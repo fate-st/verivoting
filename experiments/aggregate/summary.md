@@ -8,6 +8,7 @@ Build profile(s): `dev-unoptimized`
 |---|---|
 | G0_native_core_and_p1 | PASS |
 | G0.5_cp_single_equation | BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF |
+| G0.6_curve_decision | PARTIAL_PASS_ISOLATED_CURVE_EXPERIMENT_FULL_P3_BLOCKED |
 | G1_snarkpack | BLOCKED_NOT_INTEGRATED |
 | G2_state_proof | BLOCKED_CIRCUIT_NOT_IMPLEMENTED |
 | G3_multiprocess | BLOCKED_SINGLE_PROCESS_SIMULATION_ONLY |
@@ -49,6 +50,21 @@ Build profile(s): `dev-unoptimized`
 |---|---:|---:|---:|---:|---|
 | baseline_256_bit_joint | 3501941 | 324 | 174531.438 | 8179.4 | False |
 | canonical_253_bit_joint | 3461084 | 324 | 169906.703 | 8240.4 | False |
+
+## G0.6 isolated SNARK-friendly curve experiment
+
+- Status: `PARTIAL_PASS_ISOLATED_CURVE_EXPERIMENT_FULL_P3_BLOCKED`
+- Build profile: `dev-unoptimized`
+- Experiment group: `Jubjub/ark-ed-on-bls12-381-0.4.0`
+- Native manifest changed: `False`
+- CP challenge recomputed in-circuit: `False`
+- Full P3: `False`
+
+| Component | Constraints | Public inputs | Setup ms | Prove ms | Verify ms | Proof bytes |
+|---|---:|---:|---:|---:|---:|---:|
+| single_cp_equation | 9571 | 5 | 2893.210 | 2931.179 | 34.082 | 192 |
+| one_elgamal_coordinate | 12538 | 6 | 3409.576 | 3535.100 | 39.645 | 192 |
+| one_homomorphic_point_addition | 5867 | 6 | 1959.694 | 2260.702 | 39.460 | 192 |
 
 ## Bounded discrete log
 

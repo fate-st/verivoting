@@ -1,4 +1,5 @@
 pub mod cp_gadget;
+pub mod friendly_curve;
 pub mod hash_to_scalar_gadget;
 
 use ark_bls12_381::{Bls12_381, Fr};

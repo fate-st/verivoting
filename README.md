@@ -17,6 +17,7 @@ SnarkPack, state-circuit, full-P3, multiprocess, or on-chain work as measurement
 | Winner proof P1 | Real arkworks Groth16 proof of score bounds and smallest-ID tie breaking | READY |
 | Pre-DKG binding | `policy_pre -> prekey -> DKG session -> KeyCore -> final context` | READY in native experiment |
 | G0.5 CP feasibility | 253-bit optimized real CP equation; 3,461,084 constraints | BLOCKED by 1,000,000-constraint proof guard |
+| G0.6 curve decision | Isolated Jubjub CP/ElGamal/state relations with real Groth16 | PARTIAL PASS; not a protocol migration or full P3 |
 | Full P3 | Nested non-native CP verification and package binding inside Groth16 | BLOCKED |
 | Ballot aggregation | Ballot circuit and SnarkPack integration | BLOCKED |
 | State proof / chain | State R1CS, verifier contract, gas and DA measurements | BLOCKED |
@@ -53,6 +54,8 @@ cargo run --release -p vv-bench -- dlog
 cargo run --release -p vv-bench -- e2e
 cargo run -p vv-bench -- p3-feasibility --max-cp-constraints 1000000
 cargo run -p vv-bench -- cp-optimize --cp-implementation canonical_253 --max-cp-constraints 1000000
+cargo run -p vv-bench -- curve-compare --output experiments/raw --seed 20261020
+python3 scripts/curve_compare.py experiments/raw
 ```
 
 Raw results are written to `experiments/raw/`; the summary script writes
@@ -72,6 +75,9 @@ checked against this result.
 - G0.5 reached a real single-equation R1CS preflight. The first optimization
   reduced 3,501,941 constraints to 3,461,084, still above the 1,000,000 limit,
   so Groth16 was not run.
+- G0.6 measured an isolated native-field alternative: the CP equation used
+  9,571 constraints and generated a real proof. It does not recompute the CP
+  transcript hash and does not replace the official Ristretto manifest.
 - G1 SnarkPack, G2 state proof, G3 real multiprocess networking, G4 full P3,
   and G5 target-chain verification remain blocked.
 - A blocked gate is a development result, not a cryptographic benchmark value.

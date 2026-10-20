@@ -1,0 +1,40 @@
+{
+  "gate": "G0.6-release-reproduction",
+  "status": "BLOCKED_RELEASE_BUILD_TIMEOUT",
+  "baseline_commit": "92d147001fe84c58f85d7692ff9980b4684cd193",
+  "experiment_revision": "uncommitted_g0_6_worktree",
+  "date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "environment": {
+    "os": "macOS 15.7.1 (24G231); Darwin 24.6.0; arm64",
+    "cpu": "Apple M4",
+    "logical_cpus": 10,
+    "memory_bytes": 34359738368,
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "llvm": "23.1.1",
+    "release_opt_level": 1
+  },
+  "manifest": {
+    "canonical_digest": "c1b74c703e1f52d3ee8a1ea94c46433cc7991fccf0d64d503209e737dc5f29dd",
+    "file_sha256": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503"
+  },
+  "release_test": {
+    "command": "cargo test --workspace --release --locked",
+    "completed": false,
+    "minimum_observation_seconds": 480,
+    "last_output": "Compiling proc-macro2 v1.0.107",
+    "termination": "user interrupt after build timeout",
+    "exit_code": 130
+  },
+  "release_clippy": "NOT_RUN_AFTER_RELEASE_BUILD_BLOCK",
+  "release_e2e": "NOT_RUN_AFTER_RELEASE_BUILD_BLOCK",
+  "release_p1_five_trials": "NOT_RUN_AFTER_RELEASE_BUILD_BLOCK",
+  "development_validation": {
+    "fmt_check": "PASS",
+    "clippy_all_targets_deny_warnings": "PASS",
+    "workspace_tests_passed": 22,
+    "workspace_tests_failed": 0,
+    "resource_heavy_ristretto_test_filtered": 1,
+    "friendly_curve_command": "PASS"
+  }
+}

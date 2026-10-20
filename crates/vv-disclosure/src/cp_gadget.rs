@@ -377,7 +377,7 @@ pub fn run_cp_equation_groth16(
         borrowed.instance_assignment[1..].to_vec()
     };
 
-    let mut setup_rng = ChaCha20Rng::seed_from_u64(seed ^ 0x0043_505F_4730_35);
+    let mut setup_rng = ChaCha20Rng::seed_from_u64(seed ^ 0x0000_4350_5F47_3035);
     let setup_started = Instant::now();
     let parameters = Groth16::<Bls12_381>::generate_random_parameters_with_reduction(
         circuit.clone(),
@@ -385,7 +385,7 @@ pub fn run_cp_equation_groth16(
     )?;
     let setup_ms = setup_started.elapsed().as_secs_f64() * 1000.0;
 
-    let mut proof_rng = ChaCha20Rng::seed_from_u64(seed ^ 0x0043_505F_5052_4F);
+    let mut proof_rng = ChaCha20Rng::seed_from_u64(seed ^ 0x0000_4350_5F50_524F);
     let prove_started = Instant::now();
     let proof = Groth16::<Bls12_381>::create_random_proof_with_reduction(
         circuit.clone(),

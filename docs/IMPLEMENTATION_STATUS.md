@@ -42,6 +42,24 @@ The first sound optimization used the canonical 253-bit scalar bound and
 reduced the result to `3,461,084` constraints. This remains blocked by the same
 resource guard; see `docs/P3_OPTIMIZATION_REPORT.md`.
 
+## G0.6 curve-decision result
+
+An isolated Jubjub/BLS12-381 prototype compiled one CP equation (`9,571`
+constraints), one ElGamal coordinate (`12,538`), and one homomorphic point
+addition (`5,867`). All three produced and verified real 192-byte Groth16
+proofs; changed public inputs and invalid relations were rejected. Peak process
+RSS was `101.3 MiB` in the development-profile run.
+
+This did not change the manifest or native Ristretto protocol. The challenge is
+a canonical public input but SHA-512 is not recomputed in-circuit, and the
+ElGamal/state rows are component experiments rather than full ballot or state
+proofs. See `docs/P3_CURVE_DECISION.md` and
+`experiments/raw/p3_curve_compare.csv`.
+
+The required Release reproduction remains
+`BLOCKED_RELEASE_BUILD_TIMEOUT`; see `docs/G0_RELEASE_REPRO.md`. No Release
+timing was inferred from development-profile data.
+
 ## Pre-DKG binding order
 
 The native experiment now freezes `policy_pre` before DKG, derives the pre-key
@@ -58,6 +76,8 @@ stale-session tests pass.
 - Full P3. G0.5 implements only a resource-guarded R1CS preflight for the first
   CP equation; compressed Ristretto binding, in-circuit transcript hashing,
   the vector equation, private-package openings and signatures remain absent.
+- A friendly-curve protocol migration. G0.6 is an isolated cost experiment;
+  DKG, ElGamal, CP, commitments and the manifest still use Ristretto255.
 - Five OS processes with authenticated transport and crash/restart persistence.
 - Solidity verifier contracts, Foundry tests, gas, calldata and DA costs.
 

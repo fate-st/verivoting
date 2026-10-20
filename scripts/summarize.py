@@ -23,6 +23,7 @@ def main() -> int:
     p1_path = newest(list(raw.glob("p1-trial-*.json")))
     dkg_path = newest(list(raw.glob("dkg-trial-*.json")))
     cp_path = raw / "p3-feasibility.json"
+    friendly_curve_path = raw / "p3-curve-friendly.json"
     cp_optimization_paths = sorted(raw.glob("cp-optimization-*.json"))
     required = [e2e_path, dlog_path, p1_path, dkg_path]
     if any(path is None or not path.exists() for path in required):
@@ -34,6 +35,11 @@ def main() -> int:
     p1 = json.loads(p1_path.read_text())
     dkg = json.loads(dkg_path.read_text())
     cp = json.loads(cp_path.read_text()) if cp_path.exists() else None
+    friendly_curve = (
+        json.loads(friendly_curve_path.read_text())
+        if friendly_curve_path.exists()
+        else None
+    )
     cp_optimization = [
         json.loads(path.read_text()) for path in cp_optimization_paths
     ]
@@ -66,6 +72,9 @@ def main() -> int:
                 if cp
                 else "NOT_RUN"
             ),
+            "G0.6_curve_decision": (
+                friendly_curve["status"] if friendly_curve else "NOT_RUN"
+            ),
             "G1_snarkpack": "BLOCKED_NOT_INTEGRATED",
             "G2_state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
             "G3_multiprocess": "BLOCKED_SINGLE_PROCESS_SIMULATION_ONLY",
@@ -78,6 +87,7 @@ def main() -> int:
         "e2e": e2e,
         "cp_feasibility": cp,
         "cp_optimization": cp_optimization,
+        "friendly_curve_experiment": friendly_curve,
         "csv_rows_seen": len(csv_rows),
         "build_profiles": build_profiles,
     }
@@ -150,6 +160,35 @@ def main() -> int:
                     groth16=item["groth16"] is not None,
                 )
             )
+    if friendly_curve:
+        experiment = friendly_curve["experiment"]
+        lines.extend([
+            "",
+            "## G0.6 isolated SNARK-friendly curve experiment",
+            "",
+            f"- Status: `{friendly_curve['status']}`",
+            f"- Build profile: `{friendly_curve['build_profile']}`",
+            f"- Experiment group: `{experiment['experiment_group']}`",
+            f"- Native manifest changed: `{friendly_curve['manifest_changed']}`",
+            f"- CP challenge recomputed in-circuit: `{experiment['cp_challenge_recomputed_in_circuit']}`",
+            f"- Full P3: `{experiment['full_p3']}`",
+            "",
+            "| Component | Constraints | Public inputs | Setup ms | Prove ms | Verify ms | Proof bytes |",
+            "|---|---:|---:|---:|---:|---:|---:|",
+        ])
+        for key in ("cp", "elgamal_coordinate", "state_point_addition"):
+            item = experiment[key]
+            lines.append(
+                "| {component} | {constraints} | {public_inputs} | {setup:.3f} | {prove:.3f} | {verify:.3f} | {proof_bytes} |".format(
+                    component=item["component"],
+                    constraints=item["constraints"],
+                    public_inputs=item["public_inputs"],
+                    setup=item["setup_ms"],
+                    prove=item["prove_ms"],
+                    verify=item["verify_ms"],
+                    proof_bytes=item["proof_bytes"],
+                )
+            )
     lines.extend([
         "",
         "## Bounded discrete log",
@@ -170,7 +209,13 @@ def main() -> int:
 
     print("Gate status:")
     for gate, status in summary["gates"].items():
-        marker = "PASS" if status == "PASS" else "BLOCKED"
+        marker = (
+            "PASS"
+            if status == "PASS"
+            else "PARTIAL"
+            if status.startswith("PARTIAL_PASS")
+            else "BLOCKED"
+        )
         print(f"  [{marker:7}] {gate}: {status}")
     print(f"Build profile(s): {', '.join(build_profiles) if build_profiles else 'unknown'}")
     print(f"Public winner: {event['winner']} | legal subsets: {e2e['all_legal_subsets_checked']}")

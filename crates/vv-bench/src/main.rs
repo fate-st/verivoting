@@ -21,6 +21,7 @@ use vv_disclosure::{
         run_cp_equation_groth16, CpEquationCircuit, CpFeasibilityMetrics, CpPreflightMetrics,
         CpPrimitiveCosts, CpScalarMulVersion, EdwardsAffineValue,
     },
+    friendly_curve::{run_friendly_curve_experiment, FriendlyCurveReport},
     run_p1_groth16, P1Metrics,
 };
 use vv_dkg::{run_dkg, DkgConfig, DkgOutput, FaultPlan};
@@ -198,6 +199,23 @@ struct CpFeasibilityReport {
     next_decision: &'static str,
 }
 
+#[derive(Serialize)]
+struct FriendlyCurveDecisionReport {
+    gate: &'static str,
+    status: &'static str,
+    classification: &'static str,
+    build_profile: &'static str,
+    rustc_version: String,
+    baseline_commit: &'static str,
+    experiment_revision: &'static str,
+    manifest_sha256: String,
+    native_curve_suite: String,
+    manifest_changed: bool,
+    elapsed_ms: f64,
+    peak_rss_mb: f64,
+    experiment: FriendlyCurveReport,
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     let options = Options::parse()?;
     if options.command == "help" || options.command == "--help" {
@@ -214,6 +232,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         "e2e" => run_e2e(&manifest, &options)?,
         "p3-feasibility" => run_p3_feasibility(&manifest, &options)?,
         "cp-optimize" => run_cp_optimization(&manifest, &options)?,
+        "curve-compare" => run_curve_compare(&manifest, &options)?,
         "all" => {
             run_manifest(&manifest);
             run_dkg_experiment(&manifest, &options)?;
@@ -228,7 +247,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 fn print_help() {
     println!(
-        "vv-bench <manifest|p1|dkg|dlog|e2e|p3-feasibility|cp-optimize|all> [--manifest PATH] [--output DIR] [--trials N] [--seed N] [--max-cp-constraints N] [--cp-implementation baseline_256|canonical_253]"
+        "vv-bench <manifest|p1|dkg|dlog|e2e|p3-feasibility|cp-optimize|curve-compare|all> [--manifest PATH] [--output DIR] [--trials N] [--seed N] [--max-cp-constraints N] [--cp-implementation baseline_256|canonical_253]"
     );
     println!("Classification: native core and real P1 Groth16; no SnarkPack, state proof, full P3, or chain gas claim.");
 }
@@ -240,6 +259,56 @@ fn run_manifest(manifest: &ProtocolManifest) {
         Ok(()) => println!("full submission validation: PASS"),
         Err(error) => println!("full submission validation: BLOCKED ({error})"),
     }
+}
+
+fn run_curve_compare(manifest: &ProtocolManifest, options: &Options) -> Result<(), Box<dyn Error>> {
+    let rss_before = peak_rss_mb();
+    let started = Instant::now();
+    let experiment = run_friendly_curve_experiment(options.seed)?;
+    let elapsed_ms = started.elapsed().as_secs_f64() * 1000.0;
+    let peak_rss_mb = peak_rss_mb().max(rss_before);
+    let accepted = experiment.cp.valid_proof_verified
+        && experiment.elgamal_coordinate.valid_proof_verified
+        && experiment.state_point_addition.valid_proof_verified
+        && experiment.cp.changed_public_input_rejected
+        && experiment.elgamal_coordinate.changed_public_input_rejected
+        && experiment
+            .state_point_addition
+            .changed_public_input_rejected
+        && experiment.cp_wrong_commitment_rejected
+        && experiment.cp_wrong_challenge_rejected
+        && experiment.cp_wrong_response_rejected
+        && !experiment.manifest_or_native_protocol_changed
+        && !experiment.full_p3;
+    if !accepted {
+        return Err("friendly-curve experiment failed an acceptance condition".into());
+    }
+
+    let report = FriendlyCurveDecisionReport {
+        gate: "G0.6",
+        status: "PARTIAL_PASS_ISOLATED_CURVE_EXPERIMENT_FULL_P3_BLOCKED",
+        classification: "real-groth16-isolated-curve-decision-data",
+        build_profile: build_profile(),
+        rustc_version: rustc_version(),
+        baseline_commit: "92d147001fe84c58f85d7692ff9980b4684cd193",
+        experiment_revision: "uncommitted_g0_6_worktree",
+        manifest_sha256: manifest.digest_hex(),
+        native_curve_suite: manifest.encryption_group.clone(),
+        manifest_changed: false,
+        elapsed_ms,
+        peak_rss_mb,
+        experiment,
+    };
+    write_json(&options.output.join("p3-curve-friendly.json"), &report)?;
+    println!(
+        "G0.6 isolated friendly curve: CP={} constraints, ElGamal={} constraints, state-add={} constraints, total={:.3}ms peak_rss={:.1}MiB full_p3=false",
+        report.experiment.cp.constraints,
+        report.experiment.elgamal_coordinate.constraints,
+        report.experiment.state_point_addition.constraints,
+        report.elapsed_ms,
+        report.peak_rss_mb,
+    );
+    Ok(())
 }
 
 fn run_p1(manifest: &ProtocolManifest, options: &Options) -> Result<(), Box<dyn Error>> {
@@ -1032,17 +1101,17 @@ fn write_cp_bench_csv(
         report
             .groth16
             .as_ref()
-            .map_or(false, |value| value.compressed_encoding_bound_in_circuit)
+            .is_some_and(|value| value.compressed_encoding_bound_in_circuit)
             .to_string(),
         report
             .groth16
             .as_ref()
-            .map_or(false, |value| value.sha512_recomputed_in_circuit)
+            .is_some_and(|value| value.sha512_recomputed_in_circuit)
             .to_string(),
         report
             .groth16
             .as_ref()
-            .map_or(false, |value| value.full_p3)
+            .is_some_and(|value| value.full_p3)
             .to_string(),
     ];
     writeln!(file, "{}", columns.join(","))?;
@@ -1108,7 +1177,7 @@ fn write_cp_optimization_csv(
         report
             .groth16
             .as_ref()
-            .map_or(false, |value| value.full_p3)
+            .is_some_and(|value| value.full_p3)
             .to_string(),
     ];
     writeln!(file, "{}", columns.join(","))?;
