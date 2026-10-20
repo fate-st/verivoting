@@ -23,6 +23,7 @@ def main() -> int:
     p1_path = newest(list(raw.glob("p1-trial-*.json")))
     dkg_path = newest(list(raw.glob("dkg-trial-*.json")))
     cp_path = raw / "p3-feasibility.json"
+    cp_optimization_paths = sorted(raw.glob("cp-optimization-*.json"))
     required = [e2e_path, dlog_path, p1_path, dkg_path]
     if any(path is None or not path.exists() for path in required):
         print("missing raw artifacts; run `cargo run --release -p vv-bench -- all` first")
@@ -33,6 +34,18 @@ def main() -> int:
     p1 = json.loads(p1_path.read_text())
     dkg = json.loads(dkg_path.read_text())
     cp = json.loads(cp_path.read_text()) if cp_path.exists() else None
+    cp_optimization = [
+        json.loads(path.read_text()) for path in cp_optimization_paths
+    ]
+    optimized_cp = next(
+        (
+            item
+            for item in cp_optimization
+            if item["preflight"].get("implementation")
+            == "canonical_253_bit_joint"
+        ),
+        None,
+    )
     csv_rows = []
     runs_path = raw / "runs.csv"
     if runs_path.exists():
@@ -47,7 +60,11 @@ def main() -> int:
         "gates": {
             "G0_native_core_and_p1": "PASS",
             "G0.5_cp_single_equation": (
-                cp["status"] if cp else "NOT_RUN"
+                optimized_cp["status"]
+                if optimized_cp
+                else cp["status"]
+                if cp
+                else "NOT_RUN"
             ),
             "G1_snarkpack": "BLOCKED_NOT_INTEGRATED",
             "G2_state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
@@ -60,6 +77,7 @@ def main() -> int:
         "dlog": dlog,
         "e2e": e2e,
         "cp_feasibility": cp,
+        "cp_optimization": cp_optimization,
         "csv_rows_seen": len(csv_rows),
         "build_profiles": build_profiles,
     }
@@ -112,6 +130,26 @@ def main() -> int:
             f"- Peak RSS: `{cp['peak_rss_mb']:.1f} MiB`",
             f"- Groth16 setup/prove/verify run: `{cp['groth16'] is not None}`",
         ])
+    if cp_optimization:
+        lines.extend([
+            "",
+            "## G0.5 optimization comparison",
+            "",
+            "| Implementation | Constraints | Public inputs | Witness ms | Peak RSS MiB | Groth16 run |",
+            "|---|---:|---:|---:|---:|---|",
+        ])
+        for item in cp_optimization:
+            preflight = item["preflight"]
+            lines.append(
+                "| {implementation} | {constraints} | {public_inputs} | {witness:.3f} | {rss:.1f} | {groth16} |".format(
+                    implementation=preflight["implementation"],
+                    constraints=preflight["constraints"],
+                    public_inputs=preflight["public_inputs"],
+                    witness=preflight["synthesis_witness_ms"],
+                    rss=item["peak_rss_mb"],
+                    groth16=item["groth16"] is not None,
+                )
+            )
     lines.extend([
         "",
         "## Bounded discrete log",

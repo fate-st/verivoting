@@ -8,7 +8,7 @@ use vv_crypto::{
 };
 use vv_types::{sha256, CanonicalEncoder};
 
-pub const REGISTRATION_VERSION: u32 = 1;
+pub const REGISTRATION_VERSION: u32 = 2;
 
 #[derive(Debug, Error)]
 pub enum RegistryError {
@@ -183,15 +183,16 @@ impl RegistrationAuthority {
 
 pub fn policy_pre_digest(
     election_id: [u8; 32],
-    context: [u8; 32],
     w_max: u64,
     rule_id: &str,
     manifest_digest: [u8; 32],
     ra_public: &RistrettoPoint,
 ) -> [u8; 32] {
-    let mut encoded = CanonicalEncoder::new(b"VV/DISCLOSURE/POLICY/PRE/v1");
+    // This digest is frozen before DKG. Final `context` is deliberately absent:
+    // it is downstream of the DKG KeyCore and including it would create the
+    // ordering bug that the two-stage binding is intended to prevent.
+    let mut encoded = CanonicalEncoder::new(b"VV/DISCLOSURE/POLICY/PRE/v2");
     encoded.fixed(&election_id);
-    encoded.fixed(&context);
     encoded.u64(w_max);
     encoded.text(rule_id);
     encoded.u32(REGISTRATION_VERSION);
@@ -326,5 +327,51 @@ mod tests {
             authority.close(entries, [1; 32], [2; 32], [3; 32], 10, &mut rng),
             Err(RegistryError::BadCommitment)
         ));
+    }
+
+    #[test]
+    fn close_rejects_policy_substitution_stale_context_and_cross_election_replay() {
+        let mut rng = ChaCha20Rng::seed_from_u64(23);
+        let authority = RegistrationAuthority::generate(&mut rng);
+        let eid = [1; 32];
+        let context = [2; 32];
+        let policy = policy_pre_digest(
+            eid,
+            10,
+            "highest-weight-smallest-id-on-tie",
+            [4; 32],
+            &authority.keypair.public,
+        );
+        let certificate = authority
+            .close(fixture(&mut rng), eid, context, policy, 10, &mut rng)
+            .unwrap();
+
+        assert!(verify_close(
+            &certificate,
+            &authority.keypair.public,
+            eid,
+            context,
+            [9; 32],
+            10
+        )
+        .is_err());
+        assert!(verify_close(
+            &certificate,
+            &authority.keypair.public,
+            eid,
+            [8; 32],
+            policy,
+            10
+        )
+        .is_err());
+        assert!(verify_close(
+            &certificate,
+            &authority.keypair.public,
+            [7; 32],
+            context,
+            policy,
+            10
+        )
+        .is_err());
     }
 }

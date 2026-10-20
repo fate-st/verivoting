@@ -48,6 +48,14 @@ The next necessary experiment is optimization of the non-native scalar
 multiplication. P2/P3-a should not begin until the single-equation circuit can
 complete setup/prove/verify within the declared resource budget.
 
+## Subsequent optimization result
+
+The canonical 253-bit joint implementation removes the three highest scalar
+iterations that are already forced to zero by the canonical scalar range. It
+reduced the circuit from `3,501,941` to `3,461,084` constraints (`1.17%`) but
+remained above the proof-run guard. Groth16 was therefore still not run. See
+`docs/P3_OPTIMIZATION_REPORT.md` for the executed comparison.
+
 ## Reproduce the bounded preflight
 
 ```bash

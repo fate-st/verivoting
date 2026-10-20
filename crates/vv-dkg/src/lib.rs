@@ -5,11 +5,14 @@ use vv_crypto::{
     generator, lagrange_at_zero, point_bytes, secondary_generator, verify_signature,
     SchnorrKeypair, SchnorrSignature,
 };
-use vv_types::{sha256, CanonicalEncoder};
+use vv_types::{derive_dkg_session_id, derive_prekey_context, sha256, CanonicalEncoder};
 
 #[derive(Clone, Debug)]
 pub struct DkgConfig {
     pub election_id: [u8; 32],
+    pub policy_pre: [u8; 32],
+    pub manifest_digest: [u8; 32],
+    pub prekey_context: [u8; 32],
     pub session_id: [u8; 32],
     pub n: usize,
     pub t: usize,
@@ -18,7 +21,12 @@ pub struct DkgConfig {
 
 impl DkgConfig {
     pub fn validate(&self) -> Result<(), DkgError> {
-        if self.n < 2 * self.t + 1 || self.q_cert != self.n - self.t {
+        if self.n < 2 * self.t + 1
+            || self.q_cert != self.n - self.t
+            || self.prekey_context
+                != derive_prekey_context(self.election_id, self.policy_pre, self.manifest_digest)
+            || self.session_id != derive_dkg_session_id(self.prekey_context)
+        {
             return Err(DkgError::InvalidConfig);
         }
         Ok(())
@@ -380,6 +388,9 @@ fn transcript_digest(
 ) -> [u8; 32] {
     let mut encoded = CanonicalEncoder::new(b"VV/DKG/TRANSCRIPT/v1");
     encoded.fixed(&config.election_id);
+    encoded.fixed(&config.policy_pre);
+    encoded.fixed(&config.manifest_digest);
+    encoded.fixed(&config.prekey_context);
     encoded.fixed(&config.session_id);
     encoded.u64(config.n as u64);
     encoded.u64(config.t as u64);
@@ -409,6 +420,9 @@ fn key_core_digest(
 ) -> [u8; 32] {
     let mut encoded = CanonicalEncoder::new(b"VV/KEYCORE/v3");
     encoded.fixed(&config.election_id);
+    encoded.fixed(&config.policy_pre);
+    encoded.fixed(&config.manifest_digest);
+    encoded.fixed(&config.prekey_context);
     encoded.fixed(&config.session_id);
     encoded.u64(config.n as u64);
     encoded.u64(config.t as u64);
@@ -444,9 +458,16 @@ mod tests {
     use rand_chacha::{rand_core::SeedableRng, ChaCha20Rng};
 
     fn config() -> DkgConfig {
+        let election_id = [1; 32];
+        let policy_pre = [2; 32];
+        let manifest_digest = [3; 32];
+        let prekey_context = derive_prekey_context(election_id, policy_pre, manifest_digest);
         DkgConfig {
-            election_id: [1; 32],
-            session_id: [2; 32],
+            election_id,
+            policy_pre,
+            manifest_digest,
+            prekey_context,
+            session_id: derive_dkg_session_id(prekey_context),
             n: 5,
             t: 2,
             q_cert: 3,
@@ -527,6 +548,22 @@ mod tests {
         .unwrap();
         assert_eq!(output.transcript.disqualified_dealers, vec![1]);
         output.certificate.signatures.truncate(2);
+        assert!(!output.verify_certificate());
+    }
+
+    #[test]
+    fn stale_session_and_policy_replacement_are_rejected() {
+        let mut stale = config();
+        stale.policy_pre[0] ^= 1;
+        assert!(matches!(stale.validate(), Err(DkgError::InvalidConfig)));
+
+        let mut replay = config();
+        replay.election_id[0] ^= 1;
+        assert!(matches!(replay.validate(), Err(DkgError::InvalidConfig)));
+
+        let mut rng = ChaCha20Rng::seed_from_u64(37);
+        let mut output = run_dkg(config(), FaultPlan::default(), &mut rng).unwrap();
+        output.config.policy_pre[0] ^= 1;
         assert!(!output.verify_certificate());
     }
 }

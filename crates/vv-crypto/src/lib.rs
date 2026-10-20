@@ -510,7 +510,7 @@ mod tests {
     }
 
     #[test]
-    fn cp_is_bound_to_target_and_transcript() {
+    fn cp_rejects_wrong_challenge_commitment_and_response() {
         let mut rng = ChaCha20Rng::seed_from_u64(11);
         let secret = Scalar::from(23u64);
         let public = secret * generator();
@@ -531,6 +531,7 @@ mod tests {
             &mut rng,
         )
         .unwrap();
+        let original_context = context.clone();
         context.target[0] ^= 1;
         assert!(!verify_decryption(
             &context,
@@ -539,6 +540,28 @@ mod tests {
             std::slice::from_ref(&ciphertext),
             &shares,
             &proof
+        ));
+
+        let mut wrong_commitment = proof.clone();
+        wrong_commitment.a0 += generator();
+        assert!(!verify_decryption(
+            &original_context,
+            1,
+            &public,
+            std::slice::from_ref(&ciphertext),
+            &shares,
+            &wrong_commitment
+        ));
+
+        let mut wrong_response = proof;
+        wrong_response.response += Scalar::ONE;
+        assert!(!verify_decryption(
+            &original_context,
+            1,
+            &public,
+            std::slice::from_ref(&ciphertext),
+            &shares,
+            &wrong_response
         ));
     }
 

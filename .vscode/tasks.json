@@ -16,9 +16,9 @@
       "problemMatcher": ["$rustc"]
     },
     {
-      "label": "VeriVoting: G0.5 CP feasibility preflight",
+      "label": "VeriVoting: G0.5 CP optimized preflight",
       "type": "shell",
-      "command": "cargo run -p vv-bench -- p3-feasibility --max-cp-constraints 1000000",
+      "command": "cargo run -p vv-bench -- cp-optimize --cp-implementation canonical_253 --max-cp-constraints 1000000",
       "group": "test",
       "problemMatcher": ["$rustc"]
     },

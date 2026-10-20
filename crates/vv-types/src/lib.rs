@@ -222,6 +222,35 @@ pub fn sha256(bytes: &[u8]) -> [u8; 32] {
     Sha256::digest(bytes).into()
 }
 
+/// Bind the immutable pre-DKG election policy to the protocol manifest.
+pub fn derive_prekey_context(
+    election_id: [u8; 32],
+    policy_pre: [u8; 32],
+    manifest_digest: [u8; 32],
+) -> [u8; 32] {
+    let mut encoded = CanonicalEncoder::new(b"VV/PREKEY/v3");
+    encoded.fixed(&election_id);
+    encoded.fixed(&policy_pre);
+    encoded.fixed(&manifest_digest);
+    sha256(&encoded.finish())
+}
+
+/// Derive the only DKG session identifier authorized by a frozen pre-key
+/// context.
+pub fn derive_dkg_session_id(prekey_context: [u8; 32]) -> [u8; 32] {
+    let mut encoded = CanonicalEncoder::new(b"VV/DKG/SESSION/v1");
+    encoded.fixed(&prekey_context);
+    sha256(&encoded.finish())
+}
+
+/// Complete the acyclic binding chain after DKG finalization.
+pub fn derive_final_context(prekey_context: [u8; 32], key_core_digest: [u8; 32]) -> [u8; 32] {
+    let mut encoded = CanonicalEncoder::new(b"VV/FINALCONTEXT/v3");
+    encoded.fixed(&prekey_context);
+    encoded.fixed(&key_core_digest);
+    sha256(&encoded.finish())
+}
+
 pub fn sha256_hex(bytes: &[u8]) -> String {
     hex(&sha256(bytes))
 }
@@ -289,5 +318,26 @@ mod tests {
         let mut value = manifest();
         value.encryption_group = "UNDECIDED".to_owned();
         assert!(value.validate_core().is_err());
+    }
+
+    #[test]
+    fn prekey_session_and_final_context_form_an_acyclic_binding_chain() {
+        let manifest_digest = sha256(&manifest().canonical_bytes());
+        let election = [1; 32];
+        let policy = [2; 32];
+        let prekey = derive_prekey_context(election, policy, manifest_digest);
+        let session = derive_dkg_session_id(prekey);
+        let context = derive_final_context(prekey, [3; 32]);
+
+        assert_ne!(
+            prekey,
+            derive_prekey_context([9; 32], policy, manifest_digest)
+        );
+        assert_ne!(
+            prekey,
+            derive_prekey_context(election, [9; 32], manifest_digest)
+        );
+        assert_ne!(session, derive_dkg_session_id([9; 32]));
+        assert_ne!(context, derive_final_context(prekey, [9; 32]));
     }
 }

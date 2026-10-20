@@ -17,8 +17,9 @@ use vv_crypto::{
 };
 use vv_disclosure::{
     cp_gadget::{
-        decompress_ristretto, preflight_cp_equation, run_cp_equation_groth16, CpEquationCircuit,
-        CpFeasibilityMetrics, CpPreflightMetrics, EdwardsAffineValue,
+        decompress_ristretto, preflight_cp_equation, profile_cp_primitives,
+        run_cp_equation_groth16, CpEquationCircuit, CpFeasibilityMetrics, CpPreflightMetrics,
+        CpPrimitiveCosts, CpScalarMulVersion, EdwardsAffineValue,
     },
     run_p1_groth16, P1Metrics,
 };
@@ -26,7 +27,10 @@ use vv_dkg::{run_dkg, DkgConfig, DkgOutput, FaultPlan};
 use vv_registry::{
     disclosure_digest, policy_pre_digest, verify_close, RegistrationAuthority, RegistrationEntry,
 };
-use vv_types::{hex, sha256, winner, CanonicalEncoder, ProtocolManifest};
+use vv_types::{
+    derive_dkg_session_id, derive_final_context, derive_prekey_context, hex, sha256, winner,
+    CanonicalEncoder, ProtocolManifest,
+};
 
 const CSV_HEADER: &str = "run_id,experiment,mode,git_commit,manifest_sha256,curve_suite,os,arch,cpu,logical_threads,ram_gb,rustc_version,compiler_flags,n_voters,n_candidates,n_trustees,t_corrupt,tau,q_cert,batch_size,region_count,merkle_depth,w_registered,w_max,seed_id,proof_type,stage,success,abort_reason,proof_bytes,public_input_bytes,private_bytes,constraints,setup_ms,witness_ms,prove_ms,verify_ms,aggregation_ms,cp_ms,dlog_ms,peak_rss_mb,gas_kind,total_gas,calldata_bytes,da_bytes\n";
 
@@ -38,6 +42,7 @@ struct Options {
     trials: usize,
     seed: u64,
     max_cp_constraints: usize,
+    cp_implementation: String,
 }
 
 impl Options {
@@ -51,6 +56,7 @@ impl Options {
             trials: 1,
             seed: 20261019,
             max_cp_constraints: 1_000_000,
+            cp_implementation: "canonical_253".to_owned(),
         };
         while let Some(flag) = args.next() {
             let value = args
@@ -62,6 +68,7 @@ impl Options {
                 "--trials" => options.trials = value.parse()?,
                 "--seed" => options.seed = value.parse()?,
                 "--max-cp-constraints" => options.max_cp_constraints = value.parse()?,
+                "--cp-implementation" => options.cp_implementation = value,
                 _ => return Err(format!("unknown option {flag}").into()),
             }
         }
@@ -84,6 +91,12 @@ struct DkgReport {
     certificate_signers: usize,
     certificate_valid: bool,
     public_key: String,
+    election_id: String,
+    policy_pre: String,
+    manifest_digest: String,
+    prekey_context: String,
+    session_id: String,
+    key_core_digest: String,
     transcript_digest: String,
     estimated_protocol_bytes: usize,
     execution_model: &'static str,
@@ -104,6 +117,9 @@ struct PublicWinnerEvent {
     classification: &'static str,
     election_id: String,
     context: String,
+    policy_pre: String,
+    dkg_session_id: String,
+    key_core_digest: String,
     registration_root: String,
     w_registered: u64,
     w_max: u64,
@@ -177,6 +193,7 @@ struct CpFeasibilityReport {
     native_cp_verified: bool,
     max_cp_constraints: usize,
     preflight: CpPreflightMetrics,
+    primitive_costs: CpPrimitiveCosts,
     groth16: Option<CpFeasibilityMetrics>,
     next_decision: &'static str,
 }
@@ -196,6 +213,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         "dlog" => run_dlog(&manifest, &options)?,
         "e2e" => run_e2e(&manifest, &options)?,
         "p3-feasibility" => run_p3_feasibility(&manifest, &options)?,
+        "cp-optimize" => run_cp_optimization(&manifest, &options)?,
         "all" => {
             run_manifest(&manifest);
             run_dkg_experiment(&manifest, &options)?;
@@ -210,7 +228,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 fn print_help() {
     println!(
-        "vv-bench <manifest|p1|dkg|dlog|e2e|p3-feasibility|all> [--manifest PATH] [--output DIR] [--trials N] [--seed N] [--max-cp-constraints N]"
+        "vv-bench <manifest|p1|dkg|dlog|e2e|p3-feasibility|cp-optimize|all> [--manifest PATH] [--output DIR] [--trials N] [--seed N] [--max-cp-constraints N] [--cp-implementation baseline_256|canonical_253]"
     );
     println!("Classification: native core and real P1 Groth16; no SnarkPack, state proof, full P3, or chain gas claim.");
 }
@@ -259,10 +277,19 @@ fn run_p1(manifest: &ProtocolManifest, options: &Options) -> Result<(), Box<dyn 
     Ok(())
 }
 
-fn dkg_config(manifest: &ProtocolManifest) -> DkgConfig {
+fn dkg_config(
+    manifest: &ProtocolManifest,
+    election_id: [u8; 32],
+    policy_pre: [u8; 32],
+) -> DkgConfig {
+    let manifest_digest = sha256(&manifest.canonical_bytes());
+    let prekey_context = derive_prekey_context(election_id, policy_pre, manifest_digest);
     DkgConfig {
-        election_id: sha256(b"VV/EXPERIMENT/ELECTION/20261019"),
-        session_id: sha256(b"VV/EXPERIMENT/DKG/SESSION/20261019"),
+        election_id,
+        policy_pre,
+        manifest_digest,
+        prekey_context,
+        session_id: derive_dkg_session_id(prekey_context),
         n: manifest.n,
         t: manifest.t,
         q_cert: manifest.q_cert,
@@ -275,9 +302,18 @@ fn run_dkg_experiment(
 ) -> Result<(), Box<dyn Error>> {
     for trial in 0..options.trials {
         let mut rng = ChaCha20Rng::seed_from_u64(options.seed + trial as u64);
+        let election_id = sha256(b"VV/EXPERIMENT/ELECTION/20261020/POLICY-V2");
+        let authority = RegistrationAuthority::generate(&mut rng);
+        let policy_pre = policy_pre_digest(
+            election_id,
+            10,
+            &manifest.winning_rule,
+            sha256(&manifest.canonical_bytes()),
+            &authority.keypair.public,
+        );
         let started = Instant::now();
         let output = run_dkg(
-            dkg_config(manifest),
+            dkg_config(manifest, election_id, policy_pre),
             FaultPlan {
                 bad_private_share: Some((1, 3)),
                 bad_feldman_broadcast_dealer: Some(2),
@@ -335,6 +371,12 @@ fn dkg_report(output: &DkgOutput, elapsed_ms: f64, tau: usize) -> DkgReport {
         certificate_signers: output.certificate.signatures.len(),
         certificate_valid: output.verify_certificate(),
         public_key: hex(&point_bytes(&output.public_key)),
+        election_id: hex(&output.config.election_id),
+        policy_pre: hex(&output.config.policy_pre),
+        manifest_digest: hex(&output.config.manifest_digest),
+        prekey_context: hex(&output.config.prekey_context),
+        session_id: hex(&output.config.session_id),
+        key_core_digest: hex(&output.certificate.key_core_digest),
         transcript_digest: hex(&output.transcript.public_digest),
         estimated_protocol_bytes: output.transcript.estimated_bytes,
         execution_model:
@@ -383,26 +425,24 @@ fn run_dlog(manifest: &ProtocolManifest, options: &Options) -> Result<(), Box<dy
 
 fn run_e2e(manifest: &ProtocolManifest, options: &Options) -> Result<(), Box<dyn Error>> {
     let mut rng = ChaCha20Rng::seed_from_u64(options.seed ^ 0x0045_3245);
-    let dkg_started = Instant::now();
-    let dkg = run_dkg(dkg_config(manifest), FaultPlan::default(), &mut rng)?;
-    let dkg_ms = dkg_started.elapsed().as_secs_f64() * 1000.0;
-    let election_id = dkg.config.election_id;
-    let mut context_encoding = CanonicalEncoder::new(b"VV/FINALCONTEXT/v3");
-    context_encoding.fixed(&dkg.certificate.key_core_digest);
-    context_encoding.fixed(&sha256(&manifest.canonical_bytes()));
-    let context = sha256(&context_encoding.finish());
-
+    let election_id = sha256(b"VV/EXPERIMENT/ELECTION/20261020/POLICY-V2");
     let authority = RegistrationAuthority::generate(&mut rng);
     let manifest_digest = sha256(&manifest.canonical_bytes());
     let w_max = 10u64;
     let policy_pre = policy_pre_digest(
         election_id,
-        context,
         w_max,
         &manifest.winning_rule,
         manifest_digest,
         &authority.keypair.public,
     );
+    // The policy and all data needed to derive the DKG session are fixed before
+    // the first DKG message is generated.
+    let config = dkg_config(manifest, election_id, policy_pre);
+    let dkg_started = Instant::now();
+    let dkg = run_dkg(config, FaultPlan::default(), &mut rng)?;
+    let dkg_ms = dkg_started.elapsed().as_secs_f64() * 1000.0;
+    let context = derive_final_context(dkg.config.prekey_context, dkg.certificate.key_core_digest);
     let weights = [3u64, 2, 1, 4];
     let choices = [1usize, 2, 1, 3];
     let entries: Vec<_> = weights
@@ -538,6 +578,9 @@ fn run_e2e(manifest: &ProtocolManifest, options: &Options) -> Result<(), Box<dyn
         classification: "winner-only-public-view-core-no-full-p3",
         election_id: hex(&election_id),
         context: hex(&context),
+        policy_pre: hex(&policy_pre),
+        dkg_session_id: hex(&dkg.config.session_id),
+        key_core_digest: hex(&dkg.certificate.key_core_digest),
         registration_root: hex(&certificate.close.root_close),
         w_registered: certificate.close.w_registered,
         w_max: certificate.close.w_max,
@@ -618,17 +661,59 @@ fn cp_point_vector(point: &RistrettoPoint, value: EdwardsAffineValue) -> CpPoint
 }
 
 fn run_p3_feasibility(
-    _manifest: &ProtocolManifest,
+    manifest: &ProtocolManifest,
     options: &Options,
+) -> Result<(), Box<dyn Error>> {
+    run_cp_experiment(manifest, options, CpScalarMulVersion::Baseline256, false)
+}
+
+fn run_cp_optimization(
+    manifest: &ProtocolManifest,
+    options: &Options,
+) -> Result<(), Box<dyn Error>> {
+    let version = match options.cp_implementation.as_str() {
+        "baseline_256" => CpScalarMulVersion::Baseline256,
+        "canonical_253" => CpScalarMulVersion::Canonical253,
+        value => {
+            return Err(format!(
+                "unknown CP implementation {value}; use baseline_256 or canonical_253"
+            )
+            .into())
+        }
+    };
+    run_cp_experiment(manifest, options, version, true)
+}
+
+fn run_cp_experiment(
+    manifest: &ProtocolManifest,
+    options: &Options,
+    scalar_mul_version: CpScalarMulVersion,
+    optimization_run: bool,
 ) -> Result<(), Box<dyn Error>> {
     let mut rng = ChaCha20Rng::seed_from_u64(options.seed ^ 0x4730_355F_4350);
     let secret = Scalar::from(23u64);
     let verification_key = secret * generator();
     let (ciphertext, _) = encrypt(&verification_key, 3, &mut rng);
+    let election_id = sha256(b"VV/G0.5/ELECTION/PREPOLICY-V2");
+    let authority = RegistrationAuthority::generate(&mut rng);
+    let policy_pre = policy_pre_digest(
+        election_id,
+        10,
+        &manifest.winning_rule,
+        sha256(&manifest.canonical_bytes()),
+        &authority.keypair.public,
+    );
+    let prekey_context =
+        derive_prekey_context(election_id, policy_pre, sha256(&manifest.canonical_bytes()));
+    let mut cp_key_core = CanonicalEncoder::new(b"VV/G0.5/KEYCORE/v2");
+    cp_key_core.fixed(&election_id);
+    cp_key_core.fixed(&prekey_context);
+    cp_key_core.fixed(&point_bytes(&verification_key));
+    let context_digest = derive_final_context(prekey_context, sha256(&cp_key_core.finish()));
     let context = ThresholdContext {
-        election_id: sha256(b"VV/G0.5/ELECTION/v1"),
-        context: sha256(b"VV/G0.5/FINAL-CONTEXT/v1"),
-        policy_pre: sha256(b"VV/G0.5/PRE-POLICY/v1"),
+        election_id,
+        context: context_digest,
+        policy_pre,
         disclose: sha256(b"VV/G0.5/DISCLOSURE/v1"),
         target: sha256(b"VV/G0.5/TARGET/v1"),
     };
@@ -667,12 +752,14 @@ fn run_p3_feasibility(
     let generator_value = decompress_ristretto(point_bytes(&generator()))?;
     let verification_key_value = decompress_ristretto(point_bytes(&verification_key))?;
     let commitment_value = decompress_ristretto(point_bytes(&proof.a0))?;
+    let primitive_costs = profile_cp_primitives(generator_value, verification_key_value)?;
     let circuit = CpEquationCircuit {
         generator: generator_value,
         commitment: commitment_value,
         verification_key: verification_key_value,
         challenge_le: scalar_bytes(&challenge),
         response_le: scalar_bytes(&proof.response),
+        scalar_mul_version,
     };
 
     let rss_before = peak_rss_mb();
@@ -709,18 +796,34 @@ fn run_p3_feasibility(
         native_cp_verified,
         max_cp_constraints: options.max_cp_constraints,
         preflight,
+        primitive_costs,
         groth16,
         next_decision,
     };
-    write_json(&options.output.join("p3-feasibility.json"), &report)?;
-    write_cp_bench_csv(
-        &options.output.join("cp_circuit_bench.csv"),
-        options.seed,
-        &report,
-    )?;
+    if optimization_run {
+        write_json(
+            &options.output.join(format!(
+                "cp-optimization-{}.json",
+                scalar_mul_version.label()
+            )),
+            &report,
+        )?;
+        write_cp_optimization_csv(
+            &options.output.join("cp_optimization.csv"),
+            options.seed,
+            &report,
+        )?;
+    } else {
+        write_json(&options.output.join("p3-feasibility.json"), &report)?;
+        write_cp_bench_csv(
+            &options.output.join("cp_circuit_bench.csv"),
+            options.seed,
+            &report,
+        )?;
+    }
 
     let vector = CpCompatibilityVector {
-        vector_id: "VV-G0.5-CP-SINGLE-COORDINATE-v1",
+        vector_id: "VV-G0.5-CP-SINGLE-COORDINATE-PREPOLICY-v2",
         classification: "real-native-generalized-cp-vector-used-by-partial-r1cs-equation",
         election_id: hex(&context.election_id),
         context: hex(&context.context),
@@ -761,7 +864,8 @@ fn run_p3_feasibility(
     write_json(Path::new("fixtures/cp_vectors.json"), &vector)?;
     if let Some(metrics) = &report.groth16 {
         println!(
-            "G0.5 partial Groth16: constraints={} public_inputs={} setup={:.3}ms prove={:.3}ms verify={:.3}ms peak_rss={:.1}MiB full_p3=false",
+            "G0.5 {} partial Groth16: constraints={} public_inputs={} setup={:.3}ms prove={:.3}ms verify={:.3}ms peak_rss={:.1}MiB full_p3=false",
+            metrics.implementation,
             metrics.constraints,
             metrics.public_inputs,
             metrics.setup_ms,
@@ -771,9 +875,11 @@ fn run_p3_feasibility(
         );
     } else {
         println!(
-            "G0.5 preflight: constraints={} public_inputs={} guard={} Groth16_setup=false Groth16_prove=false Groth16_verify=false peak_rss={:.1}MiB full_p3=false",
+            "G0.5 {} preflight: constraints={} public_inputs={} witness={:.3}ms guard={} Groth16_setup=false Groth16_prove=false Groth16_verify=false peak_rss={:.1}MiB full_p3=false",
+            report.preflight.implementation,
             report.preflight.constraints,
             report.preflight.public_inputs,
+            report.preflight.synthesis_witness_ms,
             report.max_cp_constraints,
             report.peak_rss_mb,
         );
@@ -933,6 +1039,72 @@ fn write_cp_bench_csv(
             .as_ref()
             .map_or(false, |value| value.sha512_recomputed_in_circuit)
             .to_string(),
+        report
+            .groth16
+            .as_ref()
+            .map_or(false, |value| value.full_p3)
+            .to_string(),
+    ];
+    writeln!(file, "{}", columns.join(","))?;
+    Ok(())
+}
+
+fn write_cp_optimization_csv(
+    path: &Path,
+    seed: u64,
+    report: &CpFeasibilityReport,
+) -> Result<(), Box<dyn Error>> {
+    const HEADER: &str = "timestamp,implementation,status,build_profile,rustc_version,os,arch,seed,constraints,public_inputs,input_and_scalar_range_constraints,curve_membership_constraints,nonnative_double_scalar_mul_constraints,ristretto_quotient_equality_constraints,nonnative_field_mul_profile_constraints,extended_point_add_profile_constraints,ristretto_equality_profile_constraints,synthesis_witness_ms,peak_rss_mb,max_cp_constraints,valid_relation_satisfied,native_cp_verified,groth16_setup_run,groth16_prove_run,groth16_verify_run,setup_ms,prove_ms,verify_ms,proof_bytes,full_p3\n";
+    let new_file = !path.exists();
+    let mut file = OpenOptions::new().create(true).append(true).open(path)?;
+    if new_file {
+        file.write_all(HEADER.as_bytes())?;
+    }
+    let timestamp = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs();
+    let preflight = &report.preflight;
+    let breakdown = &preflight.breakdown;
+    let groth16_value = |extract: fn(&CpFeasibilityMetrics) -> String| {
+        report.groth16.as_ref().map(extract).unwrap_or_default()
+    };
+    let columns = vec![
+        timestamp.to_string(),
+        preflight.implementation.clone(),
+        report.status.to_owned(),
+        report.build_profile.to_owned(),
+        report.rustc_version.replace(',', ";"),
+        env::consts::OS.to_owned(),
+        env::consts::ARCH.to_owned(),
+        seed.to_string(),
+        preflight.constraints.to_string(),
+        preflight.public_inputs.to_string(),
+        breakdown.input_and_scalar_range.to_string(),
+        breakdown.curve_membership.to_string(),
+        breakdown.nonnative_double_scalar_mul.to_string(),
+        breakdown.ristretto_quotient_equality.to_string(),
+        report
+            .primitive_costs
+            .nonnative_field_mul_with_output_check
+            .to_string(),
+        report
+            .primitive_costs
+            .extended_point_add_with_output_check
+            .to_string(),
+        report
+            .primitive_costs
+            .ristretto_quotient_equality
+            .to_string(),
+        format!("{:.6}", preflight.synthesis_witness_ms),
+        format!("{:.3}", report.peak_rss_mb),
+        report.max_cp_constraints.to_string(),
+        preflight.valid_relation_satisfied.to_string(),
+        report.native_cp_verified.to_string(),
+        report.groth16.is_some().to_string(),
+        report.groth16.is_some().to_string(),
+        report.groth16.is_some().to_string(),
+        groth16_value(|value| format!("{:.6}", value.setup_ms)),
+        groth16_value(|value| format!("{:.6}", value.prove_ms)),
+        groth16_value(|value| format!("{:.6}", value.verify_ms)),
+        groth16_value(|value| value.proof_bytes.to_string()),
         report
             .groth16
             .as_ref()

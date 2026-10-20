@@ -38,6 +38,19 @@ The dominant component is non-native double-scalar multiplication
 P2/P3-a is not started from this result. See `docs/P3_FEASIBILITY.md` and
 `experiments/raw/p3-feasibility.json`.
 
+The first sound optimization used the canonical 253-bit scalar bound and
+reduced the result to `3,461,084` constraints. This remains blocked by the same
+resource guard; see `docs/P3_OPTIMIZATION_REPORT.md`.
+
+## Pre-DKG binding order
+
+The native experiment now freezes `policy_pre` before DKG, derives the pre-key
+context and unique DKG session from it, includes those values in the DKG
+transcript and KeyCore, and derives the final context after certification.
+Protocol version `0.3-PREPOLICY-V2` and registration version `2` identify the
+new encoding. Policy replacement, stale-context, cross-election replay and
+stale-session tests pass.
+
 ## Deliberately unimplemented
 
 - Ballot-validity Groth16 and actual SnarkPack aggregation.

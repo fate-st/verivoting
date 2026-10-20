@@ -21,7 +21,7 @@ Build profile(s): `dev-unoptimized`
 - Full P3 generated: `False`
 - Public tally present: `False`
 - Legal 3-of-5 subsets checked: `10`
-- Public artifact bytes: `1229`
+- Public artifact bytes: `1491`
 - Private package bytes: `1551`
 
 ## Real P1 Groth16
@@ -42,6 +42,13 @@ Build profile(s): `dev-unoptimized`
 - Public inputs: `324`
 - Peak RSS: `8018.9 MiB`
 - Groth16 setup/prove/verify run: `False`
+
+## G0.5 optimization comparison
+
+| Implementation | Constraints | Public inputs | Witness ms | Peak RSS MiB | Groth16 run |
+|---|---:|---:|---:|---:|---|
+| baseline_256_bit_joint | 3501941 | 324 | 174531.438 | 8179.4 | False |
+| canonical_253_bit_joint | 3461084 | 324 | 169906.703 | 8240.4 | False |
 
 ## Bounded discrete log
 

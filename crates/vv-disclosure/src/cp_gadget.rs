@@ -105,6 +105,20 @@ impl ExtendedPointVar {
         })
     }
 
+    fn new_witness(
+        cs: ConstraintSystemRef<Fr>,
+        value: EdwardsAffineValue,
+    ) -> Result<Self, SynthesisError> {
+        let x = FqVar::new_witness(cs.clone(), || Ok(value.x))?;
+        let y = FqVar::new_witness(cs, || Ok(value.y))?;
+        Ok(Self {
+            t: &x * &y,
+            x,
+            y,
+            z: FqVar::one(),
+        })
+    }
+
     fn negate(&self) -> Result<Self, SynthesisError> {
         Ok(Self {
             x: self.x.negate()?,
@@ -177,15 +191,18 @@ fn double_scalar_mul_g_minus_vk(
     verification_key: &ExtendedPointVar,
     response_bits: &[Boolean<Fr>],
     challenge_bits: &[Boolean<Fr>],
+    scalar_bits: usize,
 ) -> Result<ExtendedPointVar, SynthesisError> {
-    if response_bits.len() != 256 || challenge_bits.len() != 256 {
+    if response_bits.len() != 256 || challenge_bits.len() != 256 || scalar_bits > 256 {
         return Err(SynthesisError::Unsatisfiable);
     }
     let identity = ExtendedPointVar::identity();
     let negative_vk = verification_key.negate()?;
     let g_minus_vk = add_points(generator, &negative_vk);
     let mut accumulator = identity.clone();
-    for (response_bit, challenge_bit) in response_bits.iter().zip(challenge_bits).rev() {
+    for index in (0..scalar_bits).rev() {
+        let response_bit = &response_bits[index];
+        let challenge_bit = &challenge_bits[index];
         let doubled = add_points(&accumulator, &accumulator);
         let when_challenge_zero = ExtendedPointVar::select(response_bit, generator, &identity)?;
         let when_challenge_one = ExtendedPointVar::select(response_bit, &g_minus_vk, &negative_vk)?;
@@ -196,6 +213,29 @@ fn double_scalar_mul_g_minus_vk(
     Ok(accumulator)
 }
 
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum CpScalarMulVersion {
+    Baseline256,
+    Canonical253,
+}
+
+impl CpScalarMulVersion {
+    pub fn label(self) -> &'static str {
+        match self {
+            Self::Baseline256 => "baseline_256_bit_joint",
+            Self::Canonical253 => "canonical_253_bit_joint",
+        }
+    }
+
+    fn scalar_bits(self) -> usize {
+        match self {
+            Self::Baseline256 => 256,
+            Self::Canonical253 => 253,
+        }
+    }
+}
+
 #[derive(Clone)]
 pub struct CpEquationCircuit {
     pub generator: EdwardsAffineValue,
@@ -203,6 +243,7 @@ pub struct CpEquationCircuit {
     pub verification_key: EdwardsAffineValue,
     pub challenge_le: [u8; 32],
     pub response_le: [u8; 32],
+    pub scalar_mul_version: CpScalarMulVersion,
 }
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
@@ -240,6 +281,7 @@ impl CpEquationCircuit {
             &verification_key,
             &response_bits,
             &challenge_bits,
+            self.scalar_mul_version.scalar_bits(),
         )?;
         breakdown.nonnative_double_scalar_mul = cs.num_constraints() - phase;
 
@@ -261,6 +303,7 @@ impl ConstraintSynthesizer<Fr> for CpEquationCircuit {
 pub struct CpFeasibilityMetrics {
     pub classification: String,
     pub equation: String,
+    pub implementation: String,
     pub constraints: usize,
     pub public_inputs: usize,
     pub breakdown: CpConstraintBreakdown,
@@ -282,10 +325,12 @@ pub struct CpFeasibilityMetrics {
 pub struct CpPreflightMetrics {
     pub classification: String,
     pub equation: String,
+    pub implementation: String,
     pub constraints: usize,
     pub public_inputs: usize,
     pub breakdown: CpConstraintBreakdown,
     pub valid_relation_satisfied: bool,
+    pub synthesis_witness_ms: f64,
     pub groth16_setup_run: bool,
     pub groth16_prove_run: bool,
     pub groth16_verify_run: bool,
@@ -295,15 +340,20 @@ pub fn preflight_cp_equation(
     circuit: CpEquationCircuit,
 ) -> Result<CpPreflightMetrics, CpGadgetError> {
     let cs = ConstraintSystem::<Fr>::new_ref();
+    let implementation = circuit.scalar_mul_version.label().to_owned();
+    let started = Instant::now();
     let breakdown = circuit.synthesize_with_breakdown(cs.clone())?;
     let valid_relation_satisfied = cs.is_satisfied()?;
+    let synthesis_witness_ms = started.elapsed().as_secs_f64() * 1000.0;
     Ok(CpPreflightMetrics {
         classification: "real-r1cs-single-cp-equation-preflight-no-groth16-proof".to_owned(),
         equation: "z*G = A0 + d*VK (Ristretto quotient equality)".to_owned(),
+        implementation,
         constraints: cs.num_constraints(),
         public_inputs: cs.num_instance_variables().saturating_sub(1),
         breakdown,
         valid_relation_satisfied,
+        synthesis_witness_ms,
         groth16_setup_run: false,
         groth16_prove_run: false,
         groth16_verify_run: false,
@@ -315,6 +365,7 @@ pub fn run_cp_equation_groth16(
     seed: u64,
 ) -> Result<CpFeasibilityMetrics, CpGadgetError> {
     let cs = ConstraintSystem::<Fr>::new_ref();
+    let implementation = circuit.scalar_mul_version.label().to_owned();
     let breakdown = circuit.synthesize_with_breakdown(cs.clone())?;
     if !cs.is_satisfied()? {
         return Err(CpGadgetError::Synthesis(SynthesisError::Unsatisfiable));
@@ -376,6 +427,7 @@ pub fn run_cp_equation_groth16(
     Ok(CpFeasibilityMetrics {
         classification: "real-groth16-single-cp-equation-feasibility-not-p3".to_owned(),
         equation: "z*G = A0 + d*VK (Ristretto quotient equality)".to_owned(),
+        implementation,
         constraints,
         public_inputs,
         breakdown,
@@ -392,6 +444,74 @@ pub fn run_cp_equation_groth16(
         sha512_recomputed_in_circuit: false,
         full_p3: false,
     })
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct CpPrimitiveCosts {
+    pub nonnative_field_mul_with_output_check: usize,
+    pub extended_point_add_with_output_check: usize,
+    pub ristretto_quotient_equality: usize,
+}
+
+pub fn profile_cp_primitives(
+    left: EdwardsAffineValue,
+    right: EdwardsAffineValue,
+) -> Result<CpPrimitiveCosts, CpGadgetError> {
+    let field_cs = ConstraintSystem::<Fr>::new_ref();
+    let left_field = FqVar::new_witness(field_cs.clone(), || Ok(left.x))?;
+    let right_field = FqVar::new_witness(field_cs.clone(), || Ok(right.x))?;
+    let field_start = field_cs.num_constraints();
+    let field_product = &left_field * &right_field;
+    field_product.enforce_equal(&FqVar::constant(left.x * right.x))?;
+    let nonnative_field_mul_with_output_check = field_cs.num_constraints() - field_start;
+    if !field_cs.is_satisfied()? {
+        return Err(CpGadgetError::Synthesis(SynthesisError::Unsatisfiable));
+    }
+
+    let add_cs = ConstraintSystem::<Fr>::new_ref();
+    let left_var = ExtendedPointVar::new_witness(add_cs.clone(), left)?;
+    let right_var = ExtendedPointVar::new_witness(add_cs.clone(), right)?;
+    let add_start = add_cs.num_constraints();
+    let sum = add_points(&left_var, &right_var);
+    let expected = add_value(left, right);
+    sum.x.enforce_equal(&FqVar::constant(expected[0]))?;
+    sum.y.enforce_equal(&FqVar::constant(expected[1]))?;
+    sum.z.enforce_equal(&FqVar::constant(expected[2]))?;
+    sum.t.enforce_equal(&FqVar::constant(expected[3]))?;
+    let extended_point_add_with_output_check = add_cs.num_constraints() - add_start;
+    if !add_cs.is_satisfied()? {
+        return Err(CpGadgetError::Synthesis(SynthesisError::Unsatisfiable));
+    }
+
+    let equality_cs = ConstraintSystem::<Fr>::new_ref();
+    let equality_left = ExtendedPointVar::new_witness(equality_cs.clone(), left)?;
+    let equality_right = ExtendedPointVar::new_witness(equality_cs.clone(), left)?;
+    let equality_start = equality_cs.num_constraints();
+    enforce_ristretto_quotient_equal(&equality_left, &equality_right)?;
+    let ristretto_quotient_equality = equality_cs.num_constraints() - equality_start;
+    if !equality_cs.is_satisfied()? {
+        return Err(CpGadgetError::Synthesis(SynthesisError::Unsatisfiable));
+    }
+
+    Ok(CpPrimitiveCosts {
+        nonnative_field_mul_with_output_check,
+        extended_point_add_with_output_check,
+        ristretto_quotient_equality,
+    })
+}
+
+fn add_value(left: EdwardsAffineValue, right: EdwardsAffineValue) -> [Curve25519Base; 4] {
+    let left_t = left.x * left.y;
+    let right_t = right.x * right.y;
+    let a = (left.y - left.x) * (right.y - right.x);
+    let b = (left.y + left.x) * (right.y + right.x);
+    let c = left_t * right_t * (edwards_d() + edwards_d());
+    let d = Curve25519Base::from(2u64);
+    let e = b - a;
+    let f = d - c;
+    let g = d + c;
+    let h = b + a;
+    [e * f, g * h, f * g, e * h]
 }
 
 pub fn decompress_ristretto(compressed_le: [u8; 32]) -> Result<EdwardsAffineValue, CpGadgetError> {
@@ -495,6 +615,7 @@ mod tests {
             .unwrap(),
             challenge_le: challenge.to_bytes(),
             response_le: response.to_bytes(),
+            scalar_mul_version: CpScalarMulVersion::Canonical253,
         };
         let cs = ConstraintSystem::<Fr>::new_ref();
         circuit.clone().generate_constraints(cs.clone()).unwrap();
