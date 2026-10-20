@@ -1,3 +1,6 @@
+pub mod cp_gadget;
+pub mod hash_to_scalar_gadget;
+
 use ark_bls12_381::{Bls12_381, Fr};
 use ark_ff::{Field, One, Zero};
 use ark_groth16::{prepare_verifying_key, Groth16};

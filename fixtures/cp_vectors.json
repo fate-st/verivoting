@@ -1,0 +1,47 @@
+{
+  "vector_id": "VV-G0.5-CP-SINGLE-COORDINATE-v1",
+  "classification": "real-native-generalized-cp-vector-used-by-partial-r1cs-equation",
+  "election_id": "05520a867fde81f1c59446f0f6d86d35c75d3533b7d9d9d1cce5abc761cebf8a",
+  "context": "786b1b4fa7fd27e9ccc66ed22668fdfa2c4e24ccc717d6c6fafe66b65775f23a",
+  "policy_pre": "0acb73967464f3810ce0c0f7859b5a7d9e0de92dedcbec6efbcbacc4698f3d7b",
+  "disclosure_digest": "1691ebd38ee563a8f9b10e0c3594ec805adcc0f8e0cd417ec71c0e1da7b3360d",
+  "target": "bfa0f08388efb64b69e2e4d05c47b0acdb00c25fe4665695eda9ecfdd5a0a05d",
+  "trustee": 1,
+  "generator": {
+    "compressed_hex": "e2f2ae0a6abc4e71a884a961c500515f58e30b6aa582dd8db6a65945e08d2d76",
+    "edwards_x_decimal": "7413488746097234319268533557746747958297143720389000677696299943083562100178",
+    "edwards_y_decimal": "9771384041963202563870679428059935816164187996444183106833894008023910952347"
+  },
+  "verification_key": {
+    "compressed_hex": "c0287ab3502a0f5c5853ebaa191d8b01c42cdc8c124c3cc76030ee08ddab8559",
+    "edwards_x_decimal": "41065532784193315941647712513556700090281994738506975747183611690545060908252",
+    "edwards_y_decimal": "38274407866923248476740417748203461266575114107045502595268632873159055051589"
+  },
+  "ciphertext_c0": [
+    "f0f05b1185790b5023ec862e3f00eb6563632e7ab937dba7b6ea08ecf9a5ef21"
+  ],
+  "decryption_shares": [
+    "266a1fe0605a939eb8cdd836163ef12c715ba36a0ff3da4d9463e3692e94206a"
+  ],
+  "commitment_a0": {
+    "compressed_hex": "ec8ca1631acbf22eec5bc321ce45c198ee7d5c6ac846b5185e159eff295a475a",
+    "edwards_x_decimal": "5933647300933718382225598908302013557617568031205127992540242727952922834128",
+    "edwards_y_decimal": "40387907583504079684432811057259169670906210378308032127098549816391565903066"
+  },
+  "coordinate_commitments": [
+    "74f12705d917139f05fedd8a047c2a4229e74dad6862bb2a0a47cd30e6b62025"
+  ],
+  "response_scalar_le_hex": "78c21b6318834ecc5286d42f508e5769cf5d011346649e6bd36cb271c1136501",
+  "challenge_scalar_le_hex": "2779d7ae3b73ba4477d4692b11ab8b408cf06338ed27e6c15b718cd3fe932407",
+  "rejection_counter": 4,
+  "transcript_hex": "000000000000000f56562d43414e4f4e4943414c2d5631000000000000001456562f5448524553484f4c442f444b45592f763105520a867fde81f1c59446f0f6d86d35c75d3533b7d9d9d1cce5abc761cebf8a786b1b4fa7fd27e9ccc66ed22668fdfa2c4e24ccc717d6c6fafe66b65775f23a0acb73967464f3810ce0c0f7859b5a7d9e0de92dedcbec6efbcbacc4698f3d7b1691ebd38ee563a8f9b10e0c3594ec805adcc0f8e0cd417ec71c0e1da7b3360dbfa0f08388efb64b69e2e4d05c47b0acdb00c25fe4665695eda9ecfdd5a0a05d00000001c0287ab3502a0f5c5853ebaa191d8b01c42cdc8c124c3cc76030ee08ddab85590000000000000001f0f05b1185790b5023ec862e3f00eb6563632e7ab937dba7b6ea08ecf9a5ef21266a1fe0605a939eb8cdd836163ef12c715ba36a0ff3da4d9463e3692e94206aec8ca1631acbf22eec5bc321ce45c198ee7d5c6ac846b5185e159eff295a475a74f12705d917139f05fedd8a047c2a4229e74dad6862bb2a0a47cd30e6b62025",
+  "transcript_sha256": "586e82cf2200eee1c720949a4356daa031f73c7dd2748ea48e265fc090f6685e",
+  "native_cp_verified": true,
+  "circuit_equation": "z*G = A0 + d*VK",
+  "circuit_limitations": [
+    "challenge d is a canonical public scalar input, not yet recomputed from SHA-512 in R1CS",
+    "public Edwards coordinates are not yet bound to compressed Ristretto bytes in R1CS",
+    "the coordinate equation z*CT0=A1+d*D and generalized vector loop are not yet compiled",
+    "this is G0.5 feasibility, not P2, P3-a, or full P3"
+  ]
+}

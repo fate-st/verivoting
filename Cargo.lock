@@ -725,6 +725,7 @@ name = "vv-bench"
 version = "0.2.0"
 dependencies = [
  "curve25519-dalek",
+ "libc",
  "rand_chacha",
  "serde",
  "serde_json",
@@ -758,6 +759,7 @@ dependencies = [
  "ark-relations",
  "ark-serialize",
  "ark-std",
+ "curve25519-dalek",
  "rand_chacha",
  "serde",
  "thiserror",

@@ -2,6 +2,7 @@
   "classification": "measured-native-core-and-real-p1-not-full-p3",
   "gates": {
     "G0_native_core_and_p1": "PASS",
+    "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
     "G1_snarkpack": "BLOCKED_NOT_INTEGRATED",
     "G2_state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
     "G3_multiprocess": "BLOCKED_SINGLE_PROCESS_SIMULATION_ONLY",
@@ -14,7 +15,7 @@
     "t": 2,
     "tau": 3,
     "q_cert": 3,
-    "elapsed_ms": 75.362708,
+    "elapsed_ms": 93.45016700000001,
     "complaints": 1,
     "corrected_complaints": 1,
     "disqualified_dealers": [],
@@ -33,9 +34,9 @@
     "candidate_count": 3,
     "constraints": 3521,
     "public_inputs": 2,
-    "setup_ms": 1040.725625,
-    "prove_ms": 291.941833,
-    "verify_ms": 28.507583,
+    "setup_ms": 1018.3772090000001,
+    "prove_ms": 279.053334,
+    "verify_ms": 28.298917,
     "proof_bytes": 192,
     "proving_key_bytes": 1039440,
     "verifying_key_bytes": 488,
@@ -47,28 +48,28 @@
       "bound": 1000,
       "expected": 999,
       "decoded": 999,
-      "decode_ms": 1.165917,
+      "decode_ms": 1.189792,
       "algorithm": "baby-step-giant-step"
     },
     {
       "bound": 10000,
       "expected": 9999,
       "decoded": 9999,
-      "decode_ms": 3.144166,
+      "decode_ms": 3.2185,
       "algorithm": "baby-step-giant-step"
     },
     {
       "bound": 100000,
       "expected": 99999,
       "decoded": 99999,
-      "decode_ms": 9.680166999999999,
+      "decode_ms": 10.7065,
       "algorithm": "baby-step-giant-step"
     },
     {
       "bound": 1000000,
       "expected": 999999,
       "decoded": 999999,
-      "decode_ms": 32.169792,
+      "decode_ms": 34.664416,
       "algorithm": "baby-step-giant-step"
     }
   ],
@@ -104,19 +105,19 @@
       "full_p3_generated": false,
       "public_tally_present": false
     },
-    "dkg_ms": 70.71425,
-    "ra_close_ms": 2.874542,
-    "vote_encrypt_ms": 7.869083000000001,
-    "cp_prove_verify_ms": 16.5365,
-    "combine_decode_ms": 58.437000000000005,
+    "dkg_ms": 71.365333,
+    "ra_close_ms": 2.878291,
+    "vote_encrypt_ms": 7.8740000000000006,
+    "cp_prove_verify_ms": 16.433,
+    "combine_decode_ms": 61.212666,
     "p1_metrics": {
       "classification": "real-crypto-p1-groth16-not-p3",
       "candidate_count": 3,
       "constraints": 3521,
       "public_inputs": 2,
-      "setup_ms": 1007.1185419999999,
-      "prove_ms": 333.55204100000003,
-      "verify_ms": 30.185416,
+      "setup_ms": 983.9522499999999,
+      "prove_ms": 330.31645799999995,
+      "verify_ms": 28.947542,
       "proof_bytes": 192,
       "proving_key_bytes": 1039440,
       "verifying_key_bytes": 488,
@@ -135,7 +136,35 @@
       "the experiment does not prove Function-Equal privacy or the joint extraction theorem"
     ]
   },
-  "csv_rows_seen": 14,
+  "cp_feasibility": {
+    "gate": "G0.5",
+    "status": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
+    "build_profile": "dev-unoptimized",
+    "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "peak_rss_mb": 8018.90625,
+    "native_cp_verified": true,
+    "max_cp_constraints": 1000000,
+    "preflight": {
+      "classification": "real-r1cs-single-cp-equation-preflight-no-groth16-proof",
+      "equation": "z*G = A0 + d*VK (Ristretto quotient equality)",
+      "constraints": 3501941,
+      "public_inputs": 324,
+      "breakdown": {
+        "input_and_scalar_range": 2726,
+        "curve_membership": 9548,
+        "nonnative_double_scalar_mul": 3484879,
+        "ristretto_quotient_equality": 4788,
+        "total": 3501941
+      },
+      "valid_relation_satisfied": true,
+      "groth16_setup_run": false,
+      "groth16_prove_run": false,
+      "groth16_verify_run": false
+    },
+    "groth16": null,
+    "next_decision": "Do not begin P2/P3-a; first reduce non-native scalar-multiplication cost, then add compressed Ristretto decoding and exact SHA-512/rejection sampling"
+  },
+  "csv_rows_seen": 7,
   "build_profiles": [
     "dev-unoptimized"
   ]

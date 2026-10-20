@@ -22,6 +22,7 @@ def main() -> int:
     dlog_path = raw / "dlog.json"
     p1_path = newest(list(raw.glob("p1-trial-*.json")))
     dkg_path = newest(list(raw.glob("dkg-trial-*.json")))
+    cp_path = raw / "p3-feasibility.json"
     required = [e2e_path, dlog_path, p1_path, dkg_path]
     if any(path is None or not path.exists() for path in required):
         print("missing raw artifacts; run `cargo run --release -p vv-bench -- all` first")
@@ -31,6 +32,7 @@ def main() -> int:
     dlog = json.loads(dlog_path.read_text())
     p1 = json.loads(p1_path.read_text())
     dkg = json.loads(dkg_path.read_text())
+    cp = json.loads(cp_path.read_text()) if cp_path.exists() else None
     csv_rows = []
     runs_path = raw / "runs.csv"
     if runs_path.exists():
@@ -44,6 +46,9 @@ def main() -> int:
         "classification": "measured-native-core-and-real-p1-not-full-p3",
         "gates": {
             "G0_native_core_and_p1": "PASS",
+            "G0.5_cp_single_equation": (
+                cp["status"] if cp else "NOT_RUN"
+            ),
             "G1_snarkpack": "BLOCKED_NOT_INTEGRATED",
             "G2_state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
             "G3_multiprocess": "BLOCKED_SINGLE_PROCESS_SIMULATION_ONLY",
@@ -54,6 +59,7 @@ def main() -> int:
         "p1": p1,
         "dlog": dlog,
         "e2e": e2e,
+        "cp_feasibility": cp,
         "csv_rows_seen": len(csv_rows),
         "build_profiles": build_profiles,
     }
@@ -91,6 +97,22 @@ def main() -> int:
         f"- Prove: `{p1['prove_ms']:.3f} ms`",
         f"- Verify: `{p1['verify_ms']:.3f} ms`",
         f"- Altered public winner rejected: `{p1['wrong_public_winner_rejected']}`",
+    ])
+    if cp:
+        preflight = cp["preflight"]
+        lines.extend([
+            "",
+            "## G0.5 CP feasibility",
+            "",
+            f"- Status: `{cp['status']}`",
+            f"- Real native CP verified: `{cp['native_cp_verified']}`",
+            f"- R1CS witness satisfied: `{preflight['valid_relation_satisfied']}`",
+            f"- Constraints: `{preflight['constraints']}`",
+            f"- Public inputs: `{preflight['public_inputs']}`",
+            f"- Peak RSS: `{cp['peak_rss_mb']:.1f} MiB`",
+            f"- Groth16 setup/prove/verify run: `{cp['groth16'] is not None}`",
+        ])
+    lines.extend([
         "",
         "## Bounded discrete log",
         "",

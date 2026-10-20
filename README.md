@@ -15,6 +15,7 @@ SnarkPack, state-circuit, full-P3, multiprocess, or on-chain work as measurement
 | Voting/tally | Weighted Ristretto ElGamal, homomorphic folding, all ten 3-of-5 combinations, bounded BSGS decoding | READY |
 | Threshold-share proof | Generalized Chaum–Pedersen proof over the full ciphertext vector; challenge recomputed from the exact context | READY natively |
 | Winner proof P1 | Real arkworks Groth16 proof of score bounds and smallest-ID tie breaking | READY |
+| G0.5 CP feasibility | Real CP vector satisfies the first non-native R1CS equation; 3,501,941 constraints | BLOCKED by 1,000,000-constraint proof guard |
 | Full P3 | Nested non-native CP verification and package binding inside Groth16 | BLOCKED |
 | Ballot aggregation | Ballot circuit and SnarkPack integration | BLOCKED |
 | State proof / chain | State R1CS, verifier contract, gas and DA measurements | BLOCKED |
@@ -49,6 +50,7 @@ cargo run --release -p vv-bench -- dkg --trials 3
 cargo run --release -p vv-bench -- p1 --trials 3
 cargo run --release -p vv-bench -- dlog
 cargo run --release -p vv-bench -- e2e
+cargo run -p vv-bench -- p3-feasibility --max-cp-constraints 1000000
 ```
 
 Raw results are written to `experiments/raw/`; the summary script writes
@@ -65,6 +67,8 @@ checked against this result.
 ## Gate interpretation
 
 - G0 native manifest/core and P1 can be reproduced here.
+- G0.5 reached a real single-equation R1CS preflight, but did not run Groth16
+  because 3,501,941 constraints exceeded the declared 1,000,000 limit.
 - G1 SnarkPack, G2 state proof, G3 real multiprocess networking, G4 full P3,
   and G5 target-chain verification remain blocked.
 - A blocked gate is a development result, not a cryptographic benchmark value.

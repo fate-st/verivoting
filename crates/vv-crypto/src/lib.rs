@@ -296,6 +296,30 @@ fn cp_transcript(
     Ok(encoded.finish())
 }
 
+/// Return the exact canonical CP transcript and its bounded hash-to-scalar
+/// challenge. This is public for circuit compatibility vectors; production
+/// verification still recomputes the value rather than accepting it.
+pub fn decryption_transcript_and_challenge(
+    context: &ThresholdContext,
+    trustee: u32,
+    verification_share: &RistrettoPoint,
+    ciphertexts: &[Ciphertext],
+    shares: &[RistrettoPoint],
+    proof: &DecryptionProof,
+) -> Result<(Vec<u8>, Scalar, u16), CryptoError> {
+    let transcript = cp_transcript(
+        context,
+        trustee,
+        verification_share,
+        ciphertexts,
+        shares,
+        &proof.a0,
+        &proof.coordinates,
+    )?;
+    let (challenge, counter) = hash_to_scalar(b"VV/THRESHOLD/DKEY/H2S/v1", &transcript)?;
+    Ok((transcript, challenge, counter))
+}
+
 pub fn prove_decryption<R: RngCore + CryptoRng>(
     context: &ThresholdContext,
     trustee: u32,
@@ -343,18 +367,14 @@ pub fn verify_decryption(
     shares: &[RistrettoPoint],
     proof: &DecryptionProof,
 ) -> bool {
-    let Ok(transcript) = cp_transcript(
+    let Ok((_, challenge, counter)) = decryption_transcript_and_challenge(
         context,
         trustee,
         verification_share,
         ciphertexts,
         shares,
-        &proof.a0,
-        &proof.coordinates,
+        proof,
     ) else {
-        return false;
-    };
-    let Ok((challenge, counter)) = hash_to_scalar(b"VV/THRESHOLD/DKEY/H2S/v1", &transcript) else {
         return false;
     };
     if counter != proof.rejection_counter

@@ -11,11 +11,17 @@ use std::{
 };
 use vv_crypto::{
     aggregate_vectors, bounded_discrete_log, ciphertext_vector_digest, combine_decryption_shares,
-    commit_bytes, encrypt, generator, point_bytes, prove_decryption, scalar_bytes,
-    verify_commitment, verify_decryption, verify_signature, Ciphertext, DecryptionProof,
-    PedersenCommitment, SchnorrSignature, ThresholdContext,
+    commit_bytes, decryption_transcript_and_challenge, encrypt, generator, point_bytes,
+    prove_decryption, scalar_bytes, verify_commitment, verify_decryption, verify_signature,
+    Ciphertext, DecryptionProof, PedersenCommitment, SchnorrSignature, ThresholdContext,
 };
-use vv_disclosure::{run_p1_groth16, P1Metrics};
+use vv_disclosure::{
+    cp_gadget::{
+        decompress_ristretto, preflight_cp_equation, run_cp_equation_groth16, CpEquationCircuit,
+        CpFeasibilityMetrics, CpPreflightMetrics, EdwardsAffineValue,
+    },
+    run_p1_groth16, P1Metrics,
+};
 use vv_dkg::{run_dkg, DkgConfig, DkgOutput, FaultPlan};
 use vv_registry::{
     disclosure_digest, policy_pre_digest, verify_close, RegistrationAuthority, RegistrationEntry,
@@ -31,6 +37,7 @@ struct Options {
     output: PathBuf,
     trials: usize,
     seed: u64,
+    max_cp_constraints: usize,
 }
 
 impl Options {
@@ -43,6 +50,7 @@ impl Options {
             output: PathBuf::from("experiments/raw"),
             trials: 1,
             seed: 20261019,
+            max_cp_constraints: 1_000_000,
         };
         while let Some(flag) = args.next() {
             let value = args
@@ -53,6 +61,7 @@ impl Options {
                 "--output" => options.output = PathBuf::from(value),
                 "--trials" => options.trials = value.parse()?,
                 "--seed" => options.seed = value.parse()?,
+                "--max-cp-constraints" => options.max_cp_constraints = value.parse()?,
                 _ => return Err(format!("unknown option {flag}").into()),
             }
         }
@@ -125,6 +134,53 @@ struct E2eReport {
     limitations: Vec<&'static str>,
 }
 
+#[derive(Serialize)]
+struct CpPointVector {
+    compressed_hex: String,
+    edwards_x_decimal: String,
+    edwards_y_decimal: String,
+}
+
+#[derive(Serialize)]
+struct CpCompatibilityVector {
+    vector_id: &'static str,
+    classification: &'static str,
+    election_id: String,
+    context: String,
+    policy_pre: String,
+    disclosure_digest: String,
+    target: String,
+    trustee: u32,
+    generator: CpPointVector,
+    verification_key: CpPointVector,
+    ciphertext_c0: Vec<String>,
+    decryption_shares: Vec<String>,
+    commitment_a0: CpPointVector,
+    coordinate_commitments: Vec<String>,
+    response_scalar_le_hex: String,
+    challenge_scalar_le_hex: String,
+    rejection_counter: u16,
+    transcript_hex: String,
+    transcript_sha256: String,
+    native_cp_verified: bool,
+    circuit_equation: &'static str,
+    circuit_limitations: Vec<&'static str>,
+}
+
+#[derive(Serialize)]
+struct CpFeasibilityReport {
+    gate: &'static str,
+    status: &'static str,
+    build_profile: &'static str,
+    rustc_version: String,
+    peak_rss_mb: f64,
+    native_cp_verified: bool,
+    max_cp_constraints: usize,
+    preflight: CpPreflightMetrics,
+    groth16: Option<CpFeasibilityMetrics>,
+    next_decision: &'static str,
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     let options = Options::parse()?;
     if options.command == "help" || options.command == "--help" {
@@ -139,6 +195,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         "dkg" => run_dkg_experiment(&manifest, &options)?,
         "dlog" => run_dlog(&manifest, &options)?,
         "e2e" => run_e2e(&manifest, &options)?,
+        "p3-feasibility" => run_p3_feasibility(&manifest, &options)?,
         "all" => {
             run_manifest(&manifest);
             run_dkg_experiment(&manifest, &options)?;
@@ -153,7 +210,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 fn print_help() {
     println!(
-        "vv-bench <manifest|p1|dkg|dlog|e2e|all> [--manifest PATH] [--output DIR] [--trials N] [--seed N]"
+        "vv-bench <manifest|p1|dkg|dlog|e2e|p3-feasibility|all> [--manifest PATH] [--output DIR] [--trials N] [--seed N] [--max-cp-constraints N]"
     );
     println!("Classification: native core and real P1 Groth16; no SnarkPack, state proof, full P3, or chain gas claim.");
 }
@@ -552,6 +609,340 @@ fn run_e2e(manifest: &ProtocolManifest, options: &Options) -> Result<(), Box<dyn
     Ok(())
 }
 
+fn cp_point_vector(point: &RistrettoPoint, value: EdwardsAffineValue) -> CpPointVector {
+    CpPointVector {
+        compressed_hex: hex(&point_bytes(point)),
+        edwards_x_decimal: value.x_decimal(),
+        edwards_y_decimal: value.y_decimal(),
+    }
+}
+
+fn run_p3_feasibility(
+    _manifest: &ProtocolManifest,
+    options: &Options,
+) -> Result<(), Box<dyn Error>> {
+    let mut rng = ChaCha20Rng::seed_from_u64(options.seed ^ 0x4730_355F_4350);
+    let secret = Scalar::from(23u64);
+    let verification_key = secret * generator();
+    let (ciphertext, _) = encrypt(&verification_key, 3, &mut rng);
+    let context = ThresholdContext {
+        election_id: sha256(b"VV/G0.5/ELECTION/v1"),
+        context: sha256(b"VV/G0.5/FINAL-CONTEXT/v1"),
+        policy_pre: sha256(b"VV/G0.5/PRE-POLICY/v1"),
+        disclose: sha256(b"VV/G0.5/DISCLOSURE/v1"),
+        target: sha256(b"VV/G0.5/TARGET/v1"),
+    };
+    let ciphertexts = vec![ciphertext];
+    let (shares, proof) = prove_decryption(
+        &context,
+        1,
+        secret,
+        &verification_key,
+        &ciphertexts,
+        &mut rng,
+    )?;
+    let native_cp_verified = verify_decryption(
+        &context,
+        1,
+        &verification_key,
+        &ciphertexts,
+        &shares,
+        &proof,
+    );
+    if !native_cp_verified {
+        return Err("native CP vector did not verify".into());
+    }
+    let (transcript, challenge, rejection_counter) = decryption_transcript_and_challenge(
+        &context,
+        1,
+        &verification_key,
+        &ciphertexts,
+        &shares,
+        &proof,
+    )?;
+    if rejection_counter != proof.rejection_counter {
+        return Err("native CP rejection counter mismatch".into());
+    }
+
+    let generator_value = decompress_ristretto(point_bytes(&generator()))?;
+    let verification_key_value = decompress_ristretto(point_bytes(&verification_key))?;
+    let commitment_value = decompress_ristretto(point_bytes(&proof.a0))?;
+    let circuit = CpEquationCircuit {
+        generator: generator_value,
+        commitment: commitment_value,
+        verification_key: verification_key_value,
+        challenge_le: scalar_bytes(&challenge),
+        response_le: scalar_bytes(&proof.response),
+    };
+
+    let rss_before = peak_rss_mb();
+    let preflight = preflight_cp_equation(circuit.clone())?;
+    if !preflight.valid_relation_satisfied {
+        return Err("real CP vector did not satisfy the R1CS equation".into());
+    }
+    let groth16 = if preflight.constraints <= options.max_cp_constraints {
+        Some(run_cp_equation_groth16(
+            circuit,
+            options.seed ^ 0x4730_355F_5052,
+        )?)
+    } else {
+        None
+    };
+    let peak_rss_mb = peak_rss_mb().max(rss_before);
+    let (status, next_decision) = if groth16.is_some() {
+        (
+            "PARTIAL_PASS_SINGLE_EQUATION_GROTH16_FULL_P3_BLOCKED",
+            "Optimize the non-native circuit, then add compressed Ristretto decoding and exact SHA-512/rejection sampling before P2/P3-a",
+        )
+    } else {
+        (
+            "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
+            "Do not begin P2/P3-a; first reduce non-native scalar-multiplication cost, then add compressed Ristretto decoding and exact SHA-512/rejection sampling",
+        )
+    };
+    let report = CpFeasibilityReport {
+        gate: "G0.5",
+        status,
+        build_profile: build_profile(),
+        rustc_version: rustc_version(),
+        peak_rss_mb,
+        native_cp_verified,
+        max_cp_constraints: options.max_cp_constraints,
+        preflight,
+        groth16,
+        next_decision,
+    };
+    write_json(&options.output.join("p3-feasibility.json"), &report)?;
+    write_cp_bench_csv(
+        &options.output.join("cp_circuit_bench.csv"),
+        options.seed,
+        &report,
+    )?;
+
+    let vector = CpCompatibilityVector {
+        vector_id: "VV-G0.5-CP-SINGLE-COORDINATE-v1",
+        classification: "real-native-generalized-cp-vector-used-by-partial-r1cs-equation",
+        election_id: hex(&context.election_id),
+        context: hex(&context.context),
+        policy_pre: hex(&context.policy_pre),
+        disclosure_digest: hex(&context.disclose),
+        target: hex(&context.target),
+        trustee: 1,
+        generator: cp_point_vector(&generator(), generator_value),
+        verification_key: cp_point_vector(&verification_key, verification_key_value),
+        ciphertext_c0: ciphertexts
+            .iter()
+            .map(|value| hex(&point_bytes(&value.c0)))
+            .collect(),
+        decryption_shares: shares
+            .iter()
+            .map(|value| hex(&point_bytes(value)))
+            .collect(),
+        commitment_a0: cp_point_vector(&proof.a0, commitment_value),
+        coordinate_commitments: proof
+            .coordinates
+            .iter()
+            .map(|value| hex(&point_bytes(value)))
+            .collect(),
+        response_scalar_le_hex: hex(&scalar_bytes(&proof.response)),
+        challenge_scalar_le_hex: hex(&scalar_bytes(&challenge)),
+        rejection_counter,
+        transcript_hex: hex(&transcript),
+        transcript_sha256: hex(&sha256(&transcript)),
+        native_cp_verified,
+        circuit_equation: "z*G = A0 + d*VK",
+        circuit_limitations: vec![
+            "challenge d is a canonical public scalar input, not yet recomputed from SHA-512 in R1CS",
+            "public Edwards coordinates are not yet bound to compressed Ristretto bytes in R1CS",
+            "the coordinate equation z*CT0=A1+d*D and generalized vector loop are not yet compiled",
+            "this is G0.5 feasibility, not P2, P3-a, or full P3",
+        ],
+    };
+    write_json(Path::new("fixtures/cp_vectors.json"), &vector)?;
+    if let Some(metrics) = &report.groth16 {
+        println!(
+            "G0.5 partial Groth16: constraints={} public_inputs={} setup={:.3}ms prove={:.3}ms verify={:.3}ms peak_rss={:.1}MiB full_p3=false",
+            metrics.constraints,
+            metrics.public_inputs,
+            metrics.setup_ms,
+            metrics.prove_ms,
+            metrics.verify_ms,
+            report.peak_rss_mb,
+        );
+    } else {
+        println!(
+            "G0.5 preflight: constraints={} public_inputs={} guard={} Groth16_setup=false Groth16_prove=false Groth16_verify=false peak_rss={:.1}MiB full_p3=false",
+            report.preflight.constraints,
+            report.preflight.public_inputs,
+            report.max_cp_constraints,
+            report.peak_rss_mb,
+        );
+    }
+    Ok(())
+}
+
+fn build_profile() -> &'static str {
+    if cfg!(debug_assertions) {
+        "dev-unoptimized"
+    } else {
+        "release-opt-level-1"
+    }
+}
+
+fn rustc_version() -> String {
+    let executable = env::var("RUSTC").unwrap_or_else(|_| "rustc".to_owned());
+    std::process::Command::new(executable)
+        .arg("--version")
+        .output()
+        .ok()
+        .filter(|output| output.status.success())
+        .map(|output| String::from_utf8_lossy(&output.stdout).trim().to_owned())
+        .unwrap_or_else(|| "unavailable".to_owned())
+}
+
+#[cfg(target_os = "macos")]
+fn peak_rss_mb() -> f64 {
+    let mut usage = std::mem::MaybeUninit::<libc::rusage>::zeroed();
+    // SAFETY: getrusage initializes the supplied rusage structure on success.
+    let status = unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) };
+    if status == 0 {
+        // SAFETY: status == 0 means the operating system initialized `usage`.
+        unsafe { usage.assume_init().ru_maxrss as f64 / (1024.0 * 1024.0) }
+    } else {
+        0.0
+    }
+}
+
+#[cfg(all(unix, not(target_os = "macos")))]
+fn peak_rss_mb() -> f64 {
+    let mut usage = std::mem::MaybeUninit::<libc::rusage>::zeroed();
+    // SAFETY: getrusage initializes the supplied rusage structure on success.
+    let status = unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) };
+    if status == 0 {
+        // Linux and most other Unix targets report ru_maxrss in KiB.
+        unsafe { usage.assume_init().ru_maxrss as f64 / 1024.0 }
+    } else {
+        0.0
+    }
+}
+
+#[cfg(not(unix))]
+fn peak_rss_mb() -> f64 {
+    0.0
+}
+
+fn write_cp_bench_csv(
+    path: &Path,
+    seed: u64,
+    report: &CpFeasibilityReport,
+) -> Result<(), Box<dyn Error>> {
+    const HEADER: &str = "timestamp,gate,status,build_profile,rustc_version,os,arch,seed,equation,max_cp_constraints,constraints,public_inputs,input_and_scalar_range_constraints,curve_membership_constraints,nonnative_double_scalar_mul_constraints,ristretto_quotient_equality_constraints,valid_relation_satisfied,groth16_setup_run,groth16_prove_run,groth16_verify_run,setup_ms,prove_ms,verify_ms,proof_bytes,proving_key_bytes,verifying_key_bytes,peak_rss_mb,native_cp_verified,valid_proof_verified,changed_public_challenge_rejected,altered_response_relation_unsatisfied,compressed_encoding_bound_in_circuit,sha512_recomputed_in_circuit,full_p3\n";
+    let new_file = !path.exists();
+    let mut file = OpenOptions::new().create(true).append(true).open(path)?;
+    if new_file {
+        file.write_all(HEADER.as_bytes())?;
+    }
+    let timestamp = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs();
+    let preflight = &report.preflight;
+    let breakdown = &preflight.breakdown;
+    let optional = |value: Option<String>| value.unwrap_or_default();
+    let columns = vec![
+        timestamp.to_string(),
+        report.gate.to_owned(),
+        report.status.to_owned(),
+        report.build_profile.to_owned(),
+        report.rustc_version.replace(',', ";"),
+        env::consts::OS.to_owned(),
+        env::consts::ARCH.to_owned(),
+        seed.to_string(),
+        preflight.equation.clone(),
+        report.max_cp_constraints.to_string(),
+        preflight.constraints.to_string(),
+        preflight.public_inputs.to_string(),
+        breakdown.input_and_scalar_range.to_string(),
+        breakdown.curve_membership.to_string(),
+        breakdown.nonnative_double_scalar_mul.to_string(),
+        breakdown.ristretto_quotient_equality.to_string(),
+        preflight.valid_relation_satisfied.to_string(),
+        report.groth16.is_some().to_string(),
+        report.groth16.is_some().to_string(),
+        report.groth16.is_some().to_string(),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| format!("{:.6}", value.setup_ms)),
+        ),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| format!("{:.6}", value.prove_ms)),
+        ),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| format!("{:.6}", value.verify_ms)),
+        ),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| value.proof_bytes.to_string()),
+        ),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| value.proving_key_bytes.to_string()),
+        ),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| value.verifying_key_bytes.to_string()),
+        ),
+        format!("{:.3}", report.peak_rss_mb),
+        report.native_cp_verified.to_string(),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| value.valid_proof_verified.to_string()),
+        ),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| value.changed_public_challenge_rejected.to_string()),
+        ),
+        optional(
+            report
+                .groth16
+                .as_ref()
+                .map(|value| value.altered_response_relation_unsatisfied.to_string()),
+        ),
+        report
+            .groth16
+            .as_ref()
+            .map_or(false, |value| value.compressed_encoding_bound_in_circuit)
+            .to_string(),
+        report
+            .groth16
+            .as_ref()
+            .map_or(false, |value| value.sha512_recomputed_in_circuit)
+            .to_string(),
+        report
+            .groth16
+            .as_ref()
+            .map_or(false, |value| value.full_p3)
+            .to_string(),
+    ];
+    writeln!(file, "{}", columns.join(","))?;
+    Ok(())
+}
+
 fn private_package_bytes(
     context: &ThresholdContext,
     trustee: u32,
@@ -693,11 +1084,7 @@ fn append_csv(
         std::thread::available_parallelism().map_or(String::new(), |n| n.get().to_string()),
         String::new(),
         String::new(),
-        if cfg!(debug_assertions) {
-            "dev-unoptimized".to_owned()
-        } else {
-            "release-opt-level-1".to_owned()
-        },
+        build_profile().to_owned(),
         n_voters.to_string(),
         manifest.candidate_count.to_string(),
         manifest.n.to_string(),

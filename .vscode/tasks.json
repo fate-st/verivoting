@@ -16,6 +16,13 @@
       "problemMatcher": ["$rustc"]
     },
     {
+      "label": "VeriVoting: G0.5 CP feasibility preflight",
+      "type": "shell",
+      "command": "cargo run -p vv-bench -- p3-feasibility --max-cp-constraints 1000000",
+      "group": "test",
+      "problemMatcher": ["$rustc"]
+    },
+    {
       "label": "VeriVoting: summarize results",
       "type": "shell",
       "command": "python3 scripts/summarize.py experiments/raw experiments/aggregate",

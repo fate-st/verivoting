@@ -19,12 +19,32 @@
    winner selection. Change the public winner and confirm verification fails.
 9. Serialize a winner-only public event without the tally or private packages.
 
+## G0.5 CP-circuit feasibility result
+
+The next required experiment was run once with a real native generalized
+Chaum--Pedersen transcript. The native proof verified, and the first circuit
+equation `z*G = A0 + d*VK` was satisfied by the corresponding witness.
+
+This is a preflight result, not a Groth16 proof and not P3:
+
+- constraints: `3,501,941`;
+- public inputs: `324`;
+- peak RSS in the dev build: `8,018.9 MiB`;
+- configured proof-run guard: `1,000,000` constraints;
+- Groth16 setup/prove/verify: not run because the preflight exceeded the guard.
+
+The dominant component is non-native double-scalar multiplication
+(`3,484,879` constraints). The necessary next action is to reduce that cost;
+P2/P3-a is not started from this result. See `docs/P3_FEASIBILITY.md` and
+`experiments/raw/p3-feasibility.json`.
+
 ## Deliberately unimplemented
 
 - Ballot-validity Groth16 and actual SnarkPack aggregation.
 - Regional state R1CS and recursive/linked state proof.
-- Full P3 with non-native Ristretto arithmetic, in-circuit transcript hashing,
-  CP verification, private-package openings and signature binding.
+- Full P3. G0.5 implements only a resource-guarded R1CS preflight for the first
+  CP equation; compressed Ristretto binding, in-circuit transcript hashing,
+  the vector equation, private-package openings and signatures remain absent.
 - Five OS processes with authenticated transport and crash/restart persistence.
 - Solidity verifier contracts, Foundry tests, gas, calldata and DA costs.
 
