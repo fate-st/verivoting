@@ -1,0 +1,14 @@
+{
+  "fixture_id": "four-voters-v1",
+  "candidate_order": [1, 2, 3],
+  "voters": [
+    {"voter": 1, "weight": 3, "choice": 1},
+    {"voter": 2, "weight": 2, "choice": 2},
+    {"voter": 3, "weight": 1, "choice": 1},
+    {"voter": 4, "weight": 4, "choice": 3}
+  ],
+  "w_registered": 10,
+  "expected_private_tally": [4, 2, 4],
+  "expected_public_winner": 1,
+  "tie_rule": "highest-weight-smallest-id-on-tie"
+}

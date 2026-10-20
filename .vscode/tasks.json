@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "VeriVoting: test workspace",
+      "type": "shell",
+      "command": "cargo test --workspace --release",
+      "group": "test",
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "VeriVoting: run all implemented experiments",
+      "type": "shell",
+      "command": "cargo run --release -p vv-bench -- all --trials 1",
+      "group": "build",
+      "problemMatcher": ["$rustc"]
+    },
+    {
+      "label": "VeriVoting: summarize results",
+      "type": "shell",
+      "command": "python3 scripts/summarize.py experiments/raw experiments/aggregate",
+      "problemMatcher": []
+    },
+    {
+      "label": "VeriVoting: test and run core",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "VeriVoting: test workspace",
+        "VeriVoting: run all implemented experiments",
+        "VeriVoting: summarize results"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

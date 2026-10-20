@@ -1,0 +1,142 @@
+{
+  "classification": "measured-native-core-and-real-p1-not-full-p3",
+  "gates": {
+    "G0_native_core_and_p1": "PASS",
+    "G1_snarkpack": "BLOCKED_NOT_INTEGRATED",
+    "G2_state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
+    "G3_multiprocess": "BLOCKED_SINGLE_PROCESS_SIMULATION_ONLY",
+    "G4_full_p3": "BLOCKED_NON_NATIVE_NESTED_CP_NOT_IMPLEMENTED",
+    "G5_target_chain": "BLOCKED_CONTRACTS_NOT_IMPLEMENTED"
+  },
+  "dkg": {
+    "classification": "real-group-single-process-protocol-simulation",
+    "n": 5,
+    "t": 2,
+    "tau": 3,
+    "q_cert": 3,
+    "elapsed_ms": 75.362708,
+    "complaints": 1,
+    "corrected_complaints": 1,
+    "disqualified_dealers": [],
+    "extraction_recoveries": [
+      3
+    ],
+    "certificate_signers": 5,
+    "certificate_valid": true,
+    "public_key": "6a32e286043e12b21b5104bf197f3050305d8346d6e4150f6c4bf6270831d620",
+    "transcript_digest": "897e7137de37df1a9191638f39cd2654e199e74e15eb595f6a31e8d19f5907e7",
+    "estimated_protocol_bytes": 2656,
+    "execution_model": "one OS process with independent trustee state objects; multiprocess G3 remains open"
+  },
+  "p1": {
+    "classification": "real-crypto-p1-groth16-not-p3",
+    "candidate_count": 3,
+    "constraints": 3521,
+    "public_inputs": 2,
+    "setup_ms": 1040.725625,
+    "prove_ms": 291.941833,
+    "verify_ms": 28.507583,
+    "proof_bytes": 192,
+    "proving_key_bytes": 1039440,
+    "verifying_key_bytes": 488,
+    "verified": true,
+    "wrong_public_winner_rejected": true
+  },
+  "dlog": [
+    {
+      "bound": 1000,
+      "expected": 999,
+      "decoded": 999,
+      "decode_ms": 1.165917,
+      "algorithm": "baby-step-giant-step"
+    },
+    {
+      "bound": 10000,
+      "expected": 9999,
+      "decoded": 9999,
+      "decode_ms": 3.144166,
+      "algorithm": "baby-step-giant-step"
+    },
+    {
+      "bound": 100000,
+      "expected": 99999,
+      "decoded": 99999,
+      "decode_ms": 9.680166999999999,
+      "algorithm": "baby-step-giant-step"
+    },
+    {
+      "bound": 1000000,
+      "expected": 999999,
+      "decoded": 999999,
+      "decode_ms": 32.169792,
+      "algorithm": "baby-step-giant-step"
+    }
+  ],
+  "e2e": {
+    "classification": "end-to-end-native-core-with-real-p1-not-official-p3",
+    "gate_status": "G0-core/P1 pass; G1/G2/G3-multiprocess/G4/G5 blocked",
+    "public_event": {
+      "protocol_version": "VERIVOTING-BATCH-V4.5-NATIVE-CORE-0.2",
+      "classification": "winner-only-public-view-core-no-full-p3",
+      "election_id": "84d6fe2c01b3fa2c4cb5962d6df36cfa269a28022ef94c2b5638a9c64ff441a0",
+      "context": "cb91cdc9ee9e5f457d6a461eeeecefd05ba578e11bfb279a5a6664e9282ee703",
+      "registration_root": "9bce7bf4ad7ccfbc9171bbc91938a060a7f2e86abc56a3f3ba181af257036e56",
+      "w_registered": 10,
+      "w_max": 10,
+      "target": "9732f424e361f06fc7701cca74776640a855e822d05c59fa0f9f446441e04d62",
+      "selected_trustees": [
+        1,
+        3,
+        5
+      ],
+      "public_commitments": [
+        "e079f290e4d04504eb0c363b4e02fecc029099a543deede7433b073267df390f",
+        "86fe305557f807234add14ac9102c47ebae5d5cba1114c6e59e72022670a6971",
+        "2c89731d366376f2af46b1ae50dabb582ee8abed17597a8777215edd54c96c59"
+      ],
+      "public_signatures": [
+        "648c808b6eb91f21f52e59368107e336412f21b59ec9cfac6b8884bfda4616129b42ab124c5ffedb1b98698d1380cfdb3ad4598e485781f1490b35da0a2ff601",
+        "b07ac54a7789fda6a1c9d62396e76b6cc7f435e33dc4dd9958990b9c2d258a4dd8ea9abb547be369af3eef6e76696e20ef1770e7b7178a1172dedd48e025c701",
+        "9a22eaf06155cc60204770a662c6823996db67c36c3eb45f8d3763ae022f615e5b3f3f5bd0b29d94fbedc71a8bc19dbe41deafd8ba40d280bf7c5a85edf08707"
+      ],
+      "winner": 1,
+      "p1_groth16_verified": true,
+      "full_p3_generated": false,
+      "public_tally_present": false
+    },
+    "dkg_ms": 70.71425,
+    "ra_close_ms": 2.874542,
+    "vote_encrypt_ms": 7.869083000000001,
+    "cp_prove_verify_ms": 16.5365,
+    "combine_decode_ms": 58.437000000000005,
+    "p1_metrics": {
+      "classification": "real-crypto-p1-groth16-not-p3",
+      "candidate_count": 3,
+      "constraints": 3521,
+      "public_inputs": 2,
+      "setup_ms": 1007.1185419999999,
+      "prove_ms": 333.55204100000003,
+      "verify_ms": 30.185416,
+      "proof_bytes": 192,
+      "proving_key_bytes": 1039440,
+      "verifying_key_bytes": 488,
+      "verified": true,
+      "wrong_public_winner_rejected": true
+    },
+    "all_legal_subsets_checked": 10,
+    "public_bytes": 1229,
+    "private_package_bytes": 1551,
+    "limitations": [
+      "DKG executes real Pedersen/Feldman/GJKR phases in one process, not five OS processes",
+      "ballot Groth16 and SnarkPack are not integrated",
+      "state R1CS is not integrated",
+      "P1 is not full P3: CP and package binding are verified natively, not inside Groth16",
+      "no target-chain verifier or gas result is claimed",
+      "the experiment does not prove Function-Equal privacy or the joint extraction theorem"
+    ]
+  },
+  "csv_rows_seen": 14,
+  "build_profiles": [
+    "dev-unoptimized"
+  ]
+}

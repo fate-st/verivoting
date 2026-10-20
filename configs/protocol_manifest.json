@@ -1,0 +1,30 @@
+{
+  "protocol_version": "VERIVOTING-BATCH-V4.5-NATIVE-CORE-0.2",
+  "release_policy": "WINNER_ONLY_V1",
+  "n": 5,
+  "t": 2,
+  "tau": 3,
+  "q_cert": 3,
+  "candidate_count": 3,
+  "candidate_order": [1, 2, 3],
+  "winning_rule": "highest-weight-smallest-id-on-tie",
+  "encryption_group": "Ristretto255/curve25519-dalek-4.1.3",
+  "ballot_groth16_curve": "BLS12-381/ark-groth16-0.4 (P1 disclosure circuit only)",
+  "snarkpack_revision": "SnarkPack-ePrint-2021-529; implementation not vendored",
+  "state_groth16_curve": "BLS12-381/ark-groth16-0.4; state circuit not implemented",
+  "disclosure_groth16_curve": "BLS12-381/ark-groth16-0.4; P1-only",
+  "cp_hash_to_scalar_suite": "SHA-512-to-canonical-Ristretto-scalar/rejection-128/domain-separated",
+  "commitment_suite": "Pedersen/Ristretto255/secondary-generator-SHA512",
+  "signature_suite": "Schnorr/Ristretto255/SHA512-domain-separated",
+  "canonical_codec_version": "VV-CANONICAL-V1/big-endian/length-prefixed",
+  "hash_rejection_max_attempts": 128,
+  "supported_batch_sizes": [1, 8, 16, 32, 64, 128, 256],
+  "capabilities": {
+    "native_core": "READY",
+    "p1_groth16": "READY",
+    "snarkpack": "BLOCKED_NOT_INTEGRATED",
+    "state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
+    "full_p3": "BLOCKED_NON_NATIVE_NESTED_CP_NOT_IMPLEMENTED",
+    "target_chain": "BLOCKED_FOUNDRY_AND_CONTRACTS_NOT_IMPLEMENTED"
+  }
+}

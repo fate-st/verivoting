@@ -1,0 +1,19 @@
+[package]
+name = "vv-disclosure"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ark-bls12-381.workspace = true
+ark-ff.workspace = true
+ark-groth16.workspace = true
+ark-r1cs-std.workspace = true
+ark-relations.workspace = true
+ark-serialize.workspace = true
+ark-std.workspace = true
+rand_chacha.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+vv-types = { path = "../vv-types" }
+
