@@ -56,9 +56,31 @@ ElGamal/state rows are component experiments rather than full ballot or state
 proofs. See `docs/P3_CURVE_DECISION.md` and
 `experiments/raw/p3_curve_compare.csv`.
 
-The required Release reproduction remains
-`BLOCKED_RELEASE_BUILD_TIMEOUT`; see `docs/G0_RELEASE_REPRO.md`. No Release
-timing was inferred from development-profile data.
+## G0.7 Release reproduction
+
+The Release workspace build, strict Clippy and required regression tests now
+pass with `CARGO_PROFILE_RELEASE_STRIP=none`, which avoids a host
+`rust-objcopy --strip-debug` stall without changing optimized code generation.
+The initial five-trial P1 baseline and four-voter Ristretto E2E passed. See
+`docs/G07_RELEASE_BASELINE.md`.
+
+The benchmark CSV writer now records the actual Git SHA, dirty state, manifest
+suite, CPU, memory, Rust version and build profile for new runs. Historical CSV
+files were not rewritten.
+
+## G0.8 native Jubjub progress
+
+The independent `vv-friendly-crypto` crate defines canonical Jubjub point and
+scalar encodings, native SHA-512 rejection hash-to-scalar, deterministic
+secondary-generator derivation, Weighted ElGamal, homomorphic folding and BSGS.
+One Release fixture encrypted `(3,A),(2,B),(1,A),(4,C)` and recovered
+`(4,2,4)` with winner `1`.
+
+This is `PARTIAL_WEIGHTED_ELGAMAL_ONLY`: the fixture uses one native secret key.
+Jubjub VSS/GJKR, generalized CP, threshold packages and the complete G0.8 E2E
+are not implemented. The official Ristretto manifest is unchanged. See
+`docs/JUBJUB_SUITE_SPEC.md` and
+`experiments/g0_8_raw/friendly-elgamal-four-voter.json`.
 
 ## Pre-DKG binding order
 
@@ -76,8 +98,9 @@ stale-session tests pass.
 - Full P3. G0.5 implements only a resource-guarded R1CS preflight for the first
   CP equation; compressed Ristretto binding, in-circuit transcript hashing,
   the vector equation, private-package openings and signatures remain absent.
-- A friendly-curve protocol migration. G0.6 is an isolated cost experiment;
-  DKG, ElGamal, CP, commitments and the manifest still use Ristretto255.
+- A complete friendly-curve protocol migration. G0.8 currently implements only
+  the independent native Jubjub suite and Weighted ElGamal/BSGS; DKG,
+  generalized CP, commitments and threshold E2E remain absent.
 - Five OS processes with authenticated transport and crash/restart persistence.
 - Solidity verifier contracts, Foundry tests, gas, calldata and DA costs.
 

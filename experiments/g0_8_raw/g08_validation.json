@@ -1,0 +1,59 @@
+{
+  "gate": "G0.8-1-and-G0.8-2",
+  "status": "PARTIAL_WEIGHTED_ELGAMAL_ONLY",
+  "date": "2026-10-20",
+  "baseline_commit": "b4632e227760040df5cb53aed28427291934a50f",
+  "experiment_revision": "uncommitted_experiment_g08_jubjub_native_worktree",
+  "branch": "experiment/g08-jubjub-native",
+  "build_profile": "release-opt-level-1",
+  "release_strip": "none",
+  "release_clippy": "PASS",
+  "workspace_tests": {
+    "passed": 30,
+    "failed": 0,
+    "filtered": 1,
+    "filtered_test": "real_dalek_equation_satisfies_non_native_r1cs_and_mutation_fails"
+  },
+  "friendly_crypto_tests": {
+    "passed": 8,
+    "failed": 0,
+    "covered": [
+      "canonical scalar and modulus rejection",
+      "canonical point, identity and malformed encoding",
+      "domain-separated canonical hash-to-scalar",
+      "secondary generator derivation",
+      "deterministic encoding vectors",
+      "four weighted ballots and winner",
+      "wrong key and ciphertext mutation",
+      "identity key/C0, invalid choice and invalid weight"
+    ]
+  },
+  "official_ristretto_manifest_changed": false,
+  "four_voter_result": {
+    "seed": 20261020,
+    "weights": [3, 2, 1, 4],
+    "choices": [1, 2, 1, 3],
+    "private_tally": [4, 2, 4],
+    "public_winner": 1,
+    "encryption_ms": 1.385584,
+    "aggregate_decrypt_decode_ms": 0.223583
+  },
+  "implemented": [
+    "Jubjub canonical point/scalar encoding",
+    "native SHA-512 rejection hash-to-scalar",
+    "secondary generator hash-and-clear derivation",
+    "native weighted ElGamal",
+    "homomorphic folding",
+    "bounded discrete-log decoding"
+  ],
+  "not_implemented": [
+    "Jubjub VSS/GJKR",
+    "generalized Chaum-Pedersen",
+    "threshold packages and signatures",
+    "complete G0.8 winner-only E2E",
+    "in-circuit Fiat-Shamir",
+    "full P3",
+    "SnarkPack",
+    "state proof"
+  ]
+}

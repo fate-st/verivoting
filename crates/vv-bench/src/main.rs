@@ -7,6 +7,8 @@ use std::{
     fs::{self, OpenOptions},
     io::Write,
     path::{Path, PathBuf},
+    process::Command,
+    sync::OnceLock,
     time::{Instant, SystemTime, UNIX_EPOCH},
 };
 use vv_crypto::{
@@ -33,7 +35,63 @@ use vv_types::{
     CanonicalEncoder, ProtocolManifest,
 };
 
-const CSV_HEADER: &str = "run_id,experiment,mode,git_commit,manifest_sha256,curve_suite,os,arch,cpu,logical_threads,ram_gb,rustc_version,compiler_flags,n_voters,n_candidates,n_trustees,t_corrupt,tau,q_cert,batch_size,region_count,merkle_depth,w_registered,w_max,seed_id,proof_type,stage,success,abort_reason,proof_bytes,public_input_bytes,private_bytes,constraints,setup_ms,witness_ms,prove_ms,verify_ms,aggregation_ms,cp_ms,dlog_ms,peak_rss_mb,gas_kind,total_gas,calldata_bytes,da_bytes\n";
+const CSV_HEADER: &str = "run_id,experiment,mode,git_commit,git_dirty,manifest_sha256,curve_suite,os,arch,cpu,logical_threads,ram_gb,rustc_version,compiler_flags,n_voters,n_candidates,n_trustees,t_corrupt,tau,q_cert,batch_size,region_count,merkle_depth,w_registered,w_max,seed_id,proof_type,stage,success,abort_reason,proof_bytes,public_input_bytes,private_bytes,constraints,setup_ms,witness_ms,prove_ms,verify_ms,aggregation_ms,cp_ms,dlog_ms,peak_rss_mb,gas_kind,total_gas,calldata_bytes,da_bytes\n";
+
+#[derive(Clone, Debug)]
+struct RunMetadata {
+    git_commit: String,
+    git_dirty: String,
+    cpu: String,
+    ram_gb: String,
+    rustc_version: String,
+}
+
+static RUN_METADATA: OnceLock<RunMetadata> = OnceLock::new();
+
+impl RunMetadata {
+    fn capture() -> Self {
+        let git_commit =
+            command_output("git", &["rev-parse", "HEAD"]).unwrap_or_else(|| "UNKNOWN".to_owned());
+        let git_dirty = command_output(
+            "git",
+            &["status", "--porcelain", "--untracked-files=normal"],
+        )
+        .map_or_else(
+            || "UNKNOWN".to_owned(),
+            |output| (!output.is_empty()).to_string(),
+        );
+        let cpu = if cfg!(target_os = "macos") {
+            command_output("sysctl", &["-n", "machdep.cpu.brand_string"])
+                .unwrap_or_else(|| "UNKNOWN".to_owned())
+        } else {
+            "UNKNOWN".to_owned()
+        };
+        let ram_gb = if cfg!(target_os = "macos") {
+            command_output("sysctl", &["-n", "hw.memsize"])
+                .and_then(|value| value.parse::<f64>().ok())
+                .map(|bytes| format!("{:.3}", bytes / 1024.0_f64.powi(3)))
+                .unwrap_or_else(|| "UNKNOWN".to_owned())
+        } else {
+            "UNKNOWN".to_owned()
+        };
+        Self {
+            git_commit,
+            git_dirty,
+            cpu,
+            ram_gb,
+            rustc_version: rustc_version(),
+        }
+    }
+}
+
+fn command_output(program: &str, args: &[&str]) -> Option<String> {
+    Command::new(program)
+        .args(args)
+        .output()
+        .ok()
+        .filter(|output| output.status.success())
+        .map(|output| String::from_utf8_lossy(&output.stdout).trim().to_owned())
+}
 
 #[derive(Clone, Debug)]
 struct Options {
@@ -222,6 +280,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         print_help();
         return Ok(());
     }
+    RUN_METADATA
+        .set(RunMetadata::capture())
+        .map_err(|_| "run metadata was initialized more than once")?;
     fs::create_dir_all(&options.output)?;
     let manifest = ProtocolManifest::from_path(&options.manifest)?;
     match options.command.as_str() {
@@ -966,7 +1027,7 @@ fn build_profile() -> &'static str {
 
 fn rustc_version() -> String {
     let executable = env::var("RUSTC").unwrap_or_else(|_| "rustc".to_owned());
-    std::process::Command::new(executable)
+    Command::new(executable)
         .arg("--version")
         .output()
         .ok()
@@ -1312,19 +1373,30 @@ fn append_csv(
         file.write_all(CSV_HEADER.as_bytes())?;
     }
     let timestamp = SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs();
+    let metadata = RUN_METADATA
+        .get()
+        .cloned()
+        .unwrap_or_else(RunMetadata::capture);
+    let suite = format!(
+        "{}+{}",
+        manifest.encryption_group, manifest.disclosure_groth16_curve
+    )
+    .replace(',', ";")
+    .replace('\n', " ");
     let columns = vec![
         format!("{run_id}-{timestamp}"),
         experiment.to_owned(),
         "native-time".to_owned(),
-        "NO_GIT_REPOSITORY".to_owned(),
+        metadata.git_commit,
+        metadata.git_dirty,
         manifest.digest_hex(),
-        "Ristretto255+BLS12-381".to_owned(),
+        suite,
         env::consts::OS.to_owned(),
         env::consts::ARCH.to_owned(),
-        String::new(),
+        metadata.cpu.replace(',', ";").replace('\n', " "),
         std::thread::available_parallelism().map_or(String::new(), |n| n.get().to_string()),
-        String::new(),
-        String::new(),
+        metadata.ram_gb,
+        metadata.rustc_version.replace(',', ";"),
         build_profile().to_owned(),
         n_voters.to_string(),
         manifest.candidate_count.to_string(),

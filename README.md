@@ -18,6 +18,8 @@ SnarkPack, state-circuit, full-P3, multiprocess, or on-chain work as measurement
 | Pre-DKG binding | `policy_pre -> prekey -> DKG session -> KeyCore -> final context` | READY in native experiment |
 | G0.5 CP feasibility | 253-bit optimized real CP equation; 3,461,084 constraints | BLOCKED by 1,000,000-constraint proof guard |
 | G0.6 curve decision | Isolated Jubjub CP/ElGamal/state relations with real Groth16 | PARTIAL PASS; not a protocol migration or full P3 |
+| G0.7 Release baseline | Release build, 30 current tests, P1 and four-voter regression | PASS with `strip=none` toolchain workaround |
+| G0.8 Jubjub prototype | Canonical suite plus native Weighted ElGamal/BSGS four-voter fixture | PARTIAL; DKG and generalized CP not implemented |
 | Full P3 | Nested non-native CP verification and package binding inside Groth16 | BLOCKED |
 | Ballot aggregation | Ballot circuit and SnarkPack integration | BLOCKED |
 | State proof / chain | State R1CS, verifier contract, gas and DA measurements | BLOCKED |
@@ -55,6 +57,9 @@ cargo run --release -p vv-bench -- e2e
 cargo run -p vv-bench -- p3-feasibility --max-cp-constraints 1000000
 cargo run -p vv-bench -- cp-optimize --cp-implementation canonical_253 --max-cp-constraints 1000000
 cargo run -p vv-bench -- curve-compare --output experiments/raw --seed 20261020
+cargo run --release -p vv-friendly-crypto --bin friendly-four-voter -- \
+  --output experiments/g0_8_raw/friendly-elgamal-four-voter.json \
+  --vectors-output fixtures/jubjub_suite_vectors.json
 python3 scripts/curve_compare.py experiments/raw
 ```
 
@@ -78,6 +83,9 @@ checked against this result.
 - G0.6 measured an isolated native-field alternative: the CP equation used
   9,571 constraints and generated a real proof. It does not recompute the CP
   transcript hash and does not replace the official Ristretto manifest.
+- G0.7 reproduced the native core and P1 in Release mode. G0.8 now has an
+  isolated Jubjub suite and a native four-voter Weighted ElGamal fixture, but
+  no Jubjub DKG, generalized CP, or threshold E2E yet.
 - G1 SnarkPack, G2 state proof, G3 real multiprocess networking, G4 full P3,
   and G5 target-chain verification remain blocked.
 - A blocked gate is a development result, not a cryptographic benchmark value.

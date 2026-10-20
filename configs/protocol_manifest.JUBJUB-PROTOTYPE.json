@@ -1,0 +1,30 @@
+{
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-0.1",
+  "release_policy": "WINNER_ONLY_V1",
+  "n": 5,
+  "t": 2,
+  "tau": 3,
+  "q_cert": 3,
+  "candidate_count": 3,
+  "candidate_order": [1, 2, 3],
+  "winning_rule": "highest-weight-smallest-id-on-tie",
+  "encryption_group": "Jubjub/ark-ed-on-bls12-381-0.4.0; experimental native prototype",
+  "ballot_groth16_curve": "BLS12-381/ark-groth16-0.4; ballot circuit not implemented",
+  "snarkpack_revision": "BLOCKED_NOT_INTEGRATED",
+  "state_groth16_curve": "BLS12-381/ark-groth16-0.4; state circuit not implemented",
+  "disclosure_groth16_curve": "BLS12-381/ark-groth16-0.4; isolated group equations only",
+  "cp_hash_to_scalar_suite": "SHA-512 first-32-byte canonical Jubjub scalar rejection-128/domain-separated; native helper only",
+  "commitment_suite": "Jubjub Pedersen H via VV/JUBJUB/H2G/v1; commitment protocol not implemented",
+  "signature_suite": "BLOCKED_NOT_IMPLEMENTED_FOR_JUBJUB_PROTOTYPE",
+  "canonical_codec_version": "VV-JUBJUB-CANONICAL-V1/point-compressed/scalar-little-endian/context-big-endian-length-prefixed",
+  "hash_rejection_max_attempts": 128,
+  "supported_batch_sizes": [1],
+  "capabilities": {
+    "native_core": "PARTIAL_WEIGHTED_ELGAMAL_ONLY",
+    "p1_groth16": "BLOCKED_NOT_MIGRATED",
+    "snarkpack": "BLOCKED_NOT_INTEGRATED",
+    "state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
+    "full_p3": "BLOCKED_DKG_CP_AND_BINDING_NOT_IMPLEMENTED",
+    "target_chain": "BLOCKED_CONTRACTS_NOT_IMPLEMENTED"
+  }
+}

@@ -794,6 +794,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "vv-friendly-crypto"
+version = "0.2.0"
+dependencies = [
+ "ark-ec",
+ "ark-ed-on-bls12-381",
+ "ark-ff",
+ "ark-serialize",
+ "ark-std",
+ "rand_chacha",
+ "rand_core",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror",
+ "vv-types",
+]
+
+[[package]]
 name = "vv-registry"
 version = "0.2.0"
 dependencies = [

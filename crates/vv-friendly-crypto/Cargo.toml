@@ -1,0 +1,23 @@
+[package]
+name = "vv-friendly-crypto"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ark-ec.workspace = true
+ark-ed-on-bls12-381.workspace = true
+ark-ff.workspace = true
+ark-serialize.workspace = true
+ark-std.workspace = true
+rand_chacha.workspace = true
+rand_core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+vv-types = { path = "../vv-types" }
+
+[[bin]]
+name = "friendly-four-voter"
+path = "src/bin/four_voter.rs"
