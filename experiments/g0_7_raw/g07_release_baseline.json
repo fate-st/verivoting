@@ -1,0 +1,86 @@
+{
+  "gate": "G0.7_RELEASE_BASELINE",
+  "status": "PASS_WITH_STRIP_WORKAROUND",
+  "date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "git": {
+    "commit": "0eec138e0415593ddba31b0601f6428934632c56",
+    "branch": "experiment/g07-g08-friendly-migration",
+    "remote_updated": true
+  },
+  "environment": {
+    "os": "macOS 15.7.1 (24G231); Darwin 24.6.0; arm64",
+    "cpu": "Apple M4",
+    "logical_cpus": 10,
+    "memory_bytes": 34359738368,
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "llvm": "23.1.1",
+    "manifest_canonical_digest": "c1b74c703e1f52d3ee8a1ea94c46433cc7991fccf0d64d503209e737dc5f29dd"
+  },
+  "build": {
+    "profile": "release-opt-level-1",
+    "jobs": 2,
+    "strip": "none",
+    "strip_reason": "rust-objcopy --strip-debug stalled at 0% CPU",
+    "elapsed_seconds": 32.32,
+    "success": true
+  },
+  "validation": {
+    "fmt": "PASS",
+    "release_clippy_deny_warnings": "PASS",
+    "release_clippy_seconds": 8.41,
+    "tests_passed": 22,
+    "tests_failed": 0,
+    "tests_filtered": 1,
+    "filtered_test": "real_dalek_equation_satisfies_non_native_r1cs_and_mutation_fails"
+  },
+  "p1": {
+    "trials": 5,
+    "base_seed": 20261020,
+    "constraints": 3521,
+    "public_inputs": 2,
+    "proof_bytes": 192,
+    "all_verified": true,
+    "all_wrong_public_winners_rejected": true,
+    "setup_ms": {
+      "mean": 49.358,
+      "median": 46.676,
+      "sample_stdev": 6.714,
+      "min": 44.378,
+      "max": 61.146
+    },
+    "prove_ms": {
+      "mean": 26.549,
+      "median": 24.330,
+      "sample_stdev": 5.347,
+      "min": 23.871,
+      "max": 36.100
+    },
+    "verify_ms": {
+      "mean": 0.918,
+      "median": 0.910,
+      "sample_stdev": 0.015,
+      "min": 0.906,
+      "max": 0.940
+    }
+  },
+  "e2e": {
+    "seed": 20261020,
+    "private_tally_checked": [4, 2, 4],
+    "public_winner": 1,
+    "legal_three_of_five_subsets_checked": 10,
+    "p1_verified": true,
+    "wrong_public_winner_rejected": true,
+    "public_tally_present": false,
+    "full_p3_generated": false
+  },
+  "scope": {
+    "g08_started": false,
+    "full_p3": false,
+    "snarkpack": false,
+    "state_proof": false,
+    "multiprocess_dkg": false,
+    "contract_or_gas": false
+  }
+}
