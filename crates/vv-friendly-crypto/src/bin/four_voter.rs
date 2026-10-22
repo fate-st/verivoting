@@ -28,8 +28,9 @@ fn command_output(program: &str, args: &[&str]) -> Option<String> {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut args = env::args().skip(1);
-    let mut output = PathBuf::from("experiments/g0_8_raw/friendly-elgamal-four-voter.json");
-    let mut vectors_output = PathBuf::from("fixtures/jubjub_suite_vectors.json");
+    let mut output =
+        PathBuf::from("experiments/g0_8_suite_v2_raw/friendly-elgamal-four-voter.json");
+    let mut vectors_output = PathBuf::from("fixtures/jubjub_suite_vectors.v2.json");
     let mut seed = 20261020u64;
     while let Some(flag) = args.next() {
         let value = args

@@ -1,0 +1,61 @@
+{
+  "gate": "G0.8-4",
+  "status": "PASS_NATIVE_GENERALIZED_CP_NO_PACKAGES",
+  "date": "2026-10-20",
+  "git_head_at_run": "a80f7223a2dd5376155fff60ba507dc49e3d4f02",
+  "git_dirty_at_run": true,
+  "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+  "prototype_manifest_file_sha256": "28ed0b3f33494fac506225b99ac337dfedf5e3286c1ab704620de0c50560a012",
+  "official_ristretto_manifest_changed": false,
+  "build": {
+    "profile": "release-opt-level-1",
+    "release_strip": "none",
+    "format_check": "PASS",
+    "release_clippy_deny_warnings": "PASS",
+    "workspace_tests_passed": 40,
+    "workspace_tests_failed": 0,
+    "workspace_tests_filtered": 1,
+    "filtered_test": "real_dalek_equation_satisfies_non_native_r1cs_and_mutation_fails"
+  },
+  "generalized_cp": {
+    "trustees": 5,
+    "coordinates_per_trustee": 3,
+    "proofs_verified": 5,
+    "challenge_recomputed_by_verifier": true,
+    "rejection_counters": [0, 0, 0, 0, 1],
+    "proof_bytes_per_trustee": 162,
+    "share_vector_bytes_per_trustee": 96,
+    "prove_all_five_ms": 6.569417,
+    "verify_all_five_ms": 10.772375,
+    "only_verified_share_type_combined": true
+  },
+  "threshold_result": {
+    "legal_subsets_checked": 10,
+    "all_subsets_passed": true,
+    "aggregate_secret_reconstructed": false,
+    "private_tally": [4, 2, 4],
+    "public_winner": 1,
+    "ten_subset_decrypt_ms": 17.207042
+  },
+  "negative_relations_tested": [
+    "altered decryption share",
+    "altered coordinate commitment",
+    "altered response",
+    "altered rejection counter",
+    "mismatched secret and verification share",
+    "stale final context",
+    "wrong trustee identifier",
+    "reordered ciphertext coordinates",
+    "shortened proof or share vector",
+    "valid CP package from another election at the threshold-combination boundary"
+  ],
+  "not_implemented": [
+    "private package commitments and package signatures",
+    "complete native winner-only public event",
+    "in-circuit Fiat-Shamir",
+    "full P3",
+    "SnarkPack",
+    "state proof",
+    "multi-process trustees"
+  ]
+}

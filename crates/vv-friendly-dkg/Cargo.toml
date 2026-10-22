@@ -1,0 +1,32 @@
+[package]
+name = "vv-friendly-dkg"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ark-ec.workspace = true
+ark-ff.workspace = true
+rand_chacha.workspace = true
+rand_core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+vv-friendly-crypto = { path = "../vv-friendly-crypto" }
+vv-types = { path = "../vv-types" }
+
+[[bin]]
+name = "friendly-dkg-threshold"
+path = "src/bin/dkg_threshold.rs"
+
+[[bin]]
+name = "friendly-generalized-cp"
+path = "src/bin/generalized_cp.rs"
+
+[[bin]]
+name = "friendly-private-packages"
+path = "src/bin/private_packages.rs"
+
+[[bin]]
+name = "friendly-native-e2e"
+path = "src/bin/native_e2e.rs"

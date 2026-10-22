@@ -800,14 +800,32 @@ dependencies = [
  "ark-ec",
  "ark-ed-on-bls12-381",
  "ark-ff",
+ "ark-r1cs-std",
+ "ark-relations",
  "ark-serialize",
  "ark-std",
+ "libc",
  "rand_chacha",
  "rand_core",
  "serde",
  "serde_json",
  "sha2",
  "thiserror",
+ "vv-types",
+]
+
+[[package]]
+name = "vv-friendly-dkg"
+version = "0.2.0"
+dependencies = [
+ "ark-ec",
+ "ark-ff",
+ "rand_chacha",
+ "rand_core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "vv-friendly-crypto",
  "vv-types",
 ]
 

@@ -18,8 +18,10 @@ SnarkPack, state-circuit, full-P3, multiprocess, or on-chain work as measurement
 | Pre-DKG binding | `policy_pre -> prekey -> DKG session -> KeyCore -> final context` | READY in native experiment |
 | G0.5 CP feasibility | 253-bit optimized real CP equation; 3,461,084 constraints | BLOCKED by 1,000,000-constraint proof guard |
 | G0.6 curve decision | Isolated Jubjub CP/ElGamal/state relations with real Groth16 | PARTIAL PASS; not a protocol migration or full P3 |
-| G0.7 Release baseline | Release build, 30 current tests, P1 and four-voter regression | PASS with `strip=none` toolchain workaround |
-| G0.8 Jubjub prototype | Canonical suite plus native Weighted ElGamal/BSGS four-voter fixture | PARTIAL; DKG and generalized CP not implemented |
+| G0.7 Release baseline | Release build, P1 and four-voter regression | PASS with `strip=none` toolchain workaround |
+| G0.8 Jubjub native path | Suite v2, registration close, Weighted ElGamal, DKG, generalized CP, authenticated private packages and winner-only event | PASS in one-process native experiment; no ballot circuit/P3 |
+| G0.9-H0 CP transcript | Registration-bound v3 transcript golden vector and exact R1CS byte binding | PASS; SHA-512 circuit not implemented |
+| G0.9-H1 SHA-512 circuit | Real SHA-512 padding/compression over the frozen 684-byte transcript | PASS; 890,920 constraints, no hash-to-scalar/CP integration/Groth16 |
 | Full P3 | Nested non-native CP verification and package binding inside Groth16 | BLOCKED |
 | Ballot aggregation | Ballot circuit and SnarkPack integration | BLOCKED |
 | State proof / chain | State R1CS, verifier contract, gas and DA measurements | BLOCKED |
@@ -58,8 +60,21 @@ cargo run -p vv-bench -- p3-feasibility --max-cp-constraints 1000000
 cargo run -p vv-bench -- cp-optimize --cp-implementation canonical_253 --max-cp-constraints 1000000
 cargo run -p vv-bench -- curve-compare --output experiments/raw --seed 20261020
 cargo run --release -p vv-friendly-crypto --bin friendly-four-voter -- \
-  --output experiments/g0_8_raw/friendly-elgamal-four-voter.json \
-  --vectors-output fixtures/jubjub_suite_vectors.json
+  --output experiments/g0_8_suite_v2_raw/friendly-elgamal-four-voter.json \
+  --vectors-output fixtures/jubjub_suite_vectors.v2.json
+cargo run --release -p vv-friendly-dkg --bin friendly-dkg-threshold -- \
+  --output experiments/g0_8_dkg_raw/g08_dkg_threshold.json
+cargo run --release -p vv-friendly-dkg --bin friendly-generalized-cp -- \
+  --output experiments/g0_8_cp_raw/g08_generalized_cp.json
+cargo run --release -p vv-friendly-dkg --bin friendly-private-packages -- \
+  --output experiments/g0_8_packages_raw/e2e-public.json
+cargo run --release -p vv-friendly-dkg --bin friendly-native-e2e -- \
+  --output experiments/g0_8_complete_raw/e2e-public.json
+cargo run --release -p vv-friendly-crypto --bin friendly-cp-transcript-h0 -- \
+  --output experiments/g0_9_h0_raw/h0_transcript.json \
+  --vector-output fixtures/jubjub_cp_transcript_v3.json
+cargo +1.99.1 run -j 2 --release --locked -p vv-friendly-crypto \
+  --bin friendly-cp-transcript-h1
 python3 scripts/curve_compare.py experiments/raw
 ```
 
@@ -83,9 +98,19 @@ checked against this result.
 - G0.6 measured an isolated native-field alternative: the CP equation used
   9,571 constraints and generated a real proof. It does not recompute the CP
   transcript hash and does not replace the official Ristretto manifest.
-- G0.7 reproduced the native core and P1 in Release mode. G0.8 now has an
-  isolated Jubjub suite and a native four-voter Weighted ElGamal fixture, but
-  no Jubjub DKG, generalized CP, or threshold E2E yet.
+- G0.7 reproduced the native core and P1 in Release mode. G0.8 now has the
+  isolated Jubjub Suite v2, registration commitments and authenticated close,
+  single-process Pedersen VSS/GJKR, native generalized CP, authenticated
+  private packages and winner-only publication. G0.8-E2 binds the registration
+  policy before DKG and the verified close record into the tally target. This
+  completes the planned native G0.8 path, not the ballot circuit or full P3.
+- G0.9-H0 freezes the exact 684-byte registration-bound CP transcript and
+  checks a real R1CS byte-equality boundary. The temporary H0 relation uses
+  16,416 constraints; it does not compute SHA-512 and is not P3.
+- G0.9-H1 recomputes the frozen transcript's SHA-512 digest in a real R1CS
+  using 890,920 constraints. The circuit matches the native digest and rejects
+  a changed transcript or public digest. It does not implement hash-to-scalar
+  rejection sampling, CP equations, Groth16 or P3.
 - G1 SnarkPack, G2 state proof, G3 real multiprocess networking, G4 full P3,
   and G5 target-chain verification remain blocked.
 - A blocked gate is a development result, not a cryptographic benchmark value.

@@ -1,0 +1,209 @@
+{
+  "gate": "G0.8-3",
+  "status": "PASS_NATIVE_DKG_THRESHOLD_NO_CP",
+  "git_commit": "a80f7223a2dd5376155fff60ba507dc49e3d4f02",
+  "git_dirty": "true",
+  "manifest_file_sha256": "d947d30aa3695e9906a92170b0fe46c42500d7e0d292f576df662d175fe5b3eb",
+  "build_profile": "release-opt-level-1",
+  "release_strip": "none",
+  "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "os": "macos",
+  "arch": "aarch64",
+  "cpu": "Apple M4",
+  "experiment": {
+    "classification": "single-process-real-jubjub-gjkr-and-threshold-decryption-no-cp",
+    "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+    "seed": 20261020,
+    "n": 5,
+    "t": 2,
+    "tau": 3,
+    "q_cert": 3,
+    "qualified_count": 5,
+    "qualified_trustees": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "complaints": 0,
+    "corrected_complaints": 0,
+    "extraction_recoveries": [],
+    "certificate_signers": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "estimated_dkg_bytes": 2080,
+    "dkg_ms": 11.586583,
+    "vote_encrypt_and_fold_ms": 5.502541,
+    "ten_subset_threshold_decrypt_ms": 15.847208000000002,
+    "election_id": "f4e4994b3a58d4dbc9b30fadf6f5992e593e24afc4ef8f4606a5b881b1e8992e",
+    "policy_pre": "39ac22c32bdd3e29c0333293d26680812bb2cc3ea778de46d0342762f18f8793",
+    "prekey_context": "ed70de6836f84d313fefae48ca80be331a2cb24f0091f56fe0bc17a4988089b0",
+    "dkg_session_id": "4a033903a20cc56a11bb2ad51eea164124f051fc78101547d7669f1b71ed7da1",
+    "key_core_digest": "8d857aae07aafff72712cfd07f5754182b8de4afc0540fd61d2e49b3cd3458dc",
+    "public_key_hex": "4ed19fd741fe52d00826d8a220137879b998f086b6cff54feb1c166c0bdf0fbe",
+    "verification_shares_hex": [
+      "46e0fa38c950913db968e73ca1aa4742a7a149fb552a4a722cce43fa4c242c43",
+      "08e58b55f0d0a060ff70adc6de8ccf04e51d36b08d449dc05c5044ef875b7068",
+      "8294b41fff1372137921b81600441e74f7888db9eef5a8df5370f4f3ebee3e1d",
+      "db4d0375f5352989be8df7628bfa05a2d2400b97fad9d40a2e65c3665825ca12",
+      "a66b6dd2c980aa0721a97c07d171a6ac62ba446422a92fd28cdc34599c7a0c97"
+    ],
+    "registered_weight": 10,
+    "subset_results": [
+      {
+        "trustees": [
+          1,
+          2,
+          3
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          1,
+          2,
+          4
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          1,
+          2,
+          5
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          1,
+          3,
+          4
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          1,
+          3,
+          5
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          1,
+          4,
+          5
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          2,
+          3,
+          4
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          2,
+          3,
+          5
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          2,
+          4,
+          5
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      },
+      {
+        "trustees": [
+          3,
+          4,
+          5
+        ],
+        "interpolated_public_key_matches": true,
+        "private_tally": [
+          4,
+          2,
+          4
+        ],
+        "winner": 1
+      }
+    ],
+    "all_ten_subsets_passed": true,
+    "generalized_cp_implemented": false,
+    "full_g08": false,
+    "full_p3": false,
+    "limitations": [
+      "single process; not five independently deployed trustee processes",
+      "decryption shares do not yet carry generalized Chaum-Pedersen proofs",
+      "no private package commitment/signature workflow and no full P3"
+    ]
+  }
+}

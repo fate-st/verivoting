@@ -25,6 +25,9 @@ def main() -> int:
     cp_path = raw / "p3-feasibility.json"
     friendly_curve_path = raw / "p3-curve-friendly.json"
     cp_optimization_paths = sorted(raw.glob("cp-optimization-*.json"))
+    g08_path = raw.parent / "g0_8_complete_raw" / "e2e-public.json"
+    g09_h0_path = raw.parent / "g0_9_h0_raw" / "h0_transcript.json"
+    g09_h1_path = raw.parent / "g0_9_h1_raw" / "h1_sha512.json"
     required = [e2e_path, dlog_path, p1_path, dkg_path]
     if any(path is None or not path.exists() for path in required):
         print("missing raw artifacts; run `cargo run --release -p vv-bench -- all` first")
@@ -43,6 +46,9 @@ def main() -> int:
     cp_optimization = [
         json.loads(path.read_text()) for path in cp_optimization_paths
     ]
+    g08 = json.loads(g08_path.read_text()) if g08_path.exists() else None
+    g09_h0 = json.loads(g09_h0_path.read_text()) if g09_h0_path.exists() else None
+    g09_h1 = json.loads(g09_h1_path.read_text()) if g09_h1_path.exists() else None
     optimized_cp = next(
         (
             item
@@ -75,6 +81,9 @@ def main() -> int:
             "G0.6_curve_decision": (
                 friendly_curve["status"] if friendly_curve else "NOT_RUN"
             ),
+            "G0.8_jubjub_native": g08["status"] if g08 else "NOT_RUN",
+            "G0.9_H0_cp_transcript": g09_h0["status"] if g09_h0 else "NOT_RUN",
+            "G0.9_H1_sha512": g09_h1["status"] if g09_h1 else "NOT_RUN",
             "G1_snarkpack": "BLOCKED_NOT_INTEGRATED",
             "G2_state_proof": "BLOCKED_CIRCUIT_NOT_IMPLEMENTED",
             "G3_multiprocess": "BLOCKED_SINGLE_PROCESS_SIMULATION_ONLY",
@@ -88,6 +97,9 @@ def main() -> int:
         "cp_feasibility": cp,
         "cp_optimization": cp_optimization,
         "friendly_curve_experiment": friendly_curve,
+        "g08_jubjub_native": g08,
+        "g09_h0_cp_transcript": g09_h0,
+        "g09_h1_sha512": g09_h1,
         "csv_rows_seen": len(csv_rows),
         "build_profiles": build_profiles,
     }
@@ -116,6 +128,57 @@ def main() -> int:
         f"- Legal 3-of-5 subsets checked: `{e2e['all_legal_subsets_checked']}`",
         f"- Public artifact bytes: `{e2e['public_bytes']}`",
         f"- Private package bytes: `{e2e['private_package_bytes']}`",
+    ])
+    if g08:
+        g08_experiment = g08["experiment"]
+        g08_event = g08_experiment["winner_only_public_event"]
+        lines.extend([
+            "",
+            "## G0.8 complete native Jubjub path",
+            "",
+            f"- Status: `{g08['status']}`",
+            f"- Build profile: `{g08['build_profile']}`",
+            f"- Registered count / weight: `{g08_event['registration']['registered_count']} / {g08_event['registration']['registered_weight']}`",
+            f"- Packages created / verified / selected: `{g08_experiment['packages_created']} / {g08_experiment['packages_verified']} / {g08_experiment['packages_selected']}`",
+            f"- Public winner: `{g08_event['winner']}`",
+            f"- Public tally present: `{g08_event['private_tally_present']}`",
+            f"- Full native G0.8: `{g08_experiment['full_native_g08']}`",
+            f"- Full P3: `{g08_experiment['full_p3']}`",
+        ])
+    if g09_h0:
+        vector = g09_h0["vector"]
+        lines.extend([
+            "",
+            "## G0.9-H0 canonical CP transcript",
+            "",
+            f"- Status: `{g09_h0['status']}`",
+            f"- Transcript bytes: `{vector['transcript_bytes']}`",
+            f"- Transcript SHA-256: `{vector['transcript_sha256']}`",
+            f"- R1CS byte-binding constraints: `{g09_h0['r1cs_constraints']}`",
+            f"- Swapped registration fields rejected: `{g09_h0['swapped_registration_fields_rejected']}`",
+            f"- Changed registration digest rejected: `{g09_h0['changed_registration_digest_rejected']}`",
+            f"- SHA-512 circuit implemented: `{g09_h0['sha512_circuit_implemented']}`",
+            f"- Full P3: `{g09_h0['full_p3']}`",
+        ])
+    if g09_h1:
+        lines.extend([
+            "",
+            "## G0.9-H1 real SHA-512 R1CS",
+            "",
+            f"- Status: `{g09_h1['status']}`",
+            f"- Transcript bytes / padded blocks: `{g09_h1['transcript_bytes']} / {g09_h1['padded_sha512_blocks']}`",
+            f"- Constraints: `{g09_h1['constraints']}`",
+            f"- Packed public inputs: `{g09_h1['public_inputs']}`",
+            f"- Witness synthesis: `{g09_h1['witness_ms']:.3f} ms`",
+            f"- Peak RSS: `{g09_h1['peak_rss_mib']:.3f} MiB`",
+            f"- R1CS digest matches native: `{g09_h1['r1cs_digest_matches_native']}`",
+            f"- Changed transcript / digest rejected: `{g09_h1['changed_transcript_rejected']} / {g09_h1['changed_public_digest_rejected']}`",
+            f"- Hash-to-scalar implemented: `{g09_h1['hash_to_scalar_mapping_implemented']}`",
+            f"- CP equations integrated: `{g09_h1['cp_equations_integrated']}`",
+            f"- Groth16 run: `{g09_h1['groth16_run']}`",
+            f"- Full P3: `{g09_h1['full_p3']}`",
+        ])
+    lines.extend([
         "",
         "## Real P1 Groth16",
         "",
@@ -211,7 +274,7 @@ def main() -> int:
     for gate, status in summary["gates"].items():
         marker = (
             "PASS"
-            if status == "PASS"
+            if status.startswith("PASS")
             else "PARTIAL"
             if status.startswith("PARTIAL_PASS")
             else "BLOCKED"

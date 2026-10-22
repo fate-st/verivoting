@@ -3,25 +3,31 @@
 //! This crate is deliberately isolated from the official Ristretto manifest.
 //! It currently implements canonical Jubjub encodings, domain-separated
 //! hash-to-scalar/group helpers, native weighted ElGamal, homomorphic folding,
-//! bounded discrete-log decoding, and the four-voter fixture. It does not yet
-//! implement DKG, generalized CP, P3, or a production protocol suite.
+//! bounded discrete-log decoding, and the four-voter fixture. DKG lives in the
+//! separate `vv-friendly-dkg` crate. Native generalized CP is implemented in
+//! `cp`; P3 and a production protocol suite are not implemented.
+
+pub mod cp;
+pub mod transcript_gadget;
 
 use ark_ec::{AffineRepr, CurveGroup, Group};
 use ark_ed_on_bls12_381::{EdwardsAffine, EdwardsProjective, Fr as JubScalar};
 use ark_ff::{BigInteger, PrimeField, UniformRand, Zero};
 use ark_serialize::{CanonicalDeserialize, CanonicalSerialize};
 use rand_chacha::{rand_core::SeedableRng, ChaCha20Rng};
-use rand_core::RngCore;
+use rand_core::{CryptoRng, RngCore};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha512};
 use std::{collections::HashMap, time::Instant};
 use thiserror::Error;
 use vv_types::{winner, CanonicalEncoder};
 
-pub const SUITE_ID: &str = "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v1";
+pub const SUITE_ID: &str = "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2";
 pub const HASH_REJECTION_MAX_ATTEMPTS: u16 = 128;
 pub const POINT_BYTES: usize = 32;
 pub const SCALAR_BYTES: usize = 32;
+pub const HASH_TO_SCALAR_CANDIDATE_BITS: usize = 252;
+pub const MAX_BSGS_TABLE_ENTRIES: u64 = 1_000_000;
 
 pub type Point = EdwardsProjective;
 pub type Scalar = JubScalar;
@@ -53,6 +59,10 @@ pub enum FriendlyCryptoError {
     LengthMismatch,
     #[error("bounded discrete log not found below {bound}")]
     DiscreteLogNotFound { bound: u64 },
+    #[error("bounded discrete log bound {bound} exceeds the configured memory limit")]
+    DiscreteLogBoundTooLarge { bound: u64 },
+    #[error("integer overflow while decoding a bounded discrete log")]
+    ArithmeticOverflow,
     #[error("winner calculation failed: {0}")]
     Winner(#[from] vv_types::TypesError),
 }
@@ -79,10 +89,16 @@ impl Ciphertext {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct Keypair {
-    pub secret: Scalar,
+    secret: Scalar,
     pub public: Point,
+}
+
+impl Keypair {
+    pub fn public_key(&self) -> &Point {
+        &self.public
+    }
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -124,6 +140,7 @@ pub struct SuiteVectors {
     pub hash_to_scalar_transcript_hex: String,
     pub hash_to_scalar_output_le_hex: String,
     pub hash_to_scalar_rejection_counter: u16,
+    pub hash_to_scalar_candidate_bits: usize,
 }
 
 pub fn generator() -> Point {
@@ -158,6 +175,18 @@ pub fn decode_point(encoded: &[u8], allow_identity: bool) -> Result<Point, Frien
     Ok(affine.into_group())
 }
 
+pub fn validate_point(point: &Point, allow_identity: bool) -> Result<(), FriendlyCryptoError> {
+    let decoded = decode_point(&encode_point(point), allow_identity)?;
+    if decoded != *point {
+        return Err(FriendlyCryptoError::InvalidPointEncoding);
+    }
+    Ok(())
+}
+
+pub fn validate_public_key(public_key: &Point) -> Result<(), FriendlyCryptoError> {
+    validate_point(public_key, false).map_err(|_| FriendlyCryptoError::InvalidPublicKey)
+}
+
 pub fn encode_scalar(scalar: &Scalar) -> [u8; SCALAR_BYTES] {
     let bytes = scalar.into_bigint().to_bytes_le();
     let mut encoded = [0u8; SCALAR_BYTES];
@@ -177,19 +206,28 @@ pub fn decode_scalar(encoded: &[u8]) -> Result<Scalar, FriendlyCryptoError> {
     Scalar::from_bigint(integer).ok_or(FriendlyCryptoError::InvalidScalarEncoding)
 }
 
+fn hash_to_scalar_candidate(domain: &[u8], transcript: &[u8], counter: u16) -> [u8; 32] {
+    let mut input = CanonicalEncoder::new(b"VV/JUBJUB/H2S/v2");
+    input.text(SUITE_ID);
+    input.bytes(domain);
+    input.bytes(transcript);
+    input.u16(counter);
+    let digest = Sha512::digest(input.finish());
+    let mut candidate = [0u8; SCALAR_BYTES];
+    candidate.copy_from_slice(&digest[..SCALAR_BYTES]);
+    // Scalars are little-endian. Clearing the high nibble fixes the candidate
+    // space at 252 bits before the strict canonical `< Fr::MODULUS` check.
+    candidate[SCALAR_BYTES - 1] &= 0x0f;
+    candidate
+}
+
 pub fn hash_to_scalar(
     domain: &[u8],
     transcript: &[u8],
 ) -> Result<(Scalar, u16), FriendlyCryptoError> {
     for counter in 0..HASH_REJECTION_MAX_ATTEMPTS {
-        let mut input = CanonicalEncoder::new(b"VV/JUBJUB/H2S/v1");
-        input.text(SUITE_ID);
-        input.bytes(domain);
-        input.bytes(transcript);
-        input.u16(counter);
-        let digest = Sha512::digest(input.finish());
-        let candidate = &digest[..SCALAR_BYTES];
-        if let Ok(scalar) = decode_scalar(candidate) {
+        let candidate = hash_to_scalar_candidate(domain, transcript, counter);
+        if let Ok(scalar) = decode_scalar(&candidate) {
             return Ok((scalar, counter));
         }
     }
@@ -216,7 +254,7 @@ pub fn derive_secondary_generator(label: &[u8]) -> Result<Point, FriendlyCryptoE
     Err(FriendlyCryptoError::HashToGroupExhausted)
 }
 
-fn random_nonzero_scalar<R: RngCore>(rng: &mut R) -> Scalar {
+pub fn random_nonzero_scalar<R: RngCore + CryptoRng>(rng: &mut R) -> Scalar {
     loop {
         let value = Scalar::rand(rng);
         if !value.is_zero() {
@@ -225,20 +263,18 @@ fn random_nonzero_scalar<R: RngCore>(rng: &mut R) -> Scalar {
     }
 }
 
-pub fn keygen<R: RngCore>(rng: &mut R) -> Keypair {
+pub fn keygen<R: RngCore + CryptoRng>(rng: &mut R) -> Keypair {
     let secret = random_nonzero_scalar(rng);
     let public = generator().mul_bigint(secret.into_bigint());
     Keypair { secret, public }
 }
 
-pub fn encrypt<R: RngCore>(
+pub fn encrypt<R: RngCore + CryptoRng>(
     public_key: &Point,
     message: u64,
     rng: &mut R,
 ) -> Result<Ciphertext, FriendlyCryptoError> {
-    if public_key.is_zero() {
-        return Err(FriendlyCryptoError::InvalidPublicKey);
-    }
+    validate_public_key(public_key)?;
     let randomness = random_nonzero_scalar(rng);
     let c0 = generator().mul_bigint(randomness.into_bigint());
     let c1 = public_key.mul_bigint(randomness.into_bigint())
@@ -247,14 +283,11 @@ pub fn encrypt<R: RngCore>(
 }
 
 pub fn validate_fresh_ciphertext(ciphertext: &Ciphertext) -> Result<(), FriendlyCryptoError> {
-    if ciphertext.c0.is_zero() {
-        Err(FriendlyCryptoError::InvalidCiphertext)
-    } else {
-        Ok(())
-    }
+    validate_point(&ciphertext.c0, false).map_err(|_| FriendlyCryptoError::InvalidCiphertext)?;
+    validate_point(&ciphertext.c1, true).map_err(|_| FriendlyCryptoError::InvalidCiphertext)
 }
 
-pub fn encrypt_weighted_vote<R: RngCore>(
+pub fn encrypt_weighted_vote<R: RngCore + CryptoRng>(
     public_key: &Point,
     weight: u64,
     choice: usize,
@@ -303,10 +336,16 @@ pub fn decrypt_to_group(secret: &Scalar, ciphertext: &Ciphertext) -> Point {
 
 pub fn bounded_discrete_log(target: &Point, bound: u64) -> Result<u64, FriendlyCryptoError> {
     let mut width = 1u64;
-    while (width as u128) * (width as u128) <= bound as u128 {
+    let search_size = bound as u128 + 1;
+    while (width as u128) * (width as u128) < search_size {
         width += 1;
     }
-    let mut table = HashMap::with_capacity(width as usize);
+    if width > MAX_BSGS_TABLE_ENTRIES {
+        return Err(FriendlyCryptoError::DiscreteLogBoundTooLarge { bound });
+    }
+    let capacity = usize::try_from(width)
+        .map_err(|_| FriendlyCryptoError::DiscreteLogBoundTooLarge { bound })?;
+    let mut table = HashMap::with_capacity(capacity);
     let mut current = Point::zero();
     let base = generator();
     for value in 0..width {
@@ -317,7 +356,10 @@ pub fn bounded_discrete_log(target: &Point, bound: u64) -> Result<u64, FriendlyC
     let mut gamma = *target;
     for giant in 0..=width {
         if let Some(baby) = table.get(&encode_point(&gamma)) {
-            let value = giant * width + baby;
+            let value = giant
+                .checked_mul(width)
+                .and_then(|base| base.checked_add(*baby))
+                .ok_or(FriendlyCryptoError::ArithmeticOverflow)?;
             if value <= bound {
                 return Ok(value);
             }
@@ -422,6 +464,7 @@ pub fn suite_vectors() -> Result<SuiteVectors, FriendlyCryptoError> {
         hash_to_scalar_transcript_hex: hex(hash_transcript),
         hash_to_scalar_output_le_hex: hex(&encode_scalar(&challenge)),
         hash_to_scalar_rejection_counter: rejection_counter,
+        hash_to_scalar_candidate_bits: HASH_TO_SCALAR_CANDIDATE_BITS,
     })
 }
 
@@ -465,6 +508,37 @@ mod tests {
         assert_ne!(first.0, other_domain.0);
         assert!(first.1 < HASH_REJECTION_MAX_ATTEMPTS);
         assert_eq!(decode_scalar(&encode_scalar(&first.0)).unwrap(), first.0);
+        for counter in 0..first.1 {
+            assert!(
+                decode_scalar(&hash_to_scalar_candidate(b"CP", b"transcript", counter)).is_err()
+            );
+        }
+        assert!(decode_scalar(&hash_to_scalar_candidate(b"CP", b"transcript", first.1)).is_ok());
+    }
+
+    #[test]
+    fn hash_to_scalar_rejection_path_uses_first_canonical_candidate() {
+        let (transcript, (_, accepted_counter)) = (0u16..1024)
+            .find_map(|case| {
+                let transcript = case.to_be_bytes();
+                let result = hash_to_scalar(b"REJECTION-TEST", &transcript).ok()?;
+                (result.1 > 0).then_some((transcript, result))
+            })
+            .expect("a deterministic rejection-path vector exists in the search window");
+        for counter in 0..accepted_counter {
+            assert!(decode_scalar(&hash_to_scalar_candidate(
+                b"REJECTION-TEST",
+                &transcript,
+                counter
+            ))
+            .is_err());
+        }
+        assert!(decode_scalar(&hash_to_scalar_candidate(
+            b"REJECTION-TEST",
+            &transcript,
+            accepted_counter
+        ))
+        .is_ok());
     }
 
     #[test]
@@ -544,6 +618,32 @@ mod tests {
         assert!(matches!(
             encrypt_weighted_vote(&keypair.public, 0, 1, 3, 10, &mut rng),
             Err(FriendlyCryptoError::InvalidWeight { .. })
+        ));
+    }
+
+    #[test]
+    fn subgroup_boundary_and_bsgs_resource_limit_are_enforced() {
+        use ark_ed_on_bls12_381::Fq;
+        use ark_ff::Field;
+
+        let torsion = EdwardsAffine::new_unchecked(Fq::ZERO, -Fq::ONE).into_group();
+        assert!(matches!(
+            validate_public_key(&torsion),
+            Err(FriendlyCryptoError::InvalidPublicKey)
+        ));
+        assert!(matches!(
+            validate_fresh_ciphertext(&Ciphertext {
+                c0: generator(),
+                c1: torsion,
+            }),
+            Err(FriendlyCryptoError::InvalidCiphertext)
+        ));
+        let excessive_bound = MAX_BSGS_TABLE_ENTRIES
+            .checked_mul(MAX_BSGS_TABLE_ENTRIES)
+            .unwrap();
+        assert!(matches!(
+            bounded_discrete_log(&Point::zero(), excessive_bound),
+            Err(FriendlyCryptoError::DiscreteLogBoundTooLarge { .. })
         ));
     }
 }

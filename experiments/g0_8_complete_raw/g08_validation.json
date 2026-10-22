@@ -1,0 +1,47 @@
+{
+  "gate": "G0.8-E2",
+  "recorded_date": "2026-10-21",
+  "toolchain": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "build_profile": "release-opt-level-1",
+  "release_experiment": {
+    "command": "cargo +1.99.1 run --release --locked -p vv-friendly-dkg --bin friendly-native-e2e",
+    "passed": true,
+    "status": "PASS_G08_NATIVE_SINGLE_PROCESS",
+    "artifact": "experiments/g0_8_complete_raw/e2e-public.json",
+    "artifact_bytes": 4596,
+    "artifact_sha256": "4e9011179e7902878cf82d65d77c0c66bca8dc9c19f41e8f80f17406a12181bb"
+  },
+  "strict_release_clippy": {
+    "command": "cargo +1.99.1 clippy --workspace --all-targets --release --locked -- -D warnings",
+    "passed": true
+  },
+  "release_workspace_tests": {
+    "command": "cargo +1.99.1 test --workspace --release --locked -- --skip real_dalek_equation_satisfies_non_native_r1cs_and_mutation_fails",
+    "passed": 47,
+    "failed": 0,
+    "filtered": 1,
+    "filtered_reason": "separately retained memory-intensive Ristretto non-native circuit test"
+  },
+  "necessary_e2_checks": {
+    "registration_tests_passed": 3,
+    "registration_target_binding_test_passed": true,
+    "checks": [
+      "exact registered count and weight close verifies",
+      "duplicate credential and bad Pedersen opening are rejected",
+      "altered close and cross-context replay are rejected",
+      "registration-close digest substitution invalidates the CP target"
+    ]
+  },
+  "public_artifact_privacy_shape": {
+    "private_tally_present": false,
+    "decryption_shares_present": false,
+    "cp_proofs_present": false,
+    "commitment_openings_present": false
+  },
+  "official_ristretto_manifest_sha256": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503",
+  "prototype_manifest_sha256": "ae9f187bc8b52cf67a8d8766532aa4e313e2f108be78da13e0eaf722d704b3cb",
+  "full_native_g08": true,
+  "ballot_groth16_implemented": false,
+  "full_p3": false,
+  "next_gate": "G0.9-H0/H1 canonical CP transcript and one in-circuit hash feasibility measurement"
+}

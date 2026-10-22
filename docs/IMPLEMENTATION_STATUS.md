@@ -70,17 +70,77 @@ files were not rewritten.
 
 ## G0.8 native Jubjub progress
 
-The independent `vv-friendly-crypto` crate defines canonical Jubjub point and
-scalar encodings, native SHA-512 rejection hash-to-scalar, deterministic
-secondary-generator derivation, Weighted ElGamal, homomorphic folding and BSGS.
-One Release fixture encrypted `(3,A),(2,B),(1,A),(4,C)` and recovered
-`(4,2,4)` with winner `1`.
+The independent `vv-friendly-crypto` crate now freezes Jubjub Suite v2. Its
+SHA-512 rejection sampler masks candidates to 252 bits before the strict
+canonical scalar check; public keys and ciphertext points cross a canonical
+subgroup-validation boundary; cryptographic randomness requires `CryptoRng`;
+and BSGS uses checked arithmetic and a documented table limit.
 
-This is `PARTIAL_WEIGHTED_ELGAMAL_ONLY`: the fixture uses one native secret key.
-Jubjub VSS/GJKR, generalized CP, threshold packages and the complete G0.8 E2E
-are not implemented. The official Ristretto manifest is unchanged. See
-`docs/JUBJUB_SUITE_SPEC.md` and
-`experiments/g0_8_raw/friendly-elgamal-four-voter.json`.
+The `vv-friendly-dkg` crate implements a single-process, real-group Pedersen
+VSS/GJKR experiment with five pre-policy-authenticated trustees, complaint
+correction, Feldman extraction, a three-signature KeyCore certificate and
+threshold-3 decryption. Native generalized Chaum--Pedersen now proves each
+Trustee's three decryption-share equations. The verifier recomputes the exact
+Suite v2 challenge and returns a type that alone is accepted by the verified
+threshold-combination path.
+
+All five Trustee proofs verify. Every one of the ten legal 3-of-5 subsets uses
+only verified shares and decrypts `(4,2,4)` with winner `1`; the aggregate
+secret key is never reconstructed. G0.8-E1 additionally creates five private
+CP packages, commits to each package with a fresh Pedersen opening, signs each
+public commitment with the corresponding pre-policy authentication key,
+verifies all five packages, then deterministically selects Trustees 1--3.
+Only the selected verified-share type reaches threshold decryption. The public
+event contains winner `1`, contexts, package commitments and signatures, but
+no tally, shares, CP proofs or openings.
+
+G0.8-E2 adds a Jubjub RA key and registration policy that are frozen into
+`policy_pre` before DKG. Four Pedersen weight commitments are checked for
+unique credentials and exact integer sum; the RA signs a close record bound to
+the final context. The verified close and disclosure digests enter the tally
+target, generalized CP transcript and private-package commitment. The Release
+run closes count 4 and weight 10, verifies 5/5 packages, selects Trustees 1--3
+and emits winner 1 without publishing the private tally.
+
+This is `PASS_G08_NATIVE_SINGLE_PROCESS`: the planned native Jubjub G0.8 path
+is complete. It is not a weighted-ballot Groth16 implementation, full P3,
+SnarkPack, state proof, multiprocess deployment or chain result. The official
+Ristretto manifest is unchanged. See `docs/G08_NATIVE_COMPLETE.md` and
+`experiments/g0_8_complete_raw/e2e-public.json`.
+
+## G0.9-H0 CP transcript boundary
+
+The registration-bound generalized-CP transcript v3 now has a deterministic
+golden vector. Its exact canonical encoding is 684 bytes and has SHA-256
+`b902f98b94fd9a5b04a73782a8ab6e73baa7e1525a20d49ee6d2dec8c8bd1d96`.
+The native challenge scalar is also frozen by a regression test.
+
+A minimal real R1CS relation allocates the 684 bytes as witness bytes and
+public bytes and enforces exact equality. The valid vector satisfies 16,416
+constraints; swapping the registration-close and disclosure digests or
+changing the registration-close digest makes the relation unsatisfied. This is
+`PASS_H0_CANONICAL_TRANSCRIPT_R1CS_BOUND_NO_HASH`: SHA-512/rejection sampling
+is not computed in-circuit, no Groth16 proof is generated, and this is not P3.
+See `docs/G09_H0_TRANSCRIPT.md` and
+`experiments/g0_9_h0_raw/h0_transcript.json`.
+
+## G0.9-H1 SHA-512 circuit
+
+A real SHA-512 R1CS now hashes the exact frozen 684-byte H0 transcript. The
+circuit implements SHA-512 padding and six compression blocks, packs the
+64-byte public digest into three field elements, and constrains the computed
+digest to that public value.
+
+The Release run matched the frozen native digest, used 890,920 constraints and
+883,152 witness variables, synthesized the witness in 801.618 ms and reached
+807.031 MiB peak process RSS. A changed transcript and a changed public digest
+were both rejected. This is `PASS_H1_SHA512_R1CS_EXACT_DIGEST`.
+
+H1 hashes the CP transcript directly. It does not yet implement the protocol's
+hash-to-scalar wrapper and rejection sampling, integrate the CP group
+equations, or run Groth16. It is therefore not full CP verification or P3. See
+`docs/G09_H1_SHA512.md` and
+`experiments/g0_9_h1_raw/h1_sha512.json`.
 
 ## Pre-DKG binding order
 
@@ -98,9 +158,10 @@ stale-session tests pass.
 - Full P3. G0.5 implements only a resource-guarded R1CS preflight for the first
   CP equation; compressed Ristretto binding, in-circuit transcript hashing,
   the vector equation, private-package openings and signatures remain absent.
-- A complete friendly-curve protocol migration. G0.8 currently implements only
-  the independent native Jubjub suite and Weighted ElGamal/BSGS; DKG,
-  generalized CP, commitments and threshold E2E remain absent.
+- A complete friendly-curve proof-system migration. The native G0.8 path is
+  complete and isolated SHA-512 hashing is implemented, but hash-to-scalar,
+  weighted-ballot Groth16, the full P3 relation, SnarkPack and the state circuit
+  have not migrated to Jubjub.
 - Five OS processes with authenticated transport and crash/restart persistence.
 - Solidity verifier contracts, Foundry tests, gas, calldata and DA costs.
 

@@ -8,8 +8,11 @@ license.workspace = true
 ark-ec.workspace = true
 ark-ed-on-bls12-381.workspace = true
 ark-ff.workspace = true
+ark-r1cs-std.workspace = true
+ark-relations.workspace = true
 ark-serialize.workspace = true
 ark-std.workspace = true
+libc.workspace = true
 rand_chacha.workspace = true
 rand_core.workspace = true
 serde.workspace = true
@@ -21,3 +24,11 @@ vv-types = { path = "../vv-types" }
 [[bin]]
 name = "friendly-four-voter"
 path = "src/bin/four_voter.rs"
+
+[[bin]]
+name = "friendly-cp-transcript-h0"
+path = "src/bin/cp_transcript_h0.rs"
+
+[[bin]]
+name = "friendly-cp-transcript-h1"
+path = "src/bin/cp_transcript_h1.rs"

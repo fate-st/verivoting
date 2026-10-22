@@ -1,0 +1,54 @@
+{
+  "gate": "G0.9-H0",
+  "date": "2026-10-21",
+  "status": "PASS_H0_CANONICAL_TRANSCRIPT_R1CS_BOUND_NO_HASH",
+  "toolchain": {
+    "rustc": "1.99.1",
+    "profile": "release",
+    "locked": true
+  },
+  "execution": {
+    "command": "cargo +1.99.1 run --release --locked -p vv-friendly-crypto --bin friendly-cp-transcript-h0",
+    "report": {
+      "path": "experiments/g0_9_h0_raw/h0_transcript.json",
+      "size_bytes": 5227,
+      "sha256": "8332d190d0932f6262679571c8458162d6153aea1f9b4caf9b32a5cd943cf979"
+    },
+    "fixture": {
+      "path": "fixtures/jubjub_cp_transcript_v3.json",
+      "size_bytes": 4088,
+      "sha256": "92a4ae4b322a2e4f2f870b7239e6245d6165193c6d1b656f803980d5c537f328"
+    }
+  },
+  "measurements": {
+    "transcript_bytes": 684,
+    "r1cs_constraints": 16416,
+    "public_input_variables": 5472,
+    "witness_variables": 5472,
+    "valid_transcript_satisfied": true,
+    "swapped_digest_fields_rejected": true,
+    "changed_registration_digest_rejected": true
+  },
+  "verification": {
+    "strict_clippy": "PASS",
+    "focused_vv_friendly_crypto_tests": {
+      "passed": 17,
+      "failed": 0
+    },
+    "workspace_release_tests": {
+      "passed": 49,
+      "failed": 0,
+      "filtered": 1,
+      "filtered_reason": "The existing resource-intensive Ristretto non-native R1CS test is intentionally run separately."
+    }
+  },
+  "claim_boundaries": {
+    "sha512_circuit_implemented": false,
+    "groth16_run": false,
+    "full_p3": false
+  },
+  "next_gate": {
+    "id": "G0.9-H1",
+    "scope": "Implement and measure one real SHA-512 R1CS computation over the exact frozen 684-byte transcript."
+  }
+}

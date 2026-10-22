@@ -1,0 +1,44 @@
+{
+  "gate": "G0.8-E1",
+  "recorded_date": "2026-10-20",
+  "toolchain": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "build_profile": "release-opt-level-1",
+  "release_experiment": {
+    "command": "cargo +1.99.1 run --release --locked -p vv-friendly-dkg --bin friendly-private-packages",
+    "passed": true,
+    "status": "PASS_NATIVE_PRIVATE_PACKAGES_NO_REGISTRATION_CLOSE",
+    "artifact": "experiments/g0_8_packages_raw/e2e-public.json",
+    "artifact_bytes": 3635,
+    "artifact_sha256": "e47cfaa14ebd675ddfd3c23bffc436d86bda09f624a152acfa98a4225ae8fc7a"
+  },
+  "strict_release_clippy": {
+    "command": "cargo +1.99.1 clippy --workspace --all-targets --release --locked -- -D warnings",
+    "passed": true
+  },
+  "release_workspace_tests": {
+    "command": "cargo +1.99.1 test --workspace --release --locked -- --skip real_dalek_equation_satisfies_non_native_r1cs_and_mutation_fails",
+    "passed": 43,
+    "failed": 0,
+    "filtered": 1,
+    "filtered_reason": "separately retained memory-intensive Ristretto non-native circuit test"
+  },
+  "package_boundary_tests": {
+    "passed": 3,
+    "checks": [
+      "verification precedes deterministic threshold selection and combination",
+      "bad opening, signature, and election context are rejected",
+      "insufficient and duplicate verified packages are rejected"
+    ]
+  },
+  "public_artifact_privacy_shape": {
+    "private_tally_present": false,
+    "decryption_shares_present": false,
+    "cp_proofs_present": false,
+    "commitment_openings_present": false
+  },
+  "official_ristretto_manifest_sha256": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503",
+  "prototype_manifest_sha256": "9c09ed64969e9e6feda316a983c980f879831c06e8fde5f6de3bb760ce16ef37",
+  "full_g08": false,
+  "full_p3": false,
+  "next_gate": "G0.8-E2 Jubjub registration commitment and authenticated close"
+}

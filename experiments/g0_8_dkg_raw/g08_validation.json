@@ -1,0 +1,68 @@
+{
+  "gate": "G0.8-3",
+  "status": "PASS_NATIVE_DKG_THRESHOLD_NO_CP",
+  "date": "2026-10-20",
+  "git_head_at_run": "a80f7223a2dd5376155fff60ba507dc49e3d4f02",
+  "git_dirty_at_run": true,
+  "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+  "prototype_manifest_file_sha256": "d947d30aa3695e9906a92170b0fe46c42500d7e0d292f576df662d175fe5b3eb",
+  "official_ristretto_manifest_changed": false,
+  "build": {
+    "profile": "release-opt-level-1",
+    "release_strip": "none",
+    "format_check": "PASS",
+    "release_clippy_deny_warnings": "PASS",
+    "workspace_tests_passed": 35,
+    "workspace_tests_failed": 0,
+    "workspace_tests_filtered": 1,
+    "filtered_test": "real_dalek_equation_satisfies_non_native_r1cs_and_mutation_fails"
+  },
+  "suite_v2": {
+    "candidate_bits": 252,
+    "hash_rejection_max_attempts": 128,
+    "per_attempt_acceptance_probability_approx": 0.90569011,
+    "exhaustion_probability_approx": "5.54e-132",
+    "first_accepted_counter_tested": true,
+    "canonical_subgroup_boundary_tested": true,
+    "crypto_rng_required": true,
+    "bsgs_checked_arithmetic": true,
+    "bsgs_max_table_entries": 1000000
+  },
+  "dkg_threshold": {
+    "n": 5,
+    "t": 2,
+    "tau": 3,
+    "q_cert": 3,
+    "qualified_dealers": 5,
+    "certificate_signers": 5,
+    "legal_subsets_checked": 10,
+    "all_subsets_interpolate_public_key": true,
+    "all_subsets_threshold_decrypt": true,
+    "aggregate_secret_reconstructed": false,
+    "private_tally": [4, 2, 4],
+    "public_winner": 1,
+    "dkg_ms": 11.586583,
+    "vote_encrypt_and_fold_ms": 5.502541,
+    "ten_subset_threshold_decrypt_ms": 15.847208,
+    "estimated_dkg_bytes": 2080
+  },
+  "negative_relations_tested": [
+    "non-canonical scalar and malformed point",
+    "torsion public key and ciphertext point",
+    "hash domain substitution and first-accepted rejection counter",
+    "invalid complaint response and bad Feldman broadcast",
+    "insufficient certificate signatures",
+    "altered election and pre-policy binding",
+    "duplicate, unsorted, out-of-range and sub-threshold trustee sets"
+  ],
+  "not_implemented": [
+    "generalized Chaum-Pedersen decryption-share proofs",
+    "private package commitments and disclosure signatures",
+    "complete winner-only G0.8 E2E",
+    "in-circuit Fiat-Shamir",
+    "full P3",
+    "SnarkPack",
+    "state proof",
+    "multi-process trustees"
+  ]
+}
