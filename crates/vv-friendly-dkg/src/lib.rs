@@ -1,9 +1,12 @@
-//! Single-process, real-group G0.8 Jubjub Pedersen VSS/GJKR experiment.
+//! Real-group Jubjub Pedersen VSS/GJKR experiments.
 //!
 //! This crate models five authenticated trustees and the protocol's complaint,
 //! Feldman extraction, certification, generalized CP package binding, and
-//! threshold-decryption relations. It is not a multi-process deployment.
+//! threshold-decryption relations. The `multiprocess` module adds the minimal
+//! G3-A five-process honest-path experiment; the original `run_dkg` API remains
+//! the deterministic single-process reference implementation.
 
+pub mod multiprocess;
 pub mod package;
 pub mod registration;
 

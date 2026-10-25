@@ -371,7 +371,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             target_bound_to_registration_close: true,
             only_verified_share_type_combined: true,
             winner_only_public_event: WinnerOnlyEvent {
-                event_version: "VV/JUBJUB/WINNER-ONLY-EVENT/v3",
+                event_version: "VV/JUBJUB/WINNER-ONLY-EVENT/v4",
                 election_id: hex(&dkg.config.election_id),
                 policy_pre: hex(&dkg.config.policy_pre),
                 final_context: hex(&final_context),

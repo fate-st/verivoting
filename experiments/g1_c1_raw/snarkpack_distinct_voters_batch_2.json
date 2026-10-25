@@ -1,0 +1,134 @@
+{
+  "gate": "G1-C1",
+  "status": "PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS",
+  "classification": "real-bellperson-snarkpack-v2-over-two-distinct-registered-voter-g1b2-statements-with-reproducible-nonproduction-aggregation-srs",
+  "git_commit": "39cca56d730e97d136f3f998df1ab81eda9d82f4",
+  "git_dirty": "true",
+  "build_profile": "release-opt-level-1",
+  "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "os": "macos",
+  "arch": "aarch64",
+  "cpu": "Apple M4",
+  "prototype_manifest": "configs/protocol_manifest.JUBJUB-PROTOTYPE.json",
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G2B-2.2",
+  "manifest_capability": "READY_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS",
+  "manifest_matches_g1c0": true,
+  "manifest_matches_g1c1": true,
+  "implementation": "filecoin-project/bellperson",
+  "implementation_version": "0.27.0",
+  "curve": "BLS12-381",
+  "source_proof_system": "ark-groth16 0.4.0",
+  "aggregate_version": "V2",
+  "batch_size": 2,
+  "public_inputs_per_proof": 25,
+  "transcript_domain": "VV/JUBJUB/G1-C0/SNARKPACK-PUBLIC-INPUTS/v1",
+  "transcript_bytes": 1654,
+  "groth16_setup_seed": 5129954234464556117,
+  "groth16_setup_ms": 7292.88325,
+  "first_proof_seed": 5129954234415075158,
+  "first_prove_ms": 4306.160291,
+  "first_verify_ms": 2.3635,
+  "second_proof_seed": 5129955325336768306,
+  "aggregation_srs_seed": 5129955325387100930,
+  "aggregation_srs_kind": "bellperson setup_fake_srs deterministic functional experiment only",
+  "second_prove_ms": 4443.555125,
+  "conversion_ms": 4.300791,
+  "aggregation_srs_ms": 4.367709,
+  "aggregation_ms": 3.908333,
+  "aggregate_verify_ms": 2.954833,
+  "changed_public_context_verify_ms": 2.706667,
+  "individual_verify_ms": 0.9263750000000001,
+  "individual_proof_bytes": 192,
+  "total_individual_proof_bytes": 384,
+  "aggregate_proof_bytes": 5236,
+  "peak_rss_mib": 2516.265625,
+  "source_proofs_distinct": true,
+  "source_registered_voter_indices": [
+    1,
+    2
+  ],
+  "source_candidate_choices": [
+    1,
+    2
+  ],
+  "source_public_records": [
+    {
+      "voter_index": 1,
+      "candidate_choice": 1,
+      "election_id_hex": "4e2cb576fd4db6b2ef9778c78c4ca63509c08e281e761ee66895244a9808fc82",
+      "final_context_hex": "c3bd8bbdc098f77da53ab12750da1fa003c88ee1c222340b225c98200c7b83f5",
+      "region": 4,
+      "registration_root_hex": "c715ff686732b1a1ec0359d6169361a1380ab86a060426907853a26515288ff8",
+      "nullifier_hex": "43e55d38e6f179636355f40bf04980568159c5043dd67675a2d80b121922f4bd",
+      "key_set_hash_hex": "90bebd534c9767127a57bb772d801034ee29c983659e19b75b5f21af259f8227",
+      "public_key_hex": "ee613868e5790ef359653b0fcdabc9037a7c2bd699d55f58df0c70d9ee814bd2",
+      "ciphertexts": [
+        {
+          "candidate_id": 1,
+          "c0_hex": "da9bf8fc7989ae5b0cdb78357d0ec9ba8440cdcc4b069ba87cdf26465e27e7be",
+          "c1_hex": "6a7085fc8ff5ed97733dba3481242f2c38b06b168f0e97a6a7b11a11832386c1"
+        },
+        {
+          "candidate_id": 2,
+          "c0_hex": "0aa36f32dbb2c0fff3b66923a65b48e8d3e5936ec8d5ca440e55b646ceb23d9d",
+          "c1_hex": "5f672f0fc6ccd3a2270a177a9ea6821934626b688098d43689a7121bd8e4c163"
+        },
+        {
+          "candidate_id": 3,
+          "c0_hex": "f410d6238fb30ee461c912ff48eded8904b17318099df76bace9eff8bfb2de72",
+          "c1_hex": "8ed395e9f7511f7a2f61b52422a694ac178085ce3b1a613996ec6c16318d274b"
+        }
+      ]
+    },
+    {
+      "voter_index": 2,
+      "candidate_choice": 2,
+      "election_id_hex": "4e2cb576fd4db6b2ef9778c78c4ca63509c08e281e761ee66895244a9808fc82",
+      "final_context_hex": "c3bd8bbdc098f77da53ab12750da1fa003c88ee1c222340b225c98200c7b83f5",
+      "region": 4,
+      "registration_root_hex": "c715ff686732b1a1ec0359d6169361a1380ab86a060426907853a26515288ff8",
+      "nullifier_hex": "96f3f7d118e9dbf0882d7d51923c8d98ec17d192c7b7d4d18edccc358441ac0f",
+      "key_set_hash_hex": "90bebd534c9767127a57bb772d801034ee29c983659e19b75b5f21af259f8227",
+      "public_key_hex": "ee613868e5790ef359653b0fcdabc9037a7c2bd699d55f58df0c70d9ee814bd2",
+      "ciphertexts": [
+        {
+          "candidate_id": 1,
+          "c0_hex": "e72b1122a2ceae2e9a8502abc190eb010f14b8b8adaaa259ef89deb1c0cc6dc7",
+          "c1_hex": "a80526da4e1f1c87c29a153f57ee2c0fe565b7fc6c1e6019e648997c567fffb6"
+        },
+        {
+          "candidate_id": 2,
+          "c0_hex": "9c9851d181260455121096ad13602f5ee25879ef6b36c1238e4abc500e2ba88b",
+          "c1_hex": "36dede50b68edc8e499900c449c7c07ee73b9e1ca84ef0ce2ec324cb60ee7900"
+        },
+        {
+          "candidate_id": 3,
+          "c0_hex": "9e615495125a2a66979a420ff0aa7b3b125ea28019b1842a9fa43daaa83e6b9b",
+          "c1_hex": "bf5479a0d3c7629a1c766f2882fd3c9f009437f855997a432e038091e3f57114"
+        }
+      ]
+    }
+  ],
+  "state_record_serialization_matches_snarkpack_inputs": true,
+  "registered_voter_statements_distinct": true,
+  "nullifiers_distinct": true,
+  "ciphertexts_distinct": true,
+  "same_election_context_registration_root": true,
+  "same_region": true,
+  "converted_individual_proofs_verified": true,
+  "aggregate_proof_verified": true,
+  "changed_public_context_rejected": true,
+  "changed_second_nullifier_verify_ms": 2.6705,
+  "changed_second_nullifier_rejected": true,
+  "aggregation_srs_persisted": false,
+  "source_proofs_persisted": false,
+  "full_c_vote": true,
+  "real_snarkpack_code_path": true,
+  "production_setup": false,
+  "limitations": [
+    "the minimum supported power-of-two batch of two proofs is tested; this is not a scale result",
+    "the two source proofs cover distinct registered voters but do not establish large-batch performance",
+    "the deterministic bellperson setup_fake_srs path is suitable only for functional reproducibility, not production trust",
+    "the arkworks proving key, source proofs, private witness and aggregation SRS are not persisted"
+  ]
+}

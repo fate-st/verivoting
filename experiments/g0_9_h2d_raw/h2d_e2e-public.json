@@ -1,0 +1,95 @@
+{
+  "gate": "G0.8-E2",
+  "status": "PASS_G08_NATIVE_SINGLE_PROCESS",
+  "git_commit": "39cca56d730e97d136f3f998df1ab81eda9d82f4",
+  "git_dirty": "true",
+  "manifest_file_sha256": "e770c4648b20c48f29ee7d839be2d2b5ad7dff59fe973250ada188fc2f50065f",
+  "build_profile": "release-opt-level-1",
+  "release_strip": "none",
+  "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "os": "macos",
+  "arch": "aarch64",
+  "cpu": "Apple M4",
+  "experiment": {
+    "classification": "complete-native-jubjub-single-process-no-ballot-circuit-no-p3",
+    "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+    "seed": 20261021,
+    "n": 5,
+    "t": 2,
+    "tau": 3,
+    "candidate_count": 3,
+    "public_key_hex": "b160b70f5d92cbfb359f68516653f6872e0aa745c05f28adb2ad9687edb7899e",
+    "dkg_ms": 13.405583,
+    "registration_close_and_verify_ms": 1.860583,
+    "vote_encrypt_and_fold_ms": 5.856958,
+    "cp_prove_and_package_all_five_ms": 8.697,
+    "verify_all_five_and_select_ms": 13.349541,
+    "verified_threshold_decrypt_ms": 1.397334,
+    "packages_created": 5,
+    "packages_verified": 5,
+    "packages_selected": 3,
+    "private_package_payload_bytes_total": 3010,
+    "registration_policy_frozen_before_dkg": true,
+    "registration_close_verified_before_voting": true,
+    "target_bound_to_registration_close": true,
+    "only_verified_share_type_combined": true,
+    "winner_only_public_event": {
+      "event_version": "VV/JUBJUB/WINNER-ONLY-EVENT/v3",
+      "election_id": "55b04e24b3d70aa821080fbb8c4212cfe449812c60194910595acf0553b30c7c",
+      "policy_pre": "f1936a78e676d8e0eee2f60f06d4c0f9ccf4a0c511242c0c947b10e77e20e844",
+      "final_context": "b0e5821e82fa65201edf3e9c8a9c5da62cde653826964e7d0fcc559f3ebde856",
+      "dkg_session_id": "108ae25811caa73ff01a8c4fc695de8e1c38df92874754c8044d5dcf72447891",
+      "key_core_digest": "91f05fb8d895e986d7f330277b3a4d8200d3641e3f60c6f16cad50bd4e6f3386",
+      "target": "80c60393dbac317f4dd4f40c29d3b3f6ec7afbb0f823fbfe140bd51a37e34074",
+      "registration": {
+        "registration_policy_digest": "493fc4f05046759d6003f8cd031d5c7a3c744d5915590284a487ea30ca51ac35",
+        "authority_public_key": "e5b55139420b64eaf0a41396d817b06534a93dcb9847d00395d6e874e68ccaea",
+        "registration_root": "215ac421b36842f3bb8de1261c2472b7aa7514f9b4839eaf670fee9a0c6370dd",
+        "canonical_registry_digest": "ccd0873a346501495e88c2b64738fcbcdc6e5258577174003ba897a6d430a1d9",
+        "registered_count": 4,
+        "registered_weight": 10,
+        "maximum_weight": 10,
+        "registration_version": 1,
+        "close_signature": "c8b82a3bf61811fbfa59a5432df6b42aeeea2e018d333996c16aab556fd94d3db901cd2626c33995689e3c0ff36c91757518167b2be5e1c8643b5ffadafe2a050002",
+        "registration_close_digest": "f763dd968d77d4f374e4c0985e8e048994d41ebaf74c76b79b05b61d2f02858c",
+        "disclosure_digest": "0187b73ee9c93be4a3b77c7b7de2d331b90e083891d2ff9009a3ea477786a62d"
+      },
+      "selected_trustees": [
+        1,
+        2,
+        3
+      ],
+      "selected_package_records": [
+        {
+          "trustee_id": 1,
+          "commitment_hex": "d7b4018d604049aa711b8bceeac8b58d8c3131551317ee758392caa0e2b317e4",
+          "signature_hex": "78dd134d3eb938a9e0651dc84ec82412e1cad056ca71702d35ae207bacf3dd0224a37129370aea0b8abbc948464e3913a79505dd0f40a8c2865b70c438b5fa0c0000"
+        },
+        {
+          "trustee_id": 2,
+          "commitment_hex": "37bd7f6ec5642b3f10de10963dfd9f0f711e0cd2cd92b8547f9c99bdb5dc7d6d",
+          "signature_hex": "c480932d607e3fd427fc400ca9c9bd8eb13338784aa690de318e4a9b45badd489cbc8aec8015c727efd812646b79510bd8195feacf4dbd19c34d0355b96a4c0e0000"
+        },
+        {
+          "trustee_id": 3,
+          "commitment_hex": "c1e946a6d8023e1c0e4b5ab9e9de88293b30a9b6e08107b8b1d256a64294e290",
+          "signature_hex": "7cbfa4e4a0377bbab031b40ff190ffbed0a00b56b8c33ed63acdf3df437b98b6c24643a18a50a86f6020328afe24508a606e88a164374df1b816eca647da8c050001"
+        }
+      ],
+      "winner": 1,
+      "private_tally_present": false,
+      "decryption_shares_present": false,
+      "cp_proofs_present": false,
+      "commitment_openings_present": false
+    },
+    "full_native_g08": true,
+    "ballot_groth16_implemented": false,
+    "full_p3": false,
+    "limitations": [
+      "single process; not five independently deployed trustee processes",
+      "weighted-ballot Groth16 is not migrated to the Jubjub suite",
+      "native CP verification only; Fiat-Shamir is not recomputed in R1CS",
+      "this result is not full P3, SnarkPack, a state proof, or a chain result"
+    ]
+  }
+}

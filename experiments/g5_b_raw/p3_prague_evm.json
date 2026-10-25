@@ -1,0 +1,182 @@
+{
+  "gate": "G5-B",
+  "status": "PASS_G5B_LOCAL_PRAGUE_TWO_SUBSET_P3_GROTH16_VERIFIER",
+  "classification": "real-solidity-bytecode-and-eip2537-execution-in-local-prague-ethereumjs-vm",
+  "recorded_at_utc": "2026-10-25T06:12:55.352Z",
+  "git_commit": "39cca56d730e97d136f3f998df1ab81eda9d82f4",
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "os": "darwin",
+  "arch": "arm64",
+  "node_version": "v23.11.0",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "compiler_settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "prague",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode.object",
+          "evm.deployedBytecode.object"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@ethereumjs/binarytree": "10.1.3",
+    "@ethereumjs/block": "10.1.3",
+    "@ethereumjs/common": "10.1.3",
+    "@ethereumjs/evm": "10.1.3",
+    "@ethereumjs/mpt": "10.1.3",
+    "@ethereumjs/rlp": "10.1.3",
+    "@ethereumjs/statemanager": "10.1.3",
+    "@ethereumjs/tx": "10.1.3",
+    "@ethereumjs/util": "10.1.3",
+    "@ethereumjs/vm": "10.1.3",
+    "ethers": "6.15.0"
+  },
+  "hardfork": "prague",
+  "chain_id": 1,
+  "execution_scope": "local in-memory EVM with signed transactions and metered receipts",
+  "eip2537_active": true,
+  "curve": "BLS12-381",
+  "relation": "G4-B two-subset complete P3 disclosure",
+  "fixture": "fixtures/g4b_eip2537_fixture_v1.json",
+  "fixture_sha256": "dc342f8017ec615c0ad44081e7a6fe0d84b45c5222f5bc554fa8e24524c548a5",
+  "source_groth16_artifact": "experiments/g5_b_raw/source_p3_groth16.json",
+  "source_groth16_sha256": "c079000d685ae56ba99570f2e94859d32080f3aa84b4de41911aa3fd2db21fd0",
+  "prototype_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+  "contract_source_sha256": "8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277",
+  "package_lock_sha256": "590b2b2ed15d9c351a988d670b28d1ef25cd6efee1920afee81e7c3fa7ecdcf0",
+  "deployed_runtime_sha256": "70ac9a725deac1f82746776562bdac2f873b38878001f4b92ed2a62b3234ea65",
+  "deployed_contract": "0x1d273c34e216a8e8f20df9b43db58c2388ba269b",
+  "runtime_bytecode_bytes": 1807,
+  "verification_key_keccak256": "0x57df94899fdf6a0a55ef4316373a2d3b4b79ed96ecd150105da2e19aef62ea98",
+  "verification_key_eip2537_bytes": 8704,
+  "verification_key_storage": "constructor-pinned Solidity bytes storage; immutable API, no replacement method",
+  "public_inputs": 60,
+  "ic_points": 61,
+  "proof_compressed_bytes": 192,
+  "proof_eip2537_bytes": 512,
+  "logical_proof_and_public_input_bytes": 2432,
+  "changed_public_input_indices": [
+    51
+  ],
+  "native_setup_ms": 64115.567125,
+  "native_prove_ms": 40229.260125,
+  "native_verify_ms": 5.926458,
+  "deployment": {
+    "transaction_hash": "0x28117f2708034781b3d528493f21a5f0b979fdcb8f76091c302485c708f7e82b",
+    "receipt_status": 1,
+    "total_gas": 6631812,
+    "execution_gas": 6424862,
+    "gas_refund": 0,
+    "calldata_bytes": 11405,
+    "calldata_zero_bytes": 2437,
+    "calldata_nonzero_bytes": 8968,
+    "standard_calldata_gas": 153236,
+    "local_vm_wall_ms": 72.804167,
+    "precompile_calls": []
+  },
+  "valid": {
+    "transaction_hash": "0x15844e49690f7818e7cf60e1b6d0c389dd3975ed050dc9b2a4c771d694f7e29f",
+    "receipt_status": 1,
+    "total_gas": 1331473,
+    "execution_gas": 1278293,
+    "gas_refund": 0,
+    "calldata_bytes": 2564,
+    "calldata_zero_bytes": 737,
+    "calldata_nonzero_bytes": 1827,
+    "standard_calldata_gas": 32180,
+    "local_vm_wall_ms": 179.382208,
+    "precompile_calls": [
+      {
+        "address": "0x000000000000000000000000000000000000000c",
+        "execution_gas": 424560,
+        "success": true,
+        "return_bytes": 128
+      },
+      {
+        "address": "0x000000000000000000000000000000000000000f",
+        "execution_gas": 168100,
+        "success": true,
+        "return_bytes": 32
+      }
+    ]
+  },
+  "wrong_selector": {
+    "transaction_hash": "0x6488eeb850fd7ee92cbe26f7d0523d9c450a052c0005852db2e0ae948ec513f4",
+    "receipt_status": 0,
+    "total_gas": 1331539,
+    "execution_gas": 1278371,
+    "gas_refund": 0,
+    "calldata_bytes": 2564,
+    "calldata_zero_bytes": 738,
+    "calldata_nonzero_bytes": 1826,
+    "standard_calldata_gas": 32168,
+    "local_vm_wall_ms": 152.59187499999996,
+    "precompile_calls": [
+      {
+        "address": "0x000000000000000000000000000000000000000c",
+        "execution_gas": 424560,
+        "success": true,
+        "return_bytes": 128
+      },
+      {
+        "address": "0x000000000000000000000000000000000000000f",
+        "execution_gas": 168100,
+        "success": true,
+        "return_bytes": 32
+      }
+    ]
+  },
+  "valid_proof_verified": true,
+  "changed_public_selector_rejected": true,
+  "verifier_transaction_calldata_da_bytes": 2564,
+  "full_batch_da_measured": false,
+  "full_settlement_measured": false,
+  "snarkpack_evm_verified": false,
+  "p3_evm_verified": true,
+  "p3_scope": "two-subset complete P3 cryptographic relation only",
+  "supported_subsets": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      1,
+      2,
+      4
+    ]
+  ],
+  "setup_subset": [
+    1,
+    2,
+    3
+  ],
+  "proof_subset": [
+    1,
+    2,
+    4
+  ],
+  "same_setup_parameters_used": true,
+  "public_winner": 1,
+  "full_arbitrary_subset_p3": false,
+  "accepted_election_state_binding_checked": false,
+  "production_setup": false,
+  "private_witness_emitted": false,
+  "limitations": [
+    "local Prague execution, not a deployed public-chain transaction or finality measurement",
+    "G4-B P3 relation supports only ordered subsets {1,2,3} and {1,2,4}",
+    "the EVM verifier checks the P3 proof but does not compare its statement to an accepted election registry or frozen target",
+    "authenticated commitment signature checks and write-once winner state are not implemented in this gate",
+    "VK uses straightforward storage reads; gas is for this implementation and compiler",
+    "verifier calldata excludes the ordered public ballot matrix U, nullifier/context checks and state writes",
+    "complete target-chain capability remains BLOCKED in the Manifest"
+  ]
+}

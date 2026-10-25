@@ -1,0 +1,89 @@
+{
+  "gate": "G0.9-R",
+  "status": "PASS_G09R_CLEAN_BASELINE_SUITE_FROZEN",
+  "classification": "clean-commit-release-reproduction-no-new-cryptography",
+  "git_commit": "39cca56d730e97d136f3f998df1ab81eda9d82f4",
+  "git_dirty_at_run": false,
+  "branch": "experiment/g08-jubjub-native",
+  "environment": {
+    "os": "macOS 15.7.1 (24G231)",
+    "arch": "aarch64",
+    "cpu": "Apple M4",
+    "physical_memory_bytes": 34359738368,
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)"
+  },
+  "release_configuration": {
+    "profile": "release",
+    "opt_level": 1,
+    "strip": "none",
+    "locked_dependencies": true,
+    "h1_build_jobs": 2
+  },
+  "frozen_artifacts": {
+    "cargo_lock_sha256": "aed5c37a333eb2be6c5c37bfcae74d21147c3a19f3d2c0f84e0e92d97f7aa167",
+    "rust_toolchain_sha256": "b98cbf372bbc8c731db35cb9ce999d9b02259ae7255fb3c0ab10c4031c8a9879",
+    "manifest_path": "configs/protocol_manifest.JUBJUB-PROTOTYPE.json",
+    "manifest_sha256": "ae9f187bc8b52cf67a8d8766532aa4e313e2f108be78da13e0eaf722d704b3cb",
+    "cp_vector_path": "fixtures/jubjub_cp_transcript_v3.json",
+    "cp_vector_file_sha256": "92a4ae4b322a2e4f2f870b7239e6245d6165193c6d1b656f803980d5c537f328"
+  },
+  "verification": {
+    "workspace_release_tests": "PASS",
+    "tests_passed": 50,
+    "tests_failed": 0,
+    "tests_filtered": 1,
+    "filtered_test": "real_dalek_equation_satisfies_non_native_r1cs_and_mutation_fails",
+    "workspace_release_clippy_deny_warnings": "PASS"
+  },
+  "native_e2e": {
+    "status": "PASS_G08_NATIVE_SINGLE_PROCESS",
+    "seed": 20261021,
+    "registered_count": 4,
+    "registered_weight": 10,
+    "private_tally_evaluation_only": [4, 2, 4],
+    "public_winner": 1,
+    "packages_created": 5,
+    "packages_verified": 5,
+    "packages_selected": 3,
+    "public_tally_present": false,
+    "full_p3": false
+  },
+  "h0": {
+    "status": "PASS_H0_CANONICAL_TRANSCRIPT_R1CS_BOUND_NO_HASH",
+    "seed": 20261021,
+    "transcript_bytes": 684,
+    "constraints": 16416,
+    "canonical_vector_matches_committed_fixture": true
+  },
+  "h1": {
+    "status": "PASS_H1_SHA512_R1CS_EXACT_DIGEST",
+    "transcript_bytes": 684,
+    "sha512_blocks": 6,
+    "constraints": 890920,
+    "public_inputs": 3,
+    "witness_variables": 883152,
+    "witness_ms": 776.481458,
+    "peak_rss_mib": 817.15625,
+    "hash_to_scalar_implemented": false,
+    "full_p3": false
+  },
+  "suite_lock": {
+    "scope": "authoritative suite for G0.9 H2/H3/H4 experiments; not a production deployment claim",
+    "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+    "encryption_group": "Jubjub/ark-ed-on-bls12-381-0.4.0",
+    "groth16_curve": "BLS12-381/ark-groth16-0.4",
+    "base_field_fq": "52435875175126190479447740508185965837690552500527637822603658699938581184513",
+    "scalar_field_fr": "6554484396890773809930967563523245729705921265872317281365359162392183254199",
+    "point_encoding": "32-byte canonical compressed Jubjub point with subgroup validation",
+    "scalar_encoding": "32-byte canonical little-endian integer strictly below Fr",
+    "hash_to_scalar": "SHA-512, domain-separated H2S-v2, 252-bit mask, first canonical candidate, counters 0..127",
+    "ristretto_manifest_role": "legacy comparison baseline only; not mixed into G0.9 circuits"
+  },
+  "next_gate": "G0.9-H2",
+  "limitations": [
+    "G0.9-R adds no new cryptographic relation",
+    "H1 does not implement hash-to-scalar or rejection sampling",
+    "the native end-to-end run is single-process and not full P3"
+  ]
+}

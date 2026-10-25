@@ -6,7 +6,7 @@ use vv_friendly_crypto::cp::{
     DecryptionSharePackage, GeneralizedCpContext,
 };
 use vv_friendly_crypto::{
-    encode_point, encode_scalar, encrypt_weighted_vote, fold_ballots, SUITE_ID,
+    encode_point, encode_scalar, encrypt_weighted_vote, fold_ballots, CP_H2F_SUITE_ID, SUITE_ID,
 };
 use vv_friendly_dkg::{
     combinations, run_dkg, threshold_decrypt_verified_shares, AuthenticationKeypair, DkgConfig,
@@ -20,7 +20,6 @@ struct CpTrusteeResult {
     verification_share_hex: String,
     transcript_sha256: String,
     challenge_scalar_hex: String,
-    rejection_counter: u16,
     coordinate_count: usize,
     proof_bytes: usize,
     share_vector_bytes: usize,
@@ -38,6 +37,7 @@ struct SubsetResult {
 struct ExperimentResult {
     classification: &'static str,
     suite_id: &'static str,
+    cp_challenge_suite_id: &'static str,
     seed: u64,
     n: usize,
     t: usize,
@@ -90,13 +90,13 @@ fn command_output(program: &str, args: &[&str]) -> Option<String> {
 }
 
 fn proof_bytes(package: &DecryptionSharePackage) -> usize {
-    // a0, Aj vector, response scalar, and u16 rejection counter.
-    32 + package.proof.coordinates.len() * 32 + 32 + 2
+    // a0, Aj vector and response scalar. CP-H2F-v3 has no rejection counter.
+    32 + package.proof.coordinates.len() * 32 + 32
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut args = env::args().skip(1);
-    let mut output = PathBuf::from("experiments/g0_8_cp_raw/g08_generalized_cp.json");
+    let mut output = PathBuf::from("experiments/g0_9_h2d_raw/h2d_generalized_cp.json");
     let mut manifest = PathBuf::from("configs/protocol_manifest.JUBJUB-PROTOTYPE.json");
     let mut seed = 20261020u64;
     while let Some(flag) = args.next() {
@@ -128,7 +128,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let authentication_keys: Vec<_> = (0..5)
         .map(|_| AuthenticationKeypair::generate(&mut rng))
         .collect();
-    let election_id = sha256(b"VV/JUBJUB/G0.8/GENERALIZED-CP/FOUR-VOTER");
+    let election_id = sha256(b"VV/JUBJUB/G0.9/H2D/GENERALIZED-CP/FOUR-VOTER");
     let config = DkgConfig::new(
         election_id,
         manifest_digest,
@@ -216,7 +216,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .iter()
         .zip(&packages)
         .map(|(context, package)| {
-            let (transcript, challenge, counter) = transcript_and_challenge(
+            let (transcript, challenge) = transcript_and_challenge(
                 context,
                 dkg.verification_share(context.trustee_id)?,
                 &aggregate,
@@ -229,7 +229,6 @@ fn main() -> Result<(), Box<dyn Error>> {
                 )),
                 transcript_sha256: hex(&sha256(&transcript)),
                 challenge_scalar_hex: hex(&encode_scalar(&challenge)),
-                rejection_counter: counter,
                 coordinate_count: aggregate.len(),
                 proof_bytes: proof_bytes(package),
                 share_vector_bytes: package.shares.len() * 32,
@@ -267,12 +266,12 @@ fn main() -> Result<(), Box<dyn Error>> {
             .iter()
             .all(|result| result.private_tally == [4, 2, 4] && result.winner == 1);
     if !all_five_cp_verified || !all_ten_subsets_passed {
-        return Err("G0.8 generalized CP acceptance failed".into());
+        return Err("G0.9-H2-D generalized CP acceptance failed".into());
     }
 
     let report = RunEnvelope {
-        gate: "G0.8-4",
-        status: "PASS_NATIVE_GENERALIZED_CP_NO_PACKAGES",
+        gate: "G0.9-H2-D",
+        status: "PASS_H2D_CP_H2F_V3_NATIVE_ADOPTION",
         git_commit,
         git_dirty,
         manifest_file_sha256: hex(&manifest_digest),
@@ -297,9 +296,9 @@ fn main() -> Result<(), Box<dyn Error>> {
             "UNKNOWN".to_owned()
         },
         experiment: ExperimentResult {
-            classification:
-                "single-process-native-jubjub-gjkr-generalized-cp-and-threshold-no-private-packages",
+            classification: "single-process-native-jubjub-generalized-cp-with-adopted-cp-h2f-v3",
             suite_id: SUITE_ID,
+            cp_challenge_suite_id: CP_H2F_SUITE_ID,
             seed,
             n: dkg.config.n,
             t: dkg.config.t,
@@ -324,7 +323,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             full_g08: false,
             full_p3: false,
             limitations: vec![
-                "native CP verification only; Fiat-Shamir is not recomputed in R1CS",
+                "native CP verification uses adopted CP-H2F-v3; CP group equations are not in R1CS",
                 "private package commitments and package signatures are not implemented",
                 "single process; not five independently deployed trustee processes",
                 "this result is not full P3",
@@ -337,7 +336,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
     fs::write(&output, serde_json::to_vec_pretty(&report)?)?;
     println!(
-        "G0.8-4 generalized CP: trustees=5 coordinates=3 CP-verified=5/5 subsets=10/10 tally=(4,2,4) winner=1 prove-all={cp_prove_all_five_ms:.3}ms verify-all={cp_verify_all_five_ms:.3}ms full_g08=false full_p3=false"
+        "G0.9-H2-D CP-H2F-v3: trustees=5 coordinates=3 CP-verified=5/5 subsets=10/10 tally=(4,2,4) winner=1 prove-all={cp_prove_all_five_ms:.3}ms verify-all={cp_verify_all_five_ms:.3}ms full_h2=true full_p3=false"
     );
     println!("wrote {}", output.display());
     Ok(())

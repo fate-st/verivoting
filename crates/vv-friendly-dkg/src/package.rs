@@ -11,7 +11,7 @@ use vv_friendly_crypto::cp::{
     verify_decryption_share, DecryptionSharePackage, GeneralizedCpContext, VerifiedDecryptionShare,
 };
 use vv_friendly_crypto::{
-    derive_secondary_generator, encode_point, encode_scalar, generator, hash_to_scalar,
+    derive_secondary_generator, encode_point, encode_scalar, generator, package_hash_to_field_v1,
     random_nonzero_scalar, validate_point, Ciphertext, FriendlyCryptoError, Point, Scalar,
     SUITE_ID,
 };
@@ -42,6 +42,14 @@ pub struct PrivatePackage {
 impl PrivatePackage {
     pub fn encoded_len(&self) -> usize {
         package_bytes(&self.context, &self.verification_share, &self.cp_package).len()
+    }
+
+    pub fn encoded_bytes(&self) -> Vec<u8> {
+        package_bytes(&self.context, &self.verification_share, &self.cp_package)
+    }
+
+    pub fn opening(&self) -> Scalar {
+        self.opening
     }
 }
 
@@ -94,7 +102,7 @@ pub fn create_private_package<R: RngCore + CryptoRng>(
     validate_point(&verification_share, false)?;
     let opening = random_nonzero_scalar(rng);
     let encoded = package_bytes(&context, &verification_share, &cp_package);
-    let package_scalar = hash_to_scalar(b"PRIVATE-PACKAGE", &encoded)?.0;
+    let package_scalar = package_hash_to_field_v1(&encoded);
     let secondary = derive_secondary_generator(b"PEDERSEN-H")?;
     let commitment = PackageCommitment {
         point: generator().mul_bigint(package_scalar.into_bigint())
@@ -156,7 +164,7 @@ pub fn verify_private_package(
         &private.verification_share,
         &private.cp_package,
     );
-    let package_scalar = hash_to_scalar(b"PRIVATE-PACKAGE", &encoded)?.0;
+    let package_scalar = package_hash_to_field_v1(&encoded);
     let secondary = derive_secondary_generator(b"PEDERSEN-H")?;
     let expected_commitment = generator().mul_bigint(package_scalar.into_bigint())
         + secondary.mul_bigint(private.opening.into_bigint());
@@ -200,9 +208,9 @@ pub fn package_bytes(
     package: &DecryptionSharePackage,
 ) -> Vec<u8> {
     let domain = if context.has_registration_binding() {
-        b"VV/JUBJUB/PRIVATE-PACKAGE/v3".as_slice()
+        b"VV/JUBJUB/PRIVATE-PACKAGE/v5".as_slice()
     } else {
-        b"VV/JUBJUB/PRIVATE-PACKAGE/v2".as_slice()
+        b"VV/JUBJUB/PRIVATE-PACKAGE/v4".as_slice()
     };
     let mut encoded = CanonicalEncoder::new(domain);
     encoded.text(SUITE_ID);
@@ -226,7 +234,6 @@ pub fn package_bytes(
         encoded.fixed(&encode_point(coordinate));
     }
     encoded.fixed(&encode_scalar(&package.proof.response));
-    encoded.u16(package.proof.rejection_counter);
     encoded.finish()
 }
 
@@ -235,9 +242,9 @@ pub fn commitment_message(
     commitment: &PackageCommitment,
 ) -> [u8; 32] {
     let domain = if context.has_registration_binding() {
-        b"VV/JUBJUB/PRIVATE-PACKAGE/COMMIT/v3".as_slice()
+        b"VV/JUBJUB/PRIVATE-PACKAGE/COMMIT/v5".as_slice()
     } else {
-        b"VV/JUBJUB/PRIVATE-PACKAGE/COMMIT/v2".as_slice()
+        b"VV/JUBJUB/PRIVATE-PACKAGE/COMMIT/v4".as_slice()
     };
     let mut encoded = CanonicalEncoder::new(domain);
     encoded.text(SUITE_ID);

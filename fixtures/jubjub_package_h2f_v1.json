@@ -1,0 +1,51 @@
+{
+  "suite_id": "VERIVOTING-JUBJUB-PACKAGE-H2F-G0.9-v1",
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G0.9-P3B0-1.0",
+  "seed": 20261024,
+  "selected_trustees": [
+    1,
+    2,
+    3
+  ],
+  "operation_domain": "PRIVATE-PACKAGE",
+  "mapping": "SHA-512 full digest OS2IP-BE mod Jubjub-Fr",
+  "vectors": [
+    {
+      "trustee_id": 1,
+      "package_bytes": 602,
+      "package_sha256": "8d5e81385aafc1946824d211e01166545deac26c820e7b6ff6eaa4d4c6ec3325",
+      "package_scalar_le_hex": "90f7eb83ddb54a2eee2726c1cbe11c6c8cfc03a1f9415207cb44cac098816f0c",
+      "commitment_hex": "35b9f81312cdb7b8daa876e59e72ba98f5fc3c1ff7fbf7a485dfe8caf9d6ad90",
+      "r1cs_constraints": 1000827,
+      "r1cs_public_inputs": 2,
+      "r1cs_witness_variables": 967157,
+      "r1cs_witness_ms": 1042.702708,
+      "r1cs_satisfied": true
+    },
+    {
+      "trustee_id": 2,
+      "package_bytes": 602,
+      "package_sha256": "b7c768516e600ef23427a075cd47ce18a1e3ca52c5841ea6140b9aef4f70d2b2",
+      "package_scalar_le_hex": "75964dececcb1fa46834e534d0e6b5b4425b97c3623c208e2eb78e09a226d002",
+      "commitment_hex": "93478ae6e81f9db7c556025ac950010cbe2d4770a54bcd3fea7cc41cc5254e73",
+      "r1cs_constraints": 1000827,
+      "r1cs_public_inputs": 2,
+      "r1cs_witness_variables": 967157,
+      "r1cs_witness_ms": 988.204917,
+      "r1cs_satisfied": true
+    },
+    {
+      "trustee_id": 3,
+      "package_bytes": 602,
+      "package_sha256": "0ca55841d040c4da5ab41656d87d1284a2b75ad35f11104b391ad05f091b31f6",
+      "package_scalar_le_hex": "499cdfaebd894d4f8636eaea8239760db733d5befa99b126b5a72a16e5b6a600",
+      "commitment_hex": "8c4a4670eaa4242e02b6c349240e3fe323ea1cff8e9aea97a6cff805b0861c37",
+      "r1cs_constraints": 1000827,
+      "r1cs_public_inputs": 2,
+      "r1cs_witness_variables": 967157,
+      "r1cs_witness_ms": 988.644125,
+      "r1cs_satisfied": true
+    }
+  ],
+  "private_package_bytes_emitted": false
+}

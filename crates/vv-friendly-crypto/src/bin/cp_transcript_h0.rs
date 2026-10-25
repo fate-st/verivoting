@@ -10,7 +10,8 @@ use vv_friendly_crypto::cp::{
 };
 use vv_friendly_crypto::transcript_gadget::check_transcript_byte_binding;
 use vv_friendly_crypto::{
-    encode_point, encode_scalar, encrypt, generator, random_nonzero_scalar, SUITE_ID,
+    encode_point, encode_scalar, encrypt, generator, random_nonzero_scalar, CP_H2F_SUITE_ID,
+    SUITE_ID,
 };
 use vv_types::{hex, sha256};
 
@@ -20,7 +21,8 @@ struct TranscriptVector {
     suite_id: &'static str,
     codec_magic: &'static str,
     transcript_domain: &'static str,
-    hash_to_scalar_domain: &'static str,
+    hash_to_field_domain: &'static str,
+    hash_to_field_suite_id: &'static str,
     field_order: Vec<&'static str>,
     seed: u64,
     election_id: String,
@@ -40,7 +42,6 @@ struct TranscriptVector {
     transcript_sha256: String,
     transcript_sha512: String,
     challenge_scalar_le_hex: String,
-    rejection_counter: u16,
 }
 
 #[derive(Serialize)]
@@ -80,8 +81,8 @@ fn command_output(program: &str, args: &[&str]) -> Option<String> {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut args = env::args().skip(1);
-    let mut report_output = PathBuf::from("experiments/g0_9_h0_raw/h0_transcript.json");
-    let mut vector_output = PathBuf::from("fixtures/jubjub_cp_transcript_v3.json");
+    let mut report_output = PathBuf::from("experiments/g0_9_h2d_raw/h2d_transcript_binding.json");
+    let mut vector_output = PathBuf::from("fixtures/jubjub_cp_transcript_h2f_v3.json");
     let mut seed = 20261021u64;
     while let Some(flag) = args.next() {
         let value = args
@@ -140,7 +141,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         &ciphertexts,
         &mut rng,
     )?;
-    let (transcript, challenge, rejection_counter) =
+    let (transcript, challenge) =
         transcript_and_challenge(&context, &verification_share, &ciphertexts, &package)?;
 
     let valid_binding = check_transcript_byte_binding(&transcript, &transcript)?;
@@ -149,7 +150,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         &mut swapped_context.registration_close_digest,
         &mut swapped_context.disclosure_digest,
     );
-    let (swapped_transcript, _, _) = transcript_and_challenge(
+    let (swapped_transcript, _) = transcript_and_challenge(
         &swapped_context,
         &verification_share,
         &ciphertexts,
@@ -159,7 +160,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         !check_transcript_byte_binding(&transcript, &swapped_transcript)?.satisfied;
     let mut changed_context = context.clone();
     changed_context.registration_close_digest[0] ^= 1;
-    let (changed_transcript, _, _) = transcript_and_challenge(
+    let (changed_transcript, _) = transcript_and_challenge(
         &changed_context,
         &verification_share,
         &ciphertexts,
@@ -176,11 +177,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let transcript_sha512 = Sha512::digest(&transcript);
     let vector = TranscriptVector {
-        classification: "canonical-registration-bound-generalized-cp-transcript-v3",
+        classification: "canonical-registration-bound-generalized-cp-transcript-with-cp-h2f-v3",
         suite_id: SUITE_ID,
         codec_magic: "VV-CANONICAL-V1",
         transcript_domain: "VV/JUBJUB/GENERALIZED-CP/TRANSCRIPT/v3",
-        hash_to_scalar_domain: "GENERALIZED-CP",
+        hash_to_field_domain: "GENERALIZED-CP",
+        hash_to_field_suite_id: CP_H2F_SUITE_ID,
         field_order: vec![
             "codec_magic:length+bytes",
             "transcript_domain:length+bytes",
@@ -231,7 +233,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         transcript_sha256: hex(&sha256(&transcript)),
         transcript_sha512: hex(&transcript_sha512),
         challenge_scalar_le_hex: hex(&encode_scalar(&challenge)),
-        rejection_counter,
     };
 
     if let Some(parent) = vector_output.parent() {
@@ -239,8 +240,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
     fs::write(&vector_output, serde_json::to_vec_pretty(&vector)?)?;
     let report = H0Result {
-        gate: "G0.9-H0",
-        status: "PASS_H0_CANONICAL_TRANSCRIPT_R1CS_BOUND_NO_HASH",
+        gate: "G0.9-H2-D-TRANSCRIPT",
+        status: "PASS_H2D_CP_H2F_TRANSCRIPT_VECTOR",
         git_commit,
         git_dirty,
         build_profile: if cfg!(debug_assertions) {
@@ -274,7 +275,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         groth16_run: false,
         full_p3: false,
         limitations: vec![
-            "H0 binds transcript bytes only; it does not compute SHA-512 in R1CS",
+            "this runner binds transcript bytes only; CP-H2F-v3 is checked by the H2-D circuit runner",
             "the R1CS public-byte layout is a feasibility boundary, not the final packed P3 public input layout",
             "no Groth16 proof is generated for this byte-binding relation",
         ],
@@ -284,7 +285,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
     fs::write(&report_output, serde_json::to_vec_pretty(&report)?)?;
     println!(
-        "G0.9-H0 transcript: bytes={} constraints={} public-inputs={} exact=true swapped-fields-rejected=true changed-digest-rejected=true sha512-circuit=false full-p3=false",
+        "G0.9-H2-D transcript: bytes={} constraints={} public-inputs={} exact=true swapped-fields-rejected=true changed-digest-rejected=true hash-to-field-here=false full-p3=false",
         report.vector.transcript_bytes,
         report.r1cs_constraints,
         report.r1cs_public_inputs,

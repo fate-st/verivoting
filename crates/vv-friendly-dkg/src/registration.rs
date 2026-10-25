@@ -163,6 +163,12 @@ impl RegistrationEntry {
         self.commitment
     }
 
+    /// Return the private opening for construction of a ballot-circuit witness.
+    /// It is never included in registration-close or public experiment output.
+    pub fn opening(&self) -> Scalar {
+        self.opening
+    }
+
     fn verify(&self) -> Result<bool, RegistryError> {
         validate_point(&self.commitment, false)?;
         let secondary = derive_secondary_generator(b"REGISTRATION-PEDERSEN-H")?;

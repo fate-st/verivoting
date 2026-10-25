@@ -1,0 +1,58 @@
+{
+  "classification": "canonical-registration-bound-generalized-cp-transcript-v3",
+  "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+  "codec_magic": "VV-CANONICAL-V1",
+  "transcript_domain": "VV/JUBJUB/GENERALIZED-CP/TRANSCRIPT/v3",
+  "hash_to_scalar_domain": "GENERALIZED-CP",
+  "field_order": [
+    "codec_magic:length+bytes",
+    "transcript_domain:length+bytes",
+    "suite_id:length+bytes",
+    "election_id:32",
+    "policy_pre:32",
+    "final_context:32",
+    "registration_close_digest:32",
+    "disclosure_digest:32",
+    "target:32",
+    "trustee_id:u32be",
+    "verification_share:32",
+    "ciphertext_c0_count:u64be",
+    "ciphertext_c0[count]:32",
+    "decryption_share_count:u64be",
+    "decryption_shares[count]:32",
+    "proof_a0:32",
+    "proof_coordinate_count:u64be",
+    "proof_coordinates[count]:32"
+  ],
+  "seed": 20261053,
+  "election_id": "ba492b27c7f534c7e41977251f32d30f8b62b54abbdacb2d488c157f6d6c0b65",
+  "policy_pre": "067d2145ee6e9f906ac5ede9ee053ae2b2aa6df017ab144fe22e13e2f5314915",
+  "final_context": "116ca8346be7b5800c2e9984f0f43c5a78f7ceb7c7bf293769a3553e0a787d1f",
+  "registration_close_digest": "fbceb6b56e4e66881f49409b2f1c0da3982a241b44ef4cfc608a9b823cf25d64",
+  "disclosure_digest": "3f05d2cd51ca1c9fcbb8ef59d8067457358d4233571e05f90fd74ae872c2d6a7",
+  "target": "e4e6d12934ad024d195c969304068eab713ecfd63f7edd219299405ec69b60d9",
+  "trustee_id": 3,
+  "verification_share": "3c919c963e0976114782cd41e9157f4b893f9d04f59d4c0040f81226dc1f1894",
+  "ciphertext_c0": [
+    "3954b56d04871d506f09bb589088509d353b7f5fffdea83c798c57b04c4a8be3",
+    "27b85c90eef1187272117d448a414efee2e003e801e7cf30e99e8f095d29d795",
+    "466916bb05ade7ba17541acb71832249d6e51b134db73db1889f0cddf78eaa72"
+  ],
+  "decryption_shares": [
+    "911aeabccb35e08e49801028781992526bd386cd9c914bebae4a77056e94f7e8",
+    "dd915d40edfcc852a6697b2a56284c1d05479d01edb0f8c7dfd287a0227d9526",
+    "fffba876cdad5bde064de7d80f8763d333d7acc7261a4d9ac27a8eb85c76c414"
+  ],
+  "proof_a0": "3c06b1597dc93600a9f1f58ce1355dfac451c8cac17a66bbcf838712e684f539",
+  "proof_coordinates": [
+    "97827dd27a1b727cc1fc5fcca275c2b692e258405f10e58bce41a8a92c9f2229",
+    "e15c9b2bb2594950315986788a1486f19fada7ecb4b454e302f413230e8b86c9",
+    "e90c822baeff2a5c9474f1948e7b10bcf1c757f0b120c1c5e625777a56379104"
+  ],
+  "transcript_bytes": 684,
+  "transcript_hex": "000000000000000f56562d43414e4f4e4943414c2d5631000000000000002656562f4a55424a55422f47454e4552414c495a45442d43502f5452414e5343524950542f7633000000000000002356455249564f54494e472d4a55424a55422d50524f544f545950452d47302e382d7632ba492b27c7f534c7e41977251f32d30f8b62b54abbdacb2d488c157f6d6c0b65067d2145ee6e9f906ac5ede9ee053ae2b2aa6df017ab144fe22e13e2f5314915116ca8346be7b5800c2e9984f0f43c5a78f7ceb7c7bf293769a3553e0a787d1ffbceb6b56e4e66881f49409b2f1c0da3982a241b44ef4cfc608a9b823cf25d643f05d2cd51ca1c9fcbb8ef59d8067457358d4233571e05f90fd74ae872c2d6a7e4e6d12934ad024d195c969304068eab713ecfd63f7edd219299405ec69b60d9000000033c919c963e0976114782cd41e9157f4b893f9d04f59d4c0040f81226dc1f189400000000000000033954b56d04871d506f09bb589088509d353b7f5fffdea83c798c57b04c4a8be327b85c90eef1187272117d448a414efee2e003e801e7cf30e99e8f095d29d795466916bb05ade7ba17541acb71832249d6e51b134db73db1889f0cddf78eaa720000000000000003911aeabccb35e08e49801028781992526bd386cd9c914bebae4a77056e94f7e8dd915d40edfcc852a6697b2a56284c1d05479d01edb0f8c7dfd287a0227d9526fffba876cdad5bde064de7d80f8763d333d7acc7261a4d9ac27a8eb85c76c4143c06b1597dc93600a9f1f58ce1355dfac451c8cac17a66bbcf838712e684f539000000000000000397827dd27a1b727cc1fc5fcca275c2b692e258405f10e58bce41a8a92c9f2229e15c9b2bb2594950315986788a1486f19fada7ecb4b454e302f413230e8b86c9e90c822baeff2a5c9474f1948e7b10bcf1c757f0b120c1c5e625777a56379104",
+  "transcript_sha256": "66d7dbb6accc0d16a57169d0c67bbdd9dd142c5263a90d891b1dbd850c52a783",
+  "transcript_sha512": "78349f33b153b19dba589982bfea5837aab871407aca751d886c714ebb0275a06e67fee5e2e0eaccaaa76e6b5fc25bb87d8019bc0f4778d0279acab194c815d9",
+  "challenge_scalar_le_hex": "fdc592200aaba88b44b1cbbb79c299ceb6942a52ae8c04c3c3822a0b793d3508",
+  "rejection_counter": 1
+}

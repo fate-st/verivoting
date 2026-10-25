@@ -1,7 +1,18 @@
 # VeriVoting Jubjub prototype suite specification
 
-Status: `G0.8-E2 NATIVE_PATH_COMPLETE`, `G0.9-H1 SHA512_COMPLETE`,
-`HASH_TO_SCALAR_AND_PROOF_SYSTEM_MIGRATION_BLOCKED`.
+Status: `G0.8-E2 NATIVE_PATH_COMPLETE`, `G0.9-R BASELINE_FROZEN`,
+`G0.9-H2-D CP_H2F_V3_ADOPTED`,
+`G0.9-H4-B ONE_TRUSTEE_CP_GROTH16_COMPLETE`,
+`G0.9-P3-A THREE_SELECTED_CP_GROTH16_COMPLETE`,
+`G0.9-P3-B0 PACKAGE_H2F_V1_ADOPTED`,
+`G0.9-P3-B1 THREE_PACKAGE_OPENINGS_R1CS_COMPLETE`,
+`G0.9-P3-C0 FIXED_123_THRESHOLD_COMBINATION_R1CS_COMPLETE`,
+`G0.9-P3-C1 BOUNDED_TALLY_BINDING_R1CS_COMPLETE`,
+`G0.9-P3-D0 PUBLIC_WINNER_LINKAGE_R1CS_COMPLETE`,
+`G0.9-P3-D1 FIXED_123_COMPLETE_P3_GROTH16_COMPLETE`,
+`G1-B0 WEIGHTED_BALLOT_CORE_R1CS_COMPLETE`,
+`G1-B1 FIXED_SUITE_FULL_C_VOTE_R1CS_COMPLETE`,
+`G1-B2 FIXED_SUITE_FULL_C_VOTE_GROTH16_COMPLETE`.
 
 This document defines the isolated suite implemented by
 `crates/vv-friendly-crypto` and `crates/vv-friendly-dkg`. It does not modify or
@@ -17,12 +28,20 @@ replace the official Ristretto255 manifest.
   bounded discrete-log decoding, single-process Pedersen VSS/GJKR, Jubjub
   Schnorr KeyCore certification, registration commitments and authenticated
   close, generalized Chaum--Pedersen, authenticated private packages, verified
-  threshold decryption and a winner-only public event.
-- Not implemented: weighted-ballot/state circuits, full P3, SnarkPack,
-  multiprocess deployment and chain verification.
+  threshold decryption, a winner-only public event, and the fixed-suite
+  five-condition weighted-ballot R1CS, and its real Groth16 proof.
+- Not implemented: state circuits, a general-subset production P3 setup,
+  SnarkPack, multiprocess deployment and chain verification.
 
 The prototype manifest intentionally fails the official runner's `READY`
 requirements. The existing `configs/protocol_manifest.json` remains unchanged.
+
+For G0.9-H2/H3/H4, this Suite v2 specification and
+`configs/protocol_manifest.JUBJUB-PROTOTYPE.json` are the authoritative
+experiment suite. The official Ristretto manifest is a legacy comparison
+baseline and its encodings are not inputs to the G0.9 circuit path. The clean
+baseline commit, artifact hashes and toolchain are recorded in
+`docs/G09_R_BASELINE.md`.
 
 ## Algebraic parameters
 
@@ -107,9 +126,20 @@ are part of the hash, so the same bytes under `CP` and `SIGNATURE` do not share
 a challenge. The counter is included in signatures and must exactly match the
 first accepted candidate.
 
-This complete rule is implemented only natively. G0.9-H1 now recomputes the
-SHA-512 digest in R1CS, but `challenge_recomputed_in_circuit` remains false
-until the wrapper, masking and bounded rejection rule are also constrained.
+This complete rule is implemented natively. G0.9-H2-A also constrains the exact
+wrapper, masking, range check and first-valid rule in R1CS for real accepted
+counters 0 and 1. Its circuit shape depends on the accepted counter, so
+G0.9-H2-B adds one fixed-shape two-attempt feasibility circuit. The manifest
+still requires 128 attempts, so `challenge_recomputed_in_circuit` remains
+false for the full protocol until the final bounded-rejection circuit is fixed
+and integrated with the CP equations.
+
+G0.9-H2-C separately evaluates
+`VERIVOTING-JUBJUB-H2F-CANDIDATE-G0.9-v3`: one SHA-512 digest interpreted as a
+512-bit big-endian integer and reduced modulo `Fr`. It is fixed-shape and
+measured in R1CS, but it is not part of this Suite v2 specification. Adopting
+it would require a new manifest version, regenerated CP/signature vectors and
+a corresponding paper/security update.
 
 ## Pedersen secondary generator
 
@@ -259,13 +289,21 @@ threshold subsets passed the Release experiment.
 
 ## Authenticated private packages and winner-only event
 
-For each Trustee, G0.8-E1 canonically encodes the complete native CP package,
-including its election context, verification share, decryption-share vector,
-commitment points, response and rejection counter. It hashes that encoding to
-a Jubjub scalar and commits with a fresh secret opening:
+For each Trustee, the current prototype canonically encodes the complete
+native CP package, including its election context, verification share,
+decryption-share vector, commitment points and response. CP-H2F-v3 no longer
+uses a rejection counter. P3-B0 hashes that package to a Jubjub scalar with a
+dedicated fixed-shape mapping and commits with a fresh secret opening:
 
 ```text
-Com_h = H2S("PRIVATE-PACKAGE", Encode(package_h))*G + rho_h*H
+input_h = CanonicalEncode(
+    "VV/JUBJUB/H2F/v3",
+    "VERIVOTING-JUBJUB-PACKAGE-H2F-G0.9-v1",
+    "PRIVATE-PACKAGE",
+    Encode(package_h)
+)
+m_h = OS2IP_BE(SHA-512(input_h)) mod Jubjub-Fr
+Com_h = m_h*G + rho_h*H
 ```
 
 The Trustee signs the public commitment and complete election binding under
@@ -275,17 +313,14 @@ target, Trustee verification share, authentication signature, commitment
 opening and generalized CP proof. Selection is deterministic by Trustee ID and
 requires at least `tau=3` distinct verified packages.
 
-The E1 Release run created and verified 5/5 packages, selected Trustees 1--3 and
-internally recovered `(4,2,4)`. Its public JSON emits winner `1`, context
-digests, and the three selected commitments and signatures. It does not emit
-the tally, decryption shares, CP proofs or commitment openings. The complete
-private encodings total 2,700 bytes (540 bytes per Trustee); this is a native
-serialization measurement, not a P3 proof size.
-
-E2 upgrades package and commitment transcripts to v3 by adding the two
-registration-close digests. The five complete private encodings total 3,020
-bytes (604 bytes per Trustee). The public event still contains only the close
-record, contexts, selected commitments/signatures and winner.
+The current registration-bound package and commitment transcript domains are
+v5, and the winner-only event is v4. The P3-B0 native E2E creates and verifies
+5/5 packages, selects Trustees 1--3 and internally recovers `(4,2,4)`. Its
+public JSON emits winner `1`, context digests, and the three selected
+commitments and signatures. It does not emit the tally, decryption shares, CP
+proofs or commitment openings. The five complete private encodings total
+3,010 bytes (602 bytes per Trustee); this is a native serialization
+measurement, not a P3 proof size.
 
 ## Next required stage
 
@@ -300,7 +335,64 @@ byte string. It matches the native digest with 890,920 constraints; changed
 transcript and digest inputs are rejected. This isolated gate does not perform
 the protocol hash-to-scalar mapping, integrate CP equations or run Groth16.
 
-The next gate is only G0.9-H2: constrain the exact Suite v2 hash-to-scalar
-wrapper, 252-bit masking and bounded rejection rule, and compare its result
-with the frozen native challenge vector. H2 must not yet be called complete CP
-verification or P3.
+G0.9-H2-A constrains the exact Suite v2 wrapper, 252-bit mask, strict scalar
+range and first-valid rule for real accepted counters 0 and 1. H2-B
+demonstrates a single fixed shape for both paths using two attempts. H2-C
+evaluates a versioned wide-reduction candidate, and H2-D adopts it for CP as
+`VERIVOTING-JUBJUB-CP-H2F-G0.9-v3`.
+
+G0.9-H3 connects that in-circuit challenge to one Trustee's first equation,
+`zG=A0+dVK`, and binds the canonical `VK` and `A0` encodings in the transcript.
+H4-A adds all three coordinate equations, binds all 11 transcript points and
+completes the one-Trustee CP vector in R1CS. H4-B runs real Groth16 over that
+exact relation: setup, proof and verification succeed, and an altered public
+transcript is rejected. G0.9-P3-A freezes the public/private input layout and
+composes three distinct selected Trustee CP relations. The measured relation
+uses 3,611,598 constraints and keeps the shares and proofs private. Real
+Groth16 setup, proof and verification succeed, and an altered public prefix is
+rejected. P3-B0 then adopts and measures the fixed-shape Package-H2F-v1
+mapping for the three selected private packages. P3-B1 constructs those
+packages from the CP witnesses and constrains all three Pedersen opening
+equations in a 6,191,178-constraint R1CS. P3-C0 applies the fixed Trustee
+1--3 coefficients `(3,-3,1)` and binds three private plaintext group elements
+in a 6,201,342-constraint R1CS. P3-C1 binds those points to three private
+bounded integer tallies, enforces their sum equals public `W=10`, and uses
+6,203,703 constraints. P3-D0 reuses those tally bits to enforce public winner
+`1` with highest-weight, smallest-identifier tie breaking. The complete R1CS
+uses 6,205,629 constraints. P3-D1 runs real Groth16 over that exact fixed-123
+relation: setup and proof succeed, the 192-byte proof verifies, and a changed
+public winner is rejected.
+
+G1-B0 starts the ballot path with one public registered-weight commitment,
+its private weight and opening, one private three-candidate one-hot choice,
+and three public Weighted ElGamal ciphertext pairs. The native Jubjub R1CS
+uses 46,573 constraints and rejects a two-hot choice. This is only the ballot
+cryptographic core: election/context binding, the credential-derived PRF
+address and deterministic region, the voting nullifier, and registration-root
+membership are not yet constrained.
+
+G1-B1 completes the five-condition ballot relation for one explicitly fixed
+experiment suite. A 32-byte voter seed drives separately domain-separated
+HMAC-SHA-256 address and nullifier outputs bound to `eid`, the final context
+and key-set hash. SHA-256 assigns one of four regions. The derived address and
+private weight commitment form the exact native registration leaf, and a
+depth-two path binds it to the certified four-leaf closing root. These gates
+are composed with the G1-B0 one-hot, weight-opening and three-coordinate
+Weighted ElGamal equations. The relation uses 854,454 constraints. Its scope
+is fixed to four leaves and four regions; Groth16 and SnarkPack are absent.
+
+G1-B2 runs real BLS12-381 Groth16 setup, proof and verification over that exact
+relation. Setup takes 8,015.162 ms, proving 4,623.984 ms and verification
+2.386 ms. The proof is 192 bytes; the compressed proving and verifying keys
+are 251,898,000 and 1,592 bytes. Peak RSS is 1,880.547 MiB. The valid proof
+verifies and changing only the public final context causes verification to
+fail. The deterministic setup seed is a reproducibility input, not a
+production ceremony.
+
+G1-C0 then converts two independently randomized G1-B2 proofs and their
+verification key from arkworks to canonical blstrs BLS12-381 representations,
+reverifies them with bellperson 0.27.0, and runs real SnarkPack V2 aggregation.
+The minimum batch of two aggregates in 4.003 ms and verifies in 3.153 ms; a
+changed public context is rejected. The 5,236-byte aggregate is larger than
+the two 192-byte proofs, so this is a compatibility result only. Its
+deterministic `setup_fake_srs` is not a production aggregation ceremony.

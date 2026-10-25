@@ -1,0 +1,43 @@
+{
+  "layout_version": "VV/JUBJUB/G4-B/INPUT-LAYOUT/v1",
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G2B-2.2",
+  "supported_subsets": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      1,
+      2,
+      4
+    ]
+  ],
+  "public_selector_mapping": [
+    "false -> {1,2,3}",
+    "true -> {1,2,4}"
+  ],
+  "trustee_id_transcript_offset": 304,
+  "public_input_order": [
+    "three repetitions of: CP public-prefix fields then package-commitment fields",
+    "one Boolean second-subset selector",
+    "three aggregate ciphertext C1 points",
+    "registered-weight bound",
+    "winner candidate identifier"
+  ],
+  "public_input_count": 60,
+  "selector_public_input_index": 51,
+  "setup_subset": [
+    1,
+    2,
+    3
+  ],
+  "proof_subset": [
+    1,
+    2,
+    4
+  ],
+  "private_plaintext_groups_emitted": false,
+  "private_tallies_emitted": false,
+  "proving_key_persisted": false
+}

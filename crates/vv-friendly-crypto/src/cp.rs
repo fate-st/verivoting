@@ -1,12 +1,12 @@
 //! Native generalized Chaum--Pedersen proofs for Jubjub decryption shares.
 //!
-//! The verifier recomputes the Suite v2 Fiat--Shamir challenge from the exact
+//! The verifier recomputes the CP-H2F-v3 Fiat--Shamir challenge from the exact
 //! canonical transcript. This module is native protocol code, not an R1CS or
 //! Groth16 implementation.
 
 use crate::{
-    encode_point, generator, hash_to_scalar, random_nonzero_scalar, validate_point, Ciphertext,
-    FriendlyCryptoError, Point, Scalar, SUITE_ID,
+    cp_hash_to_field_v3, encode_point, generator, random_nonzero_scalar, validate_point,
+    Ciphertext, FriendlyCryptoError, Point, Scalar, SUITE_ID,
 };
 use ark_ec::Group;
 use ark_ff::PrimeField;
@@ -36,7 +36,6 @@ pub struct GeneralizedCpProof {
     pub a0: Point,
     pub coordinates: Vec<Point>,
     pub response: Scalar,
-    pub rejection_counter: u16,
 }
 
 #[derive(Clone, Debug)]
@@ -226,14 +225,13 @@ pub fn prove_decryption_share<R: RngCore + CryptoRng>(
         &a0,
         &coordinates,
     )?;
-    let (challenge, rejection_counter) = hash_to_scalar(b"GENERALIZED-CP", &transcript)?;
+    let challenge = cp_hash_to_field_v3(b"GENERALIZED-CP", &transcript);
     Ok(DecryptionSharePackage {
         shares,
         proof: GeneralizedCpProof {
             a0,
             coordinates,
             response: nonce + challenge * secret_share,
-            rejection_counter,
         },
     })
 }
@@ -265,10 +263,9 @@ pub fn verify_decryption_share(
         &package.proof.a0,
         &package.proof.coordinates,
     )?;
-    let (challenge, counter) = hash_to_scalar(b"GENERALIZED-CP", &transcript)?;
-    if counter != package.proof.rejection_counter
-        || generator().mul_bigint(package.proof.response.into_bigint())
-            != package.proof.a0 + verification_share.mul_bigint(challenge.into_bigint())
+    let challenge = cp_hash_to_field_v3(b"GENERALIZED-CP", &transcript);
+    if generator().mul_bigint(package.proof.response.into_bigint())
+        != package.proof.a0 + verification_share.mul_bigint(challenge.into_bigint())
     {
         return Err(CpError::RelationFailed);
     }
@@ -302,7 +299,7 @@ pub fn transcript_and_challenge(
     verification_share: &Point,
     ciphertexts: &[Ciphertext],
     package: &DecryptionSharePackage,
-) -> Result<(Vec<u8>, Scalar, u16), CpError> {
+) -> Result<(Vec<u8>, Scalar), CpError> {
     let transcript = cp_transcript(
         context,
         verification_share,
@@ -311,8 +308,8 @@ pub fn transcript_and_challenge(
         &package.proof.a0,
         &package.proof.coordinates,
     )?;
-    let (challenge, counter) = hash_to_scalar(b"GENERALIZED-CP", &transcript)?;
-    Ok((transcript, challenge, counter))
+    let challenge = cp_hash_to_field_v3(b"GENERALIZED-CP", &transcript);
+    Ok((transcript, challenge))
 }
 
 fn validate_statement(
@@ -440,14 +437,11 @@ mod tests {
             verify_decryption_share(&context, &verification_share, &ciphertexts, &package).unwrap();
         assert_eq!(verified.trustee_id(), 1);
         assert_eq!(verified.shares().len(), 3);
-        let (_, _, counter) =
-            transcript_and_challenge(&context, &verification_share, &ciphertexts, &package)
-                .unwrap();
-        assert_eq!(counter, package.proof.rejection_counter);
+        transcript_and_challenge(&context, &verification_share, &ciphertexts, &package).unwrap();
     }
 
     #[test]
-    fn altered_share_commitment_response_and_counter_are_rejected() {
+    fn altered_share_commitment_and_response_are_rejected() {
         let (context, _, verification_share, ciphertexts, package) = fixture();
 
         let mut bad_share = package.clone();
@@ -476,13 +470,6 @@ mod tests {
             &bad_response
         )
         .is_err());
-
-        let mut bad_counter = package.clone();
-        bad_counter.proof.rejection_counter ^= 1;
-        assert!(
-            verify_decryption_share(&context, &verification_share, &ciphertexts, &bad_counter)
-                .is_err()
-        );
     }
 
     #[test]
@@ -622,7 +609,7 @@ mod tests {
             &mut rng,
         )
         .unwrap();
-        let (transcript, challenge, counter) =
+        let (transcript, challenge) =
             transcript_and_challenge(&context, &verification_share, &ciphertexts, &package)
                 .unwrap();
 
@@ -633,8 +620,7 @@ mod tests {
         );
         assert_eq!(
             hex(&encode_scalar(&challenge)),
-            "552c8f3d6c4bcdebf1042342cccd93d7a589c1d27f257434d2d33051b0799d02"
+            "356d07f1fc3927a7c0ae3e598c61c58126e30a68575721d721938a721e622c09"
         );
-        assert_eq!(counter, 0);
     }
 }

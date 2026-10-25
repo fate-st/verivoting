@@ -208,7 +208,7 @@ fn pad_sha512(input: &[UInt8<Fq>]) -> Vec<UInt8<Fq>> {
     padded
 }
 
-fn sha512_digest_var(input: &[UInt8<Fq>]) -> Result<Vec<UInt8<Fq>>, SynthesisError> {
+pub(crate) fn sha512_digest_var(input: &[UInt8<Fq>]) -> Result<Vec<UInt8<Fq>>, SynthesisError> {
     let padded = pad_sha512(input);
     let mut state = SHA512_IV.map(UInt64::constant);
 

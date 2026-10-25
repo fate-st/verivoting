@@ -1,0 +1,25 @@
+{
+  "layout_version": "VV/JUBJUB/G2-A/STATE-B2-LAYOUT/v1",
+  "public_inputs_in_order": [
+    "election identifier",
+    "final election context",
+    "regional identifier",
+    "regional batch index",
+    "fixed batch size B=2",
+    "canonical ordered batch root",
+    "certified key-set hash",
+    "canonical certified election public key",
+    "three old-state ciphertext pairs",
+    "three new-state ciphertext pairs"
+  ],
+  "witness": [
+    "two ordered complete public ballot records authenticated by G1-C1",
+    "intermediate six-component Jubjub accumulators"
+  ],
+  "batch_size": 2,
+  "candidate_count": 3,
+  "batch_root_domain": "VV/BATCH/LEAF/v2",
+  "batch_node_domain": "VV/BATCH/NODE/v2",
+  "ballot_public_inputs_per_record": 25,
+  "fixed_field_bytes": 32
+}

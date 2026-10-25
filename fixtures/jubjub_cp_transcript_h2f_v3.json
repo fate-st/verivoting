@@ -1,0 +1,58 @@
+{
+  "classification": "canonical-registration-bound-generalized-cp-transcript-with-cp-h2f-v3",
+  "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+  "codec_magic": "VV-CANONICAL-V1",
+  "transcript_domain": "VV/JUBJUB/GENERALIZED-CP/TRANSCRIPT/v3",
+  "hash_to_field_domain": "GENERALIZED-CP",
+  "hash_to_field_suite_id": "VERIVOTING-JUBJUB-CP-H2F-G0.9-v3",
+  "field_order": [
+    "codec_magic:length+bytes",
+    "transcript_domain:length+bytes",
+    "suite_id:length+bytes",
+    "election_id:32",
+    "policy_pre:32",
+    "final_context:32",
+    "registration_close_digest:32",
+    "disclosure_digest:32",
+    "target:32",
+    "trustee_id:u32be",
+    "verification_share:32",
+    "ciphertext_c0_count:u64be",
+    "ciphertext_c0[count]:32",
+    "decryption_share_count:u64be",
+    "decryption_shares[count]:32",
+    "proof_a0:32",
+    "proof_coordinate_count:u64be",
+    "proof_coordinates[count]:32"
+  ],
+  "seed": 20261021,
+  "election_id": "ba492b27c7f534c7e41977251f32d30f8b62b54abbdacb2d488c157f6d6c0b65",
+  "policy_pre": "067d2145ee6e9f906ac5ede9ee053ae2b2aa6df017ab144fe22e13e2f5314915",
+  "final_context": "116ca8346be7b5800c2e9984f0f43c5a78f7ceb7c7bf293769a3553e0a787d1f",
+  "registration_close_digest": "fbceb6b56e4e66881f49409b2f1c0da3982a241b44ef4cfc608a9b823cf25d64",
+  "disclosure_digest": "3f05d2cd51ca1c9fcbb8ef59d8067457358d4233571e05f90fd74ae872c2d6a7",
+  "target": "594e73bf7daec022013717f5b541949e0d078f5d8db17cd27aecbf91d69b3455",
+  "trustee_id": 3,
+  "verification_share": "e5b55139420b64eaf0a41396d817b06534a93dcb9847d00395d6e874e68ccaea",
+  "ciphertext_c0": [
+    "97439280092b8dc8936fd89064638871591d1cf1cd496fb376b8a26721f8493e",
+    "5222107551e26f7eafb0c7ad0319e93e87c3960481956358198bf052fcedb286",
+    "33aca1a1afbcbd50079d051ae8241394e25f9a01df21588cc587e946bdad053c"
+  ],
+  "decryption_shares": [
+    "9a80ca940ae19ecfbeca89870d0e962e80fa9e4ff89ebdfbed4c2af521dcbe15",
+    "81bcb006ab8781fdf9a782c3232c8acf7d664ac98d36d787b334e7d9870d740e",
+    "01a616f1f2b6a7d4c6ba66f2d0448fcefb649bc6da21bf1f3ae452077c6e23e9"
+  ],
+  "proof_a0": "c6dcdcf472edd1e16d47f6e32b15ccb05713e8f2957634a13fdd5c72cbcd5123",
+  "proof_coordinates": [
+    "1ccb21b3731025532a71d8dca5edc69a31308c1548fd3ba0e09d0cc7fa570357",
+    "c275845af2b13f1378fd362cf2038279072c4d202b9532a67006b68ff363953e",
+    "2a42dc34093cfd9f42032bc5038a628cf6b1123c2ef45c46991dc7b26d576542"
+  ],
+  "transcript_bytes": 684,
+  "transcript_hex": "000000000000000f56562d43414e4f4e4943414c2d5631000000000000002656562f4a55424a55422f47454e4552414c495a45442d43502f5452414e5343524950542f7633000000000000002356455249564f54494e472d4a55424a55422d50524f544f545950452d47302e382d7632ba492b27c7f534c7e41977251f32d30f8b62b54abbdacb2d488c157f6d6c0b65067d2145ee6e9f906ac5ede9ee053ae2b2aa6df017ab144fe22e13e2f5314915116ca8346be7b5800c2e9984f0f43c5a78f7ceb7c7bf293769a3553e0a787d1ffbceb6b56e4e66881f49409b2f1c0da3982a241b44ef4cfc608a9b823cf25d643f05d2cd51ca1c9fcbb8ef59d8067457358d4233571e05f90fd74ae872c2d6a7594e73bf7daec022013717f5b541949e0d078f5d8db17cd27aecbf91d69b345500000003e5b55139420b64eaf0a41396d817b06534a93dcb9847d00395d6e874e68ccaea000000000000000397439280092b8dc8936fd89064638871591d1cf1cd496fb376b8a26721f8493e5222107551e26f7eafb0c7ad0319e93e87c3960481956358198bf052fcedb28633aca1a1afbcbd50079d051ae8241394e25f9a01df21588cc587e946bdad053c00000000000000039a80ca940ae19ecfbeca89870d0e962e80fa9e4ff89ebdfbed4c2af521dcbe1581bcb006ab8781fdf9a782c3232c8acf7d664ac98d36d787b334e7d9870d740e01a616f1f2b6a7d4c6ba66f2d0448fcefb649bc6da21bf1f3ae452077c6e23e9c6dcdcf472edd1e16d47f6e32b15ccb05713e8f2957634a13fdd5c72cbcd512300000000000000031ccb21b3731025532a71d8dca5edc69a31308c1548fd3ba0e09d0cc7fa570357c275845af2b13f1378fd362cf2038279072c4d202b9532a67006b68ff363953e2a42dc34093cfd9f42032bc5038a628cf6b1123c2ef45c46991dc7b26d576542",
+  "transcript_sha256": "b902f98b94fd9a5b04a73782a8ab6e73baa7e1525a20d49ee6d2dec8c8bd1d96",
+  "transcript_sha512": "8534949b00278a5d89b755ad9855def34cd69b695c86c67aa15079e2c8d842aa93b00855a9a854401d40bc79c2faa885980045a361d89eb10228515830b18d5f",
+  "challenge_scalar_le_hex": "356d07f1fc3927a7c0ae3e598c61c58126e30a68575721d721938a721e622c09"
+}

@@ -1,0 +1,153 @@
+{
+  "gate": "G5-A",
+  "status": "PASS_G5A_LOCAL_PRAGUE_G2B_GROTH16_VERIFIER",
+  "classification": "real-solidity-bytecode-and-eip2537-execution-in-local-prague-ethereumjs-vm",
+  "recorded_at_utc": "2026-10-25T06:12:40.987Z",
+  "git_commit": "39cca56d730e97d136f3f998df1ab81eda9d82f4",
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "os": "darwin",
+  "arch": "arm64",
+  "node_version": "v23.11.0",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "compiler_settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "prague",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode.object",
+          "evm.deployedBytecode.object"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@ethereumjs/binarytree": "10.1.3",
+    "@ethereumjs/block": "10.1.3",
+    "@ethereumjs/common": "10.1.3",
+    "@ethereumjs/evm": "10.1.3",
+    "@ethereumjs/mpt": "10.1.3",
+    "@ethereumjs/rlp": "10.1.3",
+    "@ethereumjs/statemanager": "10.1.3",
+    "@ethereumjs/tx": "10.1.3",
+    "@ethereumjs/util": "10.1.3",
+    "@ethereumjs/vm": "10.1.3",
+    "ethers": "6.15.0"
+  },
+  "hardfork": "prague",
+  "chain_id": 1,
+  "execution_scope": "local in-memory EVM with signed transactions and metered receipts",
+  "eip2537_active": true,
+  "curve": "BLS12-381",
+  "relation": "G2-B fixed-B2 three-candidate state transition",
+  "fixture": "fixtures/g2b_eip2537_fixture_v1.json",
+  "fixture_sha256": "5bacf7b98477dfd820817456caf3741a355e86a1184a4d04a3c546604975223f",
+  "source_groth16_artifact": "experiments/g5_a_raw/source_state_groth16.json",
+  "source_groth16_sha256": "a54b1783ba87a8599b46170fd2f6fde61cc834b144fc8ab809185a9eeff2b740",
+  "prototype_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+  "contract_source_sha256": "8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277",
+  "package_lock_sha256": "590b2b2ed15d9c351a988d670b28d1ef25cd6efee1920afee81e7c3fa7ecdcf0",
+  "deployed_runtime_sha256": "b6c4873825ace80802671ced28027db8d61f2f9e08c784822de8f6ea6abbe619",
+  "deployed_contract": "0x1d273c34e216a8e8f20df9b43db58c2388ba269b",
+  "runtime_bytecode_bytes": 1807,
+  "verification_key_keccak256": "0xf3405b897f8a0ab0f5cc168b46b874d8c1f4eed368c2dfe6cd55c4b67def7f02",
+  "verification_key_eip2537_bytes": 5760,
+  "verification_key_storage": "constructor-pinned Solidity bytes storage; immutable API, no replacement method",
+  "public_inputs": 37,
+  "ic_points": 38,
+  "proof_compressed_bytes": 192,
+  "proof_eip2537_bytes": 512,
+  "logical_proof_and_public_input_bytes": 1696,
+  "changed_public_input_indices": [
+    7
+  ],
+  "native_setup_ms": 12938.808959,
+  "native_prove_ms": 7537.491333,
+  "native_verify_ms": 2.055416,
+  "deployment": {
+    "transaction_hash": "0xdd0c667a1b534ebd5b2148ecfdc54713e17d6a35461c37df5a63aa1308ceeac7",
+    "receipt_status": 1,
+    "total_gas": 4550491,
+    "execution_gas": 4381853,
+    "gas_refund": 0,
+    "calldata_bytes": 8461,
+    "calldata_zero_bytes": 1689,
+    "calldata_nonzero_bytes": 6772,
+    "standard_calldata_gas": 115108,
+    "local_vm_wall_ms": 55.12129099999993,
+    "precompile_calls": []
+  },
+  "valid": {
+    "transaction_hash": "0x1b71b54f689d58f3409c9519a093e8d61810b966bd8d868067c9a0df07c26f73",
+    "receipt_status": 1,
+    "total_gas": 940640,
+    "execution_gas": 903280,
+    "gas_refund": 0,
+    "calldata_bytes": 1828,
+    "calldata_zero_bytes": 1074,
+    "calldata_nonzero_bytes": 754,
+    "standard_calldata_gas": 16360,
+    "local_vm_wall_ms": 110.99299999999994,
+    "precompile_calls": [
+      {
+        "address": "0x000000000000000000000000000000000000000c",
+        "execution_gas": 280440,
+        "success": true,
+        "return_bytes": 128
+      },
+      {
+        "address": "0x000000000000000000000000000000000000000f",
+        "execution_gas": 168100,
+        "success": true,
+        "return_bytes": 32
+      }
+    ]
+  },
+  "wrong_batch_root": {
+    "transaction_hash": "0x972e5f8f083417ff30ccad02e06b187c1ba5b52dfb26dd022365bd681e4ce339",
+    "receipt_status": 0,
+    "total_gas": 940718,
+    "execution_gas": 903358,
+    "gas_refund": 0,
+    "calldata_bytes": 1828,
+    "calldata_zero_bytes": 1074,
+    "calldata_nonzero_bytes": 754,
+    "standard_calldata_gas": 16360,
+    "local_vm_wall_ms": 88.256167,
+    "precompile_calls": [
+      {
+        "address": "0x000000000000000000000000000000000000000c",
+        "execution_gas": 280440,
+        "success": true,
+        "return_bytes": 128
+      },
+      {
+        "address": "0x000000000000000000000000000000000000000f",
+        "execution_gas": 168100,
+        "success": true,
+        "return_bytes": 32
+      }
+    ]
+  },
+  "valid_proof_verified": true,
+  "changed_public_batch_root_rejected": true,
+  "verifier_transaction_calldata_da_bytes": 1828,
+  "full_batch_da_measured": false,
+  "full_settlement_measured": false,
+  "snarkpack_evm_verified": false,
+  "p3_evm_verified": false,
+  "production_setup": false,
+  "private_witness_emitted": false,
+  "limitations": [
+    "local Prague execution, not a deployed public-chain transaction or finality measurement",
+    "G2-B fixed-B2 state verifier only; no SnarkPack or P3 verifier",
+    "VK uses straightforward storage reads; gas is for this implementation and compiler",
+    "verifier calldata excludes the ordered public ballot matrix U, nullifier/context checks and state writes",
+    "complete target-chain capability remains BLOCKED in the Manifest"
+  ]
+}

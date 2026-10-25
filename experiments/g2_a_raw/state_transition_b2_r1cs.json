@@ -1,0 +1,83 @@
+{
+  "gate": "G2-A",
+  "status": "PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS",
+  "classification": "fixed-b2-canonical-ordered-batch-root-and-six-component-jubjub-state-fold-r1cs-no-groth16",
+  "git_commit": "39cca56d730e97d136f3f998df1ab81eda9d82f4",
+  "git_dirty": "true",
+  "build_profile": "release-opt-level-1",
+  "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "os": "macos",
+  "arch": "aarch64",
+  "cpu": "Apple M4",
+  "prototype_manifest": "configs/protocol_manifest.JUBJUB-PROTOTYPE.json",
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G2B-2.2",
+  "manifest_capability": "READY_R1CS_FIXED_B2_CANONICAL_BATCH_ROOT_AND_SIX_CIPHERTEXT_COMPONENTS_NO_GROTH16",
+  "manifest_matches_g2a": true,
+  "source_g1c1_artifact": "experiments/g1_c1_raw/snarkpack_distinct_voters_batch_2.json",
+  "source_g1c1_sha256_hex": "b820ffba818da77aed0a582bc5579e705570f86174f552713fbe2a008a0025d0",
+  "source_g1c1_status": "PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS",
+  "source_public_input_serialization_matches": true,
+  "source_records_are_same_region": true,
+  "source_records_have_distinct_nullifiers": true,
+  "source_records_have_distinct_ciphertexts": true,
+  "layout_version": "VV/JUBJUB/G2-A/STATE-B2-LAYOUT/v1",
+  "layout_file": "fixtures/jubjub_state_g2a_public_layout_v1.json",
+  "batch_size": 2,
+  "candidate_count": 3,
+  "region": 4,
+  "batch_index": 1,
+  "batch_root_hex": "ef255d38af1bedbf06f91f6f1f95c83b376e41e0f05a836a2eefbcf06e1e676d",
+  "public_inputs": 37,
+  "witness_variables": 1329560,
+  "constraints": 1360002,
+  "batch_hashes_in_r1cs": 3,
+  "accumulator_components": 6,
+  "group_additions_in_r1cs": 12,
+  "ballot_public_inputs_per_record": 25,
+  "ballot_field_vector_bytes_per_record": 800,
+  "witness_ms": 1145.101042,
+  "negative_witness_ms": 1226.160167,
+  "peak_rss_mib": 1196.984375,
+  "valid_transition_satisfied": true,
+  "substituted_ciphertext_rejected": true,
+  "old_state": [
+    {
+      "candidate_id": 1,
+      "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+      "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "candidate_id": 2,
+      "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+      "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "candidate_id": 3,
+      "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+      "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "new_state": [
+    {
+      "candidate_id": 1,
+      "c0_hex": "85b23d1baca80581745797da97b7079dd4081a2b6eba41e007eb4a80e3de72b9",
+      "c1_hex": "7401ec1ab3d2fe5c1c055c82b9a6fa7f9e86b45d6254584f22b2d6c459db8d27"
+    },
+    {
+      "candidate_id": 2,
+      "c0_hex": "a49d5644fc52e4bd4112db3bd138944d3813a35021a79c0ea51f6977cf509551",
+      "c1_hex": "49159e7126182fd48cfbf8e89bbd82cdc72a1fc7d7b5ff5c09c8573578f1bf3f"
+    },
+    {
+      "candidate_id": 3,
+      "c0_hex": "2b08390925e10436c456bcf32e1c66c4fadaba5f513ff4f2028010223e521e3b",
+      "c1_hex": "02776a634e0a06e9b513585b2cdfffe63a17a2f62dc33d5ced14701c367bce34"
+    }
+  ],
+  "groth16_run": false,
+  "limitations": [
+    "G2-A fixes B=2, three candidates and the G1-C1 four-leaf/four-region ballot suite",
+    "the circuit measures R1CS witness synthesis only; Groth16 setup, prove and verify are not run",
+    "accepted-root, spent-nullifier and stale-state checks remain external contract checks as specified by the paper"
+  ]
+}

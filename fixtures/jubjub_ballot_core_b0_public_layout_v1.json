@@ -1,0 +1,50 @@
+{
+  "layout_version": "VV/JUBJUB/G1-B0/BALLOT-CORE-LAYOUT/v1",
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G1B0-1.6",
+  "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+  "seed": 20261027,
+  "candidate_count": 3,
+  "public_inputs": [
+    "canonical certified election public key",
+    "canonical registered-weight commitment",
+    "registered-weight upper bound",
+    "three canonical Weighted ElGamal ciphertext pairs"
+  ],
+  "private_witnesses": [
+    "registered weight",
+    "registered-weight commitment opening",
+    "three one-hot choice bits",
+    "three encryption randomness scalars"
+  ],
+  "omitted_full_c_vote_fields": [
+    "election and final-context identifiers",
+    "credential secret and PRF-derived address",
+    "deterministic region assignment",
+    "election-scoped voting nullifier",
+    "registration-root membership path"
+  ],
+  "registered_weight_bound": 10,
+  "public_key_hex": "d4a5d52e071bb6e122ce39a8bf48e96da9e388bf3b004dfa69e4543a7713dbe6",
+  "weight_commitment_hex": "c146697739b08d42dd665bb846811ed2279abc0c4c6eaeffb541e1fd1f29c08f",
+  "ciphertexts": [
+    {
+      "candidate_id": 1,
+      "c0_hex": "01ea347b0d3bc8af00ff40c05212f0b1113bef1a53a3f6787abea27600b0f00e",
+      "c1_hex": "f6d35ec7104c9fea7b43ac0c1e4d660e80f3a8b5bd1eef5cd1e0c6079010ce4a"
+    },
+    {
+      "candidate_id": 2,
+      "c0_hex": "fd0b81b8dec50af0cd0d2f067b343abeaf952736424d9778f9b73853def7a702",
+      "c1_hex": "6272e8c4a044d2d753edd18c7f0b21e09d35d3cff9d5c50203ed848ebf1aaea0"
+    },
+    {
+      "candidate_id": 3,
+      "c0_hex": "5b3dc0d313b98699d9aa87403794bea7b2764e2f33a20e43012783bd70be7ace",
+      "c1_hex": "b1e8981a5867461730c7a4017d6b7f95f8e4b4d7a552294864c103c146ae2422"
+    }
+  ],
+  "private_weight_emitted": false,
+  "private_choice_emitted": false,
+  "private_opening_emitted": false,
+  "private_randomness_emitted": false
+}

@@ -7,7 +7,20 @@
 //! separate `vv-friendly-dkg` crate. Native generalized CP is implemented in
 //! `cp`; P3 and a production protocol suite are not implemented.
 
+pub mod ballot_gadget;
+pub mod ballot_identity_gadget;
 pub mod cp;
+pub mod cp_h3_gadget;
+pub mod cp_h4_gadget;
+pub mod evm_export;
+pub mod hash_to_field_gadget;
+pub mod hash_to_scalar_gadget;
+pub mod p3a_gadget;
+pub mod p3b_gadget;
+pub mod p3c1_gadget;
+pub mod p3c_gadget;
+pub mod p3d_gadget;
+pub mod state_gadget;
 pub mod transcript_gadget;
 
 use ark_ec::{AffineRepr, CurveGroup, Group};
@@ -23,6 +36,9 @@ use thiserror::Error;
 use vv_types::{winner, CanonicalEncoder};
 
 pub const SUITE_ID: &str = "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2";
+pub const WIDE_H2F_CANDIDATE_SUITE_ID: &str = "VERIVOTING-JUBJUB-H2F-CANDIDATE-G0.9-v3";
+pub const CP_H2F_SUITE_ID: &str = "VERIVOTING-JUBJUB-CP-H2F-G0.9-v3";
+pub const PACKAGE_H2F_SUITE_ID: &str = "VERIVOTING-JUBJUB-PACKAGE-H2F-G0.9-v1";
 pub const HASH_REJECTION_MAX_ATTEMPTS: u16 = 128;
 pub const POINT_BYTES: usize = 32;
 pub const SCALAR_BYTES: usize = 32;
@@ -206,13 +222,52 @@ pub fn decode_scalar(encoded: &[u8]) -> Result<Scalar, FriendlyCryptoError> {
     Scalar::from_bigint(integer).ok_or(FriendlyCryptoError::InvalidScalarEncoding)
 }
 
-fn hash_to_scalar_candidate(domain: &[u8], transcript: &[u8], counter: u16) -> [u8; 32] {
+pub fn hash_to_scalar_input(domain: &[u8], transcript: &[u8], counter: u16) -> Vec<u8> {
     let mut input = CanonicalEncoder::new(b"VV/JUBJUB/H2S/v2");
     input.text(SUITE_ID);
     input.bytes(domain);
     input.bytes(transcript);
     input.u16(counter);
-    let digest = Sha512::digest(input.finish());
+    input.finish()
+}
+
+fn hash_to_field_wide_input(suite_id: &str, domain: &[u8], transcript: &[u8]) -> Vec<u8> {
+    let mut input = CanonicalEncoder::new(b"VV/JUBJUB/H2F/v3");
+    input.text(suite_id);
+    input.bytes(domain);
+    input.bytes(transcript);
+    input.finish()
+}
+
+pub fn hash_to_field_wide_v3_input(domain: &[u8], transcript: &[u8]) -> Vec<u8> {
+    hash_to_field_wide_input(WIDE_H2F_CANDIDATE_SUITE_ID, domain, transcript)
+}
+
+pub fn hash_to_field_wide_v3(domain: &[u8], transcript: &[u8]) -> Scalar {
+    let digest = Sha512::digest(hash_to_field_wide_v3_input(domain, transcript));
+    Scalar::from_be_bytes_mod_order(&digest)
+}
+
+pub fn cp_hash_to_field_v3_input(domain: &[u8], transcript: &[u8]) -> Vec<u8> {
+    hash_to_field_wide_input(CP_H2F_SUITE_ID, domain, transcript)
+}
+
+pub fn cp_hash_to_field_v3(domain: &[u8], transcript: &[u8]) -> Scalar {
+    let digest = Sha512::digest(cp_hash_to_field_v3_input(domain, transcript));
+    Scalar::from_be_bytes_mod_order(&digest)
+}
+
+pub fn package_hash_to_field_v1_input(transcript: &[u8]) -> Vec<u8> {
+    hash_to_field_wide_input(PACKAGE_H2F_SUITE_ID, b"PRIVATE-PACKAGE", transcript)
+}
+
+pub fn package_hash_to_field_v1(transcript: &[u8]) -> Scalar {
+    let digest = Sha512::digest(package_hash_to_field_v1_input(transcript));
+    Scalar::from_be_bytes_mod_order(&digest)
+}
+
+fn hash_to_scalar_candidate(domain: &[u8], transcript: &[u8], counter: u16) -> [u8; 32] {
+    let digest = Sha512::digest(hash_to_scalar_input(domain, transcript, counter));
     let mut candidate = [0u8; SCALAR_BYTES];
     candidate.copy_from_slice(&digest[..SCALAR_BYTES]);
     // Scalars are little-endian. Clearing the high nibble fixes the candidate

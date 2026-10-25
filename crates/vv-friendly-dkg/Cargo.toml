@@ -5,8 +5,15 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
+ark-bls12-381.workspace = true
 ark-ec.workspace = true
+ark-ed-on-bls12-381.workspace = true
 ark-ff.workspace = true
+ark-groth16.workspace = true
+ark-serialize.workspace = true
+bellperson.workspace = true
+blstrs.workspace = true
+libc.workspace = true
 rand_chacha.workspace = true
 rand_core.workspace = true
 serde.workspace = true
@@ -30,3 +37,47 @@ path = "src/bin/private_packages.rs"
 [[bin]]
 name = "friendly-native-e2e"
 path = "src/bin/native_e2e.rs"
+
+[[bin]]
+name = "friendly-p3a-three-cp"
+path = "src/bin/p3a_three_cp.rs"
+
+[[bin]]
+name = "friendly-p3b0-package-h2f"
+path = "src/bin/p3b0_package_h2f.rs"
+
+[[bin]]
+name = "friendly-p3b1-package-openings"
+path = "src/bin/p3b1_package_openings.rs"
+
+[[bin]]
+name = "friendly-p3c0-threshold-combination"
+path = "src/bin/p3c0_threshold_combination.rs"
+
+[[bin]]
+name = "friendly-p3c1-tally-binding"
+path = "src/bin/p3c1_tally_binding.rs"
+
+[[bin]]
+name = "friendly-p3d0-winner-linkage"
+path = "src/bin/p3d0_winner_linkage.rs"
+
+[[bin]]
+name = "friendly-p3d1-full-groth16"
+path = "src/bin/p3d1_full_groth16.rs"
+
+[[bin]]
+name = "friendly-ballot-cvote-b1"
+path = "src/bin/ballot_cvote_b1.rs"
+
+[[bin]]
+name = "friendly-g3a-multiprocess"
+path = "src/bin/g3a_multiprocess.rs"
+
+[[bin]]
+name = "friendly-g4a-second-subset-shape"
+path = "src/bin/g4a_second_subset_shape.rs"
+
+[[bin]]
+name = "friendly-g4b-public-subset-groth16"
+path = "src/bin/g4b_public_subset_groth16.rs"

@@ -304,7 +304,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             all_packages_verified_before_selection: true,
             only_verified_share_type_combined: true,
             winner_only_public_event: WinnerOnlyEvent {
-                event_version: "VV/JUBJUB/WINNER-ONLY-EVENT/v2",
+                event_version: "VV/JUBJUB/WINNER-ONLY-EVENT/v3",
                 election_id: hex(&dkg.config.election_id),
                 policy_pre: hex(&dkg.config.policy_pre),
                 final_context: hex(&final_context),
