@@ -2,6 +2,13 @@
 
 Build profile(s): `dev-unoptimized`
 
+## Current G5 checkpoint
+
+- Latest completed gate: `G5-C3-B14` / `PASS_LOW_ALLOCATION_FP2_SUB_FIXED_CASES_ONLY`
+- Latest measured prefix: `G5-C3-B12`; latest actual full-loop attempt: `G5-C3-B7`
+- A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
 ## Gate status
 
 | Gate | Status |
@@ -48,6 +55,25 @@ Build profile(s): `dev-unoptimized`
 | G4_full_p3 | PARTIAL_PASS_G4B_TWO_SUBSET_COMPLETE_P3_NOT_ARBITRARY_3_OF_5 |
 | G5_A_local_prague_state_verifier | PASS_G5A_LOCAL_PRAGUE_G2B_GROTH16_VERIFIER |
 | G5_B_local_prague_two_subset_p3_verifier | PASS_G5B_LOCAL_PRAGUE_TWO_SUBSET_P3_GROTH16_VERIFIER |
+| G5_C1_snarkpack_wire_and_runtime_prerequisites | PASS_G5C1_PUBLIC_WIRE_FIXTURE_AND_PRAGUE_PRIMITIVES |
+| G5_C2_exact_internal_transcript_conformance | PASS_G5C2_OFFICIAL_INTERNAL_TRANSCRIPT_RUST_JS_CONFORMANCE |
+| G5_C3_A_fp12_product_component | PASS_G5C3_FP12_PRODUCT_COMPONENT_ONLY |
+| G5_C3_B_actual_tipp_endpoint_route | PARTIAL_PASS_TIPP_ENDPOINT_CONFORMANCE_EVM_TARGET_BLOCKED |
+| G5_C3_B2_software_miller_loop_component | PARTIAL_PASS_MILLER_PREFIX_FULL_LOOP_OOG_20M |
+| G5_C3_B3_memory_optimized_miller_component | PARTIAL_PASS_MILLER_MEMORY_REDUCED_FULL_LOOP_OOG_20M |
+| G5_C3_B4_sparse_optimized_miller_component | PARTIAL_PASS_SPARSE_MILLER_PREFIX_FULL_LOOP_OOG_20M |
+| G5_C3_B5_isolated_field_cost_profile | PASS_ISOLATED_FP_FP2_COST_PROFILE_ONLY |
+| G5_C3_B6_low_level_field_comparison | PASS_LOW_LEVEL_FP_FIXED_CASES_AND_COST_REDUCTION_ONLY |
+| G5_C3_B7_low_level_miller_integration | PARTIAL_PASS_LOW_LEVEL_MILLER_PREFIX_FULL_LOOP_OOG_20M |
+| G5_C3_B8_fp2_allocation_comparison | PASS_FP2_FIXED_CASES_AND_COST_REDUCTION_ONLY |
+| G5_C3_B9_fp2_miller_prefix_integration | PASS_FP2_MILLER_PREFIX_INTEGRATION_ONLY |
+| G5_C3_B10_isolated_fp2_add_cost_profile | PASS_ISOLATED_FP2_ADD_COST_PROFILE_ONLY |
+| G5_C3_B11_low_allocation_fp2_add_comparison | PASS_LOW_ALLOCATION_FP2_ADD_FIXED_CASES_ONLY |
+| G5_C3_B12_add2_miller_prefix_integration | PASS_ADD2_MILLER_PREFIX_INTEGRATION_ONLY |
+| G5_C3_B13_isolated_fp2_sub_cost_profile | PASS_ISOLATED_FP2_SUB_COST_PROFILE_ONLY |
+| G5_C3_B14_low_allocation_fp2_sub_comparison | PASS_LOW_ALLOCATION_FP2_SUB_FIXED_CASES_ONLY |
+| G5_C3_complete_gt_and_pairing_target_route | PARTIAL_PASS_ADD2_PREFIX_NEW_FULL_VARIANT_UNTESTED |
+| G5_C_exact_snarkpack_target_verifier | BLOCKED_SOFTWARE_MILLER_LOOP_AFTER_LOW_LEVEL_MUL_EXCEEDS_20M |
 | G5_target_chain | PARTIAL_PASS_G5B_LOCAL_STATE_AND_TWO_SUBSET_P3_VERIFIERS_FULL_SETTLEMENT_BLOCKED |
 
 ## Four-voter end-to-end fixture
@@ -435,6 +461,238 @@ Build profile(s): `dev-unoptimized`
 - Actual verifier calldata: `2564 bytes`
 - Valid proof / changed selector rejected: `True / True`
 - P3 EVM / arbitrary-subset P3 / registry binding / full settlement: `True / False / False / False`
+
+## G5-C1 SnarkPack public wire and Prague prerequisites
+
+- Prerequisite gate: `PASS_G5C1_PUBLIC_WIRE_FIXTURE_AND_PRAGUE_PRIMITIVES`
+- Exact target verifier: `BLOCKED_EXACT_SNARKPACK_V2_EVM_VERIFIER_NOT_IMPLEMENTED`
+- Batch / public inputs per proof / aggregate bytes: `2 / 25 / 5236`
+- Decoded native aggregate / changed second nullifier rejected: `True / True`
+- External transcript Rust/JS match: `True`
+- Runtime primitive probes: `4` (not aggregate verification)
+- Exact SnarkPack EVM / aggregate verification gas: `False / None`
+- Blocker: Pinned verifier requires GT/Fp12 operations and pairing-to-non-unit-GT comparison; EIP-2537 exposes only pairing-product-to-one boolean. No exact GT/transcript verifier exists in this repository.
+- Next gate: G5-C2 exact internal transcript golden vectors and Rust/JavaScript challenge conformance before any Solidity GT port
+
+## G5-C2 official internal transcript conformance
+
+- Status: `PASS_G5C2_OFFICIAL_INTERNAL_TRANSCRIPT_RUST_JS_CONFORMANCE`
+- Actual official calls matched: `12 / 12`
+- Independent JS GT wire decodes per case: `15`
+- Complete native valid / wrong nullifier rejected: `True / True`
+- Full preimages / challenges / rejection counters match: `True / True / True`
+- Real rejected attempts observed: `3`
+- Setup / prove run: `False / False`
+- Exact SnarkPack EVM / aggregate verification gas: `False / None`
+- Next gate: G5-C3 one exact GT operation and pairing-to-target route feasibility; reuse this proof, no scale run
+
+## G5-C3-A exact Fp12 product component in local Prague EVM
+
+- Component status: `PASS_G5C3_FP12_PRODUCT_COMPONENT_ONLY`
+- Native / independent JS / Solidity product match: `True`
+- Valid / wrong-target transaction status: `1 / 0`
+- Valid / wrong-target total gas: `609940 / 609708` (one multiplication component only)
+- MODEXP calls per transaction / combined precompile execution gas: `108 / 21600`
+- Calldata / runtime bytes: `2500 / 3423`
+- Complete G5-C3 / pairing-to-GT / exact SnarkPack EVM: `False / False / False`
+- Complete SnarkPack verification gas: `None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B actual TIPP endpoint: host conformance, EVM route blocked
+
+- Status: `PARTIAL_PASS_TIPP_ENDPOINT_CONFORMANCE_EVM_TARGET_BLOCKED`
+- Native / independent JS endpoint equality: `True / True`
+- Native / JS wrong in-subgroup GT target rejected: `True / True` (not EVM rejection)
+- Independently recomputed C2 transcript calls: `6`
+- Actual-point EVM identity probe: `70300` primitive gas, 32-byte false; not pairing-to-GT verification or transaction gas
+- Pairing-to-GT EVM / EVM wrong-target rejection: `False / None`
+- Resource conclusion: Implementation/API gap; no software-pairing OOG or impossibility claim has been established
+- Blocker: No audited EVM Miller loop plus final exponentiation or validated equivalent relation in repository; the boolean precompile has no arbitrary GT target input/output
+- Complete SnarkPack verification gas: `None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B2 software Miller-loop component, fixed budget
+
+- Status: `PARTIAL_PASS_MILLER_PREFIX_FULL_LOOP_OOG_20M`
+- Prefix / full steps: `2 / 64`
+- Prefix EVM match / wrong prefix rejected: `True / True`
+- Prefix valid / wrong-result total gas: `4805196 / 4804731` (prefix component only)
+- Prefix MODEXP calls / runtime bytes: `642 / 5675`
+- Full-loop verified / exception: `False / out of gas`
+- Full attempt gas spent / explicit transaction cap: `20000000 / 20000000` (failed-attempt spend is NOT completed-loop cost)
+- Full attempt active memory words at exit: `85860`
+- EVM final exponentiation / pairing-to-GT / SnarkPack: `False / False / False`
+- Complete SnarkPack verification gas: `None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B3 memory-only Miller optimization, same endpoint/budget
+
+- Status: `PARTIAL_PASS_MILLER_MEMORY_REDUCED_FULL_LOOP_OOG_20M`
+- Prefix valid / wrong result total gas: `2371368 / 2371186`
+- Same two-step prefix gas: `4805196 -> 2371368` (50.65% reduction, not end-to-end speedup)
+- Same prefix EVM active memory words: `35464 -> 7123` (79.91% reduction)
+- Prefix MODEXP count unchanged: `642`; wrong result rejected: `True`
+- Full-loop verified / exception / capped spend: `False / out of gas / 20000000` (not completed-loop cost)
+- Full-attempt active memory words / executed MODEXP calls: `7203 / 5636`
+- EVM final exponentiation / pairing-to-GT / full SnarkPack: `False / False / False`
+- Complete SnarkPack verification gas: `None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B4 dedicated Fp12 square / sparse-014 line product
+
+- Status: `PARTIAL_PASS_SPARSE_MILLER_PREFIX_FULL_LOOP_OOG_20M`
+- Same prefix gas B2 / B3 / B4: `4805196 / 2371368 / 1865022`
+- Prefix reduction versus B3: `21.35%` (component-only, not end-to-end)
+- Actual prefix MODEXP calls B3 -> B4: `642 -> 516`
+- Prefix valid / wrong-result decision: `True / True`
+- Specialized host reference matches: `63` squares and `69` line products; not full EVM conformance
+- Full loop verified / exception / capped spend: `False / out of gas / 20000000` (not completed-loop cost)
+- Full-attempt memory words / MODEXP calls: `5315 / 5556`
+- Final exponentiation / pairing-to-GT / SnarkPack EVM: `False / False / False`
+- Complete SnarkPack verification gas: `None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B5 isolated Fp / Fp2 cost profile
+
+- Status: `PASS_ISOLATED_FP_FP2_COST_PROFILE_ONLY`; no Miller/proving rerun
+- Windows exclude decoding/encoding but include instrumentation and compiled-call overhead; not universal per-operation constants.
+
+| Operation | Total tx gas | Execution gas | Arithmetic-window gas | MODEXP gas / calls | Window memory-expansion gas |
+|---|---:|---:|---:|---:|---:|
+| Fp multiply | 29813 | 6525 | 4372 | 400 / 2 | 211 |
+| Fp2 multiply | 45399 | 20447 | 16468 | 1200 / 6 | 899 |
+
+- Full returned products match the fixed public operands' direct BigInt and Noble reference products.
+- Root opcode gas plus child MODEXP gas reconciles execution gas; call and memory counters are not mutually exclusive attribution.
+- Full Miller run / exact SnarkPack / aggregate gas: `False / False / None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B6 low-level Fp multiplication comparison
+
+- Status: `PASS_LOW_LEVEL_FP_FIXED_CASES_AND_COST_REDUCTION_ONLY`; primitive-only, no Miller/proving rerun
+- Same public operands, compiler and measurement windows as B5; only the _mul implementation changes.
+
+| Operation | B5 window gas | B6 window gas | Reduction | B6 total tx gas | MODEXP gas / calls | Window allocator growth B5 -> B6 (B) |
+|---|---:|---:|---:|---:|---:|---:|
+| Fp multiply | 4372 | 2167 | 50.43% | 27606 | 400 / 2 | 2112 -> 384 |
+| Fp2 multiply | 16468 | 9965 | 39.49% | 38887 | 1200 / 6 | 7872 -> 2816 |
+
+- Deterministic arithmetic boundaries verified: `4 / 4`; excluded from the two cost-comparison samples.
+- Complete outputs match direct BigInt and Noble; host-derived carry/borrow/odd-halving flags are not internal instruction coverage or an exhaustive arithmetic proof.
+- Gas counters reconcile; isolated cost reductions are not measured Miller-loop or end-to-end gains.
+- Full Miller run / exact SnarkPack / aggregate gas: `False / False / None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B7 low-level Fp integration into sparse Miller
+
+- Status: `PARTIAL_PASS_LOW_LEVEL_MILLER_PREFIX_FULL_LOOP_OOG_20M`
+- Exact B6 _mul replaces B4 _mul; all other source is byte-identical except the contract name.
+- Same-prefix total gas B4 -> B7: `1865022 -> 1290640` (30.80% reduction)
+- Prefix active memory words B4 -> B7: `5233 -> 2829` (45.94% reduction)
+- Prefix valid / wrong-target rejection: `True / True`; MODEXP calls unchanged: `516`
+- Exactly one full-loop attempt; verified / root exception / gas spent: `False / out of gas / 20000000`
+- Full-attempt active memory words / completed MODEXP calls: `3147 / 7848`; not a completed-step or completion-percentage measurement
+- Completed full-Miller gas: `None`; failed capped spend is not full-loop cost
+- EVM final exponentiation / pairing-to-GT / exact SnarkPack: `False / False / False`
+- Complete SnarkPack verification gas: `None`; no setup/prove or scale runs
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B8 isolated Fp2 allocation comparison
+
+- Status: `PASS_FP2_FIXED_CASES_AND_COST_REDUCTION_ONLY`; only _mul2 changes, exact B6 _mul retained
+- Same public cost operands and windows as B6; no Miller/proving rerun.
+
+| Operation | B6 window gas | B8 window gas | Window reduction | B6 -> B8 total tx gas | B6 -> B8 allocator growth (B) | MODEXP gas / calls |
+|---|---:|---:|---:|---:|---:|---:|
+| Fp multiply | 2167 | 2167 | 0.00% | 27606 -> 27614 | 384 -> 384 | 400 / 2 |
+| Fp2 multiply | 9965 | 8086 | 18.86% | 38887 -> 37022 | 2816 -> 1664 | 1200 / 6 |
+
+- Necessary Fp2 boundaries verified: `3 / 3`; pure-imaginary square, near-modulus square and cross-limb sum/subtract case; not performance samples.
+- Complete outputs match BigInt and Noble; host-derived branch flags are not instruction coverage or a formal arithmetic proof.
+- Fp control window remains unchanged; its total transaction gas increases slightly outside the window, not an across-the-board cost reduction.
+- Latest full-Miller attempt remains B7 at20M OOG; B8 does not promote any Miller/pairing/SnarkPack capability.
+- Miller run / exact SnarkPack / aggregate gas: `False / False / None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B9 Fp2 integration: prefix only, no full-loop retry
+
+- Status: `PASS_FP2_MILLER_PREFIX_INTEGRATION_ONLY`; exact B8 _mul2 integrated into B7, other source unchanged except the contract name
+- Same-prefix gas B7 -> B9: `1290640 -> 1132763` (12.23% reduction)
+- Active memory words B7 -> B9: `2829 -> 2411` (14.78% reduction)
+- Valid / wrong-result rejection: `True / True`; MODEXP calls unchanged: `516`
+- Full-loop attempts in B9: `0`; new-variant full result: `None` (not tested, not a new OOG)
+- Latest actual full attempt: `G5-C3-B7`; inherited target status source: `experiments/g5_c3_raw/miller_lowlevel_evm.json`
+- B7 OOG is evidence for the previous variant; prefix savings do not establish this new variant's complete-loop correctness or gas cost.
+- Completed full-Miller / SnarkPack gas: `None / None`; final exponentiation and pairing target remain unimplemented
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B10 unchanged Fp2 addition cost localization
+
+- Status: `PASS_ISOLATED_FP2_ADD_COST_PROFILE_ONLY`; arithmetic changed / optimization implemented: `False / False`
+- One deployment and ONE fixed public addition; complete output matches BigInt/Noble. No extra tests or Miller/proving rerun.
+- Instrumented arithmetic window / execution gas: `1752 / 5740`; not an inlined Miller constant
+- Intrinsic / total / minimum gas including calldata floor: `24952 / 30880 / 30880`
+- Calldata floor applied / extra gas: `True / 188`; pricing extra is NOT arithmetic-window cost
+- Allocator growth / window memory-expansion gas: `896 B / 91`; not host RSS
+- MODEXP calls / gas: `0 / 0`; root opcode gas reconciles execution
+- Fixed operands exercise one ordinary component sum and one reduced sum with low-limb carry/borrow; host-derived conditions, not exhaustive instruction coverage.
+- No speedup claim: this is a saved baseline. A future lower window need not lower this transaction's floor-limited total.
+- At B10, latest prefix / full attempt were B9 / `G5-C3-B7`; aggregate gas `None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B11 low-allocation Fp2 addition: isolated comparison only
+
+- Status: `PASS_LOW_ALLOCATION_FP2_ADD_FIXED_CASES_ONLY`; only _add2 implementation changes, mathematical formula/codec unchanged
+- Same-input window gas B10 -> B11: `1752 -> 849` (51.54% reduction)
+- Execution gas B10 -> B11: `5740 -> 4852`
+- Allocator growth B10 -> B11: `896 -> 384` B (57.14% reduction)
+- Total transaction gas B10 -> B11: `30880 -> 30880`; floor extra `188 -> 1076`
+- Execution/window savings do NOT lower this floor-limited transaction total; they are not measured Miller or E2E gains.
+- One equality/zero boundary verified: `True`; excluded from the one performance comparison sample
+- MODEXP calls / actual window memory-expansion gas: `0 / 39`; explicit Yul output size is not the full allocator growth
+- Miller run / full-loop attempts / aggregate-verifier gas: `False / 0 / None`; B9/B7 history unchanged
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B12 low-allocation Fp2 addition integrated into the Miller prefix
+
+- Status: `PASS_ADD2_MILLER_PREFIX_INTEGRATION_ONLY`; exact B11 _add2 integrated, other source bodies unchanged
+- Same-prefix total gas B9 -> B12: `1132763 -> 1043835` (7.85% reduction)
+- Active memory B9 -> B12: `2411 -> 2079` words (13.77% reduction)
+- Successful MODEXP calls / gas: `516 / 103200`; unchanged operation count
+- Wrong canonical target rejected: `True`
+- Runtime / deployment gas: `6992 B / 1565064`; both slightly higher than B9
+- New-variant full attempts / full attempt: `0 / None`; latest actual full attempt remains `G5-C3-B7` on an older variant
+- Full Miller / final exponentiation / exact SnarkPack verified: `False / False / False`; aggregate gas `None`
+- Prefix savings are measured only for the saved two-step input; full-loop cost is unknown for B12.
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B13 unchanged Fp2 subtraction: one cost baseline
+
+- Status: `PASS_ISOLATED_FP2_SUB_COST_PROFILE_ONLY`; arithmetic changed / optimization implemented: `False / False`
+- Arithmetic transactions / complete canonical result verified: `1 / True`
+- Arithmetic window / execution / intrinsic gas: `1286 / 5296 / 24952`
+- Total / calldata-floor supplement: `30880 / 632` gas; supplement is outside the arithmetic window
+- Allocator growth / window memory-expansion gas / exit active memory: `640 B / 65 / 79 words`
+- MODEXP calls / STATICCALL opcode gas: `0 / 0`
+- Fixed input uses direct subtraction in both components, with a low-limb borrow in c0 only; modular-wrap branch is not covered.
+- B13 is a profiling baseline. Candidate comparisons are recorded separately below; this window is not an inlined Miller cost.
+- Latest prefix / actual full attempt: `experiments/g5_c3_raw/miller_add_prefix_evm.json / G5-C3-B7`
+- Miller run / full-loop attempts / aggregate gas: `False / 0 / None`
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
+
+## G5-C3-B14 low-allocation Fp2 subtraction: isolated comparison
+
+- Status: `PASS_LOW_ALLOCATION_FP2_SUB_FIXED_CASES_ONLY`; only _sub2 implementation changes, all other function bodies unchanged
+- Same-input window gas B13 -> B14: `1286 -> 765` (40.51% reduction)
+- Execution gas B13 -> B14: `5296 -> 4790`
+- Allocator growth B13 -> B14: `640 -> 384` B (40.00% reduction)
+- Window memory-expansion gas B13 -> B14: `65 -> 39`
+- Total transaction gas B13 -> B14: `30880 -> 30880`; calldata-floor supplement `632 -> 1138`
+- Execution/window savings do not lower the floor-limited transaction total and do not establish Miller or E2E savings.
+- One modular-wrap boundary verified: `True`; `(0,0) - (1,2^256) = (p-1,p-2^256)`, excluded from performance comparison
+- Arithmetic transactions / performance samples / MODEXP calls per input: `2 / 1 / 0`
+- Miller run / full-loop attempts / aggregate gas: `False / 0 / None`; latest prefix B12, actual full attempt B7
+- Next gate: Integrate this exact _sub2 into a separate B12-based Miller variant and validate the same prefix pair ONLY before any full-loop decision; no cap increase or final exponentiation
 
 ## Real P1 Groth16
 

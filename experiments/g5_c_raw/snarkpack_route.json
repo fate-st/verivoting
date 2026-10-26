@@ -1,0 +1,96 @@
+{
+  "gate": "G5-C1",
+  "status": "PASS_G5C1_PUBLIC_WIRE_FIXTURE_AND_PRAGUE_PRIMITIVES",
+  "target_verifier_status": "BLOCKED_EXACT_SNARKPACK_V2_EVM_VERIFIER_NOT_IMPLEMENTED",
+  "classification": "native-wire-roundtrip-and-local-evm-prerequisites-only",
+  "recorded_at_utc": "2026-10-25T12:10:21.704Z",
+  "git_commit": "7442414a04e8d06d79d968b3cbf448a6a694347a",
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "os": "darwin",
+  "arch": "arm64",
+  "node_version": "v23.11.0",
+  "hardfork": "prague",
+  "eip2537_active": true,
+  "fixture": "fixtures/snarkpack_g5c1_public_v1.json",
+  "fixture_sha256": "34180b26bcb316b2bf5d2a6ce810a6348a42cb2d5bcd3916a2f9a2a8dbcfaeb2",
+  "source_run": "experiments/g5_c_raw/source_snarkpack_distinct_voters_batch_2.json",
+  "source_run_sha256": "f20536709acc487e8500e761d12c6ec8a7de1e364126a19bee7964bbbeac9808",
+  "point_probe_fixture": "fixtures/g2b_eip2537_fixture_v1.json",
+  "point_probe_fixture_sha256": "5bacf7b98477dfd820817456caf3741a355e86a1184a4d04a3c546604975223f",
+  "package_lock_sha256": "590b2b2ed15d9c351a988d670b28d1ef25cd6efee1920afee81e7c3fa7ecdcf0",
+  "cargo_lock_sha256": "7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68",
+  "prototype_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+  "batch_size": 2,
+  "public_inputs_per_proof": 25,
+  "aggregate_proof_bytes": 5236,
+  "external_transcript_bytes": 1654,
+  "decoded_native_aggregate_verified": true,
+  "decoded_changed_second_nullifier_rejected": true,
+  "external_transcript_rust_js_match": true,
+  "changed_second_statement_field_indices": [
+    7
+  ],
+  "primitive_probes": [
+    {
+      "label": "SHA-256 of exact external SnarkPack statement transcript",
+      "address": "0x02",
+      "input_bytes": 1654,
+      "output_bytes": 32,
+      "output_hex": "0x7c855a2ebaea8d7d9e6673aeacad8a2e66f025b2485e52414575f32e1288c5fa",
+      "execution_gas": 684,
+      "local_wall_ms": 3.0755840000000063,
+      "matched_expected": true
+    },
+    {
+      "label": "G2 MSM one public point times one",
+      "address": "0x0e",
+      "input_bytes": 288,
+      "output_bytes": 256,
+      "output_hex": "0x00000000000000000000000000000000006dcdffa318c85d687623be4598b0a5be4937a030b8ddcc3fd4bd65ee20f21291a765c23562b79190631bf4a352b2d100000000000000000000000000000000115312c32a9d137c565b15712896440e66d10d8892b5320599bc54e32eb8f9b86bfaa6807c59397a9486ae1729f5889d000000000000000000000000000000000cc82ffea0bdc6f917dab913c6a55de2612f766d2a4bc8ae332df731760ffd85adf629e7ab27f2f9af94a7c99536d33f0000000000000000000000000000000016832cbb9972c8adaf8b77ac1822b934d46632c52223b4117be19fa5f87081a1c1cddc93d6844057e8b286d2572e061f",
+      "execution_gas": 22500,
+      "local_wall_ms": 6.721750000000014,
+      "matched_expected": true
+    },
+    {
+      "label": "pairing product equals one",
+      "address": "0x0f",
+      "input_bytes": 768,
+      "output_bytes": 32,
+      "output_hex": "0x0000000000000000000000000000000000000000000000000000000000000001",
+      "execution_gas": 102900,
+      "local_wall_ms": 34.846333000000016,
+      "matched_expected": true
+    },
+    {
+      "label": "single non-unit pairing returns false, not a GT element",
+      "address": "0x0f",
+      "input_bytes": 384,
+      "output_bytes": 32,
+      "output_hex": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "execution_gas": 70300,
+      "local_wall_ms": 13.839666999999992,
+      "matched_expected": true
+    }
+  ],
+  "exact_snarkpack_evm_verified": false,
+  "evm_changed_statement_rejection": null,
+  "snarkpack_verification_gas": null,
+  "full_settlement_measured": false,
+  "production_setup": false,
+  "blocker": "Pinned verifier requires GT/Fp12 operations and pairing-to-non-unit-GT comparison; EIP-2537 exposes only pairing-product-to-one boolean. No exact GT/transcript verifier exists in this repository.",
+  "transcript_boundary": "Only external statements are cross-language matched here. Internal bincode/GT/challenge transcript remains unported.",
+  "next_gate": "G5-C2 exact internal transcript golden vectors and Rust/JavaScript challenge conformance before any Solidity GT port",
+  "limitations": [
+    "Primitive runCall gas is not signed-transaction gas, SnarkPack verifier gas or settlement gas",
+    "No full SnarkPack proof or changed-statement decision is evaluated by the EVM",
+    "Native randomized pairing batching uses deterministic experimental RNG, not production contract randomness",
+    "No claim that a compatible EVM verifier is impossible; a separately validated GT implementation or equivalent relation is required",
+    "No suite, official Manifest capability, aggregation SRS ceremony or cryptographic security claim is changed"
+  ],
+  "references": [
+    "https://eips.ethereum.org/EIPS/eip-2537",
+    "https://docs.rs/crate/bellperson/0.27.0/source/src/groth16/aggregate/verify.rs",
+    "https://docs.rs/crate/bellperson/0.27.0/source/src/groth16/aggregate/transcript.rs"
+  ]
+}

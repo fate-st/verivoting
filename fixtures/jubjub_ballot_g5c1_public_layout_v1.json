@@ -1,0 +1,60 @@
+{
+  "layout_version": "VV/JUBJUB/G1-B1/C-VOTE-LAYOUT/v1",
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G2B-2.2",
+  "suite_id": "VERIVOTING-JUBJUB-PROTOTYPE-G0.8-v2",
+  "ballot_prf_suite": "VV/JUBJUB/BALLOT-HMAC-SHA256/v1",
+  "seed": 20261028,
+  "public_inputs_in_order": [
+    "election identifier",
+    "final election context",
+    "deterministic region identifier",
+    "registration closing root",
+    "election-scoped voting nullifier",
+    "certified key-set hash",
+    "canonical certified election public key",
+    "three canonical Weighted ElGamal ciphertext pairs"
+  ],
+  "private_witnesses": [
+    "32-byte voter secret",
+    "PRF-derived address",
+    "registered weight and commitment opening",
+    "weight commitment",
+    "depth-two registration Merkle path",
+    "three one-hot choice bits",
+    "three encryption randomness scalars"
+  ],
+  "election_id_hex": "4e2cb576fd4db6b2ef9778c78c4ca63509c08e281e761ee66895244a9808fc82",
+  "final_context_hex": "c3bd8bbdc098f77da53ab12750da1fa003c88ee1c222340b225c98200c7b83f5",
+  "region": 4,
+  "registration_root_hex": "c715ff686732b1a1ec0359d6169361a1380ab86a060426907853a26515288ff8",
+  "nullifier_hex": "43e55d38e6f179636355f40bf04980568159c5043dd67675a2d80b121922f4bd",
+  "key_set_hash_hex": "90bebd534c9767127a57bb772d801034ee29c983659e19b75b5f21af259f8227",
+  "public_key_hex": "ee613868e5790ef359653b0fcdabc9037a7c2bd699d55f58df0c70d9ee814bd2",
+  "ciphertexts": [
+    {
+      "candidate_id": 1,
+      "c0_hex": "da9bf8fc7989ae5b0cdb78357d0ec9ba8440cdcc4b069ba87cdf26465e27e7be",
+      "c1_hex": "6a7085fc8ff5ed97733dba3481242f2c38b06b168f0e97a6a7b11a11832386c1"
+    },
+    {
+      "candidate_id": 2,
+      "c0_hex": "0aa36f32dbb2c0fff3b66923a65b48e8d3e5936ec8d5ca440e55b646ceb23d9d",
+      "c1_hex": "5f672f0fc6ccd3a2270a177a9ea6821934626b688098d43689a7121bd8e4c163"
+    },
+    {
+      "candidate_id": 3,
+      "c0_hex": "f410d6238fb30ee461c912ff48eded8904b17318099df76bace9eff8bfb2de72",
+      "c1_hex": "8ed395e9f7511f7a2f61b52422a694ac178085ce3b1a613996ec6c16318d274b"
+    }
+  ],
+  "registered_weight_bound_constant": 10,
+  "registration_leaf_count": 4,
+  "registration_depth": 2,
+  "private_voter_secret_emitted": false,
+  "private_address_emitted": false,
+  "private_weight_emitted": false,
+  "private_commitment_emitted": false,
+  "private_merkle_path_emitted": false,
+  "private_choice_emitted": false,
+  "private_randomness_emitted": false
+}

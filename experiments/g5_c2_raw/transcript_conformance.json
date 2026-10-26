@@ -1,0 +1,107 @@
+{
+  "gate": "G5-C2",
+  "status": "PASS_G5C2_OFFICIAL_INTERNAL_TRANSCRIPT_RUST_JS_CONFORMANCE",
+  "recorded_at_utc": "2026-10-25T12:55:44.911Z",
+  "git_commit": "7442414a04e8d06d79d968b3cbf448a6a694347a",
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "os": "darwin",
+  "arch": "arm64",
+  "node_version": "v23.11.0",
+  "reference_version": "bellperson 0.27.0 / blstrs 0.7.0",
+  "javascript_group_library": "@noble/curves 2.4.0; installed locked dependency",
+  "fixture": "fixtures/snarkpack_g5c1_public_v1.json",
+  "fixture_sha256": "34180b26bcb316b2bf5d2a6ce810a6348a42cb2d5bcd3916a2f9a2a8dbcfaeb2",
+  "golden_fixture": "fixtures/snarkpack_g5c2_transcript_v1.json",
+  "golden_fixture_sha256": "1600a659393d6aded9cb239fad25db1f356a150f1779c98c781bff273df7d0da",
+  "native_replay_sha256": "4304faa8b6f661200ce083ccfe168a76dc0571be6f8707f91e873839610d030a",
+  "cargo_lock_sha256": "7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68",
+  "reference_transcript_sha256": "4ae0d7da2ecc4a2bcf1eafe0cec2209ce0fde7c27bf377e6c6e782bff87b7ac8",
+  "reference_verifier_sha256": "cd6412860def9630b47a58a96c7245dc4a714e0b847dd43780858412eabe578d",
+  "reference_instrumented_transcript_sha256": "0f0cdea2552b21601bc4f0a6c58a4572e55e9f26faccae9f8cc5f4a661c12842",
+  "original_dependency_manifest_sha256": "6ee1e8dec4188ae31f3b360a0510fa1a51d97b7705d79f2f908f7879cf867563",
+  "temporary_dependency_manifest_sha256": "721b0f74ea3583a48330fce95d2f2c88f3476c31deef0032812d229e0df66c47",
+  "reference_enabled_features": [
+    "groth16"
+  ],
+  "reference_active_dependency_tree_sha256": "34b6cb6b288a1ebf57be2498231c6bfee993221ff246baa3045c0687bc65ac05",
+  "driver_sha256": "ccd7445f17ddaba9ade45305b43328942e282dea18566d72b91cb976e5574c26",
+  "javascript_decoder_sha256": "e7fa75de07541f2893ae4c4f5bca39a4f460cc0f755733805c8d09611def9343",
+  "native_replay_source_sha256": "1a6e28a0b6b18479eb89fee0f8e0b5b0d3a1ff442bb29ef84404e9149126e87c",
+  "temporary_reference_lock_sha256": "8d454bc9eb74c24e5178fa0f9dc18448e5597e07f08beb65e12d162d682d92c6",
+  "source_fixture_unchanged": true,
+  "installed_dependency_unchanged": true,
+  "project_lock_unchanged": true,
+  "batch_size": 2,
+  "public_inputs_per_proof": 25,
+  "aggregate_proof_bytes": 5236,
+  "official_call_count_per_case": 6,
+  "matched_call_count": 12,
+  "gt_elements_independently_decoded_per_case": 15,
+  "valid_challenges": [
+    {
+      "id": "hcom",
+      "payload_bytes": 2304,
+      "attempts": 1,
+      "challenge_le_hex": "f67418790ec5179021cff2d56b924cd3e6b11a2402d483ca6940e3f7f55ef445"
+    },
+    {
+      "id": "random-r",
+      "payload_bytes": 1694,
+      "attempts": 1,
+      "challenge_le_hex": "358cc0124ccb994ca8a2c18f7b0c255bed5d5b0eed54c9c98847681d90f1bc4d"
+    },
+    {
+      "id": "gipa-0-seed",
+      "payload_bytes": 688,
+      "attempts": 3,
+      "challenge_le_hex": "4bf9912112b75a01705b187a646c6c419a3810182d4b32a6668bc0e9ba01bc45"
+    },
+    {
+      "id": "gipa-0-round",
+      "payload_bytes": 5888,
+      "attempts": 2,
+      "challenge_le_hex": "b64dda665175ae1873fa3b5a6bd10bd56bdfb37cbf306fdd45802bed4977c328"
+    },
+    {
+      "id": "extra-link",
+      "payload_bytes": 6080,
+      "attempts": 1,
+      "challenge_le_hex": "3d6c3750880292f3cc25e3de35b862cf0f9f27f00687ac1518c67a7582a5cc69"
+    },
+    {
+      "id": "random-z",
+      "payload_bytes": 512,
+      "attempts": 1,
+      "challenge_le_hex": "270114fa401669fd0e97724e6936b6a915244362f84ee600a5ccecba3eae3c18"
+    }
+  ],
+  "changed_challenge_ids": [
+    "random-r",
+    "gipa-0-seed",
+    "gipa-0-round",
+    "extra-link",
+    "random-z"
+  ],
+  "rejected_attempts_observed": 3,
+  "official_complete_native_valid": true,
+  "official_complete_native_changed_nullifier_rejected": true,
+  "rust_js_preimages_match": true,
+  "rust_js_challenges_match": true,
+  "rust_js_rejection_counters_match": true,
+  "setup_run": false,
+  "prove_run": false,
+  "exact_snarkpack_evm_verified": false,
+  "snarkpack_verification_gas": null,
+  "full_settlement_measured": false,
+  "target_verifier_status": "BLOCKED_GT_ARITHMETIC_AND_PAIRING_TO_GT_EVM_ROUTE_NOT_IMPLEMENTED",
+  "next_gate": "G5-C3 one exact GT operation and pairing-to-target route feasibility; reuse this proof, no scale run",
+  "limitations": [
+    "Transcript conformance is host-language verification, not a Solidity/EVM implementation or a security proof",
+    "Temporary reference copy changes logging only; official verify.rs and installed source remain unchanged",
+    "Temporary manifest omits the inactive CUDA-supraseal dependency to preserve CPU blst=0.3.10; enabled verifier features match the original",
+    "Only the fixed B=2/64-bit transcript ABI is covered; no arbitrary-batch or platform-independence claim",
+    "Native randomized pairing batching still uses deterministic functional-test randomness",
+    "No official Manifest capability or protocol suite is promoted"
+  ]
+}

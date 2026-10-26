@@ -1,0 +1,1444 @@
+{
+  "gate": "G5-C3",
+  "status": "PASS_G5C3_FP12_PRODUCT_COMPONENT_ONLY",
+  "classification": "one-proof-derived-fp12-product-real-solidity-signed-local-prague-transactions",
+  "recorded_at_utc": "2026-10-25T13:17:04.833Z",
+  "git_commit": "7442414a04e8d06d79d968b3cbf448a6a694347a",
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "os": "darwin",
+  "arch": "arm64",
+  "node_version": "v23.11.0",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "compiler_settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "prague",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode.object",
+          "evm.deployedBytecode.object"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@ethereumjs/binarytree": "10.1.3",
+    "@ethereumjs/block": "10.1.3",
+    "@ethereumjs/common": "10.1.3",
+    "@ethereumjs/evm": "10.1.3",
+    "@ethereumjs/mpt": "10.1.3",
+    "@ethereumjs/rlp": "10.1.3",
+    "@ethereumjs/statemanager": "10.1.3",
+    "@ethereumjs/tx": "10.1.3",
+    "@ethereumjs/util": "10.1.3",
+    "@ethereumjs/vm": "10.1.3",
+    "@noble/curves": "2.4.0",
+    "ethers": "6.15.0",
+    "solc": "0.8.30"
+  },
+  "hardfork": "prague",
+  "chain_id": 1,
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "execution_scope": "local in-memory EVM with signed transactions and metered receipts; no RPC",
+  "fixture": "fixtures/snarkpack_g5c3_fp12_product_v1.json",
+  "fixture_sha256": "8d812274f67c9ffff99a7be3478d563c1225f1ec2869808d99d2fbc2a6a16250",
+  "source_fixture": "fixtures/snarkpack_g5c1_public_v1.json",
+  "source_fixture_sha256": "34180b26bcb316b2bf5d2a6ce810a6348a42cb2d5bcd3916a2f9a2a8dbcfaeb2",
+  "aggregate_proof_sha256": "12e25c7edf07eff2d3f211a3cbb74ae4ce43e028ab58702debdef98b0787e64c",
+  "contract_source": "contracts/src/Bls12381Fp12Product.sol",
+  "contract_source_sha256": "b3654c0c58f2587e21962c8109f8ddc7aaa5282b5e2273250404cd7b34bf8158",
+  "runner_source_sha256": "cb76c3b0ab456c0e92433a0a1aa15b4664ce7a52cce42b33642400976579482e",
+  "native_generator_source_sha256": "34df512335ab4f9ab68cb3993e6aab15b886f7495a0bcb88ba7f864aac079b3f",
+  "package_lock_sha256": "e627b7d966a05a29946ce4f7afd078a088f6c2c30ac43740e551f342b05b2290",
+  "cargo_lock_sha256": "7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68",
+  "prototype_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+  "official_manifest_sha256": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503",
+  "deployed_runtime_sha256": "180df2cd0cc174345f28763cfc4629634356ec16a66defdc99a172958153547d",
+  "deployed_contract": "0x1d273c34e216a8e8f20df9b43db58c2388ba269b",
+  "runtime_bytecode_bytes": 3423,
+  "encoding": "VV/G5-C3/Fp12-12xFp64BE/v1",
+  "tower": "Fp2 u^2=-1; Fp6 v^3=1+u; Fp12 w^2=v",
+  "left_operand": "proof.com_ab.0",
+  "right_operand": "proof.com_c.0",
+  "left_wire_offset": 0,
+  "right_wire_offset": 576,
+  "compressed_gt_bytes": 288,
+  "expanded_fp12_bytes": 768,
+  "independent_js_gt_decompression_and_product_match": true,
+  "native_js_solidity_product_match": true,
+  "wrong_canonical_target_rejected": true,
+  "wrong_target_mutation": "first Fp coefficient incremented by one modulo p; both operands unchanged",
+  "changed_calldata_byte_offsets": [
+    1795
+  ],
+  "deployment": {
+    "transaction_hash": "0xde18e17dce005b82893a180e5dd680e77dc3637507f404d1eaa667365883737c",
+    "receipt_status": 1,
+    "total_gas": 793421,
+    "execution_gas": 685313,
+    "gas_refund": 0,
+    "calldata_bytes": 3451,
+    "calldata_zero_bytes": 27,
+    "calldata_nonzero_bytes": 3424,
+    "standard_calldata_gas": 54892,
+    "local_vm_wall_ms": 11.900041999999985,
+    "modexp_calls": [],
+    "modexp_call_count": 0,
+    "modexp_execution_gas": 0
+  },
+  "valid": {
+    "transaction_hash": "0x43ca59bae22a070e54156c0b5f86c0f9b6646e50613764e586a12269d9fe488e",
+    "receipt_status": 1,
+    "total_gas": 609940,
+    "execution_gas": 558168,
+    "gas_refund": 0,
+    "calldata_bytes": 2500,
+    "calldata_zero_bytes": 769,
+    "calldata_nonzero_bytes": 1731,
+    "standard_calldata_gas": 30772,
+    "local_vm_wall_ms": 69.17312499999991,
+    "modexp_calls": [
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      }
+    ],
+    "modexp_call_count": 108,
+    "modexp_execution_gas": 21600
+  },
+  "wrong_target": {
+    "transaction_hash": "0xee4e481cc852156fc864c0f42ea0065326aea5d59aa1e3721b928bb6062808c7",
+    "receipt_status": 0,
+    "total_gas": 609708,
+    "execution_gas": 557936,
+    "gas_refund": 0,
+    "calldata_bytes": 2500,
+    "calldata_zero_bytes": 769,
+    "calldata_nonzero_bytes": 1731,
+    "standard_calldata_gas": 30772,
+    "local_vm_wall_ms": 55.45887499999992,
+    "modexp_calls": [
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "address": "0x0000000000000000000000000000000000000005",
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      }
+    ],
+    "modexp_call_count": 108,
+    "modexp_execution_gas": 21600
+  },
+  "valid_returned_product_sha256": "99165faa69ebd95ce5f3691141c7af2afb1aa8b4871814a22f51014aee093282",
+  "pairing_to_gt_verified": false,
+  "exact_snarkpack_evm_verified": false,
+  "complete_g5c3": false,
+  "target_verifier_status": "BLOCKED_PAIRING_TO_NONUNIT_GT_AND_FULL_VERIFIER_NOT_IMPLEMENTED",
+  "snarkpack_verification_gas": null,
+  "full_settlement_measured": false,
+  "setup_run": false,
+  "prove_run": false,
+  "production_setup": false,
+  "private_witness_emitted": false,
+  "limitations": [
+    "Component transaction gas is NOT SnarkPack verification, aggregation or settlement gas",
+    "This multiplication is not a complete GIPA/TIPP/MIPP/KZG verifier subexpression",
+    "Solidity component performs Fp12 arithmetic, not GT subgroup checks or proof transcript binding",
+    "Pairing-to-non-unit-GT comparison remains unimplemented; EIP-2537 returns a product-to-one boolean",
+    "One saved B=2 proof-derived example and one target mutation, not exhaustive arithmetic validation",
+    "Local Prague execution is not public-chain deployment, data availability or finality evidence",
+    "No suite, official Manifest capability or security claim is promoted"
+  ],
+  "next_gate": "G5-C3-B exact pairing-to-nonunit-GT route; reuse saved proof, no scale/proving run"
+}

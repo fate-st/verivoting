@@ -52,6 +52,23 @@ operation, broad crash matrices, or on-chain work as measurements.
 | G4-B public two-subset P3 | Public selector binds `{1,2,3}`/`{1,2,4}` IDs and derives their coefficients in one complete-P3 circuit | PASS real Groth16 with one shared setup; 6,231,973 constraints, 60 public inputs and 192-byte proof; not all ten subsets |
 | G5-A local Prague state verifier | Solidity/EIP-2537 verification of the real 37-input G2-B proof | PASS; 940,640 gas and 1,828-byte calldata; wrong root reverts |
 | G5-B local Prague P3 verifier | Same Solidity source verifies the real 60-input two-subset G4-B disclosure proof with its own pinned key | PASS; 1,331,473 gas and 2,564-byte calldata; wrong selector reverts |
+| G5-C1 SnarkPack route prerequisites | Public B=2 aggregate/VK/verifier-SRS fixture, native decode/reverify, exact external transcript and Prague primitive probes | PASS prerequisites only; exact GT/internal-transcript EVM verifier remains BLOCKED, no aggregate gas |
+| G5-C2 exact internal transcript | Actual official verifier calls compared with independent JS decoding of the same B=2 wire proof | PASS 12/12 calls, real rejection sampling and one changed-nullifier native rejection; no setup/prove or EVM aggregate verification |
+| G5-C3-A Fp12 multiplication | Exact Solidity product of two real proof-derived GT operands, cross-checked with native/JS | PASS component only; 609,940 gas, canonical wrong target reverts; pairing-to-GT/full G5-C3 remain BLOCKED |
+| G5-C3-B actual TIPP endpoint | Native/independent JS pairing and folded GT target match; wrong in-subgroup target rejects | PARTIAL; actual-point EVM identity probe only, exact GT-target comparison still BLOCKED |
+| G5-C3-B2 software Miller loop | All line/state arithmetic in Solidity; real two-step prefix matches and wrong result reverts | PARTIAL; prefix 4,805,196 gas, one full64-step attempt OOG at20M; final pairing/SnarkPack not verified |
+| G5-C3-B3 memory-only Miller variant | Same formulas/fixture, bounded scratch reuse; prefix and wrong result checked | PARTIAL; prefix 2,371,368 gas (-50.65%), full64 still OOG at same20M; old baseline preserved |
+| G5-C3-B4 dedicated square/014 | General Fp12 square and sparse line multiplication, same field/point/memory scheme | PARTIAL; prefix1,865,022gas (-21.35%vsB3), MODEXP642->516; full64 still OOG20M |
+| G5-C3-B5 isolated field cost profile | One Fp and one Fp2 product on saved public endpoint coordinates; all gas accounting reconciles | PASS profile only; windows4,372/16,468gas, MODEXP400/1,200; no Miller rerun/capability promotion |
+| G5-C3-B6 low-level Fp primitive | Same two products/windows with reusable MODEXP packing; four carry/halving boundary cases pass | PASS primitive comparison only; windows 2,167/9,965 gas (-50.43%/-39.49% vs B5), MODEXP 2/6 calls unchanged; full verifier remains BLOCKED |
+| G5-C3-B7 low-level Miller integration | Exact B6 `_mul` integrated into B4; same two-step prefix and wrong-result cases | PARTIAL; prefix 1,290,640 gas (-30.80% vs B4), 2,829 memory words, 516 successful MODEXPs; one full64 attempt still OOG at the same 20M cap |
+| G5-C3-B8 low-level Fp2 primitive | Only `_mul2` changed versus B6; same two public products and three necessary Fp2 boundaries pass | PASS primitive comparison only; Fp2 window 9,965->8,086 gas (-18.86%), allocator growth 2,816->1,664 bytes, six MODEXPs unchanged; no Miller run |
+| G5-C3-B9 Fp2 Miller prefix integration | Exact B8 `_mul2` integrated into B7; same two-step prefix positive/wrong-result pair | PASS prefix only; 1,132,763 gas (-12.23% vs B7), 2,411 memory words (-14.78%), 516 successful MODEXPs per case; new variant has no full-loop attempt |
+| G5-C3-B10 original Fp2-add cost profile | Unchanged `_add2`; one addition of the same public endpoint operands | PASS cost localization only; window 1,752 gas, allocator growth 896 B, execution 5,740 gas, 0 MODEXPs; no optimization or Miller run |
+| G5-C3-B11 low-allocation Fp2-add candidate | Only `_add2` and the contract name change; same public addition and one necessary boundary pass | PASS isolated fixed cases only; window 1,752->849 gas (-51.54%), allocator 896->384 B (-57.14%); transaction total stays 30,880 due to calldata floor; no Miller run |
+| G5-C3-B12 Fp2-add Miller prefix integration | Exact B11 `_add2` integrated into B9; same prefix positive/wrong-result pair | PASS prefix only; 1,043,835 gas (-7.85% vs B9), 2,079 memory words (-13.77%), 516 MODEXPs; no full-loop attempt |
+| G5-C3-B13 original Fp2-sub cost profile | Unchanged `_sub2`; one subtraction of the same public endpoint operands | PASS cost baseline only; window 1,286 gas, execution 5,296, allocator 640 B, 0 MODEXPs; total 30,880 includes 632 gas calldata-floor supplement |
+| G5-C3-B14 low-allocation Fp2-sub candidate | Only `_sub2` changes; same public input and one modular-wrap boundary | PASS isolated fixed cases; window 1,286->765 gas (-40.51%), execution 5,296->4,790, allocator 640->384 B (-40%); total stays 30,880 due to calldata floor |
 | Complete target-chain settlement | SnarkPack verifier, full batch DA and settlement bindings/writes | BLOCKED; G5-A/G5-B measure local cryptographic verifiers |
 
 The P1 proof is not a substitute for P3 because the P1 score witness is not yet
@@ -167,6 +184,153 @@ npm run g5b
 See [the G5-A report](docs/G5_A_PRAGUE_STATE_VERIFIER.md) and
 [the G5-B report](docs/G5_B_PRAGUE_DISCLOSURE_VERIFIER.md) for the one-time
 Rust fixture-generation commands and the exact gas scope.
+
+The previous prerequisite gate is documented in
+[G5-C1](docs/G5_C1_SNARKPACK_ROUTE.md). With its saved public
+fixture, `cd contracts` and `npm run g5c1` replay only the lightweight
+prerequisites; they do not run a complete SnarkPack EVM verifier.
+
+[G5-C2 and the next G5-C3 plan](docs/G5_C2_TRANSCRIPT_CONFORMANCE.md) document
+the passing internal-transcript gate. `npm run g5c2` replays the saved proof
+through a temporary instrumented CPU reference and compares all actual
+challenges with independent JavaScript decoding; it never sets up or proves.
+
+[G5-C3-A and the remaining C3-B plan](docs/G5_C3_FP12_PRODUCT.md) document the
+passing multiplication component. `npm run --prefix contracts g5c3` runs only
+one valid product and one wrong-target rejection. Its gas is not aggregate gas.
+
+[G5-C3-B](docs/G5_C3_TIPP_ENDPOINT.md) fixes one actual TIPP endpoint from that
+same proof. `npm run --prefix contracts g5c3b` rechecks native/independent-JS
+conformance and one actual-point EVM ABI probe. Wrong GT target rejection is
+native/JS only; software pairing-to-GT remains unimplemented.
+
+[G5-C3-B2](docs/G5_C3_MILLER_LOOP.md) adds a real software Miller component.
+`npm run --prefix contracts g5c3b2` checks the two-step prefix positive/negative
+and attempts the full loop once at the fixed 20M budget. The latter currently
+fails OOG; optimization comes before final exponentiation or scale runs.
+
+[G5-C3-B3](docs/G5_C3_MILLER_MEMORY.md) preserves B2 and adds memory-only reuse.
+`npm run --prefix contracts g5c3b3` reuses the saved fixture and compares the
+same cases at the same cap. Prefix memory/gas improve, but full Miller still
+fails OOG; dedicated square/sparse-line arithmetic is next.
+
+[G5-C3-B4](docs/G5_C3_MILLER_SPARSE.md) implements that dedicated arithmetic.
+`npm run --prefix contracts g5c3b4` runs the same cases and one full attempt at
+the same cap. Prefix gas improves, but full Miller still OOGs. Next is a small
+Fp/Fp2 cost profile, not another full-loop retry or a higher cap.
+
+[G5-C3-B5](docs/G5_C3_FIELD_COST_PROFILE.md) completes that isolated profile.
+`npm run --prefix contracts g5c3b5` deploys the instrumentation and runs just
+one Fp and one Fp2 product. This baseline is retained for the low-level primitive
+comparison below, before any new full-Miller attempt.
+
+[G5-C3-B6](docs/G5_C3_FIELD_LOWLEVEL.md) completes that primitive comparison.
+`npm run --prefix contracts g5c3b6` runs the same two public cost cases and four
+deterministic arithmetic boundaries in a separate contract. Both products and
+all four boundaries pass; isolated arithmetic windows fall to 2,167/9,965 gas.
+No Miller loop is rerun at this historical gate; the following B7 records its
+integration and fixed-budget full-loop attempt.
+Final exponentiation, GT-target comparison and exact SnarkPack stay blocked.
+
+[G5-C3-B7](docs/G5_C3_MILLER_LOWLEVEL.md) integrates the exact B6 multiply into a
+new sparse-Miller variant, preserving all other B4 functions and old baselines.
+`npm run --prefix contracts g5c3b7` checks the same prefix positive/wrong-result
+cases, then makes exactly one full attempt at the unchanged 20M cap. Prefix gas
+falls to 1,290,640 (-30.80% vs B4), memory to 2,829 words (-45.94%), and all 516
+MODEXP calls succeed. The wrong result reverts with `INVALID_MILLER_RESULT`.
+The full attempt still OOGs after 7,848 successful MODEXPs with 3,147 memory
+words; that capped spend is not completed-loop or aggregate-verifier gas.
+The following B8 completes the planned isolated `_mul2` allocation comparison;
+the historical full-loop result above remains the latest full attempt.
+Full Miller and exact SnarkPack remain BLOCKED; aggregate gas remains null.
+
+[G5-C3-B8](docs/G5_C3_FP2_LOWLEVEL.md) changes only `_mul2` and the contract name
+relative to B6, retaining three Karatsuba products and six real MODEXP calls.
+`npm run --prefix contracts g5c3b8` checks the same two public cost cases and
+three deterministic Fp2 arithmetic boundaries. All products pass. The Fp2
+arithmetic window falls from 9,965 to 8,086 gas (-18.86%), transaction total from
+38,887 to 37,022 gas, and window allocator growth from 2,816 to 1,664 bytes.
+The unchanged Fp control window stays at 2,167 gas; its transaction total rises
+by 8 gas (27,606->27,614), so not every measured total improves.
+No Miller loop is run in B8, and the latest full attempt remains B7's 20M OOG.
+The following B9 completes the planned integration and prefix pair only.
+
+[G5-C3-B9](docs/G5_C3_MILLER_FP2_PREFIX.md) copies exactly B8's `_mul2` into a
+new B7-based Miller variant; all other source, inputs and settings are unchanged.
+`npm run --prefix contracts g5c3b9` performs one local deployment and the same
+two-step prefix positive/wrong-result pair. The positive matches at 1,132,763
+gas (-12.23% vs B7's 1,290,640) and 2,411 memory words (-14.78% vs 2,829).
+The wrong target reverts with `INVALID_MILLER_RESULT` at 1,132,581 gas; all 516
+MODEXP calls succeed in each case. See the [raw record](experiments/g5_c3_raw/miller_fp2_prefix_evm.json).
+There are zero full-loop attempts and `full_attempt` is null. The latest full
+attempt remains B7's older variant failing at 20M; B9's new variant has not
+been tested through all 64 steps and is not shown to exceed that budget.
+Full Miller and exact SnarkPack remain BLOCKED, with null aggregate-verifier
+gas. The following B10 completes the planned original `_add2` cost localization;
+no full retry, cap increase or final exponentiation is performed.
+
+[G5-C3-B10](docs/G5_C3_FP2_ADD_COST_PROFILE.md) adds only an instrumented entry
+point around the unchanged `_add2`. `npm run --prefix contracts g5c3b10` runs
+one deployment and one addition of the same fixed public operands. The complete
+result matches the references. Its arithmetic window is 1,752 gas, allocator
+growth 896 B, and window memory-expansion cost 91 gas, with zero MODEXP calls.
+Execution costs 5,740 gas and intrinsic gas is 24,952 (sum 30,692); Prague's
+calldata floor raises the actual transaction total to 30,880, adding 188 gas
+outside the arithmetic window. See the [raw record](experiments/g5_c3_raw/fp2_add_cost_profile.json).
+This is a baseline, not an optimization or evidence of a unique bottleneck.
+The latest prefix remains B9's pass and the latest full attempt remains B7's
+older-version 20M OOG; B9's full loop is still untested.
+The following B11 completes the planned isolated candidate comparison; no
+Miller integration/retry, cap increase or final exponentiation is performed.
+
+[G5-C3-B11](docs/G5_C3_FP2_ADD_LOWLEVEL.md) changes only `_add2` and the contract
+name relative to B10. `npm run --prefix contracts g5c3b11` checks the same
+public addition and one necessary boundary, `((p-1,0),(1,0))`, whose full result
+is zero. Both pass. Window gas falls 1,752->849 (-51.54%), execution gas
+5,740->4,852, allocator growth 896->384 B (-57.14%), and window memory-expansion
+gas 91->39; MODEXP count remains zero. Transaction total does NOT fall: it stays
+30,880 as the calldata-floor supplement rises from 188 to 1,076 gas. See the
+[raw record](experiments/g5_c3_raw/fp2_add_lowlevel_profile.json).
+This is an isolated fixed-input comparison, with no Miller run in B11.
+The following B12 completes the planned prefix integration.
+
+[G5-C3-B12](docs/G5_C3_MILLER_ADD_PREFIX.md) integrates the exact B11 `_add2`
+into a separate B9-based contract, with the other 51 functions unchanged.
+`npm run --prefix contracts g5c3b12` checks the same two-step positive and wrong
+target. Positive gas falls 1,132,763->1,043,835 (-7.85%), active memory
+2,411->2,079 words (-13.77%), and all 516 MODEXPs still succeed. The wrong
+target reverts at 1,043,653 gas. Runtime rises by 11 B and deployment gas by
+2,328. There are zero full attempts: the latest actual full run remains B7's
+older-version 20M OOG, while B12's complete-loop cost/correctness remain unknown.
+See the [raw record](experiments/g5_c3_raw/miller_add_prefix_evm.json).
+
+[G5-C3-B13](docs/G5_C3_FP2_SUB_COST_PROFILE.md) adds only one measurement entry
+around the unchanged `_sub2`. `npm run --prefix contracts g5c3b13` performs one
+deployment and one subtraction on the same public endpoint x/y. The complete
+128 B output matches BigInt and Noble. Its window costs 1,286 gas, execution
+5,296, allocator growth 640 B and window memory expansion 65 gas; MODEXP count
+is zero. Total 30,880 gas includes a 632 gas calldata-floor supplement outside
+the window. Both components use direct subtraction, with a low-limb borrow
+only in c0; this sample does not cover modular wrap. This is a baseline, not an
+optimization. See the [raw record](experiments/g5_c3_raw/fp2_sub_cost_profile.json).
+
+[G5-C3-B14](docs/G5_C3_FP2_SUB_LOWLEVEL.md) changes only `_sub2` and the
+contract name relative to B13. `npm run --prefix contracts g5c3b14` executes
+one deployment, the same public subtraction and one necessary boundary:
+`(0,0) - (1,2^256) = (p-1,p-2^256)`. Both complete results match BigInt and
+Noble. Window gas falls 1,286->765 (-40.51%), execution 5,296->4,790, allocator
+growth 640->384 B (-40%), and window memory expansion 65->39 gas; MODEXP
+count remains zero. Total transaction gas stays 30,880 as the calldata-floor
+supplement rises 632->1,138. See the
+[raw record](experiments/g5_c3_raw/fp2_sub_lowlevel_profile.json).
+
+Current checkpoint: B14's isolated comparison is complete. B12 remains the
+latest measured prefix, and B7 the latest actual full attempt. Next is B15:
+integrate the exact B14 `_sub2` into a separate B12-based Miller contract and
+measure only the original prefix positive/wrong-result pair before making a
+full-loop decision. No automatic full-loop retry is scheduled.
+Full Miller, final exponentiation, GT binding and exact SnarkPack remain
+unfinished; aggregate-verifier gas is null.
 
 Raw results are written to `experiments/raw/`; the summary script writes
 `experiments/aggregate/summary.{json,md}`. Runs append to `runs.csv`, so remove

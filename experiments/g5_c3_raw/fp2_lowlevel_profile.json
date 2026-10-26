@@ -1,0 +1,773 @@
+{
+  "gate": "G5-C3-B8",
+  "status": "PASS_FP2_FIXED_CASES_AND_COST_REDUCTION_ONLY",
+  "target_verifier_status": "BLOCKED_SOFTWARE_MILLER_LOOP_AFTER_LOW_LEVEL_MUL_EXCEEDS_20M",
+  "recorded_at_utc": "2026-10-26T07:33:39.321Z",
+  "git_commit": "7442414a04e8d06d79d968b3cbf448a6a694347a",
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "os": "darwin",
+  "arch": "arm64",
+  "node_version": "v23.11.0",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "compiler_settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "prague",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode.object",
+          "evm.deployedBytecode.object"
+        ]
+      }
+    }
+  },
+  "hardfork": "prague",
+  "execution_scope": "one deployment, two original fixed-cost and three Fp2-boundary local Prague transactions; no Miller/RPC",
+  "optimization_scope": "only _mul2 sum/subtraction allocation; exact B6 _mul, three-product Karatsuba, field/codec and profile entry points unchanged",
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "baseline": "experiments/g5_c3_raw/field_lowlevel_profile.json",
+  "baseline_sha256": "4753d634e56d59986817e61846bb6c9d6252ed60477eb225c08cc2d95b95d318",
+  "baseline_source_sha256": "9b2c03c91f3dbab325be969f675a62e9ba0b8a0e4f214f90ab2420644ca29786",
+  "miller_baseline": "experiments/g5_c3_raw/miller_lowlevel_evm.json",
+  "miller_baseline_sha256": "cdf06a719f4df41a098ce1a2ce7a4b5e4a8e2e4eb61479b044aa717da9caa7e6",
+  "only_mul2_source_changed": true,
+  "fp_control_source_unchanged": true,
+  "source_fixture": "fixtures/snarkpack_g5c1_public_v1.json",
+  "source_fixture_sha256": "34180b26bcb316b2bf5d2a6ce810a6348a42cb2d5bcd3916a2f9a2a8dbcfaeb2",
+  "fixture": "fixtures/snarkpack_g5c3_miller_loop_v1.json",
+  "fixture_sha256": "1079b6fd309f7d11d60fcd2cd5f15a1e4b25895fe7f876bfe3be624d4f989ead",
+  "aggregate_proof_sha256": "12e25c7edf07eff2d3f211a3cbb74ae4ce43e028ab58702debdef98b0787e64c",
+  "operand_source": "proof.tmipp.gipa.final_b affine x/y; Fp uses x.c0/y.c0; Fp2 uses full x/y",
+  "contract_source": "contracts/src/Bls12381Fp2LowLevelProfile.sol",
+  "contract_source_sha256": "f89380291847399f78d73e942fee09cfe4644d47041ccd64461d0d9203545583",
+  "runner_source_sha256": "1f5e910440e13c6155282005cafc86dcae9f2dbe6949e57b7fe22a56393e0fbd",
+  "arithmetic_source_bodies_unchanged": [
+    "_ge",
+    "_rawAdd",
+    "_rawSub",
+    "_add",
+    "_sub",
+    "_half",
+    "_square",
+    "_add2",
+    "_sub2",
+    "_mul",
+    "_readFp",
+    "_read2",
+    "_writeFp",
+    "_write2",
+    "profileFpMul",
+    "profileFp2Mul"
+  ],
+  "package_lock_sha256": "e627b7d966a05a29946ce4f7afd078a088f6c2c30ac43740e551f342b05b2290",
+  "cargo_lock_sha256": "7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68",
+  "official_manifest_sha256": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503",
+  "prototype_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+  "runtime_bytecode_bytes": 2364,
+  "deployed_runtime_sha256": "e0cc6fe826a3711cce8185cce8deac931d6f170cf5e315bb641e1791fe47e713",
+  "deployed_contract": "0x1f4101bd8e3b3d54480739e7f231d481b91fcbf9",
+  "deployment": {
+    "transaction_hash": "0x39924424e2e50a84684be0003ce563d6d435bb125ab50410e5396ef8efa1556f",
+    "receipt_status": 1,
+    "total_gas": 564461,
+    "execution_gas": 473303,
+    "intrinsic_gas": 91158,
+    "minimum_gas_limit_including_calldata_floor": 116020,
+    "gas_refund": 0,
+    "calldata_floor_applied": null,
+    "calldata_bytes": 2392,
+    "calldata_sha256": "37fcf5a887c9685940ea8656f3e976f67e48bde2434dd193b26ad314ce5b6906",
+    "local_vm_wall_ms": 12.16858400000001,
+    "evm_active_memory_words_at_exit": 74,
+    "evm_memory_expansion_cost_at_exit": 232,
+    "exception": null,
+    "modexp_call_count": 0,
+    "modexp_execution_gas": 0,
+    "modexp_calls": [],
+    "top_level_opcode_gas": 503,
+    "staticcall_opcode_gas": 0,
+    "gas_markers": []
+  },
+  "fp": {
+    "operation": "Fp multiply",
+    "left_hex": "0x000000000000000000000000000000001225810f13554d7c5041c7ee58631780566ab0cc8fa08bfe92c5d9797b36ae99362bb3d6d90ab8ee542479c870188a37",
+    "right_hex": "0x0000000000000000000000000000000005163af04670fb368e68f880704c13b2856f783488e32a86d141f8b10fdddb66d1022a3f0bc414d9f037ffba8bcfb980",
+    "expected_hex": "0x0000000000000000000000000000000011797efa710d33a0e2362afcc33c3e57571a0af4e50f869a59a94dd52a52bbaa9a7704fafd2be70db9f6b65667fb78f4",
+    "computed_hex": "0x0000000000000000000000000000000011797efa710d33a0e2362afcc33c3e57571a0af4e50f869a59a94dd52a52bbaa9a7704fafd2be70db9f6b65667fb78f4",
+    "verified": true,
+    "transaction_hash": "0x476b6ffda733567c6181814b2d9d55af00930f273bad10350e2e68bccf5019c0",
+    "receipt_status": 1,
+    "total_gas": 27614,
+    "execution_gas": 4326,
+    "intrinsic_gas": 23288,
+    "minimum_gas_limit_including_calldata_floor": 26720,
+    "gas_refund": 0,
+    "calldata_floor_applied": false,
+    "calldata_bytes": 260,
+    "calldata_sha256": "a8497d290f9074d643e99b8bf41d13bee93eeacca2a504da90b8e75e3eef86a3",
+    "local_vm_wall_ms": 12.525874999999928,
+    "evm_active_memory_words_at_exit": 39,
+    "evm_memory_expansion_cost_at_exit": 119,
+    "exception": null,
+    "modexp_call_count": 2,
+    "modexp_execution_gas": 400,
+    "modexp_calls": [
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      }
+    ],
+    "top_level_opcode_gas": 3926,
+    "staticcall_opcode_gas": 200,
+    "gas_markers": [
+      {
+        "pc": 440,
+        "gas_left_before": 19975108,
+        "memory_words_before": 16,
+        "top_opcode_gas_before": 1604,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19974549,
+        "memory_words_before": 28,
+        "top_opcode_gas_before": 2163,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19973909,
+        "memory_words_before": 28,
+        "top_opcode_gas_before": 2603,
+        "staticcall_gas_before": 100
+      },
+      {
+        "pc": 456,
+        "gas_left_before": 19972941,
+        "memory_words_before": 28,
+        "top_opcode_gas_before": 3371,
+        "staticcall_gas_before": 200
+      }
+    ],
+    "instrumented_arithmetic_window_gas": 2167,
+    "precompile_share_of_window_percent": 18.458698661744346,
+    "window_minus_precompile_execution_gas": 1767,
+    "window_evm_memory_expansion_gas": 37,
+    "window_memory_words_before": 16,
+    "window_memory_words_after": 28,
+    "window_staticcall_opcode_gas": 200,
+    "execution_gas_outside_window": 2159,
+    "free_memory_before_bytes": 512,
+    "free_memory_after_bytes": 896,
+    "allocator_growth_in_window_bytes": 384
+  },
+  "fp2": {
+    "operation": "Fp2 multiply",
+    "left_hex": "0x000000000000000000000000000000001225810f13554d7c5041c7ee58631780566ab0cc8fa08bfe92c5d9797b36ae99362bb3d6d90ab8ee542479c870188a370000000000000000000000000000000019790910ae4e26821d3a8138ca78bc9bc36376af7bfed4d3cb29033aa2ad2bc1fb80e6bb8d544c7c648a9a354c9f1382",
+    "right_hex": "0x0000000000000000000000000000000005163af04670fb368e68f880704c13b2856f783488e32a86d141f8b10fdddb66d1022a3f0bc414d9f037ffba8bcfb980000000000000000000000000000000000c48e4b45855225393d31b2561b1061e66bb2566832084b8525173fb47840e3812a01830380d3354aa83903c2ee512e3",
+    "expected_hex": "0x000000000000000000000000000000000bc23c2996d1deb90050ca6d86a8cd2865f56429b4516aa288a4753b352d7c05ec375afe0611f07552733b7e01f5edc7000000000000000000000000000000000f5a04ea7a33b09561651602d909bf4c9cb9f1fe1dac123d861a003b9494dfa56b713f56040651f935cd6b76a20fcdc0",
+    "computed_hex": "0x000000000000000000000000000000000bc23c2996d1deb90050ca6d86a8cd2865f56429b4516aa288a4753b352d7c05ec375afe0611f07552733b7e01f5edc7000000000000000000000000000000000f5a04ea7a33b09561651602d909bf4c9cb9f1fe1dac123d861a003b9494dfa56b713f56040651f935cd6b76a20fcdc0",
+    "verified": true,
+    "transaction_hash": "0xd3c029652dcbc58c99c27483683391f33edb4358afb518f8d1d226225bc99931",
+    "receipt_status": 1,
+    "total_gas": 37022,
+    "execution_gas": 12070,
+    "intrinsic_gas": 24952,
+    "minimum_gas_limit_including_calldata_floor": 30880,
+    "gas_refund": 0,
+    "calldata_floor_applied": false,
+    "calldata_bytes": 388,
+    "calldata_sha256": "f972ef5ccd89b8cd98af71bbda4395d55ad300231c14fbd7ab628d0330661678",
+    "local_vm_wall_ms": 13.487541999999962,
+    "evm_active_memory_words_at_exit": 111,
+    "evm_memory_expansion_cost_at_exit": 357,
+    "exception": null,
+    "modexp_call_count": 6,
+    "modexp_execution_gas": 1200,
+    "modexp_calls": [
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      }
+    ],
+    "top_level_opcode_gas": 10870,
+    "staticcall_opcode_gas": 600,
+    "gas_markers": [
+      {
+        "pc": 237,
+        "gas_left_before": 19971867,
+        "memory_words_before": 44,
+        "top_opcode_gas_before": 3181,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19970390,
+        "memory_words_before": 70,
+        "top_opcode_gas_before": 4658,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19969750,
+        "memory_words_before": 70,
+        "top_opcode_gas_before": 5098,
+        "staticcall_gas_before": 100
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19968169,
+        "memory_words_before": 82,
+        "top_opcode_gas_before": 6479,
+        "staticcall_gas_before": 200
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19967529,
+        "memory_words_before": 82,
+        "top_opcode_gas_before": 6919,
+        "staticcall_gas_before": 300
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19966034,
+        "memory_words_before": 94,
+        "top_opcode_gas_before": 8214,
+        "staticcall_gas_before": 400
+      },
+      {
+        "pc": 1550,
+        "gas_left_before": 19965394,
+        "memory_words_before": 94,
+        "top_opcode_gas_before": 8654,
+        "staticcall_gas_before": 500
+      },
+      {
+        "pc": 253,
+        "gas_left_before": 19963781,
+        "memory_words_before": 96,
+        "top_opcode_gas_before": 10067,
+        "staticcall_gas_before": 600
+      }
+    ],
+    "instrumented_arithmetic_window_gas": 8086,
+    "precompile_share_of_window_percent": 14.840465001236705,
+    "window_minus_precompile_execution_gas": 6886,
+    "window_evm_memory_expansion_gas": 171,
+    "window_memory_words_before": 44,
+    "window_memory_words_after": 96,
+    "window_staticcall_opcode_gas": 600,
+    "execution_gas_outside_window": 3984,
+    "free_memory_before_bytes": 1408,
+    "free_memory_after_bytes": 3072,
+    "allocator_growth_in_window_bytes": 1664
+  },
+  "boundaries": [
+    {
+      "id": "u_squared",
+      "host_branch_conditions": {
+        "sum_reduction": false,
+        "sum_low_carry": false,
+        "sum_reduction_low_borrow": false,
+        "c0_negative_difference": true,
+        "c0_nonnegative_low_borrow": false,
+        "c1_first_negative_difference": false,
+        "c1_second_negative_difference": false,
+        "zero_output_component": true
+      },
+      "comparison_performance_sample": false,
+      "operation": "u_squared",
+      "left_hex": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+      "right_hex": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+      "expected_hex": "0x000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "computed_hex": "0x000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "verified": true,
+      "transaction_hash": "0x893049fad8cc71403521f2d6573bfbba123152e59855c6b941d79e8e102417fb",
+      "receipt_status": 1,
+      "total_gas": 34350,
+      "execution_gas": 11678,
+      "intrinsic_gas": 22672,
+      "minimum_gas_limit_including_calldata_floor": 25180,
+      "gas_refund": 0,
+      "calldata_floor_applied": false,
+      "calldata_bytes": 388,
+      "calldata_sha256": "54b582c22f19d56e948e73a1c7a11acf0731fc178fbd59f9792efb6561af3a31",
+      "local_vm_wall_ms": 9.69900000000007,
+      "evm_active_memory_words_at_exit": 111,
+      "evm_memory_expansion_cost_at_exit": 357,
+      "exception": null,
+      "modexp_call_count": 6,
+      "modexp_execution_gas": 1200,
+      "modexp_calls": [
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        }
+      ],
+      "top_level_opcode_gas": 10478,
+      "staticcall_opcode_gas": 600,
+      "gas_markers": [
+        {
+          "pc": 237,
+          "gas_left_before": 19974147,
+          "memory_words_before": 44,
+          "top_opcode_gas_before": 3181,
+          "staticcall_gas_before": 0
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19972710,
+          "memory_words_before": 70,
+          "top_opcode_gas_before": 4618,
+          "staticcall_gas_before": 0
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19972070,
+          "memory_words_before": 70,
+          "top_opcode_gas_before": 5058,
+          "staticcall_gas_before": 100
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19970665,
+          "memory_words_before": 82,
+          "top_opcode_gas_before": 6263,
+          "staticcall_gas_before": 200
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19970025,
+          "memory_words_before": 82,
+          "top_opcode_gas_before": 6703,
+          "staticcall_gas_before": 300
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19968638,
+          "memory_words_before": 94,
+          "top_opcode_gas_before": 7890,
+          "staticcall_gas_before": 400
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19967998,
+          "memory_words_before": 94,
+          "top_opcode_gas_before": 8330,
+          "staticcall_gas_before": 500
+        },
+        {
+          "pc": 253,
+          "gas_left_before": 19966453,
+          "memory_words_before": 96,
+          "top_opcode_gas_before": 9675,
+          "staticcall_gas_before": 600
+        }
+      ],
+      "instrumented_arithmetic_window_gas": 7694,
+      "precompile_share_of_window_percent": 15.596568754873928,
+      "window_minus_precompile_execution_gas": 6494,
+      "window_evm_memory_expansion_gas": 171,
+      "window_memory_words_before": 44,
+      "window_memory_words_after": 96,
+      "window_staticcall_opcode_gas": 600,
+      "execution_gas_outside_window": 3984,
+      "free_memory_before_bytes": 1408,
+      "free_memory_after_bytes": 3072,
+      "allocator_growth_in_window_bytes": 1664
+    },
+    {
+      "id": "upper_square",
+      "host_branch_conditions": {
+        "sum_reduction": true,
+        "sum_low_carry": false,
+        "sum_reduction_low_borrow": false,
+        "c0_negative_difference": false,
+        "c0_nonnegative_low_borrow": false,
+        "c1_first_negative_difference": false,
+        "c1_second_negative_difference": false,
+        "zero_output_component": true
+      },
+      "comparison_performance_sample": false,
+      "operation": "upper_square",
+      "left_hex": "0x000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa",
+      "right_hex": "0x000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa",
+      "expected_hex": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002",
+      "computed_hex": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002",
+      "verified": true,
+      "transaction_hash": "0xb6a9685f3bef26ec81ed4fdd52d97d334a05883e065d3224dd7e2bf7c3c92595",
+      "receipt_status": 1,
+      "total_gas": 36902,
+      "execution_gas": 11950,
+      "intrinsic_gas": 24952,
+      "minimum_gas_limit_including_calldata_floor": 30880,
+      "gas_refund": 0,
+      "calldata_floor_applied": false,
+      "calldata_bytes": 388,
+      "calldata_sha256": "c4971ebd3901fb6b6fe8f203cc9daf1a4770545903af6095d9dfedba2452e2ad",
+      "local_vm_wall_ms": 5.533041000000026,
+      "evm_active_memory_words_at_exit": 111,
+      "evm_memory_expansion_cost_at_exit": 357,
+      "exception": null,
+      "modexp_call_count": 6,
+      "modexp_execution_gas": 1200,
+      "modexp_calls": [
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        }
+      ],
+      "top_level_opcode_gas": 10750,
+      "staticcall_opcode_gas": 600,
+      "gas_markers": [
+        {
+          "pc": 237,
+          "gas_left_before": 19971739,
+          "memory_words_before": 44,
+          "top_opcode_gas_before": 3309,
+          "staticcall_gas_before": 0
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19970182,
+          "memory_words_before": 70,
+          "top_opcode_gas_before": 4866,
+          "staticcall_gas_before": 0
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19969542,
+          "memory_words_before": 70,
+          "top_opcode_gas_before": 5306,
+          "staticcall_gas_before": 100
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19968097,
+          "memory_words_before": 82,
+          "top_opcode_gas_before": 6551,
+          "staticcall_gas_before": 200
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19967457,
+          "memory_words_before": 82,
+          "top_opcode_gas_before": 6991,
+          "staticcall_gas_before": 300
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19966030,
+          "memory_words_before": 94,
+          "top_opcode_gas_before": 8218,
+          "staticcall_gas_before": 400
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19965390,
+          "memory_words_before": 94,
+          "top_opcode_gas_before": 8658,
+          "staticcall_gas_before": 500
+        },
+        {
+          "pc": 253,
+          "gas_left_before": 19963901,
+          "memory_words_before": 96,
+          "top_opcode_gas_before": 9947,
+          "staticcall_gas_before": 600
+        }
+      ],
+      "instrumented_arithmetic_window_gas": 7838,
+      "precompile_share_of_window_percent": 15.310028068384792,
+      "window_minus_precompile_execution_gas": 6638,
+      "window_evm_memory_expansion_gas": 171,
+      "window_memory_words_before": 44,
+      "window_memory_words_after": 96,
+      "window_staticcall_opcode_gas": 600,
+      "execution_gas_outside_window": 4112,
+      "free_memory_before_bytes": 1408,
+      "free_memory_after_bytes": 3072,
+      "allocator_growth_in_window_bytes": 1664
+    },
+    {
+      "id": "limb_carry_borrow",
+      "host_branch_conditions": {
+        "sum_reduction": true,
+        "sum_low_carry": true,
+        "sum_reduction_low_borrow": true,
+        "c0_negative_difference": false,
+        "c0_nonnegative_low_borrow": true,
+        "c1_first_negative_difference": true,
+        "c1_second_negative_difference": true,
+        "zero_output_component": false
+      },
+      "comparison_performance_sample": false,
+      "operation": "limb_carry_borrow",
+      "left_hex": "0x000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaaa0000000000000000000000000000000000000000000000000000000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "right_hex": "0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000001a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaa9",
+      "expected_hex": "0x0000000000000000000000000000000000000000000000000000000000000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd0000000000000000000000000000000002cb5d3a884e56c4fab7cd07ee4e16bc15efebb5d396d7cf82383087033108464532383fa8eaff4e967d3988a62b6c9e",
+      "computed_hex": "0x0000000000000000000000000000000000000000000000000000000000000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd0000000000000000000000000000000002cb5d3a884e56c4fab7cd07ee4e16bc15efebb5d396d7cf82383087033108464532383fa8eaff4e967d3988a62b6c9e",
+      "verified": true,
+      "transaction_hash": "0x1b651a057905addfa3fa1a6ad0aabf04973f963831129eb8d2912cea4ec361be",
+      "receipt_status": 1,
+      "total_gas": 36710,
+      "execution_gas": 12502,
+      "intrinsic_gas": 24208,
+      "minimum_gas_limit_including_calldata_floor": 29020,
+      "gas_refund": 0,
+      "calldata_floor_applied": false,
+      "calldata_bytes": 388,
+      "calldata_sha256": "b30e5a863b2ec76401e68f77167fa93581f54d5129d8c2bac8f2f016717552f6",
+      "local_vm_wall_ms": 6.882708000000093,
+      "evm_active_memory_words_at_exit": 111,
+      "evm_memory_expansion_cost_at_exit": 357,
+      "exception": null,
+      "modexp_call_count": 6,
+      "modexp_execution_gas": 1200,
+      "modexp_calls": [
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        },
+        {
+          "execution_gas": 200,
+          "success": true,
+          "return_bytes": 64
+        }
+      ],
+      "top_level_opcode_gas": 11302,
+      "staticcall_opcode_gas": 600,
+      "gas_markers": [
+        {
+          "pc": 237,
+          "gas_left_before": 19972547,
+          "memory_words_before": 44,
+          "top_opcode_gas_before": 3245,
+          "staticcall_gas_before": 0
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19970990,
+          "memory_words_before": 70,
+          "top_opcode_gas_before": 4802,
+          "staticcall_gas_before": 0
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19970350,
+          "memory_words_before": 70,
+          "top_opcode_gas_before": 5242,
+          "staticcall_gas_before": 100
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19968701,
+          "memory_words_before": 82,
+          "top_opcode_gas_before": 6691,
+          "staticcall_gas_before": 200
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19967993,
+          "memory_words_before": 82,
+          "top_opcode_gas_before": 7199,
+          "staticcall_gas_before": 300
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19966402,
+          "memory_words_before": 94,
+          "top_opcode_gas_before": 8590,
+          "staticcall_gas_before": 400
+        },
+        {
+          "pc": 1550,
+          "gas_left_before": 19965694,
+          "memory_words_before": 94,
+          "top_opcode_gas_before": 9098,
+          "staticcall_gas_before": 500
+        },
+        {
+          "pc": 253,
+          "gas_left_before": 19964093,
+          "memory_words_before": 96,
+          "top_opcode_gas_before": 10499,
+          "staticcall_gas_before": 600
+        }
+      ],
+      "instrumented_arithmetic_window_gas": 8454,
+      "precompile_share_of_window_percent": 14.194464158977999,
+      "window_minus_precompile_execution_gas": 7254,
+      "window_evm_memory_expansion_gas": 171,
+      "window_memory_words_before": 44,
+      "window_memory_words_after": 96,
+      "window_staticcall_opcode_gas": 600,
+      "execution_gas_outside_window": 4048,
+      "free_memory_before_bytes": 1408,
+      "free_memory_after_bytes": 3072,
+      "allocator_growth_in_window_bytes": 1664
+    }
+  ],
+  "all_boundaries_verified": true,
+  "measured_fp2_window_improvement": true,
+  "comparison": {
+    "fp": {
+      "baseline_window_gas": 2167,
+      "optimized_window_gas": 2167,
+      "window_gas_reduction_percent": 0,
+      "baseline_total_gas": 27606,
+      "optimized_total_gas": 27614,
+      "baseline_allocator_growth_bytes": 384,
+      "optimized_allocator_growth_bytes": 384,
+      "baseline_window_memory_gas": 37,
+      "optimized_window_memory_gas": 37,
+      "modexp_count_unchanged": true
+    },
+    "fp2": {
+      "baseline_window_gas": 9965,
+      "optimized_window_gas": 8086,
+      "window_gas_reduction_percent": 18.855995985950823,
+      "baseline_total_gas": 38887,
+      "optimized_total_gas": 37022,
+      "baseline_allocator_growth_bytes": 2816,
+      "optimized_allocator_growth_bytes": 1664,
+      "baseline_window_memory_gas": 295,
+      "optimized_window_memory_gas": 171,
+      "modexp_count_unchanged": true
+    }
+  },
+  "window_definition": "gasleft difference around _mul/_mul2 after canonical decode and before output encoding; includes compiler/call and measurement overhead",
+  "residual_definition": "window gas minus actual MODEXP execution gas; not a disjoint attribution to Solidity, memory or call costs",
+  "opcode_accounting": "root opcode dynamicFee already includes base/dynamic charges; add child MODEXP execution once; STATICCALL gas may overlap memory expansion and is not added twice",
+  "primitive_comparison_only": true,
+  "miller_run": false,
+  "full_miller_loop_verified_in_evm": false,
+  "evm_final_exponentiation_implemented": false,
+  "pairing_to_gt_evm_verified": false,
+  "exact_snarkpack_evm_verified": false,
+  "complete_g5c3": false,
+  "snarkpack_verification_gas": null,
+  "setup_run": false,
+  "prove_run": false,
+  "private_witness_emitted": false,
+  "next_gate": "Integrate this unchanged _mul2 into a new low-level-Miller variant and check the same prefix pair first; assess measured gain before any full-loop retry, keep20M cap and no final exponentiation",
+  "limitations": [
+    "Isolated instrumented call-site cost is not an intrinsic per-operation constant for inlined Miller code",
+    "Only aggregate opcode/call/memory counters are collected; no exclusive source-level attribution or exhaustive algebra validation",
+    "One public Fp control pair, one public Fp2 cost pair and three Fp2 sum/subtract boundaries; no statistical timing or E2E claim",
+    "Allocator pointer growth is not peak EVM memory or host RSS; exit memory words/cost are separately recorded",
+    "Residual includes STATICCALL/copy/arithmetic/allocation/instrumentation and cannot be assigned entirely to any one category",
+    "No full Miller loop, pairing target or SnarkPack verification is executed by this profiling gate"
+  ]
+}

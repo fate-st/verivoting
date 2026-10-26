@@ -1,0 +1,320 @@
+{
+  "gate": "G5-C3-B5",
+  "status": "PASS_ISOLATED_FP_FP2_COST_PROFILE_ONLY",
+  "target_verifier_status": "BLOCKED_SOFTWARE_MILLER_LOOP_AFTER_SPARSE_OPT_EXCEEDS_20M",
+  "recorded_at_utc": "2026-10-25T15:23:50.852Z",
+  "git_commit": "7442414a04e8d06d79d968b3cbf448a6a694347a",
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "os": "darwin",
+  "arch": "arm64",
+  "node_version": "v23.11.0",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "compiler_settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "prague",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode.object",
+          "evm.deployedBytecode.object"
+        ]
+      }
+    }
+  },
+  "hardfork": "prague",
+  "execution_scope": "one deployment, two signed local Prague arithmetic-profile transactions; no RPC",
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "baseline": "experiments/g5_c3_raw/miller_sparse_evm.json",
+  "baseline_sha256": "864e6a70d9f60fe451b0ec614b9731337ef0e7d9a70450871d80b05cb8f98d62",
+  "baseline_source_sha256": "fb6a15f66375fd26f6ba7903bb9635ebbf4a0cc8105d912a1269ccd205d07526",
+  "source_fixture": "fixtures/snarkpack_g5c1_public_v1.json",
+  "source_fixture_sha256": "34180b26bcb316b2bf5d2a6ce810a6348a42cb2d5bcd3916a2f9a2a8dbcfaeb2",
+  "fixture": "fixtures/snarkpack_g5c3_miller_loop_v1.json",
+  "fixture_sha256": "1079b6fd309f7d11d60fcd2cd5f15a1e4b25895fe7f876bfe3be624d4f989ead",
+  "aggregate_proof_sha256": "12e25c7edf07eff2d3f211a3cbb74ae4ce43e028ab58702debdef98b0787e64c",
+  "operand_source": "proof.tmipp.gipa.final_b affine x/y; Fp uses x.c0/y.c0; Fp2 uses full x/y",
+  "contract_source": "contracts/src/Bls12381FieldCostProfile.sol",
+  "contract_source_sha256": "02ffa6fffd97bf92aeebe4e1710343a673e1eeb65a3983db87ec48b2de3e305f",
+  "runner_source_sha256": "6821be92b03a5c22b4acf7af178558f2c157a3423b6fd86d058de5f4ea5f6703",
+  "arithmetic_source_bodies_unchanged": [
+    "_ge",
+    "_rawAdd",
+    "_rawSub",
+    "_add",
+    "_sub",
+    "_half",
+    "_square",
+    "_mul",
+    "_add2",
+    "_sub2",
+    "_mul2",
+    "_readFp",
+    "_read2",
+    "_writeFp",
+    "_write2"
+  ],
+  "package_lock_sha256": "e627b7d966a05a29946ce4f7afd078a088f6c2c30ac43740e551f342b05b2290",
+  "cargo_lock_sha256": "7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68",
+  "official_manifest_sha256": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503",
+  "prototype_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+  "runtime_bytecode_bytes": 2369,
+  "deployed_runtime_sha256": "2ca7e7b291882a8cefabe4d1089df62ad19e4df2b2f33bd23882189d4a873f0b",
+  "deployed_contract": "0x640eebdc78d9ac38707e173fb943a829dd95852e",
+  "deployment": {
+    "transaction_hash": "0xf09d2fccf4efc924fb95ce84ba65c69b35711a80ea28ff606dd656e9855d0535",
+    "receipt_status": 1,
+    "total_gas": 565535,
+    "execution_gas": 474309,
+    "intrinsic_gas": 91226,
+    "minimum_gas_limit_including_calldata_floor": 116190,
+    "gas_refund": 0,
+    "calldata_floor_applied": null,
+    "calldata_bytes": 2397,
+    "calldata_sha256": "bd60ca31d10634aeb7fb0af2118e8fd143b3bc3fd9b0ad3f41256f51589b1055",
+    "local_vm_wall_ms": 7.98112500000002,
+    "evm_active_memory_words_at_exit": 75,
+    "evm_memory_expansion_cost_at_exit": 235,
+    "exception": null,
+    "modexp_call_count": 0,
+    "modexp_execution_gas": 0,
+    "modexp_calls": [],
+    "top_level_opcode_gas": 509,
+    "staticcall_opcode_gas": 0,
+    "gas_markers": []
+  },
+  "fp": {
+    "operation": "Fp multiply",
+    "left_hex": "0x000000000000000000000000000000001225810f13554d7c5041c7ee58631780566ab0cc8fa08bfe92c5d9797b36ae99362bb3d6d90ab8ee542479c870188a37",
+    "right_hex": "0x0000000000000000000000000000000005163af04670fb368e68f880704c13b2856f783488e32a86d141f8b10fdddb66d1022a3f0bc414d9f037ffba8bcfb980",
+    "expected_hex": "0x0000000000000000000000000000000011797efa710d33a0e2362afcc33c3e57571a0af4e50f869a59a94dd52a52bbaa9a7704fafd2be70db9f6b65667fb78f4",
+    "computed_hex": "0x0000000000000000000000000000000011797efa710d33a0e2362afcc33c3e57571a0af4e50f869a59a94dd52a52bbaa9a7704fafd2be70db9f6b65667fb78f4",
+    "verified": true,
+    "transaction_hash": "0x01543c3a3fd13caa487c67a49efbeceec55259d471b1bdd5488d1dc290c4e9cb",
+    "receipt_status": 1,
+    "total_gas": 29813,
+    "execution_gas": 6525,
+    "intrinsic_gas": 23288,
+    "minimum_gas_limit_including_calldata_floor": 26720,
+    "gas_refund": 0,
+    "calldata_floor_applied": false,
+    "calldata_bytes": 260,
+    "calldata_sha256": "a8497d290f9074d643e99b8bf41d13bee93eeacca2a504da90b8e75e3eef86a3",
+    "local_vm_wall_ms": 8.82650000000001,
+    "evm_active_memory_words_at_exit": 93,
+    "evm_memory_expansion_cost_at_exit": 295,
+    "exception": null,
+    "modexp_call_count": 2,
+    "modexp_execution_gas": 400,
+    "modexp_calls": [
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      }
+    ],
+    "top_level_opcode_gas": 6125,
+    "staticcall_opcode_gas": 200,
+    "gas_markers": [
+      {
+        "pc": 440,
+        "gas_left_before": 19975116,
+        "memory_words_before": 16,
+        "top_opcode_gas_before": 1596,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19974053,
+        "memory_words_before": 38,
+        "top_opcode_gas_before": 2659,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19972826,
+        "memory_words_before": 56,
+        "top_opcode_gas_before": 3686,
+        "staticcall_gas_before": 100
+      },
+      {
+        "pc": 456,
+        "gas_left_before": 19970744,
+        "memory_words_before": 82,
+        "top_opcode_gas_before": 5568,
+        "staticcall_gas_before": 200
+      }
+    ],
+    "instrumented_arithmetic_window_gas": 4372,
+    "precompile_share_of_window_percent": 9.149130832570906,
+    "window_minus_precompile_execution_gas": 3972,
+    "window_evm_memory_expansion_gas": 211,
+    "window_memory_words_before": 16,
+    "window_memory_words_after": 82,
+    "window_staticcall_opcode_gas": 200,
+    "execution_gas_outside_window": 2153,
+    "free_memory_before_bytes": 512,
+    "free_memory_after_bytes": 2624,
+    "allocator_growth_in_window_bytes": 2112
+  },
+  "fp2": {
+    "operation": "Fp2 multiply",
+    "left_hex": "0x000000000000000000000000000000001225810f13554d7c5041c7ee58631780566ab0cc8fa08bfe92c5d9797b36ae99362bb3d6d90ab8ee542479c870188a370000000000000000000000000000000019790910ae4e26821d3a8138ca78bc9bc36376af7bfed4d3cb29033aa2ad2bc1fb80e6bb8d544c7c648a9a354c9f1382",
+    "right_hex": "0x0000000000000000000000000000000005163af04670fb368e68f880704c13b2856f783488e32a86d141f8b10fdddb66d1022a3f0bc414d9f037ffba8bcfb980000000000000000000000000000000000c48e4b45855225393d31b2561b1061e66bb2566832084b8525173fb47840e3812a01830380d3354aa83903c2ee512e3",
+    "expected_hex": "0x000000000000000000000000000000000bc23c2996d1deb90050ca6d86a8cd2865f56429b4516aa288a4753b352d7c05ec375afe0611f07552733b7e01f5edc7000000000000000000000000000000000f5a04ea7a33b09561651602d909bf4c9cb9f1fe1dac123d861a003b9494dfa56b713f56040651f935cd6b76a20fcdc0",
+    "computed_hex": "0x000000000000000000000000000000000bc23c2996d1deb90050ca6d86a8cd2865f56429b4516aa288a4753b352d7c05ec375afe0611f07552733b7e01f5edc7000000000000000000000000000000000f5a04ea7a33b09561651602d909bf4c9cb9f1fe1dac123d861a003b9494dfa56b713f56040651f935cd6b76a20fcdc0",
+    "verified": true,
+    "transaction_hash": "0x5d10fa338fa7c9cd6f995faceb333621913ed7e0c8d76daea4b6c99a2df15652",
+    "receipt_status": 1,
+    "total_gas": 45399,
+    "execution_gas": 20447,
+    "intrinsic_gas": 24952,
+    "minimum_gas_limit_including_calldata_floor": 30880,
+    "gas_refund": 0,
+    "calldata_floor_applied": false,
+    "calldata_bytes": 388,
+    "calldata_sha256": "f972ef5ccd89b8cd98af71bbda4395d55ad300231c14fbd7ab628d0330661678",
+    "local_vm_wall_ms": 13.67349999999999,
+    "evm_active_memory_words_at_exit": 305,
+    "evm_memory_expansion_cost_at_exit": 1096,
+    "exception": null,
+    "modexp_call_count": 6,
+    "modexp_execution_gas": 1200,
+    "modexp_calls": [
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      },
+      {
+        "execution_gas": 200,
+        "success": true,
+        "return_bytes": 64
+      }
+    ],
+    "top_level_opcode_gas": 19247,
+    "staticcall_opcode_gas": 600,
+    "gas_markers": [
+      {
+        "pc": 237,
+        "gas_left_before": 19971883,
+        "memory_words_before": 44,
+        "top_opcode_gas_before": 3165,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19970580,
+        "memory_words_before": 72,
+        "top_opcode_gas_before": 4468,
+        "staticcall_gas_before": 0
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19969352,
+        "memory_words_before": 90,
+        "top_opcode_gas_before": 5496,
+        "staticcall_gas_before": 100
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19965964,
+        "memory_words_before": 142,
+        "top_opcode_gas_before": 8684,
+        "staticcall_gas_before": 200
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19964721,
+        "memory_words_before": 160,
+        "top_opcode_gas_before": 9727,
+        "staticcall_gas_before": 300
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19959724,
+        "memory_words_before": 234,
+        "top_opcode_gas_before": 14524,
+        "staticcall_gas_before": 400
+      },
+      {
+        "pc": 1484,
+        "gas_left_before": 19958483,
+        "memory_words_before": 252,
+        "top_opcode_gas_before": 15565,
+        "staticcall_gas_before": 500
+      },
+      {
+        "pc": 253,
+        "gas_left_before": 19955415,
+        "memory_words_before": 290,
+        "top_opcode_gas_before": 18433,
+        "staticcall_gas_before": 600
+      }
+    ],
+    "instrumented_arithmetic_window_gas": 16468,
+    "precompile_share_of_window_percent": 7.286859363614282,
+    "window_minus_precompile_execution_gas": 15268,
+    "window_evm_memory_expansion_gas": 899,
+    "window_memory_words_before": 44,
+    "window_memory_words_after": 290,
+    "window_staticcall_opcode_gas": 600,
+    "execution_gas_outside_window": 3979,
+    "free_memory_before_bytes": 1408,
+    "free_memory_after_bytes": 9280,
+    "allocator_growth_in_window_bytes": 7872
+  },
+  "window_definition": "gasleft difference around _mul/_mul2 after canonical decode and before output encoding; includes compiler/call and measurement overhead",
+  "residual_definition": "window gas minus actual MODEXP execution gas; not a disjoint attribution to Solidity, memory or call costs",
+  "opcode_accounting": "root opcode dynamicFee already includes base/dynamic charges; add child MODEXP execution once; STATICCALL gas may overlap memory expansion and is not added twice",
+  "profiling_only": true,
+  "miller_run": false,
+  "full_miller_loop_verified_in_evm": false,
+  "evm_final_exponentiation_implemented": false,
+  "pairing_to_gt_evm_verified": false,
+  "exact_snarkpack_evm_verified": false,
+  "complete_g5c3": false,
+  "snarkpack_verification_gas": null,
+  "setup_run": false,
+  "prove_run": false,
+  "private_witness_emitted": false,
+  "next_gate": "Implement one low-level Fp multiplication variant with unchanged formula/codec; compare these same two cases before any full-Miller retry",
+  "limitations": [
+    "Isolated instrumented call-site cost is not an intrinsic per-operation constant for inlined Miller code",
+    "Only aggregate opcode/call/memory counters are collected; no exclusive source-level attribution or exhaustive algebra validation",
+    "Only one public operand pair per operation; no statistical timing sample or E2E performance claim",
+    "Allocator pointer growth is not peak EVM memory or host RSS; exit memory words/cost are separately recorded",
+    "Residual includes STATICCALL/copy/arithmetic/allocation/instrumentation and cannot be assigned entirely to any one category",
+    "No full Miller loop, pairing target or SnarkPack verification is executed by this profiling gate"
+  ]
+}

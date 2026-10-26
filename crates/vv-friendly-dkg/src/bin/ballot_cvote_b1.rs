@@ -4,7 +4,10 @@ use ark_ff::{BigInteger, PrimeField};
 use ark_groth16::{prepare_verifying_key, Groth16, ProvingKey as ArkProvingKey};
 use ark_serialize::CanonicalSerialize;
 use bellperson::groth16::{
-    aggregate::{aggregate_proofs, setup_fake_srs, verify_aggregate_proof, AggregateVersion},
+    aggregate::{
+        aggregate_proofs, setup_fake_srs, verify_aggregate_proof, AggregateProof, AggregateVersion,
+        VerifierSRS,
+    },
     prepare_verifying_key as prepare_bellperson_verifying_key,
     verify_proof as verify_bellperson_proof, Proof as BellpersonProof,
     VerifyingKey as BellpersonVerifyingKey,
@@ -247,6 +250,7 @@ struct SnarkpackResult {
     changed_second_nullifier_verify_ms: Option<f64>,
     changed_second_nullifier_rejected: Option<bool>,
     aggregation_srs_persisted: bool,
+    public_verifier_fixture: Option<String>,
     source_proofs_persisted: bool,
     full_c_vote: bool,
     real_snarkpack_code_path: bool,
@@ -361,6 +365,122 @@ fn snarkpack_transcript(statements: &[Vec<BellpersonScalar>]) -> Vec<u8> {
         }
     }
     encoded
+}
+
+// Only public verification material crosses this export boundary. In particular,
+// this does not serialize a Groth16 proving key or aggregation prover SRS.
+fn export_snarkpack_fixture(
+    path: &std::path::Path,
+    proof: &AggregateProof<BellpersonBls12>,
+    vk: &BellpersonVerifyingKey<BellpersonBls12>,
+    srs: &VerifierSRS<BellpersonBls12>,
+    statements: &[Vec<BellpersonScalar>],
+    changed_statements: &[Vec<BellpersonScalar>],
+) -> Result<(), Box<dyn Error>> {
+    let mut proof_bytes = Vec::new();
+    proof.write(&mut proof_bytes)?;
+    let mut cursor = std::io::Cursor::new(&proof_bytes);
+    let decoded = AggregateProof::<BellpersonBls12>::read(&mut cursor)?;
+    if cursor.position() as usize != proof_bytes.len() || &decoded != proof {
+        return Err("SnarkPack binary proof roundtrip failed".into());
+    }
+    let mut vk_bytes = Vec::new();
+    vk.write(&mut vk_bytes)?;
+    let mut vk_cursor = std::io::Cursor::new(&vk_bytes);
+    let decoded_vk = BellpersonVerifyingKey::<BellpersonBls12>::read(&mut vk_cursor)?;
+    if vk_cursor.position() as usize != vk_bytes.len() || &decoded_vk != vk {
+        return Err("SnarkPack source VK roundtrip failed".into());
+    }
+    let srs_json = serde_json::json!({
+        "encoding": "blstrs serde compressed point byte arrays; public verifier fields only",
+        "n": srs.n, "g": srs.g, "h": srs.h,
+        "g_alpha": srs.g_alpha, "g_beta": srs.g_beta,
+        "h_alpha": srs.h_alpha, "h_beta": srs.h_beta, "h_alpha_d": srs.h_alpha_d,
+    });
+    let decoded_srs = VerifierSRS::<BellpersonBls12> {
+        n: srs_json["n"].as_u64().ok_or("invalid verifier SRS size")? as usize,
+        g: serde_json::from_value(srs_json["g"].clone())?,
+        h: serde_json::from_value(srs_json["h"].clone())?,
+        g_alpha: serde_json::from_value(srs_json["g_alpha"].clone())?,
+        g_beta: serde_json::from_value(srs_json["g_beta"].clone())?,
+        h_alpha: serde_json::from_value(srs_json["h_alpha"].clone())?,
+        h_beta: serde_json::from_value(srs_json["h_beta"].clone())?,
+        h_alpha_d: serde_json::from_value(srs_json["h_alpha_d"].clone())?,
+    };
+    if &decoded_srs != srs || decoded_srs.n != srs.n {
+        return Err("public verifier SRS roundtrip failed".into());
+    }
+    let prepared = prepare_bellperson_verifying_key(&decoded_vk);
+    let transcript = snarkpack_transcript(statements);
+    let changed_transcript = snarkpack_transcript(changed_statements);
+    let started = Instant::now();
+    let valid = verify_aggregate_proof(
+        &decoded_srs,
+        &prepared,
+        ChaCha20Rng::seed_from_u64(SNARKPACK_VERIFY_SEED),
+        statements,
+        &decoded,
+        &transcript,
+        AggregateVersion::V2,
+    )?;
+    let verify_ms = started.elapsed().as_secs_f64() * 1000.0;
+    let rejected = !verify_aggregate_proof(
+        &decoded_srs,
+        &prepared,
+        ChaCha20Rng::seed_from_u64(SNARKPACK_VERIFY_SEED.wrapping_add(2)),
+        changed_statements,
+        &decoded,
+        &changed_transcript,
+        AggregateVersion::V2,
+    )?;
+    if !valid || !rejected {
+        return Err("decoded SnarkPack fixture acceptance boundary failed".into());
+    }
+    let encode_statements = |rows: &[Vec<BellpersonScalar>]| {
+        rows.iter()
+            .map(|row| {
+                row.iter()
+                    .map(|scalar| hex(&scalar.to_bytes_le()))
+                    .collect::<Vec<_>>()
+            })
+            .collect::<Vec<_>>()
+    };
+    let fixture = serde_json::json!({
+        "schema": "VV/G5-C1/SNARKPACK-PUBLIC-FIXTURE/v1",
+        "implementation": "bellperson 0.27.0 / blstrs 0.7.0",
+        "aggregate_version": "V2", "batch_size": srs.n,
+        "public_inputs_per_proof": statements[0].len(),
+        "git_commit": command_output("git", &["rev-parse", "HEAD"]),
+        "git_dirty": command_output("git", &["status", "--porcelain"]).is_some_and(|s| !s.is_empty()),
+        "aggregate_proof_hex": hex(&proof_bytes),
+        "aggregate_proof_bytes": proof_bytes.len(),
+        "aggregate_proof_sha256": hex(&sha256(&proof_bytes)),
+        "groth16_vk_hex": hex(&vk_bytes),
+        "groth16_vk_encoding": "bellperson VerifyingKey::write; uncompressed affine points",
+        "verifier_srs": srs_json,
+        "public_inputs_le_hex": encode_statements(statements),
+        "changed_second_nullifier_public_inputs_le_hex": encode_statements(changed_statements),
+        "external_transcript_hex": hex(&transcript),
+        "external_transcript_bytes": transcript.len(),
+        "external_transcript_sha256": hex(&sha256(&transcript)),
+        "changed_external_transcript_hex": hex(&changed_transcript),
+        "binary_proof_and_vk_roundtrip": true,
+        "public_verifier_srs_roundtrip": true,
+        "decoded_native_aggregate_verified": valid,
+        "decoded_changed_second_nullifier_rejected": rejected,
+        "decoded_native_verify_ms": verify_ms,
+        "native_verifier_rng": "deterministic ChaCha20 functional harness, not contract verification randomness",
+        "internal_transcript": "snarkpack-v1 prefix; SHA-256; bincode serde (NOT proof wire bytes); native usize counter",
+        "exact_snarkpack_evm_verified": false,
+        "production_setup": false, "private_witness_emitted": false,
+        "groth16_proving_key_emitted": false, "aggregation_prover_srs_emitted": false,
+    });
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent)?;
+    }
+    fs::write(path, serde_json::to_vec_pretty(&fixture)?)?;
+    println!("G5-C1: exported public SnarkPack wire fixture; decoded valid=true changed-nullifier-rejected=true; {}", path.display());
+    Ok(())
 }
 
 #[cfg(target_os = "macos")]
@@ -483,6 +603,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut groth16_output_path = None;
     let mut snarkpack_output_path = None;
     let mut snarkpack_distinct_output_path = None;
+    let mut snarkpack_fixture_output_path = None;
     let mut seed = DEFAULT_SEED;
     while let Some(flag) = args.next() {
         let value = args
@@ -497,12 +618,18 @@ fn main() -> Result<(), Box<dyn Error>> {
             "--snarkpack-distinct-output" => {
                 snarkpack_distinct_output_path = Some(PathBuf::from(value))
             }
+            "--snarkpack-fixture-output" => {
+                snarkpack_fixture_output_path = Some(PathBuf::from(value))
+            }
             "--seed" => seed = value.parse()?,
             _ => return Err(format!("unknown option {flag}").into()),
         }
     }
     if snarkpack_output_path.is_some() && snarkpack_distinct_output_path.is_some() {
         return Err("choose either G1-C0 or G1-C1 SnarkPack output, not both".into());
+    }
+    if snarkpack_fixture_output_path.is_some() && snarkpack_distinct_output_path.is_none() {
+        return Err("G5-C1 fixture export requires --snarkpack-distinct-output".into());
     }
 
     let manifest_bytes = fs::read(&manifest_path)?;
@@ -977,6 +1104,24 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             let mut aggregate_encoding = Vec::new();
             aggregate_proof.write(&mut aggregate_encoding)?;
+            if let Some(path) = snarkpack_fixture_output_path.as_ref() {
+                let mut changed = second_circuit.clone();
+                changed.nullifier[0] ^= 1;
+                let changed_inputs = ballot_cvote_public_inputs(&changed)
+                    .ok_or("failed to pack G5-C1 negative fixture")?;
+                let changed_statements = vec![
+                    statements[0].clone(),
+                    ark_public_inputs_to_bellperson(&changed_inputs)?,
+                ];
+                export_snarkpack_fixture(
+                    path,
+                    &aggregate_proof,
+                    &bellperson_vk,
+                    &aggregation_verifier_srs,
+                    &statements,
+                    &changed_statements,
+                )?;
+            }
             let snarkpack_report = SnarkpackResult {
                 gate: if distinct_voter_gate { "G1-C1" } else { "G1-C0" },
                 status: if distinct_voter_gate {
@@ -1087,6 +1232,8 @@ fn main() -> Result<(), Box<dyn Error>> {
                 changed_second_nullifier_verify_ms,
                 changed_second_nullifier_rejected,
                 aggregation_srs_persisted: false,
+                public_verifier_fixture: snarkpack_fixture_output_path.as_ref()
+                    .map(|path| path.display().to_string()),
                 source_proofs_persisted: false,
                 full_c_vote: true,
                 real_snarkpack_code_path: true,
@@ -1099,7 +1246,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                         "both source proofs prove the same valid G1-B2 public statement with independent Groth16 randomness"
                     },
                     "the deterministic bellperson setup_fake_srs path is suitable only for functional reproducibility, not production trust",
-                    "the arkworks proving key, source proofs, private witness and aggregation SRS are not persisted",
+                    "the arkworks proving key, source proofs, private witness and full aggregation prover SRS are not persisted; an optional public verifier fixture may be exported",
                 ],
             };
             if let Some(parent) = snarkpack_output_path.parent() {
