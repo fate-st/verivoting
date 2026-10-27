@@ -138,3 +138,19 @@ prove，也不进入最终幂。
 
 B16 仅为下一门计划，本报告不执行它、不提高上限、不推算完整验证器 Gas，也不
 升级 Manifest 能力。
+
+## 后续记录：B16 最新版 full64 在 20M 下 OOG
+
+B16 已保持本页 B15 合约、fixture 与编译设置不变，只执行一次部署和一笔
+full64 正例。交易在固定 20M 上限下以 root out-of-gas 失败：execution 为
+19,963,388 Gas、intrinsic 为 36,612 Gas，10,628 次 MODEXP 全部成功且无
+precompile 失败，OOG 时活动内存为 1,945 words，返回值为空。详见
+[G5_C3_MILLER_SUB_FULL.md](G5_C3_MILLER_SUB_FULL.md)。
+
+B16 没有重跑前缀或错误目标，也没有修改 B15 源码/runtime。它现在取代 B7
+成为最新实际完整尝试；B7 只保留为旧版本历史记录。B16 没有完成 full64，故
+完整循环验证 Gas 仍为 `null`。10,628 次成功调用不是完成比例，20M 也不是完整
+循环成本。
+
+下一步仅做这一次失败轨迹的只读归因和软件路线/预算决策，不自动重试、不增加
+上限、不继续逐原语 profiling，也不进入最终幂。

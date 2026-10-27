@@ -83,6 +83,12 @@ def main() -> int:
     g5_c3addprefix_path = raw.parent / "g5_c3_raw" / "miller_add_prefix_evm.json"
     g5_c3sub_path = raw.parent / "g5_c3_raw" / "fp2_sub_cost_profile.json"
     g5_c3sublow_path = raw.parent / "g5_c3_raw" / "fp2_sub_lowlevel_profile.json"
+    g5_c3subprefix_path = raw.parent / "g5_c3_raw" / "miller_sub_prefix_evm.json"
+    g5_c3subfull_path = raw.parent / "g5_c3_raw" / "miller_sub_full_evm.json"
+    g5_c3budget_path = raw.parent / "g5_c3_raw" / "miller_budget_review.json"
+    g5_c3attribution_path = raw.parent / "g5_c3_raw" / "miller_cost_attribution.json"
+    g5_c3route_path = raw.parent / "g5_c3_raw" / "miller_route_review.json"
+    g5_c3quarter_path = raw.parent / "g5_c3_raw" / "fp_mul_quarter_profile.json"
     required = [e2e_path, dlog_path, p1_path, dkg_path]
     if any(path is None or not path.exists() for path in required):
         print("missing raw artifacts; run `cargo run --release -p vv-bench -- all` first")
@@ -176,8 +182,10 @@ def main() -> int:
     g5_c3mem = json.loads(g5_c3mem_path.read_text()) if g5_c3mem_path.exists() else None
     g5_c3s = json.loads(g5_c3s_path.read_text()) if g5_c3s_path.exists() else None
     g5_c3ml = json.loads(g5_c3ml_path.read_text()) if g5_c3ml_path.exists() else None
-    # Latest variant actually attempted as a full loop; B9/B12 are prefix-only.
-    g5_miller_latest = g5_c3ml or g5_c3s or g5_c3mem or g5_c3m
+    g5_c3subfull = json.loads(g5_c3subfull_path.read_text()) if g5_c3subfull_path.exists() else None
+    g5_c3attribution = json.loads(g5_c3attribution_path.read_text()) if g5_c3attribution_path.exists() else None
+    # B18 is an actual full-attempt profiling replay; prefix evidence is separate.
+    g5_miller_latest = g5_c3attribution or g5_c3subfull or g5_c3ml or g5_c3s or g5_c3mem or g5_c3m
     g5_c3profile = json.loads(g5_c3profile_path.read_text()) if g5_c3profile_path.exists() else None
     g5_c3low = json.loads(g5_c3low_path.read_text()) if g5_c3low_path.exists() else None
     g5_c3fp2 = json.loads(g5_c3fp2_path.read_text()) if g5_c3fp2_path.exists() else None
@@ -187,8 +195,12 @@ def main() -> int:
     g5_c3addprefix = json.loads(g5_c3addprefix_path.read_text()) if g5_c3addprefix_path.exists() else None
     g5_c3sub = json.loads(g5_c3sub_path.read_text()) if g5_c3sub_path.exists() else None
     g5_c3sublow = json.loads(g5_c3sublow_path.read_text()) if g5_c3sublow_path.exists() else None
-    g5_prefix_latest = g5_c3addprefix or g5_c3fp2prefix or g5_miller_latest
-    g5_next_work = g5_c3sublow or g5_c3sub or g5_c3addprefix or g5_c3addlow or g5_c3add or g5_c3fp2prefix or g5_c3fp2 or g5_c3ml or g5_c3low or g5_c3profile or g5_miller_latest
+    g5_c3subprefix = json.loads(g5_c3subprefix_path.read_text()) if g5_c3subprefix_path.exists() else None
+    g5_c3budget = json.loads(g5_c3budget_path.read_text()) if g5_c3budget_path.exists() else None
+    g5_c3route = json.loads(g5_c3route_path.read_text()) if g5_c3route_path.exists() else None
+    g5_c3quarter = json.loads(g5_c3quarter_path.read_text()) if g5_c3quarter_path.exists() else None
+    g5_prefix_latest = g5_c3subprefix or g5_c3addprefix or g5_c3fp2prefix or g5_c3ml or g5_c3s or g5_c3mem or g5_c3m
+    g5_next_work = g5_c3quarter or g5_c3route or g5_c3attribution or g5_c3budget or g5_c3subfull or g5_c3subprefix or g5_c3sublow or g5_c3sub or g5_c3addprefix or g5_c3addlow or g5_c3add or g5_c3fp2prefix or g5_c3fp2 or g5_c3ml or g5_c3low or g5_c3profile or g5_miller_latest
     optimized_cp = next(
         (
             item
@@ -407,8 +419,30 @@ def main() -> int:
             "G5_C3_B14_low_allocation_fp2_sub_comparison": (
                 g5_c3sublow["status"] if g5_c3sublow else "NOT_RUN"
             ),
+            "G5_C3_B15_sub2_miller_prefix_integration": (
+                g5_c3subprefix["status"] if g5_c3subprefix else "NOT_RUN"
+            ),
+            "G5_C3_B16_latest_software_miller_full_attempt": (
+                g5_c3subfull["status"] if g5_c3subfull else "NOT_RUN"
+            ),
+            "G5_C3_B17_derived_miller_budget_review": (
+                g5_c3budget["status"] if g5_c3budget else "NOT_RUN"
+            ),
+            "G5_C3_B18_failed_full_attempt_cost_attribution": (
+                g5_c3attribution["status"] if g5_c3attribution else "NOT_RUN"
+            ),
+            "G5_C3_B19_source_and_algebra_route_review": (
+                g5_c3route["status"] if g5_c3route else "NOT_RUN"
+            ),
+            "G5_C3_B20_isolated_fp_quarter_comparison": (
+                g5_c3quarter["status"] if g5_c3quarter else "NOT_RUN"
+            ),
             "G5_C3_complete_gt_and_pairing_target_route": (
-                "PARTIAL_PASS_ADD2_PREFIX_NEW_FULL_VARIANT_UNTESTED" if g5_c3addprefix
+                "PARTIAL_PASS_FULL_MILLER_FINAL_EXPONENTIATION_PENDING"
+                if g5_c3subfull and g5_c3subfull["full_miller_loop_verified_in_evm"]
+                else "PARTIAL_PASS_SUB2_PREFIX_FULL_MILLER_BLOCKED" if g5_c3subfull
+                else "PARTIAL_PASS_SUB2_PREFIX_NEW_FULL_VARIANT_UNTESTED" if g5_c3subprefix
+                else "PARTIAL_PASS_ADD2_PREFIX_NEW_FULL_VARIANT_UNTESTED" if g5_c3addprefix
                 else "PARTIAL_PASS_FP2_PREFIX_NEW_FULL_VARIANT_UNTESTED" if g5_c3fp2prefix
                 else "PARTIAL_PASS_MILLER_LOOP_FINAL_EXPONENTIATION_PENDING"
                 if g5_miller_latest and g5_miller_latest["full_miller_loop_verified_in_evm"]
@@ -491,8 +525,15 @@ def main() -> int:
         "g5_c3b12_add2_miller_prefix_integration": g5_c3addprefix,
         "g5_c3b13_isolated_fp2_sub_cost_profile": g5_c3sub,
         "g5_c3b14_low_allocation_fp2_sub_comparison": g5_c3sublow,
+        "g5_c3b15_sub2_miller_prefix_integration": g5_c3subprefix,
+        "g5_c3b16_latest_software_miller_full_attempt": g5_c3subfull,
+        "g5_c3b17_derived_miller_budget_review": g5_c3budget,
+        "g5_c3b18_failed_full_attempt_cost_attribution": g5_c3attribution,
+        "g5_c3b19_source_and_algebra_route_review": g5_c3route,
+        "g5_c3b20_isolated_fp_quarter_comparison": g5_c3quarter,
         "g5_current_progress": {
             "latest_completed_gate": g5_next_work["gate"] if g5_next_work else None,
+            "latest_gate_is_derived_analysis": bool(g5_next_work and g5_next_work.get("derived_nonbenchmark", False)),
             "latest_prefix_gate": g5_prefix_latest["gate"] if g5_prefix_latest else None,
             "latest_full_attempt_gate": g5_miller_latest["gate"] if g5_miller_latest else None,
             "next_gate": g5_next_work["next_gate"] if g5_next_work else None,
@@ -513,10 +554,15 @@ def main() -> int:
         lines.extend([
             "## Current G5 checkpoint",
             "",
-            f"- Latest completed gate: `{g5_next_work['gate']}` / `{g5_next_work['status']}`",
+            f"- Latest recorded gate: `{g5_next_work['gate']}` / `{g5_next_work['status']}`",
             f"- Latest measured prefix: `{g5_prefix_latest['gate'] if g5_prefix_latest else 'NOT_RUN'}`; latest actual full-loop attempt: `{g5_miller_latest['gate'] if g5_miller_latest else 'NOT_RUN'}`",
             "- A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.",
             f"- Next gate: {g5_next_work['next_gate']}",
+            "",
+        ])
+    if g5_c3budget:
+        lines.extend([
+            "Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.",
             "",
         ])
     lines.extend([
@@ -1340,8 +1386,114 @@ def main() -> int:
             "- Execution/window savings do not lower the floor-limited transaction total and do not establish Miller or E2E savings.",
             f"- One modular-wrap boundary verified: `{g5_c3sublow['all_boundaries_verified']}`; `(0,0) - (1,2^256) = (p-1,p-2^256)`, excluded from performance comparison",
             f"- Arithmetic transactions / performance samples / MODEXP calls per input: `{g5_c3sublow['arithmetic_transactions']} / {g5_c3sublow['performance_comparison_samples']} / {subtraction['modexp_call_count']}`",
-            f"- Miller run / full-loop attempts / aggregate gas: `{g5_c3sublow['miller_run']} / {g5_c3sublow['full_loop_attempts']} / {g5_c3sublow['snarkpack_verification_gas']}`; latest prefix B12, actual full attempt B7",
+            f"- Miller run / full-loop attempts / aggregate gas: `{g5_c3sublow['miller_run']} / {g5_c3sublow['full_loop_attempts']} / {g5_c3sublow['snarkpack_verification_gas']}`; at B14, latest prefix was B12 and actual full attempt B7",
             f"- Next gate: {g5_next_work['next_gate']}",
+        ])
+    if g5_c3subprefix:
+        comparison = g5_c3subprefix["comparison"]
+        prefix = g5_c3subprefix["prefix_valid"]
+        lines.extend([
+            "",
+            "## G5-C3-B15 low-allocation Fp2 subtraction integrated into the Miller prefix",
+            "",
+            f"- Status: `{g5_c3subprefix['status']}`; exact B14 _sub2 integrated, all other B12 source bodies unchanged",
+            f"- Same-prefix total gas B12 -> B15: `{comparison['baseline_prefix_gas']} -> {comparison['optimized_prefix_gas']}` ({comparison['prefix_gas_reduction_percent']:.2f}% reduction)",
+            f"- Active memory B12 -> B15: `{comparison['baseline_prefix_memory_words']} -> {comparison['optimized_prefix_memory_words']}` words ({comparison['prefix_memory_reduction_percent']:.2f}% reduction)",
+            f"- Successful MODEXP calls / gas: `{prefix['modexp_success_count']} / {prefix['modexp_execution_gas']}`; count and trace unchanged",
+            f"- Complete saved prefix / wrong target rejected: `{g5_c3subprefix['prefix_correctness_verified_in_evm']} / {g5_c3subprefix['wrong_prefix_target_rejected_in_evm']}`",
+            f"- Runtime / deployment gas: `{g5_c3subprefix['runtime_bytecode_bytes']} B / {g5_c3subprefix['deployment']['total_gas']}`; increases versus B12 are 114 B / 24,694 gas",
+            f"- At B15, full attempts / full attempt were `{g5_c3subprefix['full_loop_attempts']} / {g5_c3subprefix['full_attempt']}`; its historical full source was `{g5_c3subprefix['latest_full_attempt_gate']}`",
+            "- This is a prefix-only result. The subsequent full-only B16 record determines the current full-loop status.",
+            f"- Next gate: {g5_next_work['next_gate']}",
+        ])
+    if g5_c3subfull:
+        attempt = g5_c3subfull["full_attempt"]
+        lines.extend([
+            "",
+            "## G5-C3-B16 unchanged B15 contract: one full64 attempt",
+            "",
+            f"- Status: `{g5_c3subfull['status']}`; same source/runtime, compiler, fixture and 20M transaction cap",
+            f"- Full attempts / prefix checks executed this run: `{g5_c3subfull['full_loop_attempts']} / {g5_c3subfull['prefix_checks_executed_this_run']}`",
+            f"- Actual receipt / exception / capped-or-actual total gas: `{attempt['receipt_status']} / {attempt['exception']} / {attempt['total_gas']}`",
+            f"- Execution / intrinsic gas: `{attempt['execution_gas']} / {attempt['intrinsic_gas']}`; zero refund",
+            f"- Successful / failed MODEXP calls: `{attempt['modexp_success_count']} / {attempt['modexp_failure_count']}`; child execution gas `{attempt['modexp_execution_gas']}`",
+            f"- Active memory at exit: `{attempt['evm_active_memory_words_at_exit']}` words; last observed root step `{attempt['last_root_step']}`",
+            f"- Full-loop conformance / completed-loop gas: `{g5_c3subfull['full_miller_loop_verified_in_evm']} / {g5_c3subfull['full_miller_verification_gas']}`",
+            "- Failed capped spend is not a completed-loop cost; call counts do not measure completion percentage.",
+            f"- At B16 the latest actual full attempt was B16; previous full attempt was `{g5_c3subfull['previous_full_attempt_gate']}`. B15 prefix evidence is retained.",
+            f"- EVM final exponentiation / exact SnarkPack verified: `{g5_c3subfull['evm_final_exponentiation_implemented']} / {g5_c3subfull['exact_snarkpack_evm_verified']}`; aggregate gas `{g5_c3subfull['snarkpack_verification_gas']}`",
+            f"- Next gate: {g5_next_work['next_gate']}",
+        ])
+    if g5_c3budget:
+        costs = g5_c3budget["derived_costs"]
+        terminal = g5_c3budget["last_observed_root_source"]
+        lines.extend([
+            "",
+            "## G5-C3-B17 saved-evidence budget review: derived analysis, no EVM run",
+            "",
+            f"- Status: `{g5_c3budget['status']}`; new EVM transactions: `{g5_c3budget['evm_transactions_executed']}`",
+            f"- Source-map compilation reproduces the saved runtime: `{g5_c3budget['runtime_bytecode_bytes']}` B / `{g5_c3budget['runtime_sha256']}`",
+            f"- Terminal source: PC `{terminal['pc']}`, `{terminal['source_unit']}:{terminal['line']}`, `{terminal['snippet']}`; terminal trigger only, not a cumulative hotspot",
+            f"- Saved successful MODEXP child gas / observed execution: `{costs['successful_modexp_child_gas']} / {costs['observed_execution_gas']}` ({costs['successful_modexp_child_percent_of_execution']:.4f}%)",
+            f"- Execution gas not attributed to those children: `{costs['execution_gas_not_attributed_to_successful_modexp_children']}`; not all field arithmetic",
+            f"- Memory expansion at the saved watermark: `{costs['memory_expansion_gas_at_observed_watermark']}` gas ({costs['memory_expansion_percent_of_observed_execution']:.5f}%); this is a subset, not an additional cost category",
+            "- Decision: hold arithmetic changes until one cumulative opcode/source attribution run supplies cost rankings; defer a wrapper requiring a new verifier relation.",
+            f"- At B17, latest actual full / prefix were `{g5_c3budget['latest_full_attempt_gate']} / {g5_c3budget['latest_prefix_gate']}`; full and aggregate gas remained null",
+            f"- Next gate: {g5_c3budget['next_gate']} (planned, not executed in B17)",
+        ])
+    if g5_c3attribution:
+        attribution = g5_c3attribution
+        fees = attribution["reconciliation"]
+        lines.extend([
+            "",
+            "## G5-C3-B18 same-program failed-full-attempt cost attribution",
+            "",
+            f"- Status: `{attribution['status']}`; B16 reproduction: `{attribution['reproduction_matches_b16']}`",
+            f"- Exactly `{attribution['evm_transactions_executed']}` transactions: one deployment and one unchanged full64 at 20M; no prefix/negative rerun",
+            f"- Charged root opcodes + successful MODEXP children + terminal burn: `{fees['charged_root_opcode_gas']} + {fees['successful_modexp_child_gas']} + {fees['terminal_unexecuted_opcode_burn_gas']} = {fees['accounted_execution_gas']}`; difference `{fees['difference_gas']}`",
+            f"- Root function mapping coverage: `{attribution['source_mapping']['mapped_function_percent_of_charged_root']:.2f}%`; unmapped/generated/scaffolding remain explicit",
+            "- Exclusive root function ranking (not inclusive caller cost): " + ", ".join(f"`{item['name']}` {item['charged_gas']} gas ({item['percent_of_charged_root']:.2f}%)" for item in attribution["exclusive_solidity_function_ranking"][:5]),
+            "- Opcode/function/leaf rankings are alternative partitions of the same root gas, not additive costs.",
+            f"- Current full attempt / prefix: `{attribution['gate']} / {attribution['latest_prefix_gate']}`; full-loop and exact SnarkPack remain BLOCKED, completed-loop and aggregate gas remain null",
+            f"- Next gate: {attribution['next_gate']}",
+        ])
+    if g5_c3route:
+        route = g5_c3route
+        bound = route["observed_rank_bound"]
+        planned = route["planned_validation"]
+        lines.extend([
+            "",
+            "## G5-C3-B19 saved-evidence/source/algebra route decision: no EVM run",
+            "",
+            f"- Status: `{route['status']}`; EVM transactions / arithmetic changes: `{route['evm_transactions_executed']} / {route['contract_changed']}`",
+            f"- Source-owned rank bound: _mul `{bound['mul_source_owned_gas']}` > next mapped + all unassigned `{bound['largest_other_bucket_if_all_unassigned_added']}`; margin `{bound['mul_margin_over_that_bound']}`",
+            "- At B19 one candidate was selected: fuse the two modular halvings in _mul into quarter(t) = (t + (t & 3)*p)/4 for this fixed p mod 4 = 3; B19 itself measured no implementation or gas improvement.",
+            f"- Original halfMod source bucket is only `{bound['original_halfMod_percent_of_charged_root']:.4f}%` of charged root gas; no claim that this solves the full20M budget.",
+            f"- At B19, B20 was planned, not executed: `{planned['planned_deployments']}` deployment, `{planned['planned_arithmetic_transactions']}` isolated Fp multiplies (one performance input plus four correction/carry cases). No Miller, Fp2 or extra matrix.",
+            "- If exact results or isolated-window improvement fail, stop the candidate; prefix integration and any full retry require separate gates.",
+            f"- Latest actual full / prefix remain `{route['latest_full_attempt_gate']} / {route['latest_prefix_gate']}`; full verifier remains `{route['target_verifier_status']}` with null full/aggregate gas.",
+            f"- Next gate: {route['next_gate']}",
+        ])
+    if g5_c3quarter:
+        quarter = g5_c3quarter
+        comparison = quarter["comparison"]
+        quarter_reduction = (
+            f"{comparison['window_gas_reduction_percent']:.2f}%"
+            if comparison["window_gas_reduction_percent"] is not None else "unmeasured"
+        )
+        lines.extend([
+            "",
+            "## G5-C3-B20 isolated fixed-p quarterMod multiplication comparison",
+            "",
+            f"- Status: `{quarter['status']}`; correctness/accounting: `{quarter['correctness_and_accounting_passed']}`; only _mul helper/calls and contract name differ from B6",
+            f"- Actual EVM transactions / arithmetic calls / performance samples: `{quarter['evm_transactions_executed']} / {quarter['arithmetic_transactions']} / {quarter['performance_comparison_samples']}`; four correction/carry cases excluded from performance sample",
+            f"- Same-input window B6 -> B20: `{comparison['baseline_window_gas']} -> {comparison['candidate_window_gas']}`; change `{quarter_reduction}` reduction",
+            f"- Same-input execution / total gas B6 -> B20: `{comparison['baseline_execution_gas']} -> {comparison['candidate_execution_gas']}` / `{comparison['baseline_total_gas']} -> {comparison['candidate_total_gas']}`",
+            f"- Allocator growth B6 -> B20: `{comparison['baseline_allocator_growth_bytes']} -> {comparison['candidate_allocator_growth_bytes']}` B; MODEXP count / calldata unchanged: `{comparison['modexp_count_unchanged']} / {comparison['calldata_unchanged']}`",
+            f"- Runtime B6 -> B20: `{comparison['baseline_runtime_bytes']} -> {comparison['candidate_runtime_bytes']}` B; deployment gas `{comparison['baseline_deployment_gas']} -> {comparison['candidate_deployment_gas']}`",
+            f"- Four boundaries verified / candidate accepted for a separate prefix gate: `{quarter['all_boundaries_verified']} / {quarter['candidate_accepted_for_separate_prefix_gate']}`",
+            f"- No Fp2 or Miller executed. Latest actual full / passing prefix remain `{quarter['latest_full_attempt_gate']} / {quarter['latest_prefix_gate']}`; full/aggregate verifier gas remain null and target status BLOCKED.",
+            f"- Next gate: {quarter['next_gate']}",
         ])
     lines.extend([
         "",

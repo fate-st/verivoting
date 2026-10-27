@@ -1,10 +1,11 @@
 # Next gates
 
-Current checkpoint (2026-10-26): B14's low-allocation Fp2-subtraction comparison
-passes the original input and one necessary modular-wrap boundary. The next
-experiment is B15 only: integrate the exact `_sub2` into a separate B12-based
-Miller variant and measure the original prefix pair. B12 has no full-loop
-result; the latest actual full attempt remains B7's older-version 20M OOG.
+Current checkpoint (2026-10-27): B19's zero-EVM source/algebra route review is
+complete. It selects one quarterMod candidate for isolated Fp measurement,
+without implementing it or claiming gas savings. B18 remains the latest actual
+full attempt (20M OOG); B15 remains the passing prefix. Next is B20, one saved
+performance input and four necessary correction/carry cases only. No automatic
+Miller retry or full verifier claim follows from this review.
 
 The current native core and real P1 Groth16 path pass. The remaining gates must
 be implemented in this order without substituting mocks for measurements:
@@ -197,18 +198,69 @@ The sole necessary modular-wrap boundary `(0,0)-(1,2^256)` returns
 zero MODEXP/STATICCALLs. No Miller run occurs. See
 [the B14 report](G5_C3_FP2_SUB_LOWLEVEL.md).
 
-1. G5-C3-B15: preserve B12/B14 and copy the exact B14 `_sub2` into a separate
-   B12-based Miller variant. All other source except the contract name must
-   remain unchanged. Run only the same two-step prefix positive/wrong-result
-   pair on the original fixture, and record its actual integrated gas, memory
-   and MODEXP count. The isolated 40.51% saving is not a Miller saving.
-2. Use the integrated result to decide the next step. B15 does not automatically
-   retry the full loop. Preserve the 20M cap, compiler, suite, curve, encoding
-   and Manifest; do not rerun isolated boundaries or broaden the test matrix.
-3. Full-loop EVM conformance, final exponentiation and exact GT target binding
-   still precede a full pairing/SnarkPack verifier. Keep aggregate-verifier gas
-   null until it is actually measured. No scale or proving run is needed for
-   the B15 prefix comparison.
+G5-C3-B15 completes that prefix integration with 985,557 gas (-5.58% versus
+B12), 1,905 active memory words (-8.37%) and 516 successful MODEXPs per case.
+The wrong target rejects. This is the latest passing prefix, not full-loop
+conformance. See [the B15 report](G5_C3_MILLER_SUB_PREFIX.md).
+
+G5-C3-B16 completes the planned single full64 attempt on that same source and
+runtime. It OOGs at 20M: 19,963,388 execution + 36,612 intrinsic gas. All
+10,628 MODEXPs succeed; active memory is 1,945 words. No prefix or negative
+is rerun. At that gate B16 became the latest actual full result; completed-loop gas stays
+null. See [the B16 report](G5_C3_MILLER_SUB_FULL.md).
+
+G5-C3-B17 completes the read-only attribution and route decision. Its script
+reproduces B16's runtime/source map and derives MODEXP-child share 10.6475%,
+unattributed execution 17,837,788 gas, and memory-expansion schedule cost
+13,223 gas (0.06624%). The terminal `halfMod` span is not a hotspot. The saved
+record has no cumulative opcode/source ranking, so selecting another primitive
+for optimization is unsupported. See [the B17 report](G5_C3_MILLER_BUDGET_REVIEW.md).
+
+G5-C3-B18 completes one such deployment and one unchanged full64 transaction.
+The failure endpoint and 10,628 successful MODEXPs exactly match B16. Charged
+root 17,837,786 + MODEXP child 2,125,600 + exceptional-halt remainder 2 equals
+19,963,388 execution gas with zero difference. The final SHR was not executed.
+Only aggregate counters are saved. `_mul` owns 45.14% of charged root gas;
+77.58% of root charges map to functions, while 22.42% stays in explicit
+unmapped/generated/scaffolding buckets. This exceeds the preselected 10%
+unassigned-gas candidate filter, so no automatic arithmetic edit is selected.
+See [the B18 report](G5_C3_MILLER_COST_ATTRIBUTION.md).
+
+G5-C3-B19 completes that source/algebra decision with zero EVM transactions.
+`_mul`'s 8,051,757 gas still exceeds `_add2` plus all unassigned gas
+(6,154,522). The 10% automatic filter is a heuristic, not a reason to forbid
+this manual single-candidate review. The exact B6/B15 `_mul` body has two
+modular halvings that can be expressed as `(t + (t & 3)*p)/4` for the pinned
+p mod 4 = 3. Both small-product and subsequent addition carries must be kept.
+The historical halfMod bucket is only 6.0557% of root gas; no actual savings
+or completed full64 budget is inferred. See
+[the B19 report](G5_C3_MILLER_ROUTE_REVIEW.md).
+
+### Next single gate: B20 isolated quarterMod Fp comparison
+
+1. Create a separate B6-based Fp profile variant. Change only the local helper
+   and two halfMod invocations within `_mul`, plus contract name. Preserve
+   codecs, square/MODEXP calls, memory layout, all other source bodies and
+   historical files. Do not integrate it into Miller in this gate.
+2. Use the same compiler/optimizer/Prague and budgets. Execute one deployment,
+   one original public Fp performance input, and four correctness cases only:
+   internal t = 0, p-2, p-1, 2^256-1; choose a=1, b=(t+(t&3)*p)/4. These cover
+   k=0/1/2/3 and both carries simultaneously without an extra boundary matrix.
+3. Compare against B6's saved same-input 2,167-gas window. Record exact output,
+   window and total gas, allocator growth, memory, two real MODEXPs per multiply,
+   runtime and deployment. Require canonical correct outputs, unchanged
+   allocation, exact gas accounting and a strictly lower isolated window.
+   One performance input is not a statistical benchmark; calldata-floor effects
+   must not be mislabeled as transaction savings.
+4. On failure or no isolated gain, retain the baseline and stop the candidate.
+   If it passes, a future separate gate may validate the original Miller prefix
+   pair; no full retry is automatic. No Fp2, new profiling matrix, setup/prove,
+   final exponentiation, wrapper or scale experiment belongs in B20.
+
+The 20M is the fixed experiment budget, not an established chain hard limit.
+No cap, curve, Suite or Manifest change was made in B18/B19 or belongs in B20. Full Miller conformance,
+final exponentiation, exact GT target binding and the remaining SnarkPack
+equations still precede a complete verifier; aggregate gas stays null.
 
 Subsequent gates cover SnarkPack's target-verifier compatibility and complete
 settlement bindings/data publication. The full `target_chain` Manifest entry

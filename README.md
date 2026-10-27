@@ -69,6 +69,11 @@ operation, broad crash matrices, or on-chain work as measurements.
 | G5-C3-B12 Fp2-add Miller prefix integration | Exact B11 `_add2` integrated into B9; same prefix positive/wrong-result pair | PASS prefix only; 1,043,835 gas (-7.85% vs B9), 2,079 memory words (-13.77%), 516 MODEXPs; no full-loop attempt |
 | G5-C3-B13 original Fp2-sub cost profile | Unchanged `_sub2`; one subtraction of the same public endpoint operands | PASS cost baseline only; window 1,286 gas, execution 5,296, allocator 640 B, 0 MODEXPs; total 30,880 includes 632 gas calldata-floor supplement |
 | G5-C3-B14 low-allocation Fp2-sub candidate | Only `_sub2` changes; same public input and one modular-wrap boundary | PASS isolated fixed cases; window 1,286->765 gas (-40.51%), execution 5,296->4,790, allocator 640->384 B (-40%); total stays 30,880 due to calldata floor |
+| G5-C3-B15 Fp2-sub Miller prefix integration | Exact B14 `_sub2` integrated into B12; same prefix pair | PASS prefix only; 985,557 gas (-5.58%), 1,905 memory words (-8.37%), 516 MODEXPs; wrong target rejects |
+| G5-C3-B16 latest software Miller full attempt | Unchanged B15 source/runtime; one full64 positive at the same 20M cap | BLOCKED by root OOG; 10,628 MODEXPs succeed, 1,945 memory words; 20M is capped failed spend, completed-loop gas remains null |
+| G5-C3-B17 saved-evidence budget review | Recompile source map and derive costs from saved B16 data; 0 EVM transactions | PASS analysis only; MODEXP children 10.65% of failed execution, memory expansion 13,223 gas; full verification remains BLOCKED |
+| G5-C3-B18 failed-full-attempt cost attribution | One same-program full64 profiling replay at the unchanged 20M cap | PASS attribution only; B16 OOG exactly reproduced, gas difference 0; full verification remains BLOCKED |
+| G5-C3-B19 source/algebra route review | Saved-cost and fixed-modulus review; 0 EVM transactions | PASS analysis only; select one isolated quarterMod candidate, no implementation or measured savings yet |
 | Complete target-chain settlement | SnarkPack verifier, full batch DA and settlement bindings/writes | BLOCKED; G5-A/G5-B measure local cryptographic verifiers |
 
 The P1 proof is not a substitute for P3 because the P1 score witness is not yet
@@ -324,11 +329,54 @@ count remains zero. Total transaction gas stays 30,880 as the calldata-floor
 supplement rises 632->1,138. See the
 [raw record](experiments/g5_c3_raw/fp2_sub_lowlevel_profile.json).
 
-Current checkpoint: B14's isolated comparison is complete. B12 remains the
-latest measured prefix, and B7 the latest actual full attempt. Next is B15:
-integrate the exact B14 `_sub2` into a separate B12-based Miller contract and
-measure only the original prefix positive/wrong-result pair before making a
-full-loop decision. No automatic full-loop retry is scheduled.
+[G5-C3-B15](docs/G5_C3_MILLER_SUB_PREFIX.md) completes that exact `_sub2`
+integration and original prefix pair. Gas falls 1,043,835->985,557 (-5.58%)
+and active memory 2,079->1,905 words (-8.37%). Both transactions complete all
+516 MODEXPs, and the wrong target rejects. Runtime rises 114 B and deployment
+24,694 gas. Its historical result contains zero full attempts.
+
+[G5-C3-B16](docs/G5_C3_MILLER_SUB_FULL.md) runs the unchanged B15 contract
+once through its full64 entry point, with the original fixture and 20M cap.
+`npm run --prefix contracts g5c3b16` performs one deployment and one positive
+full-loop attempt only. The actual attempt OOGs: execution 19,963,388 plus
+intrinsic 36,612 equals the 20M capped spend. All 10,628 observed MODEXPs
+succeed; active memory at exit is 1,945 words. The last root step is pc5374
+`SHR` with 2 gas left. The completed-loop gas remains null. See the
+[raw record](experiments/g5_c3_raw/miller_sub_full_evm.json).
+
+[G5-C3-B17](docs/G5_C3_MILLER_BUDGET_REVIEW.md) makes that saved-evidence
+review reproducible with `npm run --prefix contracts g5c3b17`. It executes zero
+EVM transactions. The same-runtime source map locates the terminal instruction,
+while derived costs separate 2,125,600 MODEXP-child gas from 17,837,788 gas not
+yet attributed to functions. Memory expansion at 1,945 words costs 13,223 gas.
+Neither the terminal function nor that memory watermark establishes a hotspot.
+See the [derived report](experiments/g5_c3_raw/miller_budget_review.json).
+
+[G5-C3-B18](docs/G5_C3_MILLER_COST_ATTRIBUTION.md) completes that one-run
+attribution. It exactly reproduces B16's OOG, 10,628 successful MODEXPs and
+terminal PC5374. Charged root opcodes 17,837,786 + MODEXP children 2,125,600 +
+exceptional-halt remainder 2 = 19,963,388 execution gas, with zero difference.
+`_mul` owns 8,051,757 gas (45.14% of charged root gas); 3,999,108 gas (22.42%)
+remains in explicit unmapped/generated/scaffolding buckets. Function attribution
+coverage is 77.58%; rankings are exclusive source ownership, not inclusive
+caller costs. See the [raw record](experiments/g5_c3_raw/miller_cost_attribution.json).
+
+[G5-C3-B19](docs/G5_C3_MILLER_ROUTE_REVIEW.md) completes the read-only route
+review with zero EVM transactions. Even assigning all unassigned costs to the
+next mapped function gives 6,154,522 gas, below `_mul`'s 8,051,757. That permits
+one source-derived candidate despite the earlier automatic 10% mapping filter:
+combine two modular halves into `(t + (t & 3)*p)/4` for the exact fixed modulus.
+The low-product carry and subsequent addition carry must both be preserved.
+No Solidity arithmetic or budget was changed; candidate gas remains unmeasured.
+
+Current checkpoint (2026-10-27): B19 analysis is complete. B18 remains the
+latest actual full attempt and B15 the passing prefix. Next is B20: one
+isolated Fp `_mul` comparison against B6, using one saved performance input and
+four correction/carry correctness cases only. Stop if correctness or actual
+window improvement fails; no automatic prefix integration or full retry.
+The software component still exceeds this experiment's unchanged 20M budget.
+A wrapper remains deferred until its complete verifier relation and resource
+plan are defined.
 Full Miller, final exponentiation, GT binding and exact SnarkPack remain
 unfinished; aggregate-verifier gas is null.
 

@@ -1,0 +1,103 @@
+{
+  "schema": "VV/G5-C3/MILLER-BUDGET-REVIEW/v1",
+  "gate": "G5-C3-B17",
+  "status": "PASS_DERIVED_MILLER_BUDGET_REVIEW_ONLY",
+  "classification": "derived-read-only-analysis-of-saved-evm-evidence",
+  "derived_nonbenchmark": true,
+  "evm_transactions_executed": 0,
+  "source_map_recompiled_only": true,
+  "new_evm_benchmark_run": false,
+  "recorded_at_utc": "2026-10-26T14:16:42.317Z",
+  "git_commit": "e80aa2b9fb8770653d7eb23351d27fc89b0d466f",
+  "evidence": "experiments/g5_c3_raw/miller_sub_full_evm.json",
+  "evidence_sha256": "1bace132207dd13d4fa492283ccb0d37bd6d65d53e02cc15e0044f39cde941e9",
+  "prefix_evidence": "experiments/g5_c3_raw/miller_sub_prefix_evm.json",
+  "prefix_evidence_sha256": "702ca228900fbfb5decd02ad383205b08ddadeeec8b2ebd04eb6cbd4f205ad37",
+  "previous_full_evidence": "experiments/g5_c3_raw/miller_lowlevel_evm.json",
+  "previous_full_evidence_sha256": "cdf06a719f4df41a098ce1a2ce7a4b5e4a8e2e4eb61479b044aa717da9caa7e6",
+  "analysis_source": "contracts/scripts/g5c3_miller_budget.mjs",
+  "analysis_source_sha256": "227fba03ca45aeaf40c4ac31771dca276013c5eddf6b066c1bdb5993312aaa0e",
+  "contract_source": "contracts/src/Bls12381MillerLoopSubLowLevel.sol",
+  "contract_source_sha256": "8f13f1c53c5cf3ddc8f04a8259b3944d0a9fc642897f04a3cd8e5659c596eb06",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "compiler_settings_used": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "prague",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode.object",
+          "evm.deployedBytecode.object",
+          "evm.deployedBytecode.sourceMap"
+        ]
+      }
+    }
+  },
+  "runtime_sha256": "69912b7444e21d7f8f562795063895da8243f1be400bf3333b2b925b0db58e92",
+  "runtime_bytecode_bytes": 7106,
+  "source_map_sha256": "60b66307f9fbce831f5df2c671d46d8d96bc690d06789d17aa16595ac49a1b39",
+  "last_observed_root_source": {
+    "pc": 5374,
+    "opcode": "SHR",
+    "gas_left_before": 2,
+    "memory_words_before": 1945,
+    "instruction_index": 3758,
+    "source_unit": "Bls12381MillerLoopSubLowLevel.sol",
+    "source_id": 0,
+    "byte_start": 15774,
+    "byte_length": 10,
+    "line": 355,
+    "snippet": "shr(1, hi)",
+    "interpretation": "terminal trigger only; no cumulative function hotspot attribution"
+  },
+  "derived_costs": {
+    "observed_execution_gas": 19963388,
+    "successful_modexp_child_gas": 2125600,
+    "successful_modexp_child_percent_of_execution": 10.64749129756933,
+    "execution_gas_not_attributed_to_successful_modexp_children": 17837788,
+    "memory_expansion_gas_at_observed_watermark": 13223,
+    "memory_expansion_percent_of_observed_execution": 0.06623625208306326,
+    "costs_are_from_failed_attempt_only": true
+  },
+  "budget_policy": {
+    "experiment_transaction_limit": 20000000,
+    "recorded_block_limit": 30000000,
+    "chain_hard_limit_established_by_this_analysis": false,
+    "automatic_budget_increase": false
+  },
+  "routing_decision": {
+    "software_changes": "HOLD_PENDING_CUMULATIVE_COST_ATTRIBUTION",
+    "next_gate": "G5-C3-B18",
+    "next_gate_executed": false,
+    "selected_work": "one cumulative-cost attribution experiment on the unchanged software route",
+    "reason": "saved evidence identifies root gas exhaustion but has no cumulative opcode/source ranking",
+    "wrapper_work": "DEFERRED_REQUIRES_NEW_VERIFIER_RELATION_AND_RESOURCE_PLAN",
+    "automatic_full_retry_for_success": false,
+    "automatic_arithmetic_optimization": false
+  },
+  "latest_full_attempt_gate": "G5-C3-B16",
+  "latest_prefix_gate": "G5-C3-B15",
+  "target_verifier_status": "BLOCKED_SOFTWARE_MILLER_SUB_LOWLEVEL_EXCEEDS_20M",
+  "target_verifier_status_source": "experiments/g5_c3_raw/miller_sub_full_evm.json",
+  "full_miller_loop_verified_in_evm": false,
+  "full_miller_verification_gas": null,
+  "estimated_full_gas": null,
+  "completion_percent": null,
+  "exact_snarkpack_evm_verified": false,
+  "snarkpack_verification_gas": null,
+  "protocol_capabilities_changed": false,
+  "miller_run": false,
+  "full_loop_attempts": 0,
+  "next_gate": "B18: ONE same-runtime, same-calldata, same-20M attribution run; reconcile charged root-opcode/source bins, MODEXP children and terminal gas burn before proposing any arithmetic change",
+  "limitations": [
+    "This analysis adds no EVM measurement; B16 remains the latest actual full attempt",
+    "The terminal source span is not a hotspot; unclassified root costs are not all arithmetic",
+    "Memory expansion is only its schedule cost, not all memory-related opcode cost or host RSS",
+    "Failed spend and MODEXP count do not estimate completed-loop gas or completion percentage",
+    "B18 is planned only; no change to curve, encoding, Suite, proof relation or Manifest"
+  ]
+}

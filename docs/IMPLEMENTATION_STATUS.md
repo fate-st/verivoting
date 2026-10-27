@@ -1,10 +1,11 @@
 # Implementation and claim boundary
 
-Current checkpoint (2026-10-26): B14's isolated low-allocation `_sub2`
-comparison passes the saved public input and one modular-wrap boundary.
-B12 remains the latest measured Miller prefix, and B7 the latest actual
-full-loop attempt on an older variant. Next is B15: exact `_sub2` integration
-and the original prefix pair. See the B12-B14 sections for measured scope.
+Current checkpoint (2026-10-27): B19 completes a zero-EVM source/algebra route
+review and selects one isolated quarterMod candidate, not yet implemented or
+benchmarked. B18 remains the latest actual full attempt (20M OOG) and B15 the
+passing prefix. Next is B20: one saved Fp performance input plus four necessary
+correction/carry cases only. Full retries remain paused; complete-loop gas is
+still null.
 
 ## Implemented experiment path
 
@@ -1121,6 +1122,152 @@ No full-loop retry, budget increase or proof/scale run is scheduled.
 Reproduce with `npm run --prefix contracts g5c3b14`; see
 [the B14 report](G5_C3_FP2_SUB_LOWLEVEL.md) and
 [the raw record](../experiments/g5_c3_raw/fp2_sub_lowlevel_profile.json).
+
+## G5-C3-B15 Fp2-sub Miller prefix integration
+
+The new variant replaces only `_sub2` and the contract name relative to B12,
+copying B14's exact function body. The other 51 functions remain byte-identical.
+The original positive matches the complete 768 B reference at 985,557 gas
+versus B12's 1,043,835 (5.58% less), with active memory 2,079->1,905 words
+(8.37% less). Both prefix transactions complete all 516 MODEXPs; the wrong
+target rejects at 985,375 gas. Runtime/deployment increase 114 B / 24,694 gas.
+
+Status is `PASS_SUB2_MILLER_PREFIX_INTEGRATION_ONLY`. B15 itself has zero full
+attempts and cites B7 as the then-latest historical full source. The following
+B16 tests the unchanged B15 contract through the full entry point.
+See [the B15 report](G5_C3_MILLER_SUB_PREFIX.md) and
+[the raw record](../experiments/g5_c3_raw/miller_sub_prefix_evm.json).
+
+## G5-C3-B16 unchanged B15 full64 attempt exceeds 20M
+
+One deployment and one full64 positive transaction run on the original
+fixture. Source, deployed runtime, compiler settings, curve and both Manifests
+are identical to B15. No prefix, negative, boundary or proof run is repeated.
+The transaction fails with root `out of gas`: execution 19,963,388 plus
+intrinsic 36,612 equals the fixed 20,000,000 cap, with zero refund and empty
+return. All 10,628 observed MODEXPs succeed, using 2,125,600 child gas.
+Active memory at exit is 1,945 words; the last root opcode is pc5374 `SHR`
+with only 2 gas left.
+
+Status is `BLOCKED_SOFTWARE_MILLER_SUB_LOWLEVEL_EXCEEDS_20M`. This is an
+actual current-version full attempt, replacing B7 as the latest such evidence.
+It does not verify the complete loop. The 20M is failed capped spend, not its
+completed cost, and observed MODEXP calls do not measure a completion rate.
+`full_miller_verification_gas` remains null. Final exponentiation, GT binding
+and exact SnarkPack remain unimplemented, with null aggregate-verifier gas.
+
+The next step uses this saved failure for read-only attribution and a bounded
+software-route/budget decision. There is no automatic cap increase, full-loop
+retry or further primitive-profile sequence. The 20M is an experiment budget,
+not a claimed target-chain hard limit or impossibility bound.
+Reproduce with `npm run --prefix contracts g5c3b16` in a fresh output location;
+the runner refuses to overwrite an existing full-attempt result.
+See [the B16 report](G5_C3_MILLER_SUB_FULL.md) and
+[the raw record](../experiments/g5_c3_raw/miller_sub_full_evm.json).
+
+## G5-C3-B17 reproducible saved-evidence budget review
+
+The new analysis script reads saved B16/B15/B7 evidence and recompiles the
+same Solidity source with only source-map output added. Runtime SHA/length
+match B16 exactly. Its PC decoder skips PUSH immediates and uses the compressed
+deployed source map with UTF-8 byte offsets. PC5374 maps to line355
+`shr(1, hi)`. This is only the terminal trigger; no cumulative function costs
+are present in the saved evidence.
+
+Derived values are 2,125,600 MODEXP-child gas / 19,963,388 observed execution
+(10.6475%), with 17,837,788 gas not attributed to successful MODEXP children.
+That remainder includes root execution and calls, not exclusively arithmetic.
+Memory expansion to 1,945 words costs 13,223 gas (0.06624% of execution).
+It is a subset of observed costs and does not establish all memory-opcode cost.
+
+Status is `PASS_DERIVED_MILLER_BUDGET_REVIEW_ONLY`, explicitly non-benchmark
+analysis with `evm_transactions_executed=0`. At B17 the latest full/prefix
+evidence remained B16/B15. Complete-loop gas, estimated complete gas and completion
+percentage remain null, as does SnarkPack verification gas. No capability or
+Manifest changes follow from this analytical gate.
+
+The route decision holds arithmetic changes pending one B18 cumulative-cost
+attribution run. That future run preserves B16's source/runtime/calldata and
+20M budget, changes only the observer, saves aggregate counters rather than a
+large trace, and must reconcile charged root costs + children + terminal burn.
+It stops at a cost ranking and route recommendation; no immediate optimization
+is chained to it. A new wrapper requires its own verifier relation and budget.
+Reproduce with `npm run --prefix contracts g5c3b17`; see
+[the B17 report](G5_C3_MILLER_BUDGET_REVIEW.md) and
+[the derived record](../experiments/g5_c3_raw/miller_budget_review.json).
+
+## G5-C3-B18 same-program failed-full-attempt cost attribution
+
+One deployment and one full64 call execute on the exact B16 source, runtime,
+compiler, calldata and 20M transaction cap. Only event observation and compiler
+output selection change. The OOG outcome, all 10,628 successful MODEXPs, their
+trace hash, 1,945 memory words and terminal PC5374 with 2 gas left match B16.
+
+Charged root opcodes 17,837,786 + successful MODEXP children 2,125,600 +
+exceptional-halt remainder 2 = 19,963,388 observed execution gas. Difference is
+zero, and each of the opcode/function/leaf partitions sums to the same root
+charge. These are alternative partitions, not three additive cost categories.
+The final SHR requiring 3 gas is not executed. No memory-expansion cost is
+added again to opcode fees.
+
+Exclusive source ownership ranks `_mul` first at 8,051,757 gas (45.14% of
+charged root gas), followed among mapped functions by `_add2` 2,155,414 and
+`_mul2` 1,502,129. Explicit unmapped/generated/scaffolding buckets total
+3,999,108 gas (22.42%); mapped function coverage is 77.58%. These are costs of
+the observed failed path, not inclusive call-stack costs or full64 estimates.
+
+Status `PASS_SAME_PROGRAM_FAILED_ATTEMPT_COST_ATTRIBUTION_ONLY` means only that
+the observer reproduces and reconciles the saved failure. B18 is the latest
+actual full attempt; the verifier remains
+`BLOCKED_SOFTWARE_MILLER_SUB_LOWLEVEL_EXCEEDS_20M`. Complete-loop and SnarkPack
+gas remain null. The preselected candidate filter requires less than 10%
+unassigned root gas, so it selects no automatic optimization. B19 is a
+read-only route decision, with arithmetic edits and additional VM runs paused.
+No budget, curve, Suite or Manifest changes, new negatives, final exponentiation,
+setup/prove or scale experiments were made.
+
+Run `npm run --prefix contracts g5c3b18` only when intentionally collecting a
+new archival measurement; the default output is protected against reruns.
+See [the B18 report](G5_C3_MILLER_COST_ATTRIBUTION.md) and
+[the raw record](../experiments/g5_c3_raw/miller_cost_attribution.json).
+
+## G5-C3-B19 source/algebra review selects one isolated candidate
+
+The saved B18 ranking still has 22.42% unassigned root cost. Its 10% filter was
+an automatic candidate-selection heuristic, not a correctness threshold or a
+ban on source review. `_mul` owns 8,051,757 gas, while `_add2` plus ALL
+unassigned gas reaches only 6,154,522 (margin 1,897,235). This is a bound on
+exclusive source-owned costs of the failed path, not inclusive caller costs.
+
+The exact `_mul` body matches B6's saved isolated baseline. It canonically
+reduces the difference of two modular squares, then calls halfMod twice.
+For the pinned p mod 4 = 3, let k = t & 3 for canonical t. The exact replacement
+is quarter(t) = (t + k*p)/4. The numerator is divisible by 4 and below 4p,
+so the result is canonical. The low-limb constant satisfies
+2*P_LO < 2^256 < 3*P_LO < 2*2^256, making its small-product carry equal to
+(k == 3). The subsequent low-sum carry is separate: BOTH must be added.
+
+B19 is `PASS_SOURCE_DERIVED_MUL_QUARTER_ROUTE_REVIEW_ONLY`, with zero EVM
+transactions and no Solidity arithmetic/Manifest changes. Source and parameter
+identities were checked in a Node-only analyzer; no candidate gas was measured.
+The historical halfMod bucket is only 6.0557% of root gas, so even a correct
+local improvement is not evidence of full64 fitting 20M. Full Miller, final
+exponentiation, GT binding and exact SnarkPack remain BLOCKED.
+
+B20 is planned, not run: one deployment, one original public Fp input for
+performance comparison against B6 (2,167 window gas), and four correctness
+inputs exercising k=0/1/2/3 plus both carries. These have internal reduced
+differences 0, p-2, p-1 and 2^256-1; each uses a=1 and b=quarter(t).
+Record exact output, window/total gas, allocation, memory, MODEXP count and
+runtime/deployment cost. Require exact canonical outputs, two successful
+MODEXPs per multiply, unchanged allocation, reconciled gas and lower fixed-input
+window. If any condition fails, retain baseline and stop. Prefix integration
+would be a separate gate; no Fp2, Miller, setup/prove or extra matrix is included.
+
+Reproduce the analysis with `npm run --prefix contracts g5c3b19`; the saved
+output is protected against overwrite. See
+[the B19 report](G5_C3_MILLER_ROUTE_REVIEW.md) and
+[the derived record](../experiments/g5_c3_raw/miller_route_review.json).
 
 ## Pre-DKG binding order
 
