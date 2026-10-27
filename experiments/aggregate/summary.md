@@ -4,10 +4,10 @@ Build profile(s): `dev-unoptimized`
 
 ## Current G5 checkpoint
 
-- Latest recorded gate: `G5-C3-B19` / `PASS_SOURCE_DERIVED_MUL_QUARTER_ROUTE_REVIEW_ONLY`
-- Latest measured prefix: `G5-C3-B15`; latest actual full-loop attempt: `G5-C3-B18`
+- Latest recorded gate: `G5-C3-B23` / `BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN`
+- Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -79,8 +79,12 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G5_C3_B17_derived_miller_budget_review | PASS_DERIVED_MILLER_BUDGET_REVIEW_ONLY |
 | G5_C3_B18_failed_full_attempt_cost_attribution | PASS_SAME_PROGRAM_FAILED_ATTEMPT_COST_ATTRIBUTION_ONLY |
 | G5_C3_B19_source_and_algebra_route_review | PASS_SOURCE_DERIVED_MUL_QUARTER_ROUTE_REVIEW_ONLY |
-| G5_C3_complete_gt_and_pairing_target_route | PARTIAL_PASS_SUB2_PREFIX_FULL_MILLER_BLOCKED |
-| G5_C_exact_snarkpack_target_verifier | BLOCKED_SOFTWARE_MILLER_SUB_LOWLEVEL_EXCEEDS_20M |
+| G5_C3_B20_isolated_fp_quarter_comparison | PASS_FP_QUARTER_FIXED_CASES_AND_WINDOW_REDUCTION_ONLY |
+| G5_C3_B21_quarter_mul_miller_prefix_integration | PASS_QUARTER_MILLER_PREFIX_INTEGRATION_ONLY |
+| G5_C3_B22_read_only_full_conformance_decision | PASS_DERIVED_SINGLE_FULL_CONFORMANCE_DECISION_ONLY |
+| G5_C3_B23_quarter_full_conformance_attempt | BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN |
+| G5_C3_complete_gt_and_pairing_target_route | PARTIAL_PASS_QUARTER_PREFIX_FULL_MILLER_BLOCKED_FROZEN |
+| G5_C_exact_snarkpack_target_verifier | BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN |
 | G5_target_chain | PARTIAL_PASS_G5B_LOCAL_STATE_AND_TWO_SUBSET_P3_VERIFIERS_FULL_SETTLEMENT_BLOCKED |
 
 ## Four-voter end-to-end fixture
@@ -503,7 +507,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Calldata / runtime bytes: `2500 / 3423`
 - Complete G5-C3 / pairing-to-GT / exact SnarkPack EVM: `False / False / False`
 - Complete SnarkPack verification gas: `None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B actual TIPP endpoint: host conformance, EVM route blocked
 
@@ -516,7 +520,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Resource conclusion: Implementation/API gap; no software-pairing OOG or impossibility claim has been established
 - Blocker: No audited EVM Miller loop plus final exponentiation or validated equivalent relation in repository; the boolean precompile has no arbitrary GT target input/output
 - Complete SnarkPack verification gas: `None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B2 software Miller-loop component, fixed budget
 
@@ -530,7 +534,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Full attempt active memory words at exit: `85860`
 - EVM final exponentiation / pairing-to-GT / SnarkPack: `False / False / False`
 - Complete SnarkPack verification gas: `None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B3 memory-only Miller optimization, same endpoint/budget
 
@@ -543,7 +547,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Full-attempt active memory words / executed MODEXP calls: `7203 / 5636`
 - EVM final exponentiation / pairing-to-GT / full SnarkPack: `False / False / False`
 - Complete SnarkPack verification gas: `None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B4 dedicated Fp12 square / sparse-014 line product
 
@@ -557,7 +561,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Full-attempt memory words / MODEXP calls: `5315 / 5556`
 - Final exponentiation / pairing-to-GT / SnarkPack EVM: `False / False / False`
 - Complete SnarkPack verification gas: `None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B5 isolated Fp / Fp2 cost profile
 
@@ -572,7 +576,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Full returned products match the fixed public operands' direct BigInt and Noble reference products.
 - Root opcode gas plus child MODEXP gas reconciles execution gas; call and memory counters are not mutually exclusive attribution.
 - Full Miller run / exact SnarkPack / aggregate gas: `False / False / None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B6 low-level Fp multiplication comparison
 
@@ -588,7 +592,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Complete outputs match direct BigInt and Noble; host-derived carry/borrow/odd-halving flags are not internal instruction coverage or an exhaustive arithmetic proof.
 - Gas counters reconcile; isolated cost reductions are not measured Miller-loop or end-to-end gains.
 - Full Miller run / exact SnarkPack / aggregate gas: `False / False / None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B7 low-level Fp integration into sparse Miller
 
@@ -602,7 +606,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Completed full-Miller gas: `None`; failed capped spend is not full-loop cost
 - EVM final exponentiation / pairing-to-GT / exact SnarkPack: `False / False / False`
 - Complete SnarkPack verification gas: `None`; no setup/prove or scale runs
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B8 isolated Fp2 allocation comparison
 
@@ -619,7 +623,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Fp control window remains unchanged; its total transaction gas increases slightly outside the window, not an across-the-board cost reduction.
 - Latest full-Miller attempt remains B7 at20M OOG; B8 does not promote any Miller/pairing/SnarkPack capability.
 - Miller run / exact SnarkPack / aggregate gas: `False / False / None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B9 Fp2 integration: prefix only, no full-loop retry
 
@@ -631,7 +635,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Latest actual full attempt: `G5-C3-B7`; inherited target status source: `experiments/g5_c3_raw/miller_lowlevel_evm.json`
 - B7 OOG is evidence for the previous variant; prefix savings do not establish this new variant's complete-loop correctness or gas cost.
 - Completed full-Miller / SnarkPack gas: `None / None`; final exponentiation and pairing target remain unimplemented
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B10 unchanged Fp2 addition cost localization
 
@@ -645,7 +649,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Fixed operands exercise one ordinary component sum and one reduced sum with low-limb carry/borrow; host-derived conditions, not exhaustive instruction coverage.
 - No speedup claim: this is a saved baseline. A future lower window need not lower this transaction's floor-limited total.
 - At B10, latest prefix / full attempt were B9 / `G5-C3-B7`; aggregate gas `None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B11 low-allocation Fp2 addition: isolated comparison only
 
@@ -658,7 +662,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - One equality/zero boundary verified: `True`; excluded from the one performance comparison sample
 - MODEXP calls / actual window memory-expansion gas: `0 / 39`; explicit Yul output size is not the full allocator growth
 - Miller run / full-loop attempts / aggregate-verifier gas: `False / 0 / None`; B9/B7 history unchanged
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B12 low-allocation Fp2 addition integrated into the Miller prefix
 
@@ -671,7 +675,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - New-variant full attempts / full attempt: `0 / None`; latest actual full attempt remains `G5-C3-B7` on an older variant
 - Full Miller / final exponentiation / exact SnarkPack verified: `False / False / False`; aggregate gas `None`
 - Prefix savings are measured only for the saved two-step input; full-loop cost is unknown for B12.
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B13 unchanged Fp2 subtraction: one cost baseline
 
@@ -685,7 +689,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - B13 is a profiling baseline. Candidate comparisons are recorded separately below; this window is not an inlined Miller cost.
 - Latest prefix / actual full attempt: `experiments/g5_c3_raw/miller_add_prefix_evm.json / G5-C3-B7`
 - Miller run / full-loop attempts / aggregate gas: `False / 0 / None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B14 low-allocation Fp2 subtraction: isolated comparison
 
@@ -699,7 +703,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - One modular-wrap boundary verified: `True`; `(0,0) - (1,2^256) = (p-1,p-2^256)`, excluded from performance comparison
 - Arithmetic transactions / performance samples / MODEXP calls per input: `2 / 1 / 0`
 - Miller run / full-loop attempts / aggregate gas: `False / 0 / None`; at B14, latest prefix was B12 and actual full attempt B7
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B15 low-allocation Fp2 subtraction integrated into the Miller prefix
 
@@ -711,7 +715,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Runtime / deployment gas: `7106 B / 1589758`; increases versus B12 are 114 B / 24,694 gas
 - At B15, full attempts / full attempt were `0 / None`; its historical full source was `G5-C3-B7`
 - This is a prefix-only result. The subsequent full-only B16 record determines the current full-loop status.
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B16 unchanged B15 contract: one full64 attempt
 
@@ -725,7 +729,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Failed capped spend is not a completed-loop cost; call counts do not measure completion percentage.
 - At B16 the latest actual full attempt was B16; previous full attempt was `G5-C3-B7`. B15 prefix evidence is retained.
 - EVM final exponentiation / exact SnarkPack verified: `False / False`; aggregate gas `None`
-- Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## G5-C3-B17 saved-evidence budget review: derived analysis, no EVM run
 
@@ -747,19 +751,69 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 - Root function mapping coverage: `77.58%`; unmapped/generated/scaffolding remain explicit
 - Exclusive root function ranking (not inclusive caller cost): `_mul` 8051757 gas (45.14%), `<unmapped>` 3993601 gas (22.39%), `_add2` 2155414 gas (12.08%), `_mul2` 1502129 gas (8.42%), `_sub2` 939062 gas (5.26%)
 - Opcode/function/leaf rankings are alternative partitions of the same root gas, not additive costs.
-- Current full attempt / prefix: `G5-C3-B18 / G5-C3-B15`; full-loop and exact SnarkPack remain BLOCKED, completed-loop and aggregate gas remain null
+- At B18 full attempt / prefix: `G5-C3-B18 / G5-C3-B15`; full-loop and exact SnarkPack remained BLOCKED with null completed-loop/aggregate gas
 - Next gate: B19: pause arithmetic changes; read-only route decision from this attribution, without a full retry or wrapper implementation
 
 ## G5-C3-B19 saved-evidence/source/algebra route decision: no EVM run
 
 - Status: `PASS_SOURCE_DERIVED_MUL_QUARTER_ROUTE_REVIEW_ONLY`; EVM transactions / arithmetic changes: `0 / False`
 - Source-owned rank bound: _mul `8051757` > next mapped + all unassigned `6154522`; margin `1897235`
-- Selected one candidate: fuse the two modular halvings in _mul into quarter(t) = (t + (t & 3)*p)/4 for this fixed p mod 4 = 3; implementation and gas improvement are NOT measured.
+- At B19 one candidate was selected: fuse the two modular halvings in _mul into quarter(t) = (t + (t & 3)*p)/4 for this fixed p mod 4 = 3; B19 itself measured no implementation or gas improvement.
 - Original halfMod source bucket is only `6.0557%` of charged root gas; no claim that this solves the full20M budget.
-- B20 is planned, not executed: `1` deployment, `5` isolated Fp multiplies (one performance input plus four correction/carry cases). No Miller, Fp2 or extra matrix.
+- At B19, B20 was planned, not executed: `1` deployment, `5` isolated Fp multiplies (one performance input plus four correction/carry cases). No Miller, Fp2 or extra matrix.
 - If exact results or isolated-window improvement fail, stop the candidate; prefix integration and any full retry require separate gates.
-- Latest actual full / prefix remain `G5-C3-B18 / G5-C3-B15`; full verifier remains `BLOCKED_SOFTWARE_MILLER_SUB_LOWLEVEL_EXCEEDS_20M` with null full/aggregate gas.
+- At B19 latest actual full / prefix remained `G5-C3-B18 / G5-C3-B15`; target status was `BLOCKED_SOFTWARE_MILLER_SUB_LOWLEVEL_EXCEEDS_20M` with null full/aggregate gas.
 - Next gate: B20: one isolated Fp _mul comparison replacing only the two halfMod calls with the fixed-p quarterMod; one saved operand performance case plus four correction/carry correctness cases; no Miller run
+
+## G5-C3-B20 isolated fixed-p quarterMod multiplication comparison
+
+- Status: `PASS_FP_QUARTER_FIXED_CASES_AND_WINDOW_REDUCTION_ONLY`; correctness/accounting: `True`; only _mul helper/calls and contract name differ from B6
+- Actual EVM transactions / arithmetic calls / performance samples: `6 / 5 / 1`; four correction/carry cases excluded from performance sample
+- Same-input window B6 -> B20: `2167 -> 2023`; change `6.65%` reduction
+- Same-input execution / total gas B6 -> B20: `4318 -> 4174` / `27606 -> 27462`
+- Allocator growth B6 -> B20: `384 -> 384` B; MODEXP count / calldata unchanged: `True / True`
+- Runtime B6 -> B20: `2519 -> 2491` B; deployment gas `597983 -> 591914`
+- Four boundaries verified / candidate accepted for a separate prefix gate: `True / True`
+- No Fp2 or Miller executed at B20. At that gate full / passing prefix remained `G5-C3-B18 / G5-C3-B15`; full/aggregate gas were null and target status BLOCKED.
+- Next gate: B21: integrate ONLY the exact measured quarterMod _mul into a separate B15-based Miller variant; run the same prefix positive/wrong-result pair only; no full64 retry
+
+## G5-C3-B21 exact quarterMod _mul integrated into the original Miller prefix
+
+- Status: `PASS_QUARTER_MILLER_PREFIX_INTEGRATION_ONLY`; all other B15 source bytes unchanged except contract name
+- Exactly `3` transactions: one deployment and the original prefix positive/wrong-target pair; full attempts `0`
+- Positive total gas B15 -> B21: `985557 -> 951873` (3.42% reduction)
+- Active memory B15 -> B21: `1905 -> 1905` words; MODEXP calls `516 -> 516`
+- Exact prefix / wrong target rejection / accounting: `True / True / True`
+- Runtime bytes B15 -> B21: `7106 -> 7078`; deployment gas `1589758 -> 1583679`
+- At B21 target status was `BLOCKED_QUARTER_MILLER_FULL_VARIANT_UNTESTED`; latest actual full was historical `G5-C3-B18` on a DIFFERENT variant, not a measured B21 full failure
+- No full64, boundary rerun, final exponentiation or capability promotion; full/aggregate gas and completion percentage remain null.
+- Next gate: B22: read-only stop/continue decision for the saved quarter-prefix variant; no automatic full64 retry, final exponentiation or new primitive optimization
+
+## G5-C3-B22 read-only full-conformance decision: zero EVM transactions
+
+- Status: `PASS_DERIVED_SINGLE_FULL_CONFORMANCE_DECISION_ONLY`; EVM transactions / source changes: `0 / False`
+- Decision: one bounded full64 conformance attempt on the saved quarter runtime, then stop software arithmetic/full retries on failure; not a prediction that 20M will suffice.
+- Reason: B21 covers two steps, not the complete loop/arena use or terminal negative-x conjugation; B18 OOG is a different runtime.
+- At B22, B23 was planned, NOT executed: `1` deployment + `1` full positive; transaction/block cap `20000000 / 30000000`
+- Planned success: exact `768` B full output and `14316` successful MODEXPs, zero failures and reconciled fees; only then report completed-loop gas.
+- OOG/other failure: save the actual outcome, retain null completed-loop gas and stop; do not relabel other failures as OOG or automatically increase the cap.
+- No prefix/boundary rerun, negative matrix, final exponentiation, proof generation or new profiling; full Miller/complete SnarkPack remain unverified.
+- At B22 measured prefix / actual full remained `G5-C3-B21 / G5-C3-B18`; target status was `BLOCKED_QUARTER_MILLER_FULL_VARIANT_UNTESTED`
+- Next gate: B23: ONE full64 positive on the exact saved B21 source/runtime/compiler and frozen full fixture at the same20M cap; one deployment, no prefix/boundary rerun; on failure stop software arithmetic and full retries
+
+## G5-C3-B23 same-runtime quarter full64 conformance attempt
+
+- Status / classification: `BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN / OOG`
+- Actual EVM transactions / full attempts: `2 / 1`; no prefix or boundary rerun
+- Complete full-loop verified / measured completed-loop gas: `False / None`
+- Fixed-budget software automatic optimization/retries frozen: `True`; this does not freeze unrelated project work
+- Receipt / actual exception / actual total gas: `0 / out of gas / 20000000`
+- Execution + intrinsic = total: `19963388 + 36612 = 20000000`; refund `0`
+- Successful / failed MODEXP calls and child gas: `11076 / 0 / 2215200`
+- Active EVM memory at exit: `1945` words; post-execution state `{'program_counter': 6119, 'last_opcode_byte': 87, 'gas_left_after_execution': 0, 'interpretation': 'post-execution VM state, not a pre-charge step event or cumulative source profile'}`
+- Failed capped spend is not completed-loop gas; MODEXP counts are not a completion percentage. No source/step profile or wall-time speedup comparison is claimed.
+- Target status: `BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN`; final exponentiation/GT binding/exact SnarkPack remain unverified
+- Next step: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
 
 ## Real P1 Groth16
 

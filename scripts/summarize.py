@@ -89,6 +89,9 @@ def main() -> int:
     g5_c3attribution_path = raw.parent / "g5_c3_raw" / "miller_cost_attribution.json"
     g5_c3route_path = raw.parent / "g5_c3_raw" / "miller_route_review.json"
     g5_c3quarter_path = raw.parent / "g5_c3_raw" / "fp_mul_quarter_profile.json"
+    g5_c3quarterprefix_path = raw.parent / "g5_c3_raw" / "miller_quarter_prefix_evm.json"
+    g5_c3fulldecision_path = raw.parent / "g5_c3_raw" / "miller_full_decision.json"
+    g5_c3quarterfull_path = raw.parent / "g5_c3_raw" / "miller_quarter_full_evm.json"
     required = [e2e_path, dlog_path, p1_path, dkg_path]
     if any(path is None or not path.exists() for path in required):
         print("missing raw artifacts; run `cargo run --release -p vv-bench -- all` first")
@@ -184,8 +187,9 @@ def main() -> int:
     g5_c3ml = json.loads(g5_c3ml_path.read_text()) if g5_c3ml_path.exists() else None
     g5_c3subfull = json.loads(g5_c3subfull_path.read_text()) if g5_c3subfull_path.exists() else None
     g5_c3attribution = json.loads(g5_c3attribution_path.read_text()) if g5_c3attribution_path.exists() else None
-    # B18 is an actual full-attempt profiling replay; prefix evidence is separate.
-    g5_miller_latest = g5_c3attribution or g5_c3subfull or g5_c3ml or g5_c3s or g5_c3mem or g5_c3m
+    g5_c3quarterfull = json.loads(g5_c3quarterfull_path.read_text()) if g5_c3quarterfull_path.exists() else None
+    # An actual B23 result supersedes B18; an abort must not pretend a full ran.
+    g5_miller_latest = (g5_c3quarterfull if g5_c3quarterfull and g5_c3quarterfull.get("full_attempted") else None) or g5_c3attribution or g5_c3subfull or g5_c3ml or g5_c3s or g5_c3mem or g5_c3m
     g5_c3profile = json.loads(g5_c3profile_path.read_text()) if g5_c3profile_path.exists() else None
     g5_c3low = json.loads(g5_c3low_path.read_text()) if g5_c3low_path.exists() else None
     g5_c3fp2 = json.loads(g5_c3fp2_path.read_text()) if g5_c3fp2_path.exists() else None
@@ -199,8 +203,11 @@ def main() -> int:
     g5_c3budget = json.loads(g5_c3budget_path.read_text()) if g5_c3budget_path.exists() else None
     g5_c3route = json.loads(g5_c3route_path.read_text()) if g5_c3route_path.exists() else None
     g5_c3quarter = json.loads(g5_c3quarter_path.read_text()) if g5_c3quarter_path.exists() else None
-    g5_prefix_latest = g5_c3subprefix or g5_c3addprefix or g5_c3fp2prefix or g5_c3ml or g5_c3s or g5_c3mem or g5_c3m
-    g5_next_work = g5_c3quarter or g5_c3route or g5_c3attribution or g5_c3budget or g5_c3subfull or g5_c3subprefix or g5_c3sublow or g5_c3sub or g5_c3addprefix or g5_c3addlow or g5_c3add or g5_c3fp2prefix or g5_c3fp2 or g5_c3ml or g5_c3low or g5_c3profile or g5_miller_latest
+    g5_c3quarterprefix = json.loads(g5_c3quarterprefix_path.read_text()) if g5_c3quarterprefix_path.exists() else None
+    g5_c3fulldecision = json.loads(g5_c3fulldecision_path.read_text()) if g5_c3fulldecision_path.exists() else None
+    g5_prefix_latest = (g5_c3quarterprefix if g5_c3quarterprefix and g5_c3quarterprefix["prefix_conformance_and_accounting_passed"] else None) or g5_c3subprefix or g5_c3addprefix or g5_c3fp2prefix or g5_c3ml or g5_c3s or g5_c3mem or g5_c3m
+    g5_target_latest = (g5_c3quarterfull if g5_c3quarterfull and g5_c3quarterfull.get("target_verifier_status") else None) or g5_c3quarterprefix or g5_miller_latest
+    g5_next_work = g5_c3quarterfull or g5_c3fulldecision or g5_c3quarterprefix or g5_c3quarter or g5_c3route or g5_c3attribution or g5_c3budget or g5_c3subfull or g5_c3subprefix or g5_c3sublow or g5_c3sub or g5_c3addprefix or g5_c3addlow or g5_c3add or g5_c3fp2prefix or g5_c3fp2 or g5_c3ml or g5_c3low or g5_c3profile or g5_miller_latest
     optimized_cp = next(
         (
             item
@@ -437,8 +444,23 @@ def main() -> int:
             "G5_C3_B20_isolated_fp_quarter_comparison": (
                 g5_c3quarter["status"] if g5_c3quarter else "NOT_RUN"
             ),
+            "G5_C3_B21_quarter_mul_miller_prefix_integration": (
+                g5_c3quarterprefix["status"] if g5_c3quarterprefix else "NOT_RUN"
+            ),
+            "G5_C3_B22_read_only_full_conformance_decision": (
+                g5_c3fulldecision["status"] if g5_c3fulldecision else "NOT_RUN"
+            ),
+            "G5_C3_B23_quarter_full_conformance_attempt": (
+                g5_c3quarterfull["status"] if g5_c3quarterfull else "NOT_RUN"
+            ),
             "G5_C3_complete_gt_and_pairing_target_route": (
-                "PARTIAL_PASS_FULL_MILLER_FINAL_EXPONENTIATION_PENDING"
+                "PARTIAL_PASS_FULL_QUARTER_MILLER_FINAL_EXPONENTIATION_PENDING"
+                if g5_c3quarterfull and g5_c3quarterfull["full_miller_loop_verified_in_evm"]
+                else "PARTIAL_PASS_QUARTER_PREFIX_FULL_MILLER_BLOCKED_FROZEN"
+                if g5_c3quarterfull and g5_c3quarterfull.get("full_attempted")
+                else "PARTIAL_PASS_QUARTER_PREFIX_FULL_VARIANT_UNTESTED"
+                if g5_c3quarterprefix and g5_c3quarterprefix["prefix_conformance_and_accounting_passed"]
+                else "PARTIAL_PASS_FULL_MILLER_FINAL_EXPONENTIATION_PENDING"
                 if g5_c3subfull and g5_c3subfull["full_miller_loop_verified_in_evm"]
                 else "PARTIAL_PASS_SUB2_PREFIX_FULL_MILLER_BLOCKED" if g5_c3subfull
                 else "PARTIAL_PASS_SUB2_PREFIX_NEW_FULL_VARIANT_UNTESTED" if g5_c3subprefix
@@ -454,7 +476,7 @@ def main() -> int:
                 else "PARTIAL_PASS_FP12_PRODUCT_PAIRING_TO_GT_BLOCKED" if g5_c3 else "NOT_RUN"
             ),
             "G5_C_exact_snarkpack_target_verifier": (
-                g5_miller_latest["target_verifier_status"] if g5_miller_latest
+                g5_target_latest["target_verifier_status"] if g5_target_latest
                 else g5_c3b["target_verifier_status"] if g5_c3b
                 else g5_c3["target_verifier_status"] if g5_c3
                 else g5_c2["target_verifier_status"] if g5_c2
@@ -531,11 +553,15 @@ def main() -> int:
         "g5_c3b18_failed_full_attempt_cost_attribution": g5_c3attribution,
         "g5_c3b19_source_and_algebra_route_review": g5_c3route,
         "g5_c3b20_isolated_fp_quarter_comparison": g5_c3quarter,
+        "g5_c3b21_quarter_mul_miller_prefix_integration": g5_c3quarterprefix,
+        "g5_c3b22_read_only_full_conformance_decision": g5_c3fulldecision,
+        "g5_c3b23_quarter_full_conformance_attempt": g5_c3quarterfull,
         "g5_current_progress": {
             "latest_completed_gate": g5_next_work["gate"] if g5_next_work else None,
             "latest_gate_is_derived_analysis": bool(g5_next_work and g5_next_work.get("derived_nonbenchmark", False)),
             "latest_prefix_gate": g5_prefix_latest["gate"] if g5_prefix_latest else None,
             "latest_full_attempt_gate": g5_miller_latest["gate"] if g5_miller_latest else None,
+            "fixed_budget_software_route_frozen": bool(g5_c3quarterfull and g5_c3quarterfull.get("software_route_frozen_by_failure")),
             "next_gate": g5_next_work["next_gate"] if g5_next_work else None,
         },
         "csv_rows_seen": len(csv_rows),
@@ -1454,7 +1480,7 @@ def main() -> int:
             f"- Root function mapping coverage: `{attribution['source_mapping']['mapped_function_percent_of_charged_root']:.2f}%`; unmapped/generated/scaffolding remain explicit",
             "- Exclusive root function ranking (not inclusive caller cost): " + ", ".join(f"`{item['name']}` {item['charged_gas']} gas ({item['percent_of_charged_root']:.2f}%)" for item in attribution["exclusive_solidity_function_ranking"][:5]),
             "- Opcode/function/leaf rankings are alternative partitions of the same root gas, not additive costs.",
-            f"- Current full attempt / prefix: `{attribution['gate']} / {attribution['latest_prefix_gate']}`; full-loop and exact SnarkPack remain BLOCKED, completed-loop and aggregate gas remain null",
+            f"- At B18 full attempt / prefix: `{attribution['gate']} / {attribution['latest_prefix_gate']}`; full-loop and exact SnarkPack remained BLOCKED with null completed-loop/aggregate gas",
             f"- Next gate: {attribution['next_gate']}",
         ])
     if g5_c3route:
@@ -1471,7 +1497,7 @@ def main() -> int:
             f"- Original halfMod source bucket is only `{bound['original_halfMod_percent_of_charged_root']:.4f}%` of charged root gas; no claim that this solves the full20M budget.",
             f"- At B19, B20 was planned, not executed: `{planned['planned_deployments']}` deployment, `{planned['planned_arithmetic_transactions']}` isolated Fp multiplies (one performance input plus four correction/carry cases). No Miller, Fp2 or extra matrix.",
             "- If exact results or isolated-window improvement fail, stop the candidate; prefix integration and any full retry require separate gates.",
-            f"- Latest actual full / prefix remain `{route['latest_full_attempt_gate']} / {route['latest_prefix_gate']}`; full verifier remains `{route['target_verifier_status']}` with null full/aggregate gas.",
+            f"- At B19 latest actual full / prefix remained `{route['latest_full_attempt_gate']} / {route['latest_prefix_gate']}`; target status was `{route['target_verifier_status']}` with null full/aggregate gas.",
             f"- Next gate: {route['next_gate']}",
         ])
     if g5_c3quarter:
@@ -1492,8 +1518,68 @@ def main() -> int:
             f"- Allocator growth B6 -> B20: `{comparison['baseline_allocator_growth_bytes']} -> {comparison['candidate_allocator_growth_bytes']}` B; MODEXP count / calldata unchanged: `{comparison['modexp_count_unchanged']} / {comparison['calldata_unchanged']}`",
             f"- Runtime B6 -> B20: `{comparison['baseline_runtime_bytes']} -> {comparison['candidate_runtime_bytes']}` B; deployment gas `{comparison['baseline_deployment_gas']} -> {comparison['candidate_deployment_gas']}`",
             f"- Four boundaries verified / candidate accepted for a separate prefix gate: `{quarter['all_boundaries_verified']} / {quarter['candidate_accepted_for_separate_prefix_gate']}`",
-            f"- No Fp2 or Miller executed. Latest actual full / passing prefix remain `{quarter['latest_full_attempt_gate']} / {quarter['latest_prefix_gate']}`; full/aggregate verifier gas remain null and target status BLOCKED.",
+            f"- No Fp2 or Miller executed at B20. At that gate full / passing prefix remained `{quarter['latest_full_attempt_gate']} / {quarter['latest_prefix_gate']}`; full/aggregate gas were null and target status BLOCKED.",
             f"- Next gate: {quarter['next_gate']}",
+        ])
+    if g5_c3quarterprefix:
+        integrated = g5_c3quarterprefix
+        comparison = integrated["comparison"]
+        lines.extend([
+            "",
+            "## G5-C3-B21 exact quarterMod _mul integrated into the original Miller prefix",
+            "",
+            f"- Status: `{integrated['status']}`; all other B15 source bytes unchanged except contract name",
+            f"- Exactly `{integrated['evm_transactions_executed']}` transactions: one deployment and the original prefix positive/wrong-target pair; full attempts `{integrated['full_loop_attempts']}`",
+            f"- Positive total gas B15 -> B21: `{comparison['baseline_prefix_gas']} -> {comparison['optimized_prefix_gas']}` ({comparison['prefix_gas_reduction_percent']:.2f}% reduction)",
+            f"- Active memory B15 -> B21: `{comparison['baseline_prefix_memory_words']} -> {comparison['optimized_prefix_memory_words']}` words; MODEXP calls `{comparison['baseline_prefix_modexp_calls']} -> {comparison['optimized_prefix_modexp_calls']}`",
+            f"- Exact prefix / wrong target rejection / accounting: `{integrated['prefix_correctness_verified_in_evm']} / {integrated['wrong_prefix_target_rejected_in_evm']} / {integrated['prefix_conformance_and_accounting_passed']}`",
+            f"- Runtime bytes B15 -> B21: `{comparison['baseline_runtime_bytes']} -> {comparison['optimized_runtime_bytes']}`; deployment gas `{comparison['baseline_deployment_gas']} -> {comparison['optimized_deployment_gas']}`",
+            f"- At B21 target status was `{integrated['target_verifier_status']}`; latest actual full was historical `{integrated['latest_full_attempt_gate']}` on a DIFFERENT variant, not a measured B21 full failure",
+            "- No full64, boundary rerun, final exponentiation or capability promotion; full/aggregate gas and completion percentage remain null.",
+            f"- Next gate: {integrated['next_gate']}",
+        ])
+    if g5_c3fulldecision:
+        decision = g5_c3fulldecision
+        planned = decision["planned_validation"]
+        lines.extend([
+            "",
+            "## G5-C3-B22 read-only full-conformance decision: zero EVM transactions",
+            "",
+            f"- Status: `{decision['status']}`; EVM transactions / source changes: `{decision['evm_transactions_executed']} / {decision['contract_changed']}`",
+            "- Decision: one bounded full64 conformance attempt on the saved quarter runtime, then stop software arithmetic/full retries on failure; not a prediction that 20M will suffice.",
+            "- Reason: B21 covers two steps, not the complete loop/arena use or terminal negative-x conjugation; B18 OOG is a different runtime.",
+            f"- At B22, B23 was planned, NOT executed: `{planned['deployments']}` deployment + `{planned['full_positive_transactions']}` full positive; transaction/block cap `{planned['transaction_gas_limit']} / {planned['block_gas_limit']}`",
+            f"- Planned success: exact `{planned['expected_return_payload_bytes']}` B full output and `{planned['expected_complete_modexp_calls_from_unchanged_formula']}` successful MODEXPs, zero failures and reconciled fees; only then report completed-loop gas.",
+            "- OOG/other failure: save the actual outcome, retain null completed-loop gas and stop; do not relabel other failures as OOG or automatically increase the cap.",
+            "- No prefix/boundary rerun, negative matrix, final exponentiation, proof generation or new profiling; full Miller/complete SnarkPack remain unverified.",
+            f"- At B22 measured prefix / actual full remained `{decision['latest_prefix_gate']} / {decision['latest_full_attempt_gate']}`; target status was `{decision['target_verifier_status']}`",
+            f"- Next gate: {decision['next_gate']}",
+        ])
+    if g5_c3quarterfull:
+        full = g5_c3quarterfull
+        attempt = full["full_attempt"]
+        lines.extend([
+            "",
+            "## G5-C3-B23 same-runtime quarter full64 conformance attempt",
+            "",
+            f"- Status / classification: `{full['status']} / {full['result_class']}`",
+            f"- Actual EVM transactions / full attempts: `{full['evm_transactions_executed']} / {full['full_loop_attempts']}`; no prefix or boundary rerun",
+            f"- Complete full-loop verified / measured completed-loop gas: `{full['full_miller_loop_verified_in_evm']} / {full['full_miller_verification_gas']}`",
+            f"- Fixed-budget software automatic optimization/retries frozen: `{full['software_route_frozen_by_failure']}`; this does not freeze unrelated project work",
+        ])
+        if attempt:
+            lines.extend([
+                f"- Receipt / actual exception / actual total gas: `{attempt['receipt_status']} / {attempt['exception']} / {attempt['total_gas']}`",
+                f"- Execution + intrinsic = total: `{attempt['execution_gas']} + {attempt['intrinsic_gas']} = {attempt['total_gas']}`; refund `{attempt['gas_refund']}`",
+                f"- Successful / failed MODEXP calls and child gas: `{attempt['modexp_success_count']} / {attempt['modexp_failure_count']} / {attempt['modexp_execution_gas']}`",
+                f"- Active EVM memory at exit: `{attempt['evm_active_memory_words_at_exit']}` words; post-execution state `{attempt['root_post_execution_state']}`",
+                "- Failed capped spend is not completed-loop gas; MODEXP counts are not a completion percentage. No source/step profile or wall-time speedup comparison is claimed.",
+            ])
+        else:
+            lines.append(f"- Abort/host failure evidence: `{full.get('failure_phase')} / {full.get('host_error')}`; no completed full result")
+        lines.extend([
+            f"- Target status: `{full.get('target_verifier_status', 'UNAVAILABLE_ON_ABORT')}`; final exponentiation/GT binding/exact SnarkPack remain unverified",
+            f"- Next step: {full['next_gate']}",
         ])
     lines.extend([
         "",

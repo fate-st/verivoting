@@ -146,3 +146,23 @@ python3 scripts/summarize.py experiments/raw experiments/aggregate
 `BLOCKED_SOFTWARE_MILLER_SUB_LOWLEVEL_EXCEEDS_20M`。完整 Miller、最终幂、GT
 绑定和 exact SnarkPack EVM 验证没有完成。候选实测 Gas、完整循环 Gas、完成率
 及 SnarkPack 验证 Gas 均保持 null，不从本次推导承诺 20M 内成功。
+
+## 后续记录：B20 隔离乘法已真实执行
+
+2026-10-27，B20 在独立 B6-based profile 中实现本页 quarterMod 候选，实际
+执行一次部署、一个原公开性能输入及四个校正/进位用例，六笔交易全部完成。
+五个完整规范结果及每笔费用对账通过，两次 MODEXP / 每次乘法、384B 分配及
+37 Gas 窗口内存扩张保持不变。
+
+同一公开输入的窗口为 `2,167 -> 2,023 Gas`，下降 144 Gas（6.6451%）；
+execution 为 `4,318 -> 4,174`，交易总费用为 `27,606 -> 27,462`，没有
+calldata floor 补差。runtime 为 `2,519 -> 2,491B`，部署总 Gas 为
+`597,983 -> 591,914`。四个正确性用例只用于检查，不作为额外性能样本。
+
+候选尚未集成 Miller，最新 full 仍是 B18 的 20M OOG，完整验证器继续 BLOCKED。
+本页前文保留 B19 当时的源内推导及计划背景；实测结果见
+[B20 隔离乘法报告](G5_C3_FP_MUL_QUARTER.md)。下一门 B21 仅规划将相同完整
+`_mul` 集成到独立 B15-based 版本并验收原前缀正/错对，不自动追加 full 重试。
+
+B20 raw：`experiments/g5_c3_raw/fp_mul_quarter_profile.json`，SHA-256
+`0d44c5b76b33816cf37f85aaacd52ff7170afc09cd5e92a987b10c198b5cb52c`。

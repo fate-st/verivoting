@@ -1,11 +1,11 @@
 # Implementation and claim boundary
 
-Current checkpoint (2026-10-27): B19 completes a zero-EVM source/algebra route
-review and selects one isolated quarterMod candidate, not yet implemented or
-benchmarked. B18 remains the latest actual full attempt (20M OOG) and B15 the
-passing prefix. Next is B20: one saved Fp performance input plus four necessary
-correction/carry cases only. Full retries remain paused; complete-loop gas is
-still null.
+Current checkpoint (2026-10-27): B23 executes one unchanged-runtime full64
+positive and reaches root OOG at the fixed20M cap. All 11,076 observed MODEXPs
+succeed; completed-loop gas remains unknown/null. B23 is the latest actual full
+attempt; B21 remains the passing prefix. As precommitted in B22, automatic
+arithmetic optimization/full retries on this fixed-budget software route are
+frozen. Other project work may continue without promoting verifier capabilities.
 
 ## Implemented experiment path
 
@@ -1254,7 +1254,7 @@ The historical halfMod bucket is only 6.0557% of root gas, so even a correct
 local improvement is not evidence of full64 fitting 20M. Full Miller, final
 exponentiation, GT binding and exact SnarkPack remain BLOCKED.
 
-B20 is planned, not run: one deployment, one original public Fp input for
+At B19, B20 was planned, not run: one deployment, one original public Fp input for
 performance comparison against B6 (2,167 window gas), and four correctness
 inputs exercising k=0/1/2/3 plus both carries. These have internal reduced
 differences 0, p-2, p-1 and 2^256-1; each uses a=1 and b=quarter(t).
@@ -1268,6 +1268,132 @@ Reproduce the analysis with `npm run --prefix contracts g5c3b19`; the saved
 output is protected against overwrite. See
 [the B19 report](G5_C3_MILLER_ROUTE_REVIEW.md) and
 [the derived record](../experiments/g5_c3_raw/miller_route_review.json).
+
+## G5-C3-B20 isolated quarterMod Fp multiply comparison
+
+The independent B6-based profile contract changes only its name and the local
+halfMod helper/two calls within `_mul`. All 16 other function bodies and source
+bytes are preserved. One deployment plus five arithmetic transactions execute:
+one original public performance input and four B19 correction/carry cases.
+Every complete canonical output matches direct modular multiplication and
+Noble; each call has two successful MODEXPs, 400 child gas, unchanged 384 B
+allocator growth and exact execution/transaction/window gas accounting.
+
+For the same performance input, window gas is 2,167 -> 2,023 (-6.6451%),
+execution 4,318 -> 4,174 and total 27,606 -> 27,462; calldata is unchanged.
+Window memory expansion stays 37 gas. Runtime shrinks 2,519 -> 2,491 B and
+deployment gas 597,983 -> 591,914. The four boundary calls are correctness-only,
+not additional performance samples or statistical repetitions.
+
+Status `PASS_FP_QUARTER_FIXED_CASES_AND_WINDOW_REDUCTION_ONLY` accepts exactly
+this isolated candidate. No Fp2, Miller or proving call ran at B20. See
+[the B20 report](G5_C3_FP_MUL_QUARTER.md) and
+[the real record](../experiments/g5_c3_raw/fp_mul_quarter_profile.json).
+
+## G5-C3-B21 exact measured _mul integrated into the Miller prefix
+
+The separate `Bls12381MillerLoopQuarter.sol` replaces B15's `_mul` with the
+complete B20 function byte-for-byte. All 51 other function bodies and all
+remaining source bytes are identical except the contract name. Compiler,
+fixtures, calldata, memory arena, curve, Suite and Manifest remain unchanged.
+Exactly one deployment and the original positive/wrong-target prefix pair run.
+
+The positive returns the complete saved 768 B Fp12 value. Execution 915,181 +
+intrinsic 36,692 = 951,873 gas, versus B15's 985,557 (-33,684 / -3.4178%). The
+wrong target reverts with `INVALID_MILLER_RESULT` at 951,691 gas. Both calls
+complete 516 successful MODEXPs (103,200 child gas), with zero failures/refund
+and the original trace hash. Active memory stays 1,905 words. Runtime shrinks
+7,106 -> 7,078 B; deployment gas 1,589,758 -> 1,583,679.
+
+Status `PASS_QUARTER_MILLER_PREFIX_INTEGRATION_ONLY` is prefix-only. B21 is the
+latest passing prefix, but has zero full attempts and `full_attempt=null`.
+B18 remains the latest actual full attempt on the older B15-derived runtime;
+its historical OOG is NOT a measured failure of this new quarter variant.
+Current target status is `BLOCKED_QUARTER_MILLER_FULL_VARIANT_UNTESTED`.
+Completed-loop gas, estimates, completion percentage and SnarkPack gas remain
+null. Final exponentiation, GT binding and exact SnarkPack are still missing.
+
+At B21, B22 was the next read-only stop/continue decision. No extra primitive/carry run, full64
+retry, budget increase, final exponentiation, setup/prove or capability promotion
+was chained to B21. See [the B21 report](G5_C3_MILLER_QUARTER_PREFIX.md) and
+[the real record](../experiments/g5_c3_raw/miller_quarter_prefix_evm.json).
+
+## G5-C3-B22 read-only decision: one bounded full-conformance closure
+
+The Node-only analysis rechecks saved B21/B20/B18/B16 evidence, current source,
+locks and Manifests. It does not instantiate a VM or recompile the runtime.
+The exact B21 `_mul` remains the isolated B20 function; the rest of the B15
+source is unchanged except contract name. The existing full64 entry and final
+negative-x conjugation are present, but two-step prefix execution never reaches
+the full path. Historical B18 OOG belongs to another runtime.
+
+Status `PASS_DERIVED_SINGLE_FULL_CONFORMANCE_DECISION_ONLY` means only that the
+evidence-based plan is finalized. B22 executes zero transactions and changes
+no arithmetic, Suite, budget, Manifest or protocol capability. B21/B18 remain
+the latest measured prefix/actual full; target status remains
+`BLOCKED_QUARTER_MILLER_FULL_VARIANT_UNTESTED`. Full gas, estimates, completion
+percentage and SnarkPack gas remain null.
+
+The selected B23 plan is exactly one deployment plus one full64 positive on
+B21's saved 7,078 B runtime, same source/compiler, full fixture/calldata and
+20M transaction / 30M block limits. It is a current-version evidence closure,
+not an extrapolation of prefix ratios or a success guarantee. The manuscript
+already defers complete aggregate EVM verification, so this is not required to
+support its current restricted claims; it serves the continued component work.
+
+PASS requires exact full 768 B output, 14,316 successful MODEXPs, zero child
+failures/refund and reconciled fees. Root OOG at full20M with no child failures
+is a budget failure, not a completed-loop cost. Reverts, child failures, other
+exceptions or mismatched output/count/accounting must retain their actual
+classification, not be mislabeled OOG. Preflight/deployment failure aborts setup
+without counting a full attempt.
+
+Any failure ends automatic arithmetic optimization and full retries on this
+fixed-budget software route; only read-only diagnosis follows. Success would
+establish fixed-input Miller conformance, not final exponentiation, exact GT
+binding or complete SnarkPack. No prefix/boundary rerun, negative matrix, new
+profiling or setup/prove belonged in the B23 plan. At B22, B23 had not run.
+
+See [the B22 report](G5_C3_MILLER_FULL_DECISION.md),
+[the derived record](../experiments/g5_c3_raw/miller_full_decision.json) and
+`npm run --prefix contracts g5c3b22` (the saved output is overwrite-protected).
+
+## G5-C3-B23 exact B21 full64 attempt: OOG and fixed-budget route frozen
+
+The unchanged B21 source/runtime/compiler and frozen full calldata pass the
+B22 preconditions. Exactly one deployment succeeds (7,078 B runtime,
+1,583,679 gas), then one full64 positive runs. No prefix, primitive boundary,
+negative matrix, final exponentiation or proving call is repeated.
+
+The result is strict root OOG: receipt0, exception `out of gas`, empty return,
+zero refund, and execution 19,963,388 + intrinsic 36,612 = 20,000,000 gas.
+All 11,076 observed MODEXPs succeed with 64 B returns and 200 gas each
+(2,215,200 child gas); message nesting balances and every common result check
+passes. Active memory at exit is 1,945 words. Post-execution VM state records
+PC6119/opcode byte87/gasLeft0; this is not a pre-charge step observation or a
+source hotspot profile. Wall time is not compared with B18's heavy observer.
+
+Status is `BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN` and B23 is the
+latest actual full attempt. The quarter version is tested and failed the
+fixed-input budget check, not merely full-untested; B21's prefix pass remains
+valid. Full conformance/completion flags are false. Completed-loop gas,
+estimates, completion percentage and exact SnarkPack gas remain null; neither
+the failed capped spend nor 11,076 MODEXPs is a completed-loop cost/progress
+measurement. The 20M cap is an experiment choice, not a chain impossibility
+claim or evidence that every input has the same cost.
+
+The B22 stopping rule is now in force: no automatic arithmetic optimization,
+full retry, cap increase, wrapper implementation or final-exponentiation
+experiment follows on this fixed-budget software route. The freeze does NOT
+apply to the entire project. Next is read-only alignment of the saved evidence
+with manuscript claims and selection of one independent native-batch increment;
+no new experiment has been run for that next task. Manifest capabilities and
+paper claims have not been promoted.
+
+See [the B23 report](G5_C3_MILLER_QUARTER_FULL.md) and
+[the real record](../experiments/g5_c3_raw/miller_quarter_full_evm.json).
+The default `g5c3b23` output is protected against reruns; inspect the saved
+record rather than executing it again.
 
 ## Pre-DKG binding order
 

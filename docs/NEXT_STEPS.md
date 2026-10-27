@@ -1,14 +1,15 @@
 # Next gates
 
-Current checkpoint (2026-10-27): B19's zero-EVM source/algebra route review is
-complete. It selects one quarterMod candidate for isolated Fp measurement,
-without implementing it or claiming gas savings. B18 remains the latest actual
-full attempt (20M OOG); B15 remains the passing prefix. Next is B20, one saved
-performance input and four necessary correction/carry cases only. No automatic
-Miller retry or full verifier claim follows from this review.
+Current checkpoint (2026-10-27): B23 runs the exact B21 runtime once at20M and
+reaches root OOG, with 11,076 successful MODEXPs and no child failures. B23 is
+the latest actual full attempt; B21 remains the passing prefix. Completed-loop
+gas is still unknown/null. The precommitted fixed-budget software arithmetic/
+full-retry route is now frozen. Next is read-only evidence/claim alignment and
+selection of one independent native-batch increment, not another verifier run.
 
-The current native core and real P1 Groth16 path pass. The remaining gates must
-be implemented in this order without substituting mocks for measurements:
+The current native core and real P1 Groth16 path pass. Historical gates and
+remaining boundaries are listed below. The frozen verifier subroute does not
+prevent independent native-batch work; mocks must not replace measurements.
 
 G4-B is complete for exactly two ordered subsets. One public selector binds the
 CP transcript Trustee IDs and derives the Lagrange coefficients for `{1,2,3}`
@@ -236,29 +237,59 @@ The historical halfMod bucket is only 6.0557% of root gas; no actual savings
 or completed full64 budget is inferred. See
 [the B19 report](G5_C3_MILLER_ROUTE_REVIEW.md).
 
-### Next single gate: B20 isolated quarterMod Fp comparison
+G5-C3-B20 executes exactly the planned one deployment, original Fp performance
+input and four correction/carry cases. All five complete outputs pass. On the
+same performance input, window 2,167 -> 2,023 gas (-6.6451%), execution
+4,318 -> 4,174 and total 27,606 -> 27,462; two MODEXPs, 384 B allocation and
+37 gas window memory expansion are unchanged. No Fp2 or Miller ran. See
+[the B20 report](G5_C3_FP_MUL_QUARTER.md).
 
-1. Create a separate B6-based Fp profile variant. Change only the local helper
-   and two halfMod invocations within `_mul`, plus contract name. Preserve
-   codecs, square/MODEXP calls, memory layout, all other source bodies and
-   historical files. Do not integrate it into Miller in this gate.
-2. Use the same compiler/optimizer/Prague and budgets. Execute one deployment,
-   one original public Fp performance input, and four correctness cases only:
-   internal t = 0, p-2, p-1, 2^256-1; choose a=1, b=(t+(t&3)*p)/4. These cover
-   k=0/1/2/3 and both carries simultaneously without an extra boundary matrix.
-3. Compare against B6's saved same-input 2,167-gas window. Record exact output,
-   window and total gas, allocator growth, memory, two real MODEXPs per multiply,
-   runtime and deployment. Require canonical correct outputs, unchanged
-   allocation, exact gas accounting and a strictly lower isolated window.
-   One performance input is not a statistical benchmark; calldata-floor effects
-   must not be mislabeled as transaction savings.
-4. On failure or no isolated gain, retain the baseline and stop the candidate.
-   If it passes, a future separate gate may validate the original Miller prefix
-   pair; no full retry is automatic. No Fp2, new profiling matrix, setup/prove,
-   final exponentiation, wrapper or scale experiment belongs in B20.
+G5-C3-B21 then integrates only that exact `_mul` into a separate B15-based
+contract, with all 51 other function bodies unchanged. One deployment and the
+original two prefix calls pass. Positive total gas 985,557 -> 951,873
+(-33,684 / -3.4178%); the wrong target reverts at 951,691 gas. Both retain
+1,905 memory words, 516 successful MODEXPs / 103,200 child gas and the original
+trace. Runtime 7,106 -> 7,078 B, deployment 1,589,758 -> 1,583,679 gas. No
+full64, extra boundary or primitive profiling is executed. See
+[the B21 report](G5_C3_MILLER_QUARTER_PREFIX.md).
+
+G5-C3-B22 completes that decision with zero EVM transactions. The new runtime
+still lacks full64 evidence, including later arena use and terminal negative-x
+conjugation. One bounded full call has independent information value because
+B18's historical failure cannot answer for this runtime. This is not a forecast
+from the 3.4178% prefix saving, nor a required experiment for the manuscript's
+already restricted claims. See [the B22 report](G5_C3_MILLER_FULL_DECISION.md).
+
+G5-C3-B23 executes exactly that closure: one successful deployment and one
+full64 positive on the exact B21 runtime. Receipt0/root OOG spends 20M
+(19,963,388 execution + 36,612 intrinsic), refund0 and empty return. All 11,076
+observed MODEXPs succeed (2,215,200 child gas), with 1,945 active memory words.
+No full result is returned; completed-loop gas/estimate/completion remain null.
+This new-runtime budget failure is now the latest full evidence, replacing the
+old "full untested" state. See [the B23 report](G5_C3_MILLER_QUARTER_FULL.md).
+
+The B22 failure stop is binding: no further automatic arithmetic optimization,
+full retry, increased cap, new profiler, final exponentiation or wrapper
+implementation on this fixed20M software route. Do not convert MODEXP counts or
+failed capped spend into completion percentages or full-cost estimates. Other
+paper experiments remain in scope without claiming complete target verification.
+
+### Next single task: evidence alignment and one native-batch plan (read-only)
+
+1. Keep the B23 budget failure separate from the existing native SnarkPack,
+   ballot and fixed-B=2 state-proof results. Check these against the manuscript's
+   already restricted claims; do not promote the target-chain Manifest.
+2. Inspect the current native batch interface, reusable ballot circuit/key and
+   experimental SRS limits. Select at most one batch-size increment beyond the
+   current two-distinct-voter case, with exact inputs/artifacts and minimal
+   acceptance conditions. Do not assume larger-batch compatibility is measured.
+3. This next task itself runs zero EVM/proving experiments and changes no
+   cryptography. It only selects one necessary future native experiment; no
+   scale matrix, production ceremony, new verifier architecture or purchase is
+   authorized automatically. The fixed-budget software-route freeze remains.
 
 The 20M is the fixed experiment budget, not an established chain hard limit.
-No cap, curve, Suite or Manifest change was made in B18/B19 or belongs in B20. Full Miller conformance,
+No cap, curve, Suite or Manifest change was made in B18--B23. Full Miller conformance,
 final exponentiation, exact GT target binding and the remaining SnarkPack
 equations still precede a complete verifier; aggregate gas stays null.
 

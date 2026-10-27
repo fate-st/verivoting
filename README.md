@@ -74,6 +74,10 @@ operation, broad crash matrices, or on-chain work as measurements.
 | G5-C3-B17 saved-evidence budget review | Recompile source map and derive costs from saved B16 data; 0 EVM transactions | PASS analysis only; MODEXP children 10.65% of failed execution, memory expansion 13,223 gas; full verification remains BLOCKED |
 | G5-C3-B18 failed-full-attempt cost attribution | One same-program full64 profiling replay at the unchanged 20M cap | PASS attribution only; B16 OOG exactly reproduced, gas difference 0; full verification remains BLOCKED |
 | G5-C3-B19 source/algebra route review | Saved-cost and fixed-modulus review; 0 EVM transactions | PASS analysis only; select one isolated quarterMod candidate, no implementation or measured savings yet |
+| G5-C3-B20 isolated quarterMod multiply | One saved Fp performance input and four carry/correction cases; 6 local transactions including deployment | PASS component only; window 2,167->2,023 gas (-6.65%), all five outputs correct; no Miller run |
+| G5-C3-B21 quarterMod Miller prefix integration | Exact B20 _mul in a separate B15-based contract; original prefix positive/wrong-target pair only | PASS prefix only; 985,557->951,873 gas (-3.42%), same memory/516 MODEXPs; new full64 variant untested |
+| G5-C3-B22 full-conformance decision | Read saved B18/B20/B21 evidence and unchanged full entry; 0 EVM transactions | PASS decision only; plan one same20M full64 attempt, then freeze software optimization/retries on failure; no new gas result |
+| G5-C3-B23 quarter full64 budget closure | Exact B21 runtime; one deployment and one fixed20M full positive only | BLOCKED/OOG at20M; 11,076 successful MODEXPs, zero child failures; automatic software optimization/full retries frozen |
 | Complete target-chain settlement | SnarkPack verifier, full batch DA and settlement bindings/writes | BLOCKED; G5-A/G5-B measure local cryptographic verifiers |
 
 The P1 proof is not a substitute for P3 because the P1 score witness is not yet
@@ -367,16 +371,47 @@ next mapped function gives 6,154,522 gas, below `_mul`'s 8,051,757. That permits
 one source-derived candidate despite the earlier automatic 10% mapping filter:
 combine two modular halves into `(t + (t & 3)*p)/4` for the exact fixed modulus.
 The low-product carry and subsequent addition carry must both be preserved.
-No Solidity arithmetic or budget was changed; candidate gas remains unmeasured.
+At B19 no Solidity arithmetic or budget was changed, and candidate gas was unmeasured.
 
-Current checkpoint (2026-10-27): B19 analysis is complete. B18 remains the
-latest actual full attempt and B15 the passing prefix. Next is B20: one
-isolated Fp `_mul` comparison against B6, using one saved performance input and
-four correction/carry correctness cases only. Stop if correctness or actual
-window improvement fails; no automatic prefix integration or full retry.
-The software component still exceeds this experiment's unchanged 20M budget.
-A wrapper remains deferred until its complete verifier relation and resource
-plan are defined.
+[G5-C3-B20](docs/G5_C3_FP_MUL_QUARTER.md) implements that candidate in an
+independent profile contract. All five complete Fp products pass. On the
+original performance input the window falls 2,167->2,023 gas (-6.65%), execution
+4,318->4,174 and total 27,606->27,462. Allocation remains 384 B and MODEXP calls
+remain two. The four carry/correction cases are not performance samples.
+
+[G5-C3-B21](docs/G5_C3_MILLER_QUARTER_PREFIX.md) integrates that exact `_mul`
+into a new B15-based Miller variant; all 51 other function bodies and remaining
+source bytes are unchanged except the contract name. One deployment and the
+original prefix pair pass. Positive total gas falls 985,557->951,873 (-3.42%);
+active memory stays 1,905 words and each call has 516 successful MODEXPs.
+The wrong target reverts with `INVALID_MILLER_RESULT` at 951,691 gas.
+
+[G5-C3-B22](docs/G5_C3_MILLER_FULL_DECISION.md) completes a zero-EVM decision:
+one bounded full64 attempt on the saved quarter runtime can close its remaining
+current-version evidence gap. The old full failure does not test this runtime;
+two prefix steps do not exercise the full loop or terminal conjugation.
+This is not a forecast from the 3.42% prefix saving, nor a prerequisite for the
+manuscript's existing restricted claims. On OOG or other failure, save evidence
+and freeze this fixed-budget software route's automatic arithmetic/full retries.
+
+[G5-C3-B23](docs/G5_C3_MILLER_QUARTER_FULL.md) executes that exact limited
+plan. Deployment succeeds at 1,583,679 gas with the same B21 runtime. The one
+full64 attempt hits root OOG: 19,963,388 execution + 36,612 intrinsic = 20M,
+zero refund and empty return. All 11,076 observed MODEXPs succeed (2,215,200
+child gas); active memory is 1,945 words. No prefix, boundary or full retry ran.
+
+Current checkpoint (2026-10-27): B23 is the latest actual full attempt; B21
+remains the passing prefix. The new quarter version is now tested and budget-
+blocked, not untested. Status is
+`BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN`. In accordance with B22,
+automatic arithmetic optimization and full retries on this fixed20M software
+route are frozen; the rest of the project is not frozen. Failed capped spend
+does not measure completed-loop gas or completion percentage.
+
+Next is read-only evidence/claim alignment and prioritization of the remaining
+native batch experiments. There is no automatic cap increase, new primitive
+search, final-exponentiation experiment or wrapper implementation. A different
+verifier architecture requires a new scoped decision and resource plan.
 Full Miller, final exponentiation, GT binding and exact SnarkPack remain
 unfinished; aggregate-verifier gas is null.
 
