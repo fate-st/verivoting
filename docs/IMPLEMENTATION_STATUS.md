@@ -1,10 +1,28 @@
 # Implementation and claim boundary
 
+## Latest checkpoint (2026-10-28): G5-D P3 tally-v2 local EVM
+
+Status: `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`.
+Two archived G4-C proofs are canonically decoded, natively reverified and
+converted to EIP-2537 without a new setup/prove. The unchanged Groth16 Solidity
+source accepts partial/full turnout under the v2 VK (1,331,365 / 1,331,377 gas;
+2,564 B calldata each). A changed winner and the SAME partial proof/inputs
+under the actual archived v1 VK both revert with `INVALID_GROTH16`; the
+precompile calls themselves succeed and pairing returns zero, not OOG.
+
+Two deployments plus four verification calls are measured. All ten subsets,
+registry/frozen-state equality, authenticated commitment checks, winner writes,
+full settlement and SnarkPack EVM verification remain outside this gate.
+Old G5-B gas remains historical v1 evidence. See [G5-D](G5_D_P3_V2_EVM.md) and
+`experiments/g5_d_raw/g5d_p3_v2_evm.json`. Next is native B=4 distinct-voter
+aggregation, independent of the still-frozen fixed-budget Miller route.
+
 ## Current correctness revision (2026-10-28): G4-C tally v2
 
 Status: `PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2`. One setup and both
 real 192-byte proofs pass at 6,232,037 constraints / 60 public inputs. Wrong
-winner and sum-over-bound reject; v2 EVM and other subsets remain unmeasured.
+winner and sum-over-bound reject. V2 EVM is subsequently measured in G5-D;
+other v2 subsets remain unmeasured.
 
 The former `sum(t_j) = W_registered` requirement incorrectly excluded partial
 turnout. The current shared P3-C1 relation instead constrains a private u64
@@ -21,8 +39,8 @@ records. Old VKs cannot verify v2 proofs, even though the public width remains
 manifests are preserved; a separate G4-C experiment descriptor identifies v2.
 Registration/package authentication and frozen-state checks include native
 external verification; no composed ballot/state/settlement circuit is claimed.
-The next necessary gate is the newly keyed proof through the existing local
-Groth16 EVM verifier, not another software Miller attempt.
+The newly keyed proof has subsequently passed the local Groth16 EVM gate G5-D,
+without another software Miller attempt.
 
 ## Frozen G5 subroute (historical checkpoint)
 
@@ -1446,9 +1464,10 @@ stale-session tests pass.
 - Mid-write crash recovery, remote transport and Byzantine-process tests. G3-B
   covers one orderly post-checkpoint restart over authenticated local files.
 - Complete target-chain settlement, SnarkPack EVM verification, full batch DA
-  and public-chain confirmation costs. G5-A/G5-B cover local Prague execution
+  and public-chain confirmation costs. Historical G5-A/G5-B cover local Prague execution
   of the G2-B state-proof and two-subset P3 verifiers; accepted-election-state
-  comparisons and settlement writes remain unimplemented.
+  comparisons and settlement writes remain unimplemented. G5-D adds the fixed-123
+  tally-v2 P3 verifier regression, not these missing settlement bindings.
 
 No synthetic measurements are emitted for these items. Their manifest states
 start with `BLOCKED_`, and `validate_full_submission()` refuses the manifest.

@@ -21,8 +21,16 @@ The fixed-20M software Miller/SnarkPack route remains frozen.
 
 G4-C has now passed: one fresh setup, two real 192-byte P3 proofs (full/partial
 turnout), 6,232,037 constraints and 60 public inputs. Wrong winner and excessive
-total weight reject. Only subset `{1,2,3}` was proved under v2; its EVM verifier
-and the other subsets are not measured.
+total weight reject. Only subset `{1,2,3}` was proved under v2; the other subsets
+remain unmeasured.
+
+[G5-D](docs/G5_D_P3_V2_EVM.md) now verifies both archived v2 proofs in the
+unchanged Solidity verifier on local Prague EVM: partial/full calls consume
+1,331,365 / 1,331,377 gas with 2,564-byte calldata each. Changed winner and the
+actual old v1 VK both reject. Exactly two deployments and four verification
+calls run, with no setup/prove rerun. This is verifier-level acceptance, not
+registry/frozen-state binding, settlement writes or a complete SnarkPack path.
+Next is native distinct-voter B=4 aggregation, not further software Miller work.
 
 | Area | Implementation | Reported status |
 |---|---|---|
@@ -424,8 +432,9 @@ automatic arithmetic optimization and full retries on this fixed20M software
 route are frozen; the rest of the project is not frozen. Failed capped spend
 does not measure completed-loop gas or completion percentage.
 
-That B23 next-task note is historical. The 2026-10-28 user-requested priority
-is the P3 partial-turnout correction, not a native batch-size expansion.
+That B23 next-task note is historical. The P3 partial-turnout correction and
+its v2 EVM acceptance have now passed in G4-C/G5-D. The next project task is
+native B=4 distinct-voter aggregation, independent of the frozen verifier route.
 There is no automatic cap increase, new primitive
 search, final-exponentiation experiment or wrapper implementation. A different
 verifier architecture requires a new scoped decision and resource plan.

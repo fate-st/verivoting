@@ -1,23 +1,46 @@
 # Next gates
 
-## Current project priority (2026-10-28): P3 partial-turnout correctness
+## Current checkpoint (2026-10-28): G5-D tally-v2 local EVM accepted
 
-G4-C acceptance has passed with actual setup/prove/verify results. The next
-experiment below is planned only, not executed in this gate.
+G4-C corrected partial turnout with private slack. G5-D now accepts its archived
+partial/full proofs under the new VK and rejects changed winner / actual old-VK
+mixing in local Prague EVM. Exactly two deployments plus four verify calls ran;
+there was zero setup/prove. The measured valid gas is 1,331,365 / 1,331,377,
+with 2,564 B calldata. See `docs/G5_D_P3_V2_EVM.md` and
+`experiments/g5_d_raw/g5d_p3_v2_evm.json`. No complete settlement is claimed.
 
-The newly supplied review takes priority over the former native-batch planning
-note. G4-C repairs the overly strong exact-sum tally constraint with a private
-u64 slack: `sum(t_j) + slack = W_registered`. Its minimal acceptance is one new
-setup shared by full and partial turnout proofs, a changed-winner rejection,
-and one sum-over-bound R1CS rejection. Details and measured outputs:
-`docs/G4_C_PARTIAL_TURNOUT.md` and `experiments/g4_c_raw/partial_turnout_groth16.json`.
+## Next single experiment: native distinct-voter B=4 aggregation
 
-The next **single** experiment after G4-C acceptance is to feed the new v2
-proof and new VK to the existing local Groth16 EVM verifier. Verify one valid
-partial-turnout proof and reject one changed winner; archive new v2 gas and
-calldata measurements. Do not reuse the G5-B v1 key or gas. No SnarkPack/Miller
-retry, batch-size matrix, extra fault matrix, production ceremony or deployment
-is included. All-ten-subset v2 P3 and larger batches remain separate later gates.
+This is the next implementation task, not a completed experiment. It directly
+starts the uploaded plan's native batching workflow without waiting for a
+SnarkPack EVM verifier.
+
+1. Extend the existing ballot/SnarkPack runner for exactly four DIFFERENT
+   registered voters in one region. Retain the existing HMAC PRF and region
+   constraints; construct a deterministic same-region fixture by selecting
+   voter seeds before registration, never override region bits or duplicate a
+   proof/nullifier. Use one authenticated DKG key and a pre-policy fixed before
+   that DKG. Keep candidate count 3, registered bound 10 and weights 3/2/1/4.
+2. B=4 is a functional bridge and still fits four leaves/depth 2. Do not change
+   the ballot relation/tree depth yet; B=8 will need a separately versioned
+   deeper tree. Make the native-aggregation-only B=4 descriptor explicit; do
+   not add B=4 to a global Manifest as though the B=2 state circuit supports it.
+3. Use one fresh in-memory ballot setup and four fresh ballot proofs under one
+   VK, because old proving keys/proofs were not persisted. Convert and verify
+   all four, then run a real V2 aggregate/verification with size-4 experimental
+   SRS. Preserve the old B=2 runner/schema and result files.
+4. Minimal acceptance: four valid distinct source proofs, one valid aggregate,
+   one changed LAST voter nullifier rejected against the full ordered input
+   matrix. Record actual per-ballot/total prove, individual verification,
+   aggregation/aggregate verification, proof/input byte sizes, setup/SRS timing,
+   peak RSS and exact suite/source hashes. Deterministic fake SRS is functional
+   only; no production setup or speedup is assumed.
+5. Archive independent `experiments/g1_c2_raw/` results. Stop after B=4 functional
+   acceptance; do not launch B=8--256/repetition matrices, a B=4 state proof or
+   new EVM work in the same task. The next later task is deeper-tree B=8.
+
+All-ten-subset v2 P3, B=4/8 state-circuit families with omission tests, fair
+performance baselines and full settlement remain separate later deliverables.
 
 The historical B23 fixed-budget software-route freeze below remains binding.
 
@@ -299,7 +322,7 @@ paper experiments remain in scope without claiming complete target verification.
 
 ### Superseded project-priority note: one native-batch plan (read-only)
 
-The 2026-10-28 P3 correctness request above supersedes this task selection,
+The current G4-C/G5-D acceptance and B=4 priority above supersede this task selection,
 but not the software-route freeze or the claim boundaries below.
 
 1. Keep the B23 budget failure separate from the existing native SnarkPack,

@@ -13,14 +13,24 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - The repaired relation allows total accepted vote weight below the registered bound; the slack stays private.
 - One fresh setup, full and partial turnout proofs, fixed Trustee subset `{1,2,3}` only. This is a correctness regression, not a performance comparison.
 - Old G4-B/G5-B data below are historical exact-sum-v1 measurements. The old verification key and old EVM gas do not apply to v2.
-- Next: verify the newly keyed v2 proof through the existing local EVM verifier, without reopening the frozen SnarkPack/Miller route.
+- V2 local EVM acceptance is recorded separately in G5-D below.
+
+## G5-D: P3 tally-v2 local EVM acceptance
+
+- Status: `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`; report: `docs/G5_D_P3_V2_EVM.md`.
+- Partial / full turnout valid transaction gas: `1331365 / 1331377`.
+- Wrong winner / actual old-v1-VK rejected: `True / True`.
+- Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
+- Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
+- This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
+- Next: B=4 distinct-registered-voter native SnarkPack aggregation; no SnarkPack EVM prerequisite
 
 ## Current G5 checkpoint
 
-- Latest recorded gate: `G5-C3-B23` / `BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN`
+- Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Next gate: Fixed20M software route frozen: read-only evidence/claim alignment and prioritization of other unfinished paper experiments; no arithmetic change, full retry, cap increase or wrapper implementation
+- Next gate: B=4 distinct-registered-voter native SnarkPack aggregation; no SnarkPack EVM prerequisite
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -68,11 +78,12 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G4_B_public_two_subset_p3_groth16 | PASS_G4B_REAL_GROTH16_TWO_SUBSET_PUBLIC_SELECTOR |
 | G4_C_tally_v2_full_and_partial_turnout | PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2 |
 | G4_current_tally_v2_arbitrary_subset | NOT_MEASURED |
-| G5_current_tally_v2_evm_verifier | NOT_MEASURED |
+| G5_current_tally_v2_evm_verifier | PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT |
 | G4_general_subset_p3 | PARTIAL_PASS_G4B_PUBLIC_BOUND_TWO_SUBSETS_SAME_GROTH16_SETUP |
 | G4_full_p3 | PARTIAL_PASS_G4C_TALLY_V2_FIXED_123_FULL_AND_PARTIAL_TURNOUT |
 | G5_A_local_prague_state_verifier | PASS_G5A_LOCAL_PRAGUE_G2B_GROTH16_VERIFIER |
 | G5_B_local_prague_two_subset_p3_verifier | PASS_G5B_LOCAL_PRAGUE_TWO_SUBSET_P3_GROTH16_VERIFIER |
+| G5_D_local_prague_p3_tally_v2_verifier | PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT |
 | G5_C1_snarkpack_wire_and_runtime_prerequisites | PASS_G5C1_PUBLIC_WIRE_FIXTURE_AND_PRAGUE_PRIMITIVES |
 | G5_C2_exact_internal_transcript_conformance | PASS_G5C2_OFFICIAL_INTERNAL_TRANSCRIPT_RUST_JS_CONFORMANCE |
 | G5_C3_A_fp12_product_component | PASS_G5C3_FP12_PRODUCT_COMPONENT_ONLY |
@@ -101,7 +112,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G5_C3_B23_quarter_full_conformance_attempt | BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN |
 | G5_C3_complete_gt_and_pairing_target_route | PARTIAL_PASS_QUARTER_PREFIX_FULL_MILLER_BLOCKED_FROZEN |
 | G5_C_exact_snarkpack_target_verifier | BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN |
-| G5_target_chain | PARTIAL_PASS_G5B_LOCAL_STATE_AND_TWO_SUBSET_P3_VERIFIERS_FULL_SETTLEMENT_BLOCKED |
+| G5_target_chain | PARTIAL_PASS_G5D_LOCAL_P3_TALLY_V2_AND_STATE_VERIFIERS_FULL_SETTLEMENT_BLOCKED |
 
 ## Four-voter end-to-end fixture
 

@@ -1,0 +1,88 @@
+{
+  "arch": "aarch64",
+  "build_profile": "release-opt-level-1",
+  "cargo_version": "cargo 1.99.1 (5f94df478 2026-08-27)",
+  "cases": [
+    {
+      "case_name": "full_turnout",
+      "native_proof_verified": true,
+      "native_verify_ms": 6.6432080000000004,
+      "proof_ark_compressed_bytes": 192,
+      "proof_ark_sha256": "107706e2c6879d47a6338edc69ca931c39467bba88264b727f3c9a85b23d4ea2"
+    },
+    {
+      "case_name": "partial_turnout",
+      "changed_public_input_indices": [
+        59
+      ],
+      "changed_winner_rejected": true,
+      "changed_winner_verify_ms": 5.674125,
+      "native_proof_verified": true,
+      "native_verify_ms": 5.678083,
+      "proof_ark_compressed_bytes": 192,
+      "proof_ark_sha256": "1b97ae68f9e42a6cee6bae11c89d32230df575fc0355c845b1ddcbbd475e87ad"
+    }
+  ],
+  "classification": "public-archive-native-verification-and-codec-conversion-only",
+  "evm_run": false,
+  "gate": "G5-D-public-export",
+  "git_commit": "6551be4369a44928c2777602e07bfcb3b5a151ab",
+  "git_dirty": true,
+  "limitations": [
+    "fixed subset 123 only",
+    "not an EVM result",
+    "research setup, not production",
+    "no full settlement or SnarkPack verification claim"
+  ],
+  "manifest": "configs/protocol_manifest.JUBJUB-P3-WEIGHT-V2.json",
+  "manifest_sha256": "c9813e48b669c9e77273ca4080e51062044fa1a64fce122335e882ce4aff1e21",
+  "native_negative_verification_count": 1,
+  "native_positive_verification_count": 2,
+  "os": "macos",
+  "output_fixture": "fixtures/g4c_eip2537_fixture_v2.json",
+  "output_fixture_sha256": "b611894a40ae34d29d5c6799eccc9219d2cb59b7f5516c32bb9d6c7b8c5cd903",
+  "p3_tally_relation_id": "VV/JUBJUB/P3/BOUNDED-TALLY/v2",
+  "private_witness_emitted": false,
+  "production_setup": false,
+  "proof_generation_count": 0,
+  "proof_generation_run": false,
+  "public_input_count": 60,
+  "public_second_subset": false,
+  "relation": "G4-C tally-v2 fixed-123 full/partial turnout P3",
+  "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "selected_trustees": [
+    1,
+    2,
+    3
+  ],
+  "setup_count": 0,
+  "setup_run": false,
+  "source_case_proof_digest_binding": "fixture proof_sha256 checked; source run provides lengths and VK hashes, not per-case proof hashes",
+  "source_fixture": "fixtures/jubjub_g4c_partial_turnout_v2.json",
+  "source_fixture_sha256": "b9d41ab5cce14b151ca1ad0ba21edf742199189215ea4281a829f57f0d35c4c0",
+  "source_hashes": [
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g5d_p3_v2_export.rs",
+      "sha256": "99c04fb2842de2f3a6ca87ba9799e7bd1c2b200de73a1a305bf47a95622c47b8"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/evm_export.rs",
+      "sha256": "73f1145aceb0845c64ae8527b74a5652b84172b080ecb0ceb15a6c5632fac1d1"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "sha256": "b98cbf372bbc8c731db35cb9ce999d9b02259ae7255fb3c0ab10c4031c8a9879"
+    }
+  ],
+  "source_run": "experiments/g4_c_raw/partial_turnout_groth16.json",
+  "source_run_sha256": "4979a9dc777f39a916711d85ab5e75bca48481bb066cd7b5fdaa1073290d8c1d",
+  "source_run_status": "PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2",
+  "status": "PASS_G5D_ARCHIVED_TALLY_V2_PUBLIC_EXPORT_NATIVE_REPLAY",
+  "verifying_key_ark_compressed_bytes": 3272,
+  "verifying_key_ark_sha256": "734d5a6b573b500de5b64dc90fced31036d15d26fda3118ce21e45da6326b238",
+  "winner_public_input_index": 59
+}

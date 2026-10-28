@@ -115,8 +115,10 @@ cargo +1.99.1 run --release --locked --offline \
 - 两个受影响 crate 的 `cargo +1.99.1 clippy ... --all-targets --release --locked --offline -- -D warnings` 通过。
 - 上述测试不能替代真实证明；真实证明的两个正例和两个负例已单独实测并归档。
 
-## 下一步（尚未运行）
+## 后续衔接：G5-D 已完成
 
-只将新 v2 证明和新 VK 接入**已有**本地 Groth16 EVM verifier，做一次有效证明和
-一次错误 winner 验收。不能复用旧 G5-B VK 或把其 `1,331,473 gas` 当作 v2 测量。
-这不解冻 B23 已冻结的固定 20M 软件 Miller/SnarkPack 路线，也不等于实现完整结算。
+新 v2 证明和新 VK 已接入**已有**本地 Groth16 EVM verifier；G5-D 对两种投票率
+均通过，并拒绝错误 winner 和实际旧 VK 混用。新测量见
+`docs/G5_D_P3_V2_EVM.md`，不复用旧 G5-B 的 `1,331,473 gas`。
+G4-C 本身的原始记录不变，也未重新 setup/prove。这不解冻 B23 固定 20M 软件
+Miller/SnarkPack 路线，不等于完整结算；下一项转为 B=4 原生不同选民聚合。

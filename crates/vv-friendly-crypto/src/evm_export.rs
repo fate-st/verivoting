@@ -61,6 +61,38 @@ fn proof_bytes(proof: &Proof<Bls12_381>) -> Vec<u8> {
     .concat()
 }
 
+/// Public Groth16 wire material, without assigning any application relation or
+/// mutation semantics. Callers must verify their own relation and input layout.
+#[derive(Serialize)]
+pub struct Eip2537PublicGroth16Proof {
+    pub encoding: &'static str,
+    pub curve: &'static str,
+    pub public_input_count: usize,
+    pub vk_eip2537_hex: String,
+    pub proof_neg_a_eip2537_hex: String,
+    pub public_inputs_be_hex: Vec<String>,
+}
+
+impl Eip2537PublicGroth16Proof {
+    pub fn from_proof(
+        vk: &VerifyingKey<Bls12_381>,
+        proof: &Proof<Bls12_381>,
+        inputs: &[Fr],
+    ) -> Result<Self, &'static str> {
+        if vk.gamma_abc_g1.len() != inputs.len() + 1 {
+            return Err("verifying key and public-input count differ");
+        }
+        Ok(Self {
+            encoding: "EIP-2537/Fp64BE/Fp2-c0-c1/G1-xy/G2-xy/proof-negA-B-C/v1",
+            curve: "BLS12-381",
+            public_input_count: inputs.len(),
+            vk_eip2537_hex: format!("0x{}", hex(&key_bytes(vk))),
+            proof_neg_a_eip2537_hex: format!("0x{}", hex(&proof_bytes(proof))),
+            public_inputs_be_hex: inputs.iter().map(scalar_hex).collect(),
+        })
+    }
+}
+
 #[derive(Serialize)]
 pub struct Eip2537Groth16Fixture {
     pub encoding: &'static str,

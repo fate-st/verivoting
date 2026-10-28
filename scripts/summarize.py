@@ -67,6 +67,7 @@ def main() -> int:
     g4_c_path = raw.parent / "g4_c_raw" / "partial_turnout_groth16.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
+    g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
     g5_c_path = raw.parent / "g5_c_raw" / "snarkpack_route.json"
     g5_c2_path = raw.parent / "g5_c2_raw" / "transcript_conformance.json"
     g5_c3_path = raw.parent / "g5_c3_raw" / "fp12_product_evm.json"
@@ -179,6 +180,7 @@ def main() -> int:
     g4_c = json.loads(g4_c_path.read_text()) if g4_c_path.exists() else None
     g5_a = json.loads(g5_a_path.read_text()) if g5_a_path.exists() else None
     g5_b = json.loads(g5_b_path.read_text()) if g5_b_path.exists() else None
+    g5_d = json.loads(g5_d_path.read_text()) if g5_d_path.exists() else None
     g5_c = json.loads(g5_c_path.read_text()) if g5_c_path.exists() else None
     g5_c2 = json.loads(g5_c2_path.read_text()) if g5_c2_path.exists() else None
     g5_c3 = json.loads(g5_c3_path.read_text()) if g5_c3_path.exists() else None
@@ -230,7 +232,9 @@ def main() -> int:
 
     summary = {
         "classification": (
-            "measured-research-prototype-tally-v2-full-partial-turnout-fixed-123-with-historical-v1-two-subset-and-evm-evidence"
+            "measured-research-prototype-tally-v2-fixed-123-native-and-local-evm-full-partial-turnout-no-complete-settlement"
+            if g5_d
+            else "measured-research-prototype-tally-v2-full-partial-turnout-fixed-123-with-historical-v1-two-subset-and-evm-evidence"
             if g4_c
             else "measured-native-core-real-two-subset-public-selector-p3-groth16-real-fixed-suite-ballot-groth16-distinct-voter-minimum-batch-snarkpack-fixed-b2-state-groth16-five-process-dkg-with-one-restart-and-local-prague-state-and-two-subset-p3-verifiers"
         ),
@@ -365,7 +369,9 @@ def main() -> int:
                 g4_c["status"] if g4_c else "NOT_RUN"
             ),
             "G4_current_tally_v2_arbitrary_subset": "NOT_MEASURED",
-            "G5_current_tally_v2_evm_verifier": "NOT_MEASURED",
+            "G5_current_tally_v2_evm_verifier": (
+                g5_d["status"] if g5_d else "NOT_MEASURED"
+            ),
             "G4_general_subset_p3": (
                 "PARTIAL_PASS_G4B_PUBLIC_BOUND_TWO_SUBSETS_SAME_GROTH16_SETUP"
                 if g4_b
@@ -387,6 +393,9 @@ def main() -> int:
             ),
             "G5_B_local_prague_two_subset_p3_verifier": (
                 g5_b["status"] if g5_b else "NOT_RUN"
+            ),
+            "G5_D_local_prague_p3_tally_v2_verifier": (
+                g5_d["status"] if g5_d else "NOT_RUN"
             ),
             "G5_C1_snarkpack_wire_and_runtime_prerequisites": (
                 g5_c["status"] if g5_c else "NOT_RUN"
@@ -496,7 +505,9 @@ def main() -> int:
                 else g5_c["target_verifier_status"] if g5_c else "NOT_RUN"
             ),
             "G5_target_chain": (
-                "PARTIAL_PASS_G5B_LOCAL_STATE_AND_TWO_SUBSET_P3_VERIFIERS_FULL_SETTLEMENT_BLOCKED"
+                "PARTIAL_PASS_G5D_LOCAL_P3_TALLY_V2_AND_STATE_VERIFIERS_FULL_SETTLEMENT_BLOCKED"
+                if g5_d
+                else "PARTIAL_PASS_G5B_LOCAL_STATE_AND_TWO_SUBSET_P3_VERIFIERS_FULL_SETTLEMENT_BLOCKED"
                 if g5_b
                 else "PARTIAL_PASS_G5A_LOCAL_STATE_VERIFIER_FULL_SETTLEMENT_BLOCKED"
                 if g5_a
@@ -547,11 +558,12 @@ def main() -> int:
             "current_result": str(g4_c_path) if g4_c else None,
             "legacy_g4b_and_g5b_results": "historical exact-sum v1 relation; not evidence for v2 parameters or gas",
             "v2_measured_subset": [1, 2, 3] if g4_c else None,
-            "v2_evm_measured": False,
+            "v2_evm_measured": g5_d is not None,
             "v2_all_ten_subsets_measured": False,
         },
         "g5_a_local_prague_state_verifier": g5_a,
         "g5_b_local_prague_two_subset_p3_verifier": g5_b,
+        "g5_d_local_prague_p3_tally_v2_verifier": g5_d,
         "g5_c1_snarkpack_route_prerequisites": g5_c,
         "g5_c2_internal_transcript_conformance": g5_c2,
         "g5_c3_fp12_product_component": g5_c3,
@@ -579,12 +591,13 @@ def main() -> int:
         "g5_c3b22_read_only_full_conformance_decision": g5_c3fulldecision,
         "g5_c3b23_quarter_full_conformance_attempt": g5_c3quarterfull,
         "g5_current_progress": {
-            "latest_completed_gate": g5_next_work["gate"] if g5_next_work else None,
-            "latest_gate_is_derived_analysis": bool(g5_next_work and g5_next_work.get("derived_nonbenchmark", False)),
+            "latest_completed_gate": g5_d["gate"] if g5_d else g5_next_work["gate"] if g5_next_work else None,
+            "latest_gate_is_derived_analysis": False if g5_d else bool(g5_next_work and g5_next_work.get("derived_nonbenchmark", False)),
+            "latest_software_arithmetic_gate": g5_next_work["gate"] if g5_next_work else None,
             "latest_prefix_gate": g5_prefix_latest["gate"] if g5_prefix_latest else None,
             "latest_full_attempt_gate": g5_miller_latest["gate"] if g5_miller_latest else None,
             "fixed_budget_software_route_frozen": bool(g5_c3quarterfull and g5_c3quarterfull.get("software_route_frozen_by_failure")),
-            "next_gate": g5_next_work["next_gate"] if g5_next_work else None,
+            "next_gate": g5_d["next_gate"] if g5_d else g5_next_work["next_gate"] if g5_next_work else None,
         },
         "csv_rows_seen": len(csv_rows),
         "build_profiles": build_profiles,
@@ -614,17 +627,31 @@ def main() -> int:
             "- The repaired relation allows total accepted vote weight below the registered bound; the slack stays private.",
             "- One fresh setup, full and partial turnout proofs, fixed Trustee subset `{1,2,3}` only. This is a correctness regression, not a performance comparison.",
             "- Old G4-B/G5-B data below are historical exact-sum-v1 measurements. The old verification key and old EVM gas do not apply to v2.",
-            "- Next: verify the newly keyed v2 proof through the existing local EVM verifier, without reopening the frozen SnarkPack/Miller route.",
+            "- V2 local EVM acceptance is recorded separately in G5-D below." if g5_d else "- Next: verify the newly keyed v2 proof through the existing local EVM verifier, without reopening the frozen SnarkPack/Miller route.",
             "",
         ])
-    if g5_next_work:
+    if g5_d:
+        lines.extend([
+            "## G5-D: P3 tally-v2 local EVM acceptance",
+            "",
+            f"- Status: `{g5_d['status']}`; report: `docs/G5_D_P3_V2_EVM.md`.",
+            f"- Partial / full turnout valid transaction gas: `{g5_d['valid_partial']['total_gas']} / {g5_d['valid_full']['total_gas']}`.",
+            f"- Wrong winner / actual old-v1-VK rejected: `{g5_d['changed_public_winner_rejected']} / {g5_d['legacy_v1_vk_rejected_v2_proof']}`.",
+            f"- Actual verifier calldata per valid call: `{g5_d['valid_partial']['calldata_bytes']} B`; full batch DA is not measured.",
+            f"- Transactions: `{g5_d['deployment_count']}` deployments + `{g5_d['verification_transactions']}` verification calls; setup / prove rerun: `{g5_d['setup_run']} / {g5_d['proof_generation_run']}`.",
+            "- This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.",
+            f"- Next: {g5_d['next_gate']}",
+            "",
+        ])
+    current_g5 = g5_d or g5_next_work
+    if current_g5:
         lines.extend([
             "## Current G5 checkpoint",
             "",
-            f"- Latest recorded gate: `{g5_next_work['gate']}` / `{g5_next_work['status']}`",
+            f"- Latest recorded gate: `{current_g5['gate']}` / `{current_g5['status']}`",
             f"- Latest measured prefix: `{g5_prefix_latest['gate'] if g5_prefix_latest else 'NOT_RUN'}`; latest actual full-loop attempt: `{g5_miller_latest['gate'] if g5_miller_latest else 'NOT_RUN'}`",
             "- A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.",
-            f"- Next gate: {g5_next_work['next_gate']}",
+            f"- Next gate: {current_g5['next_gate']}",
             "",
         ])
     if g5_c3budget:
