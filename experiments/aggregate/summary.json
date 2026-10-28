@@ -1,5 +1,5 @@
 {
-  "classification": "measured-research-prototype-tally-v2-fixed-123-native-and-local-evm-full-partial-turnout-no-complete-settlement",
+  "classification": "measured-research-prototype-native-four-distinct-voter-snarkpack-fixed-b2-state-and-fixed123-p3-v2-local-evm-no-complete-settlement",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -30,10 +30,12 @@
     "G1_ballot_groth16": "PASS_G1B2_REAL_GROTH16_FULL_C_VOTE_FIXED_DEPTH2_FOUR_REGION",
     "G1_C0_snarkpack_compatibility": "PASS_G1C0_REAL_SNARKPACK_V2_MIN_BATCH_2_NONPRODUCTION_SRS",
     "G1_C1_distinct_voter_snarkpack": "PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS",
-    "G1_snarkpack": "PARTIAL_PASS_G1C1_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS",
+    "G1_C2_four_distinct_same_region_voter_snarkpack": "PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
+    "G1_snarkpack": "PARTIAL_PASS_G1C2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
     "G2_A_state_transition_r1cs": "PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS",
     "G2_B_state_transition_groth16": "PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION",
     "G2_state_proof": "PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION",
+    "G2_state_proof_batch_4": "NOT_IMPLEMENTED",
     "G3_A_five_process_dkg_happy_path": "PASS_G3A_FIVE_OS_PROCESS_DKG_HAPPY_PATH",
     "G3_B_one_trustee_restart_recovery": "PASS_G3B_ONE_TRUSTEE_RESTART_RECOVERY",
     "G3_multiprocess": "PARTIAL_PASS_G3B_ONE_RESTART_AUTHENTICATED_LOCAL_TRANSPORT",
@@ -1990,6 +1992,325 @@
       "the deterministic bellperson setup_fake_srs path is suitable only for functional reproducibility, not production trust",
       "the arkworks proving key, source proofs, private witness and aggregation SRS are not persisted"
     ]
+  },
+  "g1_c2_four_distinct_same_region_voter_snarkpack": {
+    "aggregate_negative_verification_count": 1,
+    "aggregate_positive_verification_count": 1,
+    "aggregate_proof_bytes": 8212,
+    "aggregate_proof_sha256": "2949d81494d52eb9721f88c64f0f85e057c2d73c952210fa6ba8982a10c36604",
+    "aggregate_verified": true,
+    "aggregate_verify_ms": 3.401917,
+    "aggregate_version": "V2",
+    "aggregation_ms": 7.216708,
+    "aggregation_prover_srs_persisted": false,
+    "aggregation_srs_kind": "deterministic setup_fake_srs functional only",
+    "aggregation_srs_ms": 5.222917,
+    "aggregation_srs_seed": 5129955333977035524,
+    "aggregation_srs_size": 4,
+    "arch": "aarch64",
+    "ark_individual_verify_ms": [
+      2.2529999999999997,
+      2.268792,
+      2.44425,
+      2.444958
+    ],
+    "base_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+    "batch_size": 4,
+    "build_profile": "release-opt-level-1",
+    "candidate_count": 3,
+    "changed_last_nullifier_rejected": true,
+    "changed_last_nullifier_verify_ms": 3.401958,
+    "changed_public_field_indices": [
+      7
+    ],
+    "changed_voter_index": 3,
+    "classification": "one-authenticated-dkg-one-ballot-setup-four-real-proofs-native-b4-aggregation-only",
+    "conversion_ms": 4.52375,
+    "converted_source_proofs_verified": true,
+    "cpu": "Apple M4",
+    "distinct_ciphertexts": true,
+    "distinct_nullifiers": true,
+    "distinct_voters": true,
+    "dkg_certificate_verified": true,
+    "dkg_key_core_digest_hex": "6f11f686ec08e046f7aecf8a92160e49f898433f7d5fdd9f14e5d3475c3aca4f",
+    "dkg_ms": 25.73825,
+    "dkg_session_id_hex": "f5bba306a4569195ea160070247b43203d915ec423f5149408ca58f2dc9a8e11",
+    "election_id_hex": "c72768a845c2c39ce10cafce2084db52394ed8b1eeff89212a9eb9b0567c4964",
+    "evm_run": false,
+    "experiment_manifest": "configs/protocol_manifest.JUBJUB-G1C2-B4.json",
+    "final_context_hex": "935eda46d9de51949c31637c0f7e523e8163f707295e9b2c921d7c6ebd1ce9a2",
+    "fixture_selection_attempts_per_voter": [
+      1,
+      6,
+      1,
+      8
+    ],
+    "gate": "G1-C2",
+    "git_commit": "b562ead94a2cf43f6f43685bdd609df69dd4dbb2",
+    "git_dirty": true,
+    "groth16_proof_seeds": [
+      5129955333926682624,
+      5129955333926682625,
+      5129955333926682626,
+      5129955333926682627
+    ],
+    "groth16_prove_ms": [
+      4052.9561660000004,
+      4059.996,
+      4020.041792,
+      4073.2916670000004
+    ],
+    "groth16_prove_total_ms": 16206.285625,
+    "groth16_setup_count": 1,
+    "groth16_setup_ms": 6973.9121669999995,
+    "groth16_setup_seed": 5129955333976183893,
+    "implementation": "bellperson =0.27.0 / blstrs =0.7.0",
+    "individual_proof_bytes": [
+      192,
+      192,
+      192,
+      192
+    ],
+    "individual_verify_ms": [
+      0.423583,
+      0.466292,
+      0.433166,
+      0.437125
+    ],
+    "individual_verify_total_ms": 1.760166,
+    "limitations": [
+      "functional B4 bridge, not statistical performance or a speedup/compression claim",
+      "deterministic public research seeds and fake aggregation SRS are not production setup or operational privacy",
+      "DKG and RA certificates are checked natively, not proven inside C_vote",
+      "fixed three candidates, four regions and four registration leaves; no B8 or larger tree",
+      "no B4 state proof, complete settlement, EVM SnarkPack or full Proposed Gas measurement"
+    ],
+    "manifest_sha256": "38e88b53b4e0d5be301ff37483eb36a76de7acadcfdbe6ff4cfdf05a560d0f39",
+    "merkle_depth": 2,
+    "os": "macos",
+    "peak_rss_mib": 3026.5625,
+    "policy_pre_hex": "ceaf875b53ddf0d9b11885ce2637cdc708d8cc383715563e0cee27a13de69549",
+    "pre_policy_fixed_before_dkg": true,
+    "prekey_context_hex": "677e5c311277877df5bae95e1bff48816a2c0b87a283c68b075823119c632588",
+    "preserved_b2_source_and_result": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/ballot_cvote_b1.rs",
+        "sha256": "1e4e468404a046461fb4d026b9da142827be77be1bf74f58ade941d89e12707a"
+      },
+      {
+        "path": "experiments/g1_c1_raw/snarkpack_distinct_voters_batch_2.json",
+        "sha256": "b820ffba818da77aed0a582bc5579e705570f86174f552713fbe2a008a0025d0"
+      }
+    ],
+    "private_witness_emitted": false,
+    "production_setup": false,
+    "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G1C2-B4-v1",
+    "proving_key_compressed_bytes": 251898000,
+    "proving_key_persisted": false,
+    "public_input_matrix_bytes": 3200,
+    "public_inputs_per_proof": 25,
+    "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+    "public_verifier_fixture": "fixtures/snarkpack_g1c2_batch4_public_v1.json",
+    "public_verifier_fixture_sha256": "84e3c7748dffa8eeece45ddfdadfe64fcb4c563a3e549a788b0321744f87d024",
+    "region": 4,
+    "region_count": 4,
+    "registered_weight": 10,
+    "registration_certificate_verified": true,
+    "registration_close_digest_hex": "38f6651adef05b38ffde7fe8eb3a1954ca586ce61f1ca0c70c44e4dc51009f71",
+    "registration_leaves": 4,
+    "registration_root_hex": "b4eab92ca1c453652c8a5a35c4931e4c9485661a63fa3b33621982203b2a15ae",
+    "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "same_region": true,
+    "same_setup_parameters_used": true,
+    "seed": 20261028,
+    "shapes": [
+      {
+        "constraints": 854454,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1061.732583,
+        "witness_variables": 839832
+      },
+      {
+        "constraints": 854454,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1003.168417,
+        "witness_variables": 839832
+      },
+      {
+        "constraints": 854454,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1000.063125,
+        "witness_variables": 839832
+      },
+      {
+        "constraints": 854454,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1004.420041,
+        "witness_variables": 839832
+      }
+    ],
+    "source_hashes": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/g1c2_batch4.rs",
+        "sha256": "05b503e7b587d8d7abf4e41a5f1a186bb6fd1210a75716ba81862eb0e8eed16c"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/ballot_identity_gadget.rs",
+        "sha256": "07a50e73ebf1bdfa79a97bef817b1f492031e6409e20330e485d194b4a427f23"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/lib.rs",
+        "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/registration.rs",
+        "sha256": "71a47ac66897aac29792f0c472521dbf2a1fe071e8893fb827470b50795663c2"
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e"
+      }
+    ],
+    "source_proof_count": 4,
+    "source_proofs_distinct": true,
+    "source_proofs_verified": true,
+    "source_public_records": [
+      {
+        "address_hex": "5f60cb1a5dea1d9618c994d19f05e8963c9ced85c43c27ac6c7a915d4c5bf9ef",
+        "ciphertexts": [
+          {
+            "c0_hex": "0979b8b16c3daf7a9d69f309e3e53822a98054766394203b2f8272689f4f19d5",
+            "c1_hex": "17e62e0f78e30d47ed5d157e91fd88079ad89a7bc65c1ba8c09027625c90b229",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "3b57f17c67c9a12b339c934640de23a82232db10cf54347cd7519b0a2535db85",
+            "c1_hex": "3010c0b1b575e76010aac58cd729f5f008f7ccb71670da89aa616f835d6a53de",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "c372fd88e11c15ae8a9d4f8bdd2ae06bb272adc52e287322d0bd1751b5c391c0",
+            "c1_hex": "ad975d448f230693261f0a4cb091e1c94de6618629ba8d1d53759c61b95e1dd5",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "c72768a845c2c39ce10cafce2084db52394ed8b1eeff89212a9eb9b0567c4964",
+        "final_context_hex": "935eda46d9de51949c31637c0f7e523e8163f707295e9b2c921d7c6ebd1ce9a2",
+        "key_set_hash_hex": "6f11f686ec08e046f7aecf8a92160e49f898433f7d5fdd9f14e5d3475c3aca4f",
+        "nullifier_hex": "176ae106379d3f12a930bf81ebe3b48f5514b0475a951f2b2a7bb1041b9f98df",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "b4eab92ca1c453652c8a5a35c4931e4c9485661a63fa3b33621982203b2a15ae",
+        "voter_index": 0
+      },
+      {
+        "address_hex": "1730935cb4d15280421ef28b5db325c6e5ee8c20000304f95f234cac233f5c3b",
+        "ciphertexts": [
+          {
+            "c0_hex": "bc29f8749f4f3d18b43aece8b0c13c11dc7c46a762663a6c19631ddc822962c5",
+            "c1_hex": "c986e9cd3861688e157751cc133afd98333219b514013388c0625ebf8ec24601",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "810e74ed6bea1f1b2c39d14479816c6d6af46c1405b0be60254abb81592d965b",
+            "c1_hex": "770dca8d9bcc0379e8e1f9e7aae3f38a405fd6ad08cbcd5b37e674f03188fdb6",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "a02116cbd93d0a8fb1e55dae9e5c31303cac3811d040d7b1f3f1f2ff8ccb57cd",
+            "c1_hex": "25a39e243faba792ecc8d684acb2c5ca1fb544a5b7100114d787051ec3b77583",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "c72768a845c2c39ce10cafce2084db52394ed8b1eeff89212a9eb9b0567c4964",
+        "final_context_hex": "935eda46d9de51949c31637c0f7e523e8163f707295e9b2c921d7c6ebd1ce9a2",
+        "key_set_hash_hex": "6f11f686ec08e046f7aecf8a92160e49f898433f7d5fdd9f14e5d3475c3aca4f",
+        "nullifier_hex": "87d05e1c02eab02d0d88c1473d786de5cc7f344e01dcab18b7c2e51d102e2d15",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "b4eab92ca1c453652c8a5a35c4931e4c9485661a63fa3b33621982203b2a15ae",
+        "voter_index": 1
+      },
+      {
+        "address_hex": "bb492f895ecf49c15eb41ce45de27865d98cda73357e186b6d6405fe340c4bce",
+        "ciphertexts": [
+          {
+            "c0_hex": "a1c21dfafde849bfafcf6766e36a24024d8f96615aab3e2ad440450bb6440272",
+            "c1_hex": "3e5b2f4ae3aa2475a21adc05b729bf2b891e88bbf478a059ac33f6c05696a855",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "113da2b2babbbdeeba3a42e94e0645991756dda68303f667ae567069bc964639",
+            "c1_hex": "e56cb97d8c7eeb6d62fa6867b65bcf062f827805e4feb8649008c48bcbe3e44a",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "1997704384136e924d472221c84640f3e574545f848fc448d4a87694aa516290",
+            "c1_hex": "aa3f62f046ea3415d384616fe374fab485681d26c45b3e3707de6ed4a5e733b2",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "c72768a845c2c39ce10cafce2084db52394ed8b1eeff89212a9eb9b0567c4964",
+        "final_context_hex": "935eda46d9de51949c31637c0f7e523e8163f707295e9b2c921d7c6ebd1ce9a2",
+        "key_set_hash_hex": "6f11f686ec08e046f7aecf8a92160e49f898433f7d5fdd9f14e5d3475c3aca4f",
+        "nullifier_hex": "6d880fe801f5d5a8685553f15aa202d0a1e935ff5ed15ec3aec34e9f2874e9ab",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "b4eab92ca1c453652c8a5a35c4931e4c9485661a63fa3b33621982203b2a15ae",
+        "voter_index": 2
+      },
+      {
+        "address_hex": "8d302a80d3288e927e0d000104709fafd6f9bac32b30a532aa9d1174cd1a8986",
+        "ciphertexts": [
+          {
+            "c0_hex": "8db5e07f1e0bce3c404abacac9c0352f22a09158f1b0cf2183325415139982a3",
+            "c1_hex": "e6b2f62a3ef31a22e743992b60e9779d45f68b9bd4082ca1830cc6fbc92dff05",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "e400db8ad93003e3a79783da0a5cdc3c7175d777f84501df06581e6a8dd0a9b8",
+            "c1_hex": "6833e1a096776418885ae3d82fcdabe04c65741461dd157213c427494a7147d3",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "bc113ef3706191777e9401aaf4902b168c28d1c8f38acf510dd7a7ddc201d991",
+            "c1_hex": "5c0977af860ab8be3c7bd4308370d25ac008238e7ceef30ba0bec9eae9fc214b",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "c72768a845c2c39ce10cafce2084db52394ed8b1eeff89212a9eb9b0567c4964",
+        "final_context_hex": "935eda46d9de51949c31637c0f7e523e8163f707295e9b2c921d7c6ebd1ce9a2",
+        "key_set_hash_hex": "6f11f686ec08e046f7aecf8a92160e49f898433f7d5fdd9f14e5d3475c3aca4f",
+        "nullifier_hex": "3386d053273f9755c4ad5986271d25c925c1c938b445ba7f1bef01b0a5471b83",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "b4eab92ca1c453652c8a5a35c4931e4c9485661a63fa3b33621982203b2a15ae",
+        "voter_index": 3
+      }
+    ],
+    "state_proof_b4_run": false,
+    "status": "PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
+    "total_individual_proof_bytes": 768,
+    "total_run_ms_excluding_compilation": 28126.280417,
+    "transcript_bytes": 3262,
+    "transcript_domain": "VV/JUBJUB/G1-C0/SNARKPACK-PUBLIC-INPUTS/v1",
+    "verifying_key_ark_compressed_bytes": 1592,
+    "verifying_key_ark_sha256": "4c9f3dd3a986b28b1f572be22554bde2cd78b1454154135011582c514a55e4e5"
+  },
+  "project_current_progress": {
+    "latest_completed_gate": "G1-C2",
+    "largest_measured_native_distinct_voter_batch": 4,
+    "largest_measured_state_proof_batch": 2,
+    "next_task": "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
+    "large_batch_statistical_comparison": "NOT_MEASURED"
   },
   "g2_a_state_transition_r1cs": {
     "gate": "G2-A",

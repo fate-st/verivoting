@@ -58,6 +58,7 @@ def main() -> int:
     g1_c1_path = (
         raw.parent / "g1_c1_raw" / "snarkpack_distinct_voters_batch_2.json"
     )
+    g1_c2_path = raw.parent / "g1_c2_raw" / "snarkpack_distinct_voters_batch_4.json"
     g2_a_path = raw.parent / "g2_a_raw" / "state_transition_b2_r1cs.json"
     g2_b_path = raw.parent / "g2_b_raw" / "state_transition_b2_groth16.json"
     g3_a_path = raw.parent / "g3_a_raw" / "five_process_dkg.json"
@@ -171,6 +172,7 @@ def main() -> int:
     g1_b2 = json.loads(g1_b2_path.read_text()) if g1_b2_path.exists() else None
     g1_c0 = json.loads(g1_c0_path.read_text()) if g1_c0_path.exists() else None
     g1_c1 = json.loads(g1_c1_path.read_text()) if g1_c1_path.exists() else None
+    g1_c2 = json.loads(g1_c2_path.read_text()) if g1_c2_path.exists() else None
     g2_a = json.loads(g2_a_path.read_text()) if g2_a_path.exists() else None
     g2_b = json.loads(g2_b_path.read_text()) if g2_b_path.exists() else None
     g3_a = json.loads(g3_a_path.read_text()) if g3_a_path.exists() else None
@@ -232,7 +234,9 @@ def main() -> int:
 
     summary = {
         "classification": (
-            "measured-research-prototype-tally-v2-fixed-123-native-and-local-evm-full-partial-turnout-no-complete-settlement"
+            "measured-research-prototype-native-four-distinct-voter-snarkpack-fixed-b2-state-and-fixed123-p3-v2-local-evm-no-complete-settlement"
+            if g1_c2
+            else "measured-research-prototype-tally-v2-fixed-123-native-and-local-evm-full-partial-turnout-no-complete-settlement"
             if g5_d
             else "measured-research-prototype-tally-v2-full-partial-turnout-fixed-123-with-historical-v1-two-subset-and-evm-evidence"
             if g4_c
@@ -326,8 +330,13 @@ def main() -> int:
             "G1_C1_distinct_voter_snarkpack": (
                 g1_c1["status"] if g1_c1 else "NOT_RUN"
             ),
+            "G1_C2_four_distinct_same_region_voter_snarkpack": (
+                g1_c2["status"] if g1_c2 else "NOT_RUN"
+            ),
             "G1_snarkpack": (
-                "PARTIAL_PASS_G1C1_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS"
+                "PARTIAL_PASS_G1C2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS"
+                if g1_c2
+                else "PARTIAL_PASS_G1C1_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS"
                 if g1_c1
                 else "PARTIAL_PASS_G1C0_MIN_BATCH_NONPRODUCTION_SRS"
                 if g1_c0
@@ -346,6 +355,7 @@ def main() -> int:
                 if g2_a
                 else "BLOCKED_CIRCUIT_NOT_IMPLEMENTED"
             ),
+            "G2_state_proof_batch_4": "NOT_IMPLEMENTED",
             "G3_A_five_process_dkg_happy_path": (
                 g3_a["status"] if g3_a else "NOT_RUN"
             ),
@@ -546,6 +556,14 @@ def main() -> int:
         "g1_b2_full_c_vote_groth16": g1_b2,
         "g1_c0_snarkpack_compatibility": g1_c0,
         "g1_c1_distinct_voter_snarkpack": g1_c1,
+        "g1_c2_four_distinct_same_region_voter_snarkpack": g1_c2,
+        "project_current_progress": {
+            "latest_completed_gate": "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
+            "largest_measured_native_distinct_voter_batch": 4 if g1_c2 else 2 if g1_c1 else None,
+            "largest_measured_state_proof_batch": 2 if g2_b else None,
+            "next_task": "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate" if g1_c2 else "B=4 native distinct-voter aggregation",
+            "large_batch_statistical_comparison": "NOT_MEASURED",
+        },
         "g2_a_state_transition_r1cs": g2_a,
         "g2_b_state_transition_groth16": g2_b,
         "g3_a_five_process_dkg_happy_path": g3_a,
@@ -612,6 +630,22 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g1_c2:
+        lines.extend([
+            "## Latest project checkpoint: G1-C2 native B=4",
+            "",
+            f"- Status: `{g1_c2['status']}`; report: `docs/G1_C2_FOUR_VOTER_SNARKPACK.md`.",
+            "- Four different registered voters, one certified DKG key, one region, four fresh ballot proofs and one real V2 aggregate. B=2 source/results remain unchanged.",
+            f"- Constraints / public inputs per ballot: `{g1_c2['shapes'][0]['constraints']} / {g1_c2['public_inputs_per_proof']}`.",
+            f"- One setup: `{g1_c2['groth16_setup_ms']:.3f} ms`; four prove times: `{[round(x, 3) for x in g1_c2['groth16_prove_ms']]} ms`.",
+            f"- Bellperson individual verification total / aggregate verification: `{g1_c2['individual_verify_total_ms']:.3f} / {g1_c2['aggregate_verify_ms']:.3f} ms`; aggregation itself: `{g1_c2['aggregation_ms']:.3f} ms`.",
+            f"- Four individual proofs / aggregate: `{g1_c2['total_individual_proof_bytes']} / {g1_c2['aggregate_proof_bytes']} B`; public input matrix: `{g1_c2['public_input_matrix_bytes']} B`.",
+            f"- Changed LAST voter nullifier rejected: `{g1_c2['changed_last_nullifier_rejected']}`; peak RSS: `{g1_c2['peak_rss_mib']:.3f} MiB`.",
+            "- This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.",
+            "- B=4 state proof and SnarkPack EVM remain unimplemented; no full Proposed gas is claimed.",
+            f"- Next: {summary['project_current_progress']['next_task']}.",
+            "",
+        ])
     if g4_c:
         lines.extend([
             "## Current P3 correctness checkpoint: G4-C (tally relation v2)",
@@ -640,7 +674,7 @@ def main() -> int:
             f"- Actual verifier calldata per valid call: `{g5_d['valid_partial']['calldata_bytes']} B`; full batch DA is not measured.",
             f"- Transactions: `{g5_d['deployment_count']}` deployments + `{g5_d['verification_transactions']}` verification calls; setup / prove rerun: `{g5_d['setup_run']} / {g5_d['proof_generation_run']}`.",
             "- This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.",
-            f"- Next: {g5_d['next_gate']}",
+            "- Its archived next task (B=4) has now passed in G1-C2; the current next task is B=8." if g1_c2 else f"- Next: {g5_d['next_gate']}",
             "",
         ])
     current_g5 = g5_d or g5_next_work
@@ -651,7 +685,7 @@ def main() -> int:
             f"- Latest recorded gate: `{current_g5['gate']}` / `{current_g5['status']}`",
             f"- Latest measured prefix: `{g5_prefix_latest['gate'] if g5_prefix_latest else 'NOT_RUN'}`; latest actual full-loop attempt: `{g5_miller_latest['gate'] if g5_miller_latest else 'NOT_RUN'}`",
             "- A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.",
-            f"- Next gate: {current_g5['next_gate']}",
+            "- Current project next gate: B=8 native aggregation; archived G5 next-task notes are historical." if g1_c2 else f"- Next gate: {current_g5['next_gate']}",
             "",
         ])
     if g5_c3budget:

@@ -1,43 +1,42 @@
 # Next gates
 
-## Current checkpoint (2026-10-28): G5-D tally-v2 local EVM accepted
+## Current checkpoint (2026-10-28): G1-C2 native B=4 accepted
 
-G4-C corrected partial turnout with private slack. G5-D now accepts its archived
-partial/full proofs under the new VK and rejects changed winner / actual old-VK
-mixing in local Prague EVM. Exactly two deployments plus four verify calls ran;
-there was zero setup/prove. The measured valid gas is 1,331,365 / 1,331,377,
-with 2,564 B calldata. See `docs/G5_D_P3_V2_EVM.md` and
-`experiments/g5_d_raw/g5d_p3_v2_evm.json`. No complete settlement is claimed.
+Four different voters, one region and certified DKG key, four fresh C_vote
+proofs and one real SnarkPack V2 aggregate pass. Only the fourth nullifier is
+changed in the necessary negative case and complete aggregate verification
+rejects. One setup / four proofs / one aggregate positive / one aggregate
+negative were executed. Old B=2 code/results and the depth-2 ballot circuit
+are unchanged. See `docs/G1_C2_FOUR_VOTER_SNARKPACK.md` and
+`experiments/g1_c2_raw/snarkpack_distinct_voters_batch_4.json`.
 
-## Next single experiment: native distinct-voter B=4 aggregation
+Aggregate size 8,212 B exceeds 768 B for four proofs; aggregate verification
+3.402 ms exceeds 1.760 ms for same-run individual bellperson verification.
+This functional pass is not an efficiency claim. State proof remains B=2.
+The previous G5-D tally-v2 EVM acceptance remains valid and was not rerun.
 
-This is the next implementation task, not a completed experiment. It directly
-starts the uploaded plan's native batching workflow without waiting for a
-SnarkPack EVM verifier.
+## Next single experiment: B=8 with a versioned depth-3 registration tree
 
-1. Extend the existing ballot/SnarkPack runner for exactly four DIFFERENT
-   registered voters in one region. Retain the existing HMAC PRF and region
-   constraints; construct a deterministic same-region fixture by selecting
-   voter seeds before registration, never override region bits or duplicate a
-   proof/nullifier. Use one authenticated DKG key and a pre-policy fixed before
-   that DKG. Keep candidate count 3, registered bound 10 and weights 3/2/1/4.
-2. B=4 is a functional bridge and still fits four leaves/depth 2. Do not change
-   the ballot relation/tree depth yet; B=8 will need a separately versioned
-   deeper tree. Make the native-aggregation-only B=4 descriptor explicit; do
-   not add B=4 to a global Manifest as though the B=2 state circuit supports it.
-3. Use one fresh in-memory ballot setup and four fresh ballot proofs under one
-   VK, because old proving keys/proofs were not persisted. Convert and verify
-   all four, then run a real V2 aggregate/verification with size-4 experimental
-   SRS. Preserve the old B=2 runner/schema and result files.
-4. Minimal acceptance: four valid distinct source proofs, one valid aggregate,
-   one changed LAST voter nullifier rejected against the full ordered input
-   matrix. Record actual per-ballot/total prove, individual verification,
-   aggregation/aggregate verification, proof/input byte sizes, setup/SRS timing,
-   peak RSS and exact suite/source hashes. Deterministic fake SRS is functional
-   only; no production setup or speedup is assumed.
-5. Archive independent `experiments/g1_c2_raw/` results. Stop after B=4 functional
-   acceptance; do not launch B=8--256/repetition matrices, a B=4 state proof or
-   new EVM work in the same task. The next later task is deeper-tree B=8.
+This is planned, not executed. Continue the uploaded plan's native batching
+workflow without waiting for SnarkPack EVM.
+
+1. Add a separately versioned depth-3 ballot relation / eight-leaf registry,
+   preserving all old depth-2/B=2/B=4 code paths, keys and data. Do not simply
+   change the global depth constant or use a depth-2 VK for a depth-3 witness.
+2. Keep three candidates and four regions, with one authenticated DKG key and
+   pre-policy fixed before DKG. Generate eight DIFFERENT registered voters in
+   one region using existing PRF/region algorithms, not copied proofs or region
+   overrides. Freeze a valid per-election weight bound for all eight entries.
+3. One fresh setup shared by eight fresh source proofs; verify individually,
+   then create/verify a real size-8 V2 aggregate using explicitly experimental
+   SRS. One negative changes only the last voter nullifier in the whole matrix.
+4. Archive a new configuration and raw directory with exact circuit/key/source
+   hashes, per-proof/aggregate timings, sizes and peak RSS. Separate setup from
+   proving and verification; do not infer crossover points from B=2/B=4 samples.
+5. Stop after one B=8 functional acceptance. B=4 state proof plus the omitted-
+   ballot negative is the following separate task; B=16/32 and formal repeated
+   performance measurements come later. No EVM, P3 subset expansion or new
+   arithmetic profiler is included in the B=8 task.
 
 All-ten-subset v2 P3, B=4/8 state-circuit families with omission tests, fair
 performance baselines and full settlement remain separate later deliverables.

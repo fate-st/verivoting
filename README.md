@@ -8,6 +8,18 @@ operation, broad crash matrices, or on-chain work as measurements.
 
 ## What is implemented
 
+### Latest native batch checkpoint: G1-C2 (2026-10-28)
+
+[G1-C2](docs/G1_C2_FOUR_VOTER_SNARKPACK.md) passes B=4 with four distinct
+registered voters in one region, one authenticated DKG key, four fresh ballot
+proofs and one real SnarkPack V2 aggregate. Changing only the fourth nullifier
+rejects. One setup and four proofs were run; B=2 code/results are unchanged.
+Aggregate size is 8,212 B versus 768 B for four individual proofs; aggregate
+verification is 3.402 ms versus 1.760 ms for individual bellperson verification.
+This single functional run does not show compression or speedup. State proofs
+remain fixed B=2, fake SRS remains nonproduction, and no new EVM run was made.
+Next is versioned depth-3 / eight-voter native aggregation, not Miller work.
+
 ### P3 correctness revision (2026-10-28)
 
 The current tally relation is v2: `sum(t_j) <= W_registered`, implemented by
@@ -30,7 +42,8 @@ unchanged Solidity verifier on local Prague EVM: partial/full calls consume
 actual old v1 VK both reject. Exactly two deployments and four verification
 calls run, with no setup/prove rerun. This is verifier-level acceptance, not
 registry/frozen-state binding, settlement writes or a complete SnarkPack path.
-Next is native distinct-voter B=4 aggregation, not further software Miller work.
+Its former next task, native B=4, is now complete in G1-C2; see the next B=8
+task above. No further software Miller work is included.
 
 | Area | Implementation | Reported status |
 |---|---|---|
@@ -434,7 +447,8 @@ does not measure completed-loop gas or completion percentage.
 
 That B23 next-task note is historical. The P3 partial-turnout correction and
 its v2 EVM acceptance have now passed in G4-C/G5-D. The next project task is
-native B=4 distinct-voter aggregation, independent of the frozen verifier route.
+native B=8 distinct-voter aggregation after G1-C2's B=4 pass, independent of
+the frozen verifier route.
 There is no automatic cap increase, new primitive
 search, final-exponentiation experiment or wrapper implementation. A different
 verifier architecture requires a new scoped decision and resource plan.

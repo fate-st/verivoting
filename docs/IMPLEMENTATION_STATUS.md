@@ -1,6 +1,26 @@
 # Implementation and claim boundary
 
-## Latest checkpoint (2026-10-28): G5-D P3 tally-v2 local EVM
+## Latest project checkpoint (2026-10-28): G1-C2 native B=4
+
+Status: `PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS`.
+One authenticated DKG and one fresh ballot setup generate four distinct
+same-region registered-voter proofs. All verify individually and their real
+V2 aggregate verifies; changing only voter 4's nullifier rejects. The original
+B=2 runner and data, the ballot relation and the four-leaf/depth-2 tree remain
+unchanged. Only an isolated native-aggregation descriptor is added.
+
+Each ballot has 854,454 constraints / 25 inputs. Four proofs total 768 B; the
+aggregate is 8,212 B. Bellperson individual verification totals 1.760 ms versus
+3.402 ms aggregate verification, plus 7.217 ms aggregation. This one run shows
+no compression/verification-time advantage, and is not statistical evaluation.
+Peak RSS is 3,026.562 MiB. See [G1-C2](G1_C2_FOUR_VOTER_SNARKPACK.md) and
+`experiments/g1_c2_raw/snarkpack_distinct_voters_batch_4.json`.
+
+State proof remains B=2; B=4 state/omission tests, B=8, production SRS and
+complete settlement remain unimplemented. Next is depth-3/eight-voter native
+aggregation, without reopening the frozen software Miller route.
+
+## Previous G5 checkpoint (2026-10-28): G5-D P3 tally-v2 local EVM
 
 Status: `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`.
 Two archived G4-C proofs are canonically decoded, natively reverified and
@@ -14,8 +34,8 @@ Two deployments plus four verification calls are measured. All ten subsets,
 registry/frozen-state equality, authenticated commitment checks, winner writes,
 full settlement and SnarkPack EVM verification remain outside this gate.
 Old G5-B gas remains historical v1 evidence. See [G5-D](G5_D_P3_V2_EVM.md) and
-`experiments/g5_d_raw/g5d_p3_v2_evm.json`. Next is native B=4 distinct-voter
-aggregation, independent of the still-frozen fixed-budget Miller route.
+`experiments/g5_d_raw/g5d_p3_v2_evm.json`. Its next task B=4 has subsequently
+passed in G1-C2, independently of the frozen fixed-budget Miller route.
 
 ## Current correctness revision (2026-10-28): G4-C tally v2
 
@@ -1450,8 +1470,9 @@ stale-session tests pass.
 
 ## Deliberately unimplemented
 
-- Scale SnarkPack experiments and a production aggregation ceremony. G1-C1
-  covers only the minimum batch of two distinct registered voters.
+- Statistical/large-scale SnarkPack experiments and a production aggregation
+  ceremony. G1-C2 now covers one functional four-distinct-voter batch; B=8 and
+  larger batches and repeated performance measurements remain unfinished.
 - Recursive/linked state proofs and larger-batch measurements. G2-B covers the
   fixed-`B=2` relation only.
 - A general-subset production P3. G4-B publicly binds `{1,2,3}` and `{1,2,4}`

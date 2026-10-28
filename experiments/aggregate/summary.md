@@ -2,6 +2,19 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
+## Latest project checkpoint: G1-C2 native B=4
+
+- Status: `PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS`; report: `docs/G1_C2_FOUR_VOTER_SNARKPACK.md`.
+- Four different registered voters, one certified DKG key, one region, four fresh ballot proofs and one real V2 aggregate. B=2 source/results remain unchanged.
+- Constraints / public inputs per ballot: `854454 / 25`.
+- One setup: `6973.912 ms`; four prove times: `[4052.956, 4059.996, 4020.042, 4073.292] ms`.
+- Bellperson individual verification total / aggregate verification: `1.760 / 3.402 ms`; aggregation itself: `7.217 ms`.
+- Four individual proofs / aggregate: `768 / 8212 B`; public input matrix: `3200 B`.
+- Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
+- This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
+- B=4 state proof and SnarkPack EVM remain unimplemented; no full Proposed gas is claimed.
+- Next: B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate.
+
 ## Current P3 correctness checkpoint: G4-C (tally relation v2)
 
 - Status: `PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2`; details: `docs/G4_C_PARTIAL_TURNOUT.md`.
@@ -23,14 +36,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- Next: B=4 distinct-registered-voter native SnarkPack aggregation; no SnarkPack EVM prerequisite
+- Its archived next task (B=4) has now passed in G1-C2; the current next task is B=8.
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Next gate: B=4 distinct-registered-voter native SnarkPack aggregation; no SnarkPack EVM prerequisite
+- Current project next gate: B=8 native aggregation; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -67,10 +80,12 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G1_ballot_groth16 | PASS_G1B2_REAL_GROTH16_FULL_C_VOTE_FIXED_DEPTH2_FOUR_REGION |
 | G1_C0_snarkpack_compatibility | PASS_G1C0_REAL_SNARKPACK_V2_MIN_BATCH_2_NONPRODUCTION_SRS |
 | G1_C1_distinct_voter_snarkpack | PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS |
-| G1_snarkpack | PARTIAL_PASS_G1C1_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS |
+| G1_C2_four_distinct_same_region_voter_snarkpack | PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS |
+| G1_snarkpack | PARTIAL_PASS_G1C2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS |
 | G2_A_state_transition_r1cs | PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS |
 | G2_B_state_transition_groth16 | PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION |
 | G2_state_proof | PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION |
+| G2_state_proof_batch_4 | NOT_IMPLEMENTED |
 | G3_A_five_process_dkg_happy_path | PASS_G3A_FIVE_OS_PROCESS_DKG_HAPPY_PATH |
 | G3_B_one_trustee_restart_recovery | PASS_G3B_ONE_TRUSTEE_RESTART_RECOVERY |
 | G3_multiprocess | PARTIAL_PASS_G3B_ONE_RESTART_AUTHENTICATED_LOCAL_TRANSPORT |
