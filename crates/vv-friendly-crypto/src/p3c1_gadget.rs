@@ -2,7 +2,9 @@
 //!
 //! This gate adds three private 64-bit tally witnesses, proves `M_j = t_j G`,
 //! constrains every tally to the public registered-weight bound, and enforces
-//! that the three tallies sum to that bound. Winner logic and Groth16 are absent.
+//! that their sum does not exceed that bound. A private 64-bit slack accounts
+//! for registered weight that did not cast an accepted ballot. Winner logic
+//! and Groth16 are absent.
 
 use crate::{
     cp_h3_gadget::fixed_base_mul,
@@ -17,6 +19,10 @@ use ark_r1cs_std::{alloc::AllocVar, boolean::Boolean, eq::EqGadget, fields::fp::
 use ark_relations::r1cs::{
     ConstraintSynthesizer, ConstraintSystem, ConstraintSystemRef, SynthesisError,
 };
+
+/// This relation changes the R1CS, but not its public-input layout. Groth16
+/// parameters for the former exact-sum relation must not be reused.
+pub const P3_TALLY_RELATION_ID: &str = "VV/JUBJUB/P3/BOUNDED-TALLY/v2";
 
 #[derive(Clone)]
 pub struct P3C1Circuit {
@@ -141,7 +147,19 @@ fn bind_tallies_to_plaintexts(
         fixed_base_mul(&tally_bits)?.enforce_equal(plaintext_var)?;
         tally_bits_output.push(tally_bits);
     }
-    tally_sum.enforce_equal(&public_bound)?;
+    // All three tallies and the slack are constrained 64-bit nonnegative
+    // integers. Their total is below 2^66, far below this field's modulus, so
+    // this field equality is also an integer equality, without modular wrap.
+    // Compute only the witness in u128: an excessive tally sum gets slack 0
+    // and is rejected by the R1CS equality below, not by a host-only check.
+    let integer_sum: u128 = tallies.iter().map(|tally| u128::from(*tally)).sum();
+    let slack_value = if integer_sum <= u128::from(registered_weight) {
+        registered_weight - integer_sum as u64
+    } else {
+        0
+    };
+    let slack_bits = allocate_u64_bits(cs, slack_value)?;
+    (tally_sum + pack_bits(&slack_bits)?).enforce_equal(&public_bound)?;
     Ok(P3C1RelationOutput {
         tally_bits: tally_bits_output,
     })
@@ -310,4 +328,80 @@ pub fn check_bounded_tally_binding_p3c1(
         public_registered_weight_values: 1,
         private_tally_values: H4_COORDINATE_COUNT,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use ark_ec::Group;
+
+    // Exercise only the tally-binding relation, not the resource-intensive
+    // CP/transcript circuits that precede it in a complete P3 witness.
+    fn tally_binding_system(
+        tallies: [u64; H4_COORDINATE_COUNT],
+        plaintext_tallies: [u64; H4_COORDINATE_COUNT],
+        registered_weight: u64,
+    ) -> ConstraintSystemRef<Fq> {
+        let cs = ConstraintSystem::<Fq>::new_ref();
+        let plaintext_vars = plaintext_tallies
+            .iter()
+            .map(|tally| {
+                EdwardsVar::new_witness(
+                    cs.clone(),
+                    || Ok(Point::generator() * Scalar::from(*tally)),
+                )
+                .expect("plaintext witness")
+            })
+            .collect::<Vec<_>>();
+        bind_tallies_to_plaintexts(cs.clone(), &plaintext_vars, &tallies, registered_weight)
+            .expect("tally-binding synthesis");
+        cs
+    }
+
+    #[test]
+    fn full_and_partial_turnout_have_the_same_tally_relation_shape() {
+        let full = tally_binding_system([4, 2, 4], [4, 2, 4], 10);
+        let partial = tally_binding_system([0, 2, 4], [0, 2, 4], 10);
+        assert!(full.is_satisfied().expect("full turnout satisfaction"));
+        assert!(partial
+            .is_satisfied()
+            .expect("partial turnout satisfaction"));
+        assert_eq!(full.num_constraints(), partial.num_constraints());
+        assert_eq!(
+            full.num_instance_variables(),
+            partial.num_instance_variables()
+        );
+        assert_eq!(
+            full.num_witness_variables(),
+            partial.num_witness_variables()
+        );
+    }
+
+    #[test]
+    fn zero_accepted_weight_is_within_the_registered_bound() {
+        for registered_weight in [0, 10] {
+            let cs = tally_binding_system([0, 0, 0], [0, 0, 0], registered_weight);
+            assert!(cs.is_satisfied().expect("zero turnout satisfaction"));
+        }
+    }
+
+    #[test]
+    fn total_above_bound_is_rejected_even_when_each_tally_is_bounded() {
+        let cs = tally_binding_system([4, 3, 4], [4, 3, 4], 10);
+        assert!(!cs.is_satisfied().expect("excessive sum satisfaction"));
+    }
+
+    #[test]
+    fn u64_wrapping_sum_cannot_satisfy_the_integer_bound() {
+        // This sum would wrap to MAX in u64 arithmetic; each tally is <= MAX.
+        let tallies = [u64::MAX, u64::MAX, 1];
+        let cs = tally_binding_system(tallies, tallies, u64::MAX);
+        assert!(!cs.is_satisfied().expect("wrapping sum satisfaction"));
+    }
+
+    #[test]
+    fn slack_does_not_weaken_plaintext_group_binding() {
+        let cs = tally_binding_system([0, 2, 4], [1, 2, 4], 10);
+        assert!(!cs.is_satisfied().expect("incorrect plaintext satisfaction"));
+    }
 }

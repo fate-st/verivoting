@@ -459,3 +459,33 @@ pub fn check_winner_linkage_p3d0_for_bound_subset(
         private_tally_values: H4_COORDINATE_COUNT,
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Keep this regression isolated from CP hashing: the full P3 experiment
+    // separately proves that these same tally bits come from decryption.
+    fn partial_turnout_winner_satisfied(public_winner: u64) -> bool {
+        let cs = ConstraintSystem::<Fq>::new_ref();
+        let tally_bits = [0u64, 2, 4]
+            .iter()
+            .map(|tally| {
+                (0..64)
+                    .map(|bit| {
+                        Boolean::new_witness(cs.clone(), || Ok(((tally >> bit) & 1) == 1))
+                            .expect("tally bit witness")
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .collect::<Vec<_>>();
+        enforce_winner(cs.clone(), &tally_bits, public_winner).expect("winner synthesis");
+        cs.is_satisfied().expect("winner satisfaction")
+    }
+
+    #[test]
+    fn partial_turnout_keeps_the_correct_winner_and_rejects_a_wrong_winner() {
+        assert!(partial_turnout_winner_satisfied(3));
+        assert!(!partial_turnout_winner_satisfied(1));
+    }
+}

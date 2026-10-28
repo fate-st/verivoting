@@ -1,5 +1,5 @@
 {
-  "classification": "measured-native-core-real-two-subset-public-selector-p3-groth16-real-fixed-suite-ballot-groth16-distinct-voter-minimum-batch-snarkpack-fixed-b2-state-groth16-five-process-dkg-with-one-restart-and-local-prague-state-and-two-subset-p3-verifiers",
+  "classification": "measured-research-prototype-tally-v2-full-partial-turnout-fixed-123-with-historical-v1-two-subset-and-evm-evidence",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -39,8 +39,11 @@
     "G3_multiprocess": "PARTIAL_PASS_G3B_ONE_RESTART_AUTHENTICATED_LOCAL_TRANSPORT",
     "G4_A_second_subset_p3_shape": "PASS_G4A_SECOND_SUBSET_COMMON_R1CS_COUNT_SHAPE",
     "G4_B_public_two_subset_p3_groth16": "PASS_G4B_REAL_GROTH16_TWO_SUBSET_PUBLIC_SELECTOR",
+    "G4_C_tally_v2_full_and_partial_turnout": "PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2",
+    "G4_current_tally_v2_arbitrary_subset": "NOT_MEASURED",
+    "G5_current_tally_v2_evm_verifier": "NOT_MEASURED",
     "G4_general_subset_p3": "PARTIAL_PASS_G4B_PUBLIC_BOUND_TWO_SUBSETS_SAME_GROTH16_SETUP",
-    "G4_full_p3": "PARTIAL_PASS_G4B_TWO_SUBSET_COMPLETE_P3_NOT_ARBITRARY_3_OF_5",
+    "G4_full_p3": "PARTIAL_PASS_G4C_TALLY_V2_FIXED_123_FULL_AND_PARTIAL_TURNOUT",
     "G5_A_local_prague_state_verifier": "PASS_G5A_LOCAL_PRAGUE_G2B_GROTH16_VERIFIER",
     "G5_B_local_prague_two_subset_p3_verifier": "PASS_G5B_LOCAL_PRAGUE_TWO_SUBSET_P3_GROTH16_VERIFIER",
     "G5_C1_snarkpack_wire_and_runtime_prerequisites": "PASS_G5C1_PUBLIC_WIRE_FIXTURE_AND_PRAGUE_PRIMITIVES",
@@ -2558,6 +2561,160 @@
       "the cryptographic Manifest remains limited to the prior fixed-123 capability",
       "private plaintext group elements and tally values are not emitted"
     ]
+  },
+  "g4_c_tally_v2_full_and_partial_turnout": {
+    "all_ten_subsets_tested": false,
+    "arch": "aarch64",
+    "base_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+    "build_profile": "release-opt-level-1",
+    "cases": [
+      {
+        "case_name": "full_turnout",
+        "native_tally_matches_expected": true,
+        "peak_rss_after_prove_mib": 7478.34375,
+        "peak_rss_after_verify_mib": 7478.34375,
+        "proof_bytes": 192,
+        "proof_seed": 5130799844839672882,
+        "proof_verified": true,
+        "prove_ms": 46432.629833,
+        "public_winner": 1,
+        "shape": {
+          "constraints": 6232037,
+          "peak_rss_mib": 7123.484375,
+          "public_input_packing_matches_r1cs": true,
+          "public_inputs": 60,
+          "satisfied": true,
+          "witness_ms": 14964.56225,
+          "witness_timing_scope": "synthesis, finalize, satisfaction check and exact public-input packing check; not witness generation alone",
+          "witness_variables": 6005170
+        },
+        "verify_ms": 5.6489590000000005,
+        "verifying_key_sha256": "734d5a6b573b500de5b64dc90fced31036d15d26fda3118ce21e45da6326b238"
+      },
+      {
+        "case_name": "partial_turnout",
+        "native_tally_matches_expected": true,
+        "peak_rss_after_prove_mib": 9250.15625,
+        "peak_rss_after_verify_mib": 9250.15625,
+        "proof_bytes": 192,
+        "proof_seed": 5130799887454196786,
+        "proof_verified": true,
+        "prove_ms": 43131.654334,
+        "public_winner": 1,
+        "shape": {
+          "constraints": 6232037,
+          "peak_rss_mib": 7123.65625,
+          "public_input_packing_matches_r1cs": true,
+          "public_inputs": 60,
+          "satisfied": true,
+          "witness_ms": 13986.579000000002,
+          "witness_timing_scope": "synthesis, finalize, satisfaction check and exact public-input packing check; not witness generation alone",
+          "witness_variables": 6005170
+        },
+        "verify_ms": 5.884292,
+        "verifying_key_sha256": "734d5a6b573b500de5b64dc90fced31036d15d26fda3118ce21e45da6326b238"
+      }
+    ],
+    "classification": "one-fresh-v2-setup-two-real-proofs-full-and-partial-turnout-fixed-123",
+    "cpu": "Apple M4",
+    "evm_run": false,
+    "fixture_file": "fixtures/jubjub_g4c_partial_turnout_v2.json",
+    "fresh_setup_for_tally_v2": true,
+    "gate": "G4-C",
+    "git_commit": "69c71993c87d3c5334f6bad068b56690fa785245",
+    "git_dirty": true,
+    "groth16_run": true,
+    "layout_version": "VV/JUBJUB/G4-C/INPUT-LAYOUT/v2",
+    "limitations": [
+      "only subset 123 was measured; the existing two-subset relation is not arbitrary-subset P3",
+      "deterministic publicly known research setup seeds are unsuitable for production",
+      "this gate checks complete P3 with authenticated registration weight, not a composed ballot/state/settlement proof",
+      "no v2 on-chain verifier or SnarkPack EVM verification was measured",
+      "two witnesses are functional correctness cases, not repeated performance samples"
+    ],
+    "manifest_capability": "EXPERIMENT_ONLY_G4C_TALLY_V2_REQUIRES_FRESH_SETUP",
+    "manifest_sha256": "c9813e48b669c9e77273ca4080e51062044fa1a64fce122335e882ce4aff1e21",
+    "negative_tests": {
+      "changed_partial_public_winner_rejected": true,
+      "same_partial_cp_material_sum_over_public_bound_rejected": true,
+      "sum_over_bound_each_tally_within_bound_checked": true,
+      "sum_over_bound_public_registered_weight": 4,
+      "sum_over_bound_shape": {
+        "constraints": 6232037,
+        "peak_rss_mib": 7335.671875,
+        "public_input_packing_matches_r1cs": true,
+        "public_inputs": 60,
+        "satisfied": false,
+        "witness_ms": 12751.943583999999,
+        "witness_timing_scope": "synthesis, finalize, satisfaction check and exact public-input packing check; not witness generation alone",
+        "witness_variables": 6005170
+      },
+      "winner_public_input_index": 59,
+      "wrong_winner_verify_ms": 6.310041
+    },
+    "old_v1_verifying_key_reused": false,
+    "os": "macos",
+    "p3_tally_relation_id": "VV/JUBJUB/P3/BOUNDED-TALLY/v2",
+    "peak_rss_after_setup_mib": 7478.34375,
+    "peak_rss_after_verify_mib": 9250.15625,
+    "private_decryption_shares_emitted": false,
+    "private_openings_emitted": false,
+    "private_packages_emitted": false,
+    "private_plaintext_groups_emitted": false,
+    "private_slack_emitted": false,
+    "private_tallies_emitted": false,
+    "production_setup": false,
+    "proof_count": 2,
+    "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G4C-3.0",
+    "prototype_manifest": "configs/protocol_manifest.JUBJUB-P3-WEIGHT-V2.json",
+    "proving_key_compressed_bytes": 1843909056,
+    "proving_key_persisted": false,
+    "public_second_subset": false,
+    "registered_weight": 10,
+    "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "same_constraints": true,
+    "same_dkg_and_registration_close": true,
+    "same_public_input_count": true,
+    "same_setup_parameters_used": true,
+    "same_witness_variables": true,
+    "seed": 20261028,
+    "selected_trustees": [
+      1,
+      2,
+      3
+    ],
+    "setup_count": 1,
+    "setup_ms": 68220.16979100001,
+    "setup_seed": 5130799900406338896,
+    "source_hashes": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/g4c_partial_turnout.rs",
+        "sha256": "7674e5a978eb59dad60640e392bf305a8251d545fbcfa1505903ae68932219d4"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/p3c1_gadget.rs",
+        "sha256": "bcc7c52feab5999874f5a6589835cf74a5f2b0b27b45387011c61af03bbbe078"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/p3d_gadget.rs",
+        "sha256": "33734df199a851e1e8a339118f0f6b6a311b586568261f9a01202eb57c880023"
+      }
+    ],
+    "status": "PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2",
+    "verifying_key_compressed_bytes": 3272,
+    "verifying_key_sha256": "734d5a6b573b500de5b64dc90fced31036d15d26fda3118ce21e45da6326b238"
+  },
+  "p3_relation_scope": {
+    "current_tally_relation": "VV/JUBJUB/P3/BOUNDED-TALLY/v2",
+    "current_result": "experiments/g4_c_raw/partial_turnout_groth16.json",
+    "legacy_g4b_and_g5b_results": "historical exact-sum v1 relation; not evidence for v2 parameters or gas",
+    "v2_measured_subset": [
+      1,
+      2,
+      3
+    ],
+    "v2_evm_measured": false,
+    "v2_all_ten_subsets_measured": false
   },
   "g5_a_local_prague_state_verifier": {
     "gate": "G5-A",
@@ -11513,5 +11670,6 @@
   "csv_rows_seen": 11,
   "build_profiles": [
     "dev-unoptimized"
-  ]
+  ],
+  "build_profiles_scope": "legacy runs.csv only; individual gate records contain their actual build profile"
 }

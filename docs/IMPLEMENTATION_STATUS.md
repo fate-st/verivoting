@@ -1,5 +1,31 @@
 # Implementation and claim boundary
 
+## Current correctness revision (2026-10-28): G4-C tally v2
+
+Status: `PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2`. One setup and both
+real 192-byte proofs pass at 6,232,037 constraints / 60 public inputs. Wrong
+winner and sum-over-bound reject; v2 EVM and other subsets remain unmeasured.
+
+The former `sum(t_j) = W_registered` requirement incorrectly excluded partial
+turnout. The current shared P3-C1 relation instead constrains a private u64
+slack with `sum(t_j) + slack = W_registered`; individual tally bounds, group
+bindings and winner tie breaking remain enforced. The new experiment uses one
+fresh Groth16 setup for full and partial turnout, with fixed subset `{1,2,3}`.
+See [G4-C](G4_C_PARTIAL_TURNOUT.md) and
+`experiments/g4_c_raw/partial_turnout_groth16.json` for actual acceptance and
+measurements. This is not a scale or performance comparison.
+
+All earlier P3 tally/winner/G4/G5-B results below are historical exact-sum-v1
+records. Old VKs cannot verify v2 proofs, even though the public width remains
+60. Their subset coverage and EVM gas must not be carried over to v2. Old
+manifests are preserved; a separate G4-C experiment descriptor identifies v2.
+Registration/package authentication and frozen-state checks include native
+external verification; no composed ballot/state/settlement circuit is claimed.
+The next necessary gate is the newly keyed proof through the existing local
+Groth16 EVM verifier, not another software Miller attempt.
+
+## Frozen G5 subroute (historical checkpoint)
+
 Current checkpoint (2026-10-27): B23 executes one unchanged-runtime full64
 positive and reaches root OOG at the fixed20M cap. All 11,076 observed MODEXPs
 succeed; completed-loop gas remains unknown/null. B23 is the latest actual full

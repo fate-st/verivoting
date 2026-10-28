@@ -8,6 +8,22 @@ operation, broad crash matrices, or on-chain work as measurements.
 
 ## What is implemented
 
+### P3 correctness revision (2026-10-28)
+
+The current tally relation is v2: `sum(t_j) <= W_registered`, implemented by
+a private range-constrained slack. The former exact-sum relation rejected
+legitimate partial turnout. See [the G4-C experiment](docs/G4_C_PARTIAL_TURNOUT.md)
+and its separate raw result. A new relation requires a new Groth16 setup/VK;
+old P3-C1/D0/D1, G4-A/B and G5-B measurements below are historical **v1**
+results, not v2 proving times, subset coverage or EVM gas. The official and old
+prototype Manifests remain unchanged; G4-C uses its own experiment descriptor.
+The fixed-20M software Miller/SnarkPack route remains frozen.
+
+G4-C has now passed: one fresh setup, two real 192-byte P3 proofs (full/partial
+turnout), 6,232,037 constraints and 60 public inputs. Wrong winner and excessive
+total weight reject. Only subset `{1,2,3}` was proved under v2; its EVM verifier
+and the other subsets are not measured.
+
 | Area | Implementation | Reported status |
 |---|---|---|
 | Canonical encoding and protocol manifest | Domain-separated, length-prefixed, big-endian encoding | READY |
@@ -408,8 +424,9 @@ automatic arithmetic optimization and full retries on this fixed20M software
 route are frozen; the rest of the project is not frozen. Failed capped spend
 does not measure completed-loop gas or completion percentage.
 
-Next is read-only evidence/claim alignment and prioritization of the remaining
-native batch experiments. There is no automatic cap increase, new primitive
+That B23 next-task note is historical. The 2026-10-28 user-requested priority
+is the P3 partial-turnout correction, not a native batch-size expansion.
+There is no automatic cap increase, new primitive
 search, final-exponentiation experiment or wrapper implementation. A different
 verifier architecture requires a new scoped decision and resource plan.
 Full Miller, final exponentiation, GT binding and exact SnarkPack remain

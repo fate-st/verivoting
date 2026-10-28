@@ -64,6 +64,7 @@ def main() -> int:
     g3_b_path = raw.parent / "g3_b_raw" / "one_trustee_restart.json"
     g4_a_path = raw.parent / "g4_a_raw" / "second_subset_p3_shape.json"
     g4_b_path = raw.parent / "g4_b_raw" / "public_subset_groth16.json"
+    g4_c_path = raw.parent / "g4_c_raw" / "partial_turnout_groth16.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_c_path = raw.parent / "g5_c_raw" / "snarkpack_route.json"
@@ -175,6 +176,7 @@ def main() -> int:
     g3_b = json.loads(g3_b_path.read_text()) if g3_b_path.exists() else None
     g4_a = json.loads(g4_a_path.read_text()) if g4_a_path.exists() else None
     g4_b = json.loads(g4_b_path.read_text()) if g4_b_path.exists() else None
+    g4_c = json.loads(g4_c_path.read_text()) if g4_c_path.exists() else None
     g5_a = json.loads(g5_a_path.read_text()) if g5_a_path.exists() else None
     g5_b = json.loads(g5_b_path.read_text()) if g5_b_path.exists() else None
     g5_c = json.loads(g5_c_path.read_text()) if g5_c_path.exists() else None
@@ -227,7 +229,11 @@ def main() -> int:
     )
 
     summary = {
-        "classification": "measured-native-core-real-two-subset-public-selector-p3-groth16-real-fixed-suite-ballot-groth16-distinct-voter-minimum-batch-snarkpack-fixed-b2-state-groth16-five-process-dkg-with-one-restart-and-local-prague-state-and-two-subset-p3-verifiers",
+        "classification": (
+            "measured-research-prototype-tally-v2-full-partial-turnout-fixed-123-with-historical-v1-two-subset-and-evm-evidence"
+            if g4_c
+            else "measured-native-core-real-two-subset-public-selector-p3-groth16-real-fixed-suite-ballot-groth16-distinct-voter-minimum-batch-snarkpack-fixed-b2-state-groth16-five-process-dkg-with-one-restart-and-local-prague-state-and-two-subset-p3-verifiers"
+        ),
         "gates": {
             "G0_native_core_and_p1": "PASS",
             "G0.5_cp_single_equation": (
@@ -355,6 +361,11 @@ def main() -> int:
             "G4_B_public_two_subset_p3_groth16": (
                 g4_b["status"] if g4_b else "NOT_RUN"
             ),
+            "G4_C_tally_v2_full_and_partial_turnout": (
+                g4_c["status"] if g4_c else "NOT_RUN"
+            ),
+            "G4_current_tally_v2_arbitrary_subset": "NOT_MEASURED",
+            "G5_current_tally_v2_evm_verifier": "NOT_MEASURED",
             "G4_general_subset_p3": (
                 "PARTIAL_PASS_G4B_PUBLIC_BOUND_TWO_SUBSETS_SAME_GROTH16_SETUP"
                 if g4_b
@@ -363,7 +374,9 @@ def main() -> int:
                 else "BLOCKED_SECOND_SUBSET_NOT_MEASURED"
             ),
             "G4_full_p3": (
-                "PARTIAL_PASS_G4B_TWO_SUBSET_COMPLETE_P3_NOT_ARBITRARY_3_OF_5"
+                "PARTIAL_PASS_G4C_TALLY_V2_FIXED_123_FULL_AND_PARTIAL_TURNOUT"
+                if g4_c
+                else "PARTIAL_PASS_G4B_TWO_SUBSET_COMPLETE_P3_NOT_ARBITRARY_3_OF_5"
                 if g4_b
                 else g09_p3d1["status"]
                 if g09_p3d1
@@ -528,6 +541,15 @@ def main() -> int:
         "g3_b_one_trustee_restart_recovery": g3_b,
         "g4_a_second_subset_p3_shape": g4_a,
         "g4_b_public_two_subset_p3_groth16": g4_b,
+        "g4_c_tally_v2_full_and_partial_turnout": g4_c,
+        "p3_relation_scope": {
+            "current_tally_relation": "VV/JUBJUB/P3/BOUNDED-TALLY/v2",
+            "current_result": str(g4_c_path) if g4_c else None,
+            "legacy_g4b_and_g5b_results": "historical exact-sum v1 relation; not evidence for v2 parameters or gas",
+            "v2_measured_subset": [1, 2, 3] if g4_c else None,
+            "v2_evm_measured": False,
+            "v2_all_ten_subsets_measured": False,
+        },
         "g5_a_local_prague_state_verifier": g5_a,
         "g5_b_local_prague_two_subset_p3_verifier": g5_b,
         "g5_c1_snarkpack_route_prerequisites": g5_c,
@@ -566,6 +588,7 @@ def main() -> int:
         },
         "csv_rows_seen": len(csv_rows),
         "build_profiles": build_profiles,
+        "build_profiles_scope": "legacy runs.csv only; individual gate records contain their actual build profile",
     }
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
@@ -573,9 +596,27 @@ def main() -> int:
     lines = [
         "# VeriVoting-Batch measured summary",
         "",
-        f"Build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}`",
+        f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g4_c:
+        lines.extend([
+            "## Current P3 correctness checkpoint: G4-C (tally relation v2)",
+            "",
+            f"- Status: `{g4_c['status']}`; details: `docs/G4_C_PARTIAL_TURNOUT.md`.",
+            f"- Actual G4-C build: `{g4_c['build_profile']}` / `{g4_c['rustc_version']}`; dirty source state is recorded, not hidden.",
+            f"- Fresh setup: `{g4_c['setup_ms']:.3f} ms`; final cumulative peak RSS: `{g4_c['peak_rss_after_verify_mib']:.3f} MiB`.",
+            *[
+                f"- `{case['case_name']}`: constraints `{case['shape']['constraints']}`, public inputs `{case['shape']['public_inputs']}`, prove / verify `{case['prove_ms']:.3f} / {case['verify_ms']:.3f} ms`, proof `{case['proof_bytes']} B`, verified `{case['proof_verified']}`."
+                for case in g4_c["cases"]
+            ],
+            f"- Wrong winner / sum-over-bound rejected: `{g4_c['negative_tests']['changed_partial_public_winner_rejected']} / {g4_c['negative_tests']['same_partial_cp_material_sum_over_public_bound_rejected']}`.",
+            "- The repaired relation allows total accepted vote weight below the registered bound; the slack stays private.",
+            "- One fresh setup, full and partial turnout proofs, fixed Trustee subset `{1,2,3}` only. This is a correctness regression, not a performance comparison.",
+            "- Old G4-B/G5-B data below are historical exact-sum-v1 measurements. The old verification key and old EVM gas do not apply to v2.",
+            "- Next: verify the newly keyed v2 proof through the existing local EVM verifier, without reopening the frozen SnarkPack/Miller route.",
+            "",
+        ])
     if g5_next_work:
         lines.extend([
             "## Current G5 checkpoint",
@@ -1683,7 +1724,7 @@ def main() -> int:
             else "BLOCKED"
         )
         print(f"  [{marker:7}] {gate}: {status}")
-    print(f"Build profile(s): {', '.join(build_profiles) if build_profiles else 'unknown'}")
+    print(f"Legacy runs.csv build profile(s): {', '.join(build_profiles) if build_profiles else 'unknown'}")
     print(f"Public winner: {event['winner']} | legal subsets: {e2e['all_legal_subsets_checked']}")
     print(f"P1: {p1['constraints']} constraints | {p1['proof_bytes']} B proof | verified={p1['verified']}")
     return 0

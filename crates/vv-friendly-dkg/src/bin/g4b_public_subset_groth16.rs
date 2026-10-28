@@ -341,6 +341,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let manifest_bytes = fs::read(&manifest_path)?;
     let manifest: Value = serde_json::from_slice(&manifest_bytes)?;
+    if manifest["p3_tally_relation_id"].as_str()
+        != Some(vv_friendly_crypto::p3c1_gadget::P3_TALLY_RELATION_ID)
+    {
+        return Err("P3 tally relation changed to v2; archived v1 manifests/keys cannot be reused. Run friendly-g4c-partial-turnout with its v2 experiment manifest.".into());
+    }
     let protocol_version = manifest["protocol_version"]
         .as_str()
         .ok_or("prototype manifest lacks protocol_version")?

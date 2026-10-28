@@ -1,0 +1,29 @@
+{
+  "protocol_version": "VERIVOTING-JUBJUB-PROTOTYPE-G4C-3.0",
+  "classification": "isolated P3 tally-bound correctness experiment; not an official deployment manifest",
+  "base_manifest_path": "configs/protocol_manifest.JUBJUB-PROTOTYPE.json",
+  "base_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+  "p3_tally_relation_id": "VV/JUBJUB/P3/BOUNDED-TALLY/v2",
+  "input_layout_version": "VV/JUBJUB/G4-C/INPUT-LAYOUT/v2",
+  "tally_constraint": "0 <= t_j <= W_registered; sum_j(t_j) + private_u64_slack = W_registered",
+  "n": 5,
+  "t": 2,
+  "tau": 3,
+  "candidate_count": 3,
+  "registered_weight": 10,
+  "measured_subset": [1, 2, 3],
+  "release_policy": "WINNER_ONLY_V1",
+  "winning_rule": "highest-weight-smallest-id-on-tie",
+  "encryption_group": "Jubjub/ark-ed-on-bls12-381-0.4.0",
+  "disclosure_groth16_curve": "BLS12-381/ark-groth16-0.4; new parameters required for tally relation v2",
+  "cp_hash_to_scalar_suite": "VERIVOTING-JUBJUB-CP-H2F-G0.9-v3; SHA-512 full-512-bit OS2IP-BE mod Jubjub-Fr; fixed-shape",
+  "commitment_suite": "Jubjub Pedersen VSS and registration commitments; private-package message scalar uses VERIVOTING-JUBJUB-PACKAGE-H2F-G0.9-v1 with SHA-512 full-512-bit OS2IP-BE mod Jubjub-Fr; H via VV/JUBJUB/H2G/v1",
+  "production_setup": false,
+  "legacy_v1_verifying_keys_compatible": false,
+  "capabilities": {
+    "full_p3": "EXPERIMENT_ONLY_G4C_TALLY_V2_REQUIRES_FRESH_SETUP",
+    "arbitrary_subset_p3": "NOT_MEASURED",
+    "target_chain_v2": "NOT_MEASURED",
+    "full_settlement": "NOT_IMPLEMENTED"
+  }
+}

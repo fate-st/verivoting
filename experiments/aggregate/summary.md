@@ -1,6 +1,19 @@
 # VeriVoting-Batch measured summary
 
-Build profile(s): `dev-unoptimized`
+Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
+
+## Current P3 correctness checkpoint: G4-C (tally relation v2)
+
+- Status: `PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2`; details: `docs/G4_C_PARTIAL_TURNOUT.md`.
+- Actual G4-C build: `release-opt-level-1` / `rustc 1.99.1 (58cf8f9c3 2026-10-13)`; dirty source state is recorded, not hidden.
+- Fresh setup: `68220.170 ms`; final cumulative peak RSS: `9250.156 MiB`.
+- `full_turnout`: constraints `6232037`, public inputs `60`, prove / verify `46432.630 / 5.649 ms`, proof `192 B`, verified `True`.
+- `partial_turnout`: constraints `6232037`, public inputs `60`, prove / verify `43131.654 / 5.884 ms`, proof `192 B`, verified `True`.
+- Wrong winner / sum-over-bound rejected: `True / True`.
+- The repaired relation allows total accepted vote weight below the registered bound; the slack stays private.
+- One fresh setup, full and partial turnout proofs, fixed Trustee subset `{1,2,3}` only. This is a correctness regression, not a performance comparison.
+- Old G4-B/G5-B data below are historical exact-sum-v1 measurements. The old verification key and old EVM gas do not apply to v2.
+- Next: verify the newly keyed v2 proof through the existing local EVM verifier, without reopening the frozen SnarkPack/Miller route.
 
 ## Current G5 checkpoint
 
@@ -53,8 +66,11 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G3_multiprocess | PARTIAL_PASS_G3B_ONE_RESTART_AUTHENTICATED_LOCAL_TRANSPORT |
 | G4_A_second_subset_p3_shape | PASS_G4A_SECOND_SUBSET_COMMON_R1CS_COUNT_SHAPE |
 | G4_B_public_two_subset_p3_groth16 | PASS_G4B_REAL_GROTH16_TWO_SUBSET_PUBLIC_SELECTOR |
+| G4_C_tally_v2_full_and_partial_turnout | PASS_G4C_REAL_GROTH16_PARTIAL_TURNOUT_TALLY_V2 |
+| G4_current_tally_v2_arbitrary_subset | NOT_MEASURED |
+| G5_current_tally_v2_evm_verifier | NOT_MEASURED |
 | G4_general_subset_p3 | PARTIAL_PASS_G4B_PUBLIC_BOUND_TWO_SUBSETS_SAME_GROTH16_SETUP |
-| G4_full_p3 | PARTIAL_PASS_G4B_TWO_SUBSET_COMPLETE_P3_NOT_ARBITRARY_3_OF_5 |
+| G4_full_p3 | PARTIAL_PASS_G4C_TALLY_V2_FIXED_123_FULL_AND_PARTIAL_TURNOUT |
 | G5_A_local_prague_state_verifier | PASS_G5A_LOCAL_PRAGUE_G2B_GROTH16_VERIFIER |
 | G5_B_local_prague_two_subset_p3_verifier | PASS_G5B_LOCAL_PRAGUE_TWO_SUBSET_P3_GROTH16_VERIFIER |
 | G5_C1_snarkpack_wire_and_runtime_prerequisites | PASS_G5C1_PUBLIC_WIRE_FIXTURE_AND_PRAGUE_PRIMITIVES |

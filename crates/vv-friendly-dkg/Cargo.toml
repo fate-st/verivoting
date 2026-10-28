@@ -10,6 +10,7 @@ ark-ec.workspace = true
 ark-ed-on-bls12-381.workspace = true
 ark-ff.workspace = true
 ark-groth16.workspace = true
+ark-relations.workspace = true
 ark-serialize.workspace = true
 bellperson.workspace = true
 blstrs.workspace = true
@@ -81,6 +82,10 @@ path = "src/bin/g4a_second_subset_shape.rs"
 [[bin]]
 name = "friendly-g4b-public-subset-groth16"
 path = "src/bin/g4b_public_subset_groth16.rs"
+
+[[bin]]
+name = "friendly-g4c-partial-turnout"
+path = "src/bin/g4c_partial_turnout.rs"
 
 [[bin]]
 name = "friendly-g5c2-native-replay"

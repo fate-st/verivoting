@@ -1,5 +1,28 @@
 # Next gates
 
+## Current project priority (2026-10-28): P3 partial-turnout correctness
+
+G4-C acceptance has passed with actual setup/prove/verify results. The next
+experiment below is planned only, not executed in this gate.
+
+The newly supplied review takes priority over the former native-batch planning
+note. G4-C repairs the overly strong exact-sum tally constraint with a private
+u64 slack: `sum(t_j) + slack = W_registered`. Its minimal acceptance is one new
+setup shared by full and partial turnout proofs, a changed-winner rejection,
+and one sum-over-bound R1CS rejection. Details and measured outputs:
+`docs/G4_C_PARTIAL_TURNOUT.md` and `experiments/g4_c_raw/partial_turnout_groth16.json`.
+
+The next **single** experiment after G4-C acceptance is to feed the new v2
+proof and new VK to the existing local Groth16 EVM verifier. Verify one valid
+partial-turnout proof and reject one changed winner; archive new v2 gas and
+calldata measurements. Do not reuse the G5-B v1 key or gas. No SnarkPack/Miller
+retry, batch-size matrix, extra fault matrix, production ceremony or deployment
+is included. All-ten-subset v2 P3 and larger batches remain separate later gates.
+
+The historical B23 fixed-budget software-route freeze below remains binding.
+
+## Historical G5 evidence and frozen-route checkpoint
+
 Current checkpoint (2026-10-27): B23 runs the exact B21 runtime once at20M and
 reaches root OOG, with 11,076 successful MODEXPs and no child failures. B23 is
 the latest actual full attempt; B21 remains the passing prefix. Completed-loop
@@ -274,7 +297,10 @@ implementation on this fixed20M software route. Do not convert MODEXP counts or
 failed capped spend into completion percentages or full-cost estimates. Other
 paper experiments remain in scope without claiming complete target verification.
 
-### Next single task: evidence alignment and one native-batch plan (read-only)
+### Superseded project-priority note: one native-batch plan (read-only)
+
+The 2026-10-28 P3 correctness request above supersedes this task selection,
+but not the software-route freeze or the claim boundaries below.
 
 1. Keep the B23 budget failure separate from the existing native SnarkPack,
    ballot and fixed-B=2 state-proof results. Check these against the manuscript's
