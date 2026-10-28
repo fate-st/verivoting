@@ -8,7 +8,28 @@ operation, broad crash matrices, or on-chain work as measurements.
 
 ## What is implemented
 
-### Latest project checkpoint: G2-C (2026-10-28)
+### Latest project checkpoint: G1-D0 (2026-10-28)
+
+[G1-D0](docs/G1_D0_UNIFORM_NATIVE_PILOT.md) runs a fixed depth-5, 32-leaf,
+unit-weight registry with W=32, one certified key/context and one new ballot
+VK. Eight real source proofs form ordered prefixes B=2/4/8; all aggregates
+verify and the sole changed-eighth-nullifier negative rejects.
+
+| B | Individual bellperson Verify (ms) | Aggregate Verify (ms) | Individual proofs / aggregate (B) |
+|---|---:|---:|---:|
+| 2 | 1.330 | 3.923 | 384 / 5,236 |
+| 4 | 1.847 | 3.971 | 768 / 8,212 |
+| 8 | 3.949 | 5.210 | 1,536 / 11,188 |
+
+This single pilot shows no size/verifier-time advantage at these points; it
+is not repeated statistics or a crossover result. Native direct-fold checks
+are also measured (0.003292 / 0.006459 / 0.010583 ms), as a fair baseline
+component rather than a complete settlement. Current-suite state/P3 and full
+Gas/DA remain unmeasured; historical weight-10 results cannot be spliced in.
+Next is only G1-D1 B=16 in the SAME frozen suite, reusing matching archived
+proofs instead of regenerating them. No software Miller work is included.
+
+### Previous state checkpoint: G2-C (weight 10)
 
 [G2-C](docs/G2_C_FOUR_BALLOT_STATE.md) reuses and reverifies the archived
 G1-C2 B=4 aggregate, then proves a newly keyed four-ballot state relation.
@@ -23,7 +44,7 @@ setup, one proof and one negative case were run. This is a zero-old-state
 functional case, not statistical evaluation, recursive verification or EVM
 settlement. Old B=2 state entry points/artifacts remain unchanged.
 
-Next is **G1-D0: one fixed depth-5/32-leaf suite and same-VK B=2/4/8 pilot**,
+Its planned fixed-suite B=2/4/8 pilot has since passed in G1-D0 above,
 before extending the unified matrix to B=16/32 and repeated measurements.
 No new software Miller work is included.
 
@@ -118,6 +139,7 @@ the next task is the unified native pilot above, not software Miller work.
 | G1-C1 distinct-voter ballot aggregation | SnarkPack V2 over two different registered-voter statements | PASS minimum batch; distinct nullifiers/ciphertexts, non-production SRS, no scale claim |
 | G1-C2 four-voter aggregation | Four different same-region C_vote proofs, depth 2 | PASS native B=4; one run, nonproduction SRS |
 | G1-C3 eight-voter aggregation | Eight different same-region C_vote proofs, separate depth-3 layout and new key | PASS native B=8; one run, nonproduction SRS, no efficiency claim |
+| G1-D0 same-suite pilot | Fixed depth 5 / W32, same VK and genuine proof-pool prefixes B=2/4/8 | PASS single-run native comparison and direct-fold component; no statistical/settlement claim |
 | G2-A fixed-B=2 state transition | Canonical ordered batch root and six-component Jubjub accumulator relation | PASS R1CS; 1,360,002 constraints, no Groth16 |
 | G2-B fixed-B=2 state proof | Real Groth16 over the unchanged G2-A relation | PASS; 192-byte proof, changed public batch root rejected |
 | G2-C fixed-B=4 state proof | Archived real four-voter aggregate bound to ordered root and complete ciphertext fold | PASS; one 192-byte state proof; omitted ct3 rejects in R1CS and under the original proof; native linkage only |

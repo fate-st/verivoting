@@ -1,60 +1,80 @@
 # Next gates
 
-## Current checkpoint (2026-10-28): G2-C B=4 state / omission accepted
+## Current checkpoint (2026-10-28): G1-D0 same-suite B=2/4/8 pilot accepted
 
-The saved real G1-C2 aggregate reverifies once. All four exact ordered
-25-field rows bind the state records and canonical four-leaf batch root.
-A fresh B=4 state setup/proof verifies the complete ciphertext fold. The only
-negative keeps records/root/aggregate unchanged and omits ct3 from the new
-state: R1CS is unsatisfied and the original proof rejects that public state.
-See docs/G2_C_FOUR_BALLOT_STATE.md and
-experiments/g2_c_raw/state_transition_b4_groth16.json.
+One depth-5/32-leaf unit-weight registry (W=32), certified key/context and
+ballot VK are shared by B=2/4/8. Eight different real source proofs form
+ordered prefixes. Three real V2 aggregates verify; the only negative changes
+the eighth nullifier and rejects. All three native direct-fold checks pass.
+See docs/G1_D0_UNIFORM_NATIVE_PILOT.md and
+experiments/g1_d0_raw/uniform_depth5_native_pilot.json.
 
-Actual: 2,743,666 constraints / 37 inputs; setup 23.233 s; prove 15.853 s;
-verify 2.049 ms; proof 192 B; peak RSS 6,083 MiB. One setup, one proof and
-one negative case only. DKG/ballot proofs/SRS/EVM were not regenerated.
-The old B=2 entry points and artifacts remain unchanged. Linking SnarkPack
-to the state proof is native, not recursive or an EVM settlement.
+Actual same-run individual/aggregate Verify (ms): 1.330/3.923, 1.847/3.971,
+3.949/5.210. Proof bytes: 384/5,236, 768/8,212, 1,536/11,188. These points
+show no size/verifier-time advantage in this one pilot, not a statistical
+crossover result. Per-ballot constraints: 1,076,095 / 25 inputs. Shared setup
+11.313 s, source prove total 55.702 s, cumulative process peak RSS 3,077.672 MiB.
 
-G1-C3 B=8 native aggregation remains passed. Largest measured state proof is
-now B=4. Neither checkpoint is a repeated performance study. The Miller
-fixed-budget freeze is not lifted.
+The W32 ballot suite does NOT upgrade the historical W10 state/P3 proofs.
+Current-suite state/P3, full DA/calldata and Gas remain unmeasured. G2-C
+B=4 state/omission remains passed only under its own W10 configuration.
+No state, P3 or EVM experiment was rerun. The Miller freeze remains binding.
 
-## Next single increment: G1-D0 unified-suite B=2/4/8 native pilot
+## Next single increment: G1-D1 B=16 in the SAME frozen D5/W32 suite
 
-This is PLANNED, not run in G2-C. It begins the uploaded plan's fixed-circuit
-B=2–32 comparison, not another fault-matrix experiment.
+This is PLANNED, not executed in G1-D0. Extend the uploaded plan's native
+matrix one scale at a time; do not change tree depth or silently rekey.
 
-1. Pin a new experiment descriptor/layout for a depth-5, 32-leaf registration
-   tree, three candidates, four regions and a valid fixed weight bound 32.
-   Use 32 distinct unit-weight registered voters (sum 32), selected in the
-   same region by the existing PRF/region algorithm. Freeze policy before DKG.
-   Old weight-10/depth-2/3 manifests, fixtures and keys must remain historical;
-   the new constants require a new ballot VK. Curves and PRF/hash algorithms
-   are unchanged. This does not upgrade official protocol/P3 capabilities.
-2. One authenticated DKG, one registration close and one fresh ballot setup.
-   First prove only eight distinct ballots with real depth-5 paths; unused
-   registry members need no ballot proofs. Verify all eight source proofs.
-3. Take ordered prefixes of size 2/4/8 from that SAME genuine proof pool.
-   Compare real V2 aggregation against individual bellperson verification
-   under the SAME ballot VK, depth, weight bound and process/environment.
-   Derive the required specialized verifier SRS from one research SRS; record
-   proof reuse explicitly instead of claiming three independent proof runs.
-4. Keep the existing necessary last-nullifier negative at B=8 only; do not
-   add replacement/replay/transport failure matrices. Record actual separate
-   setup/prove/aggregate/verify times, proof and input bytes, peak RSS, source
-   hashes and key hashes. Keep arkworks and bellperson verification separate.
-5. Stop after this small pilot. Then extend the SAME frozen depth-5 relation
-   to 16/32 distinct ballots, and only after functional acceptance collect
-   the formal repeated measurements (at least 10 per point, median/P95).
-   The present different-depth B=2/B=4/B=8 records cannot substitute for that
-   matrix. Do not produce statistical figures from single pilot samples.
+1. Add an independent B=16 runner; preserve the G1-D0 entry point/raw/fixture.
+   Keep configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json byte-identical:
+   same layout, 32 leaves/positive unit weights, W=32, algorithms, fixed
+   seeds, election context and registered entries. Run-size settings belong
+   outside that frozen descriptor.
+2. Reconstruct the deterministic research DKG/registration/circuit witnesses.
+   No PK was persisted, so one setup reconstruction is necessary. BEFORE
+   reusing proofs, require the actual VK hash to equal G1-D0, the first eight
+   public rows and registration/context/key to match exactly, and the
+   regenerated size-32 research SRS hash to match. Record this reconstruction
+   cost separately; it is not online proving work.
+3. Canonically decode the saved first eight genuine source proofs and reuse
+   them only after those checks; generate only proof indices 8 through 15.
+   Individually verify all 16 and aggregate the full ordered matrix once.
+   Do not report 16 newly generated proofs when only eight are new.
+4. Measure B=16 individual bellperson verification, V2 aggregation/verification,
+   native direct fold/equality and sizes. Only one necessary negative changes
+   the LAST nullifier with a correspondingly rebuilt full transcript. Preserve
+   the same arithmetic-only versus complete-settlement measurement boundary.
+5. Archive new source/key/config hashes, public verifier material, timings and
+   cumulative RSS; stop after this functional acceptance. B=32 is a separate
+   subsequent increment. If a compatibility hash fails, stop and diagnose;
+   do not silently replace old proofs, keys or the configuration.
 
-No B=256, B=8 state proving, additional P3 subsets, new EVM transactions or
-software Miller work belongs in this one pilot. State-proof scale/cost,
-full-tally versus winner-only disclosure, fair system baselines and complete
-settlement remain separate later deliverables. Missing full Proposed Gas is
-unmeasured, not zero. The current weight-10 P3 VK is not a weight-32 proof.
+## Adjusted evaluation rules for subsequent work
+
+- Reuse the existing JSON and summary pipeline. Only add minimal adapters and
+  compatibility checks needed by actual measurements; no wholesale framework
+  rebuild or mandatory seven-figure target.
+- Fair transition comparison is SnarkPack plus DIRECT FOLD versus SnarkPack
+  plus STATE PROOF. A variant with no accumulation check is only an explicitly
+  weakened security ablation. Native fold timings are not target-chain Gas.
+- Accepted-batch consistency and aggregator censorship resistance differ.
+  The current paper proves properties within accepted batches, not inclusion
+  of every ballot delivered to an aggregator. An independent accepted-intake
+  commitment/log is a separate integration feature; do not claim it is already
+  enforced by state R1CS or confuse it with the registration root.
+- Stale old state, spent nullifiers and registry equality need their actual
+  receiving/settlement layer. Test each necessary invariant when that module
+  is implemented, rather than rerunning a full attack matrix at every B.
+- After functional B=32 acceptance, collect independent repetitions under the
+  frozen suite. Separate setup, proving, verification backends and process RSS;
+  report raw samples and median. Ten samples are an initial floor, not a strong
+  tail estimate: label P95 cautiously or increase repetitions when it matters.
+- Count actual nonoverlapping wire payloads; do not add the same ciphertext
+  again as both public inputs and DA. Missing EVM/DA/Gas is null, not zero.
+- Depth scans, larger Trustee profiles, B=256, alternative Gro16.Agg and public
+  testnets are later/optional tasks. Align the paper's promised scope before
+  treating omitted experiments as completed. Preserve its two main research
+  questions; the plan's four evaluation axes need not replace their numbering.
 
 ## Historical G5 evidence and frozen-route checkpoint
 

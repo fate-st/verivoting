@@ -1,5 +1,5 @@
 {
-  "classification": "measured-research-prototype-native-b8-ballot-aggregation-b4-state-proof-with-omission-rejection-fixed123-p3-v2-no-complete-settlement",
+  "classification": "measured-research-prototype-fixed-depth5-w32-same-vk-native-b2-b4-b8-pilot-with-historical-weight10-state-and-p3-no-settlement",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -32,7 +32,8 @@
     "G1_C1_distinct_voter_snarkpack": "PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS",
     "G1_C2_four_distinct_same_region_voter_snarkpack": "PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
     "G1_C3_eight_distinct_same_region_voter_snarkpack": "PASS_G1C3_REAL_SNARKPACK_V2_EIGHT_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
-    "G1_snarkpack": "PARTIAL_PASS_G1C3_EIGHT_DISTINCT_SAME_REGION_VOTERS_DEPTH3_NONPRODUCTION_SRS",
+    "G1_D0_fixed_depth5_w32_native_pilot": "PASS_G1D0_FIXED_DEPTH5_W32_SAME_VK_NATIVE_B2_B4_B8_PILOT",
+    "G1_snarkpack": "PARTIAL_PASS_G1D0_SAME_VK_DEPTH5_W32_B2_B4_B8_SINGLE_SAMPLE_NONPRODUCTION_SRS",
     "G2_A_state_transition_r1cs": "PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS",
     "G2_B_state_transition_groth16": "PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION",
     "G2_C_b4_state_and_omission": "PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED",
@@ -2810,11 +2811,475 @@
     "verifying_key_ark_compressed_bytes": 1592,
     "verifying_key_ark_sha256": "d48942a33d87e958a274f0daaa563c70c81dac10e1c5c65e38cce9a4fc66f0f4"
   },
+  "g1_d0_same_vk_depth5_native_pilot": {
+    "active_voter_count": 8,
+    "aggregate_negative_verification_count": 1,
+    "aggregate_positive_verification_count": 3,
+    "aggregate_version": "V2",
+    "aggregation_prover_srs_persisted": false,
+    "aggregation_srs_kind": "deterministic setup_fake_srs research-only",
+    "aggregation_srs_max_size": 32,
+    "aggregation_srs_ms": 5.29925,
+    "aggregation_srs_seed": 5129956424898728736,
+    "aggregation_srs_setup_count": 1,
+    "arch": "aarch64",
+    "ark_individual_verify_ms": [
+      2.293083,
+      2.556416,
+      2.154333,
+      2.395,
+      2.686875,
+      2.645792,
+      2.277042,
+      2.3674579999999996
+    ],
+    "ballot_layout": "VV/JUBJUB/EVALUATION/C-VOTE-D5-W32-LAYOUT/v1",
+    "ballot_vk_ark_compressed_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+    "ballot_vk_bellperson_wire_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+    "base_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+    "build_profile": "release-opt-level-1",
+    "calldata_bytes": null,
+    "candidate_count": 3,
+    "case_order": [
+      2,
+      4,
+      8
+    ],
+    "case_order_randomized": false,
+    "cases": [
+      {
+        "aggregate_proof_bytes": 5236,
+        "aggregate_proof_plus_matrix_bytes": 6836,
+        "aggregate_proof_sha256": "072156c814f1ce3ae909223eeaad5d06274c163a5843dd05b5742e4cf529447c",
+        "aggregate_verified": true,
+        "aggregate_verify_ms": 3.9228750000000003,
+        "aggregate_verify_ms_per_vote": 1.9614375000000002,
+        "aggregation_ms": 5.708416,
+        "ballot_layout": "VV/JUBJUB/EVALUATION/C-VOTE-D5-W32-LAYOUT/v1",
+        "ballot_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+        "batch_size": 2,
+        "direct_fold_group_additions": 12,
+        "direct_fold_matches_submitted_state": true,
+        "external_transcript_bytes": 1654,
+        "gas_total": null,
+        "individual_proof_bytes": 384,
+        "individual_proof_plus_matrix_bytes": 1984,
+        "individual_proofs_verified": true,
+        "individual_verify_ms": [
+          0.675083,
+          0.6547080000000001
+        ],
+        "individual_verify_ms_per_vote": 0.6648955000000001,
+        "individual_verify_total_ms": 1.3297910000000002,
+        "merkle_depth": 5,
+        "native_direct_fold_check_ms": 0.003292,
+        "negative": null,
+        "payload_scope": "proof plus one canonical field matrix; transcript derived, cached VK/SRS and transaction/DA framing excluded",
+        "public_input_matrix_bytes": 1600,
+        "registered_weight_bound": 32,
+        "shared_srs_sha256": "3a8a75be96e4150c757b85f682be37d4e502e8b45a17943171bd0bbbdfd605aa",
+        "single_sample_proof_size_ratio": 13.635416666666666,
+        "single_sample_verify_speed_ratio": 0.3389837810279451,
+        "source_proofs_reused_from_one_pool": true,
+        "source_voter_indices": [
+          0,
+          1
+        ],
+        "srs_specialize_ms": 3.712417,
+        "standalone_peak_rss_mib": null,
+        "state_prove_ms": null,
+        "verifier_srs_sha256": "5b61c1ab2d19b5003dccb7cd61828e2938d8f2f3ce3172b7808a2fa53608dcb1"
+      },
+      {
+        "aggregate_proof_bytes": 8212,
+        "aggregate_proof_plus_matrix_bytes": 11412,
+        "aggregate_proof_sha256": "10c4b85a3d063d2aaa0b0d3bce3050f59267652c978636bd3be5e8d06a06ecd6",
+        "aggregate_verified": true,
+        "aggregate_verify_ms": 3.9709589999999997,
+        "aggregate_verify_ms_per_vote": 0.9927397499999999,
+        "aggregation_ms": 9.568125,
+        "ballot_layout": "VV/JUBJUB/EVALUATION/C-VOTE-D5-W32-LAYOUT/v1",
+        "ballot_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+        "batch_size": 4,
+        "direct_fold_group_additions": 24,
+        "direct_fold_matches_submitted_state": true,
+        "external_transcript_bytes": 3262,
+        "gas_total": null,
+        "individual_proof_bytes": 768,
+        "individual_proof_plus_matrix_bytes": 3968,
+        "individual_proofs_verified": true,
+        "individual_verify_ms": [
+          0.49629199999999996,
+          0.496958,
+          0.422541,
+          0.43116699999999997
+        ],
+        "individual_verify_ms_per_vote": 0.46173949999999997,
+        "individual_verify_total_ms": 1.8469579999999999,
+        "merkle_depth": 5,
+        "native_direct_fold_check_ms": 0.006459,
+        "negative": null,
+        "payload_scope": "proof plus one canonical field matrix; transcript derived, cached VK/SRS and transaction/DA framing excluded",
+        "public_input_matrix_bytes": 3200,
+        "registered_weight_bound": 32,
+        "shared_srs_sha256": "3a8a75be96e4150c757b85f682be37d4e502e8b45a17943171bd0bbbdfd605aa",
+        "single_sample_proof_size_ratio": 10.692708333333334,
+        "single_sample_verify_speed_ratio": 0.46511636106038867,
+        "source_proofs_reused_from_one_pool": true,
+        "source_voter_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "srs_specialize_ms": 5.008292,
+        "standalone_peak_rss_mib": null,
+        "state_prove_ms": null,
+        "verifier_srs_sha256": "b7e6a0f46c11c014d41e5cc7f0395e570ef3a0f2614b29aa6563183f588da595"
+      },
+      {
+        "aggregate_proof_bytes": 11188,
+        "aggregate_proof_plus_matrix_bytes": 17588,
+        "aggregate_proof_sha256": "ec5b2dfa11e6d00b3917e0032fce832a23fb2e60668b02693abb47577cf0d9a7",
+        "aggregate_verified": true,
+        "aggregate_verify_ms": 5.210167,
+        "aggregate_verify_ms_per_vote": 0.651270875,
+        "aggregation_ms": 16.832083,
+        "ballot_layout": "VV/JUBJUB/EVALUATION/C-VOTE-D5-W32-LAYOUT/v1",
+        "ballot_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+        "batch_size": 8,
+        "direct_fold_group_additions": 48,
+        "direct_fold_matches_submitted_state": true,
+        "external_transcript_bytes": 6478,
+        "gas_total": null,
+        "individual_proof_bytes": 1536,
+        "individual_proof_plus_matrix_bytes": 7936,
+        "individual_proofs_verified": true,
+        "individual_verify_ms": [
+          0.544584,
+          0.507583,
+          0.454541,
+          0.5439579999999999,
+          0.515667,
+          0.505458,
+          0.42812500000000003,
+          0.448875
+        ],
+        "individual_verify_ms_per_vote": 0.493598875,
+        "individual_verify_total_ms": 3.948791,
+        "merkle_depth": 5,
+        "native_direct_fold_check_ms": 0.010583,
+        "negative": {
+          "changed_public_field_indices": [
+            7
+          ],
+          "changed_voter_index": 7,
+          "kind": "changed_eighth_nullifier",
+          "rejected": true,
+          "verify_ms": 4.45625
+        },
+        "payload_scope": "proof plus one canonical field matrix; transcript derived, cached VK/SRS and transaction/DA framing excluded",
+        "public_input_matrix_bytes": 6400,
+        "registered_weight_bound": 32,
+        "shared_srs_sha256": "3a8a75be96e4150c757b85f682be37d4e502e8b45a17943171bd0bbbdfd605aa",
+        "single_sample_proof_size_ratio": 7.283854166666667,
+        "single_sample_verify_speed_ratio": 0.7579010423274339,
+        "source_proofs_reused_from_one_pool": true,
+        "source_voter_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "srs_specialize_ms": 7.1315,
+        "standalone_peak_rss_mib": null,
+        "state_prove_ms": null,
+        "verifier_srs_sha256": "97be23f715a083c07992c5c524354d5e956bb2e231a07be1e6f8e2d4167a639d"
+      }
+    ],
+    "classification": "single-run-shared-eight-proof-pool-native-pilot-not-statistics-or-proposed-settlement",
+    "compiler_config": {
+      "build_jobs": "2",
+      "opt_level": 1,
+      "strip": "none"
+    },
+    "conversion_and_bell_vk_prepare_ms": 5.496541,
+    "cpu": "Apple M4",
+    "da_bytes": null,
+    "dedicated_warmup": false,
+    "distinct_active_ciphertexts": true,
+    "distinct_active_nullifiers": true,
+    "distinct_registered_voters": true,
+    "dkg_certificate_verified": true,
+    "dkg_ms": 11.463084,
+    "dkg_session_id_hex": "abc984a2ba7ee1c1a65d69c984a19c846ab00d1a3f2c3f1b746733785587aafd",
+    "election_id_hex": "bc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad45718",
+    "evm_run": false,
+    "experiment_manifest": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+    "final_context_hex": "7ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e01",
+    "fixture_selection_attempts_per_registered_voter": [
+      4,
+      1,
+      15,
+      3,
+      1,
+      2,
+      5,
+      3,
+      1,
+      4,
+      1,
+      3,
+      2,
+      15,
+      8,
+      2,
+      1,
+      1,
+      11,
+      1,
+      10,
+      2,
+      1,
+      4,
+      4,
+      3,
+      11,
+      2,
+      4,
+      3,
+      1,
+      10
+    ],
+    "gas_total": null,
+    "gate": "G1-D0",
+    "git_commit": "f080b7b7abe466f510ce658feecf358ec7860d0c",
+    "git_dirty": true,
+    "groth16_proof_seeds": [
+      5129956424848375808,
+      5129956424848375809,
+      5129956424848375810,
+      5129956424848375811,
+      5129956424848375812,
+      5129956424848375813,
+      5129956424848375814,
+      5129956424848375815
+    ],
+    "groth16_prove_ms": [
+      7628.729667,
+      6970.812167,
+      6929.005959,
+      6835.703041000001,
+      6826.820375,
+      6739.683125,
+      7001.993542,
+      6769.6565
+    ],
+    "groth16_prove_total_ms": 55702.40437599999,
+    "groth16_setup_count": 1,
+    "groth16_setup_ms": 11312.936709000001,
+    "groth16_setup_seed": 5129956424897877077,
+    "implementation": "bellperson =0.27.0 / blstrs =0.7.0",
+    "independent_statistical_repetitions": false,
+    "key_core_digest_hex": "eb40303454eec2ccb51ca147a814a8026596d18901afdeb744ca1fff4a4c4be5",
+    "limitations": [
+      "one sample per B from one shared proof pool; no median/P95, confidence interval, crossover or production-SRS claim",
+      "prefix proof reuse is explicit; per-point direct-fold times measure native arithmetic and equality only, not root/nullifier/registry/settlement checks",
+      "public-input matrix includes encoded ciphertexts; proof-plus-matrix is a defined partial payload, not full DA or EVM calldata",
+      "process peak RSS cannot be assigned to individual B points; source proving and setup are shared costs",
+      "weight-32/depth-5 suite does not reuse weight-10 P3/state parameters or upgrade official manifests",
+      "no new state proof, P3, SnarkPack EVM, full Proposed settlement or formal privacy proof"
+    ],
+    "manifest_sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e",
+    "measured_batch_sizes": [
+      2,
+      4,
+      8
+    ],
+    "merkle_depth": 5,
+    "os": "macos",
+    "p3_run": false,
+    "peak_rss_mib": 3077.671875,
+    "per_case_memory_measured_in_separate_process": false,
+    "pre_policy_fixed_before_dkg": true,
+    "pre_policy_hex": "0b2830da624f7a3fc66c6303de74fd3a8f51477a7a873c12f42848445b49de72",
+    "prekey_context_hex": "12a9edb0cbe6ec7dfb2f0735e61d2949d136b326cd859082ff87974cc9b76c90",
+    "private_witness_emitted": false,
+    "production_setup": false,
+    "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-EVAL-D5-W32-v1",
+    "proving_key_compressed_bytes": 355012368,
+    "proving_key_persisted": false,
+    "public_inputs_per_proof": 25,
+    "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+    "public_verifier_fixture": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+    "public_verifier_fixture_sha256": "a4ae00a6bf322cbeba70050e4583f297d3fd9a83e6a8cea793b1366f97cef062",
+    "ram_bytes": "34359738368",
+    "region": 4,
+    "region_count": 4,
+    "registered_weight": 32,
+    "registered_weight_bound": 32,
+    "registration_certificate_verified": true,
+    "registration_close_digest_hex": "48074943738c3222a022d6c662071f199ac8f48e76776531f5986bdc19ef7928",
+    "registration_root_hex": "ae579623c1046c262e6941be7423898e72c746dafcfaea0255162b2f16c06e0b",
+    "registry_count": 32,
+    "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "same_region": true,
+    "samples_per_batch": 1,
+    "seed": 20261028,
+    "shapes": [
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1248.5444590000002,
+        "witness_variables": 1059760
+      },
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1239.272375,
+        "witness_variables": 1059760
+      },
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1243.872333,
+        "witness_variables": 1059760
+      },
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1252.933417,
+        "witness_variables": 1059760
+      },
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1243.05875,
+        "witness_variables": 1059760
+      },
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1237.050666,
+        "witness_variables": 1059760
+      },
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1251.175875,
+        "witness_variables": 1059760
+      },
+      {
+        "constraints": 1076095,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1293.971292,
+        "witness_variables": 1059760
+      }
+    ],
+    "shared_aggregation_srs_sha256": "3a8a75be96e4150c757b85f682be37d4e502e8b45a17943171bd0bbbdfd605aa",
+    "source_hashes": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/g1d0_uniform_pilot.rs",
+        "sha256": "649d8883c0f799187d624786a4b4c0f0b05778733bf079f14e91606112f54fec"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/common/native_batch.rs",
+        "sha256": "9d570edc97e90443a45a1ced94f9f7f5a97d27f0bc24883a326a07503aed6648"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/ballot_identity_gadget.rs",
+        "sha256": "a7d8c72c2de83022db9599501d9a8bf0a2c94259294a7a0b09777f456d2822e8"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/ballot_gadget.rs",
+        "sha256": "9cf9fa5c2cb3080862a7238c5126ee7c8588efdc726909c5033b24930f47b8a8"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/cp_h3_gadget.rs",
+        "sha256": "bb13d59b63d3151b3d0ff36488a00c50ecb2bef1ec990138e3392059d4b0a6df"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/state_gadget.rs",
+        "sha256": "40aef68da8416819a8b9d457ce890968a8a426099b263b81606d746e205fb80c"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/lib.rs",
+        "sha256": "c4c1cc57c44104a60a59d36b883c991c00902e025242083ab32bf5e5026f0622"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/lib.rs",
+        "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/registration.rs",
+        "sha256": "03f0383eba3005d204dd023c5818b6e035b15abccebe3c24fd172f42266106db"
+      },
+      {
+        "path": "crates/vv-types/src/lib.rs",
+        "sha256": "24fe2a3fcae0b96f211ac9a0e8908d677c381e5c652ba43a735e7b24bd7da972"
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "6b7ce01c5bd626481149ca37549a934c97131469b38d4f3bee8ae93fa1380a69"
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e"
+      }
+    ],
+    "source_proof_bytes_each": [
+      192,
+      192,
+      192,
+      192,
+      192,
+      192,
+      192,
+      192
+    ],
+    "source_proof_count": 8,
+    "source_proof_pool_reuse": "prefixes [0,B); eight unique proofs total, not 14 generated proofs",
+    "source_proofs_distinct": true,
+    "source_proofs_verified_arkworks": true,
+    "source_proofs_verified_bellperson": true,
+    "started_utc": "2026-10-28T13:33:41Z",
+    "state_proof_run": false,
+    "status": "PASS_G1D0_FIXED_DEPTH5_W32_SAME_VK_NATIVE_B2_B4_B8_PILOT",
+    "total_run_ms_excluding_compilation": 78993.687041,
+    "verifying_key_ark_compressed_bytes": 1592
+  },
   "project_current_progress": {
-    "latest_completed_gate": "G2-C",
+    "latest_completed_gate": "G1-D0",
     "largest_measured_native_distinct_voter_batch": 8,
     "largest_measured_state_proof_batch": 4,
-    "next_task": "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix",
+    "same_suite_native_pilot_batch_sizes": [
+      2,
+      4,
+      8
+    ],
+    "current_evaluation_suite": "fixed depth5 / W32, native ballot pilot only",
+    "current_evaluation_suite_state_and_p3": "NOT_MEASURED",
+    "next_task": "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs",
     "large_batch_statistical_comparison": "NOT_MEASURED"
   },
   "g2_a_state_transition_r1cs": {

@@ -1,6 +1,33 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint (2026-10-28): G2-C B=4 state and omission
+## Latest project checkpoint (2026-10-28): G1-D0 same-suite native pilot
+
+Status: `PASS_G1D0_FIXED_DEPTH5_W32_SAME_VK_NATIVE_B2_B4_B8_PILOT`.
+One certified DKG key/context, depth-5/32-leaf unit-weight registry with bound
+32, one new ballot setup and eight distinct source proofs produce real V2
+aggregates for prefixes B=2/4/8. Every point uses the SAME VK and relation;
+only B=8 adds the existing last-nullifier negative, which rejects.
+
+Each ballot has 1,076,095 constraints / 25 inputs. Individual bellperson
+verification versus aggregate verification is 1.330/3.923, 1.847/3.971 and
+3.949/5.210 ms for B=2/4/8. Proof bytes are 384/5,236, 768/8,212 and
+1,536/11,188. This single ascending-order pilot shows no advantage at those
+points and establishes no statistical crossover. Native direct folds also
+pass and take 0.003292/0.006459/0.010583 ms, measuring arithmetic/equality only.
+
+One setup is 11,312.937 ms; eight source proofs total 55,702.404 ms; process
+peak RSS is 3,077.672 MiB, not per-B independent memory. See
+[G1-D0](G1_D0_UNIFORM_NATIVE_PILOT.md) and
+`experiments/g1_d0_raw/uniform_depth5_native_pilot.json`.
+Strict all-target Clippy, formatting and 43 library tests pass.
+
+No crypto library changes or old-parameter reuse: W32 state/P3 are unmeasured;
+historical W10 state/P3 capabilities below remain separate. Largest native
+aggregate stays B=8, largest historical state proof B=4. No new EVM run or
+full Proposed Gas/DA is claimed. Next is G1-D1 B=16 using the SAME frozen
+manifest/VK and matching archived proof prefix, not a new depth/configuration.
+
+## Previous state checkpoint: G2-C B=4 and omission (weight 10)
 
 Status: `PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED`.
 The archived genuine G1-C2 aggregate reverifies once. Its exact four ordered
@@ -25,8 +52,8 @@ Largest native ballot aggregate is B=8; largest state proof is now B=4.
 This is one functional case, not a repeated performance matrix or recursive/
 on-chain settlement. Spent-nullifier, accepted-root and stale-state checks
 remain external. P3 v2 subset coverage and frozen Miller boundaries are unchanged.
-Next: G1-D0 fixed depth-5/32-leaf suite with same-VK B=2/4/8 pilot, followed by
-incremental B=16/32 and formal repetitions. Production SRS and full settlement
+Its planned G1-D0 same-VK B=2/4/8 pilot has now passed, before incremental
+B=16/32 and formal repetitions. Production SRS and full settlement
 remain unfinished.
 
 ## Previous native checkpoint: G1-C3 B=8 / depth 3

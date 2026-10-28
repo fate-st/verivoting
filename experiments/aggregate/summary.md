@@ -2,7 +2,25 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Latest project checkpoint: G2-C B=4 state proof / omission rejection
+## Latest project checkpoint: G1-D0 fixed-suite B=2/4/8 native pilot
+
+- Status: `PASS_G1D0_FIXED_DEPTH5_W32_SAME_VK_NATIVE_B2_B4_B8_PILOT`; report: `docs/G1_D0_UNIFORM_NATIVE_PILOT.md`.
+- Same depth 5, 32-leaf/unit-weight registry, W=32, certified key/context and ballot VK for all three cases. Eight unique real source proofs are reused as ordered prefixes, not 14 newly generated proofs.
+- Constraints / public inputs per ballot: `1076095 / 25`.
+- Shared setup / source prove total: `11312.937 / 55702.404 ms`; cumulative process peak RSS: `3077.672 MiB`.
+
+| B | Individual bellperson Verify (ms) | Aggregate Verify (ms) | Aggregate generation (ms) | Native direct fold/check (ms) | Source proofs / aggregate (B) |
+|---|---:|---:|---:|---:|---:|
+| 2 | 1.329791 | 3.922875 | 5.708416 | 0.003292 | 384 / 5236 |
+| 4 | 1.846958 | 3.970959 | 9.568125 | 0.006459 | 768 / 8212 |
+| 8 | 3.948791 | 5.210167 | 16.832083 | 0.010583 | 1536 / 11188 |
+
+- One positive aggregate per B and only one changed-eighth-nullifier negative (B=8), all pass. Direct-fold columns measure native arithmetic/equality only, not full settlement.
+- Single ascending-order pilot, no dedicated warmup, no repeated statistics/crossover conclusion. Per-B standalone RSS is unmeasured; cached keys/SRS, calldata and full DA are not included in proof-plus-matrix byte counts.
+- The weight-10 B=4 state and P3 results below are historical components, not weight-32 results. Current-suite state/P3, SnarkPack EVM and full Proposed Gas remain unmeasured.
+- Next: G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs.
+
+## Previous state checkpoint: G2-C B=4 / omission rejection (weight 10)
 
 - Status: `PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED`; report: `docs/G2_C_FOUR_BALLOT_STATE.md`.
 - Reuses the saved genuine G1-C2 aggregate, source VK and verifier SRS. Exact ordered 25-field matrix values bind the four state records and the native/circuit batch root.
@@ -11,7 +29,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Only negative, omitted third ballot: R1CS rejected `True`, original proof with omitted new state rejected `True`. Four records/root/aggregate remain unchanged.
 - Peak RSS: `6083.000 MiB`; old B=2 entry points and artifacts remain unchanged.
 - One zero-old-state functional case, no repeated performance or complete settlement claim. The two verifiers are linked natively, not recursively or on EVM.
-- Next: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
+- Next: G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs.
 
 ## Previous native checkpoint: G1-C3 B=8 / depth 3
 
@@ -25,7 +43,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Functional single run only, nonproduction SRS. Do not compare depth-3 B=8 times with depth-2 B=4 as a controlled performance matrix.
 - B=2/B=4 entry points and archived artifacts are unchanged; the shared ballot type is now const-generic with depth 2 as its legacy default.
 - B=4 state/omission has since passed in G2-C above. SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
+- Next: G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs.
 
 ## Historical native checkpoint: G1-C2 B=4
 
@@ -38,7 +56,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
 - This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
 - Its B=4 state/omission follow-up has since passed in G2-C; SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
+- Next: G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs.
 
 ## Current P3 correctness checkpoint: G4-C (tally relation v2)
 
@@ -61,14 +79,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- The native follow-up has passed G2-C; current next task: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
+- The native follow-up has passed G2-C; current next task: G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs.
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Current project next gate: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix; archived G5 next-task notes are historical.
+- Current project next gate: G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -107,7 +125,8 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G1_C1_distinct_voter_snarkpack | PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS |
 | G1_C2_four_distinct_same_region_voter_snarkpack | PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS |
 | G1_C3_eight_distinct_same_region_voter_snarkpack | PASS_G1C3_REAL_SNARKPACK_V2_EIGHT_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS |
-| G1_snarkpack | PARTIAL_PASS_G1C3_EIGHT_DISTINCT_SAME_REGION_VOTERS_DEPTH3_NONPRODUCTION_SRS |
+| G1_D0_fixed_depth5_w32_native_pilot | PASS_G1D0_FIXED_DEPTH5_W32_SAME_VK_NATIVE_B2_B4_B8_PILOT |
+| G1_snarkpack | PARTIAL_PASS_G1D0_SAME_VK_DEPTH5_W32_B2_B4_B8_SINGLE_SAMPLE_NONPRODUCTION_SRS |
 | G2_A_state_transition_r1cs | PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS |
 | G2_B_state_transition_groth16 | PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION |
 | G2_C_b4_state_and_omission | PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED |
