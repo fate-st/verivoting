@@ -1,0 +1,23 @@
+{
+  "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G2C-STATE-B4-v1",
+  "scope": "native B4 state proof bound to archived G1-C2 ordered statements, not recursive or on-chain settlement",
+  "source_fixture": "fixtures/snarkpack_g1c2_batch4_public_v1.json",
+  "source_fixture_sha256": "84e3c7748dffa8eeece45ddfdadfe64fcb4c563a3e549a788b0321744f87d024",
+  "source_ballot_protocol": "VERIVOTING-JUBJUB-EXPERIMENT-G1C2-B4-v1",
+  "state_layout": "VV/JUBJUB/G2-C/STATE-B4-LAYOUT/v1",
+  "batch_size": 4,
+  "candidate_count": 3,
+  "state_public_inputs": 37,
+  "ballot_public_inputs": 25,
+  "batch_leaf_domain": "VV/BATCH/LEAF/v2",
+  "batch_node_domain": "VV/BATCH/NODE/v2",
+  "state_leaf_field_encoding": "the verified LE matrix field values, encoded as canonical 32-byte BE per field",
+  "encryption_group": "Jubjub/ark-ed-on-bls12-381-0.4.0",
+  "proof_curve": "BLS12-381/ark-groth16-0.4.0",
+  "source_aggregate_version": "V2",
+  "old_state": "zero initial regional ciphertext accumulator",
+  "necessary_negative": "keep four records/root/aggregate; omit only ct3 from the submitted new state",
+  "fresh_state_setup": true,
+  "production_setup": false,
+  "snarkpack_evm": "NOT_IMPLEMENTED"
+}

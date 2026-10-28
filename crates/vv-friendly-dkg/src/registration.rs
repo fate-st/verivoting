@@ -308,6 +308,56 @@ pub fn verify_close(
     })
 }
 
+/// Canonical path for a complete power-of-two registry, in credential sort order.
+/// Uses exactly the same public leaf and node encoding as registration close.
+pub struct RegistrationMembershipPath {
+    pub siblings: Vec<[u8; 32]>,
+    pub directions: Vec<bool>,
+    pub root: [u8; 32],
+}
+
+pub fn registration_membership_path(
+    entries: &[RegistrationEntry],
+    credential: [u8; 32],
+) -> Result<RegistrationMembershipPath, RegistryError> {
+    if !entries.len().is_power_of_two() {
+        return Err(RegistryError::InvalidMembershipPath);
+    }
+    let mut sorted = entries.to_vec();
+    sorted.sort_by_key(|entry| entry.credential_id);
+    let mut index = sorted
+        .iter()
+        .position(|entry| entry.credential_id == credential)
+        .ok_or(RegistryError::InvalidMembershipPath)?;
+    let mut level = sorted
+        .iter()
+        .map(|entry| sha256(&entry.public_bytes()))
+        .collect::<Vec<_>>();
+    let mut siblings = Vec::new();
+    let mut directions = Vec::new();
+    while level.len() > 1 {
+        siblings.push(level[index ^ 1]);
+        directions.push(index % 2 == 1);
+        level = level
+            .as_chunks::<2>()
+            .0
+            .iter()
+            .map(|pair| {
+                let mut encoded = CanonicalEncoder::new(b"VV/JUBJUB/MERKLE/NODE/v1");
+                encoded.fixed(&pair[0]);
+                encoded.fixed(&pair[1]);
+                sha256(&encoded.finish())
+            })
+            .collect();
+        index /= 2;
+    }
+    Ok(RegistrationMembershipPath {
+        siblings,
+        directions,
+        root: level[0],
+    })
+}
+
 fn merkle_root(leaves: &[[u8; 32]]) -> [u8; 32] {
     if leaves.is_empty() {
         return sha256(b"VV/JUBJUB/MERKLE/EMPTY/v1");
@@ -332,6 +382,8 @@ fn merkle_root(leaves: &[[u8; 32]]) -> [u8; 32] {
 
 #[derive(Debug, Error)]
 pub enum RegistryError {
+    #[error("membership path needs a complete registry containing the credential")]
+    InvalidMembershipPath,
     #[error("invalid registration policy")]
     InvalidPolicy,
     #[error("registry is empty")]
@@ -396,6 +448,56 @@ mod tests {
         assert_eq!(verified.w_registered(), 10);
         assert_ne!(verified.registration_close_digest(), [0; 32]);
         assert_ne!(verified.disclosure_digest(), [0; 32]);
+    }
+
+    #[test]
+    fn eight_leaf_close_and_all_depth_three_paths_match() {
+        use vv_friendly_crypto::ballot_identity_gadget::{registration_leaf, registration_node};
+        let mut rng = ChaCha20Rng::seed_from_u64(20_261_028);
+        let authority = RegistrationAuthority::generate(&mut rng);
+        let policy = RegistrationPolicy::new(
+            authority.public_key(),
+            10,
+            "highest-weight-smallest-id-on-tie",
+        )
+        .unwrap();
+        let entries = [1u64, 1, 1, 1, 1, 1, 1, 3]
+            .into_iter()
+            .enumerate()
+            .map(|(i, weight)| {
+                RegistrationEntry::new(sha256(&i.to_be_bytes()), weight, &mut rng).unwrap()
+            })
+            .collect::<Vec<_>>();
+        let certificate = authority
+            .close(
+                entries.clone(),
+                [1; 32],
+                [2; 32],
+                [3; 32],
+                &policy,
+                &mut rng,
+            )
+            .unwrap();
+        assert_eq!(
+            verify_close(&certificate, &policy, [1; 32], [2; 32], [3; 32])
+                .unwrap()
+                .w_registered(),
+            10
+        );
+        for entry in &entries {
+            let path = registration_membership_path(&entries, entry.credential_id).unwrap();
+            assert_eq!(path.siblings.len(), 3);
+            let mut current = registration_leaf(&entry.credential_id, &entry.commitment());
+            for (sibling, right) in path.siblings.iter().zip(&path.directions) {
+                current = if *right {
+                    registration_node(sibling, &current)
+                } else {
+                    registration_node(&current, sibling)
+                };
+            }
+            assert_eq!(current, certificate.close.root_close);
+            assert_eq!(path.root, current);
+        }
     }
 
     #[test]

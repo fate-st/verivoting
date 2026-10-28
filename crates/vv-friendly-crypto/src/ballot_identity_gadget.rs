@@ -41,7 +41,7 @@ const REGISTRATION_ENTRY_DOMAIN: &[u8] = b"VV/JUBJUB/REGISTER/ENTRY/v1";
 const MERKLE_NODE_DOMAIN: &[u8] = b"VV/JUBJUB/MERKLE/NODE/v1";
 
 #[derive(Clone)]
-pub struct BallotCvoteCircuit {
+pub struct BallotCvoteCircuit<const DEPTH: usize = BALLOT_REGISTRATION_DEPTH> {
     pub election_id: [u8; 32],
     pub final_context: [u8; 32],
     pub region: u64,
@@ -220,13 +220,13 @@ fn equal_bits(a: &[Boolean<Fq>], b: &[Boolean<Fq>]) -> Result<Boolean<Fq>, Synth
     Ok(equal)
 }
 
-impl BallotCvoteCircuit {
+impl<const DEPTH: usize> BallotCvoteCircuit<DEPTH> {
     fn has_expected_shape(&self) -> bool {
         self.ciphertexts.len() == BALLOT_CORE_CANDIDATE_COUNT
             && self.choices.len() == BALLOT_CORE_CANDIDATE_COUNT
             && self.randomnesses.len() == BALLOT_CORE_CANDIDATE_COUNT
-            && self.merkle_siblings.len() == BALLOT_REGISTRATION_DEPTH
-            && self.merkle_directions.len() == BALLOT_REGISTRATION_DEPTH
+            && self.merkle_siblings.len() == DEPTH
+            && self.merkle_directions.len() == DEPTH
             && (1..=BALLOT_REGION_COUNT).contains(&self.region)
     }
 
@@ -289,7 +289,7 @@ impl BallotCvoteCircuit {
             .merkle_siblings
             .iter()
             .zip(&self.merkle_directions)
-            .zip(0..BALLOT_REGISTRATION_DEPTH)
+            .zip(0..DEPTH)
         {
             let sibling_var = UInt8::new_witness_vec(cs.clone(), sibling)?;
             let direction_var = Boolean::new_witness(cs.clone(), || Ok(*direction))?;
@@ -377,7 +377,7 @@ impl BallotCvoteCircuit {
     }
 }
 
-impl ConstraintSynthesizer<Fq> for BallotCvoteCircuit {
+impl<const DEPTH: usize> ConstraintSynthesizer<Fq> for BallotCvoteCircuit<DEPTH> {
     fn generate_constraints(self, cs: ConstraintSystemRef<Fq>) -> Result<(), SynthesisError> {
         self.generate_relation(cs)
     }
@@ -425,7 +425,9 @@ pub fn check_ballot_cvote_b1(
 
 /// Pack the public instance in the exact order allocated by
 /// `BallotCvoteCircuit::generate_relation`.
-pub fn ballot_cvote_public_inputs(circuit: &BallotCvoteCircuit) -> Option<Vec<Fq>> {
+pub fn ballot_cvote_public_inputs<const DEPTH: usize>(
+    circuit: &BallotCvoteCircuit<DEPTH>,
+) -> Option<Vec<Fq>> {
     if !circuit.has_expected_shape() {
         return None;
     }

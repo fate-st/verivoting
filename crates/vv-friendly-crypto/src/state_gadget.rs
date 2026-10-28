@@ -1,10 +1,12 @@
-//! G2-A/G2-B: fixed-B=2 regional encrypted-state transition.
+//! G2-A/G2-B (B=2) and G2-C (B=4) regional encrypted-state transitions.
 //!
 //! The relation binds the paper's ordered state statement to the exact two
 //! ballot public records already authenticated by G1-C1. It recomputes the
 //! canonical batch root and folds all six Jubjub ciphertext components. This
 //! G2-A measures the R1CS relation; G2-B proves the unchanged relation with
-//! Groth16.
+//! Groth16. G2-C uses a separately keyed B=4 specialization. The default B=2
+//! layout and helpers remain backward compatible; neither relation verifies
+//! SnarkPack recursively or checks external contract state.
 
 use crate::{
     ballot_gadget::BALLOT_CORE_CANDIDATE_COUNT, cp_h3_gadget::bind_canonical_compressed_point,
@@ -26,6 +28,7 @@ pub const BALLOT_PUBLIC_INPUTS: usize = 25;
 pub const BALLOT_FIELD_VECTOR_BYTES: usize = BALLOT_PUBLIC_INPUTS * 32;
 pub const STATE_PUBLIC_INPUTS: usize = 37;
 pub const STATE_LAYOUT_VERSION: &str = "VV/JUBJUB/G2-A/STATE-B2-LAYOUT/v1";
+pub const STATE_B4_LAYOUT_VERSION: &str = "VV/JUBJUB/G2-C/STATE-B4-LAYOUT/v1";
 
 const BATCH_LEAF_DOMAIN: &[u8] = b"VV/BATCH/LEAF/v2";
 const BATCH_NODE_DOMAIN: &[u8] = b"VV/BATCH/NODE/v2";
@@ -43,7 +46,7 @@ pub struct StateBallotRecord {
 }
 
 #[derive(Clone)]
-pub struct StateTransitionCircuit {
+pub struct StateTransitionCircuitForBatch<const BATCH: usize> {
     pub election_id: [u8; 32],
     pub final_context: [u8; 32],
     pub region: u64,
@@ -56,6 +59,9 @@ pub struct StateTransitionCircuit {
     pub new_state: Vec<Ciphertext>,
     pub records: Vec<StateBallotRecord>,
 }
+
+/// Archived B=2 name stays concrete, including type inference at old call sites.
+pub type StateTransitionCircuit = StateTransitionCircuitForBatch<STATE_BATCH_SIZE>;
 
 #[derive(Clone, Debug)]
 pub struct StateTransitionReport {
@@ -122,7 +128,7 @@ pub fn ballot_field_vector_bytes(record: &StateBallotRecord) -> Option<Vec<u8>> 
     Some(encoded)
 }
 
-fn batch_leaf(
+fn batch_leaf<const BATCH: usize>(
     election_id: &[u8; 32],
     final_context: &[u8; 32],
     region: u64,
@@ -136,7 +142,7 @@ fn batch_leaf(
     encoded.fixed(final_context);
     encoded.u64(region);
     encoded.u64(batch_index);
-    encoded.u64(STATE_BATCH_SIZE as u64);
+    encoded.u64(BATCH as u64);
     encoded.u64(record_index as u64);
     encoded.u64(BALLOT_PUBLIC_INPUTS as u64);
     encoded.fixed(&field_bytes);
@@ -150,37 +156,63 @@ pub fn batch_root_v2(
     batch_index: u64,
     records: &[StateBallotRecord],
 ) -> Option<[u8; 32]> {
-    if records.len() != STATE_BATCH_SIZE {
+    batch_root_v2_for_batch::<STATE_BATCH_SIZE>(
+        election_id,
+        final_context,
+        region,
+        batch_index,
+        records,
+    )
+}
+
+/// Complete, ordered power-of-two batch tree. B=2 preserves the archived root.
+pub fn batch_root_v2_for_batch<const BATCH: usize>(
+    election_id: &[u8; 32],
+    final_context: &[u8; 32],
+    region: u64,
+    batch_index: u64,
+    records: &[StateBallotRecord],
+) -> Option<[u8; 32]> {
+    if !BATCH.is_power_of_two() || records.len() != BATCH {
         return None;
     }
-    let left = batch_leaf(
-        election_id,
-        final_context,
-        region,
-        batch_index,
-        0,
-        &records[0],
-    )?;
-    let right = batch_leaf(
-        election_id,
-        final_context,
-        region,
-        batch_index,
-        1,
-        &records[1],
-    )?;
-    let mut encoded = CanonicalEncoder::new(BATCH_NODE_DOMAIN);
-    encoded.fixed(&left);
-    encoded.fixed(&right);
-    Some(sha256(&encoded.finish()))
+    let mut level = records
+        .iter()
+        .enumerate()
+        .map(|(i, record)| {
+            batch_leaf::<BATCH>(election_id, final_context, region, batch_index, i, record)
+        })
+        .collect::<Option<Vec<_>>>()?;
+    while level.len() > 1 {
+        level = level
+            .as_chunks::<2>()
+            .0
+            .iter()
+            .map(|pair| {
+                let mut encoded = CanonicalEncoder::new(BATCH_NODE_DOMAIN);
+                encoded.fixed(&pair[0]);
+                encoded.fixed(&pair[1]);
+                sha256(&encoded.finish())
+            })
+            .collect();
+    }
+    Some(level[0])
 }
 
 pub fn fold_state(
     old_state: &[Ciphertext],
     records: &[StateBallotRecord],
 ) -> Option<Vec<Ciphertext>> {
+    fold_state_for_batch::<STATE_BATCH_SIZE>(old_state, records)
+}
+
+pub fn fold_state_for_batch<const BATCH: usize>(
+    old_state: &[Ciphertext],
+    records: &[StateBallotRecord],
+) -> Option<Vec<Ciphertext>> {
     if old_state.len() != BALLOT_CORE_CANDIDATE_COUNT
-        || records.len() != STATE_BATCH_SIZE
+        || !BATCH.is_power_of_two()
+        || records.len() != BATCH
         || records
             .iter()
             .any(|record| record.ciphertexts.len() != BALLOT_CORE_CANDIDATE_COUNT)
@@ -199,7 +231,9 @@ pub fn fold_state(
 /// Packs the public statement exactly as `UInt8::new_input_vec` allocates it
 /// in `generate_relation`. This order is frozen by the G2-A layout and reused
 /// unchanged by G2-B verification.
-pub fn state_public_inputs(circuit: &StateTransitionCircuit) -> Option<Vec<Fq>> {
+pub fn state_public_inputs<const BATCH: usize>(
+    circuit: &StateTransitionCircuitForBatch<BATCH>,
+) -> Option<Vec<Fq>> {
     if !circuit.has_expected_shape() {
         return None;
     }
@@ -251,10 +285,11 @@ fn append_u64_as_field(value: &[UInt8<Fq>], encoded: &mut Vec<UInt8<Fq>>) {
     encoded.extend_from_slice(value);
 }
 
-impl StateTransitionCircuit {
+impl<const BATCH: usize> StateTransitionCircuitForBatch<BATCH> {
     fn has_expected_shape(&self) -> bool {
-        self.batch_size == STATE_BATCH_SIZE as u64
-            && self.records.len() == STATE_BATCH_SIZE
+        BATCH.is_power_of_two()
+            && self.batch_size == BATCH as u64
+            && self.records.len() == BATCH
             && self.old_state.len() == BALLOT_CORE_CANDIDATE_COUNT
             && self.new_state.len() == BALLOT_CORE_CANDIDATE_COUNT
             && self
@@ -276,7 +311,7 @@ impl StateTransitionCircuit {
         let batch_size_var = UInt8::new_input_vec(cs.clone(), &self.batch_size.to_be_bytes())?;
         enforce_bytes_equal(
             &batch_size_var,
-            &UInt8::constant_vec(&(STATE_BATCH_SIZE as u64).to_be_bytes()),
+            &UInt8::constant_vec(&(BATCH as u64).to_be_bytes()),
         )?;
         let batch_root_var = UInt8::new_input_vec(cs.clone(), &self.batch_root)?;
         let key_set_hash_var = UInt8::new_input_vec(cs.clone(), &self.key_set_hash)?;
@@ -307,8 +342,8 @@ impl StateTransitionCircuit {
             new_vars.push((new_c0, new_c1));
         }
 
-        let mut leaves = Vec::with_capacity(STATE_BATCH_SIZE);
-        let mut record_ciphertext_vars = Vec::with_capacity(STATE_BATCH_SIZE);
+        let mut leaves = Vec::with_capacity(BATCH);
+        let mut record_ciphertext_vars = Vec::with_capacity(BATCH);
         for (record_index, record) in self.records.iter().enumerate() {
             let record_eid = UInt8::new_witness_vec(cs.clone(), &record.election_id)?;
             let record_context = UInt8::new_witness_vec(cs.clone(), &record.final_context)?;
@@ -370,11 +405,20 @@ impl StateTransitionCircuit {
             leaves.push(Sha256Gadget::digest(&leaf_input)?.0);
         }
 
-        let mut node_input = constant_prefix(BATCH_NODE_DOMAIN);
-        node_input.extend_from_slice(&leaves[0]);
-        node_input.extend_from_slice(&leaves[1]);
-        let computed_root = Sha256Gadget::digest(&node_input)?.0;
-        enforce_bytes_equal(&computed_root, &batch_root_var)?;
+        while leaves.len() > 1 {
+            leaves = leaves
+                .as_chunks::<2>()
+                .0
+                .iter()
+                .map(|pair| {
+                    let mut node_input = constant_prefix(BATCH_NODE_DOMAIN);
+                    node_input.extend_from_slice(&pair[0]);
+                    node_input.extend_from_slice(&pair[1]);
+                    Ok(Sha256Gadget::digest(&node_input)?.0)
+                })
+                .collect::<Result<Vec<_>, SynthesisError>>()?;
+        }
+        enforce_bytes_equal(&leaves[0], &batch_root_var)?;
 
         let mut accumulators = old_vars;
         for record in record_ciphertext_vars {
@@ -393,7 +437,7 @@ impl StateTransitionCircuit {
     }
 }
 
-impl ConstraintSynthesizer<Fq> for StateTransitionCircuit {
+impl<const BATCH: usize> ConstraintSynthesizer<Fq> for StateTransitionCircuitForBatch<BATCH> {
     fn generate_constraints(self, cs: ConstraintSystemRef<Fq>) -> Result<(), SynthesisError> {
         self.generate_relation(cs)
     }
@@ -472,6 +516,35 @@ mod tests {
         let forward = batch_root_v2(&[1; 32], &[2; 32], 2, 1, &[first.clone(), second.clone()]);
         let reverse = batch_root_v2(&[1; 32], &[2; 32], 2, 1, &[second, first]);
         assert_ne!(forward, reverse);
+    }
+
+    #[test]
+    fn four_leaf_root_and_fold_match_explicit_tree_and_sum() {
+        let records = (5..9).map(|tag| record(tag, 2)).collect::<Vec<_>>();
+        let leaves = records
+            .iter()
+            .enumerate()
+            .map(|(i, record)| batch_leaf::<4>(&[1; 32], &[2; 32], 2, 1, i, record).unwrap())
+            .collect::<Vec<_>>();
+        let node = |left: &[u8; 32], right: &[u8; 32]| {
+            let mut encoded = CanonicalEncoder::new(BATCH_NODE_DOMAIN);
+            encoded.fixed(left);
+            encoded.fixed(right);
+            sha256(&encoded.finish())
+        };
+        let expected = node(&node(&leaves[0], &leaves[1]), &node(&leaves[2], &leaves[3]));
+        assert_eq!(
+            batch_root_v2_for_batch::<4>(&[1; 32], &[2; 32], 2, 1, &records),
+            Some(expected)
+        );
+        let old = vec![Ciphertext::zero(); BALLOT_CORE_CANDIDATE_COUNT];
+        let folded = fold_state_for_batch::<4>(&old, &records).unwrap();
+        for j in 0..BALLOT_CORE_CANDIDATE_COUNT {
+            let expected = records.iter().fold(old[j].clone(), |sum, record| {
+                sum.add(&record.ciphertexts[j])
+            });
+            assert_eq!(folded[j], expected);
+        }
     }
 
     #[test]

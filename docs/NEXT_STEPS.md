@@ -1,47 +1,60 @@
 # Next gates
 
-## Current checkpoint (2026-10-28): G1-C2 native B=4 accepted
+## Current checkpoint (2026-10-28): G2-C B=4 state / omission accepted
 
-Four different voters, one region and certified DKG key, four fresh C_vote
-proofs and one real SnarkPack V2 aggregate pass. Only the fourth nullifier is
-changed in the necessary negative case and complete aggregate verification
-rejects. One setup / four proofs / one aggregate positive / one aggregate
-negative were executed. Old B=2 code/results and the depth-2 ballot circuit
-are unchanged. See `docs/G1_C2_FOUR_VOTER_SNARKPACK.md` and
-`experiments/g1_c2_raw/snarkpack_distinct_voters_batch_4.json`.
+The saved real G1-C2 aggregate reverifies once. All four exact ordered
+25-field rows bind the state records and canonical four-leaf batch root.
+A fresh B=4 state setup/proof verifies the complete ciphertext fold. The only
+negative keeps records/root/aggregate unchanged and omits ct3 from the new
+state: R1CS is unsatisfied and the original proof rejects that public state.
+See docs/G2_C_FOUR_BALLOT_STATE.md and
+experiments/g2_c_raw/state_transition_b4_groth16.json.
 
-Aggregate size 8,212 B exceeds 768 B for four proofs; aggregate verification
-3.402 ms exceeds 1.760 ms for same-run individual bellperson verification.
-This functional pass is not an efficiency claim. State proof remains B=2.
-The previous G5-D tally-v2 EVM acceptance remains valid and was not rerun.
+Actual: 2,743,666 constraints / 37 inputs; setup 23.233 s; prove 15.853 s;
+verify 2.049 ms; proof 192 B; peak RSS 6,083 MiB. One setup, one proof and
+one negative case only. DKG/ballot proofs/SRS/EVM were not regenerated.
+The old B=2 entry points and artifacts remain unchanged. Linking SnarkPack
+to the state proof is native, not recursive or an EVM settlement.
 
-## Next single experiment: B=8 with a versioned depth-3 registration tree
+G1-C3 B=8 native aggregation remains passed. Largest measured state proof is
+now B=4. Neither checkpoint is a repeated performance study. The Miller
+fixed-budget freeze is not lifted.
 
-This is planned, not executed. Continue the uploaded plan's native batching
-workflow without waiting for SnarkPack EVM.
+## Next single increment: G1-D0 unified-suite B=2/4/8 native pilot
 
-1. Add a separately versioned depth-3 ballot relation / eight-leaf registry,
-   preserving all old depth-2/B=2/B=4 code paths, keys and data. Do not simply
-   change the global depth constant or use a depth-2 VK for a depth-3 witness.
-2. Keep three candidates and four regions, with one authenticated DKG key and
-   pre-policy fixed before DKG. Generate eight DIFFERENT registered voters in
-   one region using existing PRF/region algorithms, not copied proofs or region
-   overrides. Freeze a valid per-election weight bound for all eight entries.
-3. One fresh setup shared by eight fresh source proofs; verify individually,
-   then create/verify a real size-8 V2 aggregate using explicitly experimental
-   SRS. One negative changes only the last voter nullifier in the whole matrix.
-4. Archive a new configuration and raw directory with exact circuit/key/source
-   hashes, per-proof/aggregate timings, sizes and peak RSS. Separate setup from
-   proving and verification; do not infer crossover points from B=2/B=4 samples.
-5. Stop after one B=8 functional acceptance. B=4 state proof plus the omitted-
-   ballot negative is the following separate task; B=16/32 and formal repeated
-   performance measurements come later. No EVM, P3 subset expansion or new
-   arithmetic profiler is included in the B=8 task.
+This is PLANNED, not run in G2-C. It begins the uploaded plan's fixed-circuit
+B=2–32 comparison, not another fault-matrix experiment.
 
-All-ten-subset v2 P3, B=4/8 state-circuit families with omission tests, fair
-performance baselines and full settlement remain separate later deliverables.
+1. Pin a new experiment descriptor/layout for a depth-5, 32-leaf registration
+   tree, three candidates, four regions and a valid fixed weight bound 32.
+   Use 32 distinct unit-weight registered voters (sum 32), selected in the
+   same region by the existing PRF/region algorithm. Freeze policy before DKG.
+   Old weight-10/depth-2/3 manifests, fixtures and keys must remain historical;
+   the new constants require a new ballot VK. Curves and PRF/hash algorithms
+   are unchanged. This does not upgrade official protocol/P3 capabilities.
+2. One authenticated DKG, one registration close and one fresh ballot setup.
+   First prove only eight distinct ballots with real depth-5 paths; unused
+   registry members need no ballot proofs. Verify all eight source proofs.
+3. Take ordered prefixes of size 2/4/8 from that SAME genuine proof pool.
+   Compare real V2 aggregation against individual bellperson verification
+   under the SAME ballot VK, depth, weight bound and process/environment.
+   Derive the required specialized verifier SRS from one research SRS; record
+   proof reuse explicitly instead of claiming three independent proof runs.
+4. Keep the existing necessary last-nullifier negative at B=8 only; do not
+   add replacement/replay/transport failure matrices. Record actual separate
+   setup/prove/aggregate/verify times, proof and input bytes, peak RSS, source
+   hashes and key hashes. Keep arkworks and bellperson verification separate.
+5. Stop after this small pilot. Then extend the SAME frozen depth-5 relation
+   to 16/32 distinct ballots, and only after functional acceptance collect
+   the formal repeated measurements (at least 10 per point, median/P95).
+   The present different-depth B=2/B=4/B=8 records cannot substitute for that
+   matrix. Do not produce statistical figures from single pilot samples.
 
-The historical B23 fixed-budget software-route freeze below remains binding.
+No B=256, B=8 state proving, additional P3 subsets, new EVM transactions or
+software Miller work belongs in this one pilot. State-proof scale/cost,
+full-tally versus winner-only disclosure, fair system baselines and complete
+settlement remain separate later deliverables. Missing full Proposed Gas is
+unmeasured, not zero. The current weight-10 P3 VK is not a weight-32 proof.
 
 ## Historical G5 evidence and frozen-route checkpoint
 

@@ -2,7 +2,32 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Latest project checkpoint: G1-C2 native B=4
+## Latest project checkpoint: G2-C B=4 state proof / omission rejection
+
+- Status: `PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED`; report: `docs/G2_C_FOUR_BALLOT_STATE.md`.
+- Reuses the saved genuine G1-C2 aggregate, source VK and verifier SRS. Exact ordered 25-field matrix values bind the four state records and the native/circuit batch root.
+- Constraints / public inputs / witness variables: `2743666 / 37 / 2693602`.
+- One fresh state setup / one prove / valid verify: `23232.578 / 15853.291 / 2.049 ms`; proof: `192 B`.
+- Only negative, omitted third ballot: R1CS rejected `True`, original proof with omitted new state rejected `True`. Four records/root/aggregate remain unchanged.
+- Peak RSS: `6083.000 MiB`; old B=2 entry points and artifacts remain unchanged.
+- One zero-old-state functional case, no repeated performance or complete settlement claim. The two verifiers are linked natively, not recursively or on EVM.
+- Next: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
+
+## Previous native checkpoint: G1-C3 B=8 / depth 3
+
+- Status: `PASS_G1C3_REAL_SNARKPACK_V2_EIGHT_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS`; report: `docs/G1_C3_EIGHT_VOTER_SNARKPACK.md`.
+- Eight different same-region registered voters share one certified DKG key. One fresh depth-3 setup, eight real ballot proofs, one aggregate positive and one changed-eighth-nullifier negative were executed.
+- Constraints / public inputs per ballot: `928335 / 25`; tree depth: `3`.
+- Setup / prove total: `7730.263 / 35487.154 ms`.
+- Same-run bellperson individual verification total / aggregate verification: `4.200 / 5.276 ms`; aggregation itself: `16.975 ms`.
+- Eight individual proofs / aggregate: `1536 / 11188 B`; public input matrix: `6400 B`.
+- Changed eighth nullifier rejected: `True`; peak RSS: `3304.453 MiB`.
+- Functional single run only, nonproduction SRS. Do not compare depth-3 B=8 times with depth-2 B=4 as a controlled performance matrix.
+- B=2/B=4 entry points and archived artifacts are unchanged; the shared ballot type is now const-generic with depth 2 as its legacy default.
+- B=4 state/omission has since passed in G2-C above. SnarkPack EVM and full Proposed Gas remain unmeasured.
+- Next: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
+
+## Historical native checkpoint: G1-C2 B=4
 
 - Status: `PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS`; report: `docs/G1_C2_FOUR_VOTER_SNARKPACK.md`.
 - Four different registered voters, one certified DKG key, one region, four fresh ballot proofs and one real V2 aggregate. B=2 source/results remain unchanged.
@@ -12,8 +37,8 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Four individual proofs / aggregate: `768 / 8212 B`; public input matrix: `3200 B`.
 - Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
 - This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
-- B=4 state proof and SnarkPack EVM remain unimplemented; no full Proposed gas is claimed.
-- Next: B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate.
+- Its B=4 state/omission follow-up has since passed in G2-C; SnarkPack EVM and full Proposed Gas remain unmeasured.
+- Next: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
 
 ## Current P3 correctness checkpoint: G4-C (tally relation v2)
 
@@ -36,14 +61,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- Its archived next task (B=4) has now passed in G1-C2; the current next task is B=8.
+- The native follow-up has passed G2-C; current next task: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix.
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Current project next gate: B=8 native aggregation; archived G5 next-task notes are historical.
+- Current project next gate: G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -81,11 +106,13 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G1_C0_snarkpack_compatibility | PASS_G1C0_REAL_SNARKPACK_V2_MIN_BATCH_2_NONPRODUCTION_SRS |
 | G1_C1_distinct_voter_snarkpack | PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS |
 | G1_C2_four_distinct_same_region_voter_snarkpack | PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS |
-| G1_snarkpack | PARTIAL_PASS_G1C2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS |
+| G1_C3_eight_distinct_same_region_voter_snarkpack | PASS_G1C3_REAL_SNARKPACK_V2_EIGHT_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS |
+| G1_snarkpack | PARTIAL_PASS_G1C3_EIGHT_DISTINCT_SAME_REGION_VOTERS_DEPTH3_NONPRODUCTION_SRS |
 | G2_A_state_transition_r1cs | PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS |
 | G2_B_state_transition_groth16 | PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION |
-| G2_state_proof | PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION |
-| G2_state_proof_batch_4 | NOT_IMPLEMENTED |
+| G2_C_b4_state_and_omission | PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED |
+| G2_state_proof | PASS_G2C_REAL_GROTH16_FIXED_B4_STATE_AND_OMISSION_REJECTION |
+| G2_state_proof_batch_4 | PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED |
 | G3_A_five_process_dkg_happy_path | PASS_G3A_FIVE_OS_PROCESS_DKG_HAPPY_PATH |
 | G3_B_one_trustee_restart_recovery | PASS_G3B_ONE_TRUSTEE_RESTART_RECOVERY |
 | G3_multiprocess | PARTIAL_PASS_G3B_ONE_RESTART_AUTHENTICATED_LOCAL_TRANSPORT |

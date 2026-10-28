@@ -1,6 +1,58 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint (2026-10-28): G1-C2 native B=4
+## Latest project checkpoint (2026-10-28): G2-C B=4 state and omission
+
+Status: `PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED`.
+The archived genuine G1-C2 aggregate reverifies once. Its exact four ordered
+25-field rows match the state records; canonical LE field values are encoded
+as BE leaf bytes, and native/R1CS roots agree. A separately keyed B=4 state
+proof verifies all four ciphertext additions from a zero initial accumulator.
+
+Only negative: keep four records/root/aggregate unchanged, omit ct3 only from
+the submitted new state. R1CS is unsatisfied and the original state proof
+rejects that new public state. One state setup / one proof / one negative case
+ran; DKG, ballot proofs, SRS and EVM were not rerun.
+
+Actual: 2,743,666 constraints, 37 public inputs, 2,693,602 witness variables;
+setup 23,232.578 ms, prove 15,853.291 ms, verify 2.049 ms, proof 192 B,
+peak RSS 6,083 MiB. See [G2-C](G2_C_FOUR_BALLOT_STATE.md) and
+`experiments/g2_c_raw/state_transition_b4_groth16.json`.
+43 relevant library tests and strict all-target Clippy pass. Old B=2 concrete
+type name/helpers/entry points/artifacts remain supported; shared state source
+is parameterized with new hashes, and no old VK is reused for B=4.
+
+Largest native ballot aggregate is B=8; largest state proof is now B=4.
+This is one functional case, not a repeated performance matrix or recursive/
+on-chain settlement. Spent-nullifier, accepted-root and stale-state checks
+remain external. P3 v2 subset coverage and frozen Miller boundaries are unchanged.
+Next: G1-D0 fixed depth-5/32-leaf suite with same-VK B=2/4/8 pilot, followed by
+incremental B=16/32 and formal repetitions. Production SRS and full settlement
+remain unfinished.
+
+## Previous native checkpoint: G1-C3 B=8 / depth 3
+
+Status: `PASS_G1C3_REAL_SNARKPACK_V2_EIGHT_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS`.
+One certified DKG key, eight distinct same-region registered voters, one new
+depth-3 setup and eight fresh ballot proofs pass native V2 aggregation. Only
+the eighth nullifier changes in the necessary negative; full verification
+rejects. Each ballot has 928,335 constraints / 25 public inputs.
+
+Eight proofs total 1,536 B; the aggregate is 11,188 B. Same-run bellperson
+individual verification totals 4.200 ms versus 5.276 ms for the aggregate,
+plus 16.975 ms aggregation. Peak RSS is 3,304.453 MiB. This single functional
+run shows no compression/verifier-time advantage and is not a scale comparison.
+See [G1-C3](G1_C3_EIGHT_VOTER_SNARKPACK.md) and
+`experiments/g1_c3_raw/snarkpack_distinct_voters_batch_8.json`.
+
+The shared ballot type is now const-generic with the original depth-2 default.
+Archived B=2/B=4 entry points and artifacts are unchanged; depth 3 has a new
+descriptor and VK. Shared library source hashes did change and are recorded.
+42 relevant library tests and all-target strict Clippy passed at that checkpoint.
+Its next B=4 state/omission experiment has since passed in G2-C above.
+Production SRS, full settlement and SnarkPack EVM remain unfinished. The
+fixed-budget software Miller route stays frozen; no new EVM run was made.
+
+## Previous native checkpoint: G1-C2 B=4
 
 Status: `PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS`.
 One authenticated DKG and one fresh ballot setup generate four distinct
@@ -16,9 +68,9 @@ no compression/verification-time advantage, and is not statistical evaluation.
 Peak RSS is 3,026.562 MiB. See [G1-C2](G1_C2_FOUR_VOTER_SNARKPACK.md) and
 `experiments/g1_c2_raw/snarkpack_distinct_voters_batch_4.json`.
 
-State proof remains B=2; B=4 state/omission tests, B=8, production SRS and
-complete settlement remain unimplemented. Next is depth-3/eight-voter native
-aggregation, without reopening the frozen software Miller route.
+At that checkpoint state proof remained B=2 and B=8 was pending. The latter
+has since passed in G1-C3, and B=4 state/omission in G2-C. Production SRS and
+complete settlement remain unimplemented.
 
 ## Previous G5 checkpoint (2026-10-28): G5-D P3 tally-v2 local EVM
 
@@ -35,7 +87,7 @@ registry/frozen-state equality, authenticated commitment checks, winner writes,
 full settlement and SnarkPack EVM verification remain outside this gate.
 Old G5-B gas remains historical v1 evidence. See [G5-D](G5_D_P3_V2_EVM.md) and
 `experiments/g5_d_raw/g5d_p3_v2_evm.json`. Its next task B=4 has subsequently
-passed in G1-C2, independently of the frozen fixed-budget Miller route.
+passed through G1-C3 B=8, independently of the frozen fixed-budget Miller route.
 
 ## Current correctness revision (2026-10-28): G4-C tally v2
 

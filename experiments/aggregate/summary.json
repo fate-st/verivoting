@@ -1,5 +1,5 @@
 {
-  "classification": "measured-research-prototype-native-four-distinct-voter-snarkpack-fixed-b2-state-and-fixed123-p3-v2-local-evm-no-complete-settlement",
+  "classification": "measured-research-prototype-native-b8-ballot-aggregation-b4-state-proof-with-omission-rejection-fixed123-p3-v2-no-complete-settlement",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -31,11 +31,13 @@
     "G1_C0_snarkpack_compatibility": "PASS_G1C0_REAL_SNARKPACK_V2_MIN_BATCH_2_NONPRODUCTION_SRS",
     "G1_C1_distinct_voter_snarkpack": "PASS_G1C1_REAL_SNARKPACK_V2_DISTINCT_VOTERS_BATCH_2_NONPRODUCTION_SRS",
     "G1_C2_four_distinct_same_region_voter_snarkpack": "PASS_G1C2_REAL_SNARKPACK_V2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
-    "G1_snarkpack": "PARTIAL_PASS_G1C2_FOUR_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
+    "G1_C3_eight_distinct_same_region_voter_snarkpack": "PASS_G1C3_REAL_SNARKPACK_V2_EIGHT_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
+    "G1_snarkpack": "PARTIAL_PASS_G1C3_EIGHT_DISTINCT_SAME_REGION_VOTERS_DEPTH3_NONPRODUCTION_SRS",
     "G2_A_state_transition_r1cs": "PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS",
     "G2_B_state_transition_groth16": "PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION",
-    "G2_state_proof": "PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION",
-    "G2_state_proof_batch_4": "NOT_IMPLEMENTED",
+    "G2_C_b4_state_and_omission": "PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED",
+    "G2_state_proof": "PASS_G2C_REAL_GROTH16_FIXED_B4_STATE_AND_OMISSION_REJECTION",
+    "G2_state_proof_batch_4": "PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED",
     "G3_A_five_process_dkg_happy_path": "PASS_G3A_FIVE_OS_PROCESS_DKG_HAPPY_PATH",
     "G3_B_one_trustee_restart_recovery": "PASS_G3B_ONE_TRUSTEE_RESTART_RECOVERY",
     "G3_multiprocess": "PARTIAL_PASS_G3B_ONE_RESTART_AUTHENTICATED_LOCAL_TRANSPORT",
@@ -2305,11 +2307,514 @@
     "verifying_key_ark_compressed_bytes": 1592,
     "verifying_key_ark_sha256": "4c9f3dd3a986b28b1f572be22554bde2cd78b1454154135011582c514a55e4e5"
   },
+  "g1_c3_eight_distinct_same_region_voter_snarkpack": {
+    "aggregate_negative_verification_count": 1,
+    "aggregate_positive_verification_count": 1,
+    "aggregate_proof_bytes": 11188,
+    "aggregate_proof_sha256": "99408787a301b7627f7169c8c8049479037db996031c68364e3bc7c16555aade",
+    "aggregate_verified": true,
+    "aggregate_verify_ms": 5.276458000000001,
+    "aggregate_version": "V2",
+    "aggregation_ms": 16.974583000000003,
+    "aggregation_prover_srs_persisted": false,
+    "aggregation_srs_kind": "deterministic setup_fake_srs functional only",
+    "aggregation_srs_ms": 10.021083,
+    "aggregation_srs_seed": 5129955338272002824,
+    "aggregation_srs_size": 8,
+    "arch": "aarch64",
+    "ark_individual_verify_ms": [
+      2.607125,
+      2.272625,
+      2.4013329999999997,
+      3.311333,
+      2.383084,
+      2.6986250000000003,
+      2.30475,
+      2.418875
+    ],
+    "ballot_layout": "VV/JUBJUB/G1-C3/C-VOTE-DEPTH3-LAYOUT/v1",
+    "base_manifest_sha256": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+    "batch_size": 8,
+    "build_profile": "release-opt-level-1",
+    "candidate_count": 3,
+    "changed_last_nullifier_rejected": true,
+    "changed_last_nullifier_verify_ms": 4.680875,
+    "changed_public_field_indices": [
+      7
+    ],
+    "changed_voter_index": 7,
+    "classification": "one-authenticated-dkg-one-ballot-setup-eight-real-proofs-native-b8-aggregation-only",
+    "conversion_ms": 5.811791,
+    "converted_source_proofs_verified": true,
+    "cpu": "Apple M4",
+    "distinct_ciphertexts": true,
+    "distinct_nullifiers": true,
+    "distinct_voters": true,
+    "dkg_certificate_verified": true,
+    "dkg_key_core_digest_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+    "dkg_ms": 11.946250000000001,
+    "dkg_session_id_hex": "1adbf0b96243dec5fdbc2075320ef0aab36edecac40a90e3eaa8f7339022e3b0",
+    "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+    "evm_run": false,
+    "experiment_manifest": "configs/protocol_manifest.JUBJUB-G1C3-B8.json",
+    "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+    "fixture_selection_attempts_per_voter": [
+      3,
+      6,
+      16,
+      1,
+      3,
+      5,
+      6,
+      6
+    ],
+    "gate": "G1-C3",
+    "git_commit": "69e9d5a235d6a333fc36bba95bb756cf94ba782c",
+    "git_dirty": true,
+    "groth16_proof_seeds": [
+      5129955338221649920,
+      5129955338221649921,
+      5129955338221649922,
+      5129955338221649923,
+      5129955338221649924,
+      5129955338221649925,
+      5129955338221649926,
+      5129955338221649927
+    ],
+    "groth16_prove_ms": [
+      4411.2135,
+      4273.859583,
+      4301.030041,
+      4634.712917,
+      4887.956792,
+      4329.964875,
+      4287.826708,
+      4360.589542
+    ],
+    "groth16_prove_total_ms": 35487.153958,
+    "groth16_setup_count": 1,
+    "groth16_setup_ms": 7730.2627919999995,
+    "groth16_setup_seed": 5129955338271151189,
+    "historical_baseline_commit": "69e9d5a235d6a333fc36bba95bb756cf94ba782c",
+    "implementation": "bellperson =0.27.0 / blstrs =0.7.0",
+    "individual_proof_bytes": [
+      192,
+      192,
+      192,
+      192,
+      192,
+      192,
+      192,
+      192
+    ],
+    "individual_verify_ms": [
+      0.5563750000000001,
+      0.510667,
+      0.43479199999999996,
+      0.441916,
+      0.7036250000000001,
+      0.539791,
+      0.514583,
+      0.498333
+    ],
+    "individual_verify_total_ms": 4.200082,
+    "limitations": [
+      "functional B8 bridge, not statistical performance or a speedup/compression claim",
+      "deterministic public research seeds and fake aggregation SRS are not production setup or operational privacy",
+      "DKG and RA certificates are checked natively, not proven inside C_vote",
+      "fixed three candidates, four regions and eight registration leaves; no B16 or larger tree",
+      "no B8 state proof, complete settlement, EVM SnarkPack or full Proposed Gas measurement"
+    ],
+    "manifest_sha256": "d196b1213f5a7f833f91f73433bfe1d02187a06d2d978048677c5a2023521227",
+    "merkle_depth": 3,
+    "new_depth3_groth16_key": true,
+    "os": "macos",
+    "peak_rss_mib": 3304.453125,
+    "policy_pre_hex": "382f7ae408331b2c840b533e03a841f4459302a2ac8cbdf5e3e46d4c892dec99",
+    "pre_policy_fixed_before_dkg": true,
+    "prekey_context_hex": "b1ac9e59a80339e24005adcab31dc92e1cc97d86f1e4053d29d75f6eb2818633",
+    "preserved_b2_b4_entries_and_artifacts": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/ballot_cvote_b1.rs",
+        "sha256": "1e4e468404a046461fb4d026b9da142827be77be1bf74f58ade941d89e12707a"
+      },
+      {
+        "path": "experiments/g1_c1_raw/snarkpack_distinct_voters_batch_2.json",
+        "sha256": "b820ffba818da77aed0a582bc5579e705570f86174f552713fbe2a008a0025d0"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/g1c2_batch4.rs",
+        "sha256": "05b503e7b587d8d7abf4e41a5f1a186bb6fd1210a75716ba81862eb0e8eed16c"
+      },
+      {
+        "path": "configs/protocol_manifest.JUBJUB-G1C2-B4.json",
+        "sha256": "38e88b53b4e0d5be301ff37483eb36a76de7acadcfdbe6ff4cfdf05a560d0f39"
+      },
+      {
+        "path": "experiments/g1_c2_raw/snarkpack_distinct_voters_batch_4.json",
+        "sha256": "5958e7368326d4c96b07ef07085440cb114efb96d10cc06c111fdf919e0b5ca9"
+      },
+      {
+        "path": "fixtures/snarkpack_g1c2_batch4_public_v1.json",
+        "sha256": "84e3c7748dffa8eeece45ddfdadfe64fcb4c563a3e549a788b0321744f87d024"
+      }
+    ],
+    "private_witness_emitted": false,
+    "production_setup": false,
+    "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G1C3-B8-v1",
+    "proving_key_compressed_bytes": 269492400,
+    "proving_key_persisted": false,
+    "public_input_matrix_bytes": 6400,
+    "public_inputs_per_proof": 25,
+    "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+    "public_verifier_fixture": "fixtures/snarkpack_g1c3_batch8_public_v1.json",
+    "public_verifier_fixture_sha256": "81e24abe9d3a908860cf13ca90e5fe24dbea1ed98c56e4d328a06f2fe6a7d760",
+    "region": 4,
+    "region_count": 4,
+    "registered_weight": 10,
+    "registration_certificate_verified": true,
+    "registration_close_digest_hex": "bfb7218f099aad221e384329bf954bb584a9116d8a0c19819ac17a602925b9b7",
+    "registration_leaves": 8,
+    "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+    "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "same_region": true,
+    "same_setup_parameters_used": true,
+    "seed": 20261028,
+    "shapes": [
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1075.04025,
+        "witness_variables": 913142
+      },
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1069.3570000000002,
+        "witness_variables": 913142
+      },
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1071.341041,
+        "witness_variables": 913142
+      },
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1161.9068750000001,
+        "witness_variables": 913142
+      },
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1126.1495830000001,
+        "witness_variables": 913142
+      },
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1147.643042,
+        "witness_variables": 913142
+      },
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1085.247542,
+        "witness_variables": 913142
+      },
+      {
+        "constraints": 928335,
+        "exact_public_input_packing": true,
+        "public_inputs": 25,
+        "satisfied": true,
+        "synthesis_and_check_ms": 1140.762375,
+        "witness_variables": 913142
+      }
+    ],
+    "source_hashes": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/g1c3_batch8.rs",
+        "sha256": "803cb28c159a2a6391aa160c151023dd518cc594150a490189d9f1dd9fcd5eb2"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/common/native_batch.rs",
+        "sha256": "9d570edc97e90443a45a1ced94f9f7f5a97d27f0bc24883a326a07503aed6648"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/ballot_identity_gadget.rs",
+        "sha256": "a7d8c72c2de83022db9599501d9a8bf0a2c94259294a7a0b09777f456d2822e8"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/lib.rs",
+        "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/registration.rs",
+        "sha256": "03f0383eba3005d204dd023c5818b6e035b15abccebe3c24fd172f42266106db"
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e"
+      }
+    ],
+    "source_proof_count": 8,
+    "source_proofs_distinct": true,
+    "source_proofs_verified": true,
+    "source_public_records": [
+      {
+        "address_hex": "72a1431f485104f6dcc87e6acf9f2392c81d71da4d978af416a5ea0315664089",
+        "ciphertexts": [
+          {
+            "c0_hex": "7d9e349b1680f816e39307bdd56032dddc9daac7dd344116cf7bdb45fcd4069c",
+            "c1_hex": "c71fa037c9b90cb3331bfba9a22afa373d6d3659b2da571f2bab07a475de0f01",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "454d982c1f468c2503860fbcaf8aa80cb676beccbc800cb59becb4927bc5466e",
+            "c1_hex": "c0516c2e2b02d34ec6322c130b1d25ca8ef51751405773e26f5d89e3f19db425",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "cd2a02e529ffb189e6d3adac6290ca00a863811642547ca3b7b37325cdb9132a",
+            "c1_hex": "abe5cc3cd2f2f54a5cd71d33b2dc4908205ab4b33dd58edfc1f4b1450a0ea75f",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "3230fd93acb51d9d1f1e3768d18287f8d709dfd9dcc06745556dff8d21f84a75",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 0
+      },
+      {
+        "address_hex": "5aae550db3a9d8e36a621e4745cec1dc3ecbc4b75fed9a34368b60f26481ee0e",
+        "ciphertexts": [
+          {
+            "c0_hex": "8aeb2bdd2d23a09c9019b71db3bcbb9beac4c3458684bfd9bb85b2e0c7f678b2",
+            "c1_hex": "9456892b948d17da14e4febf588aad15eddb7a82e4078d005fa0fd795f35b32b",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "25caea7334f445d4d69fec7f186bdbffc986c2862ad79d72d5e3e64affd4e79f",
+            "c1_hex": "cfec189b65120ed13984811bd984afb3ea4bd2a7d3b92a53cefc1f5accdc6b19",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "87689b7820027bf905de17385ed914785bf62883d2171db5fabd915a5dcb8fe4",
+            "c1_hex": "0cb6dfc9ceb9cf12f9143271b332846c9c74d82fc312be6e1055bee578ecac0b",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "649cb0e32aaa4649482fc2fae8b295432bec49ca3d7d1e4527862a00c294a02a",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 1
+      },
+      {
+        "address_hex": "c18d22531dfa708b9098aa58074f44f074f08737c5c245da38fab406c539ed1b",
+        "ciphertexts": [
+          {
+            "c0_hex": "e52887d86f6475154dd43359f6f02c46fde746be8dda3ecbfa68ef6e80998a9a",
+            "c1_hex": "b94412c0776606185951bb148f8a729aa39559d02ee314a443eeae4bbb40ba96",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "5f5d1d2e47ababc961e6aed865ed121c1f82e8516f881bc6a061c4b324a701c9",
+            "c1_hex": "e10f7a1643e70ee3c3eed076552efefa24c6d9453e5f3ec4bf5c218d39673354",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "3dd7991f5f54b275a00e9d18e359e190a001a02ecaa8d9adebb9b31ce3b2ce35",
+            "c1_hex": "1b2b61cc66967aa1bef4ccc668c5c3df00187b062d94ddbf4ae73063bc07bd59",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "30a35b4a401acfc945fa4ad70a2b309d69e8370172e1db0e8eac855c36d6f9c9",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 2
+      },
+      {
+        "address_hex": "c26494c4cb666c382273e307dc60da156a3499bb367369c82fd06f541d676995",
+        "ciphertexts": [
+          {
+            "c0_hex": "7a6d89ef6ade01a078de9e36a0f580cba9042c2e06d37f93c2ef4c9bf93a2f6e",
+            "c1_hex": "5c4c6fcae8aad1f2eb62f35cf60ed169d05efdcfa48eb380d8882e3b61f5df57",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "cb38349fccde33dbe9fa0356365d20833b3b5ebd12490e0cb63fb6d4f8fa843b",
+            "c1_hex": "080b08a409d7390b57929f2ffea9e58a6aae456e445b3c4c8247b1db160cf355",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "d87dcb28c5e79712edfc1c5a8c1af196a88e92dd0b3ffcee22d64feb66fe359f",
+            "c1_hex": "f6ff62f00db91f3292d568f086c5a790ca6f6e71ba79a03f0d16ed82d73f8325",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "5656c1589d655aa8ef393a48824df4045d6cd12e2dca80b155c1ef569d45db34",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 3
+      },
+      {
+        "address_hex": "5643fa3b83534c3f5556b90a6fee126802853d5b05d252dfb635bc391894ae3a",
+        "ciphertexts": [
+          {
+            "c0_hex": "7bc689a3b12f7997c14e116faf19e92f6cc2f2b7f40a9641a5014bdacd3ea4a8",
+            "c1_hex": "ae06a1796d8a70b14a16d1a87d370e2e43f6c511c19c10d73f32d09aae018e83",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "adb0e63e0fcb28cbc83bcb3da859b03a1afd6277b6ecae69467e479ac4700961",
+            "c1_hex": "19441bde5e1b08e23e6ab1d6507811c0fee46efad4c6f644dc4947fa5c61d4ef",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "ce2db616406abe6858fbac59095c0113d0dcb8ceed98f8f247640999582949cd",
+            "c1_hex": "d2a4fb0bfeba5bbaf0449cd1d6b3b59579f0641bab9f22a3831bb292783d669f",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "757f7904c0f4134acfaafb1cd87a6f27ea283e2386be7fbb1e345606d39fd413",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 4
+      },
+      {
+        "address_hex": "072649f9b661bb2914deb13cc54b69722f2947fddbab96cac3e4c286182a9f9d",
+        "ciphertexts": [
+          {
+            "c0_hex": "93a0595fa3cd63a3b611e4ae268e6296854e043e9c11fbf6bc819db491a2c4db",
+            "c1_hex": "53b996cddba607cd903c53812151ed5832d7a9f13ae166dac9de96bf82ffb172",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "b0463b0634be5654c248b82d18262f148426eeb658e375810e5e208b160b8faa",
+            "c1_hex": "2f08d3210cea25a684331d93abd80fcc17ec9c5f84313ef3ca58c53d3db1940b",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "3db129518494b8c539520a2bd88565faf038ed907558a5945dac6cc14fdbb3aa",
+            "c1_hex": "feaf322559b0b02c99cbd0bb40ad310889500d275ac187d22b6c4c8aacb8c064",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "1106f8adf1fa2703447b4571f8dea9bb03da8239c993e4caa0d6df6286a5bc96",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 5
+      },
+      {
+        "address_hex": "97a2de23c43642ab018b27e33b8ef0453e0632325f143771073d07ce4d09a30e",
+        "ciphertexts": [
+          {
+            "c0_hex": "98a52507cff532d9b5ce064ba89c4a94ee924d9a012964edcc8995f32d6952e4",
+            "c1_hex": "e1ce55331a07b9bed0743541a9456a116b685c4a979f958334d354efd6dc7440",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "08f7e0b079e5870c0fd29f8a7e7835be5d109e1d56eb6b0972d540e66036b3a8",
+            "c1_hex": "fa28c67f1e6d0cf01fab0af83170de8d8bad80663a6e406eadec696d4cc04b0b",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "0e90909b71a0ded9f47317adf22fb7d0cf081ef5473f29cbd6cecc750967a2dc",
+            "c1_hex": "9739bb08ac81e851a653b324f841e6c3f97dea4c6ec6c2b12e2a8a7db66e6c65",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "2bb04723c55dc4f66d15aa70a90822c5c85306856c80a2a81ab3b8865a3f5afe",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 6
+      },
+      {
+        "address_hex": "1f73d9e68370240c8969a8b2fb1149f8aeaa7512978c13b6eda2d2256e089738",
+        "ciphertexts": [
+          {
+            "c0_hex": "b1ef4b583b95c546635e3b11df6a9e874275f76afd0cdf278b1736eb0e2e8c40",
+            "c1_hex": "d1c22f3d078265350f2c03285f17d526260e1f8cb5f34367ce1a26513bba9919",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "b98f467956c95cb144b21affc39af295dda3c5f5acadfff641efe185e60e0b07",
+            "c1_hex": "47b73f7819a98eb01d5a1d06749ebcbe2b1caee6c829b1cf5a5b5187b261640f",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "becab0bd39885a0eb4fbfd29a74d8a30d72a4b18b40dd199be5087fcb4584e16",
+            "c1_hex": "edf3ba7bbce7f84702002404760cfd15e50f1b805142458b1e2f931b4e1908de",
+            "candidate_id": 3
+          }
+        ],
+        "election_id_hex": "43742cb6b30b57df197482fc5ca0b5d972e35a997c34624713ee1467a620ce4d",
+        "final_context_hex": "c711e37457b4a555514333b3891a83edd1f317d31ee1798c64a790a71b60c2e2",
+        "key_set_hash_hex": "cbab1e532751d8b4937a0194dcac9c8b55ff2c8ce86b2d305d771f1453ed16fd",
+        "nullifier_hex": "7fbac3950aec06cc0f33a7848c9ff1f6102ff4d284da5299c7121a5848bc5e73",
+        "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+        "region": 4,
+        "registration_root_hex": "e8502ce647e8319f6b6a0d1f16859bc993e62a7ec099cda94eaeb16c01a6dcaa",
+        "voter_index": 7
+      }
+    ],
+    "state_proof_b8_run": false,
+    "status": "PASS_G1C3_REAL_SNARKPACK_V2_EIGHT_DISTINCT_SAME_REGION_VOTERS_NONPRODUCTION_SRS",
+    "total_individual_proof_bytes": 1536,
+    "total_run_ms_excluding_compilation": 53748.335,
+    "transcript_bytes": 6478,
+    "transcript_domain": "VV/JUBJUB/G1-C0/SNARKPACK-PUBLIC-INPUTS/v1",
+    "verifying_key_ark_compressed_bytes": 1592,
+    "verifying_key_ark_sha256": "d48942a33d87e958a274f0daaa563c70c81dac10e1c5c65e38cce9a4fc66f0f4"
+  },
   "project_current_progress": {
-    "latest_completed_gate": "G1-C2",
-    "largest_measured_native_distinct_voter_batch": 4,
-    "largest_measured_state_proof_batch": 2,
-    "next_task": "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
+    "latest_completed_gate": "G2-C",
+    "largest_measured_native_distinct_voter_batch": 8,
+    "largest_measured_state_proof_batch": 4,
+    "next_task": "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix",
     "large_batch_statistical_comparison": "NOT_MEASURED"
   },
   "g2_a_state_transition_r1cs": {
@@ -2446,6 +2951,199 @@
       "the deterministic experiment seeds are reproducibility inputs, not a production trusted setup ceremony",
       "accepted-root, spent-nullifier and stale-state checks remain external contract checks as specified by the paper"
     ]
+  },
+  "g2_c_b4_state_and_omitted_third_ballot": {
+    "aggregation_srs_rerun": false,
+    "arch": "aarch64",
+    "ballot_prove_rerun": false,
+    "ballot_setup_rerun": false,
+    "batch_index": 1,
+    "batch_internal_hashes": 3,
+    "batch_leaf_hashes": 4,
+    "batch_root_hex": "50cf0792b88806800ecb8377856d07a57f285e47dd29917a3ab9c1f704a5e24c",
+    "batch_size": 4,
+    "build_profile": "release-opt-level-1",
+    "candidate_count": 3,
+    "classification": "archived-native-b4-snarkpack-bound-to-separately-verified-state-proof-not-recursive-or-settlement",
+    "cpu": "Apple M4",
+    "dkg_rerun": false,
+    "evm_run": false,
+    "experiment_manifest": "configs/protocol_manifest.JUBJUB-G2C-STATE-B4.json",
+    "full_settlement": false,
+    "gate": "G2-C",
+    "git_commit": "69e9d5a235d6a333fc36bba95bb756cf94ba782c",
+    "git_dirty": true,
+    "group_additions": 24,
+    "leaf_be_values_match_verified_le_matrix": true,
+    "limitations": [
+      "one zero-old-state functional batch, not repeated performance measurement or a multi-batch run",
+      "source fake aggregation SRS and deterministic state setup/proof seeds are research-only, not operational privacy or a production ceremony",
+      "native host binds the two verifiers through identical ordered matrix/root; SnarkPack is not verified inside state R1CS",
+      "accepted registration root, spent nullifiers and stale-state checks remain external; no contract settlement or full Proposed Gas"
+    ],
+    "manifest_sha256": "b5bd7878d4c4ba6f8bce919ac65da8fed0499da433018abaa3d22e55a238e6be",
+    "negative_case_count": 1,
+    "new_state": [
+      {
+        "c0_hex": "868bccac73c0264f01a087d521879f3043fb178577a2536f6ba01f425fdd47eb",
+        "c1_hex": "40291d4e6b8b487d59ff7935f168f22263208d7ca0b4c49a7a91140d218ebb36",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "abb030a68c14e52a5b5f6445a71ac7639a2c42d93fc85829d27db16071113859",
+        "c1_hex": "60e7c36641c35aafbd9e7db87fe0e013c50b96be3808e51534a58b9c239c1c6d",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "be22f0ba1378bd8c5991564a5372846c8b78722b7969755c7dc9fc61bb5cbc2d",
+        "c1_hex": "7a4fc309b1d5c4d1057960c3325495b13f4dd971006d44b324f4422702af61db",
+        "candidate_id": 3
+      }
+    ],
+    "old_state": [
+      {
+        "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+        "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+        "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+        "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+        "candidate_id": 3
+      }
+    ],
+    "omitted_third_ballot": {
+      "batch_root_unchanged": true,
+      "changed_state_public_field_indices": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "invalid_witness_proving_attempted": false,
+      "only_new_state_changed": true,
+      "original_proof_with_omitted_new_state_rejected": true,
+      "r1cs_rejected": true,
+      "records_unchanged": true,
+      "shape": {
+        "constraints": 2743666,
+        "exact_public_input_packing": true,
+        "first_unsatisfied_constraint": "2743654",
+        "public_inputs": 37,
+        "satisfied": false,
+        "synthesis_and_check_ms": 3180.689792,
+        "witness_variables": 2693602
+      },
+      "source_aggregate_unchanged": true,
+      "verify_ms": 2.0169580000000003,
+      "voter_index": 2
+    },
+    "omitted_third_new_state": [
+      {
+        "c0_hex": "113f90658850e38e5d90eb1eb273ff114427b3cedcc5b3f89a2d7b166f6533b5",
+        "c1_hex": "db3a128a8dc433466466eb0d2e5136927068c46a8f5e908fc47d8aaafaef6735",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "5d176f59555f352ec06031deaa66410c01253f98147b3580360b37b4d7e3ed72",
+        "c1_hex": "3e458416204328b582664fb02034e55e4d2e4de8ed077a5eb8e7c2df4207d873",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "4bc18badf7853711a214d8c8bd5038405e4a4dad55c94702303a147bc292ec1a",
+        "c1_hex": "159b285c4a47397c5281500734c70c02034ffe32ce8a3bb2aabbf50b898ed40d",
+        "candidate_id": 3
+      }
+    ],
+    "ordered_leaf_field_vectors_be_hex": [
+      "00497c56b0b99e2a2189ffeeb1d84e3952db8420ceaf0ce19cc3c245a86827c7000000000000000000000000000000000000000000000000000000000000006400e91cbd6e7c1d922c9b5e2907f763813e527e0f7c63319c9451ded946da5e9300000000000000000000000000000000000000000000000000000000000000a2000000000000000000000000000000000000000000000000000000000000000400152a3b20821962333bfa631a6685944c1e93c4355a8a2c6553c4a12cb9eab400000000000000000000000000000000000000000000000000000000000000ae00989f1b04b17b2a2b1f955a47b014558fb4e3eb81bf30a9123f9d3706e16a1700000000000000000000000000000000000000000000000000000000000000df00ca3a5c47d3e5149fdd5f7d3f4398f8490e16928acfaef746e008ec86f6116f000000000000000000000000000000000000000000000000000000000000004f0085e71346a63edb9beedc8652c5700655c82309818d22dc480c83e357054fe4000000000000000000000000000000000000000000000000000000000000003d00194f9f6872822f3b209463765480a92238e5e309f3699d7aaf3d6cb1b8790900000000000000000000000000000000000000000000000000000000000000d500b2905c622790c0a81b5cc67b9ad89a0788fd917e155ded470de3780f2ee617000000000000000000000000000000000000000000000000000000000000002900db35250a9b51d77c3454cf10db3222a823de4046939c332ba1c9677cf1573b000000000000000000000000000000000000000000000000000000000000008500536a5d836f61aa89da7016b7ccf708f0f529d78cc5aa1060e775b5b1c0103000000000000000000000000000000000000000000000000000000000000000de0091c3b55117bdd02273282ec5ad72b26be02add8b4f9d8aae151ce188fd72c300000000000000000000000000000000000000000000000000000000000000c0001d5eb9619c75531d8dba298661e64dc9e191b04c0a1f269306238f445d97ad00000000000000000000000000000000000000000000000000000000000000d5",
+      "00497c56b0b99e2a2189ffeeb1d84e3952db8420ceaf0ce19cc3c245a86827c7000000000000000000000000000000000000000000000000000000000000006400e91cbd6e7c1d922c9b5e2907f763813e527e0f7c63319c9451ded946da5e9300000000000000000000000000000000000000000000000000000000000000a2000000000000000000000000000000000000000000000000000000000000000400152a3b20821962333bfa631a6685944c1e93c4355a8a2c6553c4a12cb9eab400000000000000000000000000000000000000000000000000000000000000ae002d2e101de5c2b718abdc014e347fcce56d783d47c1880d2db0ea021c5ed087000000000000000000000000000000000000000000000000000000000000001500ca3a5c47d3e5149fdd5f7d3f4398f8490e16928acfaef746e008ec86f6116f000000000000000000000000000000000000000000000000000000000000004f0085e71346a63edb9beedc8652c5700655c82309818d22dc480c83e357054fe4000000000000000000000000000000000000000000000000000000000000003d00622982dc1d63196c3a6662a7467cdc113cc1b0e8ec3ab4183d4f9f74f829bc00000000000000000000000000000000000000000000000000000000000000c50046c28ebf5e62c088330114b519323398fd3a13cc5177158e686138cde986c9000000000000000000000000000000000000000000000000000000000000000100962d5981bb4a2560beb005146cf46a6d6c817944d1392c1b1fea6bed740e81000000000000000000000000000000000000000000000000000000000000005b00fd8831f074e6375bcdcb08add65f408af3e3aae7f9e1e87903cc9b8dca0d7700000000000000000000000000000000000000000000000000000000000000b60057cb8cfff2f1f3b1d740d01138ac3c30315c9eae5de5b18f0a3dd9cb1621a000000000000000000000000000000000000000000000000000000000000000cd0075b7c31e0587d7140110b7a544b51fcac5b2ac84d6c8ec92a7ab3f249ea3250000000000000000000000000000000000000000000000000000000000000083",
+      "00497c56b0b99e2a2189ffeeb1d84e3952db8420ceaf0ce19cc3c245a86827c7000000000000000000000000000000000000000000000000000000000000006400e91cbd6e7c1d922c9b5e2907f763813e527e0f7c63319c9451ded946da5e9300000000000000000000000000000000000000000000000000000000000000a2000000000000000000000000000000000000000000000000000000000000000400152a3b20821962333bfa631a6685944c1e93c4355a8a2c6553c4a12cb9eab400000000000000000000000000000000000000000000000000000000000000ae00e974289f4ec3aec35ed15eff35e9a1d002a25af1535568a8d5f501e80f886d00000000000000000000000000000000000000000000000000000000000000ab00ca3a5c47d3e5149fdd5f7d3f4398f8490e16928acfaef746e008ec86f6116f000000000000000000000000000000000000000000000000000000000000004f0085e71346a63edb9beedc8652c5700655c82309818d22dc480c83e357054fe4000000000000000000000000000000000000000000000000000000000000003d000244b60b4540d42a3eab5a61968f4d02246ae36667cfafbf49e8fdfa1dc2a1000000000000000000000000000000000000000000000000000000000000007200a89656c0f633ac59a078f4bb881e892bbf29b705dc1aa27524aae34a2f5b3e0000000000000000000000000000000000000000000000000000000000000055004696bc697056ae67f60383a6dd56179945064ee9423abaeebdbbbab2a23d11000000000000000000000000000000000000000000000000000000000000003900e4e3cb8bc4089064b8fee40578822f06cf5bb66768fa626deb7e8c7db96ce5000000000000000000000000000000000000000000000000000000000000004a006251aa9476a8d448c48f845f5474e5f34046c82122474d926e13844370971900000000000000000000000000000000000000000000000000000000000000900033e7a5d46ede07373e5bc4261d6885b4fa74e36f6184d31534ea46f0623faa00000000000000000000000000000000000000000000000000000000000000b2",
+      "00497c56b0b99e2a2189ffeeb1d84e3952db8420ceaf0ce19cc3c245a86827c7000000000000000000000000000000000000000000000000000000000000006400e91cbd6e7c1d922c9b5e2907f763813e527e0f7c63319c9451ded946da5e9300000000000000000000000000000000000000000000000000000000000000a2000000000000000000000000000000000000000000000000000000000000000400152a3b20821962333bfa631a6685944c1e93c4355a8a2c6553c4a12cb9eab400000000000000000000000000000000000000000000000000000000000000ae001b47a5b001ef1b7fba45b438c9c125c9251d278659adc455973f2753d08633000000000000000000000000000000000000000000000000000000000000008300ca3a5c47d3e5149fdd5f7d3f4398f8490e16928acfaef746e008ec86f6116f000000000000000000000000000000000000000000000000000000000000004f0085e71346a63edb9beedc8652c5700655c82309818d22dc480c83e357054fe4000000000000000000000000000000000000000000000000000000000000003d008299131554328321cfb0f15891a0222f35c0c9caba4a403cce0b1e7fe0b58d00000000000000000000000000000000000000000000000000000000000000a300ff2dc9fbc60c83a12c08d49b8bf6459d77e9602b9943e7221af33e2af6b2e6000000000000000000000000000000000000000000000000000000000000000500a9d08d6a1e5806df0145f877d775713cdc5c0ada8397a7e30330d98adb00e400000000000000000000000000000000000000000000000000000000000000b80047714a4927c4137215dd611474654ce0abcd2fd8e35a8818647796a0e1336800000000000000000000000000000000000000000000000000000000000000d300d901c2dda7d70d51cf8af3c8d1288c162b90f4aa01947e77916170f33e11bc00000000000000000000000000000000000000000000000000000000000000910021fce9eac9bea00bf3ee7c8e2308c05ad2708330d47b3cbeb80a86af77095c000000000000000000000000000000000000000000000000000000000000004b"
+    ],
+    "os": "macos",
+    "peak_rss_after_prove_mib": 6083.0,
+    "peak_rss_after_setup_mib": 4683.515625,
+    "peak_rss_mib": 6083.0,
+    "private_voter_or_trustee_secrets_emitted": false,
+    "production_setup": false,
+    "proof_bytes": 192,
+    "proof_seed": 5130236787428577110,
+    "proof_sha256": "1df92a162a00528a15b94d4b48ffdf5ec1ac53af659dd4e4e1107afafd9f7d1e",
+    "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G2C-STATE-B4-v1",
+    "prove_ms": 15853.290583,
+    "proving_key_compressed_bytes": 847800624,
+    "proving_key_persisted": false,
+    "public_verifier_fixture": "fixtures/jubjub_state_g2c_b4_public_v1.json",
+    "public_verifier_fixture_sha256": "c7446db0bd964f5537e26f68797494bc20a1347c369d1071546c64d2575ba199",
+    "recursive_snarkpack_verification": false,
+    "region": 4,
+    "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "setup_ms": 23232.578417,
+    "setup_seed": 5130236787478058069,
+    "shape": {
+      "constraints": 2743666,
+      "exact_public_input_packing": true,
+      "first_unsatisfied_constraint": null,
+      "public_inputs": 37,
+      "satisfied": true,
+      "synthesis_and_check_ms": 3416.7340839999997,
+      "witness_variables": 2693602
+    },
+    "source_aggregate_sha256": "2949d81494d52eb9721f88c64f0f85e057c2d73c952210fa6ba8982a10c36604",
+    "source_aggregate_verification_count": 1,
+    "source_aggregate_verified": true,
+    "source_aggregate_verify_ms": 4.199583,
+    "source_fixture": "fixtures/snarkpack_g1c2_batch4_public_v1.json",
+    "source_fixture_sha256": "84e3c7748dffa8eeece45ddfdadfe64fcb4c563a3e549a788b0321744f87d024",
+    "source_hashes": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/g2c_state_batch4.rs",
+        "sha256": "19f060bcd555c87a87b348447335a2ba95bbd9131db6a1ee2834c4bc1937f225"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/state_gadget.rs",
+        "sha256": "40aef68da8416819a8b9d457ce890968a8a426099b263b81606d746e205fb80c"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/cp_h3_gadget.rs",
+        "sha256": "bb13d59b63d3151b3d0ff36488a00c50ecb2bef1ec990138e3392059d4b0a6df"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/lib.rs",
+        "sha256": "c4c1cc57c44104a60a59d36b883c991c00902e025242083ab32bf5e5026f0622"
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e"
+      }
+    ],
+    "source_matrix_matches_state_records": true,
+    "state_and_source_context_key_region_equal": true,
+    "state_layout": "VV/JUBJUB/G2-C/STATE-B4-LAYOUT/v1",
+    "state_proof_count": 1,
+    "state_proof_verified": true,
+    "state_setup_count": 1,
+    "status": "PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED",
+    "total_run_ms_excluding_compilation": 47023.337791000005,
+    "valid_state_relation_satisfied": true,
+    "verify_ms": 2.049292,
+    "verifying_key_compressed_bytes": 2168,
+    "verifying_key_sha256": "dcc0f90bc14685573fa03d1f560dd6b80cff6a87ef502a91860150712cefb386",
+    "vk_preparation_ms": 1.117875
   },
   "g3_a_five_process_dkg_happy_path": {
     "gate": "G3-A",

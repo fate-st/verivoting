@@ -8,7 +8,42 @@ operation, broad crash matrices, or on-chain work as measurements.
 
 ## What is implemented
 
-### Latest native batch checkpoint: G1-C2 (2026-10-28)
+### Latest project checkpoint: G2-C (2026-10-28)
+
+[G2-C](docs/G2_C_FOUR_BALLOT_STATE.md) reuses and reverifies the archived
+G1-C2 B=4 aggregate, then proves a newly keyed four-ballot state relation.
+The exact verified 25-field rows bind the ordered batch root and all four
+ciphertext additions. The valid state proof passes; keeping all four records,
+the root and aggregate unchanged while omitting only ct3 from the submitted
+new state fails R1CS and rejects the original proof under that new state.
+
+Measured: 2,743,666 constraints / 37 public inputs, setup 23.233 s, prove
+15.853 s, verify 2.049 ms, proof 192 B, peak RSS 6,083 MiB. One fresh state
+setup, one proof and one negative case were run. This is a zero-old-state
+functional case, not statistical evaluation, recursive verification or EVM
+settlement. Old B=2 state entry points/artifacts remain unchanged.
+
+Next is **G1-D0: one fixed depth-5/32-leaf suite and same-VK B=2/4/8 pilot**,
+before extending the unified matrix to B=16/32 and repeated measurements.
+No new software Miller work is included.
+
+### Latest native batch checkpoint: G1-C3 (2026-10-28)
+
+[G1-C3](docs/G1_C3_EIGHT_VOTER_SNARKPACK.md) passes native B=8 with eight
+different registered voters, one region and authenticated DKG key. A separately
+versioned depth-3 ballot relation uses one fresh setup and eight real proofs;
+its V2 aggregate verifies and changing only the eighth nullifier rejects.
+Each ballot has 928,335 constraints / 25 public inputs. Aggregate size is
+11,188 B versus 1,536 B for eight individual proofs; aggregate verification is
+5.276 ms versus 4.200 ms for same-run individual bellperson verification.
+This single functional run shows no size or verifier-time advantage.
+
+The shared ballot type is depth-parameterized, retaining depth 2 as its old
+default; archived B=2/B=4 entry points and artifacts are unchanged. No old key
+is reused for depth 3. SRS remains nonproduction. Its planned B=4 state/omission
+follow-up has now passed in G2-C above. No new EVM run was made.
+
+### Previous native batch checkpoint: G1-C2
 
 [G1-C2](docs/G1_C2_FOUR_VOTER_SNARKPACK.md) passes B=4 with four distinct
 registered voters in one region, one authenticated DKG key, four fresh ballot
@@ -17,8 +52,8 @@ rejects. One setup and four proofs were run; B=2 code/results are unchanged.
 Aggregate size is 8,212 B versus 768 B for four individual proofs; aggregate
 verification is 3.402 ms versus 1.760 ms for individual bellperson verification.
 This single functional run does not show compression or speedup. State proofs
-remain fixed B=2, fake SRS remains nonproduction, and no new EVM run was made.
-Next is versioned depth-3 / eight-voter native aggregation, not Miller work.
+were fixed B=2 at that checkpoint; B=4 has since passed in G2-C. Fake SRS stays
+nonproduction. Its depth-3 / eight-voter increment passed in G1-C3 above.
 
 ### P3 correctness revision (2026-10-28)
 
@@ -42,8 +77,8 @@ unchanged Solidity verifier on local Prague EVM: partial/full calls consume
 actual old v1 VK both reject. Exactly two deployments and four verification
 calls run, with no setup/prove rerun. This is verifier-level acceptance, not
 registry/frozen-state binding, settlement writes or a complete SnarkPack path.
-Its former next task, native B=4, is now complete in G1-C2; see the next B=8
-task above. No further software Miller work is included.
+Its former native-batch and B=4 state tasks have passed through G1-C3/G2-C;
+the next task is the unified native pilot above, not software Miller work.
 
 | Area | Implementation | Reported status |
 |---|---|---|
@@ -81,8 +116,11 @@ task above. No further software Miller work is included.
 | G1-B2 complete fixed-suite ballot proof | Real Groth16 over the exact G1-B1 relation | PASS; 192-byte proof, changed public context rejected |
 | G1-C0 ballot aggregation compatibility | Bellperson 0.27.0 SnarkPack V2 over two converted G1-B2 proofs | PASS minimum batch; non-production SRS, no scale claim |
 | G1-C1 distinct-voter ballot aggregation | SnarkPack V2 over two different registered-voter statements | PASS minimum batch; distinct nullifiers/ciphertexts, non-production SRS, no scale claim |
+| G1-C2 four-voter aggregation | Four different same-region C_vote proofs, depth 2 | PASS native B=4; one run, nonproduction SRS |
+| G1-C3 eight-voter aggregation | Eight different same-region C_vote proofs, separate depth-3 layout and new key | PASS native B=8; one run, nonproduction SRS, no efficiency claim |
 | G2-A fixed-B=2 state transition | Canonical ordered batch root and six-component Jubjub accumulator relation | PASS R1CS; 1,360,002 constraints, no Groth16 |
 | G2-B fixed-B=2 state proof | Real Groth16 over the unchanged G2-A relation | PASS; 192-byte proof, changed public batch root rejected |
+| G2-C fixed-B=4 state proof | Archived real four-voter aggregate bound to ordered root and complete ciphertext fold | PASS; one 192-byte state proof; omitted ct3 rejects in R1CS and under the original proof; native linkage only |
 | G3-A process-separated DKG | Five concurrent Trustees, persisted private state and session-bound signed local transport | PASS happy path; fixed `{1,2,3}` threshold result, no restart test |
 | G3-B restart recovery | Trustee 3 exits after state persistence and resumes under a new PID | PASS one restart; transcript/KeyCore/tally preserved |
 | G4-A second-subset P3 shape | Complete P3 R1CS for `{1,2,3}` and `{1,2,4}` through one fixed-width coefficient path | PASS equal count shape; 6,236,532 constraints and 59 public inputs, no public coefficient binding/Groth16 |
