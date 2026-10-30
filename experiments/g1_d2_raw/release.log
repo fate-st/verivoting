@@ -1,0 +1,47 @@
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running `target/release/friendly-g1d2-uniform-batch32`
+G1-D2 source commit=8e72034aa6b97c52ad23adccdff563cc27578001; git_dirty=false (before output creation)
+G1-D2 [1/8] freeze pre-policy and run one authenticated 5/3 DKG
+G1-D2 [2/8] select 32 distinct PRF addresses in region 4 BEFORE registration close
+G1-D2 [3/8] check all thirty-two complete C_vote R1CS instances and exact 25-field packing
+G1-D2 [4/8] reconstruct ONE setup with the EXACT D0 seed; VK must match
+G1-D2 [5/8] reconstruct size-32 research SRS and check ALL compatibility gates BEFORE reuse
+  compatibility PASS: context/root, 16 rows/addresses, VK bytes/hash and SRS hash all match
+G1-D2 [6/8] decode/reuse SIXTEEN archived proofs; generate ONLY new voters 17-32
+  voter 1: REUSED archived proof verified (no proving)
+  voter 2: REUSED archived proof verified (no proving)
+  voter 3: REUSED archived proof verified (no proving)
+  voter 4: REUSED archived proof verified (no proving)
+  voter 5: REUSED archived proof verified (no proving)
+  voter 6: REUSED archived proof verified (no proving)
+  voter 7: REUSED archived proof verified (no proving)
+  voter 8: REUSED archived proof verified (no proving)
+  voter 9: REUSED archived proof verified (no proving)
+  voter 10: REUSED archived proof verified (no proving)
+  voter 11: REUSED archived proof verified (no proving)
+  voter 12: REUSED archived proof verified (no proving)
+  voter 13: REUSED archived proof verified (no proving)
+  voter 14: REUSED archived proof verified (no proving)
+  voter 15: REUSED archived proof verified (no proving)
+  voter 16: REUSED archived proof verified (no proving)
+  voter 17: NEW proof verified; prove=7010.866ms
+  voter 18: NEW proof verified; prove=6673.819ms
+  voter 19: NEW proof verified; prove=6711.158ms
+  voter 20: NEW proof verified; prove=6573.681ms
+  voter 21: NEW proof verified; prove=6701.926ms
+  voter 22: NEW proof verified; prove=6539.736ms
+  voter 23: NEW proof verified; prove=6658.291ms
+  voter 24: NEW proof verified; prove=6669.051ms
+  voter 25: NEW proof verified; prove=6747.016ms
+  voter 26: NEW proof verified; prove=6594.803ms
+  voter 27: NEW proof verified; prove=6579.099ms
+  voter 28: NEW proof verified; prove=6678.105ms
+  voter 29: NEW proof verified; prove=6779.716ms
+  voter 30: NEW proof verified; prove=6808.487ms
+  voter 31: NEW proof verified; prove=6594.984ms
+  voter 32: NEW proof verified; prove=6542.427ms
+G1-D2 [7/8] one real B=32 aggregate, 32 individual checks and ONE last-nullifier negative
+  B=32: individual=14.049ms aggregate=6.942ms aggregation=57.088ms fold=0.041917ms proof=17140B / 6144B
+G1-D2 [8/8] archive new B32 public materials and actual measurements; preserve ALL D0/D1 files
+G1-D2 PASS: B=32 aggregate verified; reused16/new16; changed thirty-second nullifier rejected
+wrote experiments/g1_d2_raw/uniform_depth5_batch32.json; peak RSS=3111.375MiB

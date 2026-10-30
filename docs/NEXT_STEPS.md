@@ -1,53 +1,46 @@
 # Next gates
 
-## Current checkpoint (2026-10-28): G1-D1 same-suite B=16 accepted
+## Current checkpoint (2026-10-30): G1-D2 same-suite B=32 accepted
 
-G1-D1 passes with the frozen D5/W32 descriptor byte-identical to G1-D0.
-Reconstructed DKG key/context/root/close, first eight addresses/public rows,
-Ark VK hash, full bellperson VK bytes and size-32 research SRS hash match
-BEFORE archived proofs are decoded/reused. Eight G1-D0 proofs are reused and
-only voters 9–16 produce eight new proofs. All 16 verify individually; one
-size-16 V2 aggregate verifies; changed voter 16 nullifier rejects.
-See docs/G1_D1_UNIFORM_BATCH16.md and
-experiments/g1_d1_raw/uniform_depth5_batch16.json.
+Status: `PASS_G1D2_FIXED_DEPTH5_W32_B32_REUSED16_NEW16_SAME_VK_SRS`.
+Frozen descriptor and D0/D1 sources/data/fixtures are unchanged. DKG/key/context,
+registration root/close, first 16 addresses/rows, full VK bytes/hash and size-32
+SRS hash match before reuse. 16 genuine D1-pool proofs (originally 8 D0 + 8 D1)
+are reused; ONLY voters 17–32 generate 16 new proofs. All 32 verify individually,
+one size-32 V2 aggregate passes, and changing the last nullifier with a rebuilt
+transcript rejects. Native direct fold/check passes. See
+`docs/G1_D2_UNIFORM_BATCH32.md` and `experiments/g1_d2_raw/uniform_depth5_batch32.json`.
 
-Actual B16 individual/aggregate Verify: 6.917166/4.990667 ms; aggregation:
-28.524625 ms. Source proof/aggregate/matrix: 3,072/14,164/12,800 B.
-Setup reconstruction: 11.006 s; ONLY eight new proves: 56.349 s; old eight
-proving times are not rerun or charged as new work. Process peak RSS:
-2,911.922 MiB. This one sample is not a statistical speedup/crossover claim;
-aggregate proof size is still larger than the source proofs.
+Measured from clean source revision `8e72034aa6b97c52ad23adccdff563cc27578001`;
+`git_dirty=false` at process start, unchanged clean tree before output archival.
+The starting development base is 01d4067, not the revision containing B32 code.
+Setup reconstruction 10106.341 ms; only 16 new proves 106863.164 ms.
+Individual/aggregate Verify 14.048915/6.942209 ms; aggregation 57.087584 ms.
+Proofs/aggregate/matrix 6144/17140/25600 B; peak RSS 3111.375 MiB.
+This is one functional sample, not a statistical speedup, crossover or size benefit.
 
-The same-suite functional scales are now 2/4/8/16 across archived runs, NOT
-an independently repeated matrix. W32 state/P3, EVM and full Proposed Gas/DA
-remain unmeasured. Historical W10 state proof remains B=4. No B=32, state,
-P3 or EVM work was done in G1-D1. The Miller route remains frozen.
+G1-D2 acceptance is the STOP condition. No B64/128/256, statistics runner,
+state, P3, public testnet or Miller optimization is developed automatically.
+Historical W10 state/P3 cannot be mixed into W32 performance; missing Gas/DA/
+full calldata stay null. Production SRS and full settlement remain unfinished.
 
-G1-D1 acceptance is the STOP condition for this task. The following work is
-planned only and must not start automatically.
+## Next single task (PLANNED only): repeated fixed-suite native measurements
 
-## Next single task: G1-D2 B=32 in the SAME frozen D5/W32 suite
-
-1. Add an independent B=32 entry point; leave D0/D1 sources, raw reports,
-   public fixtures and the complete frozen descriptor bytes unchanged.
-   Keep the same 32 registered unit-weight voters, W=32, depth 5, algorithms,
-   setup/SRS seeds and original election-ID domain. Do not create a new key
-   or context to bypass a compatibility mismatch.
-2. Reconstruct DKG/registration and one setup because no PK was saved. Before
-   any reuse, require actual VK bytes/hash, SRS hash, key/context/root and
-   first 16 public rows to match the saved D1 pool. Canonically decode/reuse
-   its 16 genuine proofs, preserving provenance back to D0 where relevant.
-3. Generate only voters 17–32 proofs, verify all 32, and run one B=32 V2
-   aggregate positive plus one changed-LAST-nullifier negative with the full
-   matching transcript. No prior B=2/4/8/16 aggregation rerun is needed.
-4. Measure separate reconstruction, old-proof decode and NEW 16-prove costs,
-   individual/aggregate verification, aggregation, native direct fold/check,
-   sizes and cumulative RSS. Archive new JSON/fixture and exact hashes. Do
-   not report 32 newly generated proofs or fill absent EVM/DA/Gas with zero.
-5. Stop after B=32 functional acceptance. Then implement the explicitly
-   requested repeated native benchmark/automatic figures as a separate task,
-   with warmup, randomized/interleaved order and raw repetitions. Do not jump
-   to B=256, a depth scan or another verifier/arithmetic optimization route.
+1. Reuse the checked 32-proof pool and same VK/SRS/context/root for ordered
+   prefixes B=2/4/8/16/32. Do not change the frozen descriptor or crypto suite.
+2. Warm up, randomize/interleave scale order, collect at least 10 raw timing
+   repetitions per B for individual verification, aggregate verification and
+   aggregation; distinguish repeated operations from newly generated proofs.
+   If measuring Prove repetitions, use independent proof randomness and record
+   those actual generations separately; do not repeatedly rerun Setup.
+3. Measure per-B peak RSS in separate processes. Separate Setup/specialization/
+   conversion from online operations. Count proof + one input matrix without
+   double-counting ciphertext/transcript. Complete DA/calldata/Gas remain null.
+4. Generate statistics and verification/communication/overhead figures directly
+   from raw samples. Report sample sizes and uncertainty; ten points are not
+   a strong P95 estimate. Do not insert missing state-proof costs into a figure.
+5. Stop for review before W32 B4/B8 state proofs, generalized P3 v2 subset
+   coverage, full-tally disclosure comparison or complete settlement integration.
 
 ## Adjusted evaluation rules for subsequent work
 

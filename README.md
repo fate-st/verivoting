@@ -8,7 +8,28 @@ operation, broad crash matrices, or on-chain work as measurements.
 
 ## What is implemented
 
-### Latest project checkpoint: G1-D1 B=16 (2026-10-28)
+### Latest project checkpoint: G1-D2 B=32 (2026-10-30)
+
+[G1-D2](docs/G1_D2_UNIFORM_BATCH32.md) passes in the SAME frozen D5/W32 suite.
+All compatibility checks match D1 before its 16 archived proofs are reused;
+only voters 17–32 generate 16 new proofs. All 32 verify individually, one real
+size-32 V2 aggregate verifies, and changing voter 32's nullifier with a rebuilt
+transcript rejects. D0/D1 sources, artifacts and descriptor bytes are unchanged.
+
+Measured from clean source commit `8e72034aa6b97c52ad23adccdff563cc27578001`, with
+`git_dirty=false` at process start and a clean unchanged tree until archival.
+Setup reconstruction: 10.106 s; ONLY 16 new proves: 106.863 s.
+Individual/aggregate Verify: 14.048915 / 6.942209 ms;
+aggregation: 57.087584 ms. Source proofs/aggregate/matrix:
+6144 / 17140 / 25600 B; direct fold/check: 0.041917 ms;
+peak process RSS: 3111.375 MiB. Strict Clippy and all 43 library tests pass.
+
+The fixed-suite functional sizes are now 2/4/8/16/32. These are single samples,
+NOT repeated statistics or a stable speedup/crossover conclusion; aggregate
+proof size remains larger. This task STOPS after B32. Next is planned repeated
+native measurements/automatic figures, not B64/256, W32 state/P3 or Miller work.
+
+### Previous fixed-suite checkpoint: G1-D1 B=16 (2026-10-28)
 
 [G1-D1](docs/G1_D1_UNIFORM_BATCH16.md) passes in the byte-identical D5/W32
 suite. Reconstructed DKG/context/root, first eight rows, VK bytes/hash and
@@ -23,9 +44,9 @@ bellperson individual/aggregate verification: 6.917 / 4.991 ms; aggregation:
 speedup/crossover claim; proof size is still larger. All 43 library tests and
 strict Clippy pass. D0 code/configuration/raw/fixtures remain unchanged.
 
-G1-D1 stops here. B=32, repeated statistics, W32 state/P3 and full settlement
-remain unimplemented/unmeasured. The next planned task is G1-D2 B=32 using
-the same frozen suite and checked archived B16 proof pool, not more Miller work.
+G1-D1 stopped at B16; its B32 follow-up has now passed in G1-D2 above.
+Repeated statistics, W32 state/P3 and full settlement remain unimplemented/
+unmeasured. No software Miller work is included.
 
 ### Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
@@ -159,6 +180,7 @@ the next task is the unified native pilot above, not software Miller work.
 | G1-C2 four-voter aggregation | Four different same-region C_vote proofs, depth 2 | PASS native B=4; one run, nonproduction SRS |
 | G1-C3 eight-voter aggregation | Eight different same-region C_vote proofs, separate depth-3 layout and new key | PASS native B=8; one run, nonproduction SRS, no efficiency claim |
 | G1-D0 same-suite pilot | Fixed depth 5 / W32, same VK and genuine proof-pool prefixes B=2/4/8 | PASS single-run native comparison and direct-fold component; no statistical/settlement claim |
+| G1-D2 same-suite B=32 | Strict D1 compatibility, 16 archived plus 16 new proofs, clean committed source | PASS; 32/32 verify, real aggregate and last-nullifier rejection; one functional sample only |
 | G1-D1 same-suite B=16 | Strict D0 compatibility, eight archived plus eight new proofs, one real size-16 aggregate | PASS; 16/16 verify and last-nullifier mutation rejects; one functional sample only |
 | G2-A fixed-B=2 state transition | Canonical ordered batch root and six-component Jubjub accumulator relation | PASS R1CS; 1,360,002 constraints, no Groth16 |
 | G2-B fixed-B=2 state proof | Real Groth16 over the unchanged G2-A relation | PASS; 192-byte proof, changed public batch root rejected |

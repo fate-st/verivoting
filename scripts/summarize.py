@@ -62,6 +62,7 @@ def main() -> int:
     g1_c3_path = raw.parent / "g1_c3_raw" / "snarkpack_distinct_voters_batch_8.json"
     g1_d0_path = raw.parent / "g1_d0_raw" / "uniform_depth5_native_pilot.json"
     g1_d1_path = raw.parent / "g1_d1_raw" / "uniform_depth5_batch16.json"
+    g1_d2_path = raw.parent / "g1_d2_raw" / "uniform_depth5_batch32.json"
     g2_a_path = raw.parent / "g2_a_raw" / "state_transition_b2_r1cs.json"
     g2_b_path = raw.parent / "g2_b_raw" / "state_transition_b2_groth16.json"
     g2_c_path = raw.parent / "g2_c_raw" / "state_transition_b4_groth16.json"
@@ -186,6 +187,15 @@ def main() -> int:
         for key in ("manifest_sha256", "ballot_vk_ark_compressed_sha256", "shared_aggregation_srs_sha256"):
             if g1_d1[key] != g1_d0[key]:
                 raise ValueError(f"incompatible G1-D0/D1 evaluation family: {key}")
+    g1_d2 = json.loads(g1_d2_path.read_text()) if g1_d2_path.exists() else None
+    if g1_d2:
+        if not g1_d1 or not g1_d2["compatibility"]["all_checked_before_proof_reuse"]:
+            raise ValueError("G1-D2 requires its checked G1-D1 baseline")
+        for key in ("manifest_sha256", "ballot_vk_ark_compressed_sha256", "shared_aggregation_srs_sha256", "final_context_hex", "registration_root_hex"):
+            if g1_d2[key] != g1_d1[key]:
+                raise ValueError(f"incompatible G1-D1/D2 evaluation family: {key}")
+        if g1_d2["git_dirty"] is not False or not g1_d2["git_clean_before_archival"]:
+            raise ValueError("G1-D2 measurement requires a clean source revision")
     g2_a = json.loads(g2_a_path.read_text()) if g2_a_path.exists() else None
     g2_b = json.loads(g2_b_path.read_text()) if g2_b_path.exists() else None
     g2_c = json.loads(g2_c_path.read_text()) if g2_c_path.exists() else None
@@ -248,7 +258,9 @@ def main() -> int:
 
     summary = {
         "classification": (
-            "measured-research-prototype-fixed-depth5-w32-same-vk-native-through-b16-functional-samples-historical-weight10-state-p3-no-settlement"
+            "measured-research-prototype-fixed-depth5-w32-same-vk-native-through-b32-functional-samples-historical-weight10-state-p3-no-settlement"
+            if g1_d2
+            else "measured-research-prototype-fixed-depth5-w32-same-vk-native-through-b16-functional-samples-historical-weight10-state-p3-no-settlement"
             if g1_d1
             else "measured-research-prototype-fixed-depth5-w32-same-vk-native-b2-b4-b8-pilot-with-historical-weight10-state-and-p3-no-settlement"
             if g1_d0
@@ -364,8 +376,13 @@ def main() -> int:
             "G1_D1_fixed_depth5_w32_batch16": (
                 g1_d1["status"] if g1_d1 else "NOT_RUN"
             ),
+            "G1_D2_fixed_depth5_w32_batch32": (
+                g1_d2["status"] if g1_d2 else "NOT_RUN"
+            ),
             "G1_snarkpack": (
-                "PARTIAL_PASS_G1D1_SAME_VK_DEPTH5_W32_B16_REUSED8_NEW8_SINGLE_SAMPLE_NONPRODUCTION_SRS"
+                "PARTIAL_PASS_G1D2_SAME_VK_DEPTH5_W32_B32_REUSED16_NEW16_SINGLE_SAMPLE_NONPRODUCTION_SRS"
+                if g1_d2
+                else "PARTIAL_PASS_G1D1_SAME_VK_DEPTH5_W32_B16_REUSED8_NEW8_SINGLE_SAMPLE_NONPRODUCTION_SRS"
                 if g1_d1
                 else "PARTIAL_PASS_G1D0_SAME_VK_DEPTH5_W32_B2_B4_B8_SINGLE_SAMPLE_NONPRODUCTION_SRS"
                 if g1_d0
@@ -602,14 +619,15 @@ def main() -> int:
         "g1_c3_eight_distinct_same_region_voter_snarkpack": g1_c3,
         "g1_d0_same_vk_depth5_native_pilot": g1_d0,
         "g1_d1_same_vk_depth5_batch16": g1_d1,
+        "g1_d2_same_vk_depth5_batch32": g1_d2,
         "project_current_progress": {
-            "latest_completed_gate": "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
-            "largest_measured_native_distinct_voter_batch": 16 if g1_d1 else 8 if g1_d0 or g1_c3 else 4 if g1_c2 else 2 if g1_c1 else None,
+            "latest_completed_gate": "G1-D2" if g1_d2 else "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
+            "largest_measured_native_distinct_voter_batch": 32 if g1_d2 else 16 if g1_d1 else 8 if g1_d0 or g1_c3 else 4 if g1_c2 else 2 if g1_c1 else None,
             "largest_measured_state_proof_batch": 4 if g2_c else 2 if g2_b else None,
-            "same_suite_native_pilot_batch_sizes": g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] if g1_d1 else g1_d0["measured_batch_sizes"] if g1_d0 else [],
+            "same_suite_native_pilot_batch_sizes": g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] + g1_d2["measured_batch_sizes"] if g1_d2 else g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] if g1_d1 else g1_d0["measured_batch_sizes"] if g1_d0 else [],
             "current_evaluation_suite": "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
             "current_evaluation_suite_state_and_p3": "NOT_MEASURED" if g1_d0 else None,
-            "next_task": "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
+            "next_task": "Formal repeated native measurements for B=2/4/8/16/32 with warmup/interleaved order and automatic figures (planned only; no larger batches or state/P3 work)" if g1_d2 else "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
             "large_batch_statistical_comparison": "NOT_MEASURED",
         },
         "g2_a_state_transition_r1cs": g2_a,
@@ -679,10 +697,37 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g1_d2:
+        c = g1_d2["cases"][0]
+        lines.extend([
+            "## Latest project checkpoint: G1-D2 same-suite B=32",
+            "",
+            f"- Status: `{g1_d2['status']}`; report: `docs/G1_D2_UNIFORM_BATCH32.md`.",
+            f"- Measured source revision: `{g1_d2['git_commit']}`; git_dirty=`{g1_d2['git_dirty']}` at process start; unchanged clean tree before archival=`{g1_d2['git_clean_before_archival']}`.",
+            "- Frozen descriptor, DKG/key/context/root/close, first 16 addresses/rows, full VK bytes/hash and size-32 SRS hash matched BEFORE proof reuse. D0/D1 files remain byte-identical.",
+            f"- Source proofs: `{g1_d2['source_proof_count']}` distinct; `{g1_d2['reused_source_proof_count']}` reused from the G1-D1 pool (8 originally D0 + 8 D1); only `{g1_d2['new_source_proof_count']}` NEW proofs. All 32 verify in both backends.",
+            f"- Setup reconstruction / incremental 16 proves: `{g1_d2['groth16_setup_ms']:.3f} / {g1_d2['incremental_prove_total_ms']:.3f} ms`. Old Prove times are history, not new work.",
+            f"- Individual bellperson / aggregate Verify / aggregation: `{c['individual_verify_total_ms']:.6f} / {c['aggregate_verify_ms']:.6f} / {c['aggregation_ms']:.6f} ms`.",
+            f"- Source proofs / aggregate / matrix: `{c['individual_proof_bytes']} / {c['aggregate_proof_bytes']} / {c['public_input_matrix_bytes']} B`; direct fold/check: `{c['native_direct_fold_check_ms']:.6f} ms`; process peak RSS: `{g1_d2['peak_rss_mib']:.3f} MiB`.",
+            f"- Changed 32nd nullifier with rebuilt transcript rejected: `{c['negative']['rejected']}`. One positive and one necessary negative only.",
+            "- One functional sample, not statistics, stable speedup or a crossover. No proof-size benefit; research-only SRS. W32 state/P3, DA/Gas and full settlement remain unmeasured. STOP after B32.",
+            "",
+            "### Same-suite functional samples (separate archived runs, NOT repeated statistics)",
+            "",
+            "| B | Individual Verify (ms) | Aggregate Verify (ms) | Aggregation (ms) | Source proof / aggregate / matrix (B) |",
+            "|---|---:|---:|---:|---:|",
+            *[
+                f"| {p['batch_size']} | {p['individual_verify_total_ms']:.6f} | {p['aggregate_verify_ms']:.6f} | {p['aggregation_ms']:.6f} | {p['individual_proof_bytes']} / {p['aggregate_proof_bytes']} / {p['public_input_matrix_bytes']} |"
+                for p in g1_d0["cases"] + g1_d1["cases"] + g1_d2["cases"]
+            ],
+            "",
+            f"- Next planned task: {summary['project_current_progress']['next_task']}.",
+            "",
+        ])
     if g1_d1:
         c = g1_d1["cases"][0]
         lines.extend([
-            "## Latest project checkpoint: G1-D1 same-suite B=16",
+            "## Previous fixed-suite checkpoint: G1-D1 B=16" if g1_d2 else "## Latest project checkpoint: G1-D1 same-suite B=16",
             "",
             f"- Status: `{g1_d1['status']}`; report: `docs/G1_D1_UNIFORM_BATCH16.md`.",
             "- Frozen D5/W32 descriptor is byte-identical. DKG/context/root, first eight rows/addresses, VK bytes/hash and size-32 research SRS hash matched BEFORE reusing any proof.",
@@ -691,7 +736,7 @@ def main() -> int:
             f"- Individual bellperson Verify / aggregate Verify / aggregation: `{c['individual_verify_total_ms']:.6f} / {c['aggregate_verify_ms']:.6f} / {c['aggregation_ms']:.6f} ms`.",
             f"- Source proofs / aggregate / matrix: `{c['individual_proof_bytes']} / {c['aggregate_proof_bytes']} / {c['public_input_matrix_bytes']} B`; native direct fold/check: `{c['native_direct_fold_check_ms']:.6f} ms`.",
             f"- Changed 16th nullifier rejected: `{c['negative']['rejected']}`; cumulative process peak RSS: `{g1_d1['peak_rss_mib']:.3f} MiB`.",
-            "- One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 is NOT run.",
+            "- One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 was not run at this historical checkpoint; see G1-D2 above if available.",
             f"- Next planned task: {summary['project_current_progress']['next_task']}.",
             "",
         ])

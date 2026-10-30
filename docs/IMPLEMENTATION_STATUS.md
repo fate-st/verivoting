@@ -1,6 +1,27 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint (2026-10-28): G1-D1 same-suite B=16
+## Latest project checkpoint: G1-D2 B=32 (2026-10-30)
+
+[G1-D2](G1_D2_UNIFORM_BATCH32.md) passes in the SAME frozen D5/W32 suite.
+All compatibility checks match D1 before its 16 archived proofs are reused;
+only voters 17–32 generate 16 new proofs. All 32 verify individually, one real
+size-32 V2 aggregate verifies, and changing voter 32's nullifier with a rebuilt
+transcript rejects. D0/D1 sources, artifacts and descriptor bytes are unchanged.
+
+Measured from clean source commit `8e72034aa6b97c52ad23adccdff563cc27578001`, with
+`git_dirty=false` at process start and a clean unchanged tree until archival.
+Setup reconstruction: 10.106 s; ONLY 16 new proves: 106.863 s.
+Individual/aggregate Verify: 14.048915 / 6.942209 ms;
+aggregation: 57.087584 ms. Source proofs/aggregate/matrix:
+6144 / 17140 / 25600 B; direct fold/check: 0.041917 ms;
+peak process RSS: 3111.375 MiB. Strict Clippy and all 43 library tests pass.
+
+The fixed-suite functional sizes are now 2/4/8/16/32. These are single samples,
+NOT repeated statistics or a stable speedup/crossover conclusion; aggregate
+proof size remains larger. This task STOPS after B32. Next is planned repeated
+native measurements/automatic figures, not B64/256, W32 state/P3 or Miller work.
+
+## Previous fixed-suite checkpoint (2026-10-28): G1-D1 same-suite B=16
 
 Status: `PASS_G1D1_FIXED_DEPTH5_W32_B16_REUSED8_NEW8_SAME_VK_SRS`.
 Frozen D5/W32 descriptor bytes and D0 sources are unchanged. Reconstructed
