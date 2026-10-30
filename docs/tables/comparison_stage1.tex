@@ -1,0 +1,37 @@
+% Requires booktabs, tabularx, array; bibliography: comparison_stage1.bib.
+% Version-scoped qualitative comparison, not a cross-paper performance ranking.
+\begin{table*}[t]
+\caption{Version-scoped functional comparison. Existing systems can verify accumulation by direct recomputation; a separate state SNARK is not a prerequisite for correct tallying.}
+\label{tab:stage1-functions}
+\centering\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+System & Ballot and aggregation mechanism & Public release & Scope of this comparison \\
+\midrule
+Helios 2.0~\cite{cmpHelios2009} & Exponential ElGamal, ballot ZKPs, homomorphic weighted tally & Candidate totals & 2009 homomorphic deployment, not the 2008 mixnet version \\
+Belenios 3.0~\cite{cmpBelenios3} & Credential-signed ballots; weighted homomorphic tally or mixnet & Totals or shuffled ballots, by mode & Event hash chain, not a separate state SNARK \\
+Ordinos~\cite{cmpOrdinos2020} & Threshold Paillier instance and MPC result evaluation & Selected result, e.g., winner & Existing ballot-to-result protocol \\
+Kryvos~\cite{cmpKryvos2022} & Shared votes, vector commitments, Groth16 & Selected result function & Public tally-hiding, flexible ballots \\
+PQKryvos~\cite{cmpPQKryvos2026} & Lattice commitments and Ligero & Selected result function & Post-quantum public tally-hiding instance \\
+VeriVoting prototype & Jubjub ballots, SnarkPack B2--B32, consecutive B4 state proofs & Winner in the P3 component & Ten subsets with one P3 VK; complete settlement still pending \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{table*}[t]
+\caption{Privacy and trust boundaries. Protocol guarantees depend on the cited security models; prototype tests are not privacy proofs.}
+\label{tab:stage1-security}
+\centering\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+System & Tally visibility & Trust boundary & Instantiated setup / security \\
+\midrule
+Helios 2.0~\cite{cmpHelios2009} & Public totals & Authentication, auditing and decryption trustees; all-key-holder deployment & Classical discrete-log cryptography \\
+Belenios 3.0~\cite{cmpBelenios3} & Public totals in homomorphic mode & Credential authority, configured trustees and public audit & Classical group assumptions; optional Pedersen DKG \\
+Ordinos~\cite{cmpOrdinos2020} & Result-only even against subthreshold trustees, under its privacy model & MPC and original P1--P4 assumptions & Classical Paillier; prototype central key-share generation \\
+Kryvos~\cite{cmpKryvos2022} & Public result; talliers learn tally & Public privacy: honest talliers; internal privacy: at least one honest tallier; honest BB/scheduler & Classical Groth16; correctly generated circuit CRS \\
+PQKryvos~\cite{cmpPQKryvos2026} & Public result; talliers learn tally & Distinct public/internal adversary classes and quantum-secure primitives & Transparent Ligero; conditional post-quantum security \\
+VeriVoting prototype & Public winner target; combiner learns tally & Certified contexts, private packages and frozen target; full composition remains to be established & Classical; deterministic research Setup and Fake SRS, not production-ready \\
+\bottomrule
+\end{tabularx}
+\end{table*}

@@ -1,5 +1,13 @@
 # Implementation and claim boundary
 
+## Comparison preparation: existing evidence only (2026-10-30)
+
+[第一阶段对比入口](COMPARISON_STAGE1.md) 汇总文献功能/安全属性两表与已有 G1-E 六组统计图，
+新增 G2-D 匹配组件、G2-E 连续转换两组图（PDF/SVG/PNG）。G2 数据仍是单次功能样本；
+完整 Direct Fold receiver、Full Tally/Winner-only 系统对比及完整链上 Gas 均未补算。
+没有新 Setup/Prove 或基准测量，没有改冻结配置、密码学代码、历史结果或论文主文件。
+G4-D 十子集已完成；下述实时原生 Winner-only 串联仍是下一项唯一核心实现。
+
 ## Latest project checkpoint: G4-D ten-subset P3 v2 on W32 CT2 (2026-10-30)
 
 [G4-D](G4_D_TEN_SUBSETS_P3_V2.md) 在同一个新 P3 v2 电路、同一套 PK/VK 下，对同一

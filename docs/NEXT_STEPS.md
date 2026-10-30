@@ -1,5 +1,16 @@
 # Next steps: user's five-step route (2026-10-30)
 
+## Comparison preparation completed without new heavy experiments
+
+At the user's request, [Stage 1 comparison](COMPARISON_STAGE1.md) now reuses
+G1-E's six immutable statistical figures, adds version-scoped literature
+function/security tables, and plots the existing G2-D/E functional samples.
+G2-D uses matched component sums, not separately timed transactions; G2-E has
+no measured full Direct Fold receiver baseline. No cross-paper timing ranking,
+new proofs, rerun G1-E, new batch scale or inferred EVM Gas is included.
+This preparation does not complete Steps 3/4 below. The next unique core
+implementation remains the integrated native Winner-only state machine.
+
 ## 1. Completed: G2-E consecutive B4 state transitions
 
 Same D5/W32 D2 pool, S0 -> S1 -> S2. Two real aggregate/state verifiers pass;
