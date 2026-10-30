@@ -1,0 +1,124 @@
+{
+  "batches": [
+    {
+      "batch_index": 1,
+      "checkpoint": {
+        "freeze_digest_hex": null,
+        "frozen": false,
+        "next_batch_index": 2,
+        "public_winner": null,
+        "release_policy": "WINNER_ONLY_V1",
+        "selected_subset": [
+          1,
+          2,
+          3
+        ],
+        "spent_nullifier_count": 4,
+        "state": [
+          {
+            "c0_hex": "0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+            "c1_hex": "1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "fd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+            "c1_hex": "59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+            "c1_hex": "35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1",
+            "candidate_id": 3
+          }
+        ],
+        "winner_write_count": 0
+      },
+      "proofs_reused": true,
+      "receiver_check_verify_apply_ms": 5.596375,
+      "snarkpack_verified": true,
+      "snarkpack_verify_ms": 3.5062919999999997,
+      "state_proof_verified": true,
+      "state_verify_ms": 2.0539579999999997
+    },
+    {
+      "batch_index": 2,
+      "checkpoint": {
+        "freeze_digest_hex": null,
+        "frozen": false,
+        "next_batch_index": 3,
+        "public_winner": null,
+        "release_policy": "WINNER_ONLY_V1",
+        "selected_subset": [
+          1,
+          2,
+          3
+        ],
+        "spent_nullifier_count": 8,
+        "state": [
+          {
+            "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+            "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+            "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+            "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+            "candidate_id": 3
+          }
+        ],
+        "winner_write_count": 0
+      },
+      "proofs_reused": true,
+      "receiver_check_verify_apply_ms": 6.4822500000000005,
+      "snarkpack_verified": true,
+      "snarkpack_verify_ms": 3.815459,
+      "state_proof_verified": true,
+      "state_verify_ms": 2.634125
+    }
+  ],
+  "evm_run": false,
+  "final_checkpoint": {
+    "freeze_digest_hex": "05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+    "frozen": true,
+    "next_batch_index": 3,
+    "public_winner": 1,
+    "release_policy": "WINNER_ONLY_V1",
+    "selected_subset": [
+      1,
+      2,
+      3
+    ],
+    "spent_nullifier_count": 8,
+    "state": [
+      {
+        "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+        "candidate_id": 3
+      }
+    ],
+    "winner_write_count": 1
+  },
+  "fixture_sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78",
+  "gate": "G6-public-replay",
+  "new_p3_proof_count": 0,
+  "no_private_material_loaded": true,
+  "scope": "research public replay against pinned certified G4-D public anchors, not a production registry",
+  "setup_count": 0,
+  "status": "PASS_PUBLIC_RECEIVE_FREEZE_AND_WINNER_ONCE",
+  "winner_disclosure_verify_ms": 6.709667
+}

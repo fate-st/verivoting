@@ -8,7 +8,18 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Latest project checkpoint: G4-D ten-subset P3 v2 on W32 CT2 (2026-10-30)
+### Latest project checkpoint: G6 native Winner-only integration (2026-10-30)
+
+[G6](docs/G6_NATIVE_WINNER_ONLY.md) 已在同一次实际运行中完成：两个 B4 的真实 SnarkPack/State
+验证 → 接收器生成 CT2 → 一次冻结 → 五份新私密 CP 包 → `{1,2,3}` 私密门限解码 →
+一份新 G4-D P3 v2 证明 → 重建全部 60 输入验证 → winner=1 仅写入一次。
+篡改冻结目标、重复披露、重复冻结与冻结后追加批次均拒绝且不改写状态。
+完整 VK/矩阵与 G4-D 相同；Setup 重建 69.022 s、新 Prove 41.178 s、公布检查/准备/验证/写入 6.861 ms。
+48 项相关测试、严格 Clippy 及另一进程纯公开重放通过；只复用八份票证明、两个聚合和两个状态证明。
+这是单次、同进程私密交付、串行内存的研究功能闭环；不是生产隐私、持久化服务或完整合约结算。
+新 VK 的 EVM 与完整 SnarkPack EVM/系统级 Gas 对比仍未完成；下一轮先做同 VK 的本地 EVM 验证。
+
+### Previous P3 checkpoint: G4-D ten-subset P3 v2 on W32 CT2 (2026-10-30)
 
 [G4-D](docs/G4_D_TEN_SUBSETS_P3_V2.md) 在同一个新 P3 v2 电路、同一套 PK/VK 下，对同一
 G2-E D5/W32 最终 CT2 完成十种 3-of-5 子集的真实 Groth16 Prove/Verify（10/10）。
@@ -29,8 +40,8 @@ raw 如实记录基点 9167fa01b64a21d36b80b526eb289f9dc7d971b6、git_dirty=true
 这是固定 n=5/tau=3、一个 CT2 的功能证据，不是生产安全性或性能统计。新 VK 尚未上链，
 旧 G5-D 的固定 123 v2 Gas 不能用于本关系；完整 SnarkPack EVM 仍 BLOCKED。
 
-下一唯一任务：把 G2-E 接收检查点、目标冻结、私包交付、P3 和一次性 Winner-only 写入接为
-一个原生状态机；本轮没有实现该实时完整流程、合约结算或新性能比较。
+G4-D 当时提出的原生状态机后续已由上方 G6 完成；G4-D 本身只记录十子集组件验收，
+不将它追溯改写为完整流程或合约结算的执行证据。
 
 ### Previous state checkpoint: G2-E consecutive B4 state transitions (2026-10-30)
 

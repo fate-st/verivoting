@@ -1,14 +1,31 @@
 # Implementation and claim boundary
 
-## Comparison preparation: existing evidence only (2026-10-30)
+## Latest project checkpoint: G6 native Winner-only integration (2026-10-30)
+
+[G6](G6_NATIVE_WINNER_ONLY.md) 同一进程实际验证两批 SnarkPack/State 证明，由 G2-E Receiver
+顺序产生 CT2 并一次冻结；冻结后生成/验证五份新 CP 私包，选择 `{1,2,3}` 私密门限解码，
+使用未改的 G4-D P3 v2 关系生成一份新证明。公布方法对照冻结存储重建全部 60 个输入，真实验证后
+仅写 winner=1 一次。目标替换、重复披露、重复冻结和冻结后接收均拒绝，存储不变。
+
+Setup 重建 69021.922209 ms，完整 VK 与 G4-D 逐字相等；完整矩阵指纹也相同。
+新 Prove 41178.248416 ms；公布的检查/准备/验证/写入 6.861125 ms；累计 RSS 8602.968750 MiB。
+复用 8 票证明 + 2 聚合 + 2 状态证明；新建 5 私包 + 1 P3，不重跑十子集或 G1-E。
+48 项相关测试、严格 Clippy、另一进程纯公开接收/冻结/P3 重放及来源审计通过。
+
+运行基点 9d8e73a，git_dirty=true 与 19 份源码 hash 如实记录。此闭环仍是同进程私密对象交付、
+串行内存状态与研究型 Setup/Fake SRS；不是生产隐私、持久化并发服务、完整安全定理或链上结算。
+下一步：先测同一个 G4-D VK 的真实本地 EVM 验证，再整合合约接收/冻结/赢家状态；
+完整 SnarkPack EVM 精确路线、系统级对比和最终干净版本统一复现仍待完成。
+
+## Historical comparison preparation: existing evidence only (2026-10-30)
 
 [第一阶段对比入口](COMPARISON_STAGE1.md) 汇总文献功能/安全属性两表与已有 G1-E 六组统计图，
 新增 G2-D 匹配组件、G2-E 连续转换两组图（PDF/SVG/PNG）。G2 数据仍是单次功能样本；
 完整 Direct Fold receiver、Full Tally/Winner-only 系统对比及完整链上 Gas 均未补算。
 没有新 Setup/Prove 或基准测量，没有改冻结配置、密码学代码、历史结果或论文主文件。
-G4-D 十子集已完成；下述实时原生 Winner-only 串联仍是下一项唯一核心实现。
+当时 G4-D 十子集已完成，下一项原生 Winner-only 串联现已由上方 G6 完成。
 
-## Latest project checkpoint: G4-D ten-subset P3 v2 on W32 CT2 (2026-10-30)
+## Previous P3 checkpoint: G4-D ten-subset P3 v2 on W32 CT2 (2026-10-30)
 
 [G4-D](G4_D_TEN_SUBSETS_P3_V2.md) 在同一个新 P3 v2 电路、同一套 PK/VK 下，对同一
 G2-E D5/W32 最终 CT2 完成十种 3-of-5 子集的真实 Groth16 Prove/Verify（10/10）。
@@ -29,8 +46,7 @@ raw 如实记录基点 9167fa01b64a21d36b80b526eb289f9dc7d971b6、git_dirty=true
 这是固定 n=5/tau=3、一个 CT2 的功能证据，不是生产安全性或性能统计。新 VK 尚未上链，
 旧 G5-D 的固定 123 v2 Gas 不能用于本关系；完整 SnarkPack EVM 仍 BLOCKED。
 
-下一唯一任务：把 G2-E 接收检查点、目标冻结、私包交付、P3 和一次性 Winner-only 写入接为
-一个原生状态机；本轮没有实现该实时完整流程、合约结算或新性能比较。
+G4-D 当时尚未连接实时完整流程；该原生后续现已由上方 G6 完成，合约结算仍未完成。
 
 ## Previous state checkpoint: G2-E consecutive B4 state transitions (2026-10-30)
 

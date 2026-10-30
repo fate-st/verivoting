@@ -75,6 +75,8 @@ def main() -> int:
     g4_b_path = raw.parent / "g4_b_raw" / "public_subset_groth16.json"
     g4_c_path = raw.parent / "g4_c_raw" / "partial_turnout_groth16.json"
     g4_d_path = raw.parent / "g4_d_raw" / "ten_subsets_p3_v2.json"
+    g6_path = raw.parent / "g6_raw" / "native_winner_only.json"
+    g6_replay_path = raw.parent / "g6_raw" / "public_replay.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -221,6 +223,25 @@ def main() -> int:
     g4_b = json.loads(g4_b_path.read_text()) if g4_b_path.exists() else None
     g4_c = json.loads(g4_c_path.read_text()) if g4_c_path.exists() else None
     g4_d = json.loads(g4_d_path.read_text()) if g4_d_path.exists() else None
+    g6 = json.loads(g6_path.read_text()) if g6_path.exists() else None
+    g6_replay = json.loads(g6_replay_path.read_text()) if g6_replay_path.exists() else None
+    if g6 and (
+        not g4_d or not g2_e or not g6_replay
+        or g6["status"] != "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE"
+        or not g6["complete_native_receiver_to_winner_flow"]
+        or g6["new_p3_proof_count"] != 1 or g6["private_packages_verified"] != 5
+        or len(g6["batches"]) != 2
+        or not all(b["snarkpack_verified"] and b["state_proof_verified"] for b in g6["batches"])
+        or g6["final_checkpoint"]["state"] != g2_e["final_state"]
+        or g6["final_checkpoint"]["winner_write_count"] != 1
+        or g6["verifying_key_sha256"] != g4_d["verifying_key_sha256"]
+        or g6["shape"]["matrix_sha256"] != g4_d["matrix_sha256"]
+        or not g6["negative_tests"]["frozen_target_substitution_rejected"]
+        or not g6["negative_tests"]["repeat_disclosure_rejected"]
+        or g6_replay["status"] != "PASS_PUBLIC_RECEIVE_FREEZE_AND_WINNER_ONCE"
+        or g6_replay["final_checkpoint"] != g6["final_checkpoint"]
+    ):
+        raise ValueError("G6 requires the real live receiving/freeze/new-P3/one-write run and public replay")
     if g4_d and (not g2_e or g4_d["proof_count"] != 10 or len(g4_d["cases"]) != 10 or g4_d["setup_count"] != 1 or not g4_d["all_ten_matrices_equal"] or not all(case["proof_verified"] and case["verifying_key_sha256"] == g4_d["verifying_key_sha256"] and case["shape"]["matrix_sha256"] == g4_d["matrix_sha256"] for case in g4_d["cases"]) or g4_d["public_context"]["frozen_ciphertexts"] != g2_e["final_state"]):
         raise ValueError("G4-D requires ten passing same-relation proofs for the accepted G2-E CT2")
     g5_a = json.loads(g5_a_path.read_text()) if g5_a_path.exists() else None
@@ -735,6 +756,22 @@ def main() -> int:
         "build_profiles": build_profiles,
         "build_profiles_scope": "legacy runs.csv only; individual gate records contain their actual build profile",
     }
+    if g6:
+        summary["classification"] = "measured-native-g6-live-receiver-freeze-private-cp-decode-new-p3-one-winner-write-research-setup-not-chain-settlement"
+        summary["g6_native_winner_only_state_machine"] = g6
+        summary["g6_public_material_replay"] = g6_replay
+        summary["gates"]["G6_complete_native_receiver_to_winner"] = g6["status"]
+        summary["gates"]["G4_full_p3"] = "PASS_G6_NATIVE_FIXED_W32_FLOW_NOT_CHAIN_SETTLEMENT_OR_PRIVACY_THEOREM"
+        summary["project_current_progress"].update({
+            "latest_completed_gate": "G6",
+            "current_evaluation_suite": "D5/W32, two B4 states -> live CT2 freeze -> five private CP packages -> one new P3 -> one winner write",
+            "current_evaluation_suite_state_and_p3": g6["status"],
+            "complete_native_flow": True,
+            "complete_chain_settlement": False,
+            "next_task": "Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas.",
+        })
+        summary["p3_relation_scope"]["latest_native_integrated_result"] = str(g6_path)
+        summary["p3_relation_scope"]["native_live_flow_subset"] = g6["selected_subset"]
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -744,9 +781,23 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g6:
+        lines.extend([
+            "## Latest project checkpoint: G6 complete native Winner-only state machine",
+            "",
+            f"- Status: `{g6['status']}`. Report: `docs/G6_NATIVE_WINNER_ONLY.md`.",
+            "- One actual process executes both real SnarkPack/state verifiers for both B4 batches, freezes its resulting CT2, creates/verifies five NEW private CP packages, privately decodes subset 123 and creates ONE NEW P3 proof.",
+            "- Disclose reconstructs all 60 inputs from frozen storage and authenticated package commitments before real proof verification; winner is written once. Target substitution, repeat disclose, second freeze and post-freeze batches reject without writes.",
+            f"- Setup reconstruction `{g6['setup_rebuild_ms']:.3f} ms`; NEW P3 Prove `{g6['prove_ms']:.3f} ms`; complete disclosure check/prepare/verify/write `{g6['winner_disclosure_check_prepare_verify_write_ms']:.6f} ms`.",
+            f"- Same full G4-D VK `{g6['verifying_key_sha256']}` and matrix fingerprint; proof `{g6['proof_bytes']} B`, inputs `{g6['public_input_bytes']} B`; cumulative process peak RSS `{g6['peak_rss_mib']:.3f} MiB`.",
+            "- Reuses eight ballot proofs, two aggregates and two state proofs; no G1-E or ten-subset campaign rerun. 48 relevant tests, strict Clippy and a separate-process public-only receive/freeze/P3 replay pass.",
+            "- Same-process private object delivery, serial in-memory storage and deterministic research Setup/Fake SRS are not operational privacy, durable service, full contract settlement or a completed privacy theorem. EVM Gas/calldata remain unmeasured.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g4_d:
         lines.extend([
-            "## Latest project checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2",
+            "## Previous P3 checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2" if g6 else "## Latest project checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2",
             "",
             f"- Status: `{g4_d['status']}`. Report: `docs/G4_D_TEN_SUBSETS_P3_V2.md`.",
             "- Ten real NEW proofs, one new circuit, one Setup/PK/VK and the SAME accepted G2-E CT2. All ten full A/B/C matrix digests match, not only counts.",
@@ -756,7 +807,7 @@ def main() -> int:
             "- D2 certified DKG/registry and first-eight ciphertexts/nullifiers reconstruct exactly; five actual CP/private packages verify natively. All ten bounded native decryptions match the private fixture; only winner 1 and public evidence are emitted.",
             "- 51 relevant tests/strict Clippy, two necessary proof-level selector/winner negatives and another-process 10/10 public replay pass. New source was uncommitted: raw preserves actual dirty flag and hashes.",
             "- This is one fixed target and fixed 3-of-5 functionality, not repeated performance data or production/privacy composition. NO EVM run for this NEW VK; old G5-D Gas is not current-relation Gas.",
-            "- Next unique task: complete native receiver -> freeze -> private packages -> P3 -> one-time Winner-only result state machine. Full SnarkPack EVM remains BLOCKED; no scales/Miller/figure work.",
+            "- Its native-flow follow-up is now complete in G6 above. Full SnarkPack EVM and full contract settlement remain unfinished." if g6 else "- Next unique task: complete native receiver -> freeze -> private packages -> P3 -> one-time Winner-only result state machine. Full SnarkPack EVM remains BLOCKED; no scales/Miller/figure work.",
             "",
         ])
     if g2_e:

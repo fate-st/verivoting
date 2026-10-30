@@ -1,0 +1,132 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "commands": [
+    {
+      "name": "fmt-check",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 361.436875,
+      "resource_budget_stop": null,
+      "watchdog_sampled_rss_peak_mib": null
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "clippy",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--all-targets",
+        "--release",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 233.316334,
+      "resource_budget_stop": null,
+      "watchdog_sampled_rss_peak_mib": null
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--lib",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 2344.600417,
+      "resource_budget_stop": null,
+      "watchdog_sampled_rss_peak_mib": null
+    },
+    {
+      "name": "state-tests",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g6-native-winner-only",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 1694.998458,
+      "resource_budget_stop": null,
+      "watchdog_sampled_rss_peak_mib": null
+    },
+    {
+      "name": "build",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g6-native-winner-only",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 5028.0575,
+      "resource_budget_stop": null,
+      "watchdog_sampled_rss_peak_mib": null
+    },
+    {
+      "name": "release",
+      "argv": [
+        "target/release/friendly-g6-native-winner-only"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 132270.677667,
+      "resource_budget_stop": null,
+      "watchdog_sampled_rss_peak_mib": 8352.3125
+    },
+    {
+      "name": "public-replay",
+      "argv": [
+        "target/release/friendly-g6-native-winner-only",
+        "--verify-fixture",
+        "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+        "--output",
+        "experiments/g6_raw/public_replay.json"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 54.670667,
+      "resource_budget_stop": null,
+      "watchdog_sampled_rss_peak_mib": null
+    }
+  ]
+}

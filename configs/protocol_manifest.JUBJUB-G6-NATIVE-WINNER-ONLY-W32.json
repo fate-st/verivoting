@@ -1,0 +1,36 @@
+{
+  "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G6-NATIVE-WINNER-ONLY-v1",
+  "release_policy": "WINNER_ONLY_V1",
+  "relation_id": "VV/JUBJUB/P3/BOUNDED-TALLY-v2/TEN-SUBSETS/v1",
+  "input_layout": "VV/JUBJUB/G4-D/INPUT-LAYOUT/v1",
+  "subset": [
+    1,
+    2,
+    3
+  ],
+  "registered_weight": 32,
+  "batch_count": 2,
+  "batch_size": 4,
+  "expected_p3_vk_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29",
+  "expected_matrix_sha256": "e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0",
+  "production_setup": false,
+  "new_setup_rebuild_count": 1,
+  "new_p3_proof_count": 1,
+  "new_private_package_count": 5,
+  "reused_ballot_proof_count": 8,
+  "reused_snarkpack_proof_count": 2,
+  "reused_state_proof_count": 2,
+  "resource_budget": {
+    "serial": true,
+    "build_jobs": 2,
+    "run_wall_limit_seconds": 1800,
+    "process_rss_limit_mib": 20000
+  },
+  "scope": "native in-memory receiver/freeze/private CP/threshold decode/P3/one-time winner; unchanged cryptographic suites and historical artifacts; not contract settlement",
+  "p3_fixture": "fixtures/jubjub_g4d_ten_subsets_p3_v2_public.json",
+  "p3_fixture_sha256": "6fa754055a578efbc92e08b79a9f85078ab929745a008bfb9c0decff693b357b",
+  "p3_raw": "experiments/g4_d_raw/ten_subsets_p3_v2.json",
+  "p3_raw_sha256": "292bf1d35dab36d44cbd3020d205ae211f8e33a2a479f5eaed4802f6f4c0e7d5",
+  "p3_descriptor": "configs/protocol_manifest.JUBJUB-G4D-P3-TEN-SUBSETS-W32.json",
+  "p3_descriptor_sha256": "9f1611de7c5adde363d71e055042da52a9004133925a38e138ef2f8a35072755"
+}

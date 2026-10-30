@@ -1,0 +1,438 @@
+{
+  "arch": "aarch64",
+  "batches": [
+    {
+      "batch_index": 1,
+      "checkpoint": {
+        "freeze_digest_hex": null,
+        "frozen": false,
+        "next_batch_index": 2,
+        "public_winner": null,
+        "release_policy": "WINNER_ONLY_V1",
+        "selected_subset": [
+          1,
+          2,
+          3
+        ],
+        "spent_nullifier_count": 4,
+        "state": [
+          {
+            "c0_hex": "0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+            "c1_hex": "1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "fd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+            "c1_hex": "59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+            "c1_hex": "35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1",
+            "candidate_id": 3
+          }
+        ],
+        "winner_write_count": 0
+      },
+      "proofs_reused": true,
+      "receiver_check_verify_apply_ms": 5.433209,
+      "snarkpack_verified": true,
+      "snarkpack_verify_ms": 3.539875,
+      "state_proof_verified": true,
+      "state_verify_ms": 1.852334
+    },
+    {
+      "batch_index": 2,
+      "checkpoint": {
+        "freeze_digest_hex": null,
+        "frozen": false,
+        "next_batch_index": 3,
+        "public_winner": null,
+        "release_policy": "WINNER_ONLY_V1",
+        "selected_subset": [
+          1,
+          2,
+          3
+        ],
+        "spent_nullifier_count": 8,
+        "state": [
+          {
+            "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+            "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+            "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+            "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+            "candidate_id": 3
+          }
+        ],
+        "winner_write_count": 0
+      },
+      "proofs_reused": true,
+      "receiver_check_verify_apply_ms": 5.744875,
+      "snarkpack_verified": true,
+      "snarkpack_verify_ms": 3.28225,
+      "state_proof_verified": true,
+      "state_verify_ms": 2.4347079999999997
+    }
+  ],
+  "build_profile": "release-opt-level-1",
+  "calldata_bytes": null,
+  "certified_dkg_and_registration": {
+    "all_32_addresses_match_d2": true,
+    "certificate_verified": true,
+    "ct2_matches_native_reconstruction": true,
+    "disclosure_digest_hex": "c9ffb7957d49018a6f8960492619752f5cb42ef0d09b0d76712f0762413faa7e",
+    "dkg_session_hex": "abc984a2ba7ee1c1a65d69c984a19c846ab00d1a3f2c3f1b746733785587aafd",
+    "election_id_hex": "bc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad45718",
+    "final_context_hex": "7ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e01",
+    "first_eight_ciphertexts_and_nullifiers_match_d2": true,
+    "key_core_digest_hex": "eb40303454eec2ccb51ca147a814a8026596d18901afdeb744ca1fff4a4c4be5",
+    "n_registered": 32,
+    "policy_pre_hex": "0b2830da624f7a3fc66c6303de74fd3a8f51477a7a873c12f42848445b49de72",
+    "pre_policy_fixed_before_dkg": true,
+    "prekey_context_hex": "12a9edb0cbe6ec7dfb2f0735e61d2949d136b326cd859082ff87974cc9b76c90",
+    "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+    "rebuild_ms": 39.59475,
+    "registered_weight": 32,
+    "registration_authority_hex": "ee613868e5790ef359653b0fcdabc9037a7c2bd699d55f58df0c70d9ee814bd2",
+    "registration_certificate_hex": "000000000000000f56562d43414e4f4e4943414c2d5631000000000000002156562f4a55424a55422f52454749535445522f43455254494649434154452f76310000000000000128000000000000000f56562d43414e4f4e4943414c2d5631000000000000002256562f4a55424a55422f52454749535445522f434c4f53452f5245434f52442f7631000000000000002356455249564f54494e472d4a55424a55422d50524f544f545950452d47302e382d7632bc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad457187ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e010b2830da624f7a3fc66c6303de74fd3a8f51477a7a873c12f42848445b49de72ae579623c1046c262e6941be7423898e72c746dafcfaea0255162b2f16c06e0b0000000000000020000000000000002000000000000000200000000195bb2a6866d9363c873ec9f96c759e830e9c8ec361e198f051c53d7070437fe900000000000000421db36e7103263069ad86fed496261923ab33139fe8f70cc9819158fe0fedc55de0a68f94b35068088ff2e60e6e6401d0f259699b723f691c73eb81192b9040000000",
+    "registration_certificate_verified": true,
+    "registration_close_digest_hex": "48074943738c3222a022d6c662071f199ac8f48e76776531f5986bdc19ef7928",
+    "registration_root_hex": "ae579623c1046c262e6941be7423898e72c746dafcfaea0255162b2f16c06e0b",
+    "w_max": 32
+  },
+  "complete_native_receiver_to_winner_flow": true,
+  "cpu": "Apple M4",
+  "evm_run": false,
+  "final_checkpoint": {
+    "freeze_digest_hex": "05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+    "frozen": true,
+    "next_batch_index": 3,
+    "public_winner": 1,
+    "release_policy": "WINNER_ONLY_V1",
+    "selected_subset": [
+      1,
+      2,
+      3
+    ],
+    "spent_nullifier_count": 8,
+    "state": [
+      {
+        "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+        "candidate_id": 3
+      }
+    ],
+    "winner_write_count": 1
+  },
+  "freeze_digest_hex": "05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+  "freeze_ms": 0.652167,
+  "frozen_checkpoint": {
+    "freeze_digest_hex": "05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+    "frozen": true,
+    "next_batch_index": 3,
+    "public_winner": null,
+    "release_policy": "WINNER_ONLY_V1",
+    "selected_subset": [
+      1,
+      2,
+      3
+    ],
+    "spent_nullifier_count": 8,
+    "state": [
+      {
+        "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+        "candidate_id": 3
+      }
+    ],
+    "winner_write_count": 0
+  },
+  "full_settlement": false,
+  "g4d_relation_and_vk_unchanged": true,
+  "gas_total": null,
+  "gate": "G6",
+  "git_commit": "9d8e73a2004473ed65571e08b46e14045f3679d6",
+  "git_dirty": true,
+  "git_status_at_start": "M crates/vv-friendly-dkg/Cargo.toml\n?? configs/protocol_manifest.JUBJUB-G6-NATIVE-WINNER-ONLY-W32.json\n?? crates/vv-friendly-dkg/src/bin/common/g6_batches.rs\n?? crates/vv-friendly-dkg/src/bin/common/g6_materials.rs\n?? crates/vv-friendly-dkg/src/bin/common/g6_state.rs\n?? crates/vv-friendly-dkg/src/bin/g6_native_winner_only.rs\n?? experiments/g6_raw/build.log\n?? experiments/g6_raw/clippy.log\n?? experiments/g6_raw/commands.json\n?? experiments/g6_raw/environment.json\n?? experiments/g6_raw/fmt-check.log\n?? experiments/g6_raw/release.log\n?? experiments/g6_raw/state-tests.log\n?? experiments/g6_raw/tests.log",
+  "limitations": [
+    "serial in-memory state machine, not a durable concurrent service or a smart contract",
+    "fresh five CP packages are privately delivered as same-process objects, not independent trustee network processes",
+    "archived validity/state proofs are reused but both real verifiers execute in this run before CT2 is frozen",
+    "one functional integration, not repeated performance statistics or a completed joint-knowledge/privacy theorem",
+    "deterministic research setup and prior fake aggregation SRS; published research seeds do not provide operational privacy",
+    "freeze seal and one-time release checks are native host enforcement, not additional P3 public inputs or a new circuit",
+    "accepted batch roots remain the local pinned schedule, not an independent censorship-resistant intake log",
+    "G4-D VK not tested on EVM; exact SnarkPack EVM and complete settlement/Gas remain unfinished"
+  ],
+  "negative_tests": {
+    "frozen_target_substitution_rejected": true,
+    "post_freeze_batch_rejected": true,
+    "rejected_operations_do_not_write": true,
+    "repeat_disclosure_rejected": true,
+    "repeat_reject_ms": 0.000042,
+    "second_freeze_rejected": true,
+    "target_reject_ms": 0.30166600000000005
+  },
+  "new_ballot_proof_count": 0,
+  "new_p3_proof_count": 1,
+  "new_private_packages": 5,
+  "new_state_proof_count": 0,
+  "os": "macos",
+  "package_seed_hex": "47362d5041434b31",
+  "packages_create_deliver_verify_ms": 33.162208,
+  "peak_rss_mib": 8602.96875,
+  "private_delivery": "in-process private objects, no network/private serialization",
+  "private_packages_verified": 5,
+  "private_tally_or_shares_emitted": false,
+  "private_threshold_decode_and_witness_ms": 1.962958,
+  "production_setup": false,
+  "proof_bytes": 192,
+  "proof_seed_hex": "47362d50524f4f46",
+  "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G6-NATIVE-WINNER-ONLY-v1",
+  "prove_ms": 41178.248416,
+  "proving_key_compressed_bytes": 1844946096,
+  "proving_key_persisted": false,
+  "public_fixture": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+  "public_fixture_sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78",
+  "public_input_bytes": 1920,
+  "public_winner": 1,
+  "reused_ballot_proof_count": 8,
+  "reused_snarkpack_proof_count": 2,
+  "reused_state_proof_count": 2,
+  "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "selected_subset": [
+    1,
+    2,
+    3
+  ],
+  "setup_rebuild_count": 1,
+  "setup_rebuild_ms": 69021.922209,
+  "setup_seed_hex": "4734442d53455455",
+  "shape": {
+    "constraints": 6236368,
+    "exact_public_input_packing": true,
+    "first_unsatisfied_constraint": null,
+    "matrix_digest_encoding": "VV/G4-D/ORDERED-R1CS-ABC/v1; counts/row widths/column u64 BE; field coefficients canonical LE32; includes constant instance",
+    "matrix_digest_ms": 4912.946584,
+    "matrix_sha256": "e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0",
+    "public_inputs": 60,
+    "satisfied": true,
+    "synthesis_and_check_ms": 11228.113959,
+    "witness_variables": 6009491
+  },
+  "source_artifact_pins": [
+    {
+      "path": "configs/protocol_manifest.JUBJUB-G4D-P3-TEN-SUBSETS-W32.json",
+      "sha256": "9f1611de7c5adde363d71e055042da52a9004133925a38e138ef2f8a35072755"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "path": "experiments/g1_d2_raw/uniform_depth5_batch32.json",
+      "sha256": "1a8c11c29ec89b8cf4a58dc963d83f408cd6f3fef6ef28a91159bb6985952372"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+      "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+    },
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-P3-WEIGHT-V2.json",
+      "sha256": "c9813e48b669c9e77273ca4080e51062044fa1a64fce122335e882ce4aff1e21"
+    },
+    {
+      "path": "fixtures/jubjub_g4c_partial_turnout_v2.json",
+      "sha256": "b9d41ab5cce14b151ca1ad0ba21edf742199189215ea4281a829f57f0d35c4c0"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-G6-NATIVE-WINNER-ONLY-W32.json",
+      "sha256": "e15af1fde285a683c40fa1c77b5ec1feb05664d587901b5b1da750bf7ebda1d1"
+    },
+    {
+      "path": "fixtures/jubjub_g4d_ten_subsets_p3_v2_public.json",
+      "sha256": "6fa754055a578efbc92e08b79a9f85078ab929745a008bfb9c0decff693b357b"
+    },
+    {
+      "path": "experiments/g4_d_raw/ten_subsets_p3_v2.json",
+      "sha256": "292bf1d35dab36d44cbd3020d205ae211f8e33a2a479f5eaed4802f6f4c0e7d5"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-G4D-P3-TEN-SUBSETS-W32.json",
+      "sha256": "9f1611de7c5adde363d71e055042da52a9004133925a38e138ef2f8a35072755"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3ten_gadget.rs",
+      "sha256": "7e46b1ddb5ab5723cf3a1d2d646dfb9df5c8abac7d02bca5d4a95a1d26b3c27c"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3c1_gadget.rs",
+      "sha256": "b5a5c11e94bdea300cb511666dc47e0306973c256766125ef8f412ff2c7233b3"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3d_gadget.rs",
+      "sha256": "d8d2525b82649343ae4593d2f900b3a259af5fcc9cd1f75d7f8cda3e4a4c868c"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3b_gadget.rs",
+      "sha256": "3ccecf85828c27b48478094783e2bc9149327e58f97859a141e3222f14b673bd"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/cp_h4_gadget.rs",
+      "sha256": "72540ef0998b04d1a5a65d6eba4d31027679673ef6d7ea0f583743948fcb5a48"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/cp_h3_gadget.rs",
+      "sha256": "bb13d59b63d3151b3d0ff36488a00c50ecb2bef1ec990138e3392059d4b0a6df"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/hash_to_field_gadget.rs",
+      "sha256": "b15968bc12fbb01f710c9540d5ac093131ff89a066f78d98f0a401bc102ea712"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/lib.rs",
+      "sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g4d_ten_subsets.rs",
+      "sha256": "6acb313c72f6ca65243fa5345ce40343573f83cecd0a5dd3d1bb4ecd060ec44b"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/lib.rs",
+      "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/package.rs",
+      "sha256": "224d95192e42e24f01fee3aa00dbe73cfca8bcb25f2d60492d2f4a5166192774"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/registration.rs",
+      "sha256": "03f0383eba3005d204dd023c5818b6e035b15abccebe3c24fd172f42266106db"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    }
+  ],
+  "source_hashes": [
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g6_native_winner_only.rs",
+      "sha256": "d7f487df7c265f6c88173153ea28f26b19d9700294677d5e1476870d3687d96b"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g6_materials.rs",
+      "sha256": "f3d5f8e915c236d1f6a41e5406147385bbe321d268a8f2e17d0c79ce8dbd2c24"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g6_batches.rs",
+      "sha256": "e272ab111e29068c72d9dbe5d97ba3ae48fd5af8e4f64b3e05d35670f4e59e3f"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g6_state.rs",
+      "sha256": "c8c9bf0ad7d185aa447a707341a56b19a9e216c2a610bf867b051e2cc56c2ec2"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g2e_receiver.rs",
+      "sha256": "7f748d4c7a172fdce109c5f89877f626a28d04815ef5510197de4e679397fced"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/lib.rs",
+      "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/package.rs",
+      "sha256": "224d95192e42e24f01fee3aa00dbe73cfca8bcb25f2d60492d2f4a5166192774"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/registration.rs",
+      "sha256": "03f0383eba3005d204dd023c5818b6e035b15abccebe3c24fd172f42266106db"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3ten_gadget.rs",
+      "sha256": "7e46b1ddb5ab5723cf3a1d2d646dfb9df5c8abac7d02bca5d4a95a1d26b3c27c"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3c1_gadget.rs",
+      "sha256": "b5a5c11e94bdea300cb511666dc47e0306973c256766125ef8f412ff2c7233b3"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3d_gadget.rs",
+      "sha256": "d8d2525b82649343ae4593d2f900b3a259af5fcc9cd1f75d7f8cda3e4a4c868c"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3b_gadget.rs",
+      "sha256": "3ccecf85828c27b48478094783e2bc9149327e58f97859a141e3222f14b673bd"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/cp_h4_gadget.rs",
+      "sha256": "72540ef0998b04d1a5a65d6eba4d31027679673ef6d7ea0f583743948fcb5a48"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/cp_h3_gadget.rs",
+      "sha256": "bb13d59b63d3151b3d0ff36488a00c50ecb2bef1ec990138e3392059d4b0a6df"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/hash_to_field_gadget.rs",
+      "sha256": "b15968bc12fbb01f710c9540d5ac093131ff89a066f78d98f0a401bc102ea712"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/state_gadget.rs",
+      "sha256": "40aef68da8416819a8b9d457ce890968a8a426099b263b81606d746e205fb80c"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "67a2df371bd35fb1519745dab6ff9bce20674cd6c4f98871c48b21abac1c7bcd"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "6b7ce01c5bd626481149ca37549a934c97131469b38d4f3bee8ae93fa1380a69"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    }
+  ],
+  "sources_unchanged_before_archival": true,
+  "started_utc": "2026-10-30T12:12:30Z",
+  "status": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
+  "total_run_ms_excluding_compilation": 131587.071042,
+  "verifying_key_bytes": 3272,
+  "verifying_key_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29",
+  "winner_disclosure_check_prepare_verify_write_ms": 6.861125
+}

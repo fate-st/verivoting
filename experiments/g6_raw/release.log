@@ -1,0 +1,9 @@
+G6 [1/7] rebuild same certified DKG and registration; exact D2 context/root/first-eight ciphertexts
+G6 [2/7] REAL G2-E Receiver: verify both archived SnarkPack + state proofs, sequential check-then-write
+G6 [3/7] freeze CT2 ONCE; create/deliver/verify five NEW private CP packages in process
+G6 [4/7] private 3-of-5 decode; complete unchanged P3 v2 R1CS for live frozen CT2
+G6 [5/7] rebuild ONE research setup; require exact full G4-D VK; PK stays in memory
+  Setup MATCH: 69021.922 ms; VK=0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29; peakRSS=8602.969MiB
+G6 [6/7] create ONE NEW P3 proof from this run's private packages and decoded witness
+G6 [7/7] PASS: winner=1, writes=1; substituted target/repeated disclosure REJECT; prove=41178.248ms verify+write=6.861125ms RSS=8602.969MiB
+archived experiments/g6_raw/native_winner_only.json and fixtures/jubjub_g6_native_winner_only_public_v1.json

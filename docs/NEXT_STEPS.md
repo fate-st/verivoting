@@ -1,6 +1,29 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Comparison preparation completed without new heavy experiments
+## Current checkpoint: G6 completed; next is SAME-VK EVM acceptance
+
+[G6 report](G6_NATIVE_WINNER_ONLY.md): one actual native run verifies both G2-E
+batches, freezes the receiver's CT2, generates five new private CP packages,
+privately decodes subset 123, creates one new G4-D P3 proof and writes winner
+once. Target substitution, repeated disclosure/freeze and post-freeze receive
+reject without writes; a separate-process public-only replay also passes.
+Eight ballot proofs/two aggregates/two state proofs are reused, not re-proved.
+Full VK and R1CS match G4-D. 48 relevant tests/strict Clippy pass.
+
+STOP after this functional native integration. Next unique implementation:
+verify this SAME G4-D VK/proof with the real local EVM verifier, keeping the
+old fixed-123 G5-D data historical. Then implement actual contract receiver,
+freeze and one-time winner storage checks. Exact SnarkPack EVM still needs
+a feasible exact route; do not restart the frozen software-Miller loop or use
+mocks. No new batch scales, G1-E reruns or spliced component Gas comparisons.
+
+G6 is serial in-memory and same-process private delivery, not persistent
+multi-process service, production privacy, full-chain settlement or a privacy
+composition theorem. System comparisons and final clean-source reproduction
+remain after the contract work. The earlier Step 3 specification below is
+now completed by G6, not still an open native task.
+
+## Historical comparison preparation without new heavy experiments
 
 At the user's request, [Stage 1 comparison](COMPARISON_STAGE1.md) now reuses
 G1-E's six immutable statistical figures, adds version-scoped literature
@@ -8,8 +31,8 @@ function/security tables, and plots the existing G2-D/E functional samples.
 G2-D uses matched component sums, not separately timed transactions; G2-E has
 no measured full Direct Fold receiver baseline. No cross-paper timing ranking,
 new proofs, rerun G1-E, new batch scale or inferred EVM Gas is included.
-This preparation does not complete Steps 3/4 below. The next unique core
-implementation remains the integrated native Winner-only state machine.
+That preparation did not itself complete Steps 3/4. G6 has since completed
+the native Step 3; the contract work in Step 4 remains unfinished.
 
 ## 1. Completed: G2-E consecutive B4 state transitions
 
@@ -28,7 +51,7 @@ Public replay 10/10 and necessary selector/winner negatives pass.
 This is not production registry adoption, arbitrary n/t or a privacy theorem;
 the G4-D VK has NOT been tested on EVM. Old G5-D fixed-123 v2 Gas is historical.
 
-## 3. Next unique implementation: complete native Winner-only state machine
+## 3. Completed by G6: complete native Winner-only state machine
 
 1. Feed the exact two accepted G2-E batches through the real native receiver;
    check both real proof families, context/root/next/old state and spent NFs.

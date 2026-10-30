@@ -2,7 +2,18 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Latest project checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2
+## Latest project checkpoint: G6 complete native Winner-only state machine
+
+- Status: `PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE`. Report: `docs/G6_NATIVE_WINNER_ONLY.md`.
+- One actual process executes both real SnarkPack/state verifiers for both B4 batches, freezes its resulting CT2, creates/verifies five NEW private CP packages, privately decodes subset 123 and creates ONE NEW P3 proof.
+- Disclose reconstructs all 60 inputs from frozen storage and authenticated package commitments before real proof verification; winner is written once. Target substitution, repeat disclose, second freeze and post-freeze batches reject without writes.
+- Setup reconstruction `69021.922 ms`; NEW P3 Prove `41178.248 ms`; complete disclosure check/prepare/verify/write `6.861125 ms`.
+- Same full G4-D VK `0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29` and matrix fingerprint; proof `192 B`, inputs `1920 B`; cumulative process peak RSS `8602.969 MiB`.
+- Reuses eight ballot proofs, two aggregates and two state proofs; no G1-E or ten-subset campaign rerun. 48 relevant tests, strict Clippy and a separate-process public-only receive/freeze/P3 replay pass.
+- Same-process private object delivery, serial in-memory storage and deterministic research Setup/Fake SRS are not operational privacy, durable service, full contract settlement or a completed privacy theorem. EVM Gas/calldata remain unmeasured.
+- Next: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas.
+
+## Previous P3 checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2
 
 - Status: `PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2`. Report: `docs/G4_D_TEN_SUBSETS_P3_V2.md`.
 - Ten real NEW proofs, one new circuit, one Setup/PK/VK and the SAME accepted G2-E CT2. All ten full A/B/C matrix digests match, not only counts.
@@ -12,7 +23,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - D2 certified DKG/registry and first-eight ciphertexts/nullifiers reconstruct exactly; five actual CP/private packages verify natively. All ten bounded native decryptions match the private fixture; only winner 1 and public evidence are emitted.
 - 51 relevant tests/strict Clippy, two necessary proof-level selector/winner negatives and another-process 10/10 public replay pass. New source was uncommitted: raw preserves actual dirty flag and hashes.
 - This is one fixed target and fixed 3-of-5 functionality, not repeated performance data or production/privacy composition. NO EVM run for this NEW VK; old G5-D Gas is not current-relation Gas.
-- Next unique task: complete native receiver -> freeze -> private packages -> P3 -> one-time Winner-only result state machine. Full SnarkPack EVM remains BLOCKED; no scales/Miller/figure work.
+- Its native-flow follow-up is now complete in G6 above. Full SnarkPack EVM and full contract settlement remain unfinished.
 
 ## Previous state checkpoint: G2-E two consecutive B4 state transitions
 
@@ -78,7 +89,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 | 16 | 6.917166 | 4.990667 | 28.524625 | 3072 / 14164 / 12800 |
 | 32 | 14.048915 | 6.942209 | 57.087584 | 6144 / 17140 / 25600 |
 
-- Next planned task: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas.
+- Next planned task: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas..
 
 ## Previous fixed-suite checkpoint: G1-D1 B=16
 
@@ -90,7 +101,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Source proofs / aggregate / matrix: `3072 / 14164 / 12800 B`; native direct fold/check: `0.021041 ms`.
 - Changed 16th nullifier rejected: `True`; cumulative process peak RSS: `2911.922 MiB`.
 - One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 was not run at this historical checkpoint; see G1-D2 above if available.
-- Next planned task: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas.
+- Next planned task: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas..
 
 ## Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
@@ -108,7 +119,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - One positive aggregate per B and only one changed-eighth-nullifier negative (B=8), all pass. Direct-fold columns measure native arithmetic/equality only, not full settlement.
 - Single ascending-order pilot, no dedicated warmup, no repeated statistics/crossover conclusion. Per-B standalone RSS is unmeasured; cached keys/SRS, calldata and full DA are not included in proof-plus-matrix byte counts.
 - The weight-10 B=4 state and P3 results below are historical components, not weight-32 results. Current-suite state/P3, SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas.
+- Next: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas..
 
 ## Previous state checkpoint: G2-C B=4 / omission rejection (weight 10)
 
@@ -119,7 +130,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Only negative, omitted third ballot: R1CS rejected `True`, original proof with omitted new state rejected `True`. Four records/root/aggregate remain unchanged.
 - Peak RSS: `6083.000 MiB`; old B=2 entry points and artifacts remain unchanged.
 - One zero-old-state functional case, no repeated performance or complete settlement claim. The two verifiers are linked natively, not recursively or on EVM.
-- Next: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas.
+- Next: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas..
 
 ## Previous native checkpoint: G1-C3 B=8 / depth 3
 
@@ -133,7 +144,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Functional single run only, nonproduction SRS. Do not compare depth-3 B=8 times with depth-2 B=4 as a controlled performance matrix.
 - B=2/B=4 entry points and archived artifacts are unchanged; the shared ballot type is now const-generic with depth 2 as its legacy default.
 - B=4 state/omission has since passed in G2-C above. SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas.
+- Next: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas..
 
 ## Historical native checkpoint: G1-C2 B=4
 
@@ -146,7 +157,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
 - This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
 - Its B=4 state/omission follow-up has since passed in G2-C; SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas.
+- Next: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas..
 
 ## Historical fixed-123 P3-v2 checkpoint: G4-C
 
@@ -169,14 +180,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- The native follow-up has passed G2-C; current next task: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas.
+- The native follow-up has passed G2-C; current next task: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas..
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Current project next gate: Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas; archived G5 next-task notes are historical.
+- Current project next gate: Verify the SAME G4-D VK in local EVM, then bind receiver/freeze/one-time-winner contract state. Exact SnarkPack EVM still needs a feasible exact route; no new scales, G1-E reruns or spliced component Gas.; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -237,7 +248,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G4_current_tally_v2_arbitrary_subset | PASS_ALL_TEN_SORTED_3_OF_FIXED_5_ONE_VK_ONE_W32_CT2 |
 | G5_current_tally_v2_evm_verifier | NOT_MEASURED_FOR_NEW_G4D_VK |
 | G4_general_subset_p3 | PASS_G4D_ALL_TEN_FIXED_3_OF_5_P3_V2_ONE_VK_ONE_W32_CT2 |
-| G4_full_p3 | PARTIAL_PASS_G4D_TEN_SUBSETS_W32_CT2_NO_LIVE_SETTLEMENT_OR_PRIVACY_COMPOSITION |
+| G4_full_p3 | PASS_G6_NATIVE_FIXED_W32_FLOW_NOT_CHAIN_SETTLEMENT_OR_PRIVACY_THEOREM |
 | G5_A_local_prague_state_verifier | PASS_G5A_LOCAL_PRAGUE_G2B_GROTH16_VERIFIER |
 | G5_B_local_prague_two_subset_p3_verifier | PASS_G5B_LOCAL_PRAGUE_TWO_SUBSET_P3_GROTH16_VERIFIER |
 | G5_D_local_prague_p3_tally_v2_verifier | PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT |
@@ -270,6 +281,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G5_C3_complete_gt_and_pairing_target_route | PARTIAL_PASS_QUARTER_PREFIX_FULL_MILLER_BLOCKED_FROZEN |
 | G5_C_exact_snarkpack_target_verifier | BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN |
 | G5_target_chain | PARTIAL_PASS_G5D_LOCAL_P3_TALLY_V2_AND_STATE_VERIFIERS_FULL_SETTLEMENT_BLOCKED |
+| G6_complete_native_receiver_to_winner | PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE |
 
 ## Four-voter end-to-end fixture
 
