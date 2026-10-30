@@ -78,6 +78,7 @@ def main() -> int:
     g6_path = raw.parent / "g6_raw" / "native_winner_only.json"
     g6_replay_path = raw.parent / "g6_raw" / "public_replay.json"
     g7_path = raw.parent / "g7_raw" / "g7_p3_prague_evm.json"
+    g8_path = raw.parent / "g8_raw" / "receiver_freeze.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -227,6 +228,19 @@ def main() -> int:
     g6 = json.loads(g6_path.read_text()) if g6_path.exists() else None
     g6_replay = json.loads(g6_replay_path.read_text()) if g6_replay_path.exists() else None
     g7 = json.loads(g7_path.read_text()) if g7_path.exists() else None
+    g8 = json.loads(g8_path.read_text()) if g8_path.exists() else None
+    if g8 and (
+        not g7 or not g6
+        or g8["status"] != "PARTIAL_G8_REAL_INDIVIDUAL_BALLOT_STATE_EVM_CT2_FREEZE_PASS"
+        or len(g8["accepted_batches"]) != 2 or len(g8["negative_tests"]) != 13
+        or not all(b["receipt_status"] == 1 for b in g8["accepted_batches"])
+        or not all(n["receipt_status"] == 0 and n["atomic_rejection"] for n in g8["negative_tests"])
+        or not g8["exact_g6_freeze_seal_matched"] or not g8["exact_g6_cp_target_matched"]
+        or g8["setup_count"] != 0 or g8["proof_generation_count"] != 0
+        or g8["complete_g8_settlement"] or g8["snarkpack_evm_verified"]
+        or g8["winner_written"] or g8["p3_verified_in_this_flow"]
+    ):
+        raise ValueError("G8 phase 1 must be real individual-ballot/state verification and freeze, NOT complete settlement")
     if g7 and (
         not g6 or not g4_d
         or g7["status"] != "PASS_SAME_G6_PROOF_G4D_VK_PRAGUE_1_POSITIVE_4_NEGATIVES"
@@ -811,6 +825,21 @@ def main() -> int:
             "complete_chain_settlement": False,
             "next_task": "G8 contract receiver/freeze/authentication/one-time Winner-only state binding; exact SnarkPack EVM remains separate G9. Stop after G7 this round; no new scales or heavy-proof reruns.",
         })
+    if g8:
+        summary["classification"] = "measured-partial-g8-individual-groth16-receiver-state-freeze-not-snarkpack-or-winner-settlement"
+        summary["g8_receiver_freeze_individual_fallback"] = g8
+        summary["gates"]["G8_receiver_freeze_individual_fallback"] = g8["status"]
+        summary["gates"]["G8_full_winner_only_settlement"] = "PARTIAL_RECEIVER_FREEZE_ONLY_AUTHENTICATION_AND_DISCLOSURE_PENDING"
+        summary["gates"]["G5_target_chain"] = "PARTIAL_G8_REAL_INDIVIDUAL_BALLOT_STATE_RECEIVER_FREEZE_NO_COMPLETE_SETTLEMENT"
+        summary["project_current_progress"].update({
+            "active_gate": "G8",
+            "active_gate_status": "PARTIAL",
+            "latest_completed_step": "G8 phase 1 real individual-ballot/state EVM receiver and CT2 freeze",
+            "receiver_and_freeze_evm_measured": True,
+            "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
+            "complete_chain_settlement": False,
+            "next_task": "G8 next phase: authenticate original DKG/registration and Trustee Schnorr commitments, rebuild all 60 P3 inputs from frozen contract storage and write winner once. G9 SnarkPack remains separate/unresolved; no new batch scales or old heavy-proof reruns.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -820,9 +849,20 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g8:
+        lines.extend([
+            "## Current work: G8 phase 1 receiver/freeze passed; full G8 is PARTIAL",
+            "",
+            "- Report: `docs/G8_WINNER_ONLY_SETTLEMENT.md`. REAL individual Groth16 fallback, not SnarkPack: 8 archived ballot proofs and 2 state proofs verify on local Prague, same ordered matrices/roots and continuous storage state.",
+            f"- Deploy receiver + concrete verifiers `{g8['deployment']['total_gas']} Gas`; B4 receives `{g8['accepted_batches'][0]['total_gas']} / {g8['accepted_batches'][1]['total_gas']} Gas`, each `{g8['accepted_batches'][0]['calldata_bytes']} B`; freeze `{g8['freeze']['total_gas']} Gas`.",
+            "- Freeze computed only from contract storage; original G6 CP target and seal match exactly. 13 necessary rejects are atomic, including genuine bad-ballot/bad-state pairing failures. No Setup/Prove or G7 rerun.",
+            "- Initial certificate/registry anchors remain deployer-provisioned, not verified certificates on EVM. Trustee signature checks, P3/frozen-storage input reconstruction, winner write-once and exact SnarkPack EVM are NOT completed. No full-system Gas or efficiency claim.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g7:
         lines.extend([
-            "## Latest project checkpoint: G7 same G6 proof / G4-D VK on local Prague EVM",
+            "## Previous complete gate: G7 same G6 proof / G4-D VK on local Prague EVM" if g8 else "## Latest project checkpoint: G7 same G6 proof / G4-D VK on local Prague EVM",
             "",
             f"- Status: `{g7['status']}`. Report: `docs/G7_P3_EVM.md`.",
             "- Exact archived G6 P3 proof, original G4-D VK, 60 inputs, unchanged Solidity verifier. Signed local transactions: two deployments, one accepted proof, four pairing-level rejections (selector/winner/ciphertext/actual old fixed-123 VK).",

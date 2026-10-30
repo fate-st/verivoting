@@ -1,0 +1,21 @@
+G8 [1] compile actual receiver and concrete ballot/state verifiers (no mock)
+G8 [2] deploy receiver; constructor really deploys its own verifiers / immutable anchors
+G8 [3] necessary preflight/root/nullifier/proof negatives, no writes on rejection
+  reject premature_freeze: INCOMPLETE, 23648 Gas
+  reject skip_first_batch: NEXT_INDEX, 207060 Gas
+  reject changed_old_state: OLD_STATE, 202560 Gas
+  reject wrong_registration_root: REGISTRATION_ROOT, 201630 Gas
+  reject changed_schedule_root: ACCEPTED_ROOT, 259388 Gas
+  reject reordered_valid_ballots: BATCH_ROOT, 274206 Gas
+  reject duplicate_within_batch: DUPLICATE_NULLIFIER, 201660 Gas
+  reject wrong_ballot_proof: INVALID_GROTH16, 976346 Gas
+  reject wrong_state_proof_after_four_valid_ballots: INVALID_GROTH16, 3229317 Gas
+G8 [4] accept both real consecutive batches; verify actual ten proofs on EVM
+  batch 1 accepted: 3333283 Gas / 6948 B
+  reject replayed_first_batch: NEXT_INDEX, 201630 Gas
+  reject spent_nullifier_across_batches: SPENT_NULLIFIER, 207060 Gas
+  batch 2 accepted: 3335455 Gas / 6948 B
+G8 [5] freeze CT2 from storage; require exact ORIGINAL G6 CP target and seal
+  reject repeat_freeze: FROZEN, 23579 Gas
+  reject receive_after_freeze: FROZEN, 207060 Gas
+G8 phase 1 PASS (G8 remains PARTIAL): deployment 10358066; batches 3333283/3335455; freeze 144836; 13 atomic rejections; NO setup/prove; G6 seal matches

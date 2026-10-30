@@ -1,0 +1,18 @@
+{
+  "gate": "G8",
+  "phase": "receiver-and-freeze-only",
+  "batch_validity_route": "four real individual Groth16 verifications, NOT SnarkPack",
+  "scope": "fixed G2-E two B4 batches / D5 W32 / no new setup or proving",
+  "complete_g8_settlement": false,
+  "trustee_authentication_and_winner_storage": "NOT_IMPLEMENTED_THIS_PHASE",
+  "initialization_trust": "deployer provisions the externally checked G6 DKG/registration/schedule anchors; certificates not verified on EVM yet",
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "source_pins": [
+    {"path":"fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json","sha256":"42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"},
+    {"path":"fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json","sha256":"6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"},
+    {"path":"fixtures/jubjub_g6_native_winner_only_public_v1.json","sha256":"ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"},
+    {"path":"configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json","sha256":"00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"},
+    {"path":"contracts/src/Bls12381Groth16Verifier.sol","sha256":"8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277"}
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "checks": [
+    {
+      "ballot_proofs_verified": 4,
+      "batch": 1,
+      "state_proof_verified": true,
+      "wrong_ballot_proof_rejected": true
+    },
+    {
+      "ballot_proofs_verified": 4,
+      "batch": 2,
+      "state_proof_verified": true,
+      "wrong_ballot_proof_rejected": true
+    }
+  ],
+  "gate": "G8-public-export",
+  "git_commit": "9baed4793f9ef634a2aa7d88ac65c72518ccf266",
+  "git_dirty": true,
+  "output_fixture": "fixtures/g8_receiver_eip2537_v1.json",
+  "output_fixture_sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb",
+  "private_witness_emitted": false,
+  "proof_generation_count": 0,
+  "setup_count": 0,
+  "source_hashes": [
+    {
+      "path": "configs/protocol_manifest.JUBJUB-G8-RECEIVER-FALLBACK-W32.json",
+      "sha256": "8412caf04455c14bc5df257428ca7c7dabecdf60948b96edb8ca5b6b23ec357c"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g8_receiver_export.rs",
+      "sha256": "82d92089848c4f6222bf68999fc2e1a3c4cfe2be2e11a46f37078e6714a708f7"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "fde15d9a0573e3211ecc9beb7da4caa52194ad6cde07ba89f766303fdcf49f25"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/evm_export.rs",
+      "sha256": "73f1145aceb0845c64ae8527b74a5652b84172b080ecb0ceb15a6c5632fac1d1"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/state_gadget.rs",
+      "sha256": "40aef68da8416819a8b9d457ce890968a8a426099b263b81606d746e205fb80c"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+      "sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "path": "contracts/src/Bls12381Groth16Verifier.sol",
+      "sha256": "8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277"
+    }
+  ],
+  "status": "PASS_EIGHT_BALLOTS_TWO_STATE_PROOFS_NATIVE_REPLAY_AND_EIP2537_EXPORT"
+}

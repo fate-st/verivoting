@@ -8,7 +8,18 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Latest project checkpoint: G7 same G6 proof / G4-D VK on local Prague EVM (2026-10-30)
+### Current work: G8 phase 1 receiver/freeze passed; full G8 PARTIAL (2026-10-30)
+
+[G8 第一阶段](docs/G8_WINNER_ONLY_SETTLEMENT.md) 已在真实本地 Prague 交易中完成两批 B4
+接收和一次冻结：每批四次真实单票 Groth16 + 一次真实 State Proof，而不是 SnarkPack 或 mock。
+同一矩阵绑定批次根/注册根/NF/状态连续性；CT2、CP target、freeze seal 与 G6 完全相同。
+两批 3,333,283 / 3,335,455 Gas（各 6,948 B），冻结 144,836 Gas；13 项原子拒绝、48 回归、
+严格 Clippy 及 324 条历史数据/图表检查通过。无新 Setup/Prove，无旧重型实验重跑。
+**完整 G8 仍未完成**：初始化证书目前由部署者预置，原 Trustee 认证、冻结存储重建 P3 输入和
+一次性 Winner 写入仍待下一轮；没有完整 SnarkPack EVM 或完整系统 Gas 声明。
+新分支 `experiment/g8-winner-only-settlement` 从 G7 基点建立，未修改旧协议配置/数据/电路。
+
+### Previous complete gate: G7 same G6 proof / G4-D VK on local Prague EVM (2026-10-30)
 
 [G7](docs/G7_P3_EVM.md) 复用 G6 同一份真实 P3 证明及 G4-D 原始 VK，60 输入，未改 Solidity
 验证器。实际签名交易：两个 VK 部署、一个验证成功及四个配对层拒绝（Selector/Winner/密文/真实旧 VK）。

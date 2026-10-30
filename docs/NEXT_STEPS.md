@@ -1,6 +1,24 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current checkpoint: G7 completed; STOP this round, next is G8 contract state binding
+## Current work: G8 phase 1 passed, full G8 PARTIAL; next is authentication/disclosure
+
+[G8 receiver/freeze](G8_WINNER_ONLY_SETTLEMENT.md) 从 `9baed479` 新建
+`experiment/g8-winner-only-settlement`。实际合约验证八份原始单票证明与两份状态证明，
+连续接收两个 B4 后冻结 CT2；同一 G6 CP target 和 seal 一致。13 原子拒绝通过。
+这是独立明确的逐票 Groth16 备用/对照路线，不是 SnarkPack、mock 或仅 State Proof。
+0 Setup/Prove，不重跑 G1-E/G4-D/G6/G7；本轮到该阶段停止。
+
+下一轮仍在 G8 内，只补：
+
+1. 原 DKG/注册证书及 Trustee Jubjub Schnorr 认证的真实验证；当前锚点只是部署者预置。
+   不换成 secp256k1 重签后声称已验证原认证，不把主机检查当作链上检查。
+2. 已认证承诺与同一冻结上下文绑定，从合约存储重建全部 60 个 P3 输入并调用 G4-D VK。
+3. 只写 Winner 一次；伪造签名、改承诺/冻结目标、重复披露必须拒绝且不写状态。
+
+这些未完成前 G8 始终 PARTIAL。G9 精确 SnarkPack 路线独立待解，不重启冻结的 Miller 局部优化；
+G10 公平系统比较和最终干净版本复现后续进行。不要增加规模、重做旧统计或拼接组件 Gas。
+
+## Previous checkpoint: G7 completed
 
 [G7](G7_P3_EVM.md) 使用 G6 同一份已归档 P3 proof、G4-D 原 VK（60 输入），
 在未改 Solidity 验证器上执行真实本地 Prague 签名交易。正例成功，Selector/Winner/合法点

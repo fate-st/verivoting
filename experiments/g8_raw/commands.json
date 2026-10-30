@@ -1,0 +1,145 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "env": {
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_PROFILE_RELEASE_STRIP": "none"
+  },
+  "commands": [
+    {
+      "name": "fmt-check",
+      "attempt": 1,
+      "log": "fmt-check.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 325.68066699999997
+    },
+    {
+      "name": "clippy",
+      "attempt": 1,
+      "log": "clippy.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "clippy",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--all-targets",
+        "--release",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 437.78754200000003
+    },
+    {
+      "name": "tests",
+      "attempt": 1,
+      "log": "tests.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--lib",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 2483.4790829999997
+    },
+    {
+      "name": "state-tests",
+      "attempt": 1,
+      "log": "state-tests.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g6-native-winner-only",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 74.7607909999997
+    },
+    {
+      "name": "build",
+      "attempt": 1,
+      "log": "build.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g8-receiver-export",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 67.44254099999989
+    },
+    {
+      "name": "public-export",
+      "attempt": 1,
+      "log": "public-export.log",
+      "argv": [
+        "target/release/friendly-g8-receiver-export"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 530.9274580000001
+    },
+    {
+      "name": "evm",
+      "attempt": 1,
+      "log": "evm.log",
+      "argv": [
+        "node",
+        "contracts/scripts/g8_settlement.mjs"
+      ],
+      "exit_code": 1,
+      "signal": null,
+      "elapsed_ms": 3586.0791249999997
+    },
+    {
+      "name": "evm",
+      "attempt": 2,
+      "log": "evm-attempt2.log",
+      "argv": [
+        "node",
+        "contracts/scripts/g8_settlement.mjs"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 4915.481167
+    }
+  ]
+}

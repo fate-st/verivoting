@@ -1,0 +1,18 @@
+G8 [1] compile actual receiver and concrete ballot/state verifiers (no mock)
+G8 [2] deploy receiver; constructor really deploys its own verifiers / immutable anchors
+G8 [3] necessary preflight/root/nullifier/proof negatives, no writes on rejection
+file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/contracts/node_modules/@ethereumjs/rlp/dist/esm/errors.js:36
+    return new EthereumJSError({ code: DEFAULT_ERROR_CODE }, message, stack);
+           ^
+
+EthereumJSError: the tx doesn't have the correct nonce. account has nonce of: 27 tx has nonce of: 1 (vm hf=prague -> block number=1 hash=0x60704dd73fd250494dcfaa4ade1a8e8b20ea95ed2545c26839efcb602d46751c hf=prague baseFeePerGas=1 txs=0 uncles=0 -> tx type=0 hash=0xe86d6092a0fbf9337baf241ec27a6e4f63606600e4eda5264f5165c2528792ed nonce=1 value=0 signed=true hf=prague gasPrice=10)
+    at EthereumJSErrorWithoutCode (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/contracts/node_modules/@ethereumjs/rlp/dist/esm/errors.js:36:12)
+    at _runTx (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/contracts/node_modules/@ethereumjs/vm/dist/esm/runTx.js:672:19)
+    at async runTx (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/contracts/node_modules/@ethereumjs/vm/dist/esm/runTx.js:420:24)
+    at async transact (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/contracts/scripts/g8_settlement.mjs:62:39)
+    at async reject (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/contracts/scripts/g8_settlement.mjs:117:35)
+    at async file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/contracts/scripts/g8_settlement.mjs:127:1 {
+  type: { code: 'ETHEREUMJS_DEFAULT_ERROR_CODE' }
+}
+
+Node.js v23.11.0

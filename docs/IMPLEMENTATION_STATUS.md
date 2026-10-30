@@ -1,6 +1,19 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint: G7 same G6 P3 / G4-D VK EVM acceptance (2026-10-30)
+## Current work: G8 receiver/freeze phase passed, complete G8 PARTIAL (2026-10-30)
+
+[G8 第一阶段](G8_WINNER_ONLY_SETTLEMENT.md) 新增真实 Solidity 接收/冻结合约和逐票备用验证适配器。
+不是 mock、不是仅 State Proof：两批各四份原始单票证明与两份状态证明都在 EVM 实际验证，
+同一有序矩阵/注册根/预定批次根/NF/旧状态检查后才写状态。冻结从存储计算，不接收外部目标，
+CT2、CP target、seal 与 G6 精确一致。13 必要负例无写入，包含真实证明配错导致的配对 0。
+部署四个实际组件共 10,358,066 Gas；两批接收 3,333,283/3,335,455 Gas，各 6,948 B；冻结 144,836 Gas。
+48 回归、严格 Clippy、格式、324 条历史数据/图表来源检查通过；0 Setup/Prove。
+
+初始化证书/DKG/注册锚点仍由部署者提供，未链上验证证书；原 Trustee 签名、已认证承诺、
+从冻结存储重建 P3 输入及一次 Winner 写入均未完成，完整 G8 标记 PARTIAL。
+精确 SnarkPack EVM 仍是 G9 阻塞项；逐票备用路线不替代其正式聚合声明。本轮停止于接收/冻结。
+
+## Previous complete gate: G7 same G6 P3 / G4-D VK EVM acceptance (2026-10-30)
 
 [G7](G7_P3_EVM.md) 已在本地 Prague EVM 中执行真实签名交易，用 G6 原证明、G4-D 原 VK
 和全部 60 输入验证成功。Selector、Winner、规范编码密文 C1、实际旧固定 123 VK 四项负例
