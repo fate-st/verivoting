@@ -77,6 +77,7 @@ def main() -> int:
     g4_d_path = raw.parent / "g4_d_raw" / "ten_subsets_p3_v2.json"
     g6_path = raw.parent / "g6_raw" / "native_winner_only.json"
     g6_replay_path = raw.parent / "g6_raw" / "public_replay.json"
+    g7_path = raw.parent / "g7_raw" / "g7_p3_prague_evm.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -225,6 +226,20 @@ def main() -> int:
     g4_d = json.loads(g4_d_path.read_text()) if g4_d_path.exists() else None
     g6 = json.loads(g6_path.read_text()) if g6_path.exists() else None
     g6_replay = json.loads(g6_replay_path.read_text()) if g6_replay_path.exists() else None
+    g7 = json.loads(g7_path.read_text()) if g7_path.exists() else None
+    if g7 and (
+        not g6 or not g4_d
+        or g7["status"] != "PASS_SAME_G6_PROOF_G4D_VK_PRAGUE_1_POSITIVE_4_NEGATIVES"
+        or g7["verifying_key_ark_sha256"] != g4_d["verifying_key_sha256"]
+        or g7["verifying_key_ark_sha256"] != g6["verifying_key_sha256"]
+        or g7["setup_count"] != 0 or g7["proof_generation_count"] != 0
+        or g7["public_input_count"] != 60 or g7["hardfork"] != "prague"
+        or g7["valid"]["receipt_status"] != 1
+        or set(g7["negatives"]) != {"wrong_selector", "wrong_winner", "changed_ciphertext", "wrong_vk"}
+        or not all(n["receipt_status"] == 0 and n["revert_reason"] == "INVALID_GROTH16" for n in g7["negatives"].values())
+        or g7["complete_settlement_measured"] or g7["snarkpack_evm_verified"]
+    ):
+        raise ValueError("G7 requires same-VK/proof local Prague component acceptance, not settlement")
     if g6 and (
         not g4_d or not g2_e or not g6_replay
         or g6["status"] != "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE"
@@ -772,6 +787,30 @@ def main() -> int:
         })
         summary["p3_relation_scope"]["latest_native_integrated_result"] = str(g6_path)
         summary["p3_relation_scope"]["native_live_flow_subset"] = g6["selected_subset"]
+    if g7:
+        summary["classification"] = "measured-g6-native-flow-and-g7-same-proof-same-vk-local-prague-component-not-complete-chain-settlement"
+        summary["g7_same_g6_p3_g4d_vk_evm"] = g7
+        summary["gates"]["G7_current_g4d_vk_evm"] = g7["status"]
+        summary["gates"]["G5_current_tally_v2_evm_verifier"] = g7["status"]
+        summary["gates"]["G5_target_chain"] = "PARTIAL_PASS_G7_CURRENT_G4D_VK_LOCAL_EVM_COMPONENT_FULL_SETTLEMENT_BLOCKED"
+        summary["p3_relation_scope"].update({
+            "v2_evm_measured": True,
+            "new_g4d_vk_evm_measured": True,
+            "current_vk_evm_result": str(g7_path),
+            "current_vk_evm_measured_subsets": [[1, 2, 3]],
+            "all_ten_subsets_evm_measured": False,
+        })
+        summary["g5_current_progress"].update({
+            "latest_completed_gate": "G7",
+            "latest_gate_is_derived_analysis": False,
+            "next_gate": "G8 contract state binding; G9 exact SnarkPack EVM remains unresolved",
+        })
+        summary["project_current_progress"].update({
+            "latest_completed_gate": "G7",
+            "current_p3_vk_evm_verified": True,
+            "complete_chain_settlement": False,
+            "next_task": "G8 contract receiver/freeze/authentication/one-time Winner-only state binding; exact SnarkPack EVM remains separate G9. Stop after G7 this round; no new scales or heavy-proof reruns.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -781,9 +820,20 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g7:
+        lines.extend([
+            "## Latest project checkpoint: G7 same G6 proof / G4-D VK on local Prague EVM",
+            "",
+            f"- Status: `{g7['status']}`. Report: `docs/G7_P3_EVM.md`.",
+            "- Exact archived G6 P3 proof, original G4-D VK, 60 inputs, unchanged Solidity verifier. Signed local transactions: two deployments, one accepted proof, four pairing-level rejections (selector/winner/ciphertext/actual old fixed-123 VK).",
+            f"- Current VK deploy `{g7['deployments']['g4d']['total_gas']} Gas`; valid verification `{g7['valid']['total_gas']} Gas`; ABI calldata `{g7['abi_calldata_bytes']} B`. Setup/Prove: zero. Full transaction/bytecode/source hashes archived.",
+            "- This is a verifier component, NOT authenticated chain freeze, trustee signature checks, one-time winner storage, full SnarkPack EVM, public-chain deployment or full-system Gas. No historical component Gas is spliced into a total.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g6:
         lines.extend([
-            "## Latest project checkpoint: G6 complete native Winner-only state machine",
+            "## Previous native checkpoint: G6 complete native Winner-only state machine" if g7 else "## Latest project checkpoint: G6 complete native Winner-only state machine",
             "",
             f"- Status: `{g6['status']}`. Report: `docs/G6_NATIVE_WINNER_ONLY.md`.",
             "- One actual process executes both real SnarkPack/state verifiers for both B4 batches, freezes its resulting CT2, creates/verifies five NEW private CP packages, privately decodes subset 123 and creates ONE NEW P3 proof.",
@@ -791,7 +841,7 @@ def main() -> int:
             f"- Setup reconstruction `{g6['setup_rebuild_ms']:.3f} ms`; NEW P3 Prove `{g6['prove_ms']:.3f} ms`; complete disclosure check/prepare/verify/write `{g6['winner_disclosure_check_prepare_verify_write_ms']:.6f} ms`.",
             f"- Same full G4-D VK `{g6['verifying_key_sha256']}` and matrix fingerprint; proof `{g6['proof_bytes']} B`, inputs `{g6['public_input_bytes']} B`; cumulative process peak RSS `{g6['peak_rss_mib']:.3f} MiB`.",
             "- Reuses eight ballot proofs, two aggregates and two state proofs; no G1-E or ten-subset campaign rerun. 48 relevant tests, strict Clippy and a separate-process public-only receive/freeze/P3 replay pass.",
-            "- Same-process private object delivery, serial in-memory storage and deterministic research Setup/Fake SRS are not operational privacy, durable service, full contract settlement or a completed privacy theorem. EVM Gas/calldata remain unmeasured.",
+            "- Same-process private delivery/native freeze/research Setup are not production privacy or settlement. G7 above now measures this exact proof/VK verifier component; full settlement Gas remains unmeasured." if g7 else "- Same-process private object delivery, serial in-memory storage and deterministic research Setup/Fake SRS are not operational privacy, durable service, full contract settlement or a completed privacy theorem. EVM Gas/calldata remain unmeasured.",
             f"- Next: {summary['project_current_progress']['next_task']}",
             "",
         ])
@@ -806,7 +856,7 @@ def main() -> int:
             f"- One new VK SHA256: `{g4_d['verifying_key_sha256']}`; matrix SHA256 `{g4_d['matrix_sha256']}`.",
             "- D2 certified DKG/registry and first-eight ciphertexts/nullifiers reconstruct exactly; five actual CP/private packages verify natively. All ten bounded native decryptions match the private fixture; only winner 1 and public evidence are emitted.",
             "- 51 relevant tests/strict Clippy, two necessary proof-level selector/winner negatives and another-process 10/10 public replay pass. New source was uncommitted: raw preserves actual dirty flag and hashes.",
-            "- This is one fixed target and fixed 3-of-5 functionality, not repeated performance data or production/privacy composition. NO EVM run for this NEW VK; old G5-D Gas is not current-relation Gas.",
+            "- This is fixed-target functionality, not performance statistics or production/privacy composition. G7 above now verifies this VK with G6's proof; old G5-D Gas remains historical." if g7 else "- This is one fixed target and fixed 3-of-5 functionality, not repeated performance data or production/privacy composition. NO EVM run for this NEW VK; old G5-D Gas is not current-relation Gas.",
             "- Its native-flow follow-up is now complete in G6 above. Full SnarkPack EVM and full contract settlement remain unfinished." if g6 else "- Next unique task: complete native receiver -> freeze -> private packages -> P3 -> one-time Winner-only result state machine. Full SnarkPack EVM remains BLOCKED; no scales/Miller/figure work.",
             "",
         ])

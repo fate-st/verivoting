@@ -8,7 +8,17 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Latest project checkpoint: G6 native Winner-only integration (2026-10-30)
+### Latest project checkpoint: G7 same G6 proof / G4-D VK on local Prague EVM (2026-10-30)
+
+[G7](docs/G7_P3_EVM.md) 复用 G6 同一份真实 P3 证明及 G4-D 原始 VK，60 输入，未改 Solidity
+验证器。实际签名交易：两个 VK 部署、一个验证成功及四个配对层拒绝（Selector/Winner/密文/真实旧 VK）。
+新 VK 部署 6,631,884 Gas，验证 1,331,401 Gas，ABI calldata 2,564 B；本轮 Setup/Prove 均为零。
+格式、严格 Clippy、48 项回归测试及 299 项历史数据/图表清单检查通过；字节码和来源 hash 已归档。
+这里只完成验证器组件，不包含合约冻结、Trustee 签名、一次性赢家存储或完整 SnarkPack EVM。
+G7 验收后停止；下一轮再做 G8 状态结算，不拼接历史组件 Gas。下列“新 VK 未经 EVM”是历史阶段说明，
+其验证器组件缺口现已由 G7 补齐，完整结算缺口仍然存在。
+
+### Previous native checkpoint: G6 native Winner-only integration (2026-10-30)
 
 [G6](docs/G6_NATIVE_WINNER_ONLY.md) 已在同一次实际运行中完成：两个 B4 的真实 SnarkPack/State
 验证 → 接收器生成 CT2 → 一次冻结 → 五份新私密 CP 包 → `{1,2,3}` 私密门限解码 →

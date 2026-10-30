@@ -1,6 +1,19 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current checkpoint: G6 completed; next is SAME-VK EVM acceptance
+## Current checkpoint: G7 completed; STOP this round, next is G8 contract state binding
+
+[G7](G7_P3_EVM.md) 使用 G6 同一份已归档 P3 proof、G4-D 原 VK（60 输入），
+在未改 Solidity 验证器上执行真实本地 Prague 签名交易。正例成功，Selector/Winner/合法点
+密文替换/实际旧 VK 四项配对负例拒绝；部署 6,631,884 Gas、验证 1,331,401 Gas、
+ABI calldata 2,564 B。未 Setup/Prove，未重跑 G1-E/G4-D/G6。48 测试/严格 Clippy 通过。
+
+本轮唯一目标已达成，到此停止。下一轮 G8 必须实际实现批次/旧状态/NF 检查、冻结后禁止接收、
+对照存储重建输入、Trustee 认证签名及承诺绑定、一次性 Winner 写入；不能把 G7 的公开验证器
+视为这些状态检查已经实现。真实多进程 Trustee 私密交付仍未接入 G6。
+G9 精确 SnarkPack EVM 路线独立待解，不绕过、不重启已冻结软件 Miller 循环；
+G10 完整公平系统比较、最终干净版本复现后续进行。无新规模或重型证明重跑。
+
+## Previous native checkpoint: G6 completed
 
 [G6 report](G6_NATIVE_WINNER_ONLY.md): one actual native run verifies both G2-E
 batches, freezes the receiver's CT2, generates five new private CP packages,
@@ -10,9 +23,8 @@ reject without writes; a separate-process public-only replay also passes.
 Eight ballot proofs/two aggregates/two state proofs are reused, not re-proved.
 Full VK and R1CS match G4-D. 48 relevant tests/strict Clippy pass.
 
-STOP after this functional native integration. Next unique implementation:
-verify this SAME G4-D VK/proof with the real local EVM verifier, keeping the
-old fixed-123 G5-D data historical. Then implement actual contract receiver,
+The same-VK/proof local EVM follow-up is now complete in G7 above, keeping
+old fixed-123 G5-D data historical. Next implement actual contract receiver,
 freeze and one-time winner storage checks. Exact SnarkPack EVM still needs
 a feasible exact route; do not restart the frozen software-Miller loop or use
 mocks. No new batch scales, G1-E reruns or spliced component Gas comparisons.
@@ -49,7 +61,8 @@ for all ten, not only counts. Selector binds CP transcript IDs and Lagrange
 bits IN R1CS; CP/package H2F, opening, tally-v2/slack and winner stay constrained.
 Public replay 10/10 and necessary selector/winner negatives pass.
 This is not production registry adoption, arbitrary n/t or a privacy theorem;
-the G4-D VK has NOT been tested on EVM. Old G5-D fixed-123 v2 Gas is historical.
+the G4-D VK had not yet been tested on EVM at that historical checkpoint.
+G7 now verifies G6's proof with this VK; old G5-D fixed-123 v2 Gas remains historical.
 
 ## 3. Completed by G6: complete native Winner-only state machine
 

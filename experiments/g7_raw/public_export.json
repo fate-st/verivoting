@@ -1,0 +1,102 @@
+{
+  "build_profile": "release-opt-level-1",
+  "evm_run": false,
+  "gate": "G7-public-export",
+  "git_commit": "35fc537e9c97f132537387e87060958f548a64fa",
+  "git_dirty": true,
+  "native_checks": [
+    {
+      "accepted": true,
+      "case": "valid",
+      "verify_ms": 5.644959
+    },
+    {
+      "accepted": false,
+      "case": "wrong_selector",
+      "verify_ms": 5.638416
+    },
+    {
+      "accepted": false,
+      "case": "wrong_winner",
+      "verify_ms": 7.214417
+    },
+    {
+      "accepted": false,
+      "case": "changed_ciphertext",
+      "verify_ms": 5.66725
+    },
+    {
+      "accepted": false,
+      "case": "wrong_vk",
+      "prepare_and_verify_ms": 6.795332999999999
+    }
+  ],
+  "output_fixture": "fixtures/g6_p3_eip2537_g7_v1.json",
+  "output_fixture_sha256": "81daaa9311a507021883e58ce9e0c1adfc46daaf94c578b04295df4fc85ac356",
+  "prepare_vk_ms": 1.183541,
+  "private_witness_emitted": false,
+  "production_setup": false,
+  "proof_generation_count": 0,
+  "proof_sha256": "fc3854067baf9b766c83d18e9eabd8db90a477f8d65204991c7359e347eeee4c",
+  "public_input_count": 60,
+  "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "setup_count": 0,
+  "source_hashes": [
+    {
+      "path": "configs/protocol_manifest.JUBJUB-G7-P3-EVM-W32.json",
+      "sha256": "6b55a8bdbd47cef0402423b46b70f7d49746ec06b472460c1e7723192828bc3a"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g7_p3_eip2537_export.rs",
+      "sha256": "cf62f855a918bba577bac480db807037c76e026fc32a80c2f93bc9fc9a16367d"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "260d459390349486ab02f7686637eeae5d85a6775c1e1cfd235d0a3c221adbdb"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/evm_export.rs",
+      "sha256": "73f1145aceb0845c64ae8527b74a5652b84172b080ecb0ceb15a6c5632fac1d1"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3ten_gadget.rs",
+      "sha256": "7e46b1ddb5ab5723cf3a1d2d646dfb9df5c8abac7d02bca5d4a95a1d26b3c27c"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "sha256": "b98cbf372bbc8c731db35cb9ce999d9b02259ae7255fb3c0ab10c4031c8a9879"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+      "sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"
+    },
+    {
+      "path": "experiments/g6_raw/native_winner_only.json",
+      "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"
+    },
+    {
+      "path": "fixtures/jubjub_g4d_ten_subsets_p3_v2_public.json",
+      "sha256": "6fa754055a578efbc92e08b79a9f85078ab929745a008bfb9c0decff693b357b"
+    },
+    {
+      "path": "fixtures/jubjub_g4c_partial_turnout_v2.json",
+      "sha256": "b9d41ab5cce14b151ca1ad0ba21edf742199189215ea4281a829f57f0d35c4c0"
+    },
+    {
+      "path": "fixtures/g4c_eip2537_fixture_v2.json",
+      "sha256": "b611894a40ae34d29d5c6799eccc9219d2cb59b7f5516c32bb9d6c7b8c5cd903"
+    },
+    {
+      "path": "contracts/src/Bls12381Groth16Verifier.sol",
+      "sha256": "8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277"
+    }
+  ],
+  "status": "PASS_G6_ARCHIVE_NATIVE_VERIFY_EIP2537_EXPORT",
+  "verifying_key_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29"
+}

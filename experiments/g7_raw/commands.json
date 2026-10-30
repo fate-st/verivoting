@@ -1,0 +1,192 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "env": {
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_PROFILE_RELEASE_STRIP": "none"
+  },
+  "commands": [
+    {
+      "name": "fmt-check",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 301.15650000000005
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "clippy",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--all-targets",
+        "--release",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 336.711084
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--lib",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 2586.261791
+    },
+    {
+      "name": "state-tests",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g6-native-winner-only",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 74.58350000000019
+    },
+    {
+      "name": "build",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g7-p3-eip2537-export",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 1068.6026249999995
+    },
+    {
+      "name": "public-export",
+      "argv": [
+        "target/release/friendly-g7-p3-eip2537-export"
+      ],
+      "exit_code": 1,
+      "signal": null,
+      "elapsed_ms": 829.9607500000002
+    },
+    {
+      "name": "fmt-check",
+      "attempt": 2,
+      "log": "fmt-check-attempt2.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 325.133375
+    },
+    {
+      "name": "clippy",
+      "attempt": 2,
+      "log": "clippy-attempt2.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "clippy",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--all-targets",
+        "--release",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 236.43995800000005
+    },
+    {
+      "name": "build",
+      "attempt": 2,
+      "log": "build-attempt2.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g7-p3-eip2537-export",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 1364.62325
+    },
+    {
+      "name": "public-export",
+      "attempt": 2,
+      "log": "public-export-attempt2.log",
+      "argv": [
+        "target/release/friendly-g7-p3-eip2537-export"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 659.3835409999999
+    },
+    {
+      "name": "evm",
+      "attempt": 1,
+      "log": "evm.log",
+      "argv": [
+        "node",
+        "contracts/scripts/g7_p3_verifier.mjs"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 1865.5887080000002
+    }
+  ]
+}

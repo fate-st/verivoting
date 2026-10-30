@@ -1,0 +1,24 @@
+{
+  "gate": "G7",
+  "scope": "public archived G6 P3 proof / unchanged G4-D VK / local Prague verification only",
+  "relation_id": "VV/JUBJUB/P3/BOUNDED-TALLY-v2/TEN-SUBSETS/v1",
+  "input_layout": "VV/JUBJUB/G4-D/INPUT-LAYOUT/v1",
+  "public_input_count": 60,
+  "selector_input_index": 51,
+  "winner_input_index": 59,
+  "verifying_key_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29",
+  "proof_sha256": "fc3854067baf9b766c83d18e9eabd8db90a477f8d65204991c7359e347eeee4c",
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "setup_count": 0,
+  "proof_generation_count": 0,
+  "production_setup": false,
+  "source_pins": [
+    {"path":"fixtures/jubjub_g6_native_winner_only_public_v1.json","sha256":"ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"},
+    {"path":"experiments/g6_raw/native_winner_only.json","sha256":"db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"},
+    {"path":"fixtures/jubjub_g4d_ten_subsets_p3_v2_public.json","sha256":"6fa754055a578efbc92e08b79a9f85078ab929745a008bfb9c0decff693b357b"},
+    {"path":"fixtures/jubjub_g4c_partial_turnout_v2.json","sha256":"b9d41ab5cce14b151ca1ad0ba21edf742199189215ea4281a829f57f0d35c4c0"},
+    {"path":"fixtures/g4c_eip2537_fixture_v2.json","sha256":"b611894a40ae34d29d5c6799eccc9219d2cb59b7f5516c32bb9d6c7b8c5cd903"},
+    {"path":"contracts/src/Bls12381Groth16Verifier.sol","sha256":"8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277"}
+  ]
+}

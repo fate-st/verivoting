@@ -1,6 +1,18 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint: G6 native Winner-only integration (2026-10-30)
+## Latest project checkpoint: G7 same G6 P3 / G4-D VK EVM acceptance (2026-10-30)
+
+[G7](G7_P3_EVM.md) 已在本地 Prague EVM 中执行真实签名交易，用 G6 原证明、G4-D 原 VK
+和全部 60 输入验证成功。Selector、Winner、规范编码密文 C1、实际旧固定 123 VK 四项负例
+全部完成 MSM/配对后拒绝（非 OOG/非法编码）。未改 Solidity、未新 Setup/Prove。
+部署 6,631,884 Gas；正例验证 1,331,401 Gas；ABI calldata 2,564 B；完整字节码与哈希已归档。
+48 项相关回归、格式、严格 Clippy 通过，299 条历史数据/图表清单项未变。
+
+仅一个证明级 EVM 组件验收，不是十子集 EVM 重跑、链上冻结/签名/赢家存储、完整 SnarkPack
+或完整系统 Gas；本轮停止于 G7。下一项为 G8 合约状态绑定；G9/G10 后续推进。
+下面历史阶段的“新 VK 尚未 EVM”现由 G7 组件结果取代，旧原始报告不追溯改写。
+
+## Previous native checkpoint: G6 native Winner-only integration (2026-10-30)
 
 [G6](G6_NATIVE_WINNER_ONLY.md) 同一进程实际验证两批 SnarkPack/State 证明，由 G2-E Receiver
 顺序产生 CT2 并一次冻结；冻结后生成/验证五份新 CP 私包，选择 `{1,2,3}` 私密门限解码，
