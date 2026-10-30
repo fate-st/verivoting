@@ -1,0 +1,99 @@
+{
+  "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G4D-D5-W32-P3TEN-v1",
+  "relation_id": "VV/JUBJUB/P3/BOUNDED-TALLY-v2/TEN-SUBSETS/v1",
+  "tally_relation_id": "VV/JUBJUB/P3/BOUNDED-TALLY/v2",
+  "input_layout": "VV/JUBJUB/G4-D/INPUT-LAYOUT/v1",
+  "subsets": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      1,
+      2,
+      4
+    ],
+    [
+      1,
+      2,
+      5
+    ],
+    [
+      1,
+      3,
+      4
+    ],
+    [
+      1,
+      3,
+      5
+    ],
+    [
+      1,
+      4,
+      5
+    ],
+    [
+      2,
+      3,
+      4
+    ],
+    [
+      2,
+      3,
+      5
+    ],
+    [
+      2,
+      4,
+      5
+    ],
+    [
+      3,
+      4,
+      5
+    ]
+  ],
+  "public_input_count": 60,
+  "selector_index": 51,
+  "winner_index": 59,
+  "registered_weight": 32,
+  "n": 5,
+  "t": 2,
+  "tau": 3,
+  "candidate_count": 3,
+  "ballot_manifest": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+  "ballot_manifest_sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e",
+  "d2_raw": "experiments/g1_d2_raw/uniform_depth5_batch32.json",
+  "d2_raw_sha256": "1a8c11c29ec89b8cf4a58dc963d83f408cd6f3fef6ef28a91159bb6985952372",
+  "d2_fixture": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+  "d2_fixture_sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596",
+  "g2e_raw": "experiments/g2_e_raw/multibatch_state_b4.json",
+  "g2e_raw_sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51",
+  "g2e_fixture": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+  "g2e_fixture_sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19",
+  "legacy_v2_descriptor": "configs/protocol_manifest.JUBJUB-P3-WEIGHT-V2.json",
+  "legacy_v2_descriptor_sha256": "c9813e48b669c9e77273ca4080e51062044fa1a64fce122335e882ce4aff1e21",
+  "legacy_v2_fixture": "fixtures/jubjub_g4c_partial_turnout_v2.json",
+  "legacy_v2_fixture_sha256": "b9d41ab5cce14b151ca1ad0ba21edf742199189215ea4281a829f57f0d35c4c0",
+  "encryption_group": "Jubjub/ark-ed-on-bls12-381-0.4.0",
+  "proof_curve": "BLS12-381/ark-groth16-0.4.0",
+  "setup_count": 1,
+  "new_p3_proof_count": 10,
+  "production_setup": false,
+  "legacy_keys_compatible": false,
+  "cp_suite": "VERIVOTING-JUBJUB-CP-H2F-G0.9-v3",
+  "package_suite": "VERIVOTING-JUBJUB-PACKAGE-H2F-G0.9-v1",
+  "release_policy": "WINNER_ONLY_V1",
+  "winning_rule": "highest-weight-smallest-id-on-tie",
+  "resource_budget": {
+    "serial": true,
+    "build_jobs": 2,
+    "run_wall_limit_seconds": 1800,
+    "process_rss_limit_mib": 20000
+  },
+  "classification": "isolated research descriptor for new P3 relation; frozen ballot/DKG manifest unchanged; not production registry adoption",
+  "scope": "ten complete P3 assignments for the same CT2; not live receiver-to-winner state machine or contract integration",
+  "evm_run": false
+}

@@ -1,6 +1,30 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint: G2-E consecutive B4 state transitions (2026-10-30)
+## Latest project checkpoint: G4-D ten-subset P3 v2 on W32 CT2 (2026-10-30)
+
+[G4-D](G4_D_TEN_SUBSETS_P3_V2.md) 在同一个新 P3 v2 电路、同一套 PK/VK 下，对同一
+G2-E D5/W32 最终 CT2 完成十种 3-of-5 子集的真实 Groth16 Prove/Verify（10/10）。
+不是十个硬编码电路：selector=0..9 在 R1CS 内绑定三个 CP transcript ID 和固定表中的
+canonical Lagrange bits，十次完整有序 A/B/C 系数矩阵 SHA-256 完全相同。
+
+DKG/公钥/上下文/32 选民注册根/关闭摘要、前八票密文与 nullifier 重建精确匹配 D2；CT2
+匹配 G2-E。五份真实 CP/签名私包先原生验证，十种组合各选三份验证份额并私有解码。
+电路保留真实 CP SHA-512 H2F、12 条 CP 等式、三份 Package-H2F/Pedersen 打开、三坐标插值、
+tally-v2 的 sum<=W32/slack、群绑定和最小编号 tie-break winner。只输出 winner=1 和公开证明材料。
+
+关系 6236368 constraints / 60 inputs；一次新 Setup 64068.560000 ms；
+每份 proof 192 B。VK SHA-256：0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29。
+51 项库/状态回归测试与严格 Clippy 通过，公开材料另进程 10/10 重放通过。错误 selector 和 winner 拒绝。
+
+raw 如实记录基点 9167fa01b64a21d36b80b526eb289f9dc7d971b6、git_dirty=true 和源码 hash；不虚构干净提交。
+旧 tally/winner 文件仅改 pub(crate) 可见性，约束体逐字不变；旧配置、密钥、实验和 G1-E 图表不改。
+这是固定 n=5/tau=3、一个 CT2 的功能证据，不是生产安全性或性能统计。新 VK 尚未上链，
+旧 G5-D 的固定 123 v2 Gas 不能用于本关系；完整 SnarkPack EVM 仍 BLOCKED。
+
+下一唯一任务：把 G2-E 接收检查点、目标冻结、私包交付、P3 和一次性 Winner-only 写入接为
+一个原生状态机；本轮没有实现该实时完整流程、合约结算或新性能比较。
+
+## Previous state checkpoint: G2-E consecutive B4 state transitions (2026-10-30)
 
 [G2-E](G2_E_MULTIBATCH_STATE.md) 实际完成两个连续 B=4 批次：同一 D5/W32 选票池，
 S0 → S1 → S2；第二批 old_state 精确等于第一批 new_state 且非零，最终全部六个密文分量与

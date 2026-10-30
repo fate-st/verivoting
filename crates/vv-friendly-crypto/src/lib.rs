@@ -20,6 +20,7 @@ pub mod p3b_gadget;
 pub mod p3c1_gadget;
 pub mod p3c_gadget;
 pub mod p3d_gadget;
+pub mod p3ten_gadget;
 pub mod state_gadget;
 pub mod transcript_gadget;
 

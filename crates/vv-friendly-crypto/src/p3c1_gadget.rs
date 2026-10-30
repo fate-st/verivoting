@@ -123,7 +123,7 @@ fn equal_bits(a: &[Boolean<Fq>], b: &[Boolean<Fq>]) -> Result<Boolean<Fq>, Synth
     Ok(equal)
 }
 
-fn bind_tallies_to_plaintexts(
+pub(crate) fn bind_tallies_to_plaintexts(
     cs: ConstraintSystemRef<Fq>,
     plaintext_vars: &[EdwardsVar],
     tallies: &[u64],

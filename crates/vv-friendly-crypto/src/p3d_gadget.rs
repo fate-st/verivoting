@@ -148,7 +148,7 @@ pub fn p3d0_bound_subset_public_inputs(
     Ok(public_inputs)
 }
 
-fn enforce_winner(
+pub(crate) fn enforce_winner(
     cs: ConstraintSystemRef<Fq>,
     tally_bits: &[Vec<Boolean<Fq>>],
     public_winner_value: u64,

@@ -1,0 +1,41 @@
+{
+  "batches": [
+    {
+      "batch_index": 1,
+      "verified_and_applied": true
+    },
+    {
+      "batch_index": 2,
+      "verified_and_applied": true
+    }
+  ],
+  "elapsed_ms": 31.674459000000002,
+  "evm_run": false,
+  "final_state": [
+    {
+      "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+      "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+      "candidate_id": 1
+    },
+    {
+      "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+      "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+      "candidate_id": 2
+    },
+    {
+      "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+      "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+      "candidate_id": 3
+    }
+  ],
+  "fixture": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+  "fixture_sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19",
+  "gate": "G2-E-public-replay",
+  "git_commit": "9167fa01b64a21d36b80b526eb289f9dc7d971b6",
+  "next_batch_index": 3,
+  "production_setup": false,
+  "proof_generation_count": 0,
+  "setup_count": 0,
+  "spent_nullifier_count": 8,
+  "status": "PASS_TWO_PUBLIC_BATCHES_REPLAYED"
+}

@@ -74,6 +74,7 @@ def main() -> int:
     g4_a_path = raw.parent / "g4_a_raw" / "second_subset_p3_shape.json"
     g4_b_path = raw.parent / "g4_b_raw" / "public_subset_groth16.json"
     g4_c_path = raw.parent / "g4_c_raw" / "partial_turnout_groth16.json"
+    g4_d_path = raw.parent / "g4_d_raw" / "ten_subsets_p3_v2.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -219,6 +220,9 @@ def main() -> int:
     g4_a = json.loads(g4_a_path.read_text()) if g4_a_path.exists() else None
     g4_b = json.loads(g4_b_path.read_text()) if g4_b_path.exists() else None
     g4_c = json.loads(g4_c_path.read_text()) if g4_c_path.exists() else None
+    g4_d = json.loads(g4_d_path.read_text()) if g4_d_path.exists() else None
+    if g4_d and (not g2_e or g4_d["proof_count"] != 10 or len(g4_d["cases"]) != 10 or g4_d["setup_count"] != 1 or not g4_d["all_ten_matrices_equal"] or not all(case["proof_verified"] and case["verifying_key_sha256"] == g4_d["verifying_key_sha256"] and case["shape"]["matrix_sha256"] == g4_d["matrix_sha256"] for case in g4_d["cases"]) or g4_d["public_context"]["frozen_ciphertexts"] != g2_e["final_state"]):
+        raise ValueError("G4-D requires ten passing same-relation proofs for the accepted G2-E CT2")
     g5_a = json.loads(g5_a_path.read_text()) if g5_a_path.exists() else None
     g5_b = json.loads(g5_b_path.read_text()) if g5_b_path.exists() else None
     g5_d = json.loads(g5_d_path.read_text()) if g5_d_path.exists() else None
@@ -465,19 +469,24 @@ def main() -> int:
             "G4_C_tally_v2_full_and_partial_turnout": (
                 g4_c["status"] if g4_c else "NOT_RUN"
             ),
-            "G4_current_tally_v2_arbitrary_subset": "NOT_MEASURED",
+            "G4_D_ten_subset_p3_v2_same_vk_w32_ct2": g4_d["status"] if g4_d else "NOT_RUN",
+            "G4_current_tally_v2_arbitrary_subset": "PASS_ALL_TEN_SORTED_3_OF_FIXED_5_ONE_VK_ONE_W32_CT2" if g4_d else "NOT_MEASURED",
             "G5_current_tally_v2_evm_verifier": (
-                g5_d["status"] if g5_d else "NOT_MEASURED"
+                "NOT_MEASURED_FOR_NEW_G4D_VK" if g4_d else g5_d["status"] if g5_d else "NOT_MEASURED"
             ),
             "G4_general_subset_p3": (
-                "PARTIAL_PASS_G4B_PUBLIC_BOUND_TWO_SUBSETS_SAME_GROTH16_SETUP"
+                "PASS_G4D_ALL_TEN_FIXED_3_OF_5_P3_V2_ONE_VK_ONE_W32_CT2"
+                if g4_d
+                else "PARTIAL_PASS_G4B_PUBLIC_BOUND_TWO_SUBSETS_SAME_GROTH16_SETUP"
                 if g4_b
                 else "PARTIAL_PASS_G4A_TWO_SUBSETS_COMMON_COUNT_SHAPE_NO_PUBLIC_BINDING"
                 if g4_a
                 else "BLOCKED_SECOND_SUBSET_NOT_MEASURED"
             ),
             "G4_full_p3": (
-                "PARTIAL_PASS_G4C_TALLY_V2_FIXED_123_FULL_AND_PARTIAL_TURNOUT"
+                "PARTIAL_PASS_G4D_TEN_SUBSETS_W32_CT2_NO_LIVE_SETTLEMENT_OR_PRIVACY_COMPOSITION"
+                if g4_d
+                else "PARTIAL_PASS_G4C_TALLY_V2_FIXED_123_FULL_AND_PARTIAL_TURNOUT"
                 if g4_c
                 else "PARTIAL_PASS_G4B_TWO_SUBSET_COMPLETE_P3_NOT_ARBITRARY_3_OF_5"
                 if g4_b
@@ -652,15 +661,15 @@ def main() -> int:
         "g2_d_d5_w32_b4_state_and_omission": g2_d,
         "g2_e_consecutive_b4_native_state": g2_e,
         "project_current_progress": {
-            "latest_completed_gate": "G2-E" if g2_e else "G2-D" if g2_d else "G1-E" if g1_e else "G1-D2" if g1_d2 else "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
+            "latest_completed_gate": "G4-D" if g4_d else "G2-E" if g2_e else "G2-D" if g2_d else "G1-E" if g1_e else "G1-D2" if g1_d2 else "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
             "largest_measured_native_distinct_voter_batch": 32 if g1_d2 else 16 if g1_d1 else 8 if g1_d0 or g1_c3 else 4 if g1_c2 else 2 if g1_c1 else None,
             "largest_measured_state_proof_batch": 4 if g2_d or g2_c else 2 if g2_b else None,
             "same_suite_native_pilot_batch_sizes": g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] + g1_d2["measured_batch_sizes"] if g1_d2 else g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] if g1_d1 else g1_d0["measured_batch_sizes"] if g1_d0 else [],
-            "current_evaluation_suite": "fixed depth5 / W32, native ballot statistics and two consecutive B4 state proofs" if g2_e else "fixed depth5 / W32, native ballot statistics and first-batch B4 state proof" if g2_d else "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
-            "current_evaluation_suite_state_and_p3": "STATE_TWO_CONSECUTIVE_B4_PASS_P3_NOT_MEASURED" if g2_e else "STATE_B4_PASS_P3_NOT_MEASURED" if g2_d else "NOT_MEASURED" if g1_d0 else None,
+            "current_evaluation_suite": "fixed depth5 / W32, consecutive B4 states and one-key P3-v2 ten subsets on CT2" if g4_d else "fixed depth5 / W32, native ballot statistics and two consecutive B4 state proofs" if g2_e else "fixed depth5 / W32, native ballot statistics and first-batch B4 state proof" if g2_d else "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
+            "current_evaluation_suite_state_and_p3": "STATE_G2E_CT2_AND_P3_TEN_SUBSETS_PASS_LIVE_FULL_FLOW_NOT_IMPLEMENTED" if g4_d else "STATE_TWO_CONSECUTIVE_B4_PASS_P3_NOT_MEASURED" if g2_e else "STATE_B4_PASS_P3_NOT_MEASURED" if g2_d else "NOT_MEASURED" if g1_d0 else None,
             "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT" if g2_e else "PASS_G2D_FIRST_ZERO_OLD_STATE_B4_SINGLE_SAMPLE" if g2_d else "NOT_MEASURED",
-            "current_evaluation_suite_p3": "NOT_MEASURED",
-            "next_task": "Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison" if g2_e else "STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment" if g2_d else "G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first)" if g1_e else "Formal repeated native measurements for B=2/4/8/16/32 with warmup/interleaved order and automatic figures (planned only; no larger batches or state/P3 work)" if g1_d2 else "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
+            "current_evaluation_suite_p3": g4_d["status"] if g4_d else "NOT_MEASURED",
+            "next_task": "Connect complete native Winner-only receiver/freeze/private-package/P3/one-time-result state machine for SAME CT2; no new scales, G1-E repetitions or inferred EVM Gas" if g4_d else "Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison" if g2_e else "STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment" if g2_d else "G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first)" if g1_e else "Formal repeated native measurements for B=2/4/8/16/32 with warmup/interleaved order and automatic figures (planned only; no larger batches or state/P3 work)" if g1_d2 else "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
             "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS" if g1_e else "NOT_MEASURED",
         },
         "g2_a_state_transition_r1cs": g2_a,
@@ -671,13 +680,18 @@ def main() -> int:
         "g4_a_second_subset_p3_shape": g4_a,
         "g4_b_public_two_subset_p3_groth16": g4_b,
         "g4_c_tally_v2_full_and_partial_turnout": g4_c,
+        "g4_d_ten_subset_p3_v2_same_vk_w32_ct2": g4_d,
         "p3_relation_scope": {
             "current_tally_relation": "VV/JUBJUB/P3/BOUNDED-TALLY/v2",
-            "current_result": str(g4_c_path) if g4_c else None,
+            "current_result": str(g4_d_path) if g4_d else str(g4_c_path) if g4_c else None,
+            "current_compiled_subset_relation": g4_d["relation_id"] if g4_d else None,
             "legacy_g4b_and_g5b_results": "historical exact-sum v1 relation; not evidence for v2 parameters or gas",
-            "v2_measured_subset": [1, 2, 3] if g4_c else None,
-            "v2_evm_measured": g5_d is not None,
-            "v2_all_ten_subsets_measured": False,
+            "v2_measured_subset": None if g4_d else [1, 2, 3] if g4_c else None,
+            "v2_measured_subsets": g4_d["subsets"] if g4_d else [[1, 2, 3]] if g4_c else [],
+            "v2_evm_measured": False if g4_d else g5_d is not None,
+            "legacy_fixed_123_v2_evm_measured": g5_d is not None,
+            "v2_all_ten_subsets_measured": g4_d is not None,
+            "new_g4d_vk_evm_measured": False,
         },
         "g5_a_local_prague_state_verifier": g5_a,
         "g5_b_local_prague_two_subset_p3_verifier": g5_b,
@@ -730,9 +744,24 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g4_d:
+        lines.extend([
+            "## Latest project checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2",
+            "",
+            f"- Status: `{g4_d['status']}`. Report: `docs/G4_D_TEN_SUBSETS_P3_V2.md`.",
+            "- Ten real NEW proofs, one new circuit, one Setup/PK/VK and the SAME accepted G2-E CT2. All ten full A/B/C matrix digests match, not only counts.",
+            "- R1CS selector 0..9 binds exact CP Trustee IDs and selected canonical Lagrange bits; actual CP/Package H2F and opening, tally-v2 bounds/slack and winner tie breaking are retained.",
+            f"- Constraints/inputs: `{g4_d['cases'][0]['shape']['constraints']} / 60`; Setup `{g4_d['setup_ms']:.3f} ms`; cumulative peak RSS `{g4_d['peak_rss_mib']:.3f} MiB`.",
+            f"- One new VK SHA256: `{g4_d['verifying_key_sha256']}`; matrix SHA256 `{g4_d['matrix_sha256']}`.",
+            "- D2 certified DKG/registry and first-eight ciphertexts/nullifiers reconstruct exactly; five actual CP/private packages verify natively. All ten bounded native decryptions match the private fixture; only winner 1 and public evidence are emitted.",
+            "- 51 relevant tests/strict Clippy, two necessary proof-level selector/winner negatives and another-process 10/10 public replay pass. New source was uncommitted: raw preserves actual dirty flag and hashes.",
+            "- This is one fixed target and fixed 3-of-5 functionality, not repeated performance data or production/privacy composition. NO EVM run for this NEW VK; old G5-D Gas is not current-relation Gas.",
+            "- Next unique task: complete native receiver -> freeze -> private packages -> P3 -> one-time Winner-only result state machine. Full SnarkPack EVM remains BLOCKED; no scales/Miller/figure work.",
+            "",
+        ])
     if g2_e:
         lines.extend([
-            "## Latest project checkpoint: G2-E two consecutive B4 state transitions",
+            "## Previous state checkpoint: G2-E two consecutive B4 state transitions" if g4_d else "## Latest project checkpoint: G2-E two consecutive B4 state transitions",
             "",
             f"- Status: `{g2_e['status']}`. Report: `docs/G2_E_MULTIBATCH_STATE.md`.",
             "- Same D5/W32 suite; S0 -> S1 -> S2. Second old state is nonzero and equals first new state; final state equals the independent flat eight-ballot sum.",
@@ -892,7 +921,7 @@ def main() -> int:
         ])
     if g4_c:
         lines.extend([
-            "## Current P3 correctness checkpoint: G4-C (tally relation v2)",
+            "## Historical fixed-123 P3-v2 checkpoint: G4-C" if g4_d else "## Current P3 correctness checkpoint: G4-C (tally relation v2)",
             "",
             f"- Status: `{g4_c['status']}`; details: `docs/G4_C_PARTIAL_TURNOUT.md`.",
             f"- Actual G4-C build: `{g4_c['build_profile']}` / `{g4_c['rustc_version']}`; dirty source state is recorded, not hidden.",

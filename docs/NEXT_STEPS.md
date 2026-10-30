@@ -1,65 +1,65 @@
-# Next steps: user's four-step route (2026-10-30)
+# Next steps: user's five-step route (2026-10-30)
 
-## 1. Completed now: two consecutive B4 state transitions (G2-E)
+## 1. Completed: G2-E consecutive B4 state transitions
 
-Report: [G2-E](G2_E_MULTIBATCH_STATE.md). Same frozen D2 D5/W32 ballot suite;
-S0 -> S1 -> S2, nonzero second old state and independent flat eight-ballot sum
-match. One archived state proof/aggregate reused, only one new state proof and
-one new B4 aggregate generated. Rebuilt state VK is byte-identical to G2-D.
-Both real verifiers pass per batch; skip-first, reset-old-state and replay reject
-without writes. Native spent nullifiers are enforced; public replay passes.
-No B8 state circuit was built: this supersedes the older planned B8 increment.
-This is serial in-memory receiving state, not EVM/durable settlement or intake
-censorship resistance. No source result was overwritten; raw explicitly records
-git_dirty=true and source hashes rather than inventing a clean source commit.
+Same D5/W32 D2 pool, S0 -> S1 -> S2. Two real aggregate/state verifiers pass;
+nonzero continuity and independent flat eight-ballot sum match. Skip/replay/reset
+reject in the native in-memory checkpoint. Report: [G2-E](G2_E_MULTIBATCH_STATE.md).
 
-## 2. Next implementation: ten subsets of the complete P3 tally-v2 relation
+## 2. Completed now: G4-D complete P3-v2 ten subsets, one circuit/VK
 
-- Existing native threshold/CP tests already cover all ten 3-of-5 subsets.
-  They do NOT complete this task: current complete P3-v2 is fixed {1,2,3};
-  the old two-subset exact-sum-v1 proofs/VK/EVM results are not substitutes.
-- Add a separately versioned 0..9 selector over all sorted legal triples.
-  Constrain legal selector, exact three CP transcript Trustee IDs and selected
-  Lagrange coefficients IN the circuit. Do not merely inject host coefficients
-  or produce ten differently hard-coded relations while claiming a shared VK.
-- Preserve tally-v2 bounds (per-coordinate bound and sum <= registered weight),
-  group bindings, actual CP challenge/hash and package openings, and winner tie
-  breaking. New Manifest/layout/relation key identifies the expanded relation;
-  leave historical keys/configs/results unchanged.
-- Prefer the same W32 certified DKG and final S2 target from G2-E, so Step 3 can
-  reuse the work. Reconstruct DKG from existing seeds only with exact public
-  key/context/registration checks; never splice a historical W10 target into S2.
-- Enumerate 123,124,125,134,135,145,234,235,245,345. One setup, actual proofs and
-  verification for all ten under the SAME VK; check full matrix compatibility
-  and record Setup/Prove/Verify/RSS. Only necessary selector/ID and wrong-winner
-  negatives, not a repeated broad mutation matrix for every subset.
+Report: [G4-D](G4_D_TEN_SUBSETS_P3_V2.md). Ten real NEW Groth16 proofs for
+123,124,125,134,135,145,234,235,245,345 use one new relation, one fresh setup,
+one PK/VK and the SAME accepted W32 CT2. Actual full A/B/C matrix hashes equal
+for all ten, not only counts. Selector binds CP transcript IDs and Lagrange
+bits IN R1CS; CP/package H2F, opening, tally-v2/slack and winner stay constrained.
+Public replay 10/10 and necessary selector/winner negatives pass.
+This is not production registry adoption, arbitrary n/t or a privacy theorem;
+the G4-D VK has NOT been tested on EVM. Old G5-D fixed-123 v2 Gas is historical.
 
-## 3. Then connect the complete native flow
+## 3. Next unique implementation: complete native Winner-only state machine
 
-Use the accepted S2 checkpoint as the frozen decryption target, with one eid,
-context, certified key, registration-close record and candidate order. Connect
-batch aggregate -> state receiver -> target freeze -> authenticated private
-packages -> CP/threshold/bounded decoding -> P3 winner proof. Recompute public
-input equality to the actual frozen state; reject one changed frozen target
-and duplicate result write. Public output has only authorized winner and
-verification evidence, no usable private shares/tally/packages.
+1. Feed the exact two accepted G2-E batches through the real native receiver;
+   check both real proof families, context/root/next/old state and spent NFs.
+2. Freeze the resulting CT2 ONCE, with the same certified DKG, registration-close
+   record, candidate order, weight32 and disclosure policy. Do not splice W10
+   material or merely name a static JSON file as a live freeze operation.
+3. Generate and privately deliver authenticated CP packages for that frozen
+   target; verify CP and openings before selecting three legal Trustees.
+4. Bounded decode privately, build the same G4-D relation and generate/verify
+   one actual winner proof. If reconstructing parameters, compare exact VK;
+   if reusing public material, report reuse and all compatibility checks, not
+   a fresh proving time. Do not re-prove all ten subsets just for integration.
+5. Accept only inputs equal to frozen storage, write winner once and never
+   publish usable shares, openings, private packages or the private tally.
+6. Add only the necessary frozen-target substitution and repeated-disclosure
+   rejection. Keep existing G2-E order/NF checks instead of a new attack matrix.
 
-## 4. Last: complete contract verification and fair end-to-end comparison
+Stop after this one native integrated functional acceptance. Record exact
+source/parameter/input provenance and actual costs; functional native linkage
+does NOT establish live contract settlement or the full privacy composition.
 
-Registry/frozen-state comparisons, accepted batch root, current old state/next,
-spent nullifiers and one-time winner writes must execute in actual contracts.
-Existing independent state/P3 EVM verifiers do not establish this integration.
-Exact SnarkPack EVM verification is still BLOCKED. Do not reopen the frozen
-20M software-Miller retry route or fill in total Gas from component sums;
-identify a feasible exact-verifier route before claiming completion.
-Only then compare equal-security Direct Fold vs state-proof settlement,
-Winner-only vs Full Tally at the same frozen target and actual wire/Gas scope.
-Reuse G1-E statistics; no larger B scans, alternative curves or new chart
-campaign until these functional integrations justify them.
+## 4. Then complete actual contract settlement
 
-The user's requested order replaces the previous automatic-B8 suggestion.
-Each step must be accepted using real runs before proceeding; unfinished
-steps remain explicitly NOT_MEASURED/BLOCKED, not counts inferred from code.
+Contracts must really enforce certified contexts/registry/accepted roots,
+next/old-state equality, spent nullifiers, target freezing and one-time winner
+writes with the correct G4-D key. Prior component verifiers do not do this.
+Exact SnarkPack EVM remains BLOCKED under the historical 20M implementation
+budget; select a feasible exact route BEFORE claiming completion. Do not
+restart the frozen software-Miller trial loop or replace it with mocks.
+No production ceremony or real public-chain deployment is completed.
+
+## 5. Last: paper's fair end-to-end comparisons
+
+Reuse G1-E; no repeat or B64/128 scan. Compare equal-parameter/equal-security:
+individual vs aggregate validity; Direct Fold vs state proof; Winner-only vs
+Full Tally at the SAME frozen target; actual complete Gas/calldata/nonoverlap
+wire material. Setup/proving and online verification are separate. Do not
+sum unrelated v1/v2/W10/W32 Gas or infer total settlement from components.
+
+No B8 state circuit, new batch scales, unfocused arithmetic optimization or
+new figure campaign while Steps 3/4 still need functional integration.
+
 
 
 ## Adjusted evaluation rules for subsequent work

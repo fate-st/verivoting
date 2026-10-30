@@ -1,0 +1,27 @@
+G4-D [1/5] reconstruct SAME certified D5/W32 DKG/registration, compare exact first-eight ciphertexts to CT2
+G4-D [2/5] all TEN complete CP/package/tally-v2/winner R1CS, exact packing and full A/B/C fingerprints
+  R1CS 1/10 subset=123 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 2/10 subset=124 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 3/10 subset=125 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 4/10 subset=134 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 5/10 subset=135 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 6/10 subset=145 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 7/10 subset=234 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 8/10 subset=235 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 9/10 subset=245 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+  R1CS 10/10 subset=345 PASS constraints=6236368 matrix="e443da84ae3e636c232de16451bad8dd16f27e6fb6eb8f2097f7adcff7d7e2b0"
+G4-D [3/5] ONE fresh research setup, no historical P3/state/ballot key reuse
+  Setup PASS 64068.560ms; VK=0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29; PK remains only in memory
+G4-D [4/5] generate TEN real proofs serially with the SAME PK/VK; archive each successful case immediately
+  PROOF 1/10 subset=123 PASS prove=41497.324ms verify=5.826958ms peakRSS=8068.000MiB
+  PROOF 2/10 subset=124 PASS prove=42154.708ms verify=5.995417ms peakRSS=9018.000MiB
+  PROOF 3/10 subset=125 PASS prove=41163.706ms verify=5.692750ms peakRSS=9032.719MiB
+  PROOF 4/10 subset=134 PASS prove=41683.520ms verify=5.645750ms peakRSS=9032.719MiB
+  PROOF 5/10 subset=135 PASS prove=41892.316ms verify=5.649458ms peakRSS=9486.250MiB
+  PROOF 6/10 subset=145 PASS prove=41783.980ms verify=5.715458ms peakRSS=9486.250MiB
+  PROOF 7/10 subset=234 PASS prove=43729.161ms verify=5.904708ms peakRSS=9486.250MiB
+  PROOF 8/10 subset=235 PASS prove=42830.291ms verify=6.775500ms peakRSS=9486.250MiB
+  PROOF 9/10 subset=245 PASS prove=42316.197ms verify=5.630000ms peakRSS=9486.250MiB
+  PROOF 10/10 subset=345 PASS prove=41800.701ms verify=5.533125ms peakRSS=9486.250MiB
+G4-D [5/5] PASS: ten real P3 v2 proofs, one new circuit/VK, same frozen CT2; wrong selector/winner REJECT
+archived experiments/g4_d_raw/ten_subsets_p3_v2.json and fixtures/jubjub_g4d_ten_subsets_p3_v2_public.json; peakRSS=9486.250MiB

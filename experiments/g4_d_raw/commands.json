@@ -1,0 +1,164 @@
+[
+  {
+    "name": "fmt",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "fmt",
+      "--all"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 329,
+    "resource_budget": null
+  },
+  {
+    "name": "fmt-check",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 282,
+    "resource_budget": null
+  },
+  {
+    "name": "clippy",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "clippy",
+      "-p",
+      "vv-friendly-crypto",
+      "-p",
+      "vv-friendly-dkg",
+      "--all-targets",
+      "--release",
+      "--locked",
+      "--offline",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 535,
+    "resource_budget": null
+  },
+  {
+    "name": "tests",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "test",
+      "-p",
+      "vv-friendly-crypto",
+      "-p",
+      "vv-friendly-dkg",
+      "--lib",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 15407,
+    "resource_budget": null
+  },
+  {
+    "name": "state-regression",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "test",
+      "-p",
+      "vv-friendly-dkg",
+      "--bin",
+      "friendly-g2e-multibatch-state",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 2292,
+    "resource_budget": null
+  },
+  {
+    "name": "build",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "build",
+      "-p",
+      "vv-friendly-dkg",
+      "--bin",
+      "friendly-g4d-ten-subsets",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 3986,
+    "resource_budget": null
+  },
+  {
+    "name": "g2e-input-replay",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "run",
+      "--release",
+      "--locked",
+      "--offline",
+      "-p",
+      "vv-friendly-dkg",
+      "--bin",
+      "friendly-g2e-multibatch-state",
+      "--",
+      "--verify-fixture",
+      "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "--output",
+      "/private/tmp/verivoting-g4d.9bntlM/g2e_input_replay.json"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 8189,
+    "resource_budget": null
+  },
+  {
+    "name": "release",
+    "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/friendly-g4d-ten-subsets",
+    "args": [],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 697154,
+    "resource_budget": {
+      "wall_limit_s": 1800,
+      "rss_limit_mib": 20000,
+      "sampling_interval_ms": 1000,
+      "sampled_peak_rss_mib": 9257.40625,
+      "limit_reason": null
+    }
+  },
+  {
+    "name": "public-replay",
+    "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/friendly-g4d-ten-subsets",
+    "args": [
+      "--verify-fixture",
+      "fixtures/jubjub_g4d_ten_subsets_p3_v2_public.json",
+      "--output",
+      "experiments/g4_d_raw/public_replay.json"
+    ],
+    "exit_code": 0,
+    "signal": null,
+    "wall_ms": 71,
+    "resource_budget": null
+  }
+]
