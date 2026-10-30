@@ -19,6 +19,7 @@ rand_chacha.workspace = true
 rand_core.workspace = true
 serde.workspace = true
 serde_json.workspace = true
+sha2.workspace = true
 thiserror.workspace = true
 vv-friendly-crypto = { path = "../vv-friendly-crypto" }
 vv-types = { path = "../vv-types" }
@@ -98,6 +99,10 @@ path = "src/bin/g1e_fixed_suite_benchmark.rs"
 [[bin]]
 name = "friendly-g2c-state-batch4"
 path = "src/bin/g2c_state_batch4.rs"
+
+[[bin]]
+name = "friendly-g2d-state-d5w32-b4"
+path = "src/bin/g2d_state_d5w32_b4.rs"
 
 [[bin]]
 name = "friendly-g3a-multiprocess"
