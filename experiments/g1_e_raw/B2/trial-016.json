@@ -1,0 +1,42 @@
+{
+  "aggregate_proof_sha256": "072156c814f1ce3ae909223eeaad5d06274c163a5843dd05b5742e4cf529447c",
+  "batch_order": [
+    2,
+    32,
+    4,
+    16,
+    8
+  ],
+  "batch_size": 2,
+  "gate": "G1-E",
+  "git_commit": "6824611b4c77d5ad21d62a14bd4e95cfa19f1ad4",
+  "operation_order": [
+    "aggregate_verify",
+    "individual_verify",
+    "aggregation"
+  ],
+  "round": 16,
+  "samples": [
+    {
+      "elapsed_ms": 131.340584,
+      "iterations": 47,
+      "ms_per_operation": 2.794480510638298,
+      "operation": "aggregate_verify",
+      "success": true
+    },
+    {
+      "elapsed_ms": 117.877208,
+      "iterations": 135,
+      "ms_per_operation": 0.8731645037037037,
+      "operation": "individual_verify",
+      "success": true
+    },
+    {
+      "elapsed_ms": 130.866041,
+      "iterations": 35,
+      "ms_per_operation": 3.739029742857143,
+      "operation": "aggregation",
+      "success": true
+    }
+  ]
+}

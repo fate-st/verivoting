@@ -1,6 +1,26 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint: G1-D2 B=32 (2026-10-30)
+## Latest project checkpoint: G1-E fixed-pool repetitions (2026-10-30)
+
+[G1-E](G1_E_FIXED_SUITE_BENCHMARK.md) is measured from clean source
+`6824611b4c77d5ad21d62a14bd4e95cfa19f1ad4`. B=2/4/8/16/32 use prefixes of one D2
+proof pool, the same VK and generic research SRS; zero new ballot proofs/Setup.
+Five excluded warmups and 30 formal rounds per B yield 150 batch records and
+450 operation windows; 45 fresh B/operation processes measure memory separately.
+All five positive/negative cases and independent fold comparisons pass;
+43 existing + 4 new tests and strict Clippy pass. Historical data are unchanged.
+
+B16/B32 reduce native verifier time here, but aggregation adds computation and
+aggregate proofs are larger. These are repeated windows on ONE fixed pool/machine,
+not independent elections. P95 is withheld at n=30. Warmed 1 ms phase RSS is a
+sampled lower bound, not the historical Setup/proving process peak. Six figures
+have PNG/PDF/SVG versions. CSV/statistics: `results/g1_e`; raw observations:
+`experiments/g1_e_raw`. See report for conditional CIs and exact measurement scope.
+
+STOP after G1-E. W32 state/P3, production SRS, SnarkPack EVM and full settlement
+remain unfinished; no larger-batch or Miller work is added.
+
+## Previous fixed-suite checkpoint: G1-D2 B=32 (2026-10-30)
 
 [G1-D2](G1_D2_UNIFORM_BATCH32.md) passes in the SAME frozen D5/W32 suite.
 All compatibility checks match D1 before its 16 archived proofs are reused;

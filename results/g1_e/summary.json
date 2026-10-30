@@ -1,0 +1,992 @@
+{
+  "gate": "G1-E",
+  "status": "PASS_150_TIMING_TRIALS_45_MEMORY_PROCESSES",
+  "source_git_commit": "6824611b4c77d5ad21d62a14bd4e95cfa19f1ad4",
+  "analysis": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "platform": "macOS-15.7.1-arm64-arm-64bit",
+    "numpy": "2.3.5",
+    "matplotlib": "3.11.2",
+    "bootstrap_draws": 10000,
+    "seed": 20261030,
+    "ci_scope": "conditional percentile-bootstrap median CI; serial operation windows, not independent elections"
+  },
+  "measurement_unit": "repeated operations on fixed archived proofs, zero new Groth16 proofs",
+  "batches": {
+    "2": {
+      "timing": {
+        "individual_verify": {
+          "n": 30,
+          "mean": 0.9505242182716048,
+          "median": 0.9671688259259258,
+          "std": 0.07850150834977868,
+          "min": 0.8575496962962963,
+          "max": 1.1160956814814813,
+          "median_ci95": [
+            0.876147837037037,
+            0.992216184537037
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregation": {
+          "n": 30,
+          "mean": 4.421416943809524,
+          "median": 4.3609982,
+          "std": 1.129163432508111,
+          "min": 3.7124345428571424,
+          "max": 10.046441685714285,
+          "median_ci95": [
+            3.960654757142857,
+            4.455042857142857
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregate_verify": {
+          "n": 30,
+          "mean": 3.1456840127659573,
+          "median": 3.1281445106382977,
+          "std": 0.3661422690762225,
+          "min": 2.776729595744681,
+          "max": 4.16143440425532,
+          "median_ci95": [
+            2.8665784574468085,
+            3.2923390957446808
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "verifier_speed_ratio": {
+          "n": 30,
+          "mean": 0.3041700319888671,
+          "median": 0.3017969973726201,
+          "std": 0.026993598816942282,
+          "min": 0.2510553368625881,
+          "max": 0.3841267772868833,
+          "median_ci95": [
+            0.3003853789179839,
+            0.3072757627997197
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregator_plus_verifier": {
+          "n": 30,
+          "mean": 7.567100956575482,
+          "median": 7.482910736474164,
+          "std": 1.2948497103280558,
+          "min": 6.529836738601824,
+          "max": 13.651961175075987,
+          "median_ci95": [
+            6.931424012158055,
+            7.715889078723404
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        }
+      },
+      "memory": {
+        "individual_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.078125,
+            "min": 6.984375,
+            "max": 7.296875
+          },
+          "before_rss_mib": {
+            "median": 8.140625,
+            "min": 8.109375,
+            "max": 8.296875
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 8.171875,
+            "min": 8.125,
+            "max": 8.3125
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.015625,
+            "min": 0.015625,
+            "max": 0.03125
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 8.1875,
+            "min": 8.140625,
+            "max": 8.328125
+          }
+        },
+        "aggregation": {
+          "pool_loaded_rss_mib": {
+            "median": 7.15625,
+            "min": 7.0,
+            "max": 7.515625
+          },
+          "before_rss_mib": {
+            "median": 8.265625,
+            "min": 8.140625,
+            "max": 8.546875
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 8.375,
+            "min": 8.1875,
+            "max": 8.625
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.078125,
+            "min": 0.046875,
+            "max": 0.109375
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 8.390625,
+            "min": 8.203125,
+            "max": 8.640625
+          }
+        },
+        "aggregate_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 6.984375,
+            "min": 6.921875,
+            "max": 7.171875
+          },
+          "before_rss_mib": {
+            "median": 8.28125,
+            "min": 8.171875,
+            "max": 8.328125
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 8.703125,
+            "min": 8.6875,
+            "max": 8.78125
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.453125,
+            "min": 0.421875,
+            "max": 0.515625
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 8.703125,
+            "min": 8.6875,
+            "max": 8.78125
+          }
+        }
+      },
+      "sizes": {
+        "aggregate_plus_matrix_bytes": 6836,
+        "aggregate_proof_bytes": 5236,
+        "aggregate_proof_sha256": "072156c814f1ce3ae909223eeaad5d06274c163a5843dd05b5742e4cf529447c",
+        "batch_size": 2,
+        "direct_fold_ms_unbenchmarked": 0.00275,
+        "full_calldata_bytes": null,
+        "full_da_bytes": null,
+        "gas": null,
+        "independent_fold_matches": true,
+        "individual_plus_matrix_bytes": 1984,
+        "individual_proof_bytes": 384,
+        "last_nullifier_negative_rejected": true,
+        "matrix_bytes": 1600,
+        "negative_field": 7,
+        "negative_row": 1,
+        "positive": true,
+        "source_indices": [
+          0,
+          1
+        ],
+        "specialize_ms_offline": 2.74275,
+        "transcript_bytes": 1654,
+        "verifier_srs_json_bytes": 1956,
+        "verifier_srs_json_sha256": "5b61c1ab2d19b5003dccb7cd61828e2938d8f2f3ce3172b7808a2fa53608dcb1"
+      }
+    },
+    "4": {
+      "timing": {
+        "individual_verify": {
+          "n": 30,
+          "mean": 1.9275166276190476,
+          "median": 1.9013416642857146,
+          "std": 0.22582915834896497,
+          "min": 1.6893773714285714,
+          "max": 2.5672881000000003,
+          "median_ci95": [
+            1.7598,
+            1.9886184823214275
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregation": {
+          "n": 30,
+          "mean": 8.534607288333332,
+          "median": 8.782293750000001,
+          "std": 0.7589056921492501,
+          "min": 7.36597705,
+          "max": 10.17687085,
+          "median_ci95": [
+            7.976596875,
+            8.872143724999999
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregate_verify": {
+          "n": 30,
+          "mean": 4.082542234090909,
+          "median": 4.091989102272727,
+          "std": 0.5285824523002622,
+          "min": 3.413448863636364,
+          "max": 5.79717425,
+          "median_ci95": [
+            3.935611727272727,
+            4.218660511363636
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "verifier_speed_ratio": {
+          "n": 30,
+          "mean": 0.4785820271956897,
+          "median": 0.481101384118671,
+          "std": 0.07482920302979379,
+          "min": 0.32918346875142296,
+          "max": 0.6353943754974677,
+          "median_ci95": [
+            0.44033635074025734,
+            0.5044164842118348
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregator_plus_verifier": {
+          "n": 30,
+          "mean": 12.61714952242424,
+          "median": 12.752588165909092,
+          "std": 1.0054558914377179,
+          "min": 10.78701114090909,
+          "max": 14.871850963636364,
+          "median_ci95": [
+            12.110991954545455,
+            13.031958325000002
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        }
+      },
+      "memory": {
+        "individual_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 6.984375,
+            "min": 6.96875,
+            "max": 7.046875
+          },
+          "before_rss_mib": {
+            "median": 8.90625,
+            "min": 8.875,
+            "max": 8.90625
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 8.921875,
+            "min": 8.890625,
+            "max": 8.921875
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.015625,
+            "min": 0.015625,
+            "max": 0.015625
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 8.9375,
+            "min": 8.90625,
+            "max": 8.9375
+          }
+        },
+        "aggregation": {
+          "pool_loaded_rss_mib": {
+            "median": 7.046875,
+            "min": 7.015625,
+            "max": 7.171875
+          },
+          "before_rss_mib": {
+            "median": 8.90625,
+            "min": 8.875,
+            "max": 8.96875
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 9.109375,
+            "min": 9.0,
+            "max": 9.21875
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.203125,
+            "min": 0.125,
+            "max": 0.25
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 9.125,
+            "min": 9.015625,
+            "max": 9.234375
+          }
+        },
+        "aggregate_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.125,
+            "min": 7.09375,
+            "max": 7.484375
+          },
+          "before_rss_mib": {
+            "median": 9.21875,
+            "min": 9.171875,
+            "max": 9.84375
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 10.15625,
+            "min": 9.96875,
+            "max": 10.59375
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.796875,
+            "min": 0.75,
+            "max": 0.9375
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 10.15625,
+            "min": 9.96875,
+            "max": 10.59375
+          }
+        }
+      },
+      "sizes": {
+        "aggregate_plus_matrix_bytes": 11412,
+        "aggregate_proof_bytes": 8212,
+        "aggregate_proof_sha256": "10c4b85a3d063d2aaa0b0d3bce3050f59267652c978636bd3be5e8d06a06ecd6",
+        "batch_size": 4,
+        "direct_fold_ms_unbenchmarked": 0.005332999999999999,
+        "full_calldata_bytes": null,
+        "full_da_bytes": null,
+        "gas": null,
+        "independent_fold_matches": true,
+        "individual_plus_matrix_bytes": 3968,
+        "individual_proof_bytes": 768,
+        "last_nullifier_negative_rejected": true,
+        "matrix_bytes": 3200,
+        "negative_field": 7,
+        "negative_row": 3,
+        "positive": true,
+        "source_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "specialize_ms_offline": 3.5106669999999998,
+        "transcript_bytes": 3262,
+        "verifier_srs_json_bytes": 1951,
+        "verifier_srs_json_sha256": "b7e6a0f46c11c014d41e5cc7f0395e570ef3a0f2614b29aa6563183f588da595"
+      }
+    },
+    "8": {
+      "timing": {
+        "individual_verify": {
+          "n": 30,
+          "mean": 3.821738096969698,
+          "median": 3.9442547272727273,
+          "std": 0.28324059179639566,
+          "min": 3.4295388181818183,
+          "max": 4.365296386363636,
+          "median_ci95": [
+            3.530958806818182,
+            3.9762338977272726
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregation": {
+          "n": 30,
+          "mean": 16.789856690909094,
+          "median": 16.769414772727274,
+          "std": 3.2463887074361057,
+          "min": 14.07815909090909,
+          "max": 32.055125000000004,
+          "median_ci95": [
+            15.15042990909091,
+            17.17509468181818
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregate_verify": {
+          "n": 30,
+          "mean": 4.838034161261262,
+          "median": 4.8306295,
+          "std": 0.8224378774378079,
+          "min": 4.02535245945946,
+          "max": 7.8611531621621635,
+          "median_ci95": [
+            4.266600797297297,
+            4.934545594594595
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "verifier_speed_ratio": {
+          "n": 30,
+          "mean": 0.80701183226568,
+          "median": 0.8157965928143516,
+          "std": 0.1236042006698862,
+          "min": 0.49480364934874593,
+          "max": 1.0444614213984278,
+          "median_ci95": [
+            0.7678092023163552,
+            0.8341847078182993
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregator_plus_verifier": {
+          "n": 30,
+          "mean": 21.62789085217035,
+          "median": 20.961215448402946,
+          "std": 3.889600846923945,
+          "min": 18.13635245945946,
+          "max": 39.916278162162165,
+          "median_ci95": [
+            20.128402527027028,
+            22.012503626535626
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        }
+      },
+      "memory": {
+        "individual_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.140625,
+            "min": 7.03125,
+            "max": 7.359375
+          },
+          "before_rss_mib": {
+            "median": 10.125,
+            "min": 10.0,
+            "max": 10.453125
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 10.140625,
+            "min": 10.015625,
+            "max": 10.46875
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.015625,
+            "min": 0.015625,
+            "max": 0.015625
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 10.15625,
+            "min": 10.03125,
+            "max": 10.484375
+          }
+        },
+        "aggregation": {
+          "pool_loaded_rss_mib": {
+            "median": 7.109375,
+            "min": 7.046875,
+            "max": 7.1875
+          },
+          "before_rss_mib": {
+            "median": 10.4375,
+            "min": 10.421875,
+            "max": 10.8125
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 10.890625,
+            "min": 10.84375,
+            "max": 11.1875
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.421875,
+            "min": 0.375,
+            "max": 0.453125
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 10.90625,
+            "min": 10.859375,
+            "max": 11.203125
+          }
+        },
+        "aggregate_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.046875,
+            "min": 6.921875,
+            "max": 7.109375
+          },
+          "before_rss_mib": {
+            "median": 10.609375,
+            "min": 10.1875,
+            "max": 10.703125
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 11.609375,
+            "min": 11.09375,
+            "max": 12.0
+          },
+          "sampled_phase_delta_mib": {
+            "median": 1.0,
+            "min": 0.90625,
+            "max": 1.296875
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 11.609375,
+            "min": 11.09375,
+            "max": 12.0
+          }
+        }
+      },
+      "sizes": {
+        "aggregate_plus_matrix_bytes": 17588,
+        "aggregate_proof_bytes": 11188,
+        "aggregate_proof_sha256": "ec5b2dfa11e6d00b3917e0032fce832a23fb2e60668b02693abb47577cf0d9a7",
+        "batch_size": 8,
+        "direct_fold_ms_unbenchmarked": 0.0085,
+        "full_calldata_bytes": null,
+        "full_da_bytes": null,
+        "gas": null,
+        "independent_fold_matches": true,
+        "individual_plus_matrix_bytes": 7936,
+        "individual_proof_bytes": 1536,
+        "last_nullifier_negative_rejected": true,
+        "matrix_bytes": 6400,
+        "negative_field": 7,
+        "negative_row": 7,
+        "positive": true,
+        "source_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "specialize_ms_offline": 5.953417,
+        "transcript_bytes": 6478,
+        "verifier_srs_json_bytes": 1950,
+        "verifier_srs_json_sha256": "97be23f715a083c07992c5c524354d5e956bb2e231a07be1e6f8e2d4167a639d"
+      }
+    },
+    "16": {
+      "timing": {
+        "individual_verify": {
+          "n": 30,
+          "mean": 7.522133552631579,
+          "median": 7.1349166578947365,
+          "std": 0.6360784995086749,
+          "min": 6.787828947368421,
+          "max": 8.637969315789473,
+          "median_ci95": [
+            6.974064710526316,
+            7.961422157894736
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregation": {
+          "n": 30,
+          "mean": 30.184152083333334,
+          "median": 30.857371583333336,
+          "std": 2.5029879884534116,
+          "min": 26.080916666666667,
+          "max": 35.906486,
+          "median_ci95": [
+            28.965868,
+            31.431708333333333
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregate_verify": {
+          "n": 30,
+          "mean": 5.426579484946235,
+          "median": 5.522693564516129,
+          "std": 0.4995459803103027,
+          "min": 4.807836032258064,
+          "max": 6.799021516129033,
+          "median_ci95": [
+            4.9931297096774205,
+            5.741180790322581
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "verifier_speed_ratio": {
+          "n": 30,
+          "mean": 1.396139855089447,
+          "median": 1.4015064429585515,
+          "std": 0.16219694989462027,
+          "min": 1.0335107523098337,
+          "max": 1.769531274886818,
+          "median_ci95": [
+            1.3758487693414971,
+            1.432372292238088
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregator_plus_verifier": {
+          "n": 30,
+          "mean": 35.61073156827957,
+          "median": 36.220448465053764,
+          "std": 2.5172983546960332,
+          "min": 31.32994568817205,
+          "max": 40.78052632258065,
+          "median_ci95": [
+            34.037421376344085,
+            36.83373031451613
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        }
+      },
+      "memory": {
+        "individual_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.109375,
+            "min": 7.09375,
+            "max": 7.453125
+          },
+          "before_rss_mib": {
+            "median": 12.890625,
+            "min": 12.3125,
+            "max": 13.140625
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 12.90625,
+            "min": 12.328125,
+            "max": 13.15625
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.015625,
+            "min": 0.015625,
+            "max": 0.015625
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 12.921875,
+            "min": 12.34375,
+            "max": 13.171875
+          }
+        },
+        "aggregation": {
+          "pool_loaded_rss_mib": {
+            "median": 7.078125,
+            "min": 6.84375,
+            "max": 7.125
+          },
+          "before_rss_mib": {
+            "median": 13.0,
+            "min": 12.625,
+            "max": 13.4375
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 13.71875,
+            "min": 13.328125,
+            "max": 13.953125
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.703125,
+            "min": 0.515625,
+            "max": 0.71875
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 13.734375,
+            "min": 13.34375,
+            "max": 13.96875
+          }
+        },
+        "aggregate_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.15625,
+            "min": 7.15625,
+            "max": 7.4375
+          },
+          "before_rss_mib": {
+            "median": 13.234375,
+            "min": 12.796875,
+            "max": 13.375
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 14.0625,
+            "min": 13.953125,
+            "max": 14.46875
+          },
+          "sampled_phase_delta_mib": {
+            "median": 1.09375,
+            "min": 0.828125,
+            "max": 1.15625
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 14.0625,
+            "min": 13.953125,
+            "max": 14.46875
+          }
+        }
+      },
+      "sizes": {
+        "aggregate_plus_matrix_bytes": 26964,
+        "aggregate_proof_bytes": 14164,
+        "aggregate_proof_sha256": "1da5716a0658f85805bcf1ccf5e8311c425a50f1f48bd93ef00d0556f495adec",
+        "batch_size": 16,
+        "direct_fold_ms_unbenchmarked": 0.016833,
+        "full_calldata_bytes": null,
+        "full_da_bytes": null,
+        "gas": null,
+        "independent_fold_matches": true,
+        "individual_plus_matrix_bytes": 15872,
+        "individual_proof_bytes": 3072,
+        "last_nullifier_negative_rejected": true,
+        "matrix_bytes": 12800,
+        "negative_field": 7,
+        "negative_row": 15,
+        "positive": true,
+        "source_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "specialize_ms_offline": 10.311582999999999,
+        "transcript_bytes": 12910,
+        "verifier_srs_json_bytes": 1951,
+        "verifier_srs_json_sha256": "7751f9ab5b34786206e01df2d3424f5369b51f29d24b23602bbcaec52075f1f3"
+      }
+    },
+    "32": {
+      "timing": {
+        "individual_verify": {
+          "n": 30,
+          "mean": 15.56254473,
+          "median": 15.44655835,
+          "std": 1.9816707073969577,
+          "min": 13.823570800000002,
+          "max": 22.9726125,
+          "median_ci95": [
+            14.0968646,
+            15.9185271
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregation": {
+          "n": 30,
+          "mean": 54.96292733333334,
+          "median": 52.50714583333334,
+          "std": 5.798357763355043,
+          "min": 49.13368066666667,
+          "max": 71.68779166666667,
+          "median_ci95": [
+            51.063125,
+            57.577125
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregate_verify": {
+          "n": 30,
+          "mean": 6.463440763768115,
+          "median": 6.480822456521739,
+          "std": 0.9673473690856703,
+          "min": 5.486027173913043,
+          "max": 10.640586956521739,
+          "median_ci95": [
+            6.057794391304348,
+            6.558497304347826
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "verifier_speed_ratio": {
+          "n": 30,
+          "mean": 2.439393776549507,
+          "median": 2.4606319589288215,
+          "std": 0.3673736068043761,
+          "min": 1.5260988483391118,
+          "max": 3.61529909244629,
+          "median_ci95": [
+            2.3731819839519126,
+            2.5428516952324545
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        },
+        "aggregator_plus_verifier": {
+          "n": 30,
+          "mean": 61.42636809710146,
+          "median": 58.771831014492754,
+          "std": 6.008210643913792,
+          "min": 54.86769798550725,
+          "max": 78.04206884057972,
+          "median_ci95": [
+            57.22280978260869,
+            63.54512293478261
+          ],
+          "p95": null,
+          "p95_reason": "30 operation windows insufficient for a strong tail claim"
+        }
+      },
+      "memory": {
+        "individual_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.0625,
+            "min": 6.953125,
+            "max": 7.078125
+          },
+          "before_rss_mib": {
+            "median": 18.015625,
+            "min": 18.0,
+            "max": 18.25
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 18.03125,
+            "min": 18.015625,
+            "max": 18.265625
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.015625,
+            "min": 0.015625,
+            "max": 0.015625
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 18.046875,
+            "min": 18.03125,
+            "max": 18.28125
+          }
+        },
+        "aggregation": {
+          "pool_loaded_rss_mib": {
+            "median": 7.0625,
+            "min": 7.03125,
+            "max": 7.25
+          },
+          "before_rss_mib": {
+            "median": 18.5,
+            "min": 18.46875,
+            "max": 19.125
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 19.609375,
+            "min": 19.34375,
+            "max": 19.84375
+          },
+          "sampled_phase_delta_mib": {
+            "median": 0.84375,
+            "min": 0.71875,
+            "max": 1.140625
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 19.625,
+            "min": 19.359375,
+            "max": 19.859375
+          }
+        },
+        "aggregate_verify": {
+          "pool_loaded_rss_mib": {
+            "median": 7.109375,
+            "min": 7.09375,
+            "max": 7.125
+          },
+          "before_rss_mib": {
+            "median": 18.65625,
+            "min": 18.5,
+            "max": 18.859375
+          },
+          "sampled_phase_peak_rss_mib": {
+            "median": 19.703125,
+            "min": 19.546875,
+            "max": 20.1875
+          },
+          "sampled_phase_delta_mib": {
+            "median": 1.203125,
+            "min": 0.890625,
+            "max": 1.328125
+          },
+          "cumulative_process_peak_after_mib": {
+            "median": 19.703125,
+            "min": 19.546875,
+            "max": 20.1875
+          }
+        }
+      },
+      "sizes": {
+        "aggregate_plus_matrix_bytes": 42740,
+        "aggregate_proof_bytes": 17140,
+        "aggregate_proof_sha256": "857edce6cc6fbd7941e8d5e992bf118b4b1889dbc410a763fd04e717b7106362",
+        "batch_size": 32,
+        "direct_fold_ms_unbenchmarked": 0.032291,
+        "full_calldata_bytes": null,
+        "full_da_bytes": null,
+        "gas": null,
+        "independent_fold_matches": true,
+        "individual_plus_matrix_bytes": 31744,
+        "individual_proof_bytes": 6144,
+        "last_nullifier_negative_rejected": true,
+        "matrix_bytes": 25600,
+        "negative_field": 7,
+        "negative_row": 31,
+        "positive": true,
+        "source_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "specialize_ms_offline": 21.957708,
+        "transcript_bytes": 25774,
+        "verifier_srs_json_bytes": 1947,
+        "verifier_srs_json_sha256": "4484fa57644b0c726c49c1114b7c2c9e3d23fc2c0206ab13db96a528e00eec1d"
+      }
+    }
+  },
+  "timing_trials": 150,
+  "operation_windows": 450,
+  "memory_processes": 45,
+  "warmup_trials_excluded": 25,
+  "gas": null,
+  "full_da_bytes": null,
+  "full_calldata_bytes": null,
+  "source_manifest_sha256": "f7d657f7329e32bd75910912c9bacb5891574a38c6ac98bb807ab74516bc805d"
+}

@@ -1,46 +1,32 @@
 # Next gates
 
-## Current checkpoint (2026-10-30): G1-D2 same-suite B=32 accepted
+## Current checkpoint (2026-10-30): G1-E repeated native benchmark accepted
 
-Status: `PASS_G1D2_FIXED_DEPTH5_W32_B32_REUSED16_NEW16_SAME_VK_SRS`.
-Frozen descriptor and D0/D1 sources/data/fixtures are unchanged. DKG/key/context,
-registration root/close, first 16 addresses/rows, full VK bytes/hash and size-32
-SRS hash match before reuse. 16 genuine D1-pool proofs (originally 8 D0 + 8 D1)
-are reused; ONLY voters 17–32 generate 16 new proofs. All 32 verify individually,
-one size-32 V2 aggregate passes, and changing the last nullifier with a rebuilt
-transcript rejects. Native direct fold/check passes. See
-`docs/G1_D2_UNIFORM_BATCH32.md` and `experiments/g1_d2_raw/uniform_depth5_batch32.json`.
+Fixed D5/W32; B=2/4/8/16/32 prefixes of the same D2 pool/VK/generic SRS.
+Clean source `6824611b4c77d5ad21d62a14bd4e95cfa19f1ad4`. Five warmups per B excluded,
+30 formal rounds per B: 150 batch records / 450 operation windows, plus 45
+separate memory processes. All functional cases and independent folds pass;
+47 tests and strict Clippy pass. Report: `docs/G1_E_FIXED_SUITE_BENCHMARK.md`.
+Raw: `experiments/g1_e_raw`; CSV/statistics/six PNG-PDF-SVG figures: `results/g1_e`.
 
-Measured from clean source revision `8e72034aa6b97c52ad23adccdff563cc27578001`;
-`git_dirty=false` at process start, unchanged clean tree before output archival.
-The starting development base is 01d4067, not the revision containing B32 code.
-Setup reconstruction 10106.341 ms; only 16 new proves 106863.164 ms.
-Individual/aggregate Verify 14.048915/6.942209 ms; aggregation 57.087584 ms.
-Proofs/aggregate/matrix 6144/17140/25600 B; peak RSS 3111.375 MiB.
-This is one functional sample, not a statistical speedup, crossover or size benefit.
+Fixed-pool serial operation windows are not independent elections. B16/B32
+verifier reduction does not mean lower total compute or fewer bytes. P95 is
+withheld; stage RSS is warmed 1 ms sampling, not exact cold allocation peaks.
+No source/artifact from D0/D1/D2 or frozen descriptor changed. This task STOPS
+here; do not add B64/256, state/P3/settlement or more Miller work automatically.
 
-G1-D2 acceptance is the STOP condition. No B64/128/256, statistics runner,
-state, P3, public testnet or Miller optimization is developed automatically.
-Historical W10 state/P3 cannot be mixed into W32 performance; missing Gas/DA/
-full calldata stay null. Production SRS and full settlement remain unfinished.
+## Next task (PLANNED only): G2-D, W32 B=4 state proof
 
-## Next single task (PLANNED only): repeated fixed-suite native measurements
-
-1. Reuse the checked 32-proof pool and same VK/SRS/context/root for ordered
-   prefixes B=2/4/8/16/32. Do not change the frozen descriptor or crypto suite.
-2. Warm up, randomize/interleave scale order, collect at least 10 raw timing
-   repetitions per B for individual verification, aggregate verification and
-   aggregation; distinguish repeated operations from newly generated proofs.
-   If measuring Prove repetitions, use independent proof randomness and record
-   those actual generations separately; do not repeatedly rerun Setup.
-3. Measure per-B peak RSS in separate processes. Separate Setup/specialization/
-   conversion from online operations. Count proof + one input matrix without
-   double-counting ciphertext/transcript. Complete DA/calldata/Gas remain null.
-4. Generate statistics and verification/communication/overhead figures directly
-   from raw samples. Report sample sizes and uncertainty; ten points are not
-   a strong P95 estimate. Do not insert missing state-proof costs into a figure.
-5. Stop for review before W32 B4/B8 state proofs, generalized P3 v2 subset
-   coverage, full-tally disclosure comparison or complete settlement integration.
+1. Reuse the checked W32 B4 authenticated prefix and independent reference
+   state. Do not splice in the historical W10 state proof.
+2. Build a separately keyed state relation binding the ordered accepted batch
+   root and exact ciphertext state. Distinguish the state VK from the frozen
+   ballot VK; do not relabel the frozen descriptor's unimplemented capabilities.
+3. Fairly compare SnarkPack + complete direct fold with SnarkPack + state-proof
+   verification under explicit equal scope; measure new setup/prove/verify,
+   bytes and RSS. An accepted-intake commitment/log is a separate feature.
+4. Use one necessary omission/substitution negative, then stop for review.
+   General P3 v2 subsets, disclosure comparison and settlement come later.
 
 ## Adjusted evaluation rules for subsequent work
 
