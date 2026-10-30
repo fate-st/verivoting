@@ -8,7 +8,26 @@ operation, broad crash matrices, or on-chain work as measurements.
 
 ## What is implemented
 
-### Latest project checkpoint: G1-D0 (2026-10-28)
+### Latest project checkpoint: G1-D1 B=16 (2026-10-28)
+
+[G1-D1](docs/G1_D1_UNIFORM_BATCH16.md) passes in the byte-identical D5/W32
+suite. Reconstructed DKG/context/root, first eight rows, VK bytes/hash and
+research SRS hash match G1-D0 BEFORE eight archived proofs are reused. Only
+voters 9–16 generate new proofs. All 16 verify individually, the real size-16
+aggregate verifies, and changing voter 16's nullifier rejects.
+
+One setup reconstruction: 11.006 s; eight NEW proves: 56.349 s. Same-run
+bellperson individual/aggregate verification: 6.917 / 4.991 ms; aggregation:
+28.525 ms. Source proofs/aggregate: 3,072 / 14,164 B; peak process RSS:
+2,911.922 MiB. The smaller verification time is one sample, NOT a statistical
+speedup/crossover claim; proof size is still larger. All 43 library tests and
+strict Clippy pass. D0 code/configuration/raw/fixtures remain unchanged.
+
+G1-D1 stops here. B=32, repeated statistics, W32 state/P3 and full settlement
+remain unimplemented/unmeasured. The next planned task is G1-D2 B=32 using
+the same frozen suite and checked archived B16 proof pool, not more Miller work.
+
+### Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
 [G1-D0](docs/G1_D0_UNIFORM_NATIVE_PILOT.md) runs a fixed depth-5, 32-leaf,
 unit-weight registry with W=32, one certified key/context and one new ballot
@@ -26,8 +45,8 @@ is not repeated statistics or a crossover result. Native direct-fold checks
 are also measured (0.003292 / 0.006459 / 0.010583 ms), as a fair baseline
 component rather than a complete settlement. Current-suite state/P3 and full
 Gas/DA remain unmeasured; historical weight-10 results cannot be spliced in.
-Next is only G1-D1 B=16 in the SAME frozen suite, reusing matching archived
-proofs instead of regenerating them. No software Miller work is included.
+Its planned B=16 increment has since passed in G1-D1 above, reusing matching
+archived proofs. No software Miller work is included.
 
 ### Previous state checkpoint: G2-C (weight 10)
 
@@ -140,6 +159,7 @@ the next task is the unified native pilot above, not software Miller work.
 | G1-C2 four-voter aggregation | Four different same-region C_vote proofs, depth 2 | PASS native B=4; one run, nonproduction SRS |
 | G1-C3 eight-voter aggregation | Eight different same-region C_vote proofs, separate depth-3 layout and new key | PASS native B=8; one run, nonproduction SRS, no efficiency claim |
 | G1-D0 same-suite pilot | Fixed depth 5 / W32, same VK and genuine proof-pool prefixes B=2/4/8 | PASS single-run native comparison and direct-fold component; no statistical/settlement claim |
+| G1-D1 same-suite B=16 | Strict D0 compatibility, eight archived plus eight new proofs, one real size-16 aggregate | PASS; 16/16 verify and last-nullifier mutation rejects; one functional sample only |
 | G2-A fixed-B=2 state transition | Canonical ordered batch root and six-component Jubjub accumulator relation | PASS R1CS; 1,360,002 constraints, no Groth16 |
 | G2-B fixed-B=2 state proof | Real Groth16 over the unchanged G2-A relation | PASS; 192-byte proof, changed public batch root rejected |
 | G2-C fixed-B=4 state proof | Archived real four-voter aggregate bound to ordered root and complete ciphertext fold | PASS; one 192-byte state proof; omitted ct3 rejects in R1CS and under the original proof; native linkage only |

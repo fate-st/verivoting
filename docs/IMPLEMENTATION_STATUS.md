@@ -1,6 +1,32 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint (2026-10-28): G1-D0 same-suite native pilot
+## Latest project checkpoint (2026-10-28): G1-D1 same-suite B=16
+
+Status: `PASS_G1D1_FIXED_DEPTH5_W32_B16_REUSED8_NEW8_SAME_VK_SRS`.
+Frozen D5/W32 descriptor bytes and D0 sources are unchanged. Reconstructed
+DKG key/context/root/close, first eight addresses/rows, Ark VK hash, full
+bellperson VK bytes and size-32 SRS hash all match BEFORE any proof reuse.
+Eight archived proofs are canonically decoded and verified; only voters 9–16
+produce eight new proofs. All 16 pass arkworks and bellperson individually,
+one real B=16 V2 aggregate passes, and the changed 16th nullifier rejects.
+
+Actual: same 1,076,095 constraints / 25 inputs per ballot; setup reconstruction
+11,005.745 ms; eight incremental proves 56,349.388 ms; bellperson individual
+Verify 6.917166 ms, aggregate Verify 4.990667 ms, aggregation 28.524625 ms.
+Source proof/aggregate/matrix sizes: 3,072 / 14,164 / 12,800 B; peak process
+RSS 2,911.922 MiB. One sample is not a stable speedup/crossover conclusion;
+old proving times are not counted as newly generated work. See
+[G1-D1](G1_D1_UNIFORM_BATCH16.md) and
+`experiments/g1_d1_raw/uniform_depth5_batch16.json`.
+
+Formatting, all-target strict Clippy and 43 library tests pass. No crypto
+library algorithm or old D0 entry point/data was changed. Largest native
+aggregate is now B=16; historical W10 state proof remains B=4; W32 state/P3,
+statistics/figures and full settlement remain unmeasured. No B=32, state,
+P3 or EVM work was run. Next is ONLY planned G1-D2 B=32 with the same frozen
+manifest/VK/SRS and checked reuse of the archived 16-proof pool.
+
+## Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
 Status: `PASS_G1D0_FIXED_DEPTH5_W32_SAME_VK_NATIVE_B2_B4_B8_PILOT`.
 One certified DKG key/context, depth-5/32-leaf unit-weight registry with bound
@@ -23,9 +49,9 @@ Strict all-target Clippy, formatting and 43 library tests pass.
 
 No crypto library changes or old-parameter reuse: W32 state/P3 are unmeasured;
 historical W10 state/P3 capabilities below remain separate. Largest native
-aggregate stays B=8, largest historical state proof B=4. No new EVM run or
-full Proposed Gas/DA is claimed. Next is G1-D1 B=16 using the SAME frozen
-manifest/VK and matching archived proof prefix, not a new depth/configuration.
+aggregate was B=8 at that checkpoint, largest historical state proof B=4.
+Its same-suite B=16 follow-up has since passed in G1-D1 above. No full
+Proposed Gas/DA is claimed.
 
 ## Previous state checkpoint: G2-C B=4 and omission (weight 10)
 

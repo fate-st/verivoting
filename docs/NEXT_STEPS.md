@@ -1,53 +1,53 @@
 # Next gates
 
-## Current checkpoint (2026-10-28): G1-D0 same-suite B=2/4/8 pilot accepted
+## Current checkpoint (2026-10-28): G1-D1 same-suite B=16 accepted
 
-One depth-5/32-leaf unit-weight registry (W=32), certified key/context and
-ballot VK are shared by B=2/4/8. Eight different real source proofs form
-ordered prefixes. Three real V2 aggregates verify; the only negative changes
-the eighth nullifier and rejects. All three native direct-fold checks pass.
-See docs/G1_D0_UNIFORM_NATIVE_PILOT.md and
-experiments/g1_d0_raw/uniform_depth5_native_pilot.json.
+G1-D1 passes with the frozen D5/W32 descriptor byte-identical to G1-D0.
+Reconstructed DKG key/context/root/close, first eight addresses/public rows,
+Ark VK hash, full bellperson VK bytes and size-32 research SRS hash match
+BEFORE archived proofs are decoded/reused. Eight G1-D0 proofs are reused and
+only voters 9–16 produce eight new proofs. All 16 verify individually; one
+size-16 V2 aggregate verifies; changed voter 16 nullifier rejects.
+See docs/G1_D1_UNIFORM_BATCH16.md and
+experiments/g1_d1_raw/uniform_depth5_batch16.json.
 
-Actual same-run individual/aggregate Verify (ms): 1.330/3.923, 1.847/3.971,
-3.949/5.210. Proof bytes: 384/5,236, 768/8,212, 1,536/11,188. These points
-show no size/verifier-time advantage in this one pilot, not a statistical
-crossover result. Per-ballot constraints: 1,076,095 / 25 inputs. Shared setup
-11.313 s, source prove total 55.702 s, cumulative process peak RSS 3,077.672 MiB.
+Actual B16 individual/aggregate Verify: 6.917166/4.990667 ms; aggregation:
+28.524625 ms. Source proof/aggregate/matrix: 3,072/14,164/12,800 B.
+Setup reconstruction: 11.006 s; ONLY eight new proves: 56.349 s; old eight
+proving times are not rerun or charged as new work. Process peak RSS:
+2,911.922 MiB. This one sample is not a statistical speedup/crossover claim;
+aggregate proof size is still larger than the source proofs.
 
-The W32 ballot suite does NOT upgrade the historical W10 state/P3 proofs.
-Current-suite state/P3, full DA/calldata and Gas remain unmeasured. G2-C
-B=4 state/omission remains passed only under its own W10 configuration.
-No state, P3 or EVM experiment was rerun. The Miller freeze remains binding.
+The same-suite functional scales are now 2/4/8/16 across archived runs, NOT
+an independently repeated matrix. W32 state/P3, EVM and full Proposed Gas/DA
+remain unmeasured. Historical W10 state proof remains B=4. No B=32, state,
+P3 or EVM work was done in G1-D1. The Miller route remains frozen.
 
-## Next single increment: G1-D1 B=16 in the SAME frozen D5/W32 suite
+G1-D1 acceptance is the STOP condition for this task. The following work is
+planned only and must not start automatically.
 
-This is PLANNED, not executed in G1-D0. Extend the uploaded plan's native
-matrix one scale at a time; do not change tree depth or silently rekey.
+## Next single task: G1-D2 B=32 in the SAME frozen D5/W32 suite
 
-1. Add an independent B=16 runner; preserve the G1-D0 entry point/raw/fixture.
-   Keep configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json byte-identical:
-   same layout, 32 leaves/positive unit weights, W=32, algorithms, fixed
-   seeds, election context and registered entries. Run-size settings belong
-   outside that frozen descriptor.
-2. Reconstruct the deterministic research DKG/registration/circuit witnesses.
-   No PK was persisted, so one setup reconstruction is necessary. BEFORE
-   reusing proofs, require the actual VK hash to equal G1-D0, the first eight
-   public rows and registration/context/key to match exactly, and the
-   regenerated size-32 research SRS hash to match. Record this reconstruction
-   cost separately; it is not online proving work.
-3. Canonically decode the saved first eight genuine source proofs and reuse
-   them only after those checks; generate only proof indices 8 through 15.
-   Individually verify all 16 and aggregate the full ordered matrix once.
-   Do not report 16 newly generated proofs when only eight are new.
-4. Measure B=16 individual bellperson verification, V2 aggregation/verification,
-   native direct fold/equality and sizes. Only one necessary negative changes
-   the LAST nullifier with a correspondingly rebuilt full transcript. Preserve
-   the same arithmetic-only versus complete-settlement measurement boundary.
-5. Archive new source/key/config hashes, public verifier material, timings and
-   cumulative RSS; stop after this functional acceptance. B=32 is a separate
-   subsequent increment. If a compatibility hash fails, stop and diagnose;
-   do not silently replace old proofs, keys or the configuration.
+1. Add an independent B=32 entry point; leave D0/D1 sources, raw reports,
+   public fixtures and the complete frozen descriptor bytes unchanged.
+   Keep the same 32 registered unit-weight voters, W=32, depth 5, algorithms,
+   setup/SRS seeds and original election-ID domain. Do not create a new key
+   or context to bypass a compatibility mismatch.
+2. Reconstruct DKG/registration and one setup because no PK was saved. Before
+   any reuse, require actual VK bytes/hash, SRS hash, key/context/root and
+   first 16 public rows to match the saved D1 pool. Canonically decode/reuse
+   its 16 genuine proofs, preserving provenance back to D0 where relevant.
+3. Generate only voters 17–32 proofs, verify all 32, and run one B=32 V2
+   aggregate positive plus one changed-LAST-nullifier negative with the full
+   matching transcript. No prior B=2/4/8/16 aggregation rerun is needed.
+4. Measure separate reconstruction, old-proof decode and NEW 16-prove costs,
+   individual/aggregate verification, aggregation, native direct fold/check,
+   sizes and cumulative RSS. Archive new JSON/fixture and exact hashes. Do
+   not report 32 newly generated proofs or fill absent EVM/DA/Gas with zero.
+5. Stop after B=32 functional acceptance. Then implement the explicitly
+   requested repeated native benchmark/automatic figures as a separate task,
+   with warmup, randomized/interleaved order and raw repetitions. Do not jump
+   to B=256, a depth scan or another verifier/arithmetic optimization route.
 
 ## Adjusted evaluation rules for subsequent work
 

@@ -61,6 +61,7 @@ def main() -> int:
     g1_c2_path = raw.parent / "g1_c2_raw" / "snarkpack_distinct_voters_batch_4.json"
     g1_c3_path = raw.parent / "g1_c3_raw" / "snarkpack_distinct_voters_batch_8.json"
     g1_d0_path = raw.parent / "g1_d0_raw" / "uniform_depth5_native_pilot.json"
+    g1_d1_path = raw.parent / "g1_d1_raw" / "uniform_depth5_batch16.json"
     g2_a_path = raw.parent / "g2_a_raw" / "state_transition_b2_r1cs.json"
     g2_b_path = raw.parent / "g2_b_raw" / "state_transition_b2_groth16.json"
     g2_c_path = raw.parent / "g2_c_raw" / "state_transition_b4_groth16.json"
@@ -178,6 +179,13 @@ def main() -> int:
     g1_c2 = json.loads(g1_c2_path.read_text()) if g1_c2_path.exists() else None
     g1_c3 = json.loads(g1_c3_path.read_text()) if g1_c3_path.exists() else None
     g1_d0 = json.loads(g1_d0_path.read_text()) if g1_d0_path.exists() else None
+    g1_d1 = json.loads(g1_d1_path.read_text()) if g1_d1_path.exists() else None
+    if g1_d1:
+        if not g1_d0 or not g1_d1["compatibility"]["all_checked_before_proof_reuse"]:
+            raise ValueError("G1-D1 requires its checked G1-D0 baseline")
+        for key in ("manifest_sha256", "ballot_vk_ark_compressed_sha256", "shared_aggregation_srs_sha256"):
+            if g1_d1[key] != g1_d0[key]:
+                raise ValueError(f"incompatible G1-D0/D1 evaluation family: {key}")
     g2_a = json.loads(g2_a_path.read_text()) if g2_a_path.exists() else None
     g2_b = json.loads(g2_b_path.read_text()) if g2_b_path.exists() else None
     g2_c = json.loads(g2_c_path.read_text()) if g2_c_path.exists() else None
@@ -240,7 +248,9 @@ def main() -> int:
 
     summary = {
         "classification": (
-            "measured-research-prototype-fixed-depth5-w32-same-vk-native-b2-b4-b8-pilot-with-historical-weight10-state-and-p3-no-settlement"
+            "measured-research-prototype-fixed-depth5-w32-same-vk-native-through-b16-functional-samples-historical-weight10-state-p3-no-settlement"
+            if g1_d1
+            else "measured-research-prototype-fixed-depth5-w32-same-vk-native-b2-b4-b8-pilot-with-historical-weight10-state-and-p3-no-settlement"
             if g1_d0
             else "measured-research-prototype-native-b8-ballot-aggregation-b4-state-proof-with-omission-rejection-fixed123-p3-v2-no-complete-settlement"
             if g2_c
@@ -351,8 +361,13 @@ def main() -> int:
             "G1_D0_fixed_depth5_w32_native_pilot": (
                 g1_d0["status"] if g1_d0 else "NOT_RUN"
             ),
+            "G1_D1_fixed_depth5_w32_batch16": (
+                g1_d1["status"] if g1_d1 else "NOT_RUN"
+            ),
             "G1_snarkpack": (
-                "PARTIAL_PASS_G1D0_SAME_VK_DEPTH5_W32_B2_B4_B8_SINGLE_SAMPLE_NONPRODUCTION_SRS"
+                "PARTIAL_PASS_G1D1_SAME_VK_DEPTH5_W32_B16_REUSED8_NEW8_SINGLE_SAMPLE_NONPRODUCTION_SRS"
+                if g1_d1
+                else "PARTIAL_PASS_G1D0_SAME_VK_DEPTH5_W32_B2_B4_B8_SINGLE_SAMPLE_NONPRODUCTION_SRS"
                 if g1_d0
                 else "PARTIAL_PASS_G1C3_EIGHT_DISTINCT_SAME_REGION_VOTERS_DEPTH3_NONPRODUCTION_SRS"
                 if g1_c3
@@ -586,14 +601,15 @@ def main() -> int:
         "g1_c2_four_distinct_same_region_voter_snarkpack": g1_c2,
         "g1_c3_eight_distinct_same_region_voter_snarkpack": g1_c3,
         "g1_d0_same_vk_depth5_native_pilot": g1_d0,
+        "g1_d1_same_vk_depth5_batch16": g1_d1,
         "project_current_progress": {
-            "latest_completed_gate": "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
-            "largest_measured_native_distinct_voter_batch": 8 if g1_d0 or g1_c3 else 4 if g1_c2 else 2 if g1_c1 else None,
+            "latest_completed_gate": "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
+            "largest_measured_native_distinct_voter_batch": 16 if g1_d1 else 8 if g1_d0 or g1_c3 else 4 if g1_c2 else 2 if g1_c1 else None,
             "largest_measured_state_proof_batch": 4 if g2_c else 2 if g2_b else None,
-            "same_suite_native_pilot_batch_sizes": g1_d0["measured_batch_sizes"] if g1_d0 else [],
+            "same_suite_native_pilot_batch_sizes": g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] if g1_d1 else g1_d0["measured_batch_sizes"] if g1_d0 else [],
             "current_evaluation_suite": "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
             "current_evaluation_suite_state_and_p3": "NOT_MEASURED" if g1_d0 else None,
-            "next_task": "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate" if g1_c2 else "B=4 native distinct-voter aggregation",
+            "next_task": "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
             "large_batch_statistical_comparison": "NOT_MEASURED",
         },
         "g2_a_state_transition_r1cs": g2_a,
@@ -663,9 +679,25 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g1_d1:
+        c = g1_d1["cases"][0]
+        lines.extend([
+            "## Latest project checkpoint: G1-D1 same-suite B=16",
+            "",
+            f"- Status: `{g1_d1['status']}`; report: `docs/G1_D1_UNIFORM_BATCH16.md`.",
+            "- Frozen D5/W32 descriptor is byte-identical. DKG/context/root, first eight rows/addresses, VK bytes/hash and size-32 research SRS hash matched BEFORE reusing any proof.",
+            f"- Source proofs: `{g1_d1['source_proof_count']}` distinct; `{g1_d1['reused_source_proof_count']}` archived G1-D0 proofs reused, `{g1_d1['new_source_proof_count']}` newly generated. All 16 verify in arkworks and bellperson.",
+            f"- Setup reconstruction / incremental eight proves: `{g1_d1['groth16_setup_ms']:.3f} / {g1_d1['incremental_prove_total_ms']:.3f} ms`. Old proving times are archived history, not rerun or counted as new work.",
+            f"- Individual bellperson Verify / aggregate Verify / aggregation: `{c['individual_verify_total_ms']:.6f} / {c['aggregate_verify_ms']:.6f} / {c['aggregation_ms']:.6f} ms`.",
+            f"- Source proofs / aggregate / matrix: `{c['individual_proof_bytes']} / {c['aggregate_proof_bytes']} / {c['public_input_matrix_bytes']} B`; native direct fold/check: `{c['native_direct_fold_check_ms']:.6f} ms`.",
+            f"- Changed 16th nullifier rejected: `{c['negative']['rejected']}`; cumulative process peak RSS: `{g1_d1['peak_rss_mib']:.3f} MiB`.",
+            "- One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 is NOT run.",
+            f"- Next planned task: {summary['project_current_progress']['next_task']}.",
+            "",
+        ])
     if g1_d0:
         lines.extend([
-            "## Latest project checkpoint: G1-D0 fixed-suite B=2/4/8 native pilot",
+            "## Previous fixed-suite checkpoint: G1-D0 B=2/4/8" if g1_d1 else "## Latest project checkpoint: G1-D0 fixed-suite B=2/4/8 native pilot",
             "",
             f"- Status: `{g1_d0['status']}`; report: `docs/G1_D0_UNIFORM_NATIVE_PILOT.md`.",
             "- Same depth 5, 32-leaf/unit-weight registry, W=32, certified key/context and ballot VK for all three cases. Eight unique real source proofs are reused as ordered prefixes, not 14 newly generated proofs.",
