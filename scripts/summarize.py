@@ -67,6 +67,7 @@ def main() -> int:
     g2_a_path = raw.parent / "g2_a_raw" / "state_transition_b2_r1cs.json"
     g2_b_path = raw.parent / "g2_b_raw" / "state_transition_b2_groth16.json"
     g2_c_path = raw.parent / "g2_c_raw" / "state_transition_b4_groth16.json"
+    g2_d_path = raw.parent / "g2_d_raw" / "state_transition_d5w32_b4_groth16.json"
     g3_a_path = raw.parent / "g3_a_raw" / "five_process_dkg.json"
     g3_b_path = raw.parent / "g3_b_raw" / "one_trustee_restart.json"
     g4_a_path = raw.parent / "g4_a_raw" / "second_subset_p3_shape.json"
@@ -203,6 +204,12 @@ def main() -> int:
     g2_a = json.loads(g2_a_path.read_text()) if g2_a_path.exists() else None
     g2_b = json.loads(g2_b_path.read_text()) if g2_b_path.exists() else None
     g2_c = json.loads(g2_c_path.read_text()) if g2_c_path.exists() else None
+    g2_d = json.loads(g2_d_path.read_text()) if g2_d_path.exists() else None
+    if g2_d:
+        if not g1_d2 or not g2_d["source_aggregate_verified"] or not g2_d["state_proof_verified"] or not g2_d["omitted_third_ballot"]["original_proof_with_omitted_new_state_rejected"]:
+            raise ValueError("G2-D requires the D2 prefix and accepted positive/omission results")
+        if g2_d["frozen_ballot_manifest_sha256"] != g1_d2["manifest_sha256"] or g2_d["ballot_vk_sha256"] != g1_d2["ballot_vk_ark_compressed_sha256"]:
+            raise ValueError("G2-D does not match the frozen D2 family")
     g3_a = json.loads(g3_a_path.read_text()) if g3_a_path.exists() else None
     g3_b = json.loads(g3_b_path.read_text()) if g3_b_path.exists() else None
     g4_a = json.loads(g4_a_path.read_text()) if g4_a_path.exists() else None
@@ -262,7 +269,9 @@ def main() -> int:
 
     summary = {
         "classification": (
-            "measured-research-prototype-g1e-30-fixed-pool-operation-windows-per-b2-b4-b8-b16-b32-isolated-rss-no-settlement"
+            "measured-research-prototype-g1e-statistics-plus-d5w32-b4-state-proof-omission-rejection-single-sample-separate-verifiers-no-settlement"
+            if g2_d
+            else "measured-research-prototype-g1e-30-fixed-pool-operation-windows-per-b2-b4-b8-b16-b32-isolated-rss-no-settlement"
             if g1_e
             else "measured-research-prototype-fixed-depth5-w32-same-vk-native-through-b32-functional-samples-historical-weight10-state-p3-no-settlement"
             if g1_d2
@@ -414,8 +423,11 @@ def main() -> int:
             "G2_C_b4_state_and_omission": (
                 g2_c["status"] if g2_c else "NOT_RUN"
             ),
+            "G2_D_d5_w32_b4_state_and_omission": (g2_d["status"] if g2_d else "NOT_RUN"),
             "G2_state_proof": (
-                "PASS_G2C_REAL_GROTH16_FIXED_B4_STATE_AND_OMISSION_REJECTION"
+                "PASS_G2D_D5_W32_B4_STATE_AND_OMISSION_SINGLE_SAMPLE"
+                if g2_d
+                else "PASS_G2C_REAL_GROTH16_FIXED_B4_STATE_AND_OMISSION_REJECTION"
                 if g2_c
                 else "PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION"
                 if g2_b
@@ -423,7 +435,7 @@ def main() -> int:
                 if g2_a
                 else "BLOCKED_CIRCUIT_NOT_IMPLEMENTED"
             ),
-            "G2_state_proof_batch_4": g2_c["status"] if g2_c else "NOT_IMPLEMENTED",
+            "G2_state_proof_batch_4": g2_d["status"] if g2_d else g2_c["status"] if g2_c else "NOT_IMPLEMENTED",
             "G3_A_five_process_dkg_happy_path": (
                 g3_a["status"] if g3_a else "NOT_RUN"
             ),
@@ -630,14 +642,17 @@ def main() -> int:
         "g1_d1_same_vk_depth5_batch16": g1_d1,
         "g1_d2_same_vk_depth5_batch32": g1_d2,
         "g1_e_fixed_pool_repeated_benchmark": g1_e,
+        "g2_d_d5_w32_b4_state_and_omission": g2_d,
         "project_current_progress": {
-            "latest_completed_gate": "G1-E" if g1_e else "G1-D2" if g1_d2 else "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
+            "latest_completed_gate": "G2-D" if g2_d else "G1-E" if g1_e else "G1-D2" if g1_d2 else "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
             "largest_measured_native_distinct_voter_batch": 32 if g1_d2 else 16 if g1_d1 else 8 if g1_d0 or g1_c3 else 4 if g1_c2 else 2 if g1_c1 else None,
-            "largest_measured_state_proof_batch": 4 if g2_c else 2 if g2_b else None,
+            "largest_measured_state_proof_batch": 4 if g2_d or g2_c else 2 if g2_b else None,
             "same_suite_native_pilot_batch_sizes": g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] + g1_d2["measured_batch_sizes"] if g1_d2 else g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] if g1_d1 else g1_d0["measured_batch_sizes"] if g1_d0 else [],
-            "current_evaluation_suite": "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
-            "current_evaluation_suite_state_and_p3": "NOT_MEASURED" if g1_d0 else None,
-            "next_task": "G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first)" if g1_e else "Formal repeated native measurements for B=2/4/8/16/32 with warmup/interleaved order and automatic figures (planned only; no larger batches or state/P3 work)" if g1_d2 else "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
+            "current_evaluation_suite": "fixed depth5 / W32, native ballot statistics and first-batch B4 state proof" if g2_d else "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
+            "current_evaluation_suite_state_and_p3": "STATE_B4_PASS_P3_NOT_MEASURED" if g2_d else "NOT_MEASURED" if g1_d0 else None,
+            "current_evaluation_suite_state": "PASS_G2D_FIRST_ZERO_OLD_STATE_B4_SINGLE_SAMPLE" if g2_d else "NOT_MEASURED",
+            "current_evaluation_suite_p3": "NOT_MEASURED",
+            "next_task": "STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment" if g2_d else "G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first)" if g1_e else "Formal repeated native measurements for B=2/4/8/16/32 with warmup/interleaved order and automatic figures (planned only; no larger batches or state/P3 work)" if g1_d2 else "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
             "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS" if g1_e else "NOT_MEASURED",
         },
         "g2_a_state_transition_r1cs": g2_a,
@@ -707,9 +722,26 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g2_d:
+        c = g2_d["comparison"]
+        lines.extend([
+            "## Latest project checkpoint: G2-D D5/W32 B4 state proof",
+            "",
+            f"- Status: `{g2_d['status']}`; clean source `{g2_d['git_commit']}`. Report: `docs/G2_D_W32_B4_STATE.md`.",
+            "- Exact first four D2 proofs/25-field rows; same ballot VK/context/frozen registration root and generic research SRS. One NEW B4 aggregate, zero new ballot proofs/Setup/DKG.",
+            "- One separate state Setup/Prove/Verify, independent candidate-major fold, and one omitted-third-ballot case pass. Correct/negative R1CS have equal complete matrix digests, not just equal counts; 37-input layout unchanged.",
+            f"- State constraints/public inputs/witness variables: `{g2_d['shape']['constraints']} / {g2_d['shape']['public_inputs']} / {g2_d['shape']['witness_variables']}`; matrix SHA256: `{g2_d['shape']['matrix_sha256']}`.",
+            f"- State setup/prove/verify: `{g2_d['setup_ms']:.3f} / {g2_d['prove_ms']:.3f} / {g2_d['verify_ms']:.6f} ms`; proof/VK/public inputs: `{g2_d['proof_bytes']} / {g2_d['verifying_key_compressed_bytes']} / {g2_d['state_public_input_bytes']} B`.",
+            f"- Shared SnarkPack Verify/binding checks: `{g2_d['source_aggregate_verify_ms']:.6f} / {g2_d['common_binding_checks_ms']:.6f} ms`; independent direct fold: `{g2_d['direct_fold_check_ms']:.6f} ms`.",
+            f"- Baseline/proposed component sums: `{c['baseline_shared_plus_binding_plus_direct_fold_ms']:.6f} / {c['proposed_shared_plus_binding_plus_state_verify_ms']:.6f} ms`. These are sums of measured components, not separately timed transactions. Setup/Prove are additional, not hidden.",
+            f"- PK measured in memory: `{g2_d['proving_key_compressed_bytes']} B` (not saved); cumulative peak RSS: `{g2_d['peak_rss_mib']:.3f} MiB`, including R1CS fingerprinting and proving.",
+            "- One first-batch zero-old-state functional sample, no native speedup/statistical/recursive/on-chain/settlement claim. W32 is bound through the authenticated source context/rows, not a new field/range check in the generic state circuit. P3 and intake/censorship/stale-state enforcement remain external.",
+            "- Historical D0/D1/D2/G1-E/G2-C data are unchanged. STOP for review before B8 or other modules.",
+            "",
+        ])
     if g1_e:
         lines.extend([
-            "## Latest project checkpoint: G1-E fixed-pool repeated native benchmark",
+            "## Previous fixed-pool checkpoint: G1-E repeated native benchmark" if g2_d else "## Latest project checkpoint: G1-E fixed-pool repeated native benchmark",
             "",
             "- Five excluded warmups and 30 formal rounds per B=2/4/8/16/32: 150 batch trials, 450 operation windows, 45 separate B/operation memory processes.",
             f"- Clean source: `{g1_e['source_git_commit']}`; zero new ballot proofs/Setup; fixed D2 pool, VK, generic SRS and descriptor.",

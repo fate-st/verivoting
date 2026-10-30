@@ -1,32 +1,35 @@
 # Next gates
 
-## Current checkpoint (2026-10-30): G1-E repeated native benchmark accepted
+## Current checkpoint (2026-10-30): G2-D D5/W32 B4 state proof accepted
 
-Fixed D5/W32; B=2/4/8/16/32 prefixes of the same D2 pool/VK/generic SRS.
-Clean source `6824611b4c77d5ad21d62a14bd4e95cfa19f1ad4`. Five warmups per B excluded,
-30 formal rounds per B: 150 batch records / 450 operation windows, plus 45
-separate memory processes. All functional cases and independent folds pass;
-47 tests and strict Clippy pass. Report: `docs/G1_E_FIXED_SUITE_BENCHMARK.md`.
-Raw: `experiments/g1_e_raw`; CSV/statistics/six PNG-PDF-SVG figures: `results/g1_e`.
+Report: `docs/G2_D_W32_B4_STATE.md`. Clean source `4c6220f66c7fdc53b71966a001e5716eaf9f9f1a`.
+Exact D2 first-four proofs/rows, same ballot key/context/frozen registration root
+and research SRS; one regenerated B4 aggregate verifies. Fresh state Setup/Prove
+and 37-input Verify pass, independently accumulated state matches, and keeping
+the four records/root/aggregate while omitting ct3 from NEW state rejects.
+Complete positive/negative R1CS matrix digests match. No historical proof pool
+or state key is reused; D0/D1/D2/G1-E/G2-C artifacts stay unchanged.
 
-Fixed-pool serial operation windows are not independent elections. B16/B32
-verifier reduction does not mean lower total compute or fewer bytes. P95 is
-withheld; stage RSS is warmed 1 ms sampling, not exact cold allocation peaks.
-No source/artifact from D0/D1/D2 or frozen descriptor changed. This task STOPS
-here; do not add B64/256, state/P3/settlement or more Miller work automatically.
+One sample: state setup/prove/verify 24941.019/15998.832/2.089 ms;
+proof192B, PK847800624B (not persisted), peakRSS5911.078MiB.
+Native direct fold 0.004333ms is much cheaper than state verification here.
+Both comparison paths include the same measured SP and matrix/root checks.
+No statistical, total-compute, recursive or on-chain advantage is asserted.
 
-## Next task (PLANNED only): G2-D, W32 B=4 state proof
+G2-D B4 acceptance is the STOP condition. Do not automatically build B8/B16,
+P3 subsets, disclosure comparison, settlement or software Miller work.
 
-1. Reuse the checked W32 B4 authenticated prefix and independent reference
-   state. Do not splice in the historical W10 state proof.
-2. Build a separately keyed state relation binding the ordered accepted batch
-   root and exact ciphertext state. Distinguish the state VK from the frozen
-   ballot VK; do not relabel the frozen descriptor's unimplemented capabilities.
-3. Fairly compare SnarkPack + complete direct fold with SnarkPack + state-proof
-   verification under explicit equal scope; measure new setup/prove/verify,
-   bytes and RSS. An accepted-intake commitment/log is a separate feature.
-4. Use one necessary omission/substitution negative, then stop for review.
-   General P3 v2 subsets, disclosure comparison and settlement come later.
+## Next task (PLANNED only): review B4 before a separate G2-E B8 experiment
+
+1. Review the concrete 2,743,666 constraints, 847,800,624-byte PK and roughly
+   5,911MiB cumulative process peak. B8 resource use is unmeasured; do not assume
+   linear scaling or buy new hardware solely from this sample.
+2. Only if separately authorized, use the same D2 pool and a new B8 state key,
+   actual B8 root/circuit and independent reference sum. Preserve B4 artifacts.
+3. Treat multi-batch old-state continuity, accepted-intake commitments and spent
+   nullifier enforcement as separate integrations, not already proven by B4.
+4. State statistics, P3 v2 ten-subset support and Full-Tally comparisons come
+   later. Do not mix historical W10 measurements or Gas into W32 performance.
 
 ## Adjusted evaluation rules for subsequent work
 

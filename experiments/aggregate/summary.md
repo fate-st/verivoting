@@ -2,7 +2,20 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Latest project checkpoint: G1-E fixed-pool repeated native benchmark
+## Latest project checkpoint: G2-D D5/W32 B4 state proof
+
+- Status: `PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED`; clean source `4c6220f66c7fdc53b71966a001e5716eaf9f9f1a`. Report: `docs/G2_D_W32_B4_STATE.md`.
+- Exact first four D2 proofs/25-field rows; same ballot VK/context/frozen registration root and generic research SRS. One NEW B4 aggregate, zero new ballot proofs/Setup/DKG.
+- One separate state Setup/Prove/Verify, independent candidate-major fold, and one omitted-third-ballot case pass. Correct/negative R1CS have equal complete matrix digests, not just equal counts; 37-input layout unchanged.
+- State constraints/public inputs/witness variables: `2743666 / 37 / 2693602`; matrix SHA256: `361195013588cde48bf43e1c5b0071f9cbe8462675246fe3d6f88dec41c6315e`.
+- State setup/prove/verify: `24941.019 / 15998.832 / 2.088500 ms`; proof/VK/public inputs: `192 / 2168 / 1184 B`.
+- Shared SnarkPack Verify/binding checks: `4.951792 / 3.416083 ms`; independent direct fold: `0.004333 ms`.
+- Baseline/proposed component sums: `8.372208 / 10.456375 ms`. These are sums of measured components, not separately timed transactions. Setup/Prove are additional, not hidden.
+- PK measured in memory: `847800624 B` (not saved); cumulative peak RSS: `5911.078 MiB`, including R1CS fingerprinting and proving.
+- One first-batch zero-old-state functional sample, no native speedup/statistical/recursive/on-chain/settlement claim. W32 is bound through the authenticated source context/rows, not a new field/range check in the generic state circuit. P3 and intake/censorship/stale-state enforcement remain external.
+- Historical D0/D1/D2/G1-E/G2-C data are unchanged. STOP for review before B8 or other modules.
+
+## Previous fixed-pool checkpoint: G1-E repeated native benchmark
 
 - Five excluded warmups and 30 formal rounds per B=2/4/8/16/32: 150 batch trials, 450 operation windows, 45 separate B/operation memory processes.
 - Clean source: `6824611b4c77d5ad21d62a14bd4e95cfa19f1ad4`; zero new ballot proofs/Setup; fixed D2 pool, VK, generic SRS and descriptor.
@@ -42,7 +55,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 | 16 | 6.917166 | 4.990667 | 28.524625 | 3072 / 14164 / 12800 |
 | 32 | 14.048915 | 6.942209 | 57.087584 | 6144 / 17140 / 25600 |
 
-- Next planned task: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first).
+- Next planned task: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
 
 ## Previous fixed-suite checkpoint: G1-D1 B=16
 
@@ -54,7 +67,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Source proofs / aggregate / matrix: `3072 / 14164 / 12800 B`; native direct fold/check: `0.021041 ms`.
 - Changed 16th nullifier rejected: `True`; cumulative process peak RSS: `2911.922 MiB`.
 - One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 was not run at this historical checkpoint; see G1-D2 above if available.
-- Next planned task: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first).
+- Next planned task: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
 
 ## Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
@@ -72,7 +85,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - One positive aggregate per B and only one changed-eighth-nullifier negative (B=8), all pass. Direct-fold columns measure native arithmetic/equality only, not full settlement.
 - Single ascending-order pilot, no dedicated warmup, no repeated statistics/crossover conclusion. Per-B standalone RSS is unmeasured; cached keys/SRS, calldata and full DA are not included in proof-plus-matrix byte counts.
 - The weight-10 B=4 state and P3 results below are historical components, not weight-32 results. Current-suite state/P3, SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first).
+- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
 
 ## Previous state checkpoint: G2-C B=4 / omission rejection (weight 10)
 
@@ -83,7 +96,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Only negative, omitted third ballot: R1CS rejected `True`, original proof with omitted new state rejected `True`. Four records/root/aggregate remain unchanged.
 - Peak RSS: `6083.000 MiB`; old B=2 entry points and artifacts remain unchanged.
 - One zero-old-state functional case, no repeated performance or complete settlement claim. The two verifiers are linked natively, not recursively or on EVM.
-- Next: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first).
+- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
 
 ## Previous native checkpoint: G1-C3 B=8 / depth 3
 
@@ -97,7 +110,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Functional single run only, nonproduction SRS. Do not compare depth-3 B=8 times with depth-2 B=4 as a controlled performance matrix.
 - B=2/B=4 entry points and archived artifacts are unchanged; the shared ballot type is now const-generic with depth 2 as its legacy default.
 - B=4 state/omission has since passed in G2-C above. SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first).
+- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
 
 ## Historical native checkpoint: G1-C2 B=4
 
@@ -110,7 +123,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
 - This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
 - Its B=4 state/omission follow-up has since passed in G2-C; SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first).
+- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
 
 ## Current P3 correctness checkpoint: G4-C (tally relation v2)
 
@@ -133,14 +146,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- The native follow-up has passed G2-C; current next task: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first).
+- The native follow-up has passed G2-C; current next task: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Current project next gate: G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first); archived G5 next-task notes are historical.
+- Current project next gate: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -187,8 +200,9 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G2_A_state_transition_r1cs | PASS_G2A_FIXED_B2_STATE_TRANSITION_R1CS |
 | G2_B_state_transition_groth16 | PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION |
 | G2_C_b4_state_and_omission | PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED |
-| G2_state_proof | PASS_G2C_REAL_GROTH16_FIXED_B4_STATE_AND_OMISSION_REJECTION |
-| G2_state_proof_batch_4 | PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED |
+| G2_D_d5_w32_b4_state_and_omission | PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED |
+| G2_state_proof | PASS_G2D_D5_W32_B4_STATE_AND_OMISSION_SINGLE_SAMPLE |
+| G2_state_proof_batch_4 | PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED |
 | G3_A_five_process_dkg_happy_path | PASS_G3A_FIVE_OS_PROCESS_DKG_HAPPY_PATH |
 | G3_B_one_trustee_restart_recovery | PASS_G3B_ONE_TRUSTEE_RESTART_RECOVERY |
 | G3_multiprocess | PARTIAL_PASS_G3B_ONE_RESTART_AUTHENTICATED_LOCAL_TRANSPORT |

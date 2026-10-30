@@ -1,0 +1,13 @@
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running `target/release/friendly-g2d-state-d5w32-b4`
+G2-D source=4c6220f66c7fdc53b71966a001e5716eaf9f9f1a; git_dirty=false; reuse FOUR D2 ballots (zero ballot Prove)
+G2-D [1/6] FOUR source proofs and ONE freshly generated B4 aggregate PASS
+G2-D [2/6] bind all four records to the exact verified matrix and ordered Merkle root
+G2-D [3/6] check the complete B=4 R1CS; only negative omits ct3 from the NEW STATE
+Constraint trace requires enabling `ConstraintLayer`
+  R1CS pass; omitted-third ballot rejected; constraints=2743666
+G2-D [4/6] ONE fresh W32-source B4 state setup; ballot/old state VKs are NOT reused
+G2-D [5/6] ONE real state proof; verify valid statement and the SAME omission case
+G2-D [6/6] save NEW public proof/VK and measurements; historical files are not overwritten
+G2-D PASS: state proof verified, omitted third ballot rejected; setup=24941.019ms prove=15998.832ms verify=2.089ms peakRSS=5911.078MiB
+wrote experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json

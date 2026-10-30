@@ -8,7 +8,32 @@ operation, broad crash matrices, or on-chain work as measurements.
 
 ## What is implemented
 
-### Latest project checkpoint: G1-E fixed-pool repetitions (2026-10-30)
+### Latest project checkpoint: G2-D D5/W32 B4 state proof (2026-10-30)
+
+[G2-D](docs/G2_D_W32_B4_STATE.md) passes from clean source
+`4c6220f66c7fdc53b71966a001e5716eaf9f9f1a`. Four exact D2 D5/W32 ballots are reused;
+one new B4 SnarkPack aggregate and one separately keyed state proof verify.
+The same ordered rows/root bind both verifiers; omitting only ct3 from the
+submitted new state rejects in R1CS and under the original state proof.
+An independent candidate-major sum matches every ciphertext coordinate.
+
+State constraints/inputs: 2743666/37; complete matrix
+digest equal in positive/negative cases. State setup/prove/verify:
+24941.019/15998.832/2.089 ms; proof/VK/inputs:
+192/2168/1184 B. Shared SnarkPack Verify is
+4.952 ms; common matrix/root binding 3.416 ms;
+independent direct fold 0.004333 ms. Single-sample baseline/proposed
+component sums are 8.372/10.456 ms, NOT whole transactions or
+a native efficiency benefit. Setup/Prove are additional. Peak process RSS:
+5911.078 MiB; PK 847800624 B measured only, not persisted.
+
+47 tests and strict Clippy pass. Historical artifacts/crypto code/frozen suite
+are unchanged. The 37-input generic B4 relation is not a new in-circuit W32
+range proof: its D5/W32 source is bound by the ballot context and host checks.
+This is first-batch/zero-old-state native linkage, NOT recursive SnarkPack,
+multi-batch settlement, censorship resistance, W32 P3 or EVM Gas. STOP after B4.
+
+### Previous fixed-pool checkpoint: G1-E repetitions (2026-10-30)
 
 [G1-E](docs/G1_E_FIXED_SUITE_BENCHMARK.md) is measured from clean source
 `6824611b4c77d5ad21d62a14bd4e95cfa19f1ad4`. B=2/4/8/16/32 use prefixes of one D2
