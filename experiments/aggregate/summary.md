@@ -2,7 +2,18 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Latest project checkpoint: G2-D D5/W32 B4 state proof
+## Latest project checkpoint: G2-E two consecutive B4 state transitions
+
+- Status: `PASS_TWO_CONSECUTIVE_B4_TRANSITIONS_AND_NATIVE_CHECKPOINT`. Report: `docs/G2_E_MULTIBATCH_STATE.md`.
+- Same D5/W32 suite; S0 -> S1 -> S2. Second old state is nonzero and equals first new state; final state equals the independent flat eight-ballot sum.
+- Eight ballot proofs, first aggregate/state proof reused; one new second aggregate/state proof. Rebuilt state VK matches G2-D byte for byte; full second R1CS matrix digest also matches.
+- Real aggregate/state verifiers pass both batches. Native in-memory receiver checks context/registry/root/old/next/spent; skip-first, replay and reset-old reject without writes. Public fixture replay passes with zero Setup/Prove.
+- Setup rebuild/new second Prove: `25314.304 / 16917.431 ms`; state Verify by batch: `2.566542 / 3.004792 ms`; cumulative peak RSS `5793.875 MiB`.
+- Measured base HEAD `61193416f36a4bb4132091a10259ced1282d5978`; git_dirty=`True`, source snapshot hashes recorded. Not a clean committed-source claim.
+- Two functional B4 transitions, NOT a B8 state circuit, recursive proof, independent intake log or contract settlement. No performance advantage, P3-ten-subset, W32 winner disclosure or Gas claim.
+- Next: complete P3 tally-v2 ten subsets under one new VK, then native frozen-state-to-winner integration, then complete on-chain verification/comparison. Frozen Miller route stays frozen.
+
+## Previous state checkpoint: G2-D D5/W32 B4 state proof
 
 - Status: `PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED`; clean source `4c6220f66c7fdc53b71966a001e5716eaf9f9f1a`. Report: `docs/G2_D_W32_B4_STATE.md`.
 - Exact first four D2 proofs/25-field rows; same ballot VK/context/frozen registration root and generic research SRS. One NEW B4 aggregate, zero new ballot proofs/Setup/DKG.
@@ -55,7 +66,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 | 16 | 6.917166 | 4.990667 | 28.524625 | 3072 / 14164 / 12800 |
 | 32 | 14.048915 | 6.942209 | 57.087584 | 6144 / 17140 / 25600 |
 
-- Next planned task: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
+- Next planned task: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison.
 
 ## Previous fixed-suite checkpoint: G1-D1 B=16
 
@@ -67,7 +78,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Source proofs / aggregate / matrix: `3072 / 14164 / 12800 B`; native direct fold/check: `0.021041 ms`.
 - Changed 16th nullifier rejected: `True`; cumulative process peak RSS: `2911.922 MiB`.
 - One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 was not run at this historical checkpoint; see G1-D2 above if available.
-- Next planned task: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
+- Next planned task: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison.
 
 ## Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
@@ -85,7 +96,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - One positive aggregate per B and only one changed-eighth-nullifier negative (B=8), all pass. Direct-fold columns measure native arithmetic/equality only, not full settlement.
 - Single ascending-order pilot, no dedicated warmup, no repeated statistics/crossover conclusion. Per-B standalone RSS is unmeasured; cached keys/SRS, calldata and full DA are not included in proof-plus-matrix byte counts.
 - The weight-10 B=4 state and P3 results below are historical components, not weight-32 results. Current-suite state/P3, SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
+- Next: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison.
 
 ## Previous state checkpoint: G2-C B=4 / omission rejection (weight 10)
 
@@ -96,7 +107,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Only negative, omitted third ballot: R1CS rejected `True`, original proof with omitted new state rejected `True`. Four records/root/aggregate remain unchanged.
 - Peak RSS: `6083.000 MiB`; old B=2 entry points and artifacts remain unchanged.
 - One zero-old-state functional case, no repeated performance or complete settlement claim. The two verifiers are linked natively, not recursively or on EVM.
-- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
+- Next: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison.
 
 ## Previous native checkpoint: G1-C3 B=8 / depth 3
 
@@ -110,7 +121,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Functional single run only, nonproduction SRS. Do not compare depth-3 B=8 times with depth-2 B=4 as a controlled performance matrix.
 - B=2/B=4 entry points and archived artifacts are unchanged; the shared ballot type is now const-generic with depth 2 as its legacy default.
 - B=4 state/omission has since passed in G2-C above. SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
+- Next: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison.
 
 ## Historical native checkpoint: G1-C2 B=4
 
@@ -123,7 +134,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
 - This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
 - Its B=4 state/omission follow-up has since passed in G2-C; SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
+- Next: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison.
 
 ## Current P3 correctness checkpoint: G4-C (tally relation v2)
 
@@ -146,14 +157,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- The native follow-up has passed G2-C; current next task: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment.
+- The native follow-up has passed G2-C; current next task: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison.
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Current project next gate: STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment; archived G5 next-task notes are historical.
+- Current project next gate: Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -201,7 +212,8 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G2_B_state_transition_groth16 | PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION |
 | G2_C_b4_state_and_omission | PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED |
 | G2_D_d5_w32_b4_state_and_omission | PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED |
-| G2_state_proof | PASS_G2D_D5_W32_B4_STATE_AND_OMISSION_SINGLE_SAMPLE |
+| G2_E_consecutive_b4_native_state | PASS_TWO_CONSECUTIVE_B4_TRANSITIONS_AND_NATIVE_CHECKPOINT |
+| G2_state_proof | PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_TRANSITIONS_NOT_SETTLEMENT |
 | G2_state_proof_batch_4 | PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED |
 | G3_A_five_process_dkg_happy_path | PASS_G3A_FIVE_OS_PROCESS_DKG_HAPPY_PATH |
 | G3_B_one_trustee_restart_recovery | PASS_G3B_ONE_TRUSTEE_RESTART_RECOVERY |

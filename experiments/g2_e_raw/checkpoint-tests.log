@@ -1,0 +1,14 @@
+   Compiling vv-friendly-dkg v0.2.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/crates/vv-friendly-dkg)
+    Finished `release` profile [optimized] target(s) in 0.63s
+     Running unittests src/bin/g2e_multibatch_state.rs (target/release/deps/friendly_g2e_multibatch_state-6270bbc4e326cfc1)
+
+running 6 tests
+test independent_fold::tests::all_candidates_match_reference_at_every_supported_boundary ... ok
+test independent_fold::tests::one_changed_coordinate_has_exact_expected_delta ... ok
+test independent_fold::tests::permutation_preserves_homomorphic_sum_not_ordered_batch_identity ... ok
+test receiver::tests::across_batch_nullifier_reuse_rejects_even_with_a_different_committed_batch_root ... ok
+test receiver::tests::rejected_verification_is_atomic_then_continuity_and_replay_checks_hold ... ok
+test independent_fold::tests::empty_and_malformed_inputs_have_explicit_boundaries ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

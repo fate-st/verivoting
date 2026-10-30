@@ -1,0 +1,56 @@
+    Finished `release` profile [optimized] target(s) in 0.12s
+     Running unittests src/lib.rs (target/release/deps/vv_friendly_crypto-c91daaf60c332c0a)
+
+running 32 tests
+test ballot_identity_gadget::tests::native_domains_are_separated_and_region_is_bounded ... ok
+test cp::tests::registration_bound_transcript_v3_golden_vector_is_stable ... ok
+test cp::tests::prover_rejects_secret_not_matching_verification_share ... ok
+test cp::tests::three_coordinate_generalized_cp_verifies ... ok
+test cp::tests::registration_close_digest_is_bound_to_target_and_proof ... ok
+test cp::tests::altered_share_commitment_and_response_are_rejected ... ok
+test cp::tests::altered_context_trustee_order_and_length_are_rejected ... ok
+test p3d_gadget::tests::partial_turnout_keeps_the_correct_winner_and_rejects_a_wrong_winner ... ok
+test state_gadget::tests::field_vector_has_frozen_width_and_order_changes_root ... ok
+test state_gadget::tests::four_leaf_root_and_fold_match_explicit_tree_and_sum ... ok
+test state_gadget::tests::state_public_input_packing_has_frozen_width_and_binds_root ... ok
+test tests::canonical_point_roundtrip_rejects_identity_and_bad_encoding ... ok
+test tests::canonical_scalar_roundtrip_and_modulus_rejection ... ok
+test tests::four_weighted_votes_decrypt_to_expected_tally_and_winner ... ok
+test tests::hash_to_scalar_is_canonical_deterministic_and_domain_separated ... ok
+test tests::hash_to_scalar_rejection_path_uses_first_canonical_candidate ... ok
+test tests::invalid_public_key_ciphertext_choice_and_weight_are_rejected ... ok
+test tests::secondary_generator_is_deterministic_subgroup_and_not_standard_generator ... ok
+test tests::subgroup_boundary_and_bsgs_resource_limit_are_enforced ... ok
+test tests::suite_vectors_are_deterministic_and_have_fixed_width_encodings ... ok
+test tests::wrong_key_and_tampered_ciphertext_do_not_preserve_tally ... ok
+test transcript_gadget::tests::exact_bytes_satisfy_and_changed_or_reordered_bytes_fail ... ok
+test p3c1_gadget::tests::total_above_bound_is_rejected_even_when_each_tally_is_bounded ... ok
+test p3c1_gadget::tests::slack_does_not_weaken_plaintext_group_binding ... ok
+test p3c1_gadget::tests::u64_wrapping_sum_cannot_satisfy_the_integer_bound ... ok
+test p3c1_gadget::tests::full_and_partial_turnout_have_the_same_tally_relation_shape ... ok
+test p3c1_gadget::tests::zero_accepted_weight_is_within_the_registered_bound ... ok
+test transcript_gadget::tests::sha512_matches_native_and_rejects_changed_digest ... ok
+test hash_to_scalar_gadget::tests::counter_zero_and_one_enforce_first_valid_candidate ... ok
+test hash_to_scalar_gadget::tests::fixed_two_attempt_shape_accepts_counter_zero_and_one ... ok
+test hash_to_field_gadget::tests::package_mapping_matches_native ... ok
+test hash_to_field_gadget::tests::wide_mapping_matches_native_and_has_fixed_shape ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.49s
+
+     Running unittests src/lib.rs (target/release/deps/vv_friendly_dkg-50b3f00467dc22bc)
+
+running 11 tests
+test registration::tests::duplicate_credential_and_bad_opening_are_rejected ... ok
+test registration::tests::exact_total_close_verifies_and_derives_binding_digests ... ok
+test registration::tests::altered_close_and_cross_context_replay_are_rejected ... ok
+test registration::tests::eight_leaf_close_and_all_depth_three_paths_match ... ok
+test tests::frozen_context_certificate_and_threshold_subset_reject_mutation ... ok
+test tests::complaints_recovery_and_disqualification_are_explicit ... ok
+test package::tests::fewer_than_threshold_and_duplicate_verified_packages_are_rejected ... ok
+test package::tests::verified_packages_are_selected_before_threshold_combination ... ok
+test tests::all_ten_subsets_interpolate_key_and_threshold_decrypt ... ok
+test tests::verified_cp_packages_drive_all_ten_threshold_combinations ... ok
+test package::tests::bad_opening_signature_and_context_are_rejected ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

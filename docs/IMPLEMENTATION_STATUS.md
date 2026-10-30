@@ -1,6 +1,28 @@
 # Implementation and claim boundary
 
-## Latest project checkpoint: G2-D D5/W32 B4 state proof (2026-10-30)
+## Latest project checkpoint: G2-E consecutive B4 state transitions (2026-10-30)
+
+[G2-E](G2_E_MULTIBATCH_STATE.md) 实际完成两个连续 B=4 批次：同一 D5/W32 选票池，
+S0 → S1 → S2；第二批 old_state 精确等于第一批 new_state 且非零，最终全部六个密文分量与
+独立累计八张票一致。原生接收层检查同一选举/公钥/冻结注册根、已固定批次根、next、old_state
+及 spent nullifiers，通过两个真实验证器后才更新状态。跳过首批、重放首批和重置第二批旧状态
+均拒绝且不写状态。公开 fixture 在另一进程中再次验证两批，零 Setup/Prove。
+
+复用八份选票证明、首批 aggregate 和首批状态证明；只新增第二批 aggregate 和一份状态证明。
+重建 Setup 后完整 VK 字节与 G2-D 一致；非零旧状态的完整 R1CS A/B/C 指纹也一致。
+重建 Setup 25314.304084 ms，新第二批 Prove 16917.430791 ms；
+两批 State Verify 2.566542 / 3.004792 ms；
+累计峰值 RSS 5793.875 MiB。49 项测试及严格 Clippy 通过。
+
+测量基点为 61193416f36a4bb4132091a10259ced1282d5978，新增源码当时未提交，raw 如实记录 git_dirty=true 和逐文件
+SHA-256，不将基点 HEAD 冒充新增入口的已提交版本。密码学库、电路布局、冻结选票配置及历史
+D0/D1/D2/G1-E/G2-C/G2-D 结果未改。
+
+这是两个 B4 状态证明和原生内存检查点，不是 B8 电路、递归证明、独立接纳日志或链上结算。
+P3 v2 十种子集、W32 完整 Winner-only 串联和完整链上验证仍未完成。下一步只推进 P3 v2
+同一新 VK 下的十子集，不重复已经通过的原生门限十子集，不重启冻结的 Miller 路线。
+
+## Previous state checkpoint: G2-D D5/W32 B4 state proof (2026-10-30)
 
 [G2-D](G2_D_W32_B4_STATE.md) passes from clean source
 `4c6220f66c7fdc53b71966a001e5716eaf9f9f1a`. Four exact D2 D5/W32 ballots are reused;

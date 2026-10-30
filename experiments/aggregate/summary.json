@@ -41,7 +41,8 @@
     "G2_B_state_transition_groth16": "PASS_G2B_REAL_GROTH16_FIXED_B2_STATE_TRANSITION",
     "G2_C_b4_state_and_omission": "PASS_G2C_REAL_GROTH16_B4_STATE_AND_OMITTED_THIRD_BALLOT_REJECTED",
     "G2_D_d5_w32_b4_state_and_omission": "PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED",
-    "G2_state_proof": "PASS_G2D_D5_W32_B4_STATE_AND_OMISSION_SINGLE_SAMPLE",
+    "G2_E_consecutive_b4_native_state": "PASS_TWO_CONSECUTIVE_B4_TRANSITIONS_AND_NATIVE_CHECKPOINT",
+    "G2_state_proof": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_TRANSITIONS_NOT_SETTLEMENT",
     "G2_state_proof_batch_4": "PASS_G2D_D5_W32_B4_REAL_STATE_AND_OMISSION_REJECTED",
     "G3_A_five_process_dkg_happy_path": "PASS_G3A_FIVE_OS_PROCESS_DKG_HAPPY_PATH",
     "G3_B_one_trustee_restart_recovery": "PASS_G3B_ONE_TRUSTEE_RESTART_RECOVERY",
@@ -5876,8 +5877,334 @@
     "verifying_key_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
     "vk_preparation_ms": 1.048667
   },
+  "g2_e_consecutive_b4_native_state": {
+    "accepted_schedule": {
+      "election_id_hex": "bc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad45718",
+      "final_context_hex": "7ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e01",
+      "ordered_roots_hex": [
+        "91f6c687850b799e58e413c6c9c3b67e1acb1f2cb8a03e2b4d88a3729a9a2134",
+        "4e3a7649aa9d7455509a0b052d85c6745b38cb1f2416045c08ffd25094837fcf"
+      ],
+      "region": 4,
+      "source_voter_indices": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6,
+          7
+        ]
+      ]
+    },
+    "accepted_schedule_json_sha256": "97192e74b0ec2f66e38552516fd3489aa2c43c3b265d6d59c15e7f4613f75e6b",
+    "all_both_verifiers_pass": true,
+    "arch": "aarch64",
+    "ballot_setup_rerun": false,
+    "batch_count": 2,
+    "batch_size": 4,
+    "batches": [
+      {
+        "aggregate_bytes": 8212,
+        "ballot_matrix_bytes": 3200,
+        "batch_index": 1,
+        "checkpoint": {
+          "next": 2,
+          "spent": 4,
+          "state": [
+            {
+              "c0_hex": "0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+              "c1_hex": "1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+              "candidate_id": 1
+            },
+            {
+              "c0_hex": "fd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+              "c1_hex": "59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+              "candidate_id": 2
+            },
+            {
+              "c0_hex": "35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+              "c1_hex": "35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1",
+              "candidate_id": 3
+            }
+          ]
+        },
+        "independent_direct_fold_check_ms": 0.006167000000000001,
+        "receiver_check_verify_apply_elapsed_ms": 9.462042,
+        "snarkpack_verify_ms": 6.842292,
+        "source_voter_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "state_proof_bytes": 192,
+        "state_public_input_bytes": 1184,
+        "state_verify_ms": 2.566542,
+        "verified_and_applied": true
+      },
+      {
+        "aggregate_bytes": 8212,
+        "ballot_matrix_bytes": 3200,
+        "batch_index": 2,
+        "checkpoint": {
+          "next": 3,
+          "spent": 8,
+          "state": [
+            {
+              "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+              "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+              "candidate_id": 1
+            },
+            {
+              "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+              "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+              "candidate_id": 2
+            },
+            {
+              "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+              "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+              "candidate_id": 3
+            }
+          ]
+        },
+        "independent_direct_fold_check_ms": 0.032042,
+        "receiver_check_verify_apply_elapsed_ms": 11.817333,
+        "snarkpack_verify_ms": 8.751791,
+        "source_voter_indices": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "state_proof_bytes": 192,
+        "state_public_input_bytes": 1184,
+        "state_verify_ms": 3.004792,
+        "verified_and_applied": true
+      }
+    ],
+    "build_profile": "release-opt-level-1",
+    "calldata_bytes": null,
+    "cpu": "Apple M4",
+    "dkg_rerun": false,
+    "evm_run": false,
+    "experiment_descriptor": {
+      "accepted_schedule": "locally frozen ordered Root_v2 values before proof generation; not an independent intake or censorship guarantee",
+      "baseline_descriptor": "configs/protocol_manifest.JUBJUB-G2D-STATE-D5-W32-B4.json",
+      "baseline_descriptor_sha256": "c8568975753d5abfff4898c65e8587b6e0ace25e2165dbba9f66babab947a288",
+      "batch_count": 2,
+      "batch_size": 4,
+      "evm_run": false,
+      "first_fixture": "fixtures/jubjub_state_g2d_d5w32_b4_public_v1.json",
+      "first_fixture_sha256": "254c0f35bd7715f2807ba7981cca7ff52f50bfc5445d5909f4a49420c2f8fe04",
+      "first_raw": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+      "first_raw_sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0",
+      "negative_scope": [
+        "skip first batch",
+        "reset second old state",
+        "replay already accepted batch"
+      ],
+      "new_ballot_proof_count": 0,
+      "new_source_aggregate_count": 1,
+      "new_state_proof_count": 1,
+      "production_setup": false,
+      "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G2E-MULTIBATCH-B4-v1",
+      "receiving_layer": "native in-memory check-then-write; exact context, registry, next index, old state, accepted root and spent nullifiers",
+      "reused_state_proof_count": 1,
+      "scope": "two consecutive native B4 transitions, locally frozen accepted schedule; no recursive proof or on-chain settlement",
+      "setup": "reconstruct G2-D deterministic research setup; compare full VK bytes before reusing its first proof",
+      "source_voter_indices": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6,
+          7
+        ]
+      ],
+      "state_layout": "VV/JUBJUB/G2-C/STATE-B4-LAYOUT/v1",
+      "state_public_inputs": 37
+    },
+    "final_equals_independent_eight_ballot_fold": true,
+    "final_state": [
+      {
+        "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+        "candidate_id": 3
+      }
+    ],
+    "frozen_ballot_manifest_sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e",
+    "full_settlement": false,
+    "gas_total": null,
+    "gate": "G2-E",
+    "git_commit": "61193416f36a4bb4132091a10259ced1282d5978",
+    "git_dirty": true,
+    "git_status_at_start": "M crates/vv-friendly-dkg/Cargo.toml\n?? configs/protocol_manifest.JUBJUB-G2E-MULTIBATCH-B4.json\n?? crates/vv-friendly-dkg/src/bin/common/g2e_receiver.rs\n?? crates/vv-friendly-dkg/src/bin/g2e_multibatch_state.rs",
+    "limitations": [
+      "two functional B4 transitions, not a B8 circuit or repeated performance statistics",
+      "deterministic research setup and fake aggregation SRS, no production security ceremony",
+      "native serial in-memory checkpoint only; no crash persistence, concurrent writes or EVM execution",
+      "accepted roots locally frozen from selected D2 records; no independent intake/censorship-resistance authority",
+      "P3 ten-subset v2, W32 state-to-disclosure end-to-end and complete on-chain verifier remain future steps"
+    ],
+    "negative_tests": {
+      "all_preflight_rejections_leave_state_and_spent_unchanged": true,
+      "original_second_proof_with_zero_old_state_rejected": true,
+      "replayed_first_batch_rejected": "NextIndex",
+      "reset_proof_verify_ms": 2.432458,
+      "reset_second_old_state_rejected": "OldState",
+      "skipped_first_batch_rejected": "NextIndex"
+    },
+    "new_ballot_proof_count": 0,
+    "new_second_proof_seed": 5130238986451812354,
+    "new_second_prove_ms": 16917.430791000003,
+    "new_source_aggregate_count": 1,
+    "new_source_aggregation_ms": 12.321125,
+    "new_state_proof_count": 1,
+    "next_batch_index": 3,
+    "nonzero_old_state_shape": {
+      "constraints": 2743666,
+      "exact_public_input_packing": true,
+      "first_unsatisfied_constraint": null,
+      "matrix_digest_encoding": "VV/G2-D/ORDERED-R1CS-ABC/v1; counts/row widths/column u64 BE; field coefficients canonical LE32; includes constant instance",
+      "matrix_digest_ms": 2157.0556669999996,
+      "matrix_sha256": "361195013588cde48bf43e1c5b0071f9cbe8462675246fe3d6f88dec41c6315e",
+      "public_inputs": 37,
+      "satisfied": true,
+      "synthesis_and_check_ms": 4375.161292,
+      "witness_variables": 2693602
+    },
+    "os": "macos",
+    "peak_rss_mib": 5793.875,
+    "private_voter_or_trustee_secrets_emitted": false,
+    "production_setup": false,
+    "proving_key_compressed_bytes": 847800624,
+    "proving_key_persisted": false,
+    "public_verifier_fixture": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+    "public_verifier_fixture_sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19",
+    "recursive_snarkpack_verification": false,
+    "reused_state_proof_count": 1,
+    "rustc_version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "schedule_frozen_before_setup_and_prove": true,
+    "second_old_equals_first_new": true,
+    "second_old_state_is_nonzero": true,
+    "setup_rebuild_count": 1,
+    "setup_rebuild_ms": 25314.304084,
+    "setup_seed": 5130237886989685845,
+    "shared_aggregation_srs_sha256": "3a8a75be96e4150c757b85f682be37d4e502e8b45a17943171bd0bbbdfd605aa",
+    "source_aggregate_reused": 1,
+    "source_artifact_pins": [
+      {
+        "path": "configs/protocol_manifest.JUBJUB-G2E-MULTIBATCH-B4.json",
+        "sha256": "69037c5cd893f32fc8c7a06e13077f63b96f70b60513efe619f5e4fa0190b53b"
+      },
+      {
+        "path": "configs/protocol_manifest.JUBJUB-G2D-STATE-D5-W32-B4.json",
+        "sha256": "c8568975753d5abfff4898c65e8587b6e0ace25e2165dbba9f66babab947a288"
+      },
+      {
+        "path": "fixtures/jubjub_state_g2d_d5w32_b4_public_v1.json",
+        "sha256": "254c0f35bd7715f2807ba7981cca7ff52f50bfc5445d5909f4a49420c2f8fe04"
+      },
+      {
+        "path": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+        "sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0"
+      },
+      {
+        "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+        "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+      },
+      {
+        "path": "experiments/g1_d2_raw/uniform_depth5_batch32.json",
+        "sha256": "1a8c11c29ec89b8cf4a58dc963d83f408cd6f3fef6ef28a91159bb6985952372"
+      },
+      {
+        "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+        "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/state_gadget.rs",
+        "sha256": "40aef68da8416819a8b9d457ce890968a8a426099b263b81606d746e205fb80c"
+      }
+    ],
+    "source_ballot_proofs_reused": 8,
+    "source_hashes": [
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/g2e_multibatch_state.rs",
+        "sha256": "7dc20329a2047b990ffc4c891f860d4ebf2c14a205bec37292613026a7b3f111"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/common/g2e_receiver.rs",
+        "sha256": "7f748d4c7a172fdce109c5f89877f626a28d04815ef5510197de4e679397fced"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/common/g1e_fold.rs",
+        "sha256": "ab03a54efb491b446007447c2491c1f282ca1cfea10f39417fb8e2a9ce34ce11"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/Cargo.toml",
+        "sha256": "6d3caeea6d2c9338323c83fdfc70b110ea3134aeaf226e990646689a8b995d17"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/state_gadget.rs",
+        "sha256": "40aef68da8416819a8b9d457ce890968a8a426099b263b81606d746e205fb80c"
+      },
+      {
+        "path": "crates/vv-friendly-crypto/src/cp_h3_gadget.rs",
+        "sha256": "bb13d59b63d3151b3d0ff36488a00c50ecb2bef1ec990138e3392059d4b0a6df"
+      },
+      {
+        "path": "Cargo.toml",
+        "sha256": "6b7ce01c5bd626481149ca37549a934c97131469b38d4f3bee8ae93fa1380a69"
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+      }
+    ],
+    "source_individual_verify_ms": [
+      0.664458,
+      0.581375,
+      0.834,
+      0.756583,
+      0.6612089999999999,
+      0.478791,
+      0.5015,
+      0.536583
+    ],
+    "source_suite": "D5/W32/G1-D2",
+    "sources_unchanged_before_archival": true,
+    "spent_nullifier_count": 8,
+    "srs_rebuild_ms_offline": 6.6847080000000005,
+    "started_utc": "2026-10-30T08:41:35Z",
+    "state_layout": "VV/JUBJUB/G2-C/STATE-B4-LAYOUT/v1",
+    "state_vk_matches_g2d_byte_for_byte": true,
+    "state_vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+    "status": "PASS_TWO_CONSECUTIVE_B4_TRANSITIONS_AND_NATIVE_CHECKPOINT",
+    "total_distinct_ballots": 8,
+    "total_run_ms_excluding_compilation": 50236.422292
+  },
   "project_current_progress": {
-    "latest_completed_gate": "G2-D",
+    "latest_completed_gate": "G2-E",
     "largest_measured_native_distinct_voter_batch": 32,
     "largest_measured_state_proof_batch": 4,
     "same_suite_native_pilot_batch_sizes": [
@@ -5887,11 +6214,11 @@
       16,
       32
     ],
-    "current_evaluation_suite": "fixed depth5 / W32, native ballot statistics and first-batch B4 state proof",
-    "current_evaluation_suite_state_and_p3": "STATE_B4_PASS_P3_NOT_MEASURED",
-    "current_evaluation_suite_state": "PASS_G2D_FIRST_ZERO_OLD_STATE_B4_SINGLE_SAMPLE",
+    "current_evaluation_suite": "fixed depth5 / W32, native ballot statistics and two consecutive B4 state proofs",
+    "current_evaluation_suite_state_and_p3": "STATE_TWO_CONSECUTIVE_B4_PASS_P3_NOT_MEASURED",
+    "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT",
     "current_evaluation_suite_p3": "NOT_MEASURED",
-    "next_task": "STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment",
+    "next_task": "Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison",
     "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS"
   },
   "g2_a_state_transition_r1cs": {

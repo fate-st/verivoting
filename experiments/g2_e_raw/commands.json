@@ -1,0 +1,138 @@
+[
+  {
+    "name": "fmt",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "fmt",
+      "--all"
+    ],
+    "exit_code": 0,
+    "wall_ms": 400
+  },
+  {
+    "name": "fmt-check",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0,
+    "wall_ms": 286
+  },
+  {
+    "name": "clippy",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "clippy",
+      "-p",
+      "vv-friendly-crypto",
+      "-p",
+      "vv-friendly-dkg",
+      "--all-targets",
+      "--release",
+      "--locked",
+      "--offline",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0,
+    "wall_ms": 643
+  },
+  {
+    "name": "tests",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "test",
+      "-p",
+      "vv-friendly-crypto",
+      "-p",
+      "vv-friendly-dkg",
+      "--lib",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "wall_ms": 2765
+  },
+  {
+    "name": "checkpoint-tests",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "test",
+      "-p",
+      "vv-friendly-dkg",
+      "--bin",
+      "friendly-g2e-multibatch-state",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "wall_ms": 886
+  },
+  {
+    "name": "build",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "build",
+      "-p",
+      "vv-friendly-dkg",
+      "--bin",
+      "friendly-g2e-multibatch-state",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "wall_ms": 8072
+  },
+  {
+    "name": "release",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "run",
+      "--release",
+      "--locked",
+      "--offline",
+      "-p",
+      "vv-friendly-dkg",
+      "--bin",
+      "friendly-g2e-multibatch-state"
+    ],
+    "exit_code": 0,
+    "wall_ms": 50740
+  },
+  {
+    "name": "public-replay",
+    "program": "cargo",
+    "args": [
+      "+1.99.1",
+      "run",
+      "--release",
+      "--locked",
+      "--offline",
+      "-p",
+      "vv-friendly-dkg",
+      "--bin",
+      "friendly-g2e-multibatch-state",
+      "--",
+      "--verify-fixture",
+      "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "--output",
+      "experiments/g2_e_raw/public_replay.json"
+    ],
+    "exit_code": 0,
+    "wall_ms": 610
+  }
+]

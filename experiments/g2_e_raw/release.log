@@ -1,0 +1,10 @@
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running `target/release/friendly-g2e-multibatch-state`
+G2-E [1/5] reuse eight D2 ballot proofs; freeze TWO B4 roots before state setup/proving
+G2-E [2/5] fingerprint nonzero-old-state batch two; reconstruct G2-D setup and require byte-identical VK
+G2-E [3/5] reuse ONE archived first state proof; generate ONE new proof with old=S1, NOT zero
+  batch 1 PASS: next=2 spent=4 stateVerify=2.566542ms
+  batch 2 PASS: next=3 spent=8 stateVerify=3.004792ms
+G2-E [4/5] skipped first / replay / reset-old-state REJECT; flat independent eight-ballot sum MATCH
+G2-E [5/5] archive new public material and real measurements, preserve ALL historical results
+G2-E PASS: setup rebuild=25314.304ms new second prove=16917.431ms peakRSS=5793.875MiB

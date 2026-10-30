@@ -68,6 +68,7 @@ def main() -> int:
     g2_b_path = raw.parent / "g2_b_raw" / "state_transition_b2_groth16.json"
     g2_c_path = raw.parent / "g2_c_raw" / "state_transition_b4_groth16.json"
     g2_d_path = raw.parent / "g2_d_raw" / "state_transition_d5w32_b4_groth16.json"
+    g2_e_path = raw.parent / "g2_e_raw" / "multibatch_state_b4.json"
     g3_a_path = raw.parent / "g3_a_raw" / "five_process_dkg.json"
     g3_b_path = raw.parent / "g3_b_raw" / "one_trustee_restart.json"
     g4_a_path = raw.parent / "g4_a_raw" / "second_subset_p3_shape.json"
@@ -210,6 +211,9 @@ def main() -> int:
             raise ValueError("G2-D requires the D2 prefix and accepted positive/omission results")
         if g2_d["frozen_ballot_manifest_sha256"] != g1_d2["manifest_sha256"] or g2_d["ballot_vk_sha256"] != g1_d2["ballot_vk_ark_compressed_sha256"]:
             raise ValueError("G2-D does not match the frozen D2 family")
+    g2_e = json.loads(g2_e_path.read_text()) if g2_e_path.exists() else None
+    if g2_e and (not g2_d or g2_e["batch_count"] != 2 or not g2_e["all_both_verifiers_pass"] or not g2_e["second_old_equals_first_new"] or not g2_e["final_equals_independent_eight_ballot_fold"] or g2_e["state_vk_sha256"] != g2_d["verifying_key_sha256"]):
+        raise ValueError("G2-E requires two continuous D5/W32 batches with the pinned G2-D VK")
     g3_a = json.loads(g3_a_path.read_text()) if g3_a_path.exists() else None
     g3_b = json.loads(g3_b_path.read_text()) if g3_b_path.exists() else None
     g4_a = json.loads(g4_a_path.read_text()) if g4_a_path.exists() else None
@@ -424,8 +428,11 @@ def main() -> int:
                 g2_c["status"] if g2_c else "NOT_RUN"
             ),
             "G2_D_d5_w32_b4_state_and_omission": (g2_d["status"] if g2_d else "NOT_RUN"),
+            "G2_E_consecutive_b4_native_state": (g2_e["status"] if g2_e else "NOT_RUN"),
             "G2_state_proof": (
-                "PASS_G2D_D5_W32_B4_STATE_AND_OMISSION_SINGLE_SAMPLE"
+                "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_TRANSITIONS_NOT_SETTLEMENT"
+                if g2_e
+                else "PASS_G2D_D5_W32_B4_STATE_AND_OMISSION_SINGLE_SAMPLE"
                 if g2_d
                 else "PASS_G2C_REAL_GROTH16_FIXED_B4_STATE_AND_OMISSION_REJECTION"
                 if g2_c
@@ -643,16 +650,17 @@ def main() -> int:
         "g1_d2_same_vk_depth5_batch32": g1_d2,
         "g1_e_fixed_pool_repeated_benchmark": g1_e,
         "g2_d_d5_w32_b4_state_and_omission": g2_d,
+        "g2_e_consecutive_b4_native_state": g2_e,
         "project_current_progress": {
-            "latest_completed_gate": "G2-D" if g2_d else "G1-E" if g1_e else "G1-D2" if g1_d2 else "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
+            "latest_completed_gate": "G2-E" if g2_e else "G2-D" if g2_d else "G1-E" if g1_e else "G1-D2" if g1_d2 else "G1-D1" if g1_d1 else "G1-D0" if g1_d0 else "G2-C" if g2_c else "G1-C3" if g1_c3 else "G1-C2" if g1_c2 else "G5-D" if g5_d else None,
             "largest_measured_native_distinct_voter_batch": 32 if g1_d2 else 16 if g1_d1 else 8 if g1_d0 or g1_c3 else 4 if g1_c2 else 2 if g1_c1 else None,
             "largest_measured_state_proof_batch": 4 if g2_d or g2_c else 2 if g2_b else None,
             "same_suite_native_pilot_batch_sizes": g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] + g1_d2["measured_batch_sizes"] if g1_d2 else g1_d0["measured_batch_sizes"] + g1_d1["measured_batch_sizes"] if g1_d1 else g1_d0["measured_batch_sizes"] if g1_d0 else [],
-            "current_evaluation_suite": "fixed depth5 / W32, native ballot statistics and first-batch B4 state proof" if g2_d else "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
-            "current_evaluation_suite_state_and_p3": "STATE_B4_PASS_P3_NOT_MEASURED" if g2_d else "NOT_MEASURED" if g1_d0 else None,
-            "current_evaluation_suite_state": "PASS_G2D_FIRST_ZERO_OLD_STATE_B4_SINGLE_SAMPLE" if g2_d else "NOT_MEASURED",
+            "current_evaluation_suite": "fixed depth5 / W32, native ballot statistics and two consecutive B4 state proofs" if g2_e else "fixed depth5 / W32, native ballot statistics and first-batch B4 state proof" if g2_d else "fixed depth5 / W32, native ballot pilot only" if g1_d0 else None,
+            "current_evaluation_suite_state_and_p3": "STATE_TWO_CONSECUTIVE_B4_PASS_P3_NOT_MEASURED" if g2_e else "STATE_B4_PASS_P3_NOT_MEASURED" if g2_d else "NOT_MEASURED" if g1_d0 else None,
+            "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT" if g2_e else "PASS_G2D_FIRST_ZERO_OLD_STATE_B4_SINGLE_SAMPLE" if g2_d else "NOT_MEASURED",
             "current_evaluation_suite_p3": "NOT_MEASURED",
-            "next_task": "STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment" if g2_d else "G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first)" if g1_e else "Formal repeated native measurements for B=2/4/8/16/32 with warmup/interleaved order and automatic figures (planned only; no larger batches or state/P3 work)" if g1_d2 else "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
+            "next_task": "Complete ten 3-of-5 subsets in one new P3 tally-v2 relation/VK, preferably on G2-E W32 final state; then native full-flow binding, then exact on-chain verification/comparison" if g2_e else "STOP for G2-D B4 review; assess PK/RSS budget before authorizing a separate G2-E B8 experiment" if g2_d else "G2-D: W32 B=4 state proof and direct-fold comparison (planned only; review G1-E first)" if g1_e else "Formal repeated native measurements for B=2/4/8/16/32 with warmup/interleaved order and automatic figures (planned only; no larger batches or state/P3 work)" if g1_d2 else "G1-D2: B=32 in the SAME frozen D5/W32 suite; reuse matching archived B16 pool, generate only voters 17-32 (planned, not automatic)" if g1_d1 else "G1-D1: B=16 functional increment in the SAME frozen D5/W32 suite; reuse archived matching first eight proofs" if g1_d0 else "G1-D0: freeze depth-5/32-leaf suite; same-VK B=2/4/8 native pilot before the B=2-32 repeated matrix" if g2_c else "G2-C: B=4 state proof bound to the saved G1-C2 ordered statements; omitted-third-ballot negative" if g1_c3 else "B=8: versioned depth-3 registration and eight distinct same-region source proofs/aggregate",
             "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS" if g1_e else "NOT_MEASURED",
         },
         "g2_a_state_transition_r1cs": g2_a,
@@ -722,10 +730,24 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g2_e:
+        lines.extend([
+            "## Latest project checkpoint: G2-E two consecutive B4 state transitions",
+            "",
+            f"- Status: `{g2_e['status']}`. Report: `docs/G2_E_MULTIBATCH_STATE.md`.",
+            "- Same D5/W32 suite; S0 -> S1 -> S2. Second old state is nonzero and equals first new state; final state equals the independent flat eight-ballot sum.",
+            "- Eight ballot proofs, first aggregate/state proof reused; one new second aggregate/state proof. Rebuilt state VK matches G2-D byte for byte; full second R1CS matrix digest also matches.",
+            "- Real aggregate/state verifiers pass both batches. Native in-memory receiver checks context/registry/root/old/next/spent; skip-first, replay and reset-old reject without writes. Public fixture replay passes with zero Setup/Prove.",
+            f"- Setup rebuild/new second Prove: `{g2_e['setup_rebuild_ms']:.3f} / {g2_e['new_second_prove_ms']:.3f} ms`; state Verify by batch: `{g2_e['batches'][0]['state_verify_ms']:.6f} / {g2_e['batches'][1]['state_verify_ms']:.6f} ms`; cumulative peak RSS `{g2_e['peak_rss_mib']:.3f} MiB`.",
+            f"- Measured base HEAD `{g2_e['git_commit']}`; git_dirty=`{g2_e['git_dirty']}`, source snapshot hashes recorded. Not a clean committed-source claim.",
+            "- Two functional B4 transitions, NOT a B8 state circuit, recursive proof, independent intake log or contract settlement. No performance advantage, P3-ten-subset, W32 winner disclosure or Gas claim.",
+            "- Next: complete P3 tally-v2 ten subsets under one new VK, then native frozen-state-to-winner integration, then complete on-chain verification/comparison. Frozen Miller route stays frozen.",
+            "",
+        ])
     if g2_d:
         c = g2_d["comparison"]
         lines.extend([
-            "## Latest project checkpoint: G2-D D5/W32 B4 state proof",
+            "## Previous state checkpoint: G2-D D5/W32 B4 state proof" if g2_e else "## Latest project checkpoint: G2-D D5/W32 B4 state proof",
             "",
             f"- Status: `{g2_d['status']}`; clean source `{g2_d['git_commit']}`. Report: `docs/G2_D_W32_B4_STATE.md`.",
             "- Exact first four D2 proofs/25-field rows; same ballot VK/context/frozen registration root and generic research SRS. One NEW B4 aggregate, zero new ballot proofs/Setup/DKG.",

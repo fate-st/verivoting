@@ -1,0 +1,43 @@
+{
+  "protocol_version": "VERIVOTING-JUBJUB-EXPERIMENT-G2E-MULTIBATCH-B4-v1",
+  "scope": "two consecutive native B4 transitions, locally frozen accepted schedule; no recursive proof or on-chain settlement",
+  "baseline_descriptor": "configs/protocol_manifest.JUBJUB-G2D-STATE-D5-W32-B4.json",
+  "baseline_descriptor_sha256": "c8568975753d5abfff4898c65e8587b6e0ace25e2165dbba9f66babab947a288",
+  "first_fixture": "fixtures/jubjub_state_g2d_d5w32_b4_public_v1.json",
+  "first_fixture_sha256": "254c0f35bd7715f2807ba7981cca7ff52f50bfc5445d5909f4a49420c2f8fe04",
+  "first_raw": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+  "first_raw_sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0",
+  "batch_size": 4,
+  "batch_count": 2,
+  "source_voter_indices": [
+    [
+      0,
+      1,
+      2,
+      3
+    ],
+    [
+      4,
+      5,
+      6,
+      7
+    ]
+  ],
+  "state_layout": "VV/JUBJUB/G2-C/STATE-B4-LAYOUT/v1",
+  "state_public_inputs": 37,
+  "new_ballot_proof_count": 0,
+  "reused_state_proof_count": 1,
+  "new_state_proof_count": 1,
+  "new_source_aggregate_count": 1,
+  "production_setup": false,
+  "setup": "reconstruct G2-D deterministic research setup; compare full VK bytes before reusing its first proof",
+  "accepted_schedule": "locally frozen ordered Root_v2 values before proof generation; not an independent intake or censorship guarantee",
+  "negative_scope": [
+    "skip first batch",
+    "reset second old state",
+    "replay already accepted batch"
+  ],
+  "receiving_layer": "native in-memory check-then-write; exact context, registry, next index, old state, accepted root and spent nullifiers",
+  "evm_run": false
+}
+
