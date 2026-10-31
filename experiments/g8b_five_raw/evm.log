@@ -1,0 +1,12 @@
+G8-B five [1] execute exact archived signed prefix in a fresh Prague VM, not copy storage
+G8-B five [2] authenticate non-certifiers first; certify {1,2,3} != decrypt-roster set
+  reject forged_trustee4_signature: BAD_PACKAGE_SIGNATURE
+  reject changed_trustee4_cp_target: CP_TARGET
+  Trustee 4: 3795978 Gas / 484 B, DKG certifier=false
+  reject duplicate_trustee4: DUPLICATE_TRUSTEE
+  Trustee 5: 3767933 Gas / 484 B, DKG certifier=false
+  reject only_noncertifiers_4_5_not_ready: DECRYPTION_QUORUM
+  Trustee 3: 3788569 Gas / 484 B, DKG certifier=true
+  Trustee 1: 3787397 Gas / 484 B, DKG certifier=true
+  Trustee 2: 3779881 Gas / 484 B, DKG certifier=true
+G8-B five PASS: 5/5 original package signatures; readiness {3,4,5} independent of certifiers {1,2,3}; 4 new atomic rejections; 23 signed txs; full G8 PARTIAL

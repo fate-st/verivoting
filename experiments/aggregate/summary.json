@@ -1,5 +1,5 @@
 {
-  "classification": "measured-g8b-original-trustee-commitments-certified-keycore-live-frozen-ct2-not-full-settlement",
+  "classification": "measured-g8b-five-original-commitments-distinct-certifier-and-decryption-roster-not-full-settlement",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -92,7 +92,8 @@
     "G8_receiver_freeze_individual_fallback": "PARTIAL_G8_REAL_INDIVIDUAL_BALLOT_STATE_EVM_CT2_FREEZE_PASS",
     "G8_full_winner_only_settlement": "PARTIAL_CERTIFICATES_AND_FROZEN_COMMITMENTS_PASS_P3_WINNER_INTEGRATION_PENDING",
     "G8_A_original_certificate_authentication_component": "PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE",
-    "G8_B_authenticated_trustee_commitments_component": "PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2"
+    "G8_B_authenticated_trustee_commitments_component": "PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2",
+    "G8_B_all_five_original_commitments": "PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED"
   },
   "dkg": {
     "classification": "real-group-single-process-protocol-simulation",
@@ -6232,13 +6233,15 @@
     "current_p3_vk_evm_verified": true,
     "active_gate": "G8",
     "active_gate_status": "PARTIAL",
-    "latest_completed_step": "G8-B original Trustee signatures and KeyCore shares bound to live frozen CT2",
+    "latest_completed_step": "G8-B all five original commitments; first-ready set 345 differs from DKG certifiers 123",
     "receiver_and_freeze_evm_measured": true,
     "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
     "certificate_authentication_component_evm_measured": true,
     "receiver_enforces_certificate_gate": false,
     "trustee_commitment_authentication_component_evm_measured": true,
-    "p3_storage_binding_integrated": false
+    "p3_storage_binding_integrated": false,
+    "all_five_trustee_commitments_evm_measured": true,
+    "certificate_and_decryption_roles_separated": true
   },
   "g2_a_state_transition_r1cs": {
     "gate": "G2-A",
@@ -21146,6 +21149,52 @@
       ]
     },
     "peak_node_rss_mib": 450.6875,
+    "full_system_gas": null
+  },
+  "g8b_five_trustees": {
+    "status": "PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED",
+    "raw": "experiments/g8b_five_raw/all_trustees.json",
+    "original_package_signatures_verified_evm": 5,
+    "dkg_certifier_ids": [
+      1,
+      2,
+      3
+    ],
+    "first_ready_commitment_set": [
+      3,
+      4,
+      5
+    ],
+    "accepted_commitments": [
+      {
+        "trustee_id": 4,
+        "is_dkg_certifier": false,
+        "gas": 3795978
+      },
+      {
+        "trustee_id": 5,
+        "is_dkg_certifier": false,
+        "gas": 3767933
+      },
+      {
+        "trustee_id": 3,
+        "is_dkg_certifier": true,
+        "gas": 3788569
+      },
+      {
+        "trustee_id": 1,
+        "is_dkg_certifier": true,
+        "gas": 3787397
+      },
+      {
+        "trustee_id": 2,
+        "is_dkg_certifier": true,
+        "gas": 3779881
+      }
+    ],
+    "new_atomic_negative_count": 4,
+    "contract_sources_changed": false,
+    "bytecode_changed": false,
     "full_system_gas": null
   }
 }

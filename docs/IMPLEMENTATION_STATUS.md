@@ -1,6 +1,19 @@
 # Implementation and claim boundary
 
-## Current work: G8-B original Trustee commitments passed, full G8 PARTIAL (2026-10-31)
+## Current work: G8-B five original commitments passed; full G8 PARTIAL (2026-10-31)
+
+[五人补充验收](G8_B_FIVE_TRUSTEES.md)：上传评估仍以 `ac021610` 为基准；本地 `e3b7cfb`
+已完成三人 G8-B。本轮仅补新增要求，不重复开发：五份原 G6 公开签名/承诺、原合约字节码
+全部复用，5/5 EVM 签名及 KeyCore 验证份额通过。建钥 certifier 固定 `{1,2,3}`，先接受
+4/5，再接受 3，使 `{3,4,5}` 达到门限，最后接受 1/2。4/5 没有签 DKG certificate 仍获合法认证。
+
+23 笔实际签名交易中，13 笔原前缀在新 VM 中逐笔执行且收据/Gas/轨迹匹配，不是拷贝冻结存储。
+四个新反例原子拒绝；411 条历史归档项未变。Solidity/Rust 原字节不改，没有重签、CP 包、
+Setup/Prove。沿用基点已通过的 48 Rust 回归；本轮未重新执行 Rust/Clippy 或历史重型实验。
+Node 语法、真实 EVM、基点来源和新补充审计通过。完整 G8 继续 PARTIAL，P3-ready 不代表
+已验证 CP/P3；旧接收器认证门控、60 输入重建、Winner 写入仍分别待 G8-C/D。此轮到五人验收停止。
+
+## Previous component: G8-B first-three acceptance (2026-10-31)
 
 [G8-B](G8_B_TRUSTEE_COMMITMENTS.md)：复用 G6 全部五份已归档公开承诺/签名，未执行新 DKG、
 CP 私包生成、重签或 SNARK Setup/Prove。原生验证全部五份签名/公开系数份额；同一次本地 Prague

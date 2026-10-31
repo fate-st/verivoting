@@ -2,7 +2,15 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Current work: G8-B authenticated Trustee commitments passed; full G8 remains PARTIAL
+## Current work: G8-B five-Trustee supplement passed; full G8 remains PARTIAL
+
+- Report: `docs/G8_B_FIVE_TRUSTEES.md`; raw: `experiments/g8b_five_raw/all_trustees.json`. All five archived original commitment signatures and KeyCore shares actually checked on unchanged EVM bytecode.
+- DKG certifiers stay `{1,2,3}`. Commitments arrive `4,5,3,1,2`; the distinct set `{3,4,5}` reaches readiness before 1/2 submit. Non-certifiers 4/5 are valid roster members, not rejected for failing to sign the DKG certificate.
+- 23 actual signed transactions include 13 exact prefix transactions reexecuted in a fresh local Prague VM, not storage copied from JSON. Four new necessary atomic rejects; 411 historical artifact entries unchanged. No new DKG/CP/signatures/Setup/Prove or Solidity/Rust changes; baseline's 48 Rust regressions are retained, not claimed as rerun this round.
+- Readiness is only authenticated-public-record quorum, NOT private CP verification, decryption or a new P3 proof. Receiver intake gate, storage-built P3 and Winner write-once remain G8-C/D; exact SnarkPack EVM remains unresolved.
+- Next: G8-C only: enforce certificates in a new integrated receiver, reconstruct all 60 P3 inputs from certified KeyCore/frozen storage/authenticated commitments and verify the existing G6 proof with G4-D VK. Keep private openings inside P3; Winner write-once remains G8-D. No heavy-proof reruns or exact SnarkPack completion claim.
+
+## Previous component: G8-B first-three acceptance
 
 - Report: `docs/G8_B_TRUSTEE_COMMITMENTS.md`; raw: `experiments/g8b_raw/trustee_commitments.json`. Five archived G6 public records were decoded/native-checked; three original commitment signatures and public polynomial verification shares were actually checked in EVM.
 - Trustee 1/2/3 costs `[3804497, 3779881, 3788569]` Gas; each 484 B. 10 atomic negatives; 25 signed transactions in one local Prague VM; 48 relevant Rust regressions and strict Clippy passed.
@@ -319,6 +327,7 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G8_full_winner_only_settlement | PARTIAL_CERTIFICATES_AND_FROZEN_COMMITMENTS_PASS_P3_WINNER_INTEGRATION_PENDING |
 | G8_A_original_certificate_authentication_component | PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE |
 | G8_B_authenticated_trustee_commitments_component | PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2 |
+| G8_B_all_five_original_commitments | PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED |
 
 ## Four-voter end-to-end fixture
 

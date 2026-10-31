@@ -81,6 +81,7 @@ def main() -> int:
     g8_path = raw.parent / "g8_raw" / "receiver_freeze.json"
     g8a_path = raw.parent / "g8a_raw" / "certificate_auth.json"
     g8b_path = raw.parent / "g8b_raw" / "trustee_commitments.json"
+    g8b_five_path = raw.parent / "g8b_five_raw" / "all_trustees.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -233,6 +234,21 @@ def main() -> int:
     g8 = json.loads(g8_path.read_text()) if g8_path.exists() else None
     g8a = json.loads(g8a_path.read_text()) if g8a_path.exists() else None
     g8b = json.loads(g8b_path.read_text()) if g8b_path.exists() else None
+    g8b_five = json.loads(g8b_five_path.read_text()) if g8b_five_path.exists() else None
+    if g8b_five and (
+        not g8b or g8b_five["status"] != "PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED"
+        or g8b_five["original_package_signatures_verified_evm"] != 5
+        or g8b_five["verification_share_polynomial_checks_evm"] != 5
+        or g8b_five["dkg_certifier_ids"] != [1, 2, 3]
+        or g8b_five["first_ready_commitment_set"] != [3, 4, 5]
+        or g8b_five["first_ready_checkpoint"]["submitted"] != [False, False, True, True, True]
+        or g8b_five["final_checkpoint"]["count"] != 5
+        or not g8b_five["final_checkpoint"]["p3_ready"]
+        or g8b_five["contract_sources_changed"] or g8b_five["bytecode_changed"]
+        or g8b_five["p3_verified_in_this_flow"] or g8b_five["complete_g8_settlement"]
+        or any(g8b_five[k] != 0 for k in ["new_signatures", "new_cp_packages", "setup_count", "proof_generation_count"])
+    ):
+        raise ValueError("G8-B supplement must authenticate all five original records and separate certificate/decryption roles, NOT claim P3")
     if g8b and (
         not g8a or g8b["status"] != "PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2"
         or g8b["original_package_signatures_verified_evm"] != 3
@@ -900,6 +916,27 @@ def main() -> int:
             "p3_storage_binding_integrated": False,
             "next_task": "G8-C only: enforce certificates in a new integrated receiver, reconstruct all 60 P3 inputs from certified KeyCore/frozen storage/authenticated commitments and verify the existing G6 proof with G4-D VK. Keep private openings inside P3; Winner write-once remains G8-D. No heavy-proof reruns or exact SnarkPack completion claim.",
         })
+    if g8b_five:
+        summary["classification"] = "measured-g8b-five-original-commitments-distinct-certifier-and-decryption-roster-not-full-settlement"
+        summary["g8b_five_trustees"] = {
+            "status": g8b_five["status"], "raw": str(g8b_five_path),
+            "original_package_signatures_verified_evm": 5,
+            "dkg_certifier_ids": g8b_five["dkg_certifier_ids"],
+            "first_ready_commitment_set": g8b_five["first_ready_commitment_set"],
+            "accepted_commitments": [
+                {"trustee_id": t["trustee_id"], "is_dkg_certifier": t["is_dkg_certifier"],
+                 "gas": g8b_five["transactions"][t["transaction_nonce"]]["total_gas"]}
+                for t in g8b_five["accepted_commitments"]
+            ],
+            "new_atomic_negative_count": len(g8b_five["negative_tests"]),
+            "contract_sources_changed": False, "bytecode_changed": False, "full_system_gas": None,
+        }
+        summary["gates"]["G8_B_all_five_original_commitments"] = g8b_five["status"]
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G8-B all five original commitments; first-ready set 345 differs from DKG certifiers 123",
+            "all_five_trustee_commitments_evm_measured": True,
+            "certificate_and_decryption_roles_separated": True,
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -909,9 +946,20 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g8b_five:
+        lines.extend([
+            "## Current work: G8-B five-Trustee supplement passed; full G8 remains PARTIAL",
+            "",
+            "- Report: `docs/G8_B_FIVE_TRUSTEES.md`; raw: `experiments/g8b_five_raw/all_trustees.json`. All five archived original commitment signatures and KeyCore shares actually checked on unchanged EVM bytecode.",
+            "- DKG certifiers stay `{1,2,3}`. Commitments arrive `4,5,3,1,2`; the distinct set `{3,4,5}` reaches readiness before 1/2 submit. Non-certifiers 4/5 are valid roster members, not rejected for failing to sign the DKG certificate.",
+            f"- {g8b_five['transaction_count']} actual signed transactions include 13 exact prefix transactions reexecuted in a fresh local Prague VM, not storage copied from JSON. Four new necessary atomic rejects; 411 historical artifact entries unchanged. No new DKG/CP/signatures/Setup/Prove or Solidity/Rust changes; baseline's 48 Rust regressions are retained, not claimed as rerun this round.",
+            "- Readiness is only authenticated-public-record quorum, NOT private CP verification, decryption or a new P3 proof. Receiver intake gate, storage-built P3 and Winner write-once remain G8-C/D; exact SnarkPack EVM remains unresolved.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g8b:
         lines.extend([
-            "## Current work: G8-B authenticated Trustee commitments passed; full G8 remains PARTIAL",
+            "## Previous component: G8-B first-three acceptance" if g8b_five else "## Current work: G8-B authenticated Trustee commitments passed; full G8 remains PARTIAL",
             "",
             "- Report: `docs/G8_B_TRUSTEE_COMMITMENTS.md`; raw: `experiments/g8b_raw/trustee_commitments.json`. Five archived G6 public records were decoded/native-checked; three original commitment signatures and public polynomial verification shares were actually checked in EVM.",
             f"- Trustee 1/2/3 costs `{summary['g8b_original_trustee_commitments']['accepted_commitment_gas']}` Gas; each 484 B. {len(g8b['negative_tests'])} atomic negatives; {g8b['transaction_count']} signed transactions in one local Prague VM; 48 relevant Rust regressions and strict Clippy passed.",

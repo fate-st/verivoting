@@ -1,6 +1,17 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current work: G8-B authenticated commitments passed; next only G8-C
+## Current work: G8-B five-person supplement passed; next only G8-C
+
+[补充验收](G8_B_FIVE_TRUSTEES.md) 从本地已提交 `e3b7cfb` 建立
+`experiment/g8b-five-trustees`，不从上传评估的旧 `ac021610` 重做 G8-B。
+5/5 原承诺签名和 KeyCore 份额通过真实 EVM；认证集合 `{1,2,3}` 不变，承诺顺序 `4,5,3,1,2`，
+先由不同集合 `{3,4,5}` 达到门限。新四项必要原子拒绝、411 历史归档项核对通过。
+不改原合约/字节码/密码学算法，不生成新 CP/签名/Setup/Prove。本轮到该补充验收停止。
+
+唯一下一步仍是下面列出的 G8-C：接收前强制认证 + 存储重建 60 输入 + 复用 G6/G4-D 证明/VK。
+不能把五人承诺认证、或不同集合达到门限，写成已完成五份 CP/P3 或新的门限解密实验。
+
+## Previous component: G8-B first-three acceptance; G8-C plan remains current
 
 [G8-B](G8_B_TRUSTEE_COMMITMENTS.md) 从 `ac021610` 建立独立
 `experiment/g8b-trustee-commitments`：五份 G6 公开记录解码及原生验证，三份原承诺签名在 EVM

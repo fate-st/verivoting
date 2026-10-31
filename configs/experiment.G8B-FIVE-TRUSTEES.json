@@ -1,0 +1,18 @@
+{
+  "gate": "G8-B-five-trustees",
+  "scope": "supplemental acceptance of all five original public commitments; unchanged protocol/bytecode; not G8-C",
+  "base_commit": "e3b7cfb9b1c21161af32e2035b67e774ba4a47b5",
+  "dkg_certifier_ids": [1, 2, 3],
+  "commitment_submission_order": [4, 5, 3, 1, 2],
+  "first_ready_commitment_set": [3, 4, 5],
+  "q_cert": 3,
+  "tau": 3,
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "prefix_transactions_reexecuted": 13,
+  "source_pins": [
+    {"path":"experiments/g8b_raw/trustee_commitments.json","sha256":"f067d6cec7df0a040bdc60e383b101d81a83b8073fdae1957dceb51a6f281dea"},
+    {"path":"experiments/g8b_raw/contract_artifacts.json","sha256":"b78d34dfacc3b51190be80f248e1d11139aa6b2a72e91e2b1be21764818539b7"},
+    {"path":"fixtures/g8b_trustee_commitments_public_v1.json","sha256":"944c69430864923a43624bffa5de99b6deaf2764a6d7ffc3aaac1bac01c63800"}
+  ]
+}

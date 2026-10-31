@@ -1,0 +1,112 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "commands": [
+    {
+      "name": "evm",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "contracts/scripts/g8b_all_trustees.mjs"
+      ],
+      "log": "evm.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 3857.973708
+    },
+    {
+      "name": "baseline-audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8b_audit.mjs"
+      ],
+      "log": "baseline-audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 237.913958
+    },
+    {
+      "name": "audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8b_five_audit.mjs"
+      ],
+      "log": "audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 169.5875
+    },
+    {
+      "name": "summary",
+      "attempt": 1,
+      "argv": [
+        "/Users/lijian/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/summarize.py"
+      ],
+      "log": "summary.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 195.454875
+    },
+    {
+      "name": "syntax-runner",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "contracts/scripts/g8b_all_trustees.mjs"
+      ],
+      "log": "syntax-runner.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 20.314791999999997
+    },
+    {
+      "name": "syntax-recorder",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g8b_five_record.mjs"
+      ],
+      "log": "syntax-recorder.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 19.270667
+    },
+    {
+      "name": "syntax-audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g8b_five_audit.mjs"
+      ],
+      "log": "syntax-audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 19.406417
+    },
+    {
+      "name": "audit",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g8b_five_audit.mjs"
+      ],
+      "log": "audit-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 249.905292
+    }
+  ]
+}

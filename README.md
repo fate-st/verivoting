@@ -8,7 +8,15 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G8-B Trustee commitment authentication passed; full G8 PARTIAL
+### Current work: G8-B all five Trustee commitments passed; full G8 PARTIAL
+
+[五人补充验收](docs/G8_B_FIVE_TRUSTEES.md) 使用原字节码、五份原始 G6 承诺签名：5/5 EVM
+认证及 KeyCore 份额检查通过。建钥 certifier 固定 `{1,2,3}`，承诺按 `4,5,3,1,2` 提交；
+`{3,4,5}` 先达到承诺门限，证明不能把认证签名集合当成唯一解密 roster。
+四项新必要原子拒绝通过；411 条历史归档项未变。不生成新证明/签名，不改旧合约。
+这仍不是私密 CP/P3 或完整结算；下一项只做 G8-C。旧接收器尚未强制证书认证。
+
+### Previous component: G8-B first-three acceptance
 
 [G8-B](docs/G8_B_TRUSTEE_COMMITMENTS.md) 复用 G6 五份原始公开记录，原生检查全部五份，
 在同一次本地 Prague 流程中认证 DKG/注册、验证两批 B4 并冻结 CT2，随后真实验证三名 Trustee
