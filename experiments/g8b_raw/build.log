@@ -1,0 +1,105 @@
+   Compiling vv-friendly-dkg v0.2.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/crates/vv-friendly-dkg)
+error[E0277]: the trait bound `[u8]: TryFrom<&[u8]>` is not satisfied
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:134:45
+    |
+134 |             nonce: decode_point(&wire[..32].try_into()?, false)?,
+    |                                             ^^^^^^^^ the trait `From<&[u8]>` is not implemented for `[u8]`
+    |
+    = help: the following other types implement trait `From<T>`:
+              `[T; 1]` implements `From<(T,)>`
+              `[T; 1]` implements `From<GenericArray<T, UInt<UTerm, B1>>>`
+              `[T; 2]` implements `From<(T, T)>`
+              `[T; 2]` implements `From<GenericArray<T, UInt<UInt<UTerm, B1>, B0>>>`
+              `[u64; 2]` implements `From<ppv_lite86::generic::vec128_storage>`
+              `[u8; 2]` implements `From<zerocopy::byteorder::I16<O>>`
+              `[u8; 2]` implements `From<zerocopy::byteorder::U16<O>>`
+              `[T; 3]` implements `From<(T, T, T)>`
+            and 99 others
+    = note: required for `&[u8]` to implement `Into<[u8]>`
+    = note: required for `[u8]` to implement `TryFrom<&[u8]>`
+    = note: required for `&[u8]` to implement `TryInto<[u8]>`
+    = note: the full name for the type has been written to '/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/deps/g8b_trustee_export-9c548e44d16c4947.long-type-641374434577571444.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:134:34
+    |
+134 |             nonce: decode_point(&wire[..32].try_into()?, false)?,
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `[u8]`
+    = note: all local variables must have a statically known size
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:134:34
+    |
+134 |             nonce: decode_point(&wire[..32].try_into()?, false)?,
+    |                                  ^^^^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `[u8]`
+note: required by an implicit `Sized` bound in `std::result::Result`
+   --> /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/core/src/result.rs:558:0
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:134:55
+    |
+134 |             nonce: decode_point(&wire[..32].try_into()?, false)?,
+    |                                                       ^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `[u8]`
+note: required by an implicit `Sized` bound in `ControlFlow`
+   --> /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/core/src/ops/control_flow.rs:89:0
+
+error[E0277]: the trait bound `[u8]: TryFrom<&[u8]>` is not satisfied
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:135:51
+    |
+135 |             response: decode_scalar(&wire[32..64].try_into()?)?,
+    |                                                   ^^^^^^^^ the trait `From<&[u8]>` is not implemented for `[u8]`
+    |
+    = help: the following other types implement trait `From<T>`:
+              `[T; 1]` implements `From<(T,)>`
+              `[T; 1]` implements `From<GenericArray<T, UInt<UTerm, B1>>>`
+              `[T; 2]` implements `From<(T, T)>`
+              `[T; 2]` implements `From<GenericArray<T, UInt<UInt<UTerm, B1>, B0>>>`
+              `[u64; 2]` implements `From<ppv_lite86::generic::vec128_storage>`
+              `[u8; 2]` implements `From<zerocopy::byteorder::I16<O>>`
+              `[u8; 2]` implements `From<zerocopy::byteorder::U16<O>>`
+              `[T; 3]` implements `From<(T, T, T)>`
+            and 99 others
+    = note: required for `&[u8]` to implement `Into<[u8]>`
+    = note: required for `[u8]` to implement `TryFrom<&[u8]>`
+    = note: required for `&[u8]` to implement `TryInto<[u8]>`
+    = note: the full name for the type has been written to '/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/deps/g8b_trustee_export-9c548e44d16c4947.long-type-641374434577571444.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:135:38
+    |
+135 |             response: decode_scalar(&wire[32..64].try_into()?)?,
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `[u8]`
+    = note: all local variables must have a statically known size
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:135:38
+    |
+135 |             response: decode_scalar(&wire[32..64].try_into()?)?,
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `[u8]`
+note: required by an implicit `Sized` bound in `std::result::Result`
+   --> /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/core/src/result.rs:558:0
+
+error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+   --> crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs:135:61
+    |
+135 |             response: decode_scalar(&wire[32..64].try_into()?)?,
+    |                                                             ^ doesn't have a size known at compile-time
+    |
+    = help: the trait `Sized` is not implemented for `[u8]`
+note: required by an implicit `Sized` bound in `ControlFlow`
+   --> /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/core/src/ops/control_flow.rs:89:0
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `vv-friendly-dkg` (bin "g8b_trustee_export") due to 8 previous errors

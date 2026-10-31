@@ -1,6 +1,24 @@
 # Implementation and claim boundary
 
-## Current work: G8-A original certificate component passed, full G8 PARTIAL
+## Current work: G8-B original Trustee commitments passed, full G8 PARTIAL (2026-10-31)
+
+[G8-B](G8_B_TRUSTEE_COMMITMENTS.md)：复用 G6 全部五份已归档公开承诺/签名，未执行新 DKG、
+CP 私包生成、重签或 SNARK Setup/Prove。原生验证全部五份签名/公开系数份额；同一次本地 Prague
+实际认证原证书、验证原八票/两状态证明并冻结 CT2，随后认证 Trustee 1/2/3 承诺并存储。
+身份/多项式系数通过完整原 KeyCore hash 核对，不接收调用者替换的身份公钥；验证份额在 EVM
+检查 `A0+i*A1+i²*A2`，签名消息使用原 v5 域/原上下文/原 CP target。
+
+三笔承诺：3,804,497 / 3,779,881 / 3,788,569 Gas，各 484 B；10 必要拒绝无状态变化。
+三名认证记录达到独立解密 `tau=3`；与建钥 `q_cert=3` 分开保留。
+48 Rust 回归、格式、严格 Clippy、376 条历史归档项检查通过。最初导出器编译类型错误已修复，
+首次失败日志仍保留，不将它改写为首次成功。没有公开 opening、usable 解密份额或 tally。
+
+边界：新组件在绑定冻结目标前强制认证；旧 receiver 接收时尚未 enforce gate。
+`requireP3Ready` 不是 CP/P3 验证或披露接口；60 输入重建、P3、一次性 Winner 尚待 G8-C/D。
+外部授权的 gate/receiver 地址、身份密钥/authority 仍是信任根。未完成 G8-E/G9/G10，
+未部署公链，没有完整系统 Gas。当前分支 `experiment/g8b-trustee-commitments`，基点 `ac021610`。
+
+## Previous component: G8-A original certificate component
 
 [G8-A](G8_A_ORIGINAL_CERTIFICATE_AUTH.md) 已实现原 Canonical 编码、真实 SHA-512 H2S/v2 首合法
 拒绝采样及原 Jubjub Schnorr 群运算/子群验证，不信任 host challenge、不替换 secp256k1。

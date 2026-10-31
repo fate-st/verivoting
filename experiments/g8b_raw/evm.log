@@ -1,0 +1,19 @@
+G8-B [1] compile original certificate/receiver sources and new commitment storage
+G8-B [2] deploy original gate, real individual-ballot/state receiver and commitment component
+  reject unauthenticated_context_cannot_bind: UNCERTIFIED
+G8-B [3] real original certificate authentication; no resigned messages
+  reject unfrozen_receiver_cannot_bind: NOT_FROZEN
+G8-B [4] accept two original B4 batches, freeze live CT2, bind authenticated context
+G8-B [5] original package signatures, KeyCore share check and minimal necessary negatives
+  reject forged_package_signature: BAD_PACKAGE_SIGNATURE
+  reject changed_package_commitment: BAD_PACKAGE_SIGNATURE
+  reject changed_cp_target: CP_TARGET
+  reject changed_final_context: FINAL_CONTEXT
+  reject changed_election_id: ELECTION_ID
+  reject substituted_valid_verification_share: VERIFICATION_SHARE
+  Trustee 1: 3804497 Gas / 484 B
+  reject duplicate_trustee_id: DUPLICATE_TRUSTEE
+  Trustee 2: 3779881 Gas / 484 B
+  reject two_trustees_cannot_enter_p3: DECRYPTION_QUORUM
+  Trustee 3: 3788569 Gas / 484 B
+G8-B PASS: 3 original authenticated commitments; 10 atomic negatives; 25 actual signed transactions; full G8 PARTIAL

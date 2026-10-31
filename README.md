@@ -8,7 +8,18 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G8-A original certificate component passed; full G8 PARTIAL
+### Current work: G8-B Trustee commitment authentication passed; full G8 PARTIAL
+
+[G8-B](docs/G8_B_TRUSTEE_COMMITMENTS.md) 复用 G6 五份原始公开记录，原生检查全部五份，
+在同一次本地 Prague 流程中认证 DKG/注册、验证两批 B4 并冻结 CT2，随后真实验证三名 Trustee
+的原 Jubjub 承诺签名和 `A0+i*A1+i²*A2` 验证份额并存储承诺。未重新签名或生成 CP/SNARK 证明。
+三笔承诺认证 3,804,497 / 3,779,881 / 3,788,569 Gas，各 484 B；10 项必要负例原子拒绝，
+48 Rust 回归、格式、严格 Clippy 和 376 条历史数据/图表来源检查通过。
+新组件强制先认证证书并绑定实际冻结目标，但旧 receiver **仍未**在接收时 enforce gate。
+`P3-ready` 只表示已有三个认证公开记录，不是 CP/P3 正确性或 Winner 授权；完整 G8 仍 PARTIAL。
+下一轮只做 G8-C：新接收器强制认证、从存储重建 60 项 P3 输入并复用 G6 原证明/G4-D VK。
+
+### Previous component: G8-A original certificate component
 
 [G8-A](docs/G8_A_ORIGINAL_CERTIFICATE_AUTH.md) 实际在 EVM 执行原 Jubjub Schnorr/SHA-512
 认证：三个不同 DKG certifier 达到 `q_cert=n-t`，原注册证书验证并重建与 G6 一致的关闭/disclosure 摘要。

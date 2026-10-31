@@ -1,0 +1,52 @@
+{
+  "dkg_reexecuted": false,
+  "gate": "G8-B-public-export",
+  "git_commit": "ac0216105a2e8ed859ea2b136a8a76708177fecf",
+  "git_dirty": true,
+  "new_cp_packages": 0,
+  "new_signatures": 0,
+  "output_fixture": "fixtures/g8b_trustee_commitments_public_v1.json",
+  "output_fixture_sha256": "944c69430864923a43624bffa5de99b6deaf2764a6d7ffc3aaac1bac01c63800",
+  "private_witness_emitted": false,
+  "proof_generation_count": 0,
+  "public_signature_count_native_verified": 5,
+  "setup_count": 0,
+  "source_hashes": [
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g8b_trustee_export.rs",
+      "sha256": "54f7ce78f49d081f53fef9c56cbe561450dd4fa9c20f93d2d2dc092b1d556d4d"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/package.rs",
+      "sha256": "224d95192e42e24f01fee3aa00dbe73cfca8bcb25f2d60492d2f4a5166192774"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/lib.rs",
+      "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/cp.rs",
+      "sha256": "16667a8c1f5489e9881317ccf39f02b6dadadb028c61ab59dd79a5fbb8ffd782"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/lib.rs",
+      "sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+      "sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"
+    },
+    {
+      "path": "fixtures/g8a_original_certificates_public_v1.json",
+      "sha256": "75e724ac0644702cbb864fafc8e54ffa0f64042bb08483038ad680db3f021b8e"
+    }
+  ],
+  "status": "PASS_FIVE_ARCHIVED_G6_PACKAGE_SIGNATURES_AND_KEYCORE_SHARES",
+  "verification_share_polynomial_checks": 5
+}

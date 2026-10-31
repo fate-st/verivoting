@@ -1,5 +1,5 @@
 {
-  "classification": "measured-g8-phase1-and-original-certificate-gate-components-not-yet-authenticated-integrated-settlement",
+  "classification": "measured-g8b-original-trustee-commitments-certified-keycore-live-frozen-ct2-not-full-settlement",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -90,8 +90,9 @@
     "G6_complete_native_receiver_to_winner": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "G7_current_g4d_vk_evm": "PASS_SAME_G6_PROOF_G4D_VK_PRAGUE_1_POSITIVE_4_NEGATIVES",
     "G8_receiver_freeze_individual_fallback": "PARTIAL_G8_REAL_INDIVIDUAL_BALLOT_STATE_EVM_CT2_FREEZE_PASS",
-    "G8_full_winner_only_settlement": "PARTIAL_CERTIFICATE_COMPONENT_PASS_RECEIVER_COMMITMENTS_P3_WINNER_INTEGRATION_PENDING",
-    "G8_A_original_certificate_authentication_component": "PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE"
+    "G8_full_winner_only_settlement": "PARTIAL_CERTIFICATES_AND_FROZEN_COMMITMENTS_PASS_P3_WINNER_INTEGRATION_PENDING",
+    "G8_A_original_certificate_authentication_component": "PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE",
+    "G8_B_authenticated_trustee_commitments_component": "PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2"
   },
   "dkg": {
     "classification": "real-group-single-process-protocol-simulation",
@@ -6224,18 +6225,20 @@
     "current_evaluation_suite_state_and_p3": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT",
     "current_evaluation_suite_p3": "PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2",
-    "next_task": "G8-B: bind authenticated KeyCore/Trustee identities and verification shares to original package commitments; then enforce authentication in a new integrated receiver, rebuild frozen-storage P3 inputs and write Winner once. Keep openings private in P3. No new scales/proof campaigns or frozen Miller work.",
+    "next_task": "G8-C only: enforce certificates in a new integrated receiver, reconstruct all 60 P3 inputs from certified KeyCore/frozen storage/authenticated commitments and verify the existing G6 proof with G4-D VK. Keep private openings inside P3; Winner write-once remains G8-D. No heavy-proof reruns or exact SnarkPack completion claim.",
     "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS",
     "complete_native_flow": true,
     "complete_chain_settlement": false,
     "current_p3_vk_evm_verified": true,
     "active_gate": "G8",
     "active_gate_status": "PARTIAL",
-    "latest_completed_step": "G8-A original Jubjub Schnorr DKG/registration certificate component",
+    "latest_completed_step": "G8-B original Trustee signatures and KeyCore shares bound to live frozen CT2",
     "receiver_and_freeze_evm_measured": true,
     "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
     "certificate_authentication_component_evm_measured": true,
-    "receiver_enforces_certificate_gate": false
+    "receiver_enforces_certificate_gate": false,
+    "trustee_commitment_authentication_component_evm_measured": true,
+    "p3_storage_binding_integrated": false
   },
   "g2_a_state_transition_r1cs": {
     "gate": "G2-A",
@@ -21088,5 +21091,61 @@
     ],
     "contract_artifact": "experiments/g8a_raw/contract_artifacts.json",
     "contract_artifact_sha256": "243a3949ec7c405fe54bceecb5bb47a8d4157b9d0e4c90c53c18b72af0ccb6f8"
+  },
+  "g8b_original_trustee_commitments": {
+    "status": "PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2",
+    "raw": "experiments/g8b_raw/trustee_commitments.json",
+    "original_package_signatures_verified_evm": 3,
+    "verification_share_polynomial_checks_evm": 3,
+    "accepted_commitment_gas": [
+      3804497,
+      3779881,
+      3788569
+    ],
+    "atomic_negative_count": 10,
+    "final_checkpoint": {
+      "bound": true,
+      "freeze_seal": "0x05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+      "cp_target": "0xe21a7906c1c8a80fa5f0cd145692d0372184f0ba0965a253f741b05b3b5191e6",
+      "count": 3,
+      "p3_ready": true,
+      "submitted": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      "commitments": [
+        "0x9383514ca70a2ff98e44349676b952d0dce913a6428a6506976d12710a553b1a",
+        "0x4e418045efabb79061ac07fcc9a83c6f5f946a8667e4e6039429a58266f3f9e5",
+        "0x21430f997507501847b375aad54b3e153863e0ab0d123b6b44e85efeee5b2cc4",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "verification_shares": [
+        "0xc2b9794f6c868be3e2208c3637393aff1b0782f2a00af60d41aff81c520c4e5b",
+        "0x7b4e215cb6956904081270ea5d1aca484c3d39194f53e6cbdb1dda04b7706a1b",
+        "0xa72d7315656202bbca0146e5890e256d50a8f96700da8001fd652dd5fda6a752",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "gate_authorized": true,
+      "receiver_next": 3,
+      "receiver_spent": 8,
+      "receiver_frozen": true,
+      "receiver_seal": "0x05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+      "receiver_target": "0xe21a7906c1c8a80fa5f0cd145692d0372184f0ba0965a253f741b05b3b5191e6",
+      "receiver_state": [
+        "0xa830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "0x9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "0x4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "0xd1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "0xc03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "0x4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72"
+      ]
+    },
+    "peak_node_rss_mib": 450.6875,
+    "full_system_gas": null
   }
 }

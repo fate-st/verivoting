@@ -80,6 +80,7 @@ def main() -> int:
     g7_path = raw.parent / "g7_raw" / "g7_p3_prague_evm.json"
     g8_path = raw.parent / "g8_raw" / "receiver_freeze.json"
     g8a_path = raw.parent / "g8a_raw" / "certificate_auth.json"
+    g8b_path = raw.parent / "g8b_raw" / "trustee_commitments.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -231,6 +232,20 @@ def main() -> int:
     g7 = json.loads(g7_path.read_text()) if g7_path.exists() else None
     g8 = json.loads(g8_path.read_text()) if g8_path.exists() else None
     g8a = json.loads(g8a_path.read_text()) if g8a_path.exists() else None
+    g8b = json.loads(g8b_path.read_text()) if g8b_path.exists() else None
+    if g8b and (
+        not g8a or g8b["status"] != "PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2"
+        or g8b["original_package_signatures_verified_evm"] != 3
+        or g8b["verification_share_polynomial_checks_evm"] != 3
+        or len(g8b["negative_tests"]) != 10
+        or not all(t["atomic_rejection"] and t["before"] == t["after"] for t in g8b["negative_tests"])
+        or not g8b["final_checkpoint"]["p3_ready"]
+        or not g8b["commitment_component_enforces_authorized_frozen_context"]
+        or g8b["receiver_auth_gate_enforced_on_intake"] or g8b["p3_verified_in_this_flow"]
+        or g8b["complete_g8_settlement"] or g8b["signature_scheme_replaced"]
+        or any(g8b[k] != 0 for k in ["setup_count", "proof_generation_count", "new_signatures", "new_cp_packages"])
+    ):
+        raise ValueError("G8-B must verify original records and KeyCore shares for live frozen CT2, not claim P3/Winner integration")
     if g8a and (
         not g8 or g8a["status"] != "PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE"
         or g8a["distinct_dkg_signatures_verified_evm"] != 3
@@ -864,6 +879,27 @@ def main() -> int:
             "receiver_enforces_certificate_gate": False,
             "next_task": "G8-B: bind authenticated KeyCore/Trustee identities and verification shares to original package commitments; then enforce authentication in a new integrated receiver, rebuild frozen-storage P3 inputs and write Winner once. Keep openings private in P3. No new scales/proof campaigns or frozen Miller work.",
         })
+    if g8b:
+        summary["classification"] = "measured-g8b-original-trustee-commitments-certified-keycore-live-frozen-ct2-not-full-settlement"
+        summary["g8b_original_trustee_commitments"] = {
+            "status": g8b["status"], "raw": str(g8b_path),
+            "original_package_signatures_verified_evm": g8b["original_package_signatures_verified_evm"],
+            "verification_share_polynomial_checks_evm": g8b["verification_share_polynomial_checks_evm"],
+            "accepted_commitment_gas": [t["total_gas"] for t in g8b["transactions"] if t["label"].startswith("authenticate_commitment_")],
+            "atomic_negative_count": len(g8b["negative_tests"]),
+            "final_checkpoint": g8b["final_checkpoint"],
+            "peak_node_rss_mib": g8b["peak_node_rss_mib"],
+            "full_system_gas": None,
+        }
+        summary["gates"]["G8_B_authenticated_trustee_commitments_component"] = g8b["status"]
+        summary["gates"]["G8_full_winner_only_settlement"] = "PARTIAL_CERTIFICATES_AND_FROZEN_COMMITMENTS_PASS_P3_WINNER_INTEGRATION_PENDING"
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G8-B original Trustee signatures and KeyCore shares bound to live frozen CT2",
+            "trustee_commitment_authentication_component_evm_measured": True,
+            "receiver_enforces_certificate_gate": False,
+            "p3_storage_binding_integrated": False,
+            "next_task": "G8-C only: enforce certificates in a new integrated receiver, reconstruct all 60 P3 inputs from certified KeyCore/frozen storage/authenticated commitments and verify the existing G6 proof with G4-D VK. Keep private openings inside P3; Winner write-once remains G8-D. No heavy-proof reruns or exact SnarkPack completion claim.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -873,14 +909,25 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g8b:
+        lines.extend([
+            "## Current work: G8-B authenticated Trustee commitments passed; full G8 remains PARTIAL",
+            "",
+            "- Report: `docs/G8_B_TRUSTEE_COMMITMENTS.md`; raw: `experiments/g8b_raw/trustee_commitments.json`. Five archived G6 public records were decoded/native-checked; three original commitment signatures and public polynomial verification shares were actually checked in EVM.",
+            f"- Trustee 1/2/3 costs `{summary['g8b_original_trustee_commitments']['accepted_commitment_gas']}` Gas; each 484 B. {len(g8b['negative_tests'])} atomic negatives; {g8b['transaction_count']} signed transactions in one local Prague VM; 48 relevant Rust regressions and strict Clippy passed.",
+            "- Same run authenticates original certificates, really verifies eight old ballot proofs/two old state proofs, freezes CT2, then authenticates commitments. Zero new DKG/CP packages/authentication signatures/SNARK Setup/Prove. No private openings, usable decryption shares or tally are published.",
+            "- The old receiver still does NOT enforce certificate authentication on intake. New component enforces it only before frozen-target binding/commitment acceptance. P3-ready is NOT a verified CP/P3, winner authorization or full-system Gas result.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g8a:
         lines.extend([
-            "## Current work: G8-A original certificate gate passed; full G8 remains PARTIAL",
+            "## Previous component: G8-A original certificate gate" if g8b else "## Current work: G8-A original certificate gate passed; full G8 remains PARTIAL",
             "",
             "- Report: `docs/G8_A_ORIGINAL_CERTIFICATE_AUTH.md`. Original Jubjub Schnorr, SHA-512 rejection sampling, canonical encoding and subgroup checks execute in EVM, not secp256k1 replacement signatures or trusted host challenges.",
             f"- Deploy gate/backend `{g8a['deployment']['total_gas']} Gas`; three DKG certifiers `{[t['total_gas'] for t in g8a['accepted_dkg_signatures']]}` Gas; original registration certificate `{g8a['registration']['total_gas']} Gas`. 12 atomic rejects; 13 SHA-512 checks and six original challenge matches; 48 Rust regressions/strict Clippy pass.",
             "- DKG public certificate reconstructed with the unchanged original deterministic RNG/signing flow; original G6 registration certificate bytes match exactly. No new SNARK setup/proving or alternate authorization scheme.",
-            "- Standalone component ONLY: the old phase-one receiver does not yet enforce this gate. Trustee commitments, certified verification-share binding, storage-built P3 inputs and Winner write-once remain unfinished. Bootstrap identity keys/authority remain trust roots; no full-system Gas or G9 claim.",
+            "- At this historical checkpoint only the standalone certificate gate was complete; the receiver did not enforce it. Subsequent G8-B progress is separately reported above. Bootstrap identity keys/authority remain trust roots; no full-system Gas or G9 claim.",
             f"- Next: {summary['project_current_progress']['next_task']}",
             "",
         ])
@@ -891,7 +938,7 @@ def main() -> int:
             "- Report: `docs/G8_WINNER_ONLY_SETTLEMENT.md`. REAL individual Groth16 fallback, not SnarkPack: 8 archived ballot proofs and 2 state proofs verify on local Prague, same ordered matrices/roots and continuous storage state.",
             f"- Deploy receiver + concrete verifiers `{g8['deployment']['total_gas']} Gas`; B4 receives `{g8['accepted_batches'][0]['total_gas']} / {g8['accepted_batches'][1]['total_gas']} Gas`, each `{g8['accepted_batches'][0]['calldata_bytes']} B`; freeze `{g8['freeze']['total_gas']} Gas`.",
             "- Freeze computed only from contract storage; original G6 CP target and seal match exactly. 13 necessary rejects are atomic, including genuine bad-ballot/bad-state pairing failures. No Setup/Prove or G7 rerun.",
-            "- Initial certificate/registry anchors remain deployer-provisioned, not verified certificates on EVM. Trustee signature checks, P3/frozen-storage input reconstruction, winner write-once and exact SnarkPack EVM are NOT completed. No full-system Gas or efficiency claim.",
+            "- At this historical phase-one checkpoint certificate/registry anchors were deployer-provisioned and no Trustee/P3/winner integration existed. Later certificate/commitment components are reported separately above; full settlement and exact SnarkPack EVM are still incomplete. No full-system Gas or efficiency claim.",
             f"- Next: {summary['project_current_progress']['next_task']}",
             "",
         ])
@@ -2230,7 +2277,7 @@ def main() -> int:
             "PASS"
             if status.startswith("PASS")
             else "PARTIAL"
-            if status.startswith("PARTIAL_PASS")
+            if status.startswith("PARTIAL")
             else "BLOCKED"
         )
         print(f"  [{marker:7}] {gate}: {status}")

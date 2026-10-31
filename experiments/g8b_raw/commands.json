@@ -1,0 +1,239 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "env": {
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_PROFILE_RELEASE_STRIP": "none"
+  },
+  "commands": [
+    {
+      "name": "build",
+      "attempt": 1,
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "g8b_trustee_export",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "log": "build.log",
+      "exit_code": 101,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 989.459
+    },
+    {
+      "name": "build",
+      "attempt": 2,
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "g8b_trustee_export",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "log": "build-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 726.908959
+    },
+    {
+      "name": "public-export",
+      "attempt": 1,
+      "argv": [
+        "target/release/g8b_trustee_export"
+      ],
+      "log": "public-export.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 610.749083
+    },
+    {
+      "name": "evm",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "contracts/scripts/g8b_trustee_commitments.mjs"
+      ],
+      "log": "evm.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 12134.444416999999
+    },
+    {
+      "name": "fmt-check",
+      "attempt": 1,
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "log": "fmt-check.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 509.787875
+    },
+    {
+      "name": "clippy",
+      "attempt": 1,
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "clippy",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--all-targets",
+        "--release",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "log": "clippy.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 628.756208
+    },
+    {
+      "name": "tests",
+      "attempt": 1,
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--lib",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "log": "tests.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 3062.1367920000002
+    },
+    {
+      "name": "state-tests",
+      "attempt": 1,
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g6-native-winner-only",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "log": "state-tests.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 96.591792
+    },
+    {
+      "name": "g8a-history-audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8a_audit.mjs"
+      ],
+      "log": "g8a-history-audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 181.048542
+    },
+    {
+      "name": "audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8b_audit.mjs"
+      ],
+      "log": "audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 171.769625
+    },
+    {
+      "name": "audit",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g8b_audit.mjs"
+      ],
+      "log": "audit-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 183.500042
+    },
+    {
+      "name": "summary",
+      "attempt": 1,
+      "argv": [
+        "/Users/lijian/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/summarize.py"
+      ],
+      "log": "summary.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 90.456167
+    },
+    {
+      "name": "summary",
+      "attempt": 2,
+      "argv": [
+        "/Users/lijian/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/summarize.py"
+      ],
+      "log": "summary-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 68.754709
+    },
+    {
+      "name": "audit",
+      "attempt": 3,
+      "argv": [
+        "node",
+        "scripts/g8b_audit.mjs"
+      ],
+      "log": "audit-attempt-3.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 185.714542
+    }
+  ]
+}

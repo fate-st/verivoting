@@ -1,6 +1,27 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current work: G8-A certificate component passed; next is G8-B authenticated commitments
+## Current work: G8-B authenticated commitments passed; next only G8-C
+
+[G8-B](G8_B_TRUSTEE_COMMITMENTS.md) 从 `ac021610` 建立独立
+`experiment/g8b-trustee-commitments`：五份 G6 公开记录解码及原生验证，三份原承诺签名在 EVM
+验证并存储；验证份额由已认证 KeyCore 系数实际执行多项式群等式检查。
+同一次 Prague VM 流程真实认证证书、验证两批旧 B4 证明并冻结 CT2，然后绑定 target/承诺。
+10 必要原子拒绝、48 Rust 回归、严格 Clippy、376 条历史归档项检查通过；0 新 CP/重签/Setup/Prove。
+完整 G8 仍 PARTIAL，当前到 G8-B 验收停止。
+
+下一轮只做 G8-C：
+
+1. 保留旧 receiver/证书组件原字节，新增整合入口，在批次接收前强制相同原证书认证和上下文绑定。
+2. 复用本轮已认证 KeyCore、身份/验证份额、冻结 CT2/CP target 和承诺，从真实合约存储重建
+   完整 60 项 P3 公开输入；不能允许调用者替换公钥、密文、target 或承诺数组。
+3. 逐项检查与 G6 输入兼容，使用 G4-D 原 VK、G6 已归档真实证明完成 P3 EVM 验证；
+   CP opening/usable shares 保持私密，在现有 P3 内证明，不公开传入合约。
+4. P3-ready 只是记录数门限，不代替 CP/P3 检查或 Winner 授权。一次性 Winner 写入留给 G8-D，
+   完整交易闭环和总成本留给 G8-E；不拼接历史 Gas、不声称精确 SnarkPack EVM 已完成。
+
+不增加 B8/B64、新性能图、公链部署或历史证明重跑；G9/G10 按原顺序后置。
+
+## Previous component: G8-A certificate gate (the following G8-B plan is now completed above)
 
 [G8-A](G8_A_ORIGINAL_CERTIFICATE_AUTH.md) 从已提交 `1c19f811` 建立
 `experiment/g8-auth-disclosure`，完成原 Jubjub Schnorr/SHA-512 的真实 EVM 证书门控。
