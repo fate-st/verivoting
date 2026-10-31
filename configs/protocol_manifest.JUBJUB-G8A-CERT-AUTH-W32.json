@@ -1,0 +1,24 @@
+{
+  "gate": "G8-A",
+  "scope": "standalone original certificate authentication gate, not yet enforced by the G8 phase-one receiver",
+  "authentication_curve": "original ark-ed-on-bls12-381 Jubjub",
+  "signature_hash": "original SHA-512 H2S/v2, 252-bit masked strict canonical first-candidate rejection sampling",
+  "n": 5,
+  "t": 2,
+  "q_cert": 3,
+  "tau": 3,
+  "threshold_roles": "q_cert=n-t authenticates the DKG key; tau=t+1 is the separate private decryption threshold",
+  "bootstrap_trust": "pre-authorized trustee identity public keys, registration authority and election/manifest identity are trust roots; their signatures certify values, not the bootstrap authority itself",
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "full_g8_settlement": false,
+  "receiver_auth_gate_integrated": false,
+  "signatures_resigned": false,
+  "groth16_setup_count": 0,
+  "groth16_proof_generation_count": 0,
+  "source_pins": [
+    {"path":"fixtures/jubjub_g6_native_winner_only_public_v1.json","sha256":"ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"},
+    {"path":"experiments/g8_raw/receiver_freeze.json","sha256":"d60ef561cccb88d0ddc9abdc9c58bb4426e32a8a714269dfa664a6a6d5e5f45a"},
+    {"path":"configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json","sha256":"00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"}
+  ]
+}

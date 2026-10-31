@@ -1,0 +1,86 @@
+{
+  "gate": "G8-A-public-export",
+  "git_commit": "1c19f811df803a38e3b6ee418f799a557b6d220a",
+  "git_dirty": true,
+  "groth16_proof_generation_count": 0,
+  "groth16_setup_count": 0,
+  "keycore_matches_g6": true,
+  "native_dkg_reconstruction_ms": 42.444584,
+  "original_registration_bytes_match_g6": true,
+  "output_fixture": "fixtures/g8a_original_certificates_public_v1.json",
+  "output_fixture_sha256": "75e724ac0644702cbb864fafc8e54ffa0f64042bb08483038ad680db3f021b8e",
+  "private_witness_emitted": false,
+  "public_signatures_native_verified": 6,
+  "q_cert": 3,
+  "signatures_resigned": false,
+  "source_hashes": [
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g8a_certificate_export.rs",
+      "sha256": "b1fa5923564c95865e4e70ba08cb5793d3eed104cba3d8535db507d01cda4226"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g6_materials.rs",
+      "sha256": "f3d5f8e915c236d1f6a41e5406147385bbe321d268a8f2e17d0c79ce8dbd2c24"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/lib.rs",
+      "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/registration.rs",
+      "sha256": "03f0383eba3005d204dd023c5818b6e035b15abccebe3c24fd172f42266106db"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/lib.rs",
+      "sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "620d086610789e592edf437ecc34077aed68bf1fcc480590116da4f547b337fa"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "configs/protocol_manifest.JUBJUB-G4D-P3-TEN-SUBSETS-W32.json",
+      "sha256": "9f1611de7c5adde363d71e055042da52a9004133925a38e138ef2f8a35072755"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "path": "experiments/g1_d2_raw/uniform_depth5_batch32.json",
+      "sha256": "1a8c11c29ec89b8cf4a58dc963d83f408cd6f3fef6ef28a91159bb6985952372"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+      "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+    },
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-P3-WEIGHT-V2.json",
+      "sha256": "c9813e48b669c9e77273ca4080e51062044fa1a64fce122335e882ce4aff1e21"
+    },
+    {
+      "path": "fixtures/jubjub_g4c_partial_turnout_v2.json",
+      "sha256": "b9d41ab5cce14b151ca1ad0ba21edf742199189215ea4281a829f57f0d35c4c0"
+    },
+    {
+      "path": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+      "sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"
+    }
+  ],
+  "status": "PASS_ORIGINAL_DKG_AND_CLOSE_CERTIFICATE_NATIVE_RECONSTRUCTION",
+  "tau": 3
+}

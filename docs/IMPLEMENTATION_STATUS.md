@@ -1,6 +1,19 @@
 # Implementation and claim boundary
 
-## Current work: G8 receiver/freeze phase passed, complete G8 PARTIAL (2026-10-30)
+## Current work: G8-A original certificate component passed, full G8 PARTIAL
+
+[G8-A](G8_A_ORIGINAL_CERTIFICATE_AUTH.md) 已实现原 Canonical 编码、真实 SHA-512 H2S/v2 首合法
+拒绝采样及原 Jubjub Schnorr 群运算/子群验证，不信任 host challenge、不替换 secp256k1。
+真实 EVM 验证三个不同 DKG certifier 和原注册签名，认证关闭/disclosure 摘要与 G6 一致；
+`q_cert=n-t` 与解密 `tau=t+1` 独立保留。12 原子负例、13 hash/6 挑战检查、48 Rust 回归及严格 Clippy 通过。
+部署 7,750,282 Gas；DKG 三笔 2,651,994/2,590,448/2,580,263；注册认证 2,725,613 Gas。
+
+DKG 公共证书通过原确定性流程重建，原 signing 执行；注册证书完整字节复用匹配，未新建 SNARK。
+350 条历史数据/图表清单项未变。这里只认证组件独立完成，旧 receiver **未**强制门控。
+合法 bootstrap 身份密钥/authority、Trustee 承诺存储/认证 VK share、P3 storage binding 和 Winner
+写入仍有各自待办；不能声称已消除引导信任或完成完整 G8。下一项只推进 G8-B。
+
+## Previous component: G8 receiver/freeze phase passed, complete G8 PARTIAL (2026-10-30)
 
 [G8 第一阶段](G8_WINNER_ONLY_SETTLEMENT.md) 新增真实 Solidity 接收/冻结合约和逐票备用验证适配器。
 不是 mock、不是仅 State Proof：两批各四份原始单票证明与两份状态证明都在 EVM 实际验证，

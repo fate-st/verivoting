@@ -79,6 +79,7 @@ def main() -> int:
     g6_replay_path = raw.parent / "g6_raw" / "public_replay.json"
     g7_path = raw.parent / "g7_raw" / "g7_p3_prague_evm.json"
     g8_path = raw.parent / "g8_raw" / "receiver_freeze.json"
+    g8a_path = raw.parent / "g8a_raw" / "certificate_auth.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -229,6 +230,18 @@ def main() -> int:
     g6_replay = json.loads(g6_replay_path.read_text()) if g6_replay_path.exists() else None
     g7 = json.loads(g7_path.read_text()) if g7_path.exists() else None
     g8 = json.loads(g8_path.read_text()) if g8_path.exists() else None
+    g8a = json.loads(g8a_path.read_text()) if g8a_path.exists() else None
+    if g8a and (
+        not g8 or g8a["status"] != "PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE"
+        or g8a["distinct_dkg_signatures_verified_evm"] != 3
+        or g8a["original_registration_signatures_verified_evm"] != 1
+        or len(g8a["negative_tests"]) != 12
+        or not all(t["receipt_status"] == 0 and t["atomic_rejection"] for t in g8a["negative_tests"])
+        or not g8a["final_checkpoint"]["authorized"]
+        or g8a["receiver_auth_gate_integrated"] or g8a["complete_g8_settlement"]
+        or g8a["signature_scheme_replaced"] or g8a["groth16_proof_generation_count"] != 0
+    ):
+        raise ValueError("G8-A must authenticate original certificate signatures, not claim receiver/P3 integration")
     if g8 and (
         not g7 or not g6
         or g8["status"] != "PARTIAL_G8_REAL_INDIVIDUAL_BALLOT_STATE_EVM_CT2_FREEZE_PASS"
@@ -840,6 +853,17 @@ def main() -> int:
             "complete_chain_settlement": False,
             "next_task": "G8 next phase: authenticate original DKG/registration and Trustee Schnorr commitments, rebuild all 60 P3 inputs from frozen contract storage and write winner once. G9 SnarkPack remains separate/unresolved; no new batch scales or old heavy-proof reruns.",
         })
+    if g8a:
+        summary["classification"] = "measured-g8-phase1-and-original-certificate-gate-components-not-yet-authenticated-integrated-settlement"
+        summary["g8a_original_certificate_authentication"] = g8a
+        summary["gates"]["G8_A_original_certificate_authentication_component"] = g8a["status"]
+        summary["gates"]["G8_full_winner_only_settlement"] = "PARTIAL_CERTIFICATE_COMPONENT_PASS_RECEIVER_COMMITMENTS_P3_WINNER_INTEGRATION_PENDING"
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G8-A original Jubjub Schnorr DKG/registration certificate component",
+            "certificate_authentication_component_evm_measured": True,
+            "receiver_enforces_certificate_gate": False,
+            "next_task": "G8-B: bind authenticated KeyCore/Trustee identities and verification shares to original package commitments; then enforce authentication in a new integrated receiver, rebuild frozen-storage P3 inputs and write Winner once. Keep openings private in P3. No new scales/proof campaigns or frozen Miller work.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -849,9 +873,20 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g8a:
+        lines.extend([
+            "## Current work: G8-A original certificate gate passed; full G8 remains PARTIAL",
+            "",
+            "- Report: `docs/G8_A_ORIGINAL_CERTIFICATE_AUTH.md`. Original Jubjub Schnorr, SHA-512 rejection sampling, canonical encoding and subgroup checks execute in EVM, not secp256k1 replacement signatures or trusted host challenges.",
+            f"- Deploy gate/backend `{g8a['deployment']['total_gas']} Gas`; three DKG certifiers `{[t['total_gas'] for t in g8a['accepted_dkg_signatures']]}` Gas; original registration certificate `{g8a['registration']['total_gas']} Gas`. 12 atomic rejects; 13 SHA-512 checks and six original challenge matches; 48 Rust regressions/strict Clippy pass.",
+            "- DKG public certificate reconstructed with the unchanged original deterministic RNG/signing flow; original G6 registration certificate bytes match exactly. No new SNARK setup/proving or alternate authorization scheme.",
+            "- Standalone component ONLY: the old phase-one receiver does not yet enforce this gate. Trustee commitments, certified verification-share binding, storage-built P3 inputs and Winner write-once remain unfinished. Bootstrap identity keys/authority remain trust roots; no full-system Gas or G9 claim.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g8:
         lines.extend([
-            "## Current work: G8 phase 1 receiver/freeze passed; full G8 is PARTIAL",
+            "## Previous component: G8 phase 1 receiver/freeze passed; full G8 is PARTIAL" if g8a else "## Current work: G8 phase 1 receiver/freeze passed; full G8 is PARTIAL",
             "",
             "- Report: `docs/G8_WINNER_ONLY_SETTLEMENT.md`. REAL individual Groth16 fallback, not SnarkPack: 8 archived ballot proofs and 2 state proofs verify on local Prague, same ordered matrices/roots and continuous storage state.",
             f"- Deploy receiver + concrete verifiers `{g8['deployment']['total_gas']} Gas`; B4 receives `{g8['accepted_batches'][0]['total_gas']} / {g8['accepted_batches'][1]['total_gas']} Gas`, each `{g8['accepted_batches'][0]['calldata_bytes']} B`; freeze `{g8['freeze']['total_gas']} Gas`.",

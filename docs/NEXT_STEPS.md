@@ -1,6 +1,26 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current work: G8 phase 1 passed, full G8 PARTIAL; next is authentication/disclosure
+## Current work: G8-A certificate component passed; next is G8-B authenticated commitments
+
+[G8-A](G8_A_ORIGINAL_CERTIFICATE_AUTH.md) 从已提交 `1c19f811` 建立
+`experiment/g8-auth-disclosure`，完成原 Jubjub Schnorr/SHA-512 的真实 EVM 证书门控。
+三个不同 certifier 达到原 `q_cert=n-t=3`；原 authority 注册签名及关闭/disclosure 摘要通过，
+保留独立解密角色 `tau=t+1=3`。12 原子拒绝、13 hash/6 原挑战、48 Rust 回归、严格 Clippy 通过。
+0 SNARK Setup/Prove；原 DKG signing 通过确定性重建执行，原注册 certificate 字节匹配 G6。
+本轮到独立认证组件停止，原 phase-one receiver 尚未 enforce 门控，完整 G8 仍 PARTIAL。
+
+下一轮只做 G8-B：
+
+1. 原 Trustee package commitment 签名验证/存储，绑定同一已冻结 Election Context/CT2/target。
+2. 认证身份与 verification share 必须绑定已认证 KeyCore（由签名认可的公开系数派生/核对），
+   不得把调用者提供的新验证份额或新身份公钥直接当认证值。
+3. 不重复 Trustee、不足解密门限/错上下文拒绝；不要把建钥 `q_cert` 与解密 `tau` 混成一个角色。
+4. CP commitment opening 不公开：在后续 P3 中证明同一已认证承诺的私密打开与 CP。
+
+之后再整合强制证书 gate 的新 receiver、从冻结存储构建 60 项 P3 输入并一次写 Winner，
+优先复用 G6/G4-D 同一证明/VK。G9/G10 仍按原顺序后置，不扩批、不重跑旧证明或 Miller。
+
+## Previous component: G8 phase 1 passed; authentication/disclosure follow-up
 
 [G8 receiver/freeze](G8_WINNER_ONLY_SETTLEMENT.md) 从 `9baed479` 新建
 `experiment/g8-winner-only-settlement`。实际合约验证八份原始单票证明与两份状态证明，

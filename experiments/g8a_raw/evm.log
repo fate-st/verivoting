@@ -1,0 +1,21 @@
+G8-A [1] compile original-scheme curve/hash implementation and certificate gate
+G8-A [2] deploy; validate original subgroup/encoding and reconstruct policy / KeyCore
+G8-A [3] actual EVM SHA-512 padding vectors and all original signature challenge bytes
+G8-A [4] original DKG signatures / distinct certification quorum, necessary rejects
+  reject forged_dkg_signature: BAD_DKG_SIGNATURE
+  reject wrong_election_id: ELECTION_ID
+  reject wrong_dkg_context: DKG_CONTEXT
+  reject wrong_first_valid_counter: BAD_DKG_SIGNATURE
+  DKG certifier 1: 2651994 Gas
+  reject duplicate_certifier: DUPLICATE_CERTIFIER
+  DKG certifier 2: 2590448 Gas
+  reject insufficient_key_certification_quorum: DKG_QUORUM
+  DKG certifier 3: 2580263 Gas
+  reject registration_not_yet_authenticated: UNCERTIFIED
+G8-A [5] authenticate original registration certificate and exact original close/disclosure digests
+  reject registration_wrong_election: REGISTRATION_CONTEXT
+  reject registration_wrong_context: REGISTRATION_CONTEXT
+  reject wrong_registration_close_digest: REGISTRATION_CLOSE_DIGEST
+  reject forged_registration_signature: BAD_REGISTRATION_SIGNATURE
+  reject repeat_registration_certificate: REGISTRATION_ALREADY_CERTIFIED
+G8-A PASS: deploy 7750282; DKG 2651994/2590448/2580263; original close 2725613; 12 atomic rejections; FULL G8 REMAINS PARTIAL

@@ -1,0 +1,10 @@
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running unittests src/bin/g6_native_winner_only.rs (target/release/deps/friendly_g6_native_winner_only-324027c9a6eab88f)
+
+running 3 tests
+test receiver::tests::across_batch_nullifier_reuse_rejects_even_with_a_different_committed_batch_root ... ok
+test receiver::tests::rejected_verification_is_atomic_then_continuity_and_replay_checks_hold ... ok
+test state::tests::incomplete_freeze_rejects_and_live_state_can_only_be_frozen_once ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

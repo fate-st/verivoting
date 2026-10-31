@@ -8,7 +8,18 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G8 phase 1 receiver/freeze passed; full G8 PARTIAL (2026-10-30)
+### Current work: G8-A original certificate component passed; full G8 PARTIAL
+
+[G8-A](docs/G8_A_ORIGINAL_CERTIFICATE_AUTH.md) 实际在 EVM 执行原 Jubjub Schnorr/SHA-512
+认证：三个不同 DKG certifier 达到 `q_cert=n-t`，原注册证书验证并重建与 G6 一致的关闭/disclosure 摘要。
+部署 7,750,282 Gas；三签名 2,651,994/2,590,448/2,580,263 Gas；注册证书 2,725,613 Gas。
+12 原子拒绝、13 SHA-512 检查、六项原挑战匹配、48 Rust 回归和严格 Clippy 通过。
+原 DKG 证书由原确定性流程重建（原签名计算有执行），注册 certificate 字节精确匹配 G6；
+没有替换成 secp256k1 或新 SNARK Setup/Prove。身份密钥/authority 仍需合法引导配置。
+这是独立认证门控，**第一阶段 receiver 尚未 enforce 它**；Trustee 承诺、P3 输入和 Winner 写入仍未整合。
+下一步 G8-B 只连接已认证 KeyCore 的 Trustee/verification shares 与原 package commitments。
+
+### Previous component: G8 phase 1 receiver/freeze passed; full G8 PARTIAL (2026-10-30)
 
 [G8 第一阶段](docs/G8_WINNER_ONLY_SETTLEMENT.md) 已在真实本地 Prague 交易中完成两批 B4
 接收和一次冻结：每批四次真实单票 Groth16 + 一次真实 State Proof，而不是 SnarkPack 或 mock。

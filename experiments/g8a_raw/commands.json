@@ -1,0 +1,133 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "env": {
+    "CARGO_BUILD_JOBS": "2",
+    "CARGO_PROFILE_RELEASE_STRIP": "none"
+  },
+  "commands": [
+    {
+      "name": "fmt-check",
+      "attempt": 1,
+      "log": "fmt-check.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 310.424541
+    },
+    {
+      "name": "clippy",
+      "attempt": 1,
+      "log": "clippy.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "clippy",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--all-targets",
+        "--release",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 655.842042
+    },
+    {
+      "name": "tests",
+      "attempt": 1,
+      "log": "tests.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-crypto",
+        "-p",
+        "vv-friendly-dkg",
+        "--lib",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 2531.4729589999997
+    },
+    {
+      "name": "state-tests",
+      "attempt": 1,
+      "log": "state-tests.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g6-native-winner-only",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 106.6401249999999
+    },
+    {
+      "name": "build",
+      "attempt": 1,
+      "log": "build.log",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g8a-certificate-export",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 1308.6302910000004
+    },
+    {
+      "name": "public-export",
+      "attempt": 1,
+      "log": "public-export.log",
+      "argv": [
+        "target/release/friendly-g8a-certificate-export"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 511.7892920000004
+    },
+    {
+      "name": "evm",
+      "attempt": 1,
+      "log": "evm.log",
+      "argv": [
+        "node",
+        "contracts/scripts/g8a_certificate_auth.mjs"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 5158.339625
+    }
+  ]
+}
