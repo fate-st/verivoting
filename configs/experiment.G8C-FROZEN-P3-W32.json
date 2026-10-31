@@ -1,0 +1,21 @@
+{
+  "gate": "G8-C",
+  "base_commit": "dd7e00a76f52fbd84065045382d34a49401c2caa",
+  "scope": "authenticated B4 intake, live CT2 freeze and storage-built original P3 statement; no Winner write",
+  "transaction_gas_limit": 20000000,
+  "block_gas_limit": 30000000,
+  "p3_ark_vk_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29",
+  "p3_eip_vk_sha256": "93336597070cda6b48775e28cc077ea0027686f0f8e1e588e4867e3cedb3694a",
+  "p3_eip_vk_keccak256": "0x52fe9c94b348ede49b3e789d240edd861827eeafc9e7bcb41777d2505980e1dd",
+  "ballot_eip_vk_sha256": "69a56d10131027e0efcf0c6a7d920aac4600e87b5e20c42eb670f368e2ae9a3d",
+  "state_eip_vk_sha256": "1367728908bb6c62009afb38ad09555d5a8c463bc6945b3ceb83ae763f376896",
+  "binding_digest": "0x5cdda2d5a7931d50355480166e4453a458652e8a3d4ff02a7c2520361714829e",
+  "accepted_roots": ["0x91f6c687850b799e58e413c6c9c3b67e1acb1f2cb8a03e2b4d88a3729a9a2134","0x4e3a7649aa9d7455509a0b052d85c6745b38cb1f2416045c08ffd25094837fcf"],
+  "source_pins": [
+    {"path":"fixtures/g6_p3_eip2537_g7_v1.json","sha256":"81daaa9311a507021883e58ce9e0c1adfc46daaf94c578b04295df4fc85ac356"},
+    {"path":"fixtures/g8_receiver_eip2537_v1.json","sha256":"a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb"},
+    {"path":"fixtures/g8a_original_certificates_public_v1.json","sha256":"75e724ac0644702cbb864fafc8e54ffa0f64042bb08483038ad680db3f021b8e"},
+    {"path":"fixtures/g8b_trustee_commitments_public_v1.json","sha256":"944c69430864923a43624bffa5de99b6deaf2764a6d7ffc3aaac1bac01c63800"},
+    {"path":"fixtures/jubjub_g6_native_winner_only_public_v1.json","sha256":"ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"}
+  ]
+}

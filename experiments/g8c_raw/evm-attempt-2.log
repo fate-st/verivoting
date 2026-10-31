@@ -1,0 +1,18 @@
+G8-C [1] compile additive gate/read interfaces, authenticated receiver and fixed-VK P3 binder
+G8-C [2] deploy fixed interconnected contracts; no mutable Gate/Receiver/Store/VK selectors
+  reject wrong_same_width_p3_vk: PINNED_P3_VK, pairings=0
+  reject intake_before_certificate_authentication: UNCERTIFIED, pairings=0
+G8-C [3] original certificate authentication and certified-data getters
+G8-C [4] wrong newState BEFORE first acceptance: four ballots pass, actual state proof pairing rejects
+  reject changed_first_new_state_before_freeze: INVALID_GROTH16, pairings=5
+  reject p3_before_freeze: NOT_FROZEN, pairings=0
+G8-C [5] freeze actual CT2, preserve original seal, then authenticate original public commitments
+  reject receive_after_freeze: FROZEN, pairings=0
+  reject selected_trustee3_missing: MISSING_COMMITMENT, pairings=0
+  reject duplicate_trustee3: DUPLICATE_TRUSTEE, pairings=0
+G8-C [6] reconstruct 60 exact fields inside contract; compare both original archive encodings
+G8-C [7] real fixed-VK Groth16; distinguish missing commitment from actual pairing rejection
+  reject wrong_winner_pairing: INVALID_GROTH16, pairings=1
+  reject selector1_missing_trustee4: MISSING_COMMITMENT, pairings=0
+  reject selector1_after_all_five_pairing: INVALID_GROTH16, pairings=1
+G8-C PASS: 60/60 original inputs; authenticated live receiver/freeze/commitments/P3; 10 exact-reason atomic rejects; 28 signed transactions; no Winner write

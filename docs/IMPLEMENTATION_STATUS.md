@@ -1,6 +1,23 @@
 # Implementation and claim boundary
 
-## Current work: G8-B five original commitments passed; full G8 PARTIAL (2026-10-31)
+## Current work: G8-C authenticated intake/frozen-storage P3 passed; full G8 PARTIAL
+
+[G8-C](G8_C_FROZEN_P3_BINDING.md) 从 `dd7e00a` 建立独立分支，新增 Gate V2 认证读取接口、
+内部强制认证接收器和固定 G4-D 摘要的 P3 组件；旧源码/数据不改。原证书认证后实际验证两批
+B4 并冻结 CT2，原五份 Trustee 承诺认证，合约内部重建全部60项输入，与 G6 和 G7 逐项一致。
+G6 原证明使用 G7 已导出的512 B EIP-2537 格式验证成功，未新建 Setup/Prove/CP 或替换签名。
+
+28 笔完整流程签名交易；10 项必要原子拒绝。篡改首批 newState 在正式接收/冻结前测试：
+四份真实单票配对=1，状态配对=0。selector1 在 Trustee 4 缺失时是 MISSING_COMMITMENT；
+补齐五人后为真实配对=0 / INVALID_GROTH16，不把两种拒绝混写。VK 不只检查60宽度，而是
+固定 Arkworks 来源摘要和 EIP-2537 的 SHA-256/Keccak；B4 根、单票/状态 VK/完整 binding 也固定。
+
+输入重建加 P3：2,058,601 Gas、644 B calldata。比 G7 少传1920 B，但本次 Gas 没有更低，
+不宣称全系统效率优势。编译/Node语法/旧基点和新来源/配对轨迹审计通过，440 历史归档项未变。
+首次 fixture 字段适配和首次审计0x格式错误均修正，失败日志/版本保留。未改 Rust，未重跑旧重型证明。
+无 Winner 写入接口；P3 仅 view 验证，完整 G8 仍 PARTIAL。下一轮只做 G8-D，G8-E/G9/G10 继续待办。
+
+## Previous component: G8-B five original commitments (2026-10-31)
 
 [五人补充验收](G8_B_FIVE_TRUSTEES.md)：上传评估仍以 `ac021610` 为基准；本地 `e3b7cfb`
 已完成三人 G8-B。本轮仅补新增要求，不重复开发：五份原 G6 公开签名/承诺、原合约字节码

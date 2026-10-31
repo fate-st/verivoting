@@ -8,7 +8,16 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G8-B all five Trustee commitments passed; full G8 PARTIAL
+### Current work: G8-C authenticated intake and frozen-storage P3 passed; full G8 PARTIAL
+
+[G8-C](docs/G8_C_FROZEN_P3_BINDING.md) 新接收器内部强制原证书认证，真实接收两批 B4、冻结
+CT2 后，复用认证承诺重建60项 P3 输入，与 G6/G7 均60/60一致；原证明/固定 G4-D VK 验证通过。
+重建输入加 P3 实测 2,058,601 Gas、644 B calldata；没有沿用 G7 的旧组件 Gas。
+10 必要原子拒绝、28 签名交易、440 历史归档项核对通过；错误状态在冻结前真正进入状态配对，
+错误 selector 的缺少承诺拒绝与实际配对拒绝分开记录。没有新 Setup/Prove 或 Winner 写入。
+下一项只做 G8-D 一次性 Winner。精确 SnarkPack EVM、完整结算成本与公平系统比较仍未完成。
+
+### Previous component: G8-B all five Trustee commitments
 
 [五人补充验收](docs/G8_B_FIVE_TRUSTEES.md) 使用原字节码、五份原始 G6 承诺签名：5/5 EVM
 认证及 KeyCore 份额检查通过。建钥 certifier 固定 `{1,2,3}`，承诺按 `4,5,3,1,2` 提交；

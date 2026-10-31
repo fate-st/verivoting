@@ -1,6 +1,24 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current work: G8-B five-person supplement passed; next only G8-C
+## Current work: G8-C certified frozen-storage P3 passed; next only G8-D
+
+[G8-C](G8_C_FROZEN_P3_BINDING.md)：新 Gate V2 只加必要认证读取，原认证算法保持不变；
+新 receiver 在自身接收/冻结入口强制认证，不是可绕过 facade。固定原 B4 根、选票/状态 VK，
+P3 固定 G4-D Ark/EIP 双编码来源与 EIP SHA-256/Keccak。实际 CT2 和认证承诺生成60项输入，
+与 G6/G7 均一致；原512 B证明验证通过。28 签名交易、10 原子拒绝、440 历史归档项未变。
+本轮到 G8-C 停止；未写 Winner、未新 Setup/Prove，未触碰 G9。
+
+下一轮唯一任务 G8-D：
+
+1. 新增一次性披露结算入口，固定连接本轮 receiver/commitment/P3 组件，不允许 caller 选 verifier/VK。
+2. 检查尚未披露，调用本轮真正从冻结存储构造输入的 verifyFrozenP3，成功后同一交易写 Winner 一次。
+3. 复用 G6 原证明；错误 Winner 和重复披露必须正常拒绝，失败前后 Winner/计数/冻结状态不变。
+4. 不公开 tally、CP opening、usable shares，不将通用 view 验证器的重复调用视为重复 Winner 写入。
+
+通过后停止；G8-E 完整交易闭环/成本，G9 精确 SnarkPack EVM，G10 公平比较与干净源码复现后置。
+本次644 B calldata比G7少1920 B，但2,058,601 Gas高于G7独立组件；如实记录，不预设优化收益。
+
+## Previous component: G8-B five-person acceptance (G8-C plan below is now completed)
 
 [补充验收](G8_B_FIVE_TRUSTEES.md) 从本地已提交 `e3b7cfb` 建立
 `experiment/g8b-five-trustees`，不从上传评估的旧 `ac021610` 重做 G8-B。

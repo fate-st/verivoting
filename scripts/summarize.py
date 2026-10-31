@@ -82,6 +82,7 @@ def main() -> int:
     g8a_path = raw.parent / "g8a_raw" / "certificate_auth.json"
     g8b_path = raw.parent / "g8b_raw" / "trustee_commitments.json"
     g8b_five_path = raw.parent / "g8b_five_raw" / "all_trustees.json"
+    g8c_path = raw.parent / "g8c_raw" / "frozen_p3_binding.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -235,6 +236,17 @@ def main() -> int:
     g8a = json.loads(g8a_path.read_text()) if g8a_path.exists() else None
     g8b = json.loads(g8b_path.read_text()) if g8b_path.exists() else None
     g8b_five = json.loads(g8b_five_path.read_text()) if g8b_five_path.exists() else None
+    g8c = json.loads(g8c_path.read_text()) if g8c_path.exists() else None
+    if g8c and (
+        not g8b_five or g8c["status"] != "PASS_AUTHENTICATED_INTAKE_AND_FROZEN_STORAGE_P3_BINDING"
+        or not all(g8c[k] for k in ["receiver_auth_gate_enforced_on_intake", "p3_storage_binding_integrated", "p3_verified_in_this_flow", "all_60_inputs_match", "g6_input_match", "g7_input_match"])
+        or g8c["public_input_count"] != 60 or len(g8c["public_input_source_map"]) != 60
+        or g8c["winner_written"] or g8c["complete_g8_settlement"] or g8c["snarkpack_evm_verified"]
+        or any(g8c[k] != 0 for k in ["setup_count", "proof_generation_count", "new_cp_packages", "new_signatures"])
+        or len(g8c["negative_tests"]) != 10
+        or not all(n["atomic_rejection"] and n["before"] == n["after"] for n in g8c["negative_tests"])
+    ):
+        raise ValueError("G8-C must enforce intake authentication and rebuild all original P3 inputs, but not claim Winner writes/full G8")
     if g8b_five and (
         not g8b or g8b_five["status"] != "PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED"
         or g8b_five["original_package_signatures_verified_evm"] != 5
@@ -937,6 +949,28 @@ def main() -> int:
             "all_five_trustee_commitments_evm_measured": True,
             "certificate_and_decryption_roles_separated": True,
         })
+    if g8c:
+        p3_tx = next(t for t in g8c["transactions"] if t["label"] == "verify_frozen_p3_original")
+        summary["classification"] = "measured-g8c-certified-intake-live-frozen-storage-built-p3-local-prague-no-winner-write"
+        summary["g8c_frozen_storage_p3"] = {
+            "status": g8c["status"], "raw": str(g8c_path),
+            "all_60_inputs_match_g6_and_g7": g8c["all_60_inputs_match"],
+            "receiver_auth_gate_enforced_on_intake": True,
+            "verify_p3_with_input_reconstruction_gas": p3_tx["total_gas"],
+            "verify_p3_calldata_bytes": p3_tx["calldata_bytes"],
+            "necessary_atomic_negatives": len(g8c["negative_tests"]),
+            "winner_written": False, "full_system_gas": None,
+        }
+        summary["gates"]["G8_C_authenticated_frozen_storage_p3"] = g8c["status"]
+        summary["gates"]["G8_full_winner_only_settlement"] = "PARTIAL_AUTHENTICATED_INTAKE_FROZEN_P3_PASS_WINNER_WRITE_PENDING"
+        summary["gates"]["G5_target_chain"] = "PARTIAL_G8C_AUTHENTICATED_FROZEN_P3_NO_WINNER_NO_EXACT_SNARKPACK"
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G8-C certified intake, live frozen CT2 and storage-built original P3 verification",
+            "receiver_enforces_certificate_gate": True,
+            "p3_storage_binding_integrated": True,
+            "winner_write_once_integrated": False,
+            "next_task": "G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -946,9 +980,20 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g8c:
+        lines.extend([
+            "## Current work: G8-C authenticated intake and frozen-storage P3 passed; full G8 remains PARTIAL",
+            "",
+            "- Report: `docs/G8_C_FROZEN_P3_BINDING.md`; raw: `experiments/g8c_raw/frozen_p3_binding.json`. New receiver enforces original certificates internally; old receiver/Gate/data are unchanged. Selected Trustee shares/commitments, CT2/C0/C1, target and certified weight produce the exact original 60 inputs.",
+            f"- G6/G7 both match 60/60; reused G6 proof in G7's 512 B EIP-2537 encoding, fixed G4-D VK. Actual input-reconstruction-plus-P3 transaction `{p3_tx['total_gas']} Gas`, `{p3_tx['calldata_bytes']} B`, not G7's historical component cost.",
+            "- Wrong newState tested before first acceptance: four ballot pairings pass then the state pairing returns 0. Missing Trustee 4 gives MISSING_COMMITMENT/no pairing; after all five authenticate, the wrong selector reaches pairing 0/INVALID_GROTH16. Ten exact-reason atomic negatives, 28 actual signed transactions, 440 historical archive entries unchanged.",
+            "- Zero new Setup/Prove/CP/signing. Gate V2 adds certified key/coefficients/weight interfaces; old algorithms and proof relations remain unchanged. No Winner endpoint/write or exact SnarkPack EVM. Local functional samples, not full-system efficiency/production privacy.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g8b_five:
         lines.extend([
-            "## Current work: G8-B five-Trustee supplement passed; full G8 remains PARTIAL",
+            "## Previous component: G8-B five-Trustee acceptance" if g8c else "## Current work: G8-B five-Trustee supplement passed; full G8 remains PARTIAL",
             "",
             "- Report: `docs/G8_B_FIVE_TRUSTEES.md`; raw: `experiments/g8b_five_raw/all_trustees.json`. All five archived original commitment signatures and KeyCore shares actually checked on unchanged EVM bytecode.",
             "- DKG certifiers stay `{1,2,3}`. Commitments arrive `4,5,3,1,2`; the distinct set `{3,4,5}` reaches readiness before 1/2 submit. Non-certifiers 4/5 are valid roster members, not rejected for failing to sign the DKG certificate.",
