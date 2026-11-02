@@ -1,0 +1,199 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "commands": [
+    {
+      "name": "syntax",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g8e_accounting.mjs"
+      ],
+      "log": "syntax.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 19.204915999999997
+    },
+    {
+      "name": "accounting",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--write"
+      ],
+      "log": "accounting.log",
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 154.174125
+    },
+    {
+      "name": "deterministic-check",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--check"
+      ],
+      "log": "deterministic-check.log",
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 103.55433300000001
+    },
+    {
+      "name": "baseline-audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8d_audit.mjs"
+      ],
+      "log": "baseline-audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 9394.804791
+    },
+    {
+      "name": "accounting",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--write"
+      ],
+      "log": "accounting-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 220.520708
+    },
+    {
+      "name": "deterministic-check",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--check"
+      ],
+      "log": "deterministic-check-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 168.701875
+    },
+    {
+      "name": "summary",
+      "attempt": 1,
+      "argv": [
+        "python3",
+        "scripts/summarize.py"
+      ],
+      "log": "summary.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 141.68275
+    },
+    {
+      "name": "deterministic-check",
+      "attempt": 3,
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--check"
+      ],
+      "log": "deterministic-check-attempt-3.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 297.94283299999995
+    },
+    {
+      "name": "syntax-recorder",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g8e_record.mjs"
+      ],
+      "log": "syntax-recorder.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 18.629666999999998
+    },
+    {
+      "name": "diff-check",
+      "attempt": 1,
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "log": "diff-check.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 32.38779100000001
+    },
+    {
+      "name": "receipt-cross-check",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--input-type=module",
+        "-e",
+        "\nimport assert from \"node:assert/strict\";import fs from \"node:fs\";\nconst r=JSON.parse(fs.readFileSync(\"experiments/g8d_raw/winner_once.json\"));\nconst c=JSON.parse(fs.readFileSync(\"results/g8_e/lifecycle_costs.json\"));\nconst success=r.transactions.filter(t=>t.receipt_status===1),deployment=success.filter(t=>t.to===null),business=success.filter(t=>t.to!==null),failed=r.transactions.filter(t=>t.receipt_status===0);\nconst sum=ts=>ts.reduce((n,t)=>n+t.total_gas,0);\nassert.equal(sum(deployment),34082689);assert.equal(sum(business),31390919);assert.equal(sum(success),65473608);assert.equal(sum(failed),2263025);\nassert.equal(sum(success),c.totals.successful_including_deployment.total_gas);\nassert.equal(business.reduce((n,t)=>n+t.calldata_bytes,0),17236);\nassert.equal(success.reduce((n,t)=>n+(t.signed_transaction_hex.length-2)/2,0),99196);\nassert.deepEqual(Object.values(c.new_execution_counts),[0,0,0,0,0]);\nassert.equal(c.offline_costs.prove_time_ms,null);assert.equal(c.communication.private_trustee_transport.bytes,null);\nassert.equal(c.binding.winner,1);assert.equal(c.binding.winner_event_count,1);\nconsole.log(JSON.stringify({status:\"PASS_INDEPENDENT_RECEIPT_TOTALS_AND_SCOPE_CHECK\",transactions:r.transactions.length,successful:success.length,rejected:failed.length,new_evm:0}));"
+      ],
+      "log": "receipt-cross-check.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 25.402875
+    },
+    {
+      "name": "baseline-audit",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g8d_audit.mjs"
+      ],
+      "log": "baseline-audit-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 8346.295625
+    },
+    {
+      "name": "deterministic-check",
+      "attempt": 4,
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--check"
+      ],
+      "log": "deterministic-check-attempt-4.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 214.73
+    },
+    {
+      "name": "diff-check",
+      "attempt": 2,
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "log": "diff-check-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 33.920291
+    }
+  ]
+}

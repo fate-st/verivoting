@@ -84,6 +84,7 @@ def main() -> int:
     g8b_five_path = raw.parent / "g8b_five_raw" / "all_trustees.json"
     g8c_path = raw.parent / "g8c_raw" / "frozen_p3_binding.json"
     g8d_path = raw.parent / "g8d_raw" / "winner_once.json"
+    g8e_path = raw.parent.parent / "results" / "g8_e" / "lifecycle_costs.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -239,6 +240,19 @@ def main() -> int:
     g8b_five = json.loads(g8b_five_path.read_text()) if g8b_five_path.exists() else None
     g8c = json.loads(g8c_path.read_text()) if g8c_path.exists() else None
     g8d = json.loads(g8d_path.read_text()) if g8d_path.exists() else None
+    g8e = json.loads(g8e_path.read_text()) if g8e_path.exists() else None
+    if g8e and (
+        not g8d or g8e["status"] != "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM"
+        or g8e["artifact_kind"] != "derived_accounting_not_new_raw_experiment"
+        or g8e["totals"]["successful_including_deployment"]["transaction_count"] != 17
+        or g8e["totals"]["rejected_tests"]["transaction_count"] != 4
+        or g8e["totals"]["non_deployment_success"]["transaction_count"] != 13
+        or any(g8e["new_execution_counts"].values())
+        or g8e["complete_snarkpack_chain_settlement"] or g8e["statistical_efficiency_claim"]
+        or g8e["complete_snarkpack_settlement_gas"] is not None
+        or g8e["offline_costs"]["setup_time_ms"] is not None or g8e["offline_costs"]["prove_time_ms"] is not None
+    ):
+        raise ValueError("G8-E must be derived G8-D receipt accounting, not a new experiment, zero-cost proof claim or exact SnarkPack result")
     if g8d and (
         not g8c or g8d["status"] != "PASS_FIXED_FROZEN_P3_ATOMIC_WINNER_WRITE_ONCE"
         or not all(g8d[k] for k in ["winner_written", "winner_write_once_integrated", "p3_storage_binding_integrated", "all_60_inputs_match", "g6_input_match", "g7_input_match"])
@@ -1007,6 +1021,22 @@ def main() -> int:
             "winner_write_once_integrated": True,
             "next_task": "Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.",
         })
+    if g8e:
+        summary["classification"] = "derived-g8e-g8d-lifecycle-receipt-accounting-no-new-evm"
+        summary["g8e_lifecycle_accounting"] = {
+            "status": g8e["status"], "derived": str(g8e_path), "source": g8e["source"],
+            "totals": g8e["totals"],
+            "business_calldata_partition": g8e["communication"]["successful_business_calldata_partition"],
+            "offline_costs": g8e["offline_costs"], "new_execution_counts": g8e["new_execution_counts"],
+            "complete_snarkpack_settlement_gas": None,
+        }
+        summary["gates"]["G8_E_derived_lifecycle_accounting"] = g8e["status"]
+        summary["gates"]["G8_full_winner_only_settlement"] = "PARTIAL_G8E_INDIVIDUAL_FALLBACK_COSTS_ARCHIVED_EXACT_SNARKPACK_PENDING"
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G8-E derived accounting of one same-version local G8-D lifecycle; no new EVM/proofs",
+            "local_fallback_lifecycle_costs_archived": True,
+            "next_task": "Stop after G8-E. G9 exact SnarkPack EVM remains an independent unresolved route decision; do not restart frozen software Miller trials or silently bypass aggregate verification. G10 fair system comparisons remain pending; no new batch scales, proofs or repeated G1-E runs authorized by this accounting phase.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -1016,9 +1046,20 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g8e:
+        lines.extend([
+            "## Current work: G8-E derived local lifecycle accounting passed; no new EVM experiment",
+            "",
+            "- Report: `docs/G8_E_LIFECYCLE_COSTS.md`; derived JSON: `results/g8_e/lifecycle_costs.json`. All costs come from the same G8-D archived execution, not from summed G7/G8-C components. G8-D was saved as local baseline 4a2cc16; old dirty execution provenance is preserved.",
+            f"- Deployment: {g8e['totals']['deployment']['total_gas']:,} Gas / 4 transactions. Non-deployment successful workflow (including initialization/authentication/commitments): {g8e['totals']['non_deployment_success']['total_gas']:,} Gas / 13 transactions. Successful total: {g8e['totals']['successful_including_deployment']['total_gas']:,} Gas / 17 transactions; rejected tests excluded: {g8e['totals']['rejected_tests']['total_gas']:,} Gas / 4 transactions.",
+            "- Successful business calldata 17,236 B; successful creation inputs 80,315 B; total successful transaction data 97,551 B is nested inside signed transaction serialization 99,196 B, not added to it. Eleven proof blobs 5,632 B and ballot input matrices 6,400 B are already within calldata. Three VK blobs 18,688 B are already within creation inputs.",
+            "- No new EVM, Setup/Prove/CP/signing or timing samples. Offline generation/private transport unmeasured (null), not zero. This is the successful receipt subset of an interleaved acceptance run, not a new success-only replay, single block or statistical efficiency result. Exact SnarkPack/public deployment/full-system costs remain incomplete.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g8d:
         lines.extend([
-            "## Current work: G8-D atomic Winner write-once passed; exact SnarkPack/full-system evaluation pending",
+            "## Previous component: G8-D atomic Winner write-once passed" if g8e else "## Current work: G8-D atomic Winner write-once passed; exact SnarkPack/full-system evaluation pending",
             "",
             "- Report: `docs/G8_D_WINNER_ONCE.md`; raw: `experiments/g8d_raw/winner_once.json`. The authoritative receiver inherits the unchanged G8-C intake/freeze logic; its P3 address is immutable and bound once before start. No independent wrapper Winner state.",
             f"- Actual Winner=1, one write/event; 60/60 original G6/G7 inputs. Disclosure transaction {disclosure_tx['total_gas']} Gas / {disclosure_tx['calldata_bytes']} B includes input reconstruction, real P3 verification and state write/event.",

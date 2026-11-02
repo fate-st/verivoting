@@ -1,5 +1,5 @@
 {
-  "classification": "measured-g8d-authenticated-local-prague-frozen-p3-atomic-winner-once-individual-fallback",
+  "classification": "derived-g8e-g8d-lifecycle-receipt-accounting-no-new-evm",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -90,12 +90,13 @@
     "G6_complete_native_receiver_to_winner": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "G7_current_g4d_vk_evm": "PASS_SAME_G6_PROOF_G4D_VK_PRAGUE_1_POSITIVE_4_NEGATIVES",
     "G8_receiver_freeze_individual_fallback": "PARTIAL_G8_REAL_INDIVIDUAL_BALLOT_STATE_EVM_CT2_FREEZE_PASS",
-    "G8_full_winner_only_settlement": "PARTIAL_G8D_INDIVIDUAL_FALLBACK_WINNER_ONCE_EXACT_SNARKPACK_PENDING",
+    "G8_full_winner_only_settlement": "PARTIAL_G8E_INDIVIDUAL_FALLBACK_COSTS_ARCHIVED_EXACT_SNARKPACK_PENDING",
     "G8_A_original_certificate_authentication_component": "PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE",
     "G8_B_authenticated_trustee_commitments_component": "PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2",
     "G8_B_all_five_original_commitments": "PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED",
     "G8_C_authenticated_frozen_storage_p3": "PASS_AUTHENTICATED_INTAKE_AND_FROZEN_STORAGE_P3_BINDING",
-    "G8_D_atomic_winner_once": "PASS_FIXED_FROZEN_P3_ATOMIC_WINNER_WRITE_ONCE"
+    "G8_D_atomic_winner_once": "PASS_FIXED_FROZEN_P3_ATOMIC_WINNER_WRITE_ONCE",
+    "G8_E_derived_lifecycle_accounting": "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM"
   },
   "dkg": {
     "classification": "real-group-single-process-protocol-simulation",
@@ -6228,14 +6229,14 @@
     "current_evaluation_suite_state_and_p3": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT",
     "current_evaluation_suite_p3": "PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2",
-    "next_task": "Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.",
+    "next_task": "Stop after G8-E. G9 exact SnarkPack EVM remains an independent unresolved route decision; do not restart frozen software Miller trials or silently bypass aggregate verification. G10 fair system comparisons remain pending; no new batch scales, proofs or repeated G1-E runs authorized by this accounting phase.",
     "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS",
     "complete_native_flow": true,
     "complete_chain_settlement": false,
     "current_p3_vk_evm_verified": true,
     "active_gate": "G8",
     "active_gate_status": "PARTIAL",
-    "latest_completed_step": "G8-D same authoritative receiver verifies frozen P3 and atomically writes Winner once",
+    "latest_completed_step": "G8-E derived accounting of one same-version local G8-D lifecycle; no new EVM/proofs",
     "receiver_and_freeze_evm_measured": true,
     "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
     "certificate_authentication_component_evm_measured": true,
@@ -6244,7 +6245,8 @@
     "p3_storage_binding_integrated": true,
     "all_five_trustee_commitments_evm_measured": true,
     "certificate_and_decryption_roles_separated": true,
-    "winner_write_once_integrated": true
+    "winner_write_once_integrated": true,
+    "local_fallback_lifecycle_costs_archived": true
   },
   "g2_a_state_transition_r1cs": {
     "gate": "G2-A",
@@ -21225,5 +21227,102 @@
     "peak_node_rss_mib": 492.421875,
     "all_60_inputs_match_g6_and_g7": true,
     "full_system_gas": null
+  },
+  "g8e_lifecycle_accounting": {
+    "status": "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM",
+    "derived": "results/g8_e/lifecycle_costs.json",
+    "source": {
+      "path": "experiments/g8d_raw/winner_once.json",
+      "sha256": "20b72b4f23a66dcd8ef06e30c62494ad8f989d51107fb3c64876a9b1c1ff3268",
+      "recorded_at_utc": "2026-10-31T14:06:36.009Z",
+      "execution_git_commit": "2ce1caedf11a064c36f8322daf65e69b8522bf76",
+      "execution_git_dirty": true,
+      "execution_branch": "experiment/g8d-winner-once",
+      "archived_baseline_commit": "4a2cc163cd8b0d805d4a582c6e0d91586fc2627e"
+    },
+    "totals": {
+      "deployment": {
+        "transaction_count": 4,
+        "total_gas": 34082689,
+        "intrinsic_gas": 1412112,
+        "execution_gas": 32670577,
+        "calldata_floor_extra_gas": 0,
+        "transaction_data_bytes": 80315,
+        "creation_input_bytes": 80315,
+        "contract_calldata_bytes": 0,
+        "signed_transaction_bytes": 80643
+      },
+      "non_deployment_success": {
+        "transaction_count": 13,
+        "total_gas": 31390919,
+        "intrinsic_gas": 463444,
+        "execution_gas": 30927475,
+        "calldata_floor_extra_gas": 0,
+        "transaction_data_bytes": 17236,
+        "creation_input_bytes": 0,
+        "contract_calldata_bytes": 17236,
+        "signed_transaction_bytes": 18553
+      },
+      "successful_including_deployment": {
+        "transaction_count": 17,
+        "total_gas": 65473608,
+        "intrinsic_gas": 1875556,
+        "execution_gas": 63598052,
+        "calldata_floor_extra_gas": 0,
+        "transaction_data_bytes": 97551,
+        "creation_input_bytes": 80315,
+        "contract_calldata_bytes": 17236,
+        "signed_transaction_bytes": 99196
+      },
+      "rejected_tests": {
+        "transaction_count": 4,
+        "total_gas": 2263025,
+        "intrinsic_gas": 105832,
+        "execution_gas": 2149422,
+        "calldata_floor_extra_gas": 7771,
+        "transaction_data_bytes": 1936,
+        "creation_input_bytes": 0,
+        "contract_calldata_bytes": 1936,
+        "signed_transaction_bytes": 2341
+      },
+      "all_acceptance_transactions": {
+        "transaction_count": 21,
+        "total_gas": 67736633,
+        "intrinsic_gas": 1981388,
+        "execution_gas": 65747474,
+        "calldata_floor_extra_gas": 7771,
+        "transaction_data_bytes": 99487,
+        "creation_input_bytes": 80315,
+        "contract_calldata_bytes": 19172,
+        "signed_transaction_bytes": 101537
+      }
+    },
+    "business_calldata_partition": {
+      "proof_payload_bytes": 5632,
+      "caller_ballot_public_input_matrix_bytes": 6400,
+      "other_fields_selectors_and_abi_bytes": 5204,
+      "total_bytes": 17236
+    },
+    "offline_costs": {
+      "status": "REUSED_NOT_RETIMED",
+      "reused_proofs": {
+        "ballot": 8,
+        "state": 2,
+        "p3": 1
+      },
+      "setup_time_ms": null,
+      "prove_time_ms": null,
+      "dkg_time_ms": null,
+      "private_cp_generation_time_ms": null,
+      "original_setup_or_prover_cost_is_zero": false
+    },
+    "new_execution_counts": {
+      "evm_transactions": 0,
+      "setup": 0,
+      "prove": 0,
+      "cp_generation": 0,
+      "signatures": 0
+    },
+    "complete_snarkpack_settlement_gas": null
   }
 }

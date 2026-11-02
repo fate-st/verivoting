@@ -8,7 +8,16 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G8-D atomic Winner write-once passed
+### Current work: G8-E derived lifecycle accounting passed
+
+[G8-E](docs/G8_E_LIFECYCLE_COSTS.md)：只读取已有G8-D收据，未新建EVM交易或证明。
+成功路径17笔共65,473,608 Gas：部署34,082,689，非部署业务31,390,919；
+四笔失败测试2,263,025 Gas单列。成功业务calldata17,236 B，证明/矩阵已包含其中，不重复加。
+派生JSON位于 `results/g8_e/lifecycle_costs.json`，明确不是新raw实验或独立重复样本。
+旧G8-D保存为本地提交4a2cc16，执行时dirty来源记录不改。离线证明/私密通信未重测，时间/字节
+保留null而非0。到G8-E停止，精确SnarkPack EVM及完整系统公平比较仍未完成。
+
+### Previous component: G8-D atomic Winner write-once passed
 
 [G8-D](docs/G8_D_WINNER_ONCE.md)：同一权威接收器完成原认证、两批B4、CT2冻结、
 Trustee承诺、存储重建60输入和原P3验证，原子写入Winner=1及事件一次。21笔真实交易、

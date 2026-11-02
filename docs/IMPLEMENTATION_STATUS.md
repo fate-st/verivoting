@@ -1,6 +1,23 @@
 # Implementation and claim boundary
 
-## Current work: G8-D atomic Winner disclosure passed; exact SnarkPack/full costs pending
+## Current work: G8-E derived local lifecycle accounting passed
+
+[G8-E](G8_E_LIFECYCLE_COSTS.md) 从本地G8-D提交 `4a2cc16` 建立独立分支，
+不改合约/电路/固定配置/raw，也不新建EVM交易、Setup/Prove/CP或签名。
+21笔收据一一分类并核对守恒：成功17笔65,473,608 Gas，其中部署4笔34,082,689，
+含初始化/认证/承诺的非部署成功业务13笔31,390,919；失败测试4笔2,263,025单列。
+
+成功业务calldata17,236 B（证明5,632 + 单票输入矩阵6,400 + 其他5,204）；
+成功创建输入80,315 B，两者共97,551 B；签名交易序列化99,196 B已包含前者，不能相加。
+按二进制哈希去重的11份证明/3份VK只是已传输材料子集，不是额外通信。
+离线证明生成和私密交付未重测，以REUSED_NOT_RETIMED/null标记，不当成零成本。
+
+生成和只读重算逐字节一致；原G8-D审计通过，原始来源SHA不变。首次读取Git摘要超过
+Node默认缓冲区，调整读取上限后通过，失败日志和脚本保留在 `results/g8_e/execution`。
+这是含负例验收中成功收据的派生汇总，不是新无负例路径或性能统计样本。
+G8-E到此停止；当前仍是本地逐票Groth16备用路线，精确SnarkPack EVM/G9、G10公平系统比较待办。
+
+## Previous component: G8-D atomic Winner disclosure passed; exact SnarkPack/full costs pending
 
 [G8-D](G8_D_WINNER_ONCE.md) 从已提交G8-C `2ce1cae` 建立独立分支；新接收器
 继承原接收/冻结函数，P3地址immutable、启动前一次绑定，唯一入口真实验证原P3后原子写Winner。

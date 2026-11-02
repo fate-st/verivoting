@@ -1,6 +1,24 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current work: G8-D one-time Winner written; stop here
+## Current work: G8-E lifecycle accounting archived; stop here
+
+[G8-E](G8_E_LIFECYCLE_COSTS.md)：复用G8-D一次真实执行的21笔收据，完成分类、
+Gas及通信字节守恒、固定来源/赢家状态核对。没有补跑EVM或生成新证明。
+成功17笔65,473,608 Gas；部署34,082,689，非部署成功业务31,390,919。
+失败测试2,263,025 Gas不进入成功路径，离线证明/私密交付仍未重测，不能填零。
+
+本轮在G8-E停止。不自动开始G9/G10，不扩批、不重新跑G1-E、不改密码学关系或VK。
+
+下一轮应先给出G9精确SnarkPack EVM的有限范围路线决策方案：
+
+1. 阅读被冻结的精确验证失败证据及现有真实接口，确认尚缺哪一段。
+2. 在明确Gas/资源预算下比较能够维持原验证语义的候选路线；不能跳过验证或静默换方案。
+3. 先确定路线和验收边界，再决定是否编写一次最小可行实验；不重启无目的软件Miller扫描。
+4. 无可行路线时如实保留受阻状态，论文只报告已完成的本地逐票备用路线。
+
+G10完整公平比较和最终版本复现后置；当前G8-E分类费用不是完整SnarkPack系统效率结论。
+
+## Previous component: G8-D one-time Winner written; stop here
 
 [G8-D](G8_D_WINNER_ONCE.md)：基于G8-C提交2ce1cae，新接收器继承原批次/冻结逻辑，
 固定P3组件，存储重建60输入及原证明真实验证后在同一交易写Winner一次。21笔交易、

@@ -1,0 +1,905 @@
+{
+  "schema_version": 1,
+  "gate": "G8-E",
+  "status": "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM",
+  "artifact_kind": "derived_accounting_not_new_raw_experiment",
+  "source": {
+    "path": "experiments/g8d_raw/winner_once.json",
+    "sha256": "20b72b4f23a66dcd8ef06e30c62494ad8f989d51107fb3c64876a9b1c1ff3268",
+    "recorded_at_utc": "2026-10-31T14:06:36.009Z",
+    "execution_git_commit": "2ce1caedf11a064c36f8322daf65e69b8522bf76",
+    "execution_git_dirty": true,
+    "execution_branch": "experiment/g8d-winner-once",
+    "archived_baseline_commit": "4a2cc163cd8b0d805d4a582c6e0d91586fc2627e"
+  },
+  "generator": {
+    "path": "scripts/g8e_accounting.mjs",
+    "sha256": "843683c2c374284437e78b7665a182131246314e8a503a63d1f80858903aa063"
+  },
+  "supporting_sources": [
+    {
+      "path": "experiments/g8d_raw/contract_artifacts.json",
+      "sha256": "732a489831dac546c220f6b3ad518ecc09335035bf8edc797f6abc33e287c24b"
+    },
+    {
+      "path": "experiments/g8d_raw/transactions.jsonl",
+      "sha256": "f1154b8cc57e1b6af56bf9c898b8ccb90e8d8e9974f537d3e4636d913b6069ea"
+    },
+    {
+      "path": "experiments/g8d_raw/SHA256SUMS",
+      "sha256": "cabae12a5f07b9b9b27670c4b3c2b75790606e372614156e497fbe8716b9b906"
+    },
+    {
+      "path": "configs/experiment.G8C-FROZEN-P3-W32.json",
+      "sha256": "e48c5ccf4bc9476a0d5b62413d2a0c0ac059c48b4623d77ee19836825d89f9d8"
+    },
+    {
+      "path": "fixtures/g6_p3_eip2537_g7_v1.json",
+      "sha256": "81daaa9311a507021883e58ce9e0c1adfc46daaf94c578b04295df4fc85ac356"
+    },
+    {
+      "path": "fixtures/g8_receiver_eip2537_v1.json",
+      "sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb"
+    },
+    {
+      "path": "fixtures/g8a_original_certificates_public_v1.json",
+      "sha256": "75e724ac0644702cbb864fafc8e54ffa0f64042bb08483038ad680db3f021b8e"
+    },
+    {
+      "path": "fixtures/g8b_trustee_commitments_public_v1.json",
+      "sha256": "944c69430864923a43624bffa5de99b6deaf2764a6d7ffc3aaac1bac01c63800"
+    },
+    {
+      "path": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+      "sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"
+    }
+  ],
+  "provenance_checks": {
+    "g8d_manifest_live_entries": 63,
+    "g8d_manifest_baseline_status_entries": 6,
+    "source_code_and_fixture_hashes_matched": 24
+  },
+  "scope": {
+    "route": "local Prague individual Groth16 ballot verification + state proofs + authenticated frozen P3 + Winner once",
+    "registered_voters": 32,
+    "registered_weight": 32,
+    "accepted_ballots": 8,
+    "batches": 2,
+    "batch_size": 4,
+    "selected_trustees": [
+      1,
+      2,
+      3
+    ],
+    "accounting_basis": "successful receipt subset of one interleaved acceptance execution, NOT a new success-only replay",
+    "environment_from_source": {
+      "cpu": "Apple M4",
+      "platform": "darwin",
+      "arch": "arm64",
+      "node": "v23.11.0",
+      "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+      "compiler_settings": {
+        "optimizer": {
+          "enabled": true,
+          "runs": 200
+        },
+        "viaIR": true,
+        "evmVersion": "prague",
+        "outputSelection": {
+          "*": {
+            "*": [
+              "abi",
+              "evm.bytecode.object",
+              "evm.deployedBytecode.object"
+            ]
+          }
+        }
+      },
+      "hardfork": "prague"
+    }
+  },
+  "phases": {
+    "deployment": {
+      "transaction_count": 4,
+      "total_gas": 34082689,
+      "intrinsic_gas": 1412112,
+      "execution_gas": 32670577,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 80315,
+      "creation_input_bytes": 80315,
+      "contract_calldata_bytes": 0,
+      "signed_transaction_bytes": 80643
+    },
+    "initialization": {
+      "transaction_count": 1,
+      "total_gas": 63614,
+      "intrinsic_gas": 21064,
+      "execution_gas": 42550,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 4,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 4,
+      "signed_transaction_bytes": 103
+    },
+    "certification": {
+      "transaction_count": 4,
+      "total_gas": 10593712,
+      "intrinsic_gas": 99452,
+      "execution_gas": 10494260,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 1232,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 1232,
+      "signed_transaction_bytes": 1640
+    },
+    "intake": {
+      "transaction_count": 2,
+      "total_gas": 6803172,
+      "intrinsic_gas": 188676,
+      "execution_gas": 6614496,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 13896,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 13896,
+      "signed_transaction_bytes": 14100
+    },
+    "freeze": {
+      "transaction_count": 1,
+      "total_gas": 204081,
+      "intrinsic_gas": 21064,
+      "execution_gas": 183017,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 4,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 4,
+      "signed_transaction_bytes": 103
+    },
+    "commitments": {
+      "transaction_count": 4,
+      "total_gas": 11652780,
+      "intrinsic_gas": 104932,
+      "execution_gas": 11547848,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 1456,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 1456,
+      "signed_transaction_bytes": 1861
+    },
+    "disclosure": {
+      "transaction_count": 1,
+      "total_gas": 2073560,
+      "intrinsic_gas": 28256,
+      "execution_gas": 2045304,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 644,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 644,
+      "signed_transaction_bytes": 746
+    },
+    "rejected": {
+      "transaction_count": 4,
+      "total_gas": 2263025,
+      "intrinsic_gas": 105832,
+      "execution_gas": 2149422,
+      "calldata_floor_extra_gas": 7771,
+      "transaction_data_bytes": 1936,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 1936,
+      "signed_transaction_bytes": 2341
+    }
+  },
+  "totals": {
+    "deployment": {
+      "transaction_count": 4,
+      "total_gas": 34082689,
+      "intrinsic_gas": 1412112,
+      "execution_gas": 32670577,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 80315,
+      "creation_input_bytes": 80315,
+      "contract_calldata_bytes": 0,
+      "signed_transaction_bytes": 80643
+    },
+    "non_deployment_success": {
+      "transaction_count": 13,
+      "total_gas": 31390919,
+      "intrinsic_gas": 463444,
+      "execution_gas": 30927475,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 17236,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 17236,
+      "signed_transaction_bytes": 18553
+    },
+    "successful_including_deployment": {
+      "transaction_count": 17,
+      "total_gas": 65473608,
+      "intrinsic_gas": 1875556,
+      "execution_gas": 63598052,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 97551,
+      "creation_input_bytes": 80315,
+      "contract_calldata_bytes": 17236,
+      "signed_transaction_bytes": 99196
+    },
+    "rejected_tests": {
+      "transaction_count": 4,
+      "total_gas": 2263025,
+      "intrinsic_gas": 105832,
+      "execution_gas": 2149422,
+      "calldata_floor_extra_gas": 7771,
+      "transaction_data_bytes": 1936,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 1936,
+      "signed_transaction_bytes": 2341
+    },
+    "all_acceptance_transactions": {
+      "transaction_count": 21,
+      "total_gas": 67736633,
+      "intrinsic_gas": 1981388,
+      "execution_gas": 65747474,
+      "calldata_floor_extra_gas": 7771,
+      "transaction_data_bytes": 99487,
+      "creation_input_bytes": 80315,
+      "contract_calldata_bytes": 19172,
+      "signed_transaction_bytes": 101537
+    }
+  },
+  "transactions": [
+    {
+      "source_index": 0,
+      "nonce": 0,
+      "label": "deploy_certificate_gate_v2",
+      "phase": "deployment",
+      "transaction_hash": "0xa431e47381b5b22031c11078a305c6c2a7eb1c3977d79bd0872d39da8791feab",
+      "receipt_status": 1,
+      "to": null,
+      "total_gas": 8226556,
+      "intrinsic_gas": 330266,
+      "execution_gas": 7896290,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 17606,
+      "creation_input_bytes": 17606,
+      "contract_calldata_bytes": 0,
+      "signed_transaction_bytes": 17688,
+      "revert_reason": null
+    },
+    {
+      "source_index": 1,
+      "nonce": 1,
+      "label": "deploy_winner_receiver",
+      "phase": "deployment",
+      "transaction_hash": "0xf255eaf5afa82e5634071a28702c2d893834c849652625ca0ca8765385e0d682",
+      "receipt_status": 1,
+      "to": null,
+      "total_gas": 11604752,
+      "intrinsic_gas": 531458,
+      "execution_gas": 11073294,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 32526,
+      "creation_input_bytes": 32526,
+      "contract_calldata_bytes": 0,
+      "signed_transaction_bytes": 32608,
+      "revert_reason": null
+    },
+    {
+      "source_index": 2,
+      "nonce": 2,
+      "label": "deploy_original_commitment_store",
+      "phase": "deployment",
+      "transaction_hash": "0x15b5a51204105f26bb4dd9966ced86489de94b42c34239205eb92511e91a4610",
+      "receipt_status": 1,
+      "to": null,
+      "total_gas": 6339786,
+      "intrinsic_gas": 230514,
+      "execution_gas": 6109272,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 11351,
+      "creation_input_bytes": 11351,
+      "contract_calldata_bytes": 0,
+      "signed_transaction_bytes": 11433,
+      "revert_reason": null
+    },
+    {
+      "source_index": 3,
+      "nonce": 3,
+      "label": "deploy_frozen_p3_binder",
+      "phase": "deployment",
+      "transaction_hash": "0x021593b03f194f653ca62d97387373e2ca89eae6486b7a83eb5066f983082168",
+      "receipt_status": 1,
+      "to": null,
+      "total_gas": 7911595,
+      "intrinsic_gas": 319874,
+      "execution_gas": 7591721,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 18832,
+      "creation_input_bytes": 18832,
+      "contract_calldata_bytes": 0,
+      "signed_transaction_bytes": 18914,
+      "revert_reason": null
+    },
+    {
+      "source_index": 4,
+      "nonce": 4,
+      "label": "bind_fixed_p3_once",
+      "phase": "initialization",
+      "transaction_hash": "0x4ccefaefbe1b3096d77d1c5c895496ae5550d28ad16b9c69a839be0e8792982f",
+      "receipt_status": 1,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 63614,
+      "intrinsic_gas": 21064,
+      "execution_gas": 42550,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 4,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 4,
+      "signed_transaction_bytes": 103,
+      "revert_reason": null
+    },
+    {
+      "source_index": 5,
+      "nonce": 5,
+      "label": "repeat_p3_binding",
+      "phase": "rejected",
+      "transaction_hash": "0x13f92d001868d915b1f126c6d6ddb108617fb59ee89b2425ba254f12fc7a4c6c",
+      "receipt_status": 0,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 23855,
+      "intrinsic_gas": 21064,
+      "execution_gas": 2791,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 4,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 4,
+      "signed_transaction_bytes": 103,
+      "revert_reason": "P3_ALREADY_BOUND"
+    },
+    {
+      "source_index": 6,
+      "nonce": 6,
+      "label": "authenticate_dkg_1",
+      "phase": "certification",
+      "transaction_hash": "0xc73b788713bf53c6cb1d66b3b24445e8ef52c35a580f13eef6a70a67043cd185",
+      "receipt_status": 1,
+      "to": "0x503ca0e01e1c22e7b43f6fa2d9d8722ae991f530",
+      "total_gas": 2652194,
+      "intrinsic_gas": 24380,
+      "execution_gas": 2627814,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 260,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 260,
+      "signed_transaction_bytes": 362,
+      "revert_reason": null
+    },
+    {
+      "source_index": 7,
+      "nonce": 7,
+      "label": "authenticate_dkg_2",
+      "phase": "certification",
+      "transaction_hash": "0x58a2795c05f25acc5afc162f635c7f58cfe9cf0d50247ff775ebce1668b38a1e",
+      "receipt_status": 1,
+      "to": "0x503ca0e01e1c22e7b43f6fa2d9d8722ae991f530",
+      "total_gas": 2590648,
+      "intrinsic_gas": 24380,
+      "execution_gas": 2566268,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 260,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 260,
+      "signed_transaction_bytes": 362,
+      "revert_reason": null
+    },
+    {
+      "source_index": 8,
+      "nonce": 8,
+      "label": "authenticate_dkg_3",
+      "phase": "certification",
+      "transaction_hash": "0xdea72770a1a52a39d2cdf3fd6db76c10439cd0c05bc73758a2d56369da9ea1cc",
+      "receipt_status": 1,
+      "to": "0x503ca0e01e1c22e7b43f6fa2d9d8722ae991f530",
+      "total_gas": 2580463,
+      "intrinsic_gas": 24380,
+      "execution_gas": 2556083,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 260,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 260,
+      "signed_transaction_bytes": 362,
+      "revert_reason": null
+    },
+    {
+      "source_index": 9,
+      "nonce": 9,
+      "label": "authenticate_registration",
+      "phase": "certification",
+      "transaction_hash": "0xf81408c21c3d8c8942ac1b8e9f6a30f27f93cc7e58bc8a4e36abae65686c2dd9",
+      "receipt_status": 1,
+      "to": "0x503ca0e01e1c22e7b43f6fa2d9d8722ae991f530",
+      "total_gas": 2770407,
+      "intrinsic_gas": 26312,
+      "execution_gas": 2744095,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 452,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 452,
+      "signed_transaction_bytes": 554,
+      "revert_reason": null
+    },
+    {
+      "source_index": 10,
+      "nonce": 10,
+      "label": "accept_batch_1",
+      "phase": "intake",
+      "transaction_hash": "0xcd67149a2352a12f1c80cb18daeaadf51f28972462c628399a7c270f33356540",
+      "receipt_status": 1,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 3400500,
+      "intrinsic_gas": 93252,
+      "execution_gas": 3307248,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 6948,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 6948,
+      "signed_transaction_bytes": 7050,
+      "revert_reason": null
+    },
+    {
+      "source_index": 11,
+      "nonce": 11,
+      "label": "accept_batch_2",
+      "phase": "intake",
+      "transaction_hash": "0x3eedd6cef5281d095e90190a5dde83382109c8c70b36cb98d0fcad5951b1b727",
+      "receipt_status": 1,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 3402672,
+      "intrinsic_gas": 95424,
+      "execution_gas": 3307248,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 6948,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 6948,
+      "signed_transaction_bytes": 7050,
+      "revert_reason": null
+    },
+    {
+      "source_index": 12,
+      "nonce": 12,
+      "label": "disclose_before_freeze",
+      "phase": "rejected",
+      "transaction_hash": "0x7791c8263055931346eac482ef596d5d77afafa6526af4cd7665dcd30ca9ebec",
+      "receipt_status": 0,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 137501,
+      "intrinsic_gas": 28256,
+      "execution_gas": 109245,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 644,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 644,
+      "signed_transaction_bytes": 746,
+      "revert_reason": "NOT_FROZEN"
+    },
+    {
+      "source_index": 13,
+      "nonce": 13,
+      "label": "freeze_ct2",
+      "phase": "freeze",
+      "transaction_hash": "0x48a4e0330565770bdd4e9c7097cc366ca219baaaf9686c12140e3a2525fbab76",
+      "receipt_status": 1,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 204081,
+      "intrinsic_gas": 21064,
+      "execution_gas": 183017,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 4,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 4,
+      "signed_transaction_bytes": 103,
+      "revert_reason": null
+    },
+    {
+      "source_index": 14,
+      "nonce": 14,
+      "label": "bind_authenticated_frozen_ct2",
+      "phase": "commitments",
+      "transaction_hash": "0xecceebd44e020a1cce682ae3414a688967cfec81aa3025cba900c27aa9447a59",
+      "receipt_status": 1,
+      "to": "0x63a69add1d80f1c2a89fbfe1675d5d83d080ab6c",
+      "total_gas": 279833,
+      "intrinsic_gas": 21064,
+      "execution_gas": 258769,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 4,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 4,
+      "signed_transaction_bytes": 103,
+      "revert_reason": null
+    },
+    {
+      "source_index": 15,
+      "nonce": 15,
+      "label": "authenticate_commitment_1",
+      "phase": "commitments",
+      "transaction_hash": "0x565ca57d903a1da6f8f67236985f53adbd9796dbc46d809e18900a377fe97a83",
+      "receipt_status": 1,
+      "to": "0x63a69add1d80f1c2a89fbfe1675d5d83d080ab6c",
+      "total_gas": 3804497,
+      "intrinsic_gas": 27964,
+      "execution_gas": 3776533,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 484,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 484,
+      "signed_transaction_bytes": 586,
+      "revert_reason": null
+    },
+    {
+      "source_index": 16,
+      "nonce": 16,
+      "label": "authenticate_commitment_2",
+      "phase": "commitments",
+      "transaction_hash": "0x47d06bc072e7801dce0ec7ad162080e42c7cbc90d5d390476263c2d3daf813f0",
+      "receipt_status": 1,
+      "to": "0x63a69add1d80f1c2a89fbfe1675d5d83d080ab6c",
+      "total_gas": 3779881,
+      "intrinsic_gas": 27964,
+      "execution_gas": 3751917,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 484,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 484,
+      "signed_transaction_bytes": 586,
+      "revert_reason": null
+    },
+    {
+      "source_index": 17,
+      "nonce": 17,
+      "label": "authenticate_commitment_3",
+      "phase": "commitments",
+      "transaction_hash": "0xe0343149311b6df8b15efebbe9e880879d2c1598906263eb99e7214f8cf5440c",
+      "receipt_status": 1,
+      "to": "0x63a69add1d80f1c2a89fbfe1675d5d83d080ab6c",
+      "total_gas": 3788569,
+      "intrinsic_gas": 27940,
+      "execution_gas": 3760629,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 484,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 484,
+      "signed_transaction_bytes": 586,
+      "revert_reason": null
+    },
+    {
+      "source_index": 18,
+      "nonce": 18,
+      "label": "wrong_winner_before_disclosure",
+      "phase": "rejected",
+      "transaction_hash": "0x137488f24f1a54d6a29e0394d6a83aa137dd9f5d7d3c4e0af0acffd2280d7a20",
+      "receipt_status": 0,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 2062529,
+      "intrinsic_gas": 28256,
+      "execution_gas": 2034273,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 644,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 644,
+      "signed_transaction_bytes": 746,
+      "revert_reason": "INVALID_GROTH16"
+    },
+    {
+      "source_index": 19,
+      "nonce": 19,
+      "label": "disclose_winner_once",
+      "phase": "disclosure",
+      "transaction_hash": "0xcb7752a338f2bc7cdbeff3bcfb5f0cf0012c44f467a9be829877077d9584ecf3",
+      "receipt_status": 1,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 2073560,
+      "intrinsic_gas": 28256,
+      "execution_gas": 2045304,
+      "calldata_floor_extra_gas": 0,
+      "transaction_data_bytes": 644,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 644,
+      "signed_transaction_bytes": 746,
+      "revert_reason": null
+    },
+    {
+      "source_index": 20,
+      "nonce": 20,
+      "label": "repeat_winner_disclosure",
+      "phase": "rejected",
+      "transaction_hash": "0xcbec683e7ec9a11b5b25552319a380ba1b973b4205118d8343be8fd0ffa9e1bf",
+      "receipt_status": 0,
+      "to": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "total_gas": 39140,
+      "intrinsic_gas": 28256,
+      "execution_gas": 3113,
+      "calldata_floor_extra_gas": 7771,
+      "transaction_data_bytes": 644,
+      "creation_input_bytes": 0,
+      "contract_calldata_bytes": 644,
+      "signed_transaction_bytes": 746,
+      "revert_reason": "ALREADY_DISCLOSED"
+    }
+  ],
+  "communication": {
+    "semantics": "creation input/calldata and signed serialization are alternative nested views, never added together",
+    "successful_business_calldata_partition": {
+      "proof_payload_bytes": 5632,
+      "caller_ballot_public_input_matrix_bytes": 6400,
+      "other_fields_selectors_and_abi_bytes": 5204,
+      "total_bytes": 17236
+    },
+    "public_binary_materials": {
+      "deduplication": "exact decoded binary SHA-256, not filenames or JSON sizes",
+      "proofs": {
+        "occurrences": 11,
+        "occurrence_bytes": 5632,
+        "unique_blob_count": 11,
+        "unique_bytes": 5632,
+        "blobs": [
+          {
+            "kind": "ballot_groth16",
+            "sha256": "9381b5c88b879b15364b575671a15b3de269110e6d5081d146905e0aff63a4f9",
+            "bytes": 512,
+            "source": "accept_batch_1.ballotProofs[0]",
+            "sources": [
+              "accept_batch_1.ballotProofs[0]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "ballot_groth16",
+            "sha256": "36e8f90edb9e2ba85b87250fba80622bbeb8e2699d8be40072221beed50be655",
+            "bytes": 512,
+            "source": "accept_batch_1.ballotProofs[1]",
+            "sources": [
+              "accept_batch_1.ballotProofs[1]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "ballot_groth16",
+            "sha256": "07724be493cfdca1185e6c049ddc1fc5feb2568307a794966bba29b1c4b270ac",
+            "bytes": 512,
+            "source": "accept_batch_1.ballotProofs[2]",
+            "sources": [
+              "accept_batch_1.ballotProofs[2]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "ballot_groth16",
+            "sha256": "11b75bed88e9e1065340dbc3b7b3b54a0e126a6d84f8541172ac3bc63d603293",
+            "bytes": 512,
+            "source": "accept_batch_1.ballotProofs[3]",
+            "sources": [
+              "accept_batch_1.ballotProofs[3]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "state_groth16",
+            "sha256": "1c11128717ca48e3e3c20ead8fbaabdf1de099d729e2eaa67dcad8b422368bb1",
+            "bytes": 512,
+            "source": "accept_batch_1.stateProof",
+            "sources": [
+              "accept_batch_1.stateProof"
+            ],
+            "kinds": [
+              "state_groth16"
+            ]
+          },
+          {
+            "kind": "ballot_groth16",
+            "sha256": "58c50a7bd0f8c6c86355f13394b4544d1c8120916b1f1989fcdf43d0cc7ba6ce",
+            "bytes": 512,
+            "source": "accept_batch_2.ballotProofs[0]",
+            "sources": [
+              "accept_batch_2.ballotProofs[0]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "ballot_groth16",
+            "sha256": "2e695d7d11103014615d4f9f9c65775c3b948fb3cb2680402dbc207679e5a741",
+            "bytes": 512,
+            "source": "accept_batch_2.ballotProofs[1]",
+            "sources": [
+              "accept_batch_2.ballotProofs[1]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "ballot_groth16",
+            "sha256": "2a568858ab657f4e9196908e6e3ed823fb487fa4a9defc09cd4086be84466d12",
+            "bytes": 512,
+            "source": "accept_batch_2.ballotProofs[2]",
+            "sources": [
+              "accept_batch_2.ballotProofs[2]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "ballot_groth16",
+            "sha256": "102d9c5a7c147fb8a637a5cdd6bcbffe709849397f67e0c358d21332ce113042",
+            "bytes": 512,
+            "source": "accept_batch_2.ballotProofs[3]",
+            "sources": [
+              "accept_batch_2.ballotProofs[3]"
+            ],
+            "kinds": [
+              "ballot_groth16"
+            ]
+          },
+          {
+            "kind": "state_groth16",
+            "sha256": "85efaf41c594b1a666b6d953ce29cf703c4d6a593a44d205359f44fe8a9895d0",
+            "bytes": 512,
+            "source": "accept_batch_2.stateProof",
+            "sources": [
+              "accept_batch_2.stateProof"
+            ],
+            "kinds": [
+              "state_groth16"
+            ]
+          },
+          {
+            "kind": "p3_groth16",
+            "sha256": "ff9d5509797416de56e63cfca18b22aa319a438e049da5b3278cd9659cac47d7",
+            "bytes": 512,
+            "source": "disclose_winner_once.proof",
+            "sources": [
+              "disclose_winner_once.proof"
+            ],
+            "kinds": [
+              "p3_groth16"
+            ]
+          }
+        ]
+      },
+      "verification_keys": {
+        "occurrences": 3,
+        "occurrence_bytes": 18688,
+        "unique_blob_count": 3,
+        "unique_bytes": 18688,
+        "blobs": [
+          {
+            "kind": "ballot_vk_eip2537",
+            "sha256": "69a56d10131027e0efcf0c6a7d920aac4600e87b5e20c42eb670f368e2ae9a3d",
+            "bytes": 4224,
+            "source": "deploy_winner_receiver.ballotVk",
+            "sources": [
+              "deploy_winner_receiver.ballotVk"
+            ],
+            "kinds": [
+              "ballot_vk_eip2537"
+            ]
+          },
+          {
+            "kind": "state_vk_eip2537",
+            "sha256": "1367728908bb6c62009afb38ad09555d5a8c463bc6945b3ceb83ae763f376896",
+            "bytes": 5760,
+            "source": "deploy_winner_receiver.stateVk",
+            "sources": [
+              "deploy_winner_receiver.stateVk"
+            ],
+            "kinds": [
+              "state_vk_eip2537"
+            ]
+          },
+          {
+            "kind": "p3_vk_eip2537",
+            "sha256": "93336597070cda6b48775e28cc077ea0027686f0f8e1e588e4867e3cedb3694a",
+            "bytes": 8704,
+            "source": "deploy_frozen_p3_binder.eipVk",
+            "sources": [
+              "deploy_frozen_p3_binder.eipVk"
+            ],
+            "kinds": [
+              "p3_vk_eip2537"
+            ]
+          }
+        ]
+      },
+      "semantics": "subset already present in transaction inputs, NOT extra wire bytes or full off-chain protocol communication"
+    },
+    "internally_reconstructed_public_inputs": {
+      "state": {
+        "statements": 2,
+        "fields_per_statement": 37,
+        "field_bytes": 32,
+        "additional_calldata_bytes": 0
+      },
+      "p3": {
+        "statements": 1,
+        "fields_per_statement": 60,
+        "field_bytes": 32,
+        "additional_calldata_bytes": 0
+      }
+    },
+    "private_trustee_transport": {
+      "status": "NOT_MEASURED",
+      "bytes": null
+    },
+    "peer_to_peer_framing_and_retransmission": {
+      "status": "NOT_MEASURED",
+      "bytes": null
+    }
+  },
+  "offline_costs": {
+    "status": "REUSED_NOT_RETIMED",
+    "reused_proofs": {
+      "ballot": 8,
+      "state": 2,
+      "p3": 1
+    },
+    "setup_time_ms": null,
+    "prove_time_ms": null,
+    "dkg_time_ms": null,
+    "private_cp_generation_time_ms": null,
+    "original_setup_or_prover_cost_is_zero": false
+  },
+  "binding": {
+    "addresses": {
+      "certificate_gate_v2": "0x503ca0e01e1c22e7b43f6fa2d9d8722ae991f530",
+      "original_schnorr_verifier": "0xecc7d7f1be96ddbc72f00d2647b29a16f2175c0f",
+      "winner_receiver": "0xc7a2b7a6718b5d68c47cd2f86af7a8e528bc8eef",
+      "original_commitment_store": "0x63a69add1d80f1c2a89fbfe1675d5d83d080ab6c",
+      "frozen_p3_binder": "0xcc7934ce4b1245a7bf85353a656349271b48274f",
+      "p3_groth16_verifier": "0x7a2349ed3750d850178070e1307a8d8681a44277",
+      "batch_adapter": "0xb08b75629c74c22871b0ca133bb63aa08ed2aa22",
+      "ballot_verifier": "0x8071bca668e5f3ab48013e2ab22dcfa77b2f021e",
+      "state_verifier": "0x8ced72f630bc8711aad81dcc3f6b632b6d59d545"
+    },
+    "election_id": "0xbc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad45718",
+    "key_core_digest": "0xeb40303454eec2ccb51ca147a814a8026596d18901afdeb744ca1fff4a4c4be5",
+    "final_context": "0x7ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e01",
+    "freeze_seal": "0x05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+    "cp_target": "0xe21a7906c1c8a80fa5f0cd145692d0372184f0ba0965a253f741b05b3b5191e6",
+    "ark_vk_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29",
+    "eip_vk_sha256": "93336597070cda6b48775e28cc077ea0027686f0f8e1e588e4867e3cedb3694a",
+    "ark_proof_sha256": "fc3854067baf9b766c83d18e9eabd8db90a477f8d65204991c7359e347eeee4c",
+    "eip_proof_sha256": "ff9d5509797416de56e63cfca18b22aa319a438e049da5b3278cd9659cac47d7",
+    "all_60_inputs_match": true,
+    "winner": 1,
+    "successful_winner_writes": 1,
+    "winner_event_count": 1
+  },
+  "new_execution_counts": {
+    "evm_transactions": 0,
+    "setup": 0,
+    "prove": 0,
+    "cp_generation": 0,
+    "signatures": 0
+  },
+  "complete_snarkpack_chain_settlement": false,
+  "statistical_efficiency_claim": false,
+  "public_chain_deployment": false,
+  "complete_snarkpack_settlement_gas": null,
+  "full_end_to_end_costs": null,
+  "limitations": [
+    "sums of individual receipts are not one transaction/block and not a statistical performance sample",
+    "failed test transactions excluded from successful-path cost; failed packaging attempt not counted as another experiment sample",
+    "deployment includes internal CREATE/verifier costs already; do not add precompile/child-contract gas again",
+    "no ETH price, latency, full-tally baseline, production setup, private delivery, or exact SnarkPack EVM cost inferred",
+    "new baseline commit preserves the old dirty execution provenance instead of relabeling it as a clean run"
+  ]
+}
