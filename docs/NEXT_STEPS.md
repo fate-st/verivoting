@@ -1,6 +1,23 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current work: G8-C certified frozen-storage P3 passed; next only G8-D
+## Current work: G8-D one-time Winner written; stop here
+
+[G8-D](G8_D_WINNER_ONCE.md)：基于G8-C提交2ce1cae，新接收器继承原批次/冻结逻辑，
+固定P3组件，存储重建60输入及原证明真实验证后在同一交易写Winner一次。21笔交易、
+一个正例及四个必要原子拒绝，Winner=1/事件一次；新Setup/Prove/CP/签名为0。
+披露实测2,073,560 Gas、644 B；不等于全系统性能优势。G8-C/raw/旧源码不覆盖。
+
+下一轮只做G8-E：
+
+1. 固定同一G8-D版本及部署/认证/接收/冻结/承诺/披露清单，明确复用数据与信任根。
+2. 从同一次完整本地执行记录成功生命周期成本，部署、拒绝测试、离线证明成本分开。
+3. 公共输入、交易data和去重通信字节口径分别列出，不混入G7/G8-C历史组件Gas。
+4. 先审计现有21笔是否满足记录需求；仅在缺少必要证据时补运行，不重复G1-E或扩批。
+
+G8-D到此停止，不自动进行G8-E/G9/G10。精确SnarkPack EVM仍未完成，当前批次是逐票
+Groth16备用路线。一次披露作用于指定权威receiver实例，不是全局阻止克隆合约。
+
+## Previous component: G8-C certified frozen-storage P3 passed; next only G8-D
 
 [G8-C](G8_C_FROZEN_P3_BINDING.md)：新 Gate V2 只加必要认证读取，原认证算法保持不变；
 新 receiver 在自身接收/冻结入口强制认证，不是可绕过 facade。固定原 B4 根、选票/状态 VK，

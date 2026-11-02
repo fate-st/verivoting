@@ -83,6 +83,7 @@ def main() -> int:
     g8b_path = raw.parent / "g8b_raw" / "trustee_commitments.json"
     g8b_five_path = raw.parent / "g8b_five_raw" / "all_trustees.json"
     g8c_path = raw.parent / "g8c_raw" / "frozen_p3_binding.json"
+    g8d_path = raw.parent / "g8d_raw" / "winner_once.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -237,6 +238,18 @@ def main() -> int:
     g8b = json.loads(g8b_path.read_text()) if g8b_path.exists() else None
     g8b_five = json.loads(g8b_five_path.read_text()) if g8b_five_path.exists() else None
     g8c = json.loads(g8c_path.read_text()) if g8c_path.exists() else None
+    g8d = json.loads(g8d_path.read_text()) if g8d_path.exists() else None
+    if g8d and (
+        not g8c or g8d["status"] != "PASS_FIXED_FROZEN_P3_ATOMIC_WINNER_WRITE_ONCE"
+        or not all(g8d[k] for k in ["winner_written", "winner_write_once_integrated", "p3_storage_binding_integrated", "all_60_inputs_match", "g6_input_match", "g7_input_match"])
+        or g8d["public_input_count"] != 60 or g8d["successful_winner_writes"] != 1 or g8d["winner_event_count"] != 1
+        or g8d["final_checkpoint"]["winner"] != 1 or not g8d["final_checkpoint"]["winner_disclosed"]
+        or g8d["complete_g8_settlement"] or g8d["snarkpack_evm_verified"] or g8d["full_system_gas"] is not None
+        or any(g8d[k] != 0 for k in ["setup_count", "proof_generation_count", "new_cp_packages", "new_signatures"])
+        or len(g8d["negative_tests"]) != 4
+        or not all(n["atomic_rejection"] and n["before"] == n["after"] for n in g8d["negative_tests"])
+    ):
+        raise ValueError("G8-D must verify original P3 and atomically write Winner once, without claiming exact SnarkPack/full-system completion")
     if g8c and (
         not g8b_five or g8c["status"] != "PASS_AUTHENTICATED_INTAKE_AND_FROZEN_STORAGE_P3_BINDING"
         or not all(g8c[k] for k in ["receiver_auth_gate_enforced_on_intake", "p3_storage_binding_integrated", "p3_verified_in_this_flow", "all_60_inputs_match", "g6_input_match", "g7_input_match"])
@@ -971,6 +984,29 @@ def main() -> int:
             "winner_write_once_integrated": False,
             "next_task": "G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.",
         })
+    if g8d:
+        disclosure_tx = next(t for t in g8d["transactions"] if t["label"] == "disclose_winner_once")
+        summary["classification"] = "measured-g8d-authenticated-local-prague-frozen-p3-atomic-winner-once-individual-fallback"
+        summary["g8d_winner_once"] = {
+            "status": g8d["status"], "raw": str(g8d_path),
+            "winner": g8d["final_checkpoint"]["winner"],
+            "successful_winner_writes": g8d["successful_winner_writes"],
+            "winner_event_count": g8d["winner_event_count"],
+            "disclosure_gas": disclosure_tx["total_gas"],
+            "disclosure_calldata_bytes": disclosure_tx["calldata_bytes"],
+            "functional_acceptance_items": 5, "necessary_atomic_rejections": len(g8d["negative_tests"]),
+            "signed_transactions": g8d["transaction_count"], "peak_node_rss_mib": g8d["peak_node_rss_mib"],
+            "all_60_inputs_match_g6_and_g7": g8d["all_60_inputs_match"],
+            "full_system_gas": None,
+        }
+        summary["gates"]["G8_D_atomic_winner_once"] = g8d["status"]
+        summary["gates"]["G8_full_winner_only_settlement"] = "PARTIAL_G8D_INDIVIDUAL_FALLBACK_WINNER_ONCE_EXACT_SNARKPACK_PENDING"
+        summary["gates"]["G5_target_chain"] = "PARTIAL_LOCAL_AUTHENTICATED_WINNER_ONCE_NO_EXACT_SNARKPACK"
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G8-D same authoritative receiver verifies frozen P3 and atomically writes Winner once",
+            "winner_write_once_integrated": True,
+            "next_task": "Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -980,9 +1016,20 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g8d:
+        lines.extend([
+            "## Current work: G8-D atomic Winner write-once passed; exact SnarkPack/full-system evaluation pending",
+            "",
+            "- Report: `docs/G8_D_WINNER_ONCE.md`; raw: `experiments/g8d_raw/winner_once.json`. The authoritative receiver inherits the unchanged G8-C intake/freeze logic; its P3 address is immutable and bound once before start. No independent wrapper Winner state.",
+            f"- Actual Winner=1, one write/event; 60/60 original G6/G7 inputs. Disclosure transaction {disclosure_tx['total_gas']} Gas / {disclosure_tx['calldata_bytes']} B includes input reconstruction, real P3 verification and state write/event.",
+            "- Five acceptance items: premature disclosure, wrong Winner BEFORE finalization, correct Winner, repeat disclosure, repeat P3 binding. Four exact-reason atomic rejections, 21 signed transactions. Wrong Winner pairing=0; valid pairing=1; repeat stops before pairing.",
+            "- Original eight ballot/two state/one P3 proofs reused. Zero new Setup/Prove/CP/signing; local Prague, individual-Groth16 fallback, not exact SnarkPack EVM, public deployment or statistical total-cost advantage. Failed packaging attempt and all its 21 transactions retained.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g8c:
         lines.extend([
-            "## Current work: G8-C authenticated intake and frozen-storage P3 passed; full G8 remains PARTIAL",
+            "## Previous component: G8-C authenticated intake and frozen-storage P3 passed; full G8 remains PARTIAL",
             "",
             "- Report: `docs/G8_C_FROZEN_P3_BINDING.md`; raw: `experiments/g8c_raw/frozen_p3_binding.json`. New receiver enforces original certificates internally; old receiver/Gate/data are unchanged. Selected Trustee shares/commitments, CT2/C0/C1, target and certified weight produce the exact original 60 inputs.",
             f"- G6/G7 both match 60/60; reused G6 proof in G7's 512 B EIP-2537 encoding, fixed G4-D VK. Actual input-reconstruction-plus-P3 transaction `{p3_tx['total_gas']} Gas`, `{p3_tx['calldata_bytes']} B`, not G7's historical component cost.",

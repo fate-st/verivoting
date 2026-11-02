@@ -2,13 +2,21 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Current work: G8-C authenticated intake and frozen-storage P3 passed; full G8 remains PARTIAL
+## Current work: G8-D atomic Winner write-once passed; exact SnarkPack/full-system evaluation pending
+
+- Report: `docs/G8_D_WINNER_ONCE.md`; raw: `experiments/g8d_raw/winner_once.json`. The authoritative receiver inherits the unchanged G8-C intake/freeze logic; its P3 address is immutable and bound once before start. No independent wrapper Winner state.
+- Actual Winner=1, one write/event; 60/60 original G6/G7 inputs. Disclosure transaction 2073560 Gas / 644 B includes input reconstruction, real P3 verification and state write/event.
+- Five acceptance items: premature disclosure, wrong Winner BEFORE finalization, correct Winner, repeat disclosure, repeat P3 binding. Four exact-reason atomic rejections, 21 signed transactions. Wrong Winner pairing=0; valid pairing=1; repeat stops before pairing.
+- Original eight ballot/two state/one P3 proofs reused. Zero new Setup/Prove/CP/signing; local Prague, individual-Groth16 fallback, not exact SnarkPack EVM, public deployment or statistical total-cost advantage. Failed packaging attempt and all its 21 transactions retained.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+
+## Previous component: G8-C authenticated intake and frozen-storage P3 passed; full G8 remains PARTIAL
 
 - Report: `docs/G8_C_FROZEN_P3_BINDING.md`; raw: `experiments/g8c_raw/frozen_p3_binding.json`. New receiver enforces original certificates internally; old receiver/Gate/data are unchanged. Selected Trustee shares/commitments, CT2/C0/C1, target and certified weight produce the exact original 60 inputs.
 - G6/G7 both match 60/60; reused G6 proof in G7's 512 B EIP-2537 encoding, fixed G4-D VK. Actual input-reconstruction-plus-P3 transaction `2058601 Gas`, `644 B`, not G7's historical component cost.
 - Wrong newState tested before first acceptance: four ballot pairings pass then the state pairing returns 0. Missing Trustee 4 gives MISSING_COMMITMENT/no pairing; after all five authenticate, the wrong selector reaches pairing 0/INVALID_GROTH16. Ten exact-reason atomic negatives, 28 actual signed transactions, 440 historical archive entries unchanged.
 - Zero new Setup/Prove/CP/signing. Gate V2 adds certified key/coefficients/weight interfaces; old algorithms and proof relations remain unchanged. No Winner endpoint/write or exact SnarkPack EVM. Local functional samples, not full-system efficiency/production privacy.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
 
 ## Previous component: G8-B five-Trustee acceptance
 
@@ -16,7 +24,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - DKG certifiers stay `{1,2,3}`. Commitments arrive `4,5,3,1,2`; the distinct set `{3,4,5}` reaches readiness before 1/2 submit. Non-certifiers 4/5 are valid roster members, not rejected for failing to sign the DKG certificate.
 - 23 actual signed transactions include 13 exact prefix transactions reexecuted in a fresh local Prague VM, not storage copied from JSON. Four new necessary atomic rejects; 411 historical artifact entries unchanged. No new DKG/CP/signatures/Setup/Prove or Solidity/Rust changes; baseline's 48 Rust regressions are retained, not claimed as rerun this round.
 - Readiness is only authenticated-public-record quorum, NOT private CP verification, decryption or a new P3 proof. Receiver intake gate, storage-built P3 and Winner write-once remain G8-C/D; exact SnarkPack EVM remains unresolved.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
 
 ## Previous component: G8-B first-three acceptance
 
@@ -24,7 +32,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Trustee 1/2/3 costs `[3804497, 3779881, 3788569]` Gas; each 484 B. 10 atomic negatives; 25 signed transactions in one local Prague VM; 48 relevant Rust regressions and strict Clippy passed.
 - Same run authenticates original certificates, really verifies eight old ballot proofs/two old state proofs, freezes CT2, then authenticates commitments. Zero new DKG/CP packages/authentication signatures/SNARK Setup/Prove. No private openings, usable decryption shares or tally are published.
 - The old receiver still does NOT enforce certificate authentication on intake. New component enforces it only before frozen-target binding/commitment acceptance. P3-ready is NOT a verified CP/P3, winner authorization or full-system Gas result.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
 
 ## Previous component: G8-A original certificate gate
 
@@ -32,7 +40,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Deploy gate/backend `7750282 Gas`; three DKG certifiers `[2651994, 2590448, 2580263]` Gas; original registration certificate `2725613 Gas`. 12 atomic rejects; 13 SHA-512 checks and six original challenge matches; 48 Rust regressions/strict Clippy pass.
 - DKG public certificate reconstructed with the unchanged original deterministic RNG/signing flow; original G6 registration certificate bytes match exactly. No new SNARK setup/proving or alternate authorization scheme.
 - At this historical checkpoint only the standalone certificate gate was complete; the receiver did not enforce it. Subsequent G8-B progress is separately reported above. Bootstrap identity keys/authority remain trust roots; no full-system Gas or G9 claim.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
 
 ## Previous component: G8 phase 1 receiver/freeze passed; full G8 is PARTIAL
 
@@ -40,7 +48,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Deploy receiver + concrete verifiers `10358066 Gas`; B4 receives `3333283 / 3335455 Gas`, each `6948 B`; freeze `144836 Gas`.
 - Freeze computed only from contract storage; original G6 CP target and seal match exactly. 13 necessary rejects are atomic, including genuine bad-ballot/bad-state pairing failures. No Setup/Prove or G7 rerun.
 - At this historical phase-one checkpoint certificate/registry anchors were deployer-provisioned and no Trustee/P3/winner integration existed. Later certificate/commitment components are reported separately above; full settlement and exact SnarkPack EVM are still incomplete. No full-system Gas or efficiency claim.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
 
 ## Previous complete gate: G7 same G6 proof / G4-D VK on local Prague EVM
 
@@ -48,7 +56,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Exact archived G6 P3 proof, original G4-D VK, 60 inputs, unchanged Solidity verifier. Signed local transactions: two deployments, one accepted proof, four pairing-level rejections (selector/winner/ciphertext/actual old fixed-123 VK).
 - Current VK deploy `6631884 Gas`; valid verification `1331401 Gas`; ABI calldata `2564 B`. Setup/Prove: zero. Full transaction/bytecode/source hashes archived.
 - This is a verifier component, NOT authenticated chain freeze, trustee signature checks, one-time winner storage, full SnarkPack EVM, public-chain deployment or full-system Gas. No historical component Gas is spliced into a total.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
 
 ## Previous native checkpoint: G6 complete native Winner-only state machine
 
@@ -59,7 +67,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Same full G4-D VK `0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29` and matrix fingerprint; proof `192 B`, inputs `1920 B`; cumulative process peak RSS `8602.969 MiB`.
 - Reuses eight ballot proofs, two aggregates and two state proofs; no G1-E or ten-subset campaign rerun. 48 relevant tests, strict Clippy and a separate-process public-only receive/freeze/P3 replay pass.
 - Same-process private delivery/native freeze/research Setup are not production privacy or settlement. G7 above now measures this exact proof/VK verifier component; full settlement Gas remains unmeasured.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.
 
 ## Previous P3 checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2
 
@@ -137,7 +145,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 | 16 | 6.917166 | 4.990667 | 28.524625 | 3072 / 14164 / 12800 |
 | 32 | 14.048915 | 6.942209 | 57.087584 | 6144 / 17140 / 25600 |
 
-- Next planned task: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
+- Next planned task: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
 
 ## Previous fixed-suite checkpoint: G1-D1 B=16
 
@@ -149,7 +157,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Source proofs / aggregate / matrix: `3072 / 14164 / 12800 B`; native direct fold/check: `0.021041 ms`.
 - Changed 16th nullifier rejected: `True`; cumulative process peak RSS: `2911.922 MiB`.
 - One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 was not run at this historical checkpoint; see G1-D2 above if available.
-- Next planned task: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
+- Next planned task: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
 
 ## Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
@@ -167,7 +175,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - One positive aggregate per B and only one changed-eighth-nullifier negative (B=8), all pass. Direct-fold columns measure native arithmetic/equality only, not full settlement.
 - Single ascending-order pilot, no dedicated warmup, no repeated statistics/crossover conclusion. Per-B standalone RSS is unmeasured; cached keys/SRS, calldata and full DA are not included in proof-plus-matrix byte counts.
 - The weight-10 B=4 state and P3 results below are historical components, not weight-32 results. Current-suite state/P3, SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
 
 ## Previous state checkpoint: G2-C B=4 / omission rejection (weight 10)
 
@@ -178,7 +186,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Only negative, omitted third ballot: R1CS rejected `True`, original proof with omitted new state rejected `True`. Four records/root/aggregate remain unchanged.
 - Peak RSS: `6083.000 MiB`; old B=2 entry points and artifacts remain unchanged.
 - One zero-old-state functional case, no repeated performance or complete settlement claim. The two verifiers are linked natively, not recursively or on EVM.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
 
 ## Previous native checkpoint: G1-C3 B=8 / depth 3
 
@@ -192,7 +200,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Functional single run only, nonproduction SRS. Do not compare depth-3 B=8 times with depth-2 B=4 as a controlled performance matrix.
 - B=2/B=4 entry points and archived artifacts are unchanged; the shared ballot type is now const-generic with depth 2 as its legacy default.
 - B=4 state/omission has since passed in G2-C above. SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
 
 ## Historical native checkpoint: G1-C2 B=4
 
@@ -205,7 +213,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
 - This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
 - Its B=4 state/omission follow-up has since passed in G2-C; SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
+- Next: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
 
 ## Historical fixed-123 P3-v2 checkpoint: G4-C
 
@@ -228,14 +236,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- The native follow-up has passed G2-C; current next task: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
+- The native follow-up has passed G2-C; current next task: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending..
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Current project next gate: G8-D only: verify through the fixed frozen-storage P3 component and atomically write Winner once; reject wrong Winner/repeat disclosure without writes. Reuse G6 proof, do not re-prove. G8-E complete transaction accounting, G9 exact SnarkPack EVM and G10 fair system comparison remain pending.; archived G5 next-task notes are historical.
+- Current project next gate: Stop after G8-D. Next G8-E: account for one same-version complete local lifecycle with successful/rejected/deployment costs separated; reuse proofs, no new batch scale or G1-E reruns. G9 exact SnarkPack EVM and G10 fair system comparison remain pending.; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -328,15 +336,16 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G5_C3_B23_quarter_full_conformance_attempt | BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN |
 | G5_C3_complete_gt_and_pairing_target_route | PARTIAL_PASS_QUARTER_PREFIX_FULL_MILLER_BLOCKED_FROZEN |
 | G5_C_exact_snarkpack_target_verifier | BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN |
-| G5_target_chain | PARTIAL_G8C_AUTHENTICATED_FROZEN_P3_NO_WINNER_NO_EXACT_SNARKPACK |
+| G5_target_chain | PARTIAL_LOCAL_AUTHENTICATED_WINNER_ONCE_NO_EXACT_SNARKPACK |
 | G6_complete_native_receiver_to_winner | PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE |
 | G7_current_g4d_vk_evm | PASS_SAME_G6_PROOF_G4D_VK_PRAGUE_1_POSITIVE_4_NEGATIVES |
 | G8_receiver_freeze_individual_fallback | PARTIAL_G8_REAL_INDIVIDUAL_BALLOT_STATE_EVM_CT2_FREEZE_PASS |
-| G8_full_winner_only_settlement | PARTIAL_AUTHENTICATED_INTAKE_FROZEN_P3_PASS_WINNER_WRITE_PENDING |
+| G8_full_winner_only_settlement | PARTIAL_G8D_INDIVIDUAL_FALLBACK_WINNER_ONCE_EXACT_SNARKPACK_PENDING |
 | G8_A_original_certificate_authentication_component | PASS_ORIGINAL_JUBJUB_DKG_AND_REGISTRATION_CERTIFICATES_LOCAL_PRAGUE |
 | G8_B_authenticated_trustee_commitments_component | PASS_ORIGINAL_TRUSTEE_COMMITMENTS_AUTHENTICATED_FOR_LIVE_FROZEN_CT2 |
 | G8_B_all_five_original_commitments | PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED |
 | G8_C_authenticated_frozen_storage_p3 | PASS_AUTHENTICATED_INTAKE_AND_FROZEN_STORAGE_P3_BINDING |
+| G8_D_atomic_winner_once | PASS_FIXED_FROZEN_P3_ATOMIC_WINNER_WRITE_ONCE |
 
 ## Four-voter end-to-end fixture
 

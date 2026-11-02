@@ -1,6 +1,21 @@
 # Implementation and claim boundary
 
-## Current work: G8-C authenticated intake/frozen-storage P3 passed; full G8 PARTIAL
+## Current work: G8-D atomic Winner disclosure passed; exact SnarkPack/full costs pending
+
+[G8-D](G8_D_WINNER_ONCE.md) 从已提交G8-C `2ce1cae` 建立独立分支；新接收器
+继承原接收/冻结函数，P3地址immutable、启动前一次绑定，唯一入口真实验证原P3后原子写Winner。
+本轮21笔签名交易、5项验收：错误Winner在正例前进入配对返回0；正例返回1并写Winner=1，
+事件一次；冻结前披露/重复披露/重复绑定均按准确原因原子拒绝。60/60原输入匹配G6/G7。
+
+披露2,073,560 Gas/644 B，Node峰值RSS492.421875 MiB（含编译/VM）。0新Setup/Prove/CP/重签。
+首轮因最终源码归档路径错误退出，21笔交易及源代码/日志保留，修正后第二次完整验收通过。
+旧G8-C来源回归通过；473历史archive条目和939个非中央状态基线文件不变。未改Rust/电路。
+
+Winner一次性状态在指定权威接收器实例，不是任意包装器；部署初始化和原身份/authority仍是信任根。
+本地逐票Groth16备用路线闭合，不是精确SnarkPack EVM或生产隐私/公链部署。完整G8/G9/G10
+仍不能标成全部完成；下一轮G8-E先统一生命周期成本口径，优先复用已有记录。
+
+## Previous component: G8-C authenticated intake/frozen-storage P3 passed; full G8 PARTIAL
 
 [G8-C](G8_C_FROZEN_P3_BINDING.md) 从 `dd7e00a` 建立独立分支，新增 Gate V2 认证读取接口、
 内部强制认证接收器和固定 G4-D 摘要的 P3 组件；旧源码/数据不改。原证书认证后实际验证两批

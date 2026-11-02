@@ -1,0 +1,166 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "commands": [
+    {
+      "name": "evm",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "contracts/scripts/g8d_winner_once.mjs"
+      ],
+      "log": "evm.log",
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 21077.134958
+    },
+    {
+      "name": "evm",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "contracts/scripts/g8d_winner_once.mjs"
+      ],
+      "log": "evm-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 21527.347625
+    },
+    {
+      "name": "audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8d_audit.mjs"
+      ],
+      "log": "audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 7385.378292
+    },
+    {
+      "name": "baseline-audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8c_audit.mjs"
+      ],
+      "log": "baseline-audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 140.4595
+    },
+    {
+      "name": "syntax-runner",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "contracts/scripts/g8d_winner_once.mjs"
+      ],
+      "log": "syntax-runner.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 17.939959
+    },
+    {
+      "name": "syntax-audit",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g8d_audit.mjs"
+      ],
+      "log": "syntax-audit.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 18.044542
+    },
+    {
+      "name": "syntax-recorder",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g8d_record.mjs"
+      ],
+      "log": "syntax-recorder.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 17.249375
+    },
+    {
+      "name": "summary",
+      "attempt": 1,
+      "argv": [
+        "python3",
+        "scripts/summarize.py"
+      ],
+      "log": "summary.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 156.725292
+    },
+    {
+      "name": "audit",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g8d_audit.mjs"
+      ],
+      "log": "audit-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 7380.4632919999995
+    },
+    {
+      "name": "baseline-audit",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g8c_audit.mjs"
+      ],
+      "log": "baseline-audit-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 185.31725
+    },
+    {
+      "name": "diff-check",
+      "attempt": 1,
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "log": "diff-check.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 43.602084000000005
+    },
+    {
+      "name": "syntax-audit-final",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g8d_audit.mjs"
+      ],
+      "log": "syntax-audit-final.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 16.496125
+    }
+  ]
+}

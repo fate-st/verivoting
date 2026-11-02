@@ -8,7 +8,16 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G8-C authenticated intake and frozen-storage P3 passed; full G8 PARTIAL
+### Current work: G8-D atomic Winner write-once passed
+
+[G8-D](docs/G8_D_WINNER_ONCE.md)：同一权威接收器完成原认证、两批B4、CT2冻结、
+Trustee承诺、存储重建60输入和原P3验证，原子写入Winner=1及事件一次。21笔真实交易、
+四项必要原子拒绝；错误Winner在披露前真正配对拒绝。披露实测2,073,560 Gas、644 B。
+0新Setup/Prove/CP/签名，不重跑历史规模实验。首轮归档失败及交易/source保留。
+本轮到G8-D停止；下一轮G8-E统一生命周期成本。精确SnarkPack EVM仍未完成，
+当前是逐票Groth16备用路线，不宣称完整系统效率、生产隐私或公链部署。
+
+### Previous component: G8-C authenticated intake and frozen-storage P3 passed; full G8 PARTIAL
 
 [G8-C](docs/G8_C_FROZEN_P3_BINDING.md) 新接收器内部强制原证书认证，真实接收两批 B4、冻结
 CT2 后，复用认证承诺重建60项 P3 输入，与 G6/G7 均60/60一致；原证明/固定 G4-D VK 验证通过。

@@ -1,0 +1,12 @@
+G8-D [1] compile additive gate/read interfaces, authenticated receiver and fixed-VK P3 binder
+G8-D [2] deploy fixed interconnected contracts; no mutable Gate/Receiver/Store/VK selectors
+  reject repeat_p3_binding: P3_ALREADY_BOUND, pairings=0
+G8-D [3] original certificate authentication and certified-data getters
+G8-D [4] execute both real B4 receiver/state-verifier paths unchanged
+  reject disclose_before_freeze: NOT_FROZEN, pairings=0
+G8-D [5] freeze actual CT2, preserve original seal, then authenticate original public commitments
+G8-D [6] reconstruct 60 exact fields inside contract; compare both original archive encodings
+G8-D [7] wrong Winner BEFORE finalization, then real verification + atomic Winner write, then replay
+  reject wrong_winner_before_disclosure: INVALID_GROTH16, pairings=1
+  reject repeat_winner_disclosure: ALREADY_DISCLOSED, pairings=0
+G8-D PASS: 60/60 original inputs; authenticated live receiver/freeze/commitments/P3; 4 exact-reason atomic rejects; 21 signed transactions; Winner=1 stored exactly once
