@@ -8,7 +8,17 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G9 route decision archived; exact verification remains BLOCKED
+### Current work: P0 evidence sync; P1 design/resource gate still BLOCKED
+
+P0同步已有G1-E/G2-E/G4-D/G6/G8-D/E到论文摘要、实验、讨论和结论，未改Introduction或形式化定义。
+[P0报告](docs/P0_PAPER_EVIDENCE_SYNC.md)及9组JSON证据映射/论文快照已归档。
+[P1设计](docs/G9_P1_STAGED_EXACT_DESIGN.md)列明10条pairing等式、18个逻辑pairing项及MIPP等式，
+并实际对W32 B2原声明/单nullifier变更执行两例JS transcript派生（每例6挑战）。
+GT解析、幂运算、Miller/最终幂的有界续算及总交易/时间预算尚未闭合，P1不通过，P2未启动。
+411600只是四个KZG pairing预编译的标准公式分项，不是实测总Gas。
+原G8-D逐票备用路线仍是当前EVM实现；没有新Setup/Prove/EVM或改动旧raw/Manifest。
+
+### Previous component: G9 route decision archived; exact verification remains BLOCKED
 
 [G9路线审查](docs/G9_EXACT_VERIFICATION_ROUTE.md) 只读核对18份项目来源和3份固定
 bellperson源文件。原20M失败软件路线保持冻结；多交易精确验证仅选为后续设计候选，

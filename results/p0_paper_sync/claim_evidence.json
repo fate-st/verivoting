@@ -1,0 +1,227 @@
+{
+  "schema": "VV/P0/PAPER-EVIDENCE/v1",
+  "status": "PASS_PAPER_EVIDENCE_SYNC",
+  "baseline_commit": "a5204043bdcec5a788f79de2ad79225320845e64",
+  "paper_sha256": "a2a3903afadc70982ad16f62830223aa12e08fb93c7e9de8ec9428e0d4023935",
+  "snapshot": "results/p0_paper_sync/sn-article.synced.tex",
+  "sources": [
+    {
+      "path": "results/g1_e/summary.json",
+      "sha256": "e413aab87605db515973a1acb936e36da7f0a253892935cf5c3d92d4ba24bd34"
+    },
+    {
+      "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+      "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+    },
+    {
+      "path": "experiments/g4_d_raw/ten_subsets_p3_v2.json",
+      "sha256": "292bf1d35dab36d44cbd3020d205ae211f8e33a2a479f5eaed4802f6f4c0e7d5"
+    },
+    {
+      "path": "experiments/g6_raw/native_winner_only.json",
+      "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"
+    },
+    {
+      "path": "experiments/g7_raw/g7_p3_prague_evm.json",
+      "sha256": "ecb9efb080fb40ece52df403871f72ab6e63e378a74c776fc40e02a63d1dc161"
+    },
+    {
+      "path": "experiments/g8c_raw/frozen_p3_binding.json",
+      "sha256": "12a519caf8f6446c79f0ba6867f426621fba1455da566c4a75a3726d7d9cbcec"
+    },
+    {
+      "path": "experiments/g8d_raw/winner_once.json",
+      "sha256": "20b72b4f23a66dcd8ef06e30c62494ad8f989d51107fb3c64876a9b1c1ff3268"
+    },
+    {
+      "path": "results/g8_e/lifecycle_costs.json",
+      "sha256": "4b32db983dc24ce56669745fd4f1f23cf5e7d925ac6b28de0d46858953a239ae"
+    },
+    {
+      "path": "results/g9/route_review.json",
+      "sha256": "d473d93c309c1f37038cce51707be18d6f5004e841e26ba29343b1defb93f9b4"
+    }
+  ],
+  "claims": [
+    {
+      "id": "G1-E",
+      "section": "subsec:batch-evaluation",
+      "measured": true,
+      "scope": "native fixed pool, not independent elections or EVM gas",
+      "medians": [
+        {
+          "B": 2,
+          "n": 30,
+          "individual_ms": 0.9671688259259258,
+          "aggregate_ms": 3.1281445106382977,
+          "aggregation_ms": 4.3609982
+        },
+        {
+          "B": 4,
+          "n": 30,
+          "individual_ms": 1.9013416642857146,
+          "aggregate_ms": 4.091989102272727,
+          "aggregation_ms": 8.782293750000001
+        },
+        {
+          "B": 8,
+          "n": 30,
+          "individual_ms": 3.9442547272727273,
+          "aggregate_ms": 4.8306295,
+          "aggregation_ms": 16.769414772727274
+        },
+        {
+          "B": 16,
+          "n": 30,
+          "individual_ms": 7.1349166578947365,
+          "aggregate_ms": 5.522693564516129,
+          "aggregation_ms": 30.857371583333336
+        },
+        {
+          "B": 32,
+          "n": 30,
+          "individual_ms": 15.44655835,
+          "aggregate_ms": 6.480822456521739,
+          "aggregation_ms": 52.50714583333334
+        }
+      ],
+      "reproduction_report": "docs/G1_E_FIXED_SUITE_BENCHMARK.md"
+    },
+    {
+      "id": "G2-E",
+      "section": "subsec:batch-evaluation",
+      "measured": true,
+      "scope": "two consecutive B4 native transitions over eight distinct ballots",
+      "reproduction_report": "docs/G2_E_MULTIBATCH_STATE.md"
+    },
+    {
+      "id": "G4-D",
+      "section": "subsec:threshold-evaluation",
+      "measured": true,
+      "subsets": 10,
+      "constraints": 6236368,
+      "public_inputs": 60,
+      "proof_bytes": 192,
+      "vk_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29",
+      "scope": "fixed 5/3 profile; not arbitrary n/t or ten EVM cases",
+      "reproduction_report": "docs/G4_D_TEN_SUBSETS_P3_V2.md"
+    },
+    {
+      "id": "G6",
+      "section": "subsec:threshold-evaluation",
+      "measured": true,
+      "setup_rebuild_ms": 69021.922209,
+      "prove_ms": 41178.248416,
+      "disclosure_combined_ms": 6.861125,
+      "peak_process_rss_mib": 8602.96875,
+      "scope": "one native flow, in-process private delivery",
+      "reproduction_report": "docs/G6_NATIVE_WINNER_ONLY.md"
+    },
+    {
+      "id": "G7",
+      "section": "tab:prototype-verifiers",
+      "measured": true,
+      "receipt_gas": 1331401,
+      "calldata_bytes": 2564,
+      "reproduction_report": "docs/G7_P3_EVM.md"
+    },
+    {
+      "id": "G8-C",
+      "section": "tab:prototype-verifiers",
+      "measured": true,
+      "label": "verify_frozen_p3_original",
+      "gas": 2058601,
+      "calldata_bytes": 644,
+      "scope": "fixed frozen storage binding; individual Groth16 intake",
+      "reproduction_report": "docs/G8_C_FROZEN_P3_BINDING.md"
+    },
+    {
+      "id": "G8-D",
+      "section": "tab:prototype-verifiers",
+      "measured": true,
+      "label": "disclose_winner_once",
+      "gas": 2073560,
+      "calldata_bytes": 644,
+      "scope": "fixed local fallback Winner write-once",
+      "reproduction_report": "docs/G8_D_WINNER_ONCE.md"
+    },
+    {
+      "id": "G8-E",
+      "section": "subsec:threshold-evaluation",
+      "measured": false,
+      "derived_from_measured_receipts": true,
+      "totals": {
+        "deployment": {
+          "transaction_count": 4,
+          "total_gas": 34082689,
+          "intrinsic_gas": 1412112,
+          "execution_gas": 32670577,
+          "calldata_floor_extra_gas": 0,
+          "transaction_data_bytes": 80315,
+          "creation_input_bytes": 80315,
+          "contract_calldata_bytes": 0,
+          "signed_transaction_bytes": 80643
+        },
+        "non_deployment_success": {
+          "transaction_count": 13,
+          "total_gas": 31390919,
+          "intrinsic_gas": 463444,
+          "execution_gas": 30927475,
+          "calldata_floor_extra_gas": 0,
+          "transaction_data_bytes": 17236,
+          "creation_input_bytes": 0,
+          "contract_calldata_bytes": 17236,
+          "signed_transaction_bytes": 18553
+        },
+        "successful_including_deployment": {
+          "transaction_count": 17,
+          "total_gas": 65473608,
+          "intrinsic_gas": 1875556,
+          "execution_gas": 63598052,
+          "calldata_floor_extra_gas": 0,
+          "transaction_data_bytes": 97551,
+          "creation_input_bytes": 80315,
+          "contract_calldata_bytes": 17236,
+          "signed_transaction_bytes": 99196
+        },
+        "rejected_tests": {
+          "transaction_count": 4,
+          "total_gas": 2263025,
+          "intrinsic_gas": 105832,
+          "execution_gas": 2149422,
+          "calldata_floor_extra_gas": 7771,
+          "transaction_data_bytes": 1936,
+          "creation_input_bytes": 0,
+          "contract_calldata_bytes": 1936,
+          "signed_transaction_bytes": 2341
+        },
+        "all_acceptance_transactions": {
+          "transaction_count": 21,
+          "total_gas": 67736633,
+          "intrinsic_gas": 1981388,
+          "execution_gas": 65747474,
+          "calldata_floor_extra_gas": 7771,
+          "transaction_data_bytes": 99487,
+          "creation_input_bytes": 80315,
+          "contract_calldata_bytes": 19172,
+          "signed_transaction_bytes": 101537
+        }
+      },
+      "scope": "same-run receipt accounting, offline costs not retimed",
+      "reproduction_report": "docs/G8_E_LIFECYCLE_COSTS.md"
+    },
+    {
+      "id": "G9",
+      "section": "sec6",
+      "measured": false,
+      "implemented": false,
+      "status": "BLOCKED",
+      "scope": "route/design only; no exact EVM verification or total Gas"
+    }
+  ],
+  "new_setup": 0,
+  "new_prove": 0,
+  "new_evm_transactions": 0,
+  "complete_privacy_theorem": false,
+  "full_end_to_end_comparison": false
+}

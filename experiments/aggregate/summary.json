@@ -98,7 +98,9 @@
     "G8_D_atomic_winner_once": "PASS_FIXED_FROZEN_P3_ATOMIC_WINNER_WRITE_ONCE",
     "G8_E_derived_lifecycle_accounting": "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM",
     "G9_route_review_only": "PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED",
-    "G9_exact_snarkpack_evm": "BLOCKED_COMPLETE_EXACT_EVM_IMPLEMENTATION_AND_RESOURCE_FEASIBILITY_UNPROVEN"
+    "G9_exact_snarkpack_evm": "BLOCKED_COMPLETE_EXACT_EVM_IMPLEMENTATION_AND_RESOURCE_FEASIBILITY_UNPROVEN",
+    "P0_paper_sync": "PASS_PAPER_EVIDENCE_SYNC",
+    "P1_staged_exact_design": "BLOCKED_P1_RESOURCE_AND_EQUIVALENCE_GATES"
   },
   "dkg": {
     "classification": "real-group-single-process-protocol-simulation",
@@ -6231,14 +6233,14 @@
     "current_evaluation_suite_state_and_p3": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT",
     "current_evaluation_suite_p3": "PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2",
-    "next_task": "Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.",
+    "next_task": "Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.",
     "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS",
     "complete_native_flow": true,
     "complete_chain_settlement": false,
     "current_p3_vk_evm_verified": true,
     "active_gate": "G8",
     "active_gate_status": "PARTIAL",
-    "latest_completed_step": "G9 source/evidence route review only; staged exact candidate, implementation and resource feasibility unproven",
+    "latest_completed_step": "P0 paper evidence sync; P1 bounded JS transcript inventory only",
     "receiver_and_freeze_evm_measured": true,
     "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
     "certificate_authentication_component_evm_measured": true,
@@ -21357,5 +21359,22 @@
       "signatures": 0
     },
     "snarkpack_verification_gas": null
+  },
+  "p0_paper_sync": {
+    "status": "PASS_PAPER_EVIDENCE_SYNC",
+    "paper_sha256": "a2a3903afadc70982ad16f62830223aa12e08fb93c7e9de8ec9428e0d4023935",
+    "report": "results/p0_paper_sync/claim_evidence.json"
+  },
+  "g9_p1_design": {
+    "status": "BLOCKED_P1_RESOURCE_AND_EQUIVALENCE_GATES",
+    "report": "results/g9_p1/design_inventory.json",
+    "new_execution_counts": {
+      "javascript_transcript_cases": 2,
+      "evm_transactions": 0,
+      "compiler_runs": 0,
+      "setup": 0,
+      "prove": 0
+    },
+    "total_gas": null
   }
 }

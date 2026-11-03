@@ -2,14 +2,20 @@
 
 Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actual profile).
 
-## Current work: G9 route review completed; exact EVM verifier still BLOCKED
+## Current work: P0 synchronized; P1 resource/equivalence gate BLOCKED
+
+- P0: docs/P0_PAPER_EVIDENCE_SYNC.md; results/p0_paper_sync/claim_evidence.json and paper snapshot.
+- P1: docs/G9_P1_STAGED_EXACT_DESIGN.md; 10 equations/18 logical pairing terms; actual two-case JS transcript execution only.
+- GT parsing/folding/final exponentiation, continuation schedule and total budgets remain unresolved. No EVM/Setup/Prove or P2 acceptance.
+
+## Previous component: G9 route review
 
 - Report: `docs/G9_EXACT_VERIFICATION_ROUTE.md`; derived review: `results/g9/route_review.json`. G8-E saved as local baseline 4421dd9. This is source/evidence analysis, NOT a new EVM experiment or implementation.
 - Keep the 20M failed software Miller route frozen. Prefer staged exact verification for further design only; feasibility, final exponentiation/GT operations, complete Solidity transcript and original proof-check coverage are unresolved. Wrapper implementation deferred. No gas estimate or claimed exact verifier completion.
 - Existing W32 B2 aggregate found in G1-D0: same Ark VK identity as G8 and all 50 fields equal its first two ballot rows. Old G5-C1 GT/challenge vectors belong to another proof and cannot be spliced in. B2 component acceptance is not B4 receiver integration.
 - Proposed asynchronous BEGIN/ADVANCE/FINISH/CONSUME requires a new receiver version, not a drop-in view adapter. No CT/NF writes before all exact checks and final state binding. Original native deterministic verifier RNG is not a chain batching policy.
 - Zero new compilation/EVM/Setup/Prove/CP/signing. Original data/contracts/config remain unchanged. Historical/current Cargo lock hashes are separately preserved; external package identity tables and pinned bellperson sources agree. Review PASS does not promote exact verifier status.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous component: G8-E derived local lifecycle accounting passed
 
@@ -17,7 +23,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Deployment: 34,082,689 Gas / 4 transactions. Non-deployment successful workflow (including initialization/authentication/commitments): 31,390,919 Gas / 13 transactions. Successful total: 65,473,608 Gas / 17 transactions; rejected tests excluded: 2,263,025 Gas / 4 transactions.
 - Successful business calldata 17,236 B; successful creation inputs 80,315 B; total successful transaction data 97,551 B is nested inside signed transaction serialization 99,196 B, not added to it. Eleven proof blobs 5,632 B and ballot input matrices 6,400 B are already within calldata. Three VK blobs 18,688 B are already within creation inputs.
 - No new EVM, Setup/Prove/CP/signing or timing samples. Offline generation/private transport unmeasured (null), not zero. This is the successful receipt subset of an interleaved acceptance run, not a new success-only replay, single block or statistical efficiency result. Exact SnarkPack/public deployment/full-system costs remain incomplete.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous component: G8-D atomic Winner write-once passed
 
@@ -25,7 +31,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual Winner=1, one write/event; 60/60 original G6/G7 inputs. Disclosure transaction 2073560 Gas / 644 B includes input reconstruction, real P3 verification and state write/event.
 - Five acceptance items: premature disclosure, wrong Winner BEFORE finalization, correct Winner, repeat disclosure, repeat P3 binding. Four exact-reason atomic rejections, 21 signed transactions. Wrong Winner pairing=0; valid pairing=1; repeat stops before pairing.
 - Original eight ballot/two state/one P3 proofs reused. Zero new Setup/Prove/CP/signing; local Prague, individual-Groth16 fallback, not exact SnarkPack EVM, public deployment or statistical total-cost advantage. Failed packaging attempt and all its 21 transactions retained.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous component: G8-C authenticated intake and frozen-storage P3 passed; full G8 remains PARTIAL
 
@@ -33,7 +39,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - G6/G7 both match 60/60; reused G6 proof in G7's 512 B EIP-2537 encoding, fixed G4-D VK. Actual input-reconstruction-plus-P3 transaction `2058601 Gas`, `644 B`, not G7's historical component cost.
 - Wrong newState tested before first acceptance: four ballot pairings pass then the state pairing returns 0. Missing Trustee 4 gives MISSING_COMMITMENT/no pairing; after all five authenticate, the wrong selector reaches pairing 0/INVALID_GROTH16. Ten exact-reason atomic negatives, 28 actual signed transactions, 440 historical archive entries unchanged.
 - Zero new Setup/Prove/CP/signing. Gate V2 adds certified key/coefficients/weight interfaces; old algorithms and proof relations remain unchanged. No Winner endpoint/write or exact SnarkPack EVM. Local functional samples, not full-system efficiency/production privacy.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous component: G8-B five-Trustee acceptance
 
@@ -41,7 +47,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - DKG certifiers stay `{1,2,3}`. Commitments arrive `4,5,3,1,2`; the distinct set `{3,4,5}` reaches readiness before 1/2 submit. Non-certifiers 4/5 are valid roster members, not rejected for failing to sign the DKG certificate.
 - 23 actual signed transactions include 13 exact prefix transactions reexecuted in a fresh local Prague VM, not storage copied from JSON. Four new necessary atomic rejects; 411 historical artifact entries unchanged. No new DKG/CP/signatures/Setup/Prove or Solidity/Rust changes; baseline's 48 Rust regressions are retained, not claimed as rerun this round.
 - Readiness is only authenticated-public-record quorum, NOT private CP verification, decryption or a new P3 proof. Receiver intake gate, storage-built P3 and Winner write-once remain G8-C/D; exact SnarkPack EVM remains unresolved.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous component: G8-B first-three acceptance
 
@@ -49,7 +55,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Trustee 1/2/3 costs `[3804497, 3779881, 3788569]` Gas; each 484 B. 10 atomic negatives; 25 signed transactions in one local Prague VM; 48 relevant Rust regressions and strict Clippy passed.
 - Same run authenticates original certificates, really verifies eight old ballot proofs/two old state proofs, freezes CT2, then authenticates commitments. Zero new DKG/CP packages/authentication signatures/SNARK Setup/Prove. No private openings, usable decryption shares or tally are published.
 - The old receiver still does NOT enforce certificate authentication on intake. New component enforces it only before frozen-target binding/commitment acceptance. P3-ready is NOT a verified CP/P3, winner authorization or full-system Gas result.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous component: G8-A original certificate gate
 
@@ -57,7 +63,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Deploy gate/backend `7750282 Gas`; three DKG certifiers `[2651994, 2590448, 2580263]` Gas; original registration certificate `2725613 Gas`. 12 atomic rejects; 13 SHA-512 checks and six original challenge matches; 48 Rust regressions/strict Clippy pass.
 - DKG public certificate reconstructed with the unchanged original deterministic RNG/signing flow; original G6 registration certificate bytes match exactly. No new SNARK setup/proving or alternate authorization scheme.
 - At this historical checkpoint only the standalone certificate gate was complete; the receiver did not enforce it. Subsequent G8-B progress is separately reported above. Bootstrap identity keys/authority remain trust roots; no full-system Gas or G9 claim.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous component: G8 phase 1 receiver/freeze passed; full G8 is PARTIAL
 
@@ -65,7 +71,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Deploy receiver + concrete verifiers `10358066 Gas`; B4 receives `3333283 / 3335455 Gas`, each `6948 B`; freeze `144836 Gas`.
 - Freeze computed only from contract storage; original G6 CP target and seal match exactly. 13 necessary rejects are atomic, including genuine bad-ballot/bad-state pairing failures. No Setup/Prove or G7 rerun.
 - At this historical phase-one checkpoint certificate/registry anchors were deployer-provisioned and no Trustee/P3/winner integration existed. Later certificate/commitment components are reported separately above; full settlement and exact SnarkPack EVM are still incomplete. No full-system Gas or efficiency claim.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous complete gate: G7 same G6 proof / G4-D VK on local Prague EVM
 
@@ -73,7 +79,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Exact archived G6 P3 proof, original G4-D VK, 60 inputs, unchanged Solidity verifier. Signed local transactions: two deployments, one accepted proof, four pairing-level rejections (selector/winner/ciphertext/actual old fixed-123 VK).
 - Current VK deploy `6631884 Gas`; valid verification `1331401 Gas`; ABI calldata `2564 B`. Setup/Prove: zero. Full transaction/bytecode/source hashes archived.
 - This is a verifier component, NOT authenticated chain freeze, trustee signature checks, one-time winner storage, full SnarkPack EVM, public-chain deployment or full-system Gas. No historical component Gas is spliced into a total.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous native checkpoint: G6 complete native Winner-only state machine
 
@@ -84,7 +90,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Same full G4-D VK `0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29` and matrix fingerprint; proof `192 B`, inputs `1920 B`; cumulative process peak RSS `8602.969 MiB`.
 - Reuses eight ballot proofs, two aggregates and two state proofs; no G1-E or ten-subset campaign rerun. 48 relevant tests, strict Clippy and a separate-process public-only receive/freeze/P3 replay pass.
 - Same-process private delivery/native freeze/research Setup are not production privacy or settlement. G7 above now measures this exact proof/VK verifier component; full settlement Gas remains unmeasured.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.
 
 ## Previous P3 checkpoint: G4-D ten P3-v2 subsets, one VK, W32 CT2
 
@@ -162,7 +168,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 | 16 | 6.917166 | 4.990667 | 28.524625 | 3072 / 14164 / 12800 |
 | 32 | 14.048915 | 6.942209 | 57.087584 | 6144 / 17140 / 25600 |
 
-- Next planned task: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation..
+- Next planned task: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed..
 
 ## Previous fixed-suite checkpoint: G1-D1 B=16
 
@@ -174,7 +180,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Source proofs / aggregate / matrix: `3072 / 14164 / 12800 B`; native direct fold/check: `0.021041 ms`.
 - Changed 16th nullifier rejected: `True`; cumulative process peak RSS: `2911.922 MiB`.
 - One B=16 functional sample only, no statistical speedup/crossover claim. W32 state/P3, EVM and complete settlement remain unmeasured. B=32 was not run at this historical checkpoint; see G1-D2 above if available.
-- Next planned task: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation..
+- Next planned task: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed..
 
 ## Previous fixed-suite checkpoint: G1-D0 B=2/4/8
 
@@ -192,7 +198,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - One positive aggregate per B and only one changed-eighth-nullifier negative (B=8), all pass. Direct-fold columns measure native arithmetic/equality only, not full settlement.
 - Single ascending-order pilot, no dedicated warmup, no repeated statistics/crossover conclusion. Per-B standalone RSS is unmeasured; cached keys/SRS, calldata and full DA are not included in proof-plus-matrix byte counts.
 - The weight-10 B=4 state and P3 results below are historical components, not weight-32 results. Current-suite state/P3, SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation..
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed..
 
 ## Previous state checkpoint: G2-C B=4 / omission rejection (weight 10)
 
@@ -203,7 +209,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Only negative, omitted third ballot: R1CS rejected `True`, original proof with omitted new state rejected `True`. Four records/root/aggregate remain unchanged.
 - Peak RSS: `6083.000 MiB`; old B=2 entry points and artifacts remain unchanged.
 - One zero-old-state functional case, no repeated performance or complete settlement claim. The two verifiers are linked natively, not recursively or on EVM.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation..
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed..
 
 ## Previous native checkpoint: G1-C3 B=8 / depth 3
 
@@ -217,7 +223,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Functional single run only, nonproduction SRS. Do not compare depth-3 B=8 times with depth-2 B=4 as a controlled performance matrix.
 - B=2/B=4 entry points and archived artifacts are unchanged; the shared ballot type is now const-generic with depth 2 as its legacy default.
 - B=4 state/omission has since passed in G2-C above. SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation..
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed..
 
 ## Historical native checkpoint: G1-C2 B=4
 
@@ -230,7 +236,7 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Changed LAST voter nullifier rejected: `True`; peak RSS: `3026.562 MiB`.
 - This single functional run shows no size or verifier-time advantage at B=4. It is not a statistical comparison or a production SRS.
 - Its B=4 state/omission follow-up has since passed in G2-C; SnarkPack EVM and full Proposed Gas remain unmeasured.
-- Next: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation..
+- Next: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed..
 
 ## Historical fixed-123 P3-v2 checkpoint: G4-C
 
@@ -253,14 +259,14 @@ Legacy runs.csv build profile(s): `dev-unoptimized` (see each gate for its actua
 - Actual verifier calldata per valid call: `2564 B`; full batch DA is not measured.
 - Transactions: `2` deployments + `4` verification calls; setup / prove rerun: `False / False`.
 - This verifies archived fixed-123 cryptographic P3 proofs, not registry/frozen-state equality or settlement writes. Old G5-B remains v1 historical evidence.
-- The native follow-up has passed G2-C; current next task: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation..
+- The native follow-up has passed G2-C; current next task: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed..
 
 ## Current G5 checkpoint
 
 - Latest recorded gate: `G5-D` / `PASS_G5D_LOCAL_PRAGUE_P3_TALLY_V2_FULL_AND_PARTIAL_TURNOUT`
 - Latest measured prefix: `G5-C3-B21`; latest actual full-loop attempt: `G5-C3-B23`
 - A prefix pass does not establish full-loop conformance or a completed SnarkPack verifier; historical sections below retain their original scope.
-- Current project next gate: Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.; archived G5 next-task notes are historical.
+- Current project next gate: Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed.; archived G5 next-task notes are historical.
 
 Historical B17 was derived analysis only, with zero new EVM transactions; it did not remove the full-loop/SnarkPack blocker.
 
@@ -366,6 +372,8 @@ Historical B17 was derived analysis only, with zero new EVM transactions; it did
 | G8_E_derived_lifecycle_accounting | PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM |
 | G9_route_review_only | PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED |
 | G9_exact_snarkpack_evm | BLOCKED_COMPLETE_EXACT_EVM_IMPLEMENTATION_AND_RESOURCE_FEASIBILITY_UNPROVEN |
+| P0_paper_sync | PASS_PAPER_EVIDENCE_SYNC |
+| P1_staged_exact_design | BLOCKED_P1_RESOURCE_AND_EQUIVALENCE_GATES |
 
 ## Four-voter end-to-end fixture
 

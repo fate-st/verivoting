@@ -1,0 +1,177 @@
+{
+  "commands": [
+    {
+      "name": "p0-evidence",
+      "argv": [
+        "node",
+        "scripts/p0_paper_evidence.mjs",
+        "--check",
+        "--paper",
+        "/Users/lijian/Documents/02学习/论文/latex模版/sn-article-template/sn-article.tex"
+      ],
+      "started_utc": "2026-11-03T13:14:35.015Z",
+      "elapsed_ms": 153.509666,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "p0-evidence-1.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "p1-design",
+      "argv": [
+        "node",
+        "scripts/g9p1_design.mjs",
+        "--check"
+      ],
+      "started_utc": "2026-11-03T13:14:35.238Z",
+      "elapsed_ms": 304.885875,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "p1-design-1.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "old-g9",
+      "argv": [
+        "node",
+        "scripts/g9_route_review.mjs",
+        "--check"
+      ],
+      "started_utc": "2026-11-03T13:14:35.591Z",
+      "elapsed_ms": 138.435417,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "old-g9-1.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "old-g8e",
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--check"
+      ],
+      "started_utc": "2026-11-03T13:14:35.780Z",
+      "elapsed_ms": 221.421708,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "old-g8e-1.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "summary",
+      "argv": [
+        "python3",
+        "scripts/summarize.py"
+      ],
+      "started_utc": "2026-11-03T13:14:36.049Z",
+      "elapsed_ms": 112.846875,
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "log": "summary-1.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "summary",
+      "argv": [
+        "python3",
+        "scripts/summarize.py"
+      ],
+      "started_utc": "2026-11-03T13:16:38.433Z",
+      "elapsed_ms": 114.64562500000001,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "summary-2.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "latex-build",
+      "argv": [
+        "latexmk",
+        "-cd",
+        "-silent",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-outdir=/private/tmp/verivoting-p0p1-20261103-fWMR1U/build",
+        "/Users/lijian/Documents/02学习/论文/latex模版/sn-article-template/sn-article.tex"
+      ],
+      "started_utc": "2026-11-03T13:16:38.630Z",
+      "elapsed_ms": 93.97991599999999,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "latex-build-1.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "final-checks",
+      "argv": [
+        "node",
+        "--input-type=module"
+      ],
+      "started_utc": "2026-11-03T13:21:46.830Z",
+      "elapsed_ms": 21.819083,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "final-checks-1.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "final-checks",
+      "argv": [
+        "node",
+        "scripts/p0p1_check.mjs",
+        "/Users/lijian/Documents/02学习/论文/latex模版/sn-article-template/sn-article.tex",
+        "/private/tmp/verivoting-p0p1-20261103-fWMR1U/sn-article.before-p0.tex"
+      ],
+      "started_utc": "2026-11-03T13:23:05.036Z",
+      "elapsed_ms": 1190.730625,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "final-checks-2.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    },
+    {
+      "name": "latex-build",
+      "argv": [
+        "latexmk",
+        "-g",
+        "-cd",
+        "-silent",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-outdir=/private/tmp/verivoting-p0p1-20261103-fWMR1U/build",
+        "/Users/lijian/Documents/02学习/论文/latex模版/sn-article-template/sn-article.tex"
+      ],
+      "started_utc": "2026-11-03T13:23:29.241Z",
+      "elapsed_ms": 1481.5634169999998,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "latex-build-2.log",
+      "source_base_sha": "a5204043bdcec5a788f79de2ad79225320845e64",
+      "git_dirty": true
+    }
+  ]
+}

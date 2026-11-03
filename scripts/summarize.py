@@ -86,6 +86,8 @@ def main() -> int:
     g8d_path = raw.parent / "g8d_raw" / "winner_once.json"
     g8e_path = raw.parent.parent / "results" / "g8_e" / "lifecycle_costs.json"
     g9_path = raw.parent.parent / "results" / "g9" / "route_review.json"
+    p0_path = raw.parent.parent / "results" / "p0_paper_sync" / "claim_evidence.json"
+    g9p1_path = raw.parent.parent / "results" / "g9_p1" / "design_inventory.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -243,6 +245,13 @@ def main() -> int:
     g8d = json.loads(g8d_path.read_text()) if g8d_path.exists() else None
     g8e = json.loads(g8e_path.read_text()) if g8e_path.exists() else None
     g9 = json.loads(g9_path.read_text()) if g9_path.exists() else None
+    p0 = json.loads(p0_path.read_text()) if p0_path.exists() else None
+    g9p1 = json.loads(g9p1_path.read_text()) if g9p1_path.exists() else None
+    if g9p1 and (not p0 or g9p1["status"] != "BLOCKED_P1_RESOURCE_AND_EQUIVALENCE_GATES"
+               or g9p1["exact_snarkpack_evm_verified"]
+               or g9p1["resource_budget"]["p2_launch_authorized"]
+               or g9p1["new_execution_counts"]["evm_transactions"]):
+        raise ValueError("P1 inventory/transcript checks are not a complete EVM verifier or resource PASS")
     if g9 and (
         not g8e or g9["status"] != "PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED"
         or g9["artifact_kind"] != "source_and_archived_evidence_review_not_new_experiment"
@@ -1069,6 +1078,12 @@ def main() -> int:
             "exact_snarkpack_evm_verified": False,
             "next_task": "Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.",
         })
+    if p0 and g9p1:
+        summary["p0_paper_sync"] = {"status": p0["status"], "paper_sha256": p0["paper_sha256"], "report": str(p0_path)}
+        summary["g9_p1_design"] = {"status": g9p1["status"], "report": str(g9p1_path), "new_execution_counts": g9p1["new_execution_counts"], "total_gas": None}
+        summary["gates"]["P0_paper_sync"] = p0["status"]
+        summary["gates"]["P1_staged_exact_design"] = g9p1["status"]
+        summary["project_current_progress"].update({"latest_completed_step": "P0 paper evidence sync; P1 bounded JS transcript inventory only", "next_task": "Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed."})
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -1078,9 +1093,14 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if p0 and g9p1:
+        lines.extend(["## Current work: P0 synchronized; P1 resource/equivalence gate BLOCKED", "",
+                      "- P0: docs/P0_PAPER_EVIDENCE_SYNC.md; results/p0_paper_sync/claim_evidence.json and paper snapshot.",
+                      "- P1: docs/G9_P1_STAGED_EXACT_DESIGN.md; 10 equations/18 logical pairing terms; actual two-case JS transcript execution only.",
+                      "- GT parsing/folding/final exponentiation, continuation schedule and total budgets remain unresolved. No EVM/Setup/Prove or P2 acceptance.", ""])
     if g9:
         lines.extend([
-            "## Current work: G9 route review completed; exact EVM verifier still BLOCKED",
+            "## Previous component: G9 route review" if g9p1 else "## Current work: G9 route review completed; exact EVM verifier still BLOCKED",
             "",
             "- Report: `docs/G9_EXACT_VERIFICATION_ROUTE.md`; derived review: `results/g9/route_review.json`. G8-E saved as local baseline 4421dd9. This is source/evidence analysis, NOT a new EVM experiment or implementation.",
             "- Keep the 20M failed software Miller route frozen. Prefer staged exact verification for further design only; feasibility, final exponentiation/GT operations, complete Solidity transcript and original proof-check coverage are unresolved. Wrapper implementation deferred. No gas estimate or claimed exact verifier completion.",
