@@ -1,0 +1,22 @@
+node:internal/modules/run_main:104
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Cargo.lock
++ actual - expected
+
++ 'b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e'
+- '7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68'
+
+    at file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/scripts/g9_route_review.mjs:33:108
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e',
+  expected: '7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68',
+  operator: 'strictEqual'
+}
+
+Node.js v23.11.0

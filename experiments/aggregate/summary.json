@@ -1,5 +1,5 @@
 {
-  "classification": "derived-g8e-g8d-lifecycle-receipt-accounting-no-new-evm",
+  "classification": "source-reviewed-g9-staged-exact-candidate-only-resource-feasibility-unproven",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -96,7 +96,9 @@
     "G8_B_all_five_original_commitments": "PASS_FIVE_ORIGINAL_COMMITMENTS_CERTIFIER_AND_DECRYPTION_ROSTER_SEPARATED",
     "G8_C_authenticated_frozen_storage_p3": "PASS_AUTHENTICATED_INTAKE_AND_FROZEN_STORAGE_P3_BINDING",
     "G8_D_atomic_winner_once": "PASS_FIXED_FROZEN_P3_ATOMIC_WINNER_WRITE_ONCE",
-    "G8_E_derived_lifecycle_accounting": "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM"
+    "G8_E_derived_lifecycle_accounting": "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM",
+    "G9_route_review_only": "PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED",
+    "G9_exact_snarkpack_evm": "BLOCKED_COMPLETE_EXACT_EVM_IMPLEMENTATION_AND_RESOURCE_FEASIBILITY_UNPROVEN"
   },
   "dkg": {
     "classification": "real-group-single-process-protocol-simulation",
@@ -6229,14 +6231,14 @@
     "current_evaluation_suite_state_and_p3": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT",
     "current_evaluation_suite_p3": "PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2",
-    "next_task": "Stop after G8-E. G9 exact SnarkPack EVM remains an independent unresolved route decision; do not restart frozen software Miller trials or silently bypass aggregate verification. G10 fair system comparisons remain pending; no new batch scales, proofs or repeated G1-E runs authorized by this accounting phase.",
+    "next_task": "Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.",
     "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS",
     "complete_native_flow": true,
     "complete_chain_settlement": false,
     "current_p3_vk_evm_verified": true,
     "active_gate": "G8",
     "active_gate_status": "PARTIAL",
-    "latest_completed_step": "G8-E derived accounting of one same-version local G8-D lifecycle; no new EVM/proofs",
+    "latest_completed_step": "G9 source/evidence route review only; staged exact candidate, implementation and resource feasibility unproven",
     "receiver_and_freeze_evm_measured": true,
     "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
     "certificate_authentication_component_evm_measured": true,
@@ -6246,7 +6248,8 @@
     "all_five_trustee_commitments_evm_measured": true,
     "certificate_and_decryption_roles_separated": true,
     "winner_write_once_integrated": true,
-    "local_fallback_lifecycle_costs_archived": true
+    "local_fallback_lifecycle_costs_archived": true,
+    "exact_snarkpack_evm_verified": false
   },
   "g2_a_state_transition_r1cs": {
     "gate": "G2-A",
@@ -21324,5 +21327,35 @@
       "signatures": 0
     },
     "complete_snarkpack_settlement_gas": null
+  },
+  "g9_exact_route_review": {
+    "status": "PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED",
+    "review": "results/g9/route_review.json",
+    "baseline_commit": "4421dd9be2487195db07d91085d941b3aa51a8f6",
+    "decision": {
+      "preferred_candidate": "STAGED_EXACT",
+      "selection_scope": "DESIGN_ONLY_NOT_PROVEN_FEASIBLE",
+      "full_b2_prototype_ready": false,
+      "implement_or_launch_now": false,
+      "blockers": [
+        "canonical wire/GT and complete Solidity transcript",
+        "all GT/TIPP/MIPP/KZG/aggregate relations",
+        "final exponentiation and sound accumulator policy",
+        "bounded continuation schedule and total resource cap",
+        "new asynchronous receiver protocol and one-time result consumption"
+      ]
+    },
+    "target_verifier_status": "BLOCKED_COMPLETE_EXACT_EVM_IMPLEMENTATION_AND_RESOURCE_FEASIBILITY_UNPROVEN",
+    "required_check_count": 10,
+    "w32_b2_50_fields_match": true,
+    "new_execution_counts": {
+      "evm_transactions": 0,
+      "compiler_runs": 0,
+      "setup": 0,
+      "prove": 0,
+      "cp_generation": 0,
+      "signatures": 0
+    },
+    "snarkpack_verification_gas": null
   }
 }

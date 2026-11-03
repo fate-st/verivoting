@@ -1,6 +1,20 @@
 # Implementation and claim boundary
 
-## Current work: G8-E derived local lifecycle accounting passed
+## Current work: G9 route review only; complete exact EVM verifier BLOCKED
+
+[G9](G9_EXACT_VERIFICATION_ROUTE.md) 基于已提交G8-E `4421dd9`，核对历史B23
+失败、C2挑战、TIPP终点和当前接口；不改合约/电路/Manifest，也不新编译/EVM/Setup/Prove。
+原20M软件Miller继续冻结。多交易精确验证仅优先进入设计，不代表已经可行或已获实现授权；
+wrapper暂不实现。完整10类原验证检查、异步接收器边界及资源前置条件已列出，Gas仍null。
+
+G1-D0已有W32 B2聚合：同一Ark VK摘要，50字段与G8第一批前两行一致，可供后续复用；
+旧G5-C1挑战/GT材料不能混入另一份proof，B2独立验收也不能声称固定B4接收器已接入聚合。
+
+来源核对发现旧/当前Cargo.lock仅工作区依赖边变化，包身份表和固定bellperson源一致；
+分别核对两版Git锁，失败日志/脚本保留，没有修改锁或旧实验。G9审查PASS与完整验证
+BLOCKED明确分开；当前仍只有G8逐票备用路线。到本轮停止，不自动试跑或开展G10。
+
+## Previous component: G8-E derived local lifecycle accounting passed
 
 [G8-E](G8_E_LIFECYCLE_COSTS.md) 从本地G8-D提交 `4a2cc16` 建立独立分支，
 不改合约/电路/固定配置/raw，也不新建EVM交易、Setup/Prove/CP或签名。

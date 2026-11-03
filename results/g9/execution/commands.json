@@ -1,0 +1,182 @@
+{
+  "working_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "commands": [
+    {
+      "name": "syntax",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g9_route_review.mjs"
+      ],
+      "log": "syntax.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 22.461999999999996
+    },
+    {
+      "name": "review",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g9_route_review.mjs",
+        "--write"
+      ],
+      "log": "review.log",
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 31.830750000000002
+    },
+    {
+      "name": "deterministic-check",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g9_route_review.mjs",
+        "--check"
+      ],
+      "log": "deterministic-check.log",
+      "exit_code": 1,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 26.329167000000005
+    },
+    {
+      "name": "review",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g9_route_review.mjs",
+        "--write"
+      ],
+      "log": "review-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 144.546958
+    },
+    {
+      "name": "deterministic-check",
+      "attempt": 2,
+      "argv": [
+        "node",
+        "scripts/g9_route_review.mjs",
+        "--check"
+      ],
+      "log": "deterministic-check-attempt-2.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 108.040542
+    },
+    {
+      "name": "summary",
+      "attempt": 1,
+      "argv": [
+        "python3",
+        "scripts/summarize.py"
+      ],
+      "log": "summary.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 107.889084
+    },
+    {
+      "name": "deterministic-check",
+      "attempt": 3,
+      "argv": [
+        "node",
+        "scripts/g9_route_review.mjs",
+        "--check"
+      ],
+      "log": "deterministic-check-attempt-3.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 131.59908299999998
+    },
+    {
+      "name": "prior-accounting",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "scripts/g8e_accounting.mjs",
+        "--check"
+      ],
+      "log": "prior-accounting.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 208.99883300000002
+    },
+    {
+      "name": "syntax-recorder",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--check",
+        "scripts/g9_record.mjs"
+      ],
+      "log": "syntax-recorder.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 19.774124999999998
+    },
+    {
+      "name": "diff-check",
+      "attempt": 1,
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "log": "diff-check.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 29.150791999999996
+    },
+    {
+      "name": "scope-check",
+      "attempt": 1,
+      "argv": [
+        "node",
+        "--input-type=module",
+        "-e",
+        "\nimport assert from \"node:assert/strict\";import fs from \"node:fs\";\nconst r=JSON.parse(fs.readFileSync(\"results/g9/route_review.json\"));\nassert.equal(r.status,\"PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED\");\nassert.equal(r.complete_verifier_checklist.length,10);assert.equal(r.routes.length,3);\nassert.ok(Object.values(r.new_execution_counts).every(n=>n===0));\nassert.equal(r.exact_snarkpack_evm_verified,false);assert.equal(r.decision.full_b2_prototype_ready,false);\nassert.equal(r.snarkpack_verification_gas,null);assert.equal(r.software_route_reopened,false);\nassert.equal(r.material_selection.future_b2_50_fields_match_g8_first_two_rows,true);\nassert.equal(r.receiver_integration_plan.current_b4_receiver_accepts_b2,false);\nassert.equal(r.lock_lineage.whole_lock_identical,false);assert.equal(r.lock_lineage.package_identity_tables_equal,true);\nconsole.log(JSON.stringify({status:\"PASS_REVIEW_SCOPE_AND_NONIMPLEMENTATION_BOUNDARIES\",required_checks:10,new_evm:0,new_proofs:0,exact_verifier:false}));"
+      ],
+      "log": "scope-check.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 21.548249999999996
+    },
+    {
+      "name": "immutable-source-check",
+      "attempt": 1,
+      "argv": [
+        "git",
+        "diff",
+        "--exit-code",
+        "HEAD",
+        "--",
+        "Cargo.lock",
+        "contracts",
+        "crates",
+        "configs",
+        "fixtures",
+        "experiments/g5_c3_raw",
+        "results/g8_e"
+      ],
+      "log": "immutable-source-check.log",
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 13.378083000000002
+    }
+  ]
+}

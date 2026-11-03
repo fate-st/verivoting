@@ -85,6 +85,7 @@ def main() -> int:
     g8c_path = raw.parent / "g8c_raw" / "frozen_p3_binding.json"
     g8d_path = raw.parent / "g8d_raw" / "winner_once.json"
     g8e_path = raw.parent.parent / "results" / "g8_e" / "lifecycle_costs.json"
+    g9_path = raw.parent.parent / "results" / "g9" / "route_review.json"
     g5_a_path = raw.parent / "g5_a_raw" / "g2b_prague_evm.json"
     g5_b_path = raw.parent / "g5_b_raw" / "p3_prague_evm.json"
     g5_d_path = raw.parent / "g5_d_raw" / "g5d_p3_v2_evm.json"
@@ -241,6 +242,19 @@ def main() -> int:
     g8c = json.loads(g8c_path.read_text()) if g8c_path.exists() else None
     g8d = json.loads(g8d_path.read_text()) if g8d_path.exists() else None
     g8e = json.loads(g8e_path.read_text()) if g8e_path.exists() else None
+    g9 = json.loads(g9_path.read_text()) if g9_path.exists() else None
+    if g9 and (
+        not g8e or g9["status"] != "PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED"
+        or g9["artifact_kind"] != "source_and_archived_evidence_review_not_new_experiment"
+        or g9["decision"]["selection_scope"] != "DESIGN_ONLY_NOT_PROVEN_FEASIBLE"
+        or g9["decision"]["full_b2_prototype_ready"] or g9["decision"]["implement_or_launch_now"]
+        or any(g9["new_execution_counts"].values())
+        or g9["exact_snarkpack_evm_verified"] or g9["software_route_reopened"] or g9["protocol_manifest_changed"]
+        or g9["snarkpack_verification_gas"] is not None
+        or g9["resource_budget"]["future_total_verification_transaction_cap"] is not None
+        or g9["future_minimal_acceptance"]["authorized_this_phase"]
+    ):
+        raise ValueError("G9 review is a design decision, NOT a verified/feasible EVM implementation or authorization to rerun Miller")
     if g8e and (
         not g8d or g8e["status"] != "PASS_DERIVED_G8D_LIFECYCLE_ACCOUNTING_NO_NEW_EVM"
         or g8e["artifact_kind"] != "derived_accounting_not_new_raw_experiment"
@@ -1037,6 +1051,24 @@ def main() -> int:
             "local_fallback_lifecycle_costs_archived": True,
             "next_task": "Stop after G8-E. G9 exact SnarkPack EVM remains an independent unresolved route decision; do not restart frozen software Miller trials or silently bypass aggregate verification. G10 fair system comparisons remain pending; no new batch scales, proofs or repeated G1-E runs authorized by this accounting phase.",
         })
+    if g9:
+        summary["classification"] = "source-reviewed-g9-staged-exact-candidate-only-resource-feasibility-unproven"
+        summary["g9_exact_route_review"] = {
+            "status": g9["status"], "review": str(g9_path),
+            "baseline_commit": g9["baseline_commit"], "decision": g9["decision"],
+            "target_verifier_status": g9["target_verifier_status"],
+            "required_check_count": len(g9["complete_verifier_checklist"]),
+            "w32_b2_50_fields_match": g9["material_selection"]["future_b2_50_fields_match_g8_first_two_rows"],
+            "new_execution_counts": g9["new_execution_counts"],
+            "snarkpack_verification_gas": None,
+        }
+        summary["gates"]["G9_route_review_only"] = g9["status"]
+        summary["gates"]["G9_exact_snarkpack_evm"] = g9["target_verifier_status"]
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G9 source/evidence route review only; staged exact candidate, implementation and resource feasibility unproven",
+            "exact_snarkpack_evm_verified": False,
+            "next_task": "Stop after G9 review. Before any prototype, specify all original verifier checks, canonical wire/transcript binding, continuation schedule, final exponentiation and total tx/time budget. Do not assume staged execution fits or start a partial-prefix optimization loop. Reuse archived W32 B2 proof when a separately approved complete minimal test becomes feasible; G8 fallback remains current implementation.",
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -1046,9 +1078,21 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g9:
+        lines.extend([
+            "## Current work: G9 route review completed; exact EVM verifier still BLOCKED",
+            "",
+            "- Report: `docs/G9_EXACT_VERIFICATION_ROUTE.md`; derived review: `results/g9/route_review.json`. G8-E saved as local baseline 4421dd9. This is source/evidence analysis, NOT a new EVM experiment or implementation.",
+            "- Keep the 20M failed software Miller route frozen. Prefer staged exact verification for further design only; feasibility, final exponentiation/GT operations, complete Solidity transcript and original proof-check coverage are unresolved. Wrapper implementation deferred. No gas estimate or claimed exact verifier completion.",
+            "- Existing W32 B2 aggregate found in G1-D0: same Ark VK identity as G8 and all 50 fields equal its first two ballot rows. Old G5-C1 GT/challenge vectors belong to another proof and cannot be spliced in. B2 component acceptance is not B4 receiver integration.",
+            "- Proposed asynchronous BEGIN/ADVANCE/FINISH/CONSUME requires a new receiver version, not a drop-in view adapter. No CT/NF writes before all exact checks and final state binding. Original native deterministic verifier RNG is not a chain batching policy.",
+            "- Zero new compilation/EVM/Setup/Prove/CP/signing. Original data/contracts/config remain unchanged. Historical/current Cargo lock hashes are separately preserved; external package identity tables and pinned bellperson sources agree. Review PASS does not promote exact verifier status.",
+            f"- Next: {summary['project_current_progress']['next_task']}",
+            "",
+        ])
     if g8e:
         lines.extend([
-            "## Current work: G8-E derived local lifecycle accounting passed; no new EVM experiment",
+            "## Previous component: G8-E derived local lifecycle accounting passed" if g9 else "## Current work: G8-E derived local lifecycle accounting passed; no new EVM experiment",
             "",
             "- Report: `docs/G8_E_LIFECYCLE_COSTS.md`; derived JSON: `results/g8_e/lifecycle_costs.json`. All costs come from the same G8-D archived execution, not from summed G7/G8-C components. G8-D was saved as local baseline 4a2cc16; old dirty execution provenance is preserved.",
             f"- Deployment: {g8e['totals']['deployment']['total_gas']:,} Gas / 4 transactions. Non-deployment successful workflow (including initialization/authentication/commitments): {g8e['totals']['non_deployment_success']['total_gas']:,} Gas / 13 transactions. Successful total: {g8e['totals']['successful_including_deployment']['total_gas']:,} Gas / 17 transactions; rejected tests excluded: {g8e['totals']['rejected_tests']['total_gas']:,} Gas / 4 transactions.",

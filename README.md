@@ -8,7 +8,15 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G8-E derived lifecycle accounting passed
+### Current work: G9 route decision archived; exact verification remains BLOCKED
+
+[G9路线审查](docs/G9_EXACT_VERIFICATION_ROUTE.md) 只读核对18份项目来源和3份固定
+bellperson源文件。原20M失败软件路线保持冻结；多交易精确验证仅选为后续设计候选，
+尚未证明可行，不自动实现或试跑。当前view/B4接口不能直接接有状态续算。
+找到可复用W32 B2聚合，其50项输入与G8前两票一致；没有生成新证明或GT向量。
+本轮0编译/EVM/Setup/Prove，Gas继续null；现有可执行流程仍是G8逐票备用路线。
+
+### Previous component: G8-E derived lifecycle accounting passed
 
 [G8-E](docs/G8_E_LIFECYCLE_COSTS.md)：只读取已有G8-D收据，未新建EVM交易或证明。
 成功路径17笔共65,473,608 Gas：部署34,082,689，非部署业务31,390,919；

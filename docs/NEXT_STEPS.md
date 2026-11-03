@@ -1,6 +1,25 @@
 # Next steps: user's five-step route (2026-10-30)
 
-## Current work: G8-E lifecycle accounting archived; stop here
+## Current work: G9 source/evidence route review completed; stop here
+
+[G9路线审查](G9_EXACT_VERIFICATION_ROUTE.md)：多交易精确验证仅作为后续设计候选，
+资源可行性未证明，完整实现仍BLOCKED。原软件Miller路线冻结，不重跑20M full、不扫描原语。
+本轮未实现合约/编译/EVM/新证明，未提高协议能力标记；来源与文档归档完毕。
+
+若用户继续，必须先把候选路线闭合为具体设计，而非直接启动半个验证器：
+
+1. 规范wire/GT解码与原Fiat–Shamir编码、全部TIPP/MIPP/KZG/聚合等式必须有完整清单。
+2. 明确最终幂和安全的方程检查策略；不把固定测试RNG或host目标值当验证结果。
+3. 列出每个续算阶段的合约计算/持久状态、终止条件、整体交易数及时间预算；未知预算不准自动扩。
+4. 新接收器仅在完整验证后一次消费同一批次，并原子检查状态证明及NF/CT；不得绕过原认证。
+5. 只有设计/预算闭合并另行批准后，复用G1-D0 W32 B2做一正一负；它不等于现有B4结算验收。
+
+单交易20M和block30M仅是本地研究配置，不当作实时公链永久上限。当前总费用/交易数
+没有实测或可信调度，保持null。若设计无法闭合，保留受阻及论文收窄声明，不虚构效率。
+
+本轮结束，不自动开发/试跑分阶段验证器、wrapper、G10或新的性能实验。
+
+## Previous component: G8-E lifecycle accounting archived; stop here
 
 [G8-E](G8_E_LIFECYCLE_COSTS.md)：复用G8-D一次真实执行的21笔收据，完成分类、
 Gas及通信字节守恒、固定来源/赢家状态核对。没有补跑EVM或生成新证明。

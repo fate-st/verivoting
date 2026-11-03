@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "gate": "G9_ROUTE_REVIEW",
+  "status": "PASS_ROUTE_REVIEW_ONLY_IMPLEMENTATION_NOT_STARTED",
+  "artifact_kind": "source_and_archived_evidence_review_not_new_experiment",
+  "reviewed_client_date": "2026-11-02",
+  "baseline_commit": "4421dd9be2487195db07d91085d941b3aa51a8f6",
+  "generator": {
+    "path": "scripts/g9_route_review.mjs",
+    "sha256": "bfe1407c008867ea10362fa80d0127a7755df699dc99d4bb3e762672e2d3269a"
+  },
+  "source_pins": [
+    {
+      "path": "experiments/g5_c3_raw/miller_quarter_full_evm.json",
+      "sha256": "ea725ce6aa8e1f0aebf0b8ca44f273cdec2aaffa25d579610ab21e090eea7ccf"
+    },
+    {
+      "path": "experiments/g5_c2_raw/transcript_conformance.json",
+      "sha256": "ef7983ea2dbce49ee5752133183273ccc41ccc2181b8d4d68102624683bc102c"
+    },
+    {
+      "path": "experiments/g5_c3_raw/tipp_endpoint_route.json",
+      "sha256": "25e2c6bb0feb6a9372b82c805aa22c87e80a6be57f8a5507a38a72b9ef5b7f5f"
+    },
+    {
+      "path": "fixtures/snarkpack_g5c1_public_v1.json",
+      "sha256": "34180b26bcb316b2bf5d2a6ce810a6348a42cb2d5bcd3916a2f9a2a8dbcfaeb2"
+    },
+    {
+      "path": "fixtures/snarkpack_g5c3_miller_loop_v1.json",
+      "sha256": "1079b6fd309f7d11d60fcd2cd5f15a1e4b25895fe7f876bfe3be624d4f989ead"
+    },
+    {
+      "path": "fixtures/snarkpack_g5c3_tipp_endpoint_v1.json",
+      "sha256": "aff928970e57a3951486c7303384cee65556b33f8a8693dffce29c32cb526ce1"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopQuarter.sol",
+      "sha256": "90e573ae450b9a75c0dbe4a21242cc07113ccb041f56c12370e43a194725958e"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+      "sha256": "a4ae00a6bf322cbeba70050e4583f297d3fd9a83e6a8cea793b1366f97cef062"
+    },
+    {
+      "path": "fixtures/g8_receiver_eip2537_v1.json",
+      "sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb"
+    },
+    {
+      "path": "results/g8_e/lifecycle_costs.json",
+      "sha256": "4b32db983dc24ce56669745fd4f1f23cf5e7d925ac6b28de0d46858953a239ae"
+    },
+    {
+      "path": "results/g8_e/SHA256SUMS",
+      "sha256": "f82ea451da6d5d7c52e2409bb9078f259e3a68b56384a61ac60bd56ff78054b2"
+    },
+    {
+      "path": "contracts/src/interfaces/IBatchVerifier.sol",
+      "sha256": "bb37c0bad239411ae836fb0b630a5dae0578be336923b7b87c75fd84e891fafd"
+    },
+    {
+      "path": "contracts/src/VeriVotingAuthenticatedSettlement.sol",
+      "sha256": "872a29701ae7d7cd5104b941a1fc39d2a4afee59c3919f8ca9c1c061c45e30cf"
+    },
+    {
+      "path": "contracts/src/VeriVotingWinnerOnlySettlement.sol",
+      "sha256": "adb876097767adb27a05f3de20563ff8eae745b3be61cb68054ab6ce0f01c513"
+    },
+    {
+      "path": "contracts/src/IndividualGroth16BatchVerifier.sol",
+      "sha256": "1697f67146dd7f62a3ef66ff6bb83528bdf2f6201c3144c110dbd687609d80d7"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    },
+    {
+      "path": "contracts/package-lock.json",
+      "sha256": "e627b7d966a05a29946ce4f7afd078a088f6c2c30ac43740e551f342b05b2290"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    }
+  ],
+  "pinned_reference_sources": [
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+      "sha256": "cd6412860def9630b47a58a96c7245dc4a714e0b847dd43780858412eabe578d"
+    },
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/transcript.rs",
+      "sha256": "4ae0d7da2ecc4a2bcf1eafe0cec2209ce0fde7c27bf377e6c6e782bff87b7ac8"
+    },
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+      "sha256": "4e3f730fdb258fbcfc99bf44e575d23e8c3c1e2224de98309f323e4d5ef7808b"
+    }
+  ],
+  "lock_lineage": {
+    "historical_git_commit": "6bad1b0384ef18f525b85c86a9342447eda94b96",
+    "historical_cargo_sha256": "7b64d7158e6f1776451b1525125847822f409c94248ed5b35d12326efc2eeb68",
+    "current_baseline_commit": "4421dd9be2487195db07d91085d941b3aa51a8f6",
+    "current_cargo_sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e",
+    "whole_lock_identical": false,
+    "package_identity_tables_equal": true,
+    "interpretation": "Git diff adds ark-relations and sha2 dependency edges to vv-friendly-dkg only; no external package version/identity change; neither lock is rewritten"
+  },
+  "standard_reference": {
+    "url": "https://eips.ethereum.org/EIPS/eip-2537#abi-for-pairing-check",
+    "reviewed_client_date": "2026-11-02",
+    "checked_by_agent_against_primary_page": true,
+    "fetched_by_this_script": false,
+    "semantics": "G1/G2 pair input; Boolean product-equals-one output; no arbitrary GT target slot or GT result"
+  },
+  "historical_observations_not_rerun": {
+    "full64_result": "OOG",
+    "capped_failed_spend": 20000000,
+    "completed_miller_gas": null,
+    "completed_snarkpack_gas": null,
+    "rust_js_challenges_matched": 12,
+    "solidity_transcript_verified": false,
+    "software_route_frozen": true
+  },
+  "routes": [
+    {
+      "id": "SINGLE_TX_SOFTWARE",
+      "decision": "KEEP_FROZEN",
+      "rationale": "The saved full64 positive call failed at the fixed 20M research cap; final exponentiation and complete verification remain absent. No repeat or primitive tuning."
+    },
+    {
+      "id": "STAGED_EXACT",
+      "decision": "PREFERRED_FOR_FURTHER_DESIGN_ONLY",
+      "feasibility": "UNPROVEN",
+      "rationale": "Can investigate retaining the original proof equations across contract-computed continuation states; per-step fit, storage and total cost have NOT been measured.",
+      "drop_in_replacement_for_view_interface": false
+    },
+    {
+      "id": "WRAPPER_PROOF",
+      "decision": "DEFER_IMPLEMENTATION",
+      "feasibility": "UNPROVEN",
+      "rationale": "Would need a full constrained verifier relation, original transcript/GT operations, sound statement binding, new proof/setup assumptions and independent feasibility work. No existing complete wrapper is claimed."
+    }
+  ],
+  "decision": {
+    "preferred_candidate": "STAGED_EXACT",
+    "selection_scope": "DESIGN_ONLY_NOT_PROVEN_FEASIBLE",
+    "full_b2_prototype_ready": false,
+    "implement_or_launch_now": false,
+    "blockers": [
+      "canonical wire/GT and complete Solidity transcript",
+      "all GT/TIPP/MIPP/KZG/aggregate relations",
+      "final exponentiation and sound accumulator policy",
+      "bounded continuation schedule and total resource cap",
+      "new asynchronous receiver protocol and one-time result consumption"
+    ]
+  },
+  "complete_verifier_checklist": [
+    {
+      "id": "PARSE",
+      "check": "Original V2 proof size/count and canonical point/GT parsing, subgroup and SRS/VK binding",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 62,
+        "anchor": "proof.parsing_check()?;"
+      },
+      "evm_status": "MISSING_COMPLETE_PROOF_PARSER"
+    },
+    {
+      "id": "FS",
+      "check": "Original bincode/GT transcript encoding, SHA-256 cumulative rejection counters and all V2 challenges",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/transcript.rs",
+        "line": 77,
+        "anchor": "pub fn into_challenge"
+      },
+      "evm_status": "RUST_JS_CONFORMANCE_ONLY"
+    },
+    {
+      "id": "GIPA",
+      "check": "All GIPA folding of group/GT/scalar terms and extra-link challenge",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 539,
+        "anchor": "fn gipa_verify_tipp_mipp"
+      },
+      "evm_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "KZG_V",
+      "check": "Commitment-key v opening verification",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 801,
+        "anchor": "fn verify_kzg_v"
+      },
+      "evm_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "KZG_W",
+      "check": "Commitment-key w opening and original r-inverse shift",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 876,
+        "anchor": "fn verify_kzg_w"
+      },
+      "evm_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TIPP",
+      "check": "All z/tab/uab pairing-to-GT equalities, not just the one archived endpoint",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 493,
+        "anchor": "let _check_z ="
+      },
+      "evm_status": "ONE_ENDPOINT_NATIVE_JS_ONLY"
+    },
+    {
+      "id": "MIPP",
+      "check": "tc/uc pairings plus final_c scalar/group relation to zc",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 503,
+        "anchor": "let final_z ="
+      },
+      "evm_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AGGREGATE",
+      "check": "Final Groth16 aggregate equation binds every ordered public-input row",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 192,
+        "anchor": "pairing_checks_copy.merge_nonrandom("
+      },
+      "evm_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ACCUMULATOR",
+      "check": "Sound complete equation checking; no fixed native harness RNG on chain",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+        "line": 144,
+        "anchor": "pub fn merge_miller_inputs"
+      },
+      "evm_status": "STRATEGY_UNRESOLVED"
+    },
+    {
+      "id": "FINAL_GT",
+      "check": "Complete Miller loops, final exponentiation and exact GT target equality",
+      "evidence": {
+        "package_path": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+        "line": 307,
+        "anchor": "let left = self.left.final_exponentiation();"
+      },
+      "evm_status": "SOFTWARE_ROUTE_FROZEN_OOG"
+    }
+  ],
+  "receiver_integration_plan": {
+    "existing_contracts_changed": false,
+    "proposed_new_version_required": true,
+    "current_interface_is_synchronous_view": true,
+    "session_envelope_must_not_change_original_fiat_shamir": true,
+    "session_binding_fields": [
+      "chain and contract addresses",
+      "suite/version",
+      "VK and verifier SRS identity",
+      "proof bytes hash",
+      "ordered matrix hash and B",
+      "election/context/root",
+      "batch index",
+      "expected old/new CT state"
+    ],
+    "progression": [
+      {
+        "stage": "BEGIN",
+        "responsibility": "The authorized receiver binds the original ordered matrix/proof/VK/SRS and current batch/old/new state to a separate session envelope. No spent NF or CT write yet."
+      },
+      {
+        "stage": "ADVANCE",
+        "responsibility": "The EVM computes each transition from stored authenticated state, checks exact next stage and proof binding; caller-provided intermediates are not trusted. No batch acceptance."
+      },
+      {
+        "stage": "FINISH",
+        "responsibility": "Only after ALL listed proof checks succeed mark one session verified. Never infer success from a component, prefix, host flag or uploaded target."
+      },
+      {
+        "stage": "CONSUME",
+        "responsibility": "Only the fixed receiver rechecks current index/old CT/root/NFs and exact batch matrix; verifies the existing state proof and atomically consumes once with CT/NF updates. No caller-switchable backend."
+      }
+    ],
+    "incomplete_session_cannot_write_spent_nf_or_ct": true,
+    "overlapping_session_policy": "initial minimal design permits only one pending next batch; any abort leaves accepted business state unchanged",
+    "current_b4_receiver_accepts_b2": false
+  },
+  "material_selection": {
+    "historical_gt_component_fixture": "fixtures/snarkpack_g5c1_public_v1.json",
+    "historical_gt_proof_sha256": "12e25c7edf07eff2d3f211a3cbb74ae4ce43e028ab58702debdef98b0787e64c",
+    "future_whole_b2_fixture": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+    "future_whole_b2_case": 2,
+    "future_b2_proof_sha256": "072156c814f1ce3ae909223eeaad5d06274c163a5843dd05b5742e4cf529447c",
+    "future_b2_shared_research_srs_sha256": "3a8a75be96e4150c757b85f682be37d4e502e8b45a17943171bd0bbbdfd605aa",
+    "future_b2_bellperson_vk_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+    "future_b2_ark_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+    "future_b2_50_fields_match_g8_first_two_rows": true,
+    "newly_derived_w32_transcript_gt_vectors_needed": true,
+    "warning": "Old G5-C1 GT/challenge vectors belong to their old proof; never splice them into the W32 aggregate. Matching W32 rows/VK does not make a B2 session accepted by the fixed B4 receiver."
+  },
+  "resource_budget": {
+    "current_phase_evm_transactions": 0,
+    "current_phase_compilations": 0,
+    "current_phase_setup_or_prove": 0,
+    "future_local_profile": "Prague research profile, not a statement about live-chain gas limits",
+    "future_per_transaction_gas_cap": 20000000,
+    "future_block_context_gas_cap": 30000000,
+    "future_total_verification_transaction_cap": null,
+    "future_total_gas": null,
+    "launch_requires_explicit_total_transaction_and_execution_time_budget": true,
+    "no_automatic_budget_increase": true
+  },
+  "future_minimal_acceptance": {
+    "authorized_this_phase": false,
+    "full_relation_cases": 2,
+    "positive": "Reuse the archived W32 B2 aggregate and recompute every original check; exact verifier accepts.",
+    "negative": "Change only second-row input[7], keep aggregate/VK/SRS unchanged, rebuild external transcript and resulting statement bindings; exact verifier rejects, not merely a stale session-ID/root mismatch.",
+    "metrics": [
+      "per-tx receipt Gas and summed Gas",
+      "verification tx count",
+      "calldata and storage bytes",
+      "complete relation coverage"
+    ],
+    "component_only_result_must_not_upgrade_exact_verifier": true
+  },
+  "new_execution_counts": {
+    "evm_transactions": 0,
+    "compiler_runs": 0,
+    "setup": 0,
+    "prove": 0,
+    "cp_generation": 0,
+    "signatures": 0
+  },
+  "exact_snarkpack_evm_verified": false,
+  "target_verifier_status": "BLOCKED_COMPLETE_EXACT_EVM_IMPLEMENTATION_AND_RESOURCE_FEASIBILITY_UNPROVEN",
+  "snarkpack_verification_gas": null,
+  "software_route_reopened": false,
+  "protocol_manifest_changed": false,
+  "prior_g8e_checks": {
+    "immutable_entries": 33,
+    "committed_status_entries": 6
+  },
+  "stop": "Stop after this review. No contract implementation, compiler, VM, proof generation or automatic follow-on trial."
+}
