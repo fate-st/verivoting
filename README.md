@@ -8,7 +8,16 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: G10-A native Direct Fold comparison; G9-P1 v2 still BLOCKED
+### Current work: clean-source G10-A 30 paired rounds; G10-B comparison scope only
+
+[干净复现](docs/G10_A_CLEAN30_REPRODUCTION.md)使用未修改e1e477f独立worktree，三次顺序进程、
+30轮配对/60原始窗口，全部git_dirty=false。两批B4完整接收中位数Direct Fold 9.082339 ms、
+State Proof 13.898156 ms；仅一组固定8票证明池，不是30场独立选举，不过滤慢样本。
+[G10-B规范](docs/G10_B_COMPARISON_PROTOCOL.md)固定五路线输入/计费边界，并登记生成成本缺口；
+它不是已完成的五基线系统实验。下一项仅实现两个真实逐票原生基线，与原两路线同版计时。
+旧10轮结果/所有历史raw和协议配置不变；本轮无Setup/Prove/新聚合/EVM，G9-P1仍阻塞P2。
+
+### Previous component: G10-A native Direct Fold comparison; G9-P1 v2 BLOCKED
 
 [G10-A](docs/G10_A_NATIVE_DIRECT_FOLD.md)真实测量相同W32两批B4的完整原生接收路径：
 Direct Fold中位数9.206768 ms，State Proof 15.559338 ms。10个配对窗口/路线、每窗口8次流程；

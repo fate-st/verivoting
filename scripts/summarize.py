@@ -1111,6 +1111,31 @@ def main() -> int:
     if p0_visual:
         summary["p0_local_visual_review"] = {"status": p0_visual["status"], "paper_sha256": p0_visual["paper_sha256"], "pdf": p0_visual["pdf"], "report": str(p0_visual_path)}
         summary["gates"]["P0_local_visual_review"] = p0_visual["status"]
+    clean30_path = raw.parent.parent / "results" / "g10_a_clean30" / "summary.json"
+    g10b_scope_path = raw.parent.parent / "results" / "g10_b_plan" / "comparison_scope.json"
+    clean30 = json.loads(clean30_path.read_text()) if clean30_path.exists() else None
+    g10b_scope = json.loads(g10b_scope_path.read_text()) if g10b_scope_path.exists() else None
+    if clean30:
+        if (not clean30["all_run_git_dirty_false"]
+                or clean30["source_commit"] != "e1e477f94247dc8ee261400cfb2ec381e0f44fc3"
+                or clean30["design"]["total_paired_rounds"] != 30
+                or clean30["design"]["total_windows"] != 60
+                or clean30["design"]["distinct_proof_pools"] != 1
+                or clean30["complete_system_comparison"] or clean30["new_evm"]):
+            raise ValueError("Clean30 is a clean fixed-pool reproduction, not independent elections or full system comparison")
+        summary["classification"] = "clean-source-30-paired-round-fixed-pool-native-reproduction-G10-B-plan-only"
+        summary["g10_a_clean30_reproduction"] = clean30
+        summary["gates"]["G10_A_clean30_reproduction"] = clean30["status"]
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G10-A unmodified clean e1e477f, three sequential processes / 30 paired rounds / one proof pool",
+            "next_task": "G10-B1: implement two real individual-proof intake baselines with the same accepted-record binding; retime all four native routes in one pinned version. Generation/full lifecycle/Full Tally and route-specific memory remain pending; G9-P1 still blocks P2.",
+            "g10b_system_comparison_measured": False,
+        })
+    if g10b_scope:
+        if g10b_scope["status"] != "DESIGN_ONLY_NO_FIVE_BASELINE_SYSTEM_RUN" or g10b_scope["admission"]["G9_P2_allowed"]:
+            raise ValueError("G10-B comparison scope is design-only and cannot authorize P2")
+        summary["g10_b_comparison_scope"] = {"status": g10b_scope["status"], "report": str(g10b_scope_path), "route_count": len(g10b_scope["routes"]), "system_comparison_executed": False}
+        summary["gates"]["G10_B_five_route_system_comparison"] = "PARTIAL_PLAN_ONLY_NO_SYSTEM_COMPARISON_RUN"
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -1120,10 +1145,18 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if clean30:
+        clean_direct = clean30["pooled_routes"]["snarkpack_direct_fold"]["two_batch_flow_ms"]["median"]
+        clean_state = clean30["pooled_routes"]["snarkpack_state_proof"]["two_batch_flow_ms"]["median"]
+        lines.extend(["## Current work: clean e1e477f G10-A reproduced; G10-B scope only", "",
+                      f"- Unmodified clean source, three sequential processes, 30 paired rounds / 60 windows: two-B4 Direct Fold median {clean_direct:.6f} ms; State Proof median {clean_state:.6f} ms.",
+                      "- One fixed proof pool, not 30 independent elections. All slow windows retained; previous dirty pilot is separate. Shared process RSS is not per-route/prover memory.",
+                      "- Report: docs/G10_A_CLEAN30_REPRODUCTION.md; raw: experiments/g10_a_clean30_raw. Format/strict Clippy/six related tests and every before/after clean-source checkpoint passed.",
+                      "- G10-B: docs/G10_B_COMPARISON_PROTOCOL.md; five-route scope and historical generation-cost references only. No matched five-route system experiment or new Setup/Prove/EVM. G9-P1 remains BLOCKED; P2 not started.", ""])
     if g10a:
         direct = g10a["routes"]["snarkpack_direct_fold"]["two_batch_flow_ms"]["median"]
         state = g10a["routes"]["snarkpack_state_proof"]["two_batch_flow_ms"]["median"]
-        lines.extend(["## Current work: G10-A native matched comparison passed; G9-P1 v2 BLOCKED", "",
+        lines.extend(["## Previous component: G10-A initial native comparison and G9-P1 v2" if clean30 else "## Current work: G10-A native matched comparison passed; G9-P1 v2 BLOCKED", "",
                       f"- Same two W32 B4 batches, full receive/preflight/SnarkPack/checkpoint paths: Direct Fold median {direct:.6f} ms; State Proof median {state:.6f} ms.",
                       "- Ten alternating paired windows/route, eight full flows/window; fixed proofs, all samples retained. Not independent elections or full-system superiority.",
                       "- Both paths reach the same CT2; two altered-new-state negatives pass SnarkPack then reject atomically. No Setup/Prove/aggregate generation/EVM. State route is slower in this campaign.",

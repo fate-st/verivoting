@@ -1,0 +1,440 @@
+{
+  "aggregate_generation_count": 0,
+  "aggregation_ms": null,
+  "binary_sha256": "8d929e9870515ec78e973d2083194b07d3554bbff50c45fb336ad95e68ba3f0a",
+  "both_paths_final_ct2_equal": true,
+  "build": "release; locked; offline; CARGO_BUILD_JOBS=2; toolchain 1.99.1",
+  "calldata": null,
+  "communication_components": [
+    {
+      "aggregate_bytes": 8212,
+      "batch_index": 1,
+      "full_network_or_calldata_bytes": null,
+      "matrix_bytes": 3200,
+      "old_and_new_ct_bytes": 384,
+      "state_proof_bytes": 192,
+      "state_statement_bytes": 1184,
+      "state_statement_is_derived_not_added_to_matrix_and_CT": true
+    },
+    {
+      "aggregate_bytes": 8212,
+      "batch_index": 2,
+      "full_network_or_calldata_bytes": null,
+      "matrix_bytes": 3200,
+      "old_and_new_ct_bytes": 384,
+      "state_proof_bytes": 192,
+      "state_statement_bytes": 1184,
+      "state_statement_is_derived_not_added_to_matrix_and_CT": true
+    }
+  ],
+  "complete_privacy_proof": false,
+  "evm_executed": false,
+  "exact_snarkpack_evm_verified": false,
+  "final_state": [
+    {
+      "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+      "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99"
+    },
+    {
+      "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+      "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae"
+    },
+    {
+      "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+      "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72"
+    }
+  ],
+  "fixture_pins": [
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "ballot_vk_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+      "state_vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+      "verifier_srs_json_sha256": "b7e6a0f46c11c014d41e5cc7f0395e570ef3a0f2614b29aa6563183f588da595"
+    }
+  ],
+  "full_winner_only_or_full_tally_comparison": false,
+  "gas": null,
+  "generation_cost_status": "REUSED_NOT_RETIMED_NOT_ZERO",
+  "git_dirty": false,
+  "hardware": "Apple M4",
+  "hardware_memory_bytes": "34359738368",
+  "load_and_prepare_ms": 26.024083,
+  "method": {
+    "alternating_AB_BA": true,
+    "deterministic_research_rng_not_production_randomness": true,
+    "fixed_proof_pool_not_independent_elections": true,
+    "no_outlier_filter": true,
+    "offline_excluded": "file parsing/canonical decoding, VK preparation; setup/proving/aggregation not rerun",
+    "paired_rounds": 10,
+    "repetitions_per_window": 8,
+    "same_rng_seed_per_matched_flow": true,
+    "timed": "receiver allocation, preflight including exact root/context/NF/old-state checks, statement/transcript rebuilding, real SnarkPack, direct fold or real state verification, checkpoint writes, final CT2 equality",
+    "total_time_not_component_sum": true,
+    "warmup_flows_per_route": 2
+  },
+  "necessary_negatives": [
+    {
+      "case": "changed_first_new_state_candidate1_c1_before_acceptance",
+      "checkpoint_unchanged": true,
+      "frozen_short_circuit": false,
+      "rejection": "ProofVerification",
+      "route": "snarkpack_direct_fold",
+      "route_specific_check_rejected": true,
+      "snarkpack_verified": true
+    },
+    {
+      "case": "changed_first_new_state_candidate1_c1_before_acceptance",
+      "checkpoint_unchanged": true,
+      "frozen_short_circuit": false,
+      "rejection": "ProofVerification",
+      "route": "snarkpack_state_proof",
+      "route_specific_check_rejected": true,
+      "snarkpack_verified": true
+    }
+  ],
+  "parameters": {
+    "batch_size": 4,
+    "consecutive_batches": 2,
+    "distinct_ballots": 8,
+    "merkle_depth": 5,
+    "registered_weight": 32
+  },
+  "process_peak_rss_mib": 8.5625,
+  "proof_generation_count": 0,
+  "prove_ms": null,
+  "rayon_num_threads": "4",
+  "resource_budget": {
+    "rss_mib": 2048,
+    "runs": 1,
+    "wall_seconds": 120
+  },
+  "reused_snarkpack_proofs": 2,
+  "reused_state_proofs": 2,
+  "rss_scope": "shared cumulative process, including both paths; not per-route memory comparison",
+  "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+  "schema": "VV/G10-A/NATIVE-MATCHED-B4/v1",
+  "setup_count": 0,
+  "setup_ms": null,
+  "source_base_sha": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+  "sources": [
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g10a_native_fold.rs",
+      "sha256": "6e517343287b4e417bcea54b94c8c35e87c7400d6fd2c88878386199287fc1be"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g2e_receiver.rs",
+      "sha256": "7f748d4c7a172fdce109c5f89877f626a28d04815ef5510197de4e679397fced"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g1e_fold.rs",
+      "sha256": "ab03a54efb491b446007447c2491c1f282ca1cfea10f39417fb8e2a9ce34ce11"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/native_batch.rs",
+      "sha256": "9d570edc97e90443a45a1ced94f9f7f5a97d27f0bc24883a326a07503aed6648"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "20296a5f9d14efeb0de983866260addb5ba8414c1f1bc4d2dd728e6e833b8d40"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    }
+  ],
+  "started_utc": "2026-11-04T07:23:44Z",
+  "status": "PASS_MATCHED_TWO_B4_NATIVE_RECEIVE_PATHS",
+  "windows": [
+    {
+      "packing_ms_per_flow": 0.038510125000000006,
+      "per_batch_ms": 5.3864948125,
+      "per_vote_ms": 1.346623703125,
+      "position": 1,
+      "repetitions": 8,
+      "round": 1,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.008786625,
+      "snarkpack_ms_per_flow": 10.660057250000001,
+      "two_batch_flow_ms": 10.772989625,
+      "votes_per_second": 742.5979489885567,
+      "window_ms": 86.183917
+    },
+    {
+      "packing_ms_per_flow": 0.03852075,
+      "per_batch_ms": 7.859104187500001,
+      "per_vote_ms": 1.9647760468750002,
+      "position": 2,
+      "repetitions": 8,
+      "round": 1,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 4.999380375,
+      "snarkpack_ms_per_flow": 10.6149375,
+      "two_batch_flow_ms": 15.718208375000001,
+      "votes_per_second": 508.96385956583293,
+      "window_ms": 125.74566700000001
+    },
+    {
+      "packing_ms_per_flow": 0.03674475,
+      "per_batch_ms": 7.5634270625,
+      "per_vote_ms": 1.890856765625,
+      "position": 1,
+      "repetitions": 8,
+      "round": 2,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 4.70030725,
+      "snarkpack_ms_per_flow": 10.322203250000001,
+      "two_batch_flow_ms": 15.126854125,
+      "votes_per_second": 528.8607884952418,
+      "window_ms": 121.014833
+    },
+    {
+      "packing_ms_per_flow": 0.035354250000000004,
+      "per_batch_ms": 4.3056823125,
+      "per_vote_ms": 1.076420578125,
+      "position": 2,
+      "repetitions": 8,
+      "round": 2,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.010796999999999998,
+      "snarkpack_ms_per_flow": 8.500625,
+      "two_batch_flow_ms": 8.611364625,
+      "votes_per_second": 929.0049078603497,
+      "window_ms": 68.890917
+    },
+    {
+      "packing_ms_per_flow": 0.035921625000000006,
+      "per_batch_ms": 4.46989325,
+      "per_vote_ms": 1.1174733125,
+      "position": 1,
+      "repetitions": 8,
+      "round": 3,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.010119875,
+      "snarkpack_ms_per_flow": 8.8278225,
+      "two_batch_flow_ms": 8.9397865,
+      "votes_per_second": 894.8759570488623,
+      "window_ms": 71.518292
+    },
+    {
+      "packing_ms_per_flow": 0.035125250000000004,
+      "per_batch_ms": 6.6830599375,
+      "per_vote_ms": 1.670764984375,
+      "position": 2,
+      "repetitions": 8,
+      "round": 3,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 4.5805,
+      "snarkpack_ms_per_flow": 8.687687625,
+      "two_batch_flow_ms": 13.366119875,
+      "votes_per_second": 598.5282247066484,
+      "window_ms": 106.928959
+    },
+    {
+      "packing_ms_per_flow": 0.0376565,
+      "per_batch_ms": 6.9577551875,
+      "per_vote_ms": 1.739438796875,
+      "position": 1,
+      "repetitions": 8,
+      "round": 4,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 4.65260425,
+      "snarkpack_ms_per_flow": 9.159843874999998,
+      "two_batch_flow_ms": 13.915510375,
+      "votes_per_second": 574.8980658569628,
+      "window_ms": 111.324083
+    },
+    {
+      "packing_ms_per_flow": 0.036593499999999994,
+      "per_batch_ms": 4.467242187499999,
+      "per_vote_ms": 1.1168105468749998,
+      "position": 2,
+      "repetitions": 8,
+      "round": 4,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.010932125000000001,
+      "snarkpack_ms_per_flow": 8.82192175,
+      "two_batch_flow_ms": 8.934484374999998,
+      "votes_per_second": 895.4070167031884,
+      "window_ms": 71.47587499999999
+    },
+    {
+      "packing_ms_per_flow": 0.036552,
+      "per_batch_ms": 4.4400520624999995,
+      "per_vote_ms": 1.1100130156249999,
+      "position": 1,
+      "repetitions": 8,
+      "round": 5,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.010239749999999999,
+      "snarkpack_ms_per_flow": 8.769223875,
+      "two_batch_flow_ms": 8.880104124999999,
+      "votes_per_second": 900.8903372515355,
+      "window_ms": 71.04083299999999
+    },
+    {
+      "packing_ms_per_flow": 0.041233874999999996,
+      "per_batch_ms": 7.908250000000001,
+      "per_vote_ms": 1.9770625000000002,
+      "position": 2,
+      "repetitions": 8,
+      "round": 5,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 5.2036615,
+      "snarkpack_ms_per_flow": 10.500556999999999,
+      "two_batch_flow_ms": 15.816500000000001,
+      "votes_per_second": 505.80090411911607,
+      "window_ms": 126.53200000000001
+    },
+    {
+      "packing_ms_per_flow": 0.040062625,
+      "per_batch_ms": 7.994703125000001,
+      "per_vote_ms": 1.9986757812500002,
+      "position": 1,
+      "repetitions": 8,
+      "round": 6,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 5.050853999999999,
+      "snarkpack_ms_per_flow": 10.829323125,
+      "two_batch_flow_ms": 15.989406250000002,
+      "votes_per_second": 500.331274027139,
+      "window_ms": 127.91525000000001
+    },
+    {
+      "packing_ms_per_flow": 0.042765375,
+      "per_batch_ms": 5.4200990000000004,
+      "per_vote_ms": 1.3550247500000001,
+      "position": 2,
+      "repetitions": 8,
+      "round": 6,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.010083124999999998,
+      "snarkpack_ms_per_flow": 10.716556875000002,
+      "two_batch_flow_ms": 10.840198000000001,
+      "votes_per_second": 737.9939001114186,
+      "window_ms": 86.72158400000001
+    },
+    {
+      "packing_ms_per_flow": 0.040568,
+      "per_batch_ms": 5.3982604375,
+      "per_vote_ms": 1.349565109375,
+      "position": 1,
+      "repetitions": 8,
+      "round": 7,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.009078125,
+      "snarkpack_ms_per_flow": 10.675921749999999,
+      "two_batch_flow_ms": 10.796520875,
+      "votes_per_second": 740.9794407497035,
+      "window_ms": 86.372167
+    },
+    {
+      "packing_ms_per_flow": 0.03966675,
+      "per_batch_ms": 7.940231750000001,
+      "per_vote_ms": 1.9850579375000001,
+      "position": 2,
+      "repetitions": 8,
+      "round": 7,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 5.0972708749999995,
+      "snarkpack_ms_per_flow": 10.674875375000001,
+      "two_batch_flow_ms": 15.880463500000001,
+      "votes_per_second": 503.76363385111523,
+      "window_ms": 127.04370800000001
+    },
+    {
+      "packing_ms_per_flow": 0.0364895,
+      "per_batch_ms": 7.7217943125,
+      "per_vote_ms": 1.930448578125,
+      "position": 1,
+      "repetitions": 8,
+      "round": 8,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 4.705859375,
+      "snarkpack_ms_per_flow": 10.633474249999999,
+      "two_batch_flow_ms": 15.443588625,
+      "votes_per_second": 518.0143161188354,
+      "window_ms": 123.548709
+    },
+    {
+      "packing_ms_per_flow": 0.037323375000000006,
+      "per_batch_ms": 4.4637994999999995,
+      "per_vote_ms": 1.1159498749999999,
+      "position": 2,
+      "repetitions": 8,
+      "round": 8,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.011275749999999998,
+      "snarkpack_ms_per_flow": 8.813760125,
+      "two_batch_flow_ms": 8.927598999999999,
+      "votes_per_second": 896.0975957813519,
+      "window_ms": 71.42079199999999
+    },
+    {
+      "packing_ms_per_flow": 0.036989499999999995,
+      "per_batch_ms": 4.612445312499999,
+      "per_vote_ms": 1.1531113281249998,
+      "position": 1,
+      "repetitions": 8,
+      "round": 9,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.010375,
+      "snarkpack_ms_per_flow": 9.109082749999999,
+      "two_batch_flow_ms": 9.224890624999999,
+      "votes_per_second": 867.2189541542668,
+      "window_ms": 73.79912499999999
+    },
+    {
+      "packing_ms_per_flow": 0.038083250000000006,
+      "per_batch_ms": 7.4851614375,
+      "per_vote_ms": 1.871290359375,
+      "position": 2,
+      "repetitions": 8,
+      "round": 9,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 4.828593875,
+      "snarkpack_ms_per_flow": 10.030234499999999,
+      "two_batch_flow_ms": 14.970322875,
+      "votes_per_second": 534.3906117990124,
+      "window_ms": 119.762583
+    },
+    {
+      "packing_ms_per_flow": 0.036369875,
+      "per_batch_ms": 6.8927890624999995,
+      "per_vote_ms": 1.7231972656249999,
+      "position": 1,
+      "repetitions": 8,
+      "round": 10,
+      "route": "snarkpack_state_proof",
+      "route_specific_ms_per_flow": 4.58025525,
+      "snarkpack_ms_per_flow": 9.10292725,
+      "two_batch_flow_ms": 13.785578124999999,
+      "votes_per_second": 580.3166125831231,
+      "window_ms": 110.28462499999999
+    },
+    {
+      "packing_ms_per_flow": 0.03514025,
+      "per_batch_ms": 4.2871770625,
+      "per_vote_ms": 1.071794265625,
+      "position": 2,
+      "repetitions": 8,
+      "round": 10,
+      "route": "snarkpack_direct_fold",
+      "route_specific_ms_per_flow": 0.010645874999999997,
+      "snarkpack_ms_per_flow": 8.464833375,
+      "two_batch_flow_ms": 8.574354125,
+      "votes_per_second": 933.0148817477259,
+      "window_ms": 68.594833
+    }
+  ]
+}

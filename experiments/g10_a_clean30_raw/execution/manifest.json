@@ -1,0 +1,285 @@
+{
+  "schema": "VV/G10-A/CLEAN-REPRODUCTION/v1",
+  "source_commit": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+  "source_worktree": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+  "external_target_cache": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+  "cache_reused": true,
+  "started_utc": "2026-11-04T07:23:22.287Z",
+  "before": {
+    "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+    "status": ""
+  },
+  "driver_sha256": "5f5bf8d7e40d08916cde1a072c95b7d870bce08351a03ba672076becf7e2856e",
+  "commands": [
+    {
+      "name": "build",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g10a-native-fold"
+      ],
+      "cwd": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+      "env": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "started_utc": "2026-11-04T07:23:22.311Z",
+      "elapsed_ms": 13357.606875000001,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "execution/build.log",
+      "source_before": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      },
+      "source_after": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      }
+    },
+    {
+      "name": "fmt",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+      "env": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "started_utc": "2026-11-04T07:23:35.697Z",
+      "elapsed_ms": 365.11945800000103,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "execution/fmt.log",
+      "source_before": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      },
+      "source_after": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      }
+    },
+    {
+      "name": "clippy",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g10a-native-fold",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+      "env": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "started_utc": "2026-11-04T07:23:36.085Z",
+      "elapsed_ms": 1214.8230000000003,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "execution/clippy.log",
+      "source_before": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      },
+      "source_after": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      }
+    },
+    {
+      "name": "tests",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "test",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g10a-native-fold"
+      ],
+      "cwd": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+      "env": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "started_utc": "2026-11-04T07:23:37.322Z",
+      "elapsed_ms": 2491.7850419999995,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "execution/tests.log",
+      "source_before": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      },
+      "source_after": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      }
+    },
+    {
+      "name": "benchmark-1",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/friendly-g10a-native-fold",
+      "args": [
+        "--output",
+        "/private/tmp/vv-g10a-clean-20261104-FNOZrv/output/run-1.json"
+      ],
+      "cwd": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+      "env": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "started_utc": "2026-11-04T07:23:39.839Z",
+      "elapsed_ms": 2376.984124999999,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "execution/benchmark-1.log",
+      "source_before": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      },
+      "source_after": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      }
+    },
+    {
+      "name": "benchmark-2",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/friendly-g10a-native-fold",
+      "args": [
+        "--output",
+        "/private/tmp/vv-g10a-clean-20261104-FNOZrv/output/run-2.json"
+      ],
+      "cwd": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+      "env": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "started_utc": "2026-11-04T07:23:42.302Z",
+      "elapsed_ms": 2082.6950840000027,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "execution/benchmark-2.log",
+      "source_before": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      },
+      "source_after": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      }
+    },
+    {
+      "name": "benchmark-3",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/friendly-g10a-native-fold",
+      "args": [
+        "--output",
+        "/private/tmp/vv-g10a-clean-20261104-FNOZrv/output/run-3.json"
+      ],
+      "cwd": "/private/tmp/vv-g10a-clean-20261104-FNOZrv/source",
+      "env": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target",
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "started_utc": "2026-11-04T07:23:44.466Z",
+      "elapsed_ms": 2125.2658330000013,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "execution/benchmark-3.log",
+      "source_before": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      },
+      "source_after": {
+        "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+        "status": ""
+      }
+    }
+  ],
+  "runs": [
+    {
+      "process": 1,
+      "path": "run-1.json",
+      "sha256": "2bfbb911c4b3dc68a7471d200ad61cd13fa1f49866f747cb06b4d86c6c5d0d0d",
+      "source_clean": true,
+      "paired_rounds": 10,
+      "windows": 20
+    },
+    {
+      "process": 2,
+      "path": "run-2.json",
+      "sha256": "e11761c9efa614a6ea75aca5a6387d6337bbfeae429b0c534a94ad788afbd138",
+      "source_clean": true,
+      "paired_rounds": 10,
+      "windows": 20
+    },
+    {
+      "process": 3,
+      "path": "run-3.json",
+      "sha256": "1f478160cc3795425031305f579d5c292b48e381a63678007ff380e87f7cdaa2",
+      "source_clean": true,
+      "paired_rounds": 10,
+      "windows": 20
+    }
+  ],
+  "new_setup": 0,
+  "new_proofs": 0,
+  "new_aggregates": 0,
+  "new_evm": 0,
+  "binary_sha256": "8d929e9870515ec78e973d2083194b07d3554bbff50c45fb336ad95e68ba3f0a",
+  "after": {
+    "head": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+    "status": ""
+  },
+  "finished_utc": "2026-11-04T07:23:46.670Z",
+  "status": "PASS_CLEAN_E1E477F_THREE_PROCESSES_30_PAIRED_ROUNDS",
+  "paired_rounds": 30,
+  "raw_windows": 60,
+  "independent_proof_pools": 1
+}

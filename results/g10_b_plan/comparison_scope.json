@@ -1,0 +1,145 @@
+{
+  "schema": "VV/G10-B/COMPARISON-SCOPE/v1",
+  "status": "DESIGN_ONLY_NO_FIVE_BASELINE_SYSTEM_RUN",
+  "source_commit": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+  "not_a_cryptographic_protocol_manifest": true,
+  "frozen_inputs": [
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    }
+  ],
+  "params": {
+    "W": 32,
+    "D": 5,
+    "candidates": 3,
+    "distinct_ballots": 8,
+    "batches": 2,
+    "batch_size": 4,
+    "trustees": 5,
+    "threshold": 3,
+    "winning_rule": "highest-weight-smallest-id-on-tie"
+  },
+  "accepted_roots": [
+    "91f6c687850b799e58e413c6c9c3b67e1acb1f2cb8a03e2b4d88a3729a9a2134",
+    "4e3a7649aa9d7455509a0b052d85c6745b38cb1f2416045c08ffd25094837fcf"
+  ],
+  "state_vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+  "target_state_json_sha256": "da610cc805f8c734b2372097ea0e7b641253d2a52bf230947fc8249ee377922a",
+  "target_hash_scope": "artifact JSON-byte identity only, not a new protocol CT/CP hash",
+  "routes": [
+    {
+      "id": "legacy_individual",
+      "environment": "native_first_then_separate_EVM_implementation",
+      "unit": "8 authenticated individual ballot accept/update operations",
+      "verification": "8 real Groth16 proofs",
+      "fold": "one-ballot direct fold per acceptance",
+      "status": "NOT_IMPLEMENTED_MATCHED_ROUTE"
+    },
+    {
+      "id": "transaction_batch_individual",
+      "environment": "native_first_then_separate_EVM_implementation",
+      "unit": "2 authenticated B4 accept/update operations",
+      "verification": "8 real Groth16 proofs, no aggregate",
+      "fold": "B4 direct fold",
+      "status": "NOT_IMPLEMENTED_MATCHED_ROUTE"
+    },
+    {
+      "id": "snarkpack_direct_fold",
+      "environment": "native",
+      "unit": "2 authenticated B4 accept/update operations",
+      "verification": "2 real SnarkPack V2",
+      "fold": "B4 direct fold",
+      "status": "MEASURED_INTAKE_ONLY_CLEAN30"
+    },
+    {
+      "id": "snarkpack_state_proof",
+      "environment": "native",
+      "unit": "2 authenticated B4 accept/update operations",
+      "verification": "2 real SnarkPack V2 + 2 real state proofs",
+      "fold": "state-proof verification",
+      "status": "MEASURED_INTAKE_ONLY_CLEAN30"
+    },
+    {
+      "id": "g8_individual_fallback",
+      "environment": "local_Prague_EVM",
+      "unit": "certificate/init + 2 B4 + freeze + commitments + P3 + winner write-once",
+      "verification": "individual Groth16 fallback, NOT exact SnarkPack EVM",
+      "status": "ARCHIVED_DIFFERENT_LIFECYCLE_SCOPE_NOT_A_MATCHED_FIVE_ROUTE_RUN"
+    }
+  ],
+  "panels": {
+    "A": "Matched intake only: identical source ballots/order, root authorization, context, key, fresh nullifiers, CT0->CT1->CT2, same checks and state writes. Both legacy and transaction-batch routes must be real implementations, not renamed component timing.",
+    "B": "Complete lifecycle: add the same certificate/freeze/trustee/threshold/P3 or Full-Tally suffix to every eligible route. Never rank native milliseconds against EVM Gas as if same workload."
+  },
+  "required_generation_ledger": {
+    "ballot_setup": "OFFLINE_SEPARATE",
+    "ballot_proving": "PENDING_MATCHED_MEASUREMENT",
+    "aggregation": "PENDING_MATCHED_MEASUREMENT",
+    "state_setup": "OFFLINE_SEPARATE",
+    "state_proving": "PENDING_MATCHED_MEASUREMENT",
+    "P3_setup": "OFFLINE_SEPARATE",
+    "P3_proving": "PENDING_MATCHED_MEASUREMENT",
+    "new_values_in_this_round": false
+  },
+  "historical_references_only": {
+    "not_added_to_clean30_receive_times": true,
+    "not_current_generation_comparison": true,
+    "state_batch1": {
+      "source": {
+        "path": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+        "sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0"
+      },
+      "prove_ms": 15998.8315,
+      "setup_ms": 24941.019291,
+      "proof_sha256": "b85d693df1ef357fff8d55ae33c6294d8fe520b02f3d6bb312248c2528af92e9"
+    },
+    "state_batch2": {
+      "source": {
+        "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+        "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+      },
+      "prove_ms": 16917.430791000003,
+      "setup_rebuild_ms": 25314.304084
+    },
+    "winner_P3": {
+      "source": {
+        "path": "experiments/g6_raw/native_winner_only.json",
+        "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"
+      },
+      "prove_ms": 41178.248416,
+      "setup_rebuild_ms": 69021.922209
+    },
+    "fallback_EVM": {
+      "source": {
+        "path": "results/g8_e/lifecycle_costs.json",
+        "sha256": "4b32db983dc24ce56669745fd4f1f23cf5e7d925ac6b28de0d46858953a239ae"
+      },
+      "successful_gas_including_deployment": 65473608,
+      "successful_non_deployment_gas": 31390919,
+      "gas_is_archived_receipts_not_new_measurement": true
+    }
+  },
+  "admission": {
+    "G10_B_first_two_native_routes": "implement a shared accepted-record authentication contract before timing; correct per-ballot legacy writes vs B4 atomic writes, same CT2/NF set",
+    "exact_snarkpack_EVM": false,
+    "G9_P2_allowed": false,
+    "Full_Tally_vs_Winner_only": "same CT2/DKG/shares but isolated release branches; full-tally outputs must not contaminate winner-only public fixture",
+    "production_privacy_claim": false
+  },
+  "missing": [
+    "two real individual-proof intake routes",
+    "matched generation-time and route-specific verifier/prover memory",
+    "matched full lifecycle and Full-Tally comparison",
+    "exact SnarkPack EVM admission and fair chain comparison",
+    "independent proof pools and final clean-source full-system reproduction"
+  ]
+}

@@ -1,6 +1,24 @@
 # Next steps: native comparison and exact-verifier feasibility (2026-11-04)
 
-## Current checkpoint: P0 local acceptance + G10-A complete; P1 v2 not admitted to P2
+## Current checkpoint: clean30 reproduced; next only G10-B1 matched native baselines
+
+[G10-A干净复现](G10_A_CLEAN30_REPRODUCTION.md)完成：e1e477f未改、3进程/30配对轮/60窗口，
+全部git_dirty=false。保持一组固定证明池，不能声称独立选举/独立证明池统计；生成时间仍未重测。
+[G10-B比较规范](G10_B_COMPARISON_PROTOCOL.md)已经固定输入、认证/写入语义及计费口径，尚未执行五路线系统比较。
+
+下一项唯一开发任务G10-B1：
+
+1. 实现同一预先接受集合的真实逐票Groth16接收/逐票直接累计，和B4提交/逐票验证/直接累计。
+2. 两基线必须检查同一记录/上下文/位置/根/鲜活NF；逐票做8次实际写入，批次做2次原子写入，最终CT2一致。
+3. 与SnarkPack+Direct Fold/State Proof在同一新源码版本、相同环境内四路线统一计时，不能拼接不同入口数据。
+4. 将生成时间、验证者/证明者内存、通信与在线接收分开；未测填null，不把历史Setup/Prove和新验证时间相加。
+5. 先到现有两批B4，不扩B64+、不重跑G1/G2/G4/G8或冻结Miller，也不自动做Full Tally/P3重证明。
+
+之后再单独做同CT2/DKG/份额的Full Tally vs Winner-only；隔离发布分支，公开数据大小不是隐私定理。
+G9-P1仍BLOCKED，资源/语义未准入前不启动P2。链上五路线、分布式私密交付、T4/T5和最终系统复现仍待完成。
+按用户计划，待G10-B匹配数据完成后才统一写入论文；本轮不改原P0论文。
+
+## Previous component: P0 local acceptance + initial G10-A; P1 v2 not admitted to P2
 
 已完成[P0本地核查](P0_LOCAL_ACCEPTANCE.md)及[G10-A完整原生接收对比](G10_A_NATIVE_DIRECT_FOLD.md)。
 只比较已有两批B4，不扩状态电路/规模、不重跑G1-E。State Proof在本机本轮更慢，不能预设效率收益。

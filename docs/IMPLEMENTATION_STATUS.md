@@ -1,6 +1,21 @@
 # Implementation and claim boundary
 
-## Current work: G10-A matched native receive paths; G9-P1 v2 remains BLOCKED
+## Current work: G10-A clean e1e477f reproduction passed; G10-B design-only
+
+[干净30轮](G10_A_CLEAN30_REPRODUCTION.md)：原e1e477f入口未改，外部日志/结果、外部编译缓存，
+三个顺序进程每次10轮，共30配对轮/60窗口，源HEAD/运行前后status和raw git_dirty=false均核对。
+完整两批B4接收中位数Direct Fold 9.082339 ms、State Proof 13.898156 ms；30对中State均更慢。
+每窗口8次流程，但仍只有一组固定证明池/8张不同选票；报告进程分组统计，不当作独立选举或完整系统优势。
+格式、严格Clippy、6项相关测试通过；每进程两类必要错误状态拒绝和相同CT2均通过。
+旧dirty的10轮独立保留，不混入新统计；未重测的生成时间为null，进程共享RSS不是逐路线内存。
+
+[G10-B比较规范](G10_B_COMPARISON_PROTOCOL.md)及results/g10_b_plan/comparison_scope.json只有设计：
+两个逐票原生接收器/匹配生成成本/完整生命周期/Full Tally比较仍未实现或未重测。
+不把原生毫秒和完整G8备用生命周期Gas直接排名；历史State/P3生成成本只带来源参考，不加到新接收时间。
+下一项G10-B1仅实现两个真实逐票基线，并在同一新固定版本内重测四路线；不重复旧规模实验。
+本轮没有新Setup/Prove/聚合生成/EVM或论文正文修改；G9-P1仍BLOCKED，P2/P3未启动。
+
+## Previous component: initial G10-A matched native paths; G9-P1 v2 BLOCKED
 
 [G10-A](G10_A_NATIVE_DIRECT_FOLD.md)：同一W32两批B4，复用原aggregate/state proof和VK/SRS，
 相同原Receiver实际执行共同检查、真实SnarkPack和checkpoint写入。Direct Fold/State Proof两批流程

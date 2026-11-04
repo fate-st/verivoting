@@ -1,5 +1,5 @@
 {
-  "classification": "matched-native-B4-Direct-Fold-State-Proof-comparison-G9-P1-blocked",
+  "classification": "clean-source-30-paired-round-fixed-pool-native-reproduction-G10-B-plan-only",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -103,7 +103,9 @@
     "P1_staged_exact_design": "BLOCKED_P1_RESOURCE_AND_EQUIVALENCE_GATES",
     "G10_A_native_direct_fold": "PASS_MATCHED_TWO_B4_NATIVE_RECEIVE_PATHS",
     "G9_P1_v2_resource_equivalence": "BLOCKED_NO_COMPLETE_GAS_AND_EQUIVALENCE_BOUND",
-    "P0_local_visual_review": "PASS_LOCAL_EVIDENCE_AND_VISUAL_REVIEW_SCOPE"
+    "P0_local_visual_review": "PASS_LOCAL_EVIDENCE_AND_VISUAL_REVIEW_SCOPE",
+    "G10_A_clean30_reproduction": "PASS_CLEAN_E1E477F_THREE_PROCESSES_30_PAIRED_ROUNDS",
+    "G10_B_five_route_system_comparison": "PARTIAL_PLAN_ONLY_NO_SYSTEM_COMPARISON_RUN"
   },
   "dkg": {
     "classification": "real-group-single-process-protocol-simulation",
@@ -6236,14 +6238,14 @@
     "current_evaluation_suite_state_and_p3": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT",
     "current_evaluation_suite_p3": "PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2",
-    "next_task": "G9-P1: resolve typed GT target/sentinel semantics, full micro-program invariants and complete phase/total resource bounds before P2. Native comparison is available; no B64+, frozen Miller rerun or EVM claim.",
+    "next_task": "G10-B1: implement two real individual-proof intake baselines with the same accepted-record binding; retime all four native routes in one pinned version. Generation/full lifecycle/Full Tally and route-specific memory remain pending; G9-P1 still blocks P2.",
     "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS",
     "complete_native_flow": true,
     "complete_chain_settlement": false,
     "current_p3_vk_evm_verified": true,
     "active_gate": "G8",
     "active_gate_status": "PARTIAL",
-    "latest_completed_step": "G10-A real matched two-B4 native receive paths; P0 local visual acceptance",
+    "latest_completed_step": "G10-A unmodified clean e1e477f, three sequential processes / 30 paired rounds / one proof pool",
     "receiver_and_freeze_evm_measured": true,
     "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
     "certificate_authentication_component_evm_measured": true,
@@ -6254,7 +6256,8 @@
     "certificate_and_decryption_roles_separated": true,
     "winner_write_once_integrated": true,
     "local_fallback_lifecycle_costs_archived": true,
-    "exact_snarkpack_evm_verified": false
+    "exact_snarkpack_evm_verified": false,
+    "g10b_system_comparison_measured": false
   },
   "g2_a_state_transition_r1cs": {
     "gate": "G2-A",
@@ -21536,5 +21539,537 @@
       "pages": 67
     },
     "report": "results/p0_visual_review/review.json"
+  },
+  "g10_a_clean30_reproduction": {
+    "schema": "VV/G10-A/CLEAN30-SUMMARY/v1",
+    "status": "PASS_CLEAN_E1E477F_THREE_PROCESSES_30_PAIRED_ROUNDS",
+    "source_commit": "e1e477f94247dc8ee261400cfb2ec381e0f44fc3",
+    "all_run_git_dirty_false": true,
+    "driver_sha256": "5f5bf8d7e40d08916cde1a072c95b7d870bce08351a03ba672076becf7e2856e",
+    "binary_sha256": "8d929e9870515ec78e973d2083194b07d3554bbff50c45fb336ad95e68ba3f0a",
+    "source_manifest": {
+      "path": "experiments/g10_a_clean30_raw/execution/manifest.json",
+      "sha256": "f8c18353e57373fcaacd47a6007c4e3d2a7fe08dba0019964a7e769c0511e09f"
+    },
+    "raw_runs": [
+      {
+        "process": 1,
+        "path": "experiments/g10_a_clean30_raw/run-1.json",
+        "sha256": "2bfbb911c4b3dc68a7471d200ad61cd13fa1f49866f747cb06b4d86c6c5d0d0d",
+        "source_clean": true,
+        "paired_rounds": 10,
+        "windows": 20
+      },
+      {
+        "process": 2,
+        "path": "experiments/g10_a_clean30_raw/run-2.json",
+        "sha256": "e11761c9efa614a6ea75aca5a6387d6337bbfeae429b0c534a94ad788afbd138",
+        "source_clean": true,
+        "paired_rounds": 10,
+        "windows": 20
+      },
+      {
+        "process": 3,
+        "path": "experiments/g10_a_clean30_raw/run-3.json",
+        "sha256": "1f478160cc3795425031305f579d5c292b48e381a63678007ff380e87f7cdaa2",
+        "source_clean": true,
+        "paired_rounds": 10,
+        "windows": 20
+      }
+    ],
+    "design": {
+      "independent_processes": 3,
+      "paired_rounds_per_process": 10,
+      "total_paired_rounds": 30,
+      "total_windows": 60,
+      "repetitions_per_window": 8,
+      "total_timed_two_batch_flows": 480,
+      "distinct_proof_pools": 1,
+      "distinct_ballots": 8,
+      "independent_elections": 1,
+      "one_process_is_not_one_independent_election": true,
+      "all_samples_retained": true,
+      "old_dirty_pilot_not_pooled": true,
+      "window_clustering_by_process": true
+    },
+    "pooled_routes": {
+      "snarkpack_direct_fold": {
+        "two_batch_flow_ms": {
+          "n": 30,
+          "median": 9.082338562499999,
+          "q1": 8.67227346875,
+          "q3": 10.81511853125,
+          "min": 8.480802125,
+          "max": 11.087651000000001
+        },
+        "per_vote_ms": {
+          "n": 30,
+          "median": 1.1352923203124998,
+          "q1": 1.08403418359375,
+          "q3": 1.35188981640625,
+          "min": 1.060100265625,
+          "max": 1.3859563750000001
+        },
+        "votes_per_second": {
+          "n": 30,
+          "median": 881.0474556015646,
+          "q1": 739.7059839262607,
+          "q3": 922.4833317394327,
+          "min": 721.5234317891138,
+          "max": 943.306998805847
+        },
+        "packing_ms_per_flow": {
+          "n": 30,
+          "median": 0.03696893749999999,
+          "q1": 0.035994781249999996,
+          "q3": 0.03810021875,
+          "min": 0.03514025,
+          "max": 0.042765375
+        },
+        "snarkpack_ms_per_flow": {
+          "n": 30,
+          "median": 8.968452625,
+          "q1": 8.558989375000001,
+          "q3": 10.69933571875,
+          "min": 8.370708500000001,
+          "max": 10.932609500000002
+        },
+        "route_specific_ms_per_flow": {
+          "n": 30,
+          "median": 0.0101015,
+          "q1": 0.0094089375,
+          "q3": 0.01079175,
+          "min": 0.008786625,
+          "max": 0.019822875
+        }
+      },
+      "snarkpack_state_proof": {
+        "two_batch_flow_ms": {
+          "n": 30,
+          "median": 13.8981561875,
+          "q1": 13.20994140625,
+          "q3": 15.716096406250001,
+          "min": 12.929802,
+          "max": 16.273322874999998
+        },
+        "per_vote_ms": {
+          "n": 30,
+          "median": 1.7372695234375,
+          "q1": 1.65124267578125,
+          "q3": 1.9645120507812501,
+          "min": 1.61622525,
+          "max": 2.0341653593749998
+        },
+        "votes_per_second": {
+          "n": 30,
+          "median": 575.6168203517153,
+          "q1": 509.03228300018657,
+          "q3": 605.6077989554616,
+          "min": 491.6021184763718,
+          "max": 618.7256386447372
+        },
+        "packing_ms_per_flow": {
+          "n": 30,
+          "median": 0.036906,
+          "q1": 0.036113343750000006,
+          "q3": 0.038022125,
+          "min": 0.035125250000000004,
+          "max": 0.041233874999999996
+        },
+        "snarkpack_ms_per_flow": {
+          "n": 30,
+          "median": 9.1735495,
+          "q1": 8.58975378125,
+          "q3": 10.664525093750001,
+          "min": 8.453672000000001,
+          "max": 11.265984374999999
+        },
+        "route_specific_ms_per_flow": {
+          "n": 30,
+          "median": 4.633033875000001,
+          "q1": 4.47240475,
+          "q3": 4.795614375,
+          "min": 4.338849125,
+          "max": 5.2036615
+        }
+      }
+    },
+    "paired_state_over_direct": {
+      "n": 30,
+      "median": 1.4890215414967205,
+      "q1": 1.4557146378855794,
+      "q3": 1.53856720345756,
+      "min": 1.1984039157617785,
+      "max": 1.7811165023923639
+    },
+    "state_slower_window_pairs": 30,
+    "per_process": [
+      {
+        "process": 1,
+        "routes": {
+          "snarkpack_direct_fold": {
+            "two_batch_flow_ms": {
+              "n": 10,
+              "median": 10.573377625,
+              "q1": 8.67227346875,
+              "q3": 10.96450909375,
+              "min": 8.596791625000002,
+              "max": 11.087651000000001
+            },
+            "per_vote_ms": {
+              "n": 10,
+              "median": 1.321672203125,
+              "q1": 1.08403418359375,
+              "q3": 1.37056363671875,
+              "min": 1.0745989531250002,
+              "max": 1.3859563750000001
+            },
+            "votes_per_second": {
+              "n": 10,
+              "median": 756.6646406637642,
+              "q1": 729.6675455723856,
+              "q3": 922.4833317394327,
+              "min": 721.5234317891138,
+              "max": 930.5797265965485
+            },
+            "packing_ms_per_flow": {
+              "n": 10,
+              "median": 0.0378151875,
+              "q1": 0.036536625,
+              "q3": 0.03829203125,
+              "min": 0.035848875,
+              "max": 0.0425105
+            },
+            "snarkpack_ms_per_flow": {
+              "n": 10,
+              "median": 10.4593569375,
+              "q1": 8.558989375000001,
+              "q3": 10.834507906250002,
+              "min": 8.484521125,
+              "max": 10.932609500000002
+            },
+            "route_specific_ms_per_flow": {
+              "n": 10,
+              "median": 0.010210999999999998,
+              "q1": 0.009419375,
+              "q3": 0.011988124999999999,
+              "min": 0.008958125,
+              "max": 0.019822875
+            }
+          },
+          "snarkpack_state_proof": {
+            "two_batch_flow_ms": {
+              "n": 10,
+              "median": 13.184036437500001,
+              "q1": 13.05484509375,
+              "q3": 13.942645875,
+              "min": 12.94146875,
+              "max": 16.273322874999998
+            },
+            "per_vote_ms": {
+              "n": 10,
+              "median": 1.6480045546875002,
+              "q1": 1.63185563671875,
+              "q3": 1.742830734375,
+              "min": 1.61768359375,
+              "max": 2.0341653593749998
+            },
+            "votes_per_second": {
+              "n": 10,
+              "median": 606.8318001846598,
+              "q1": 573.7829600579048,
+              "q3": 612.7994196768415,
+              "min": 491.6021184763718,
+              "max": 618.1678567202814
+            },
+            "packing_ms_per_flow": {
+              "n": 10,
+              "median": 0.036322812499999996,
+              "q1": 0.036080718750000004,
+              "q3": 0.037239468750000004,
+              "min": 0.036010375000000004,
+              "max": 0.03902575
+            },
+            "snarkpack_ms_per_flow": {
+              "n": 10,
+              "median": 8.607921687500001,
+              "q1": 8.50638815625,
+              "q3": 9.2801653125,
+              "min": 8.455983999999999,
+              "max": 11.265984374999999
+            },
+            "route_specific_ms_per_flow": {
+              "n": 10,
+              "median": 4.460361875,
+              "q1": 4.41616803125,
+              "q3": 4.6566315312499995,
+              "min": 4.338849125,
+              "max": 4.897755
+            }
+          }
+        },
+        "peak_rss_mib": 8.828125,
+        "started_utc": "2026-11-04T07:23:40Z"
+      },
+      {
+        "process": 2,
+        "routes": {
+          "snarkpack_direct_fold": {
+            "two_batch_flow_ms": {
+              "n": 10,
+              "median": 9.3042890625,
+              "q1": 8.64563028125,
+              "q3": 10.75785159375,
+              "min": 8.480802125,
+              "max": 11.034078124999999
+            },
+            "per_vote_ms": {
+              "n": 10,
+              "median": 1.1630361328125,
+              "q1": 1.08070378515625,
+              "q3": 1.34473144921875,
+              "min": 1.060100265625,
+              "max": 1.3792597656249999
+            },
+            "votes_per_second": {
+              "n": 10,
+              "median": 863.0657792395261,
+              "q1": 743.7214853739853,
+              "q3": 925.340964628266,
+              "min": 725.0265866682905,
+              "max": 943.306998805847
+            },
+            "packing_ms_per_flow": {
+              "n": 10,
+              "median": 0.036804812500000006,
+              "q1": 0.03565634375,
+              "q3": 0.03755728125,
+              "min": 0.03523450000000001,
+              "max": 0.038479
+            },
+            "snarkpack_ms_per_flow": {
+              "n": 10,
+              "median": 9.1893125,
+              "q1": 8.5358088125,
+              "q3": 10.646076875,
+              "min": 8.370708500000001,
+              "max": 10.921015749999999
+            },
+            "route_specific_ms_per_flow": {
+              "n": 10,
+              "median": 0.009578125,
+              "q1": 0.009319125000000001,
+              "q3": 0.01047759375,
+              "min": 0.00917175,
+              "max": 0.011005499999999998
+            }
+          },
+          "snarkpack_state_proof": {
+            "two_batch_flow_ms": {
+              "n": 10,
+              "median": 13.5404270625,
+              "q1": 13.20994140625,
+              "q3": 15.6790873125,
+              "min": 12.929802,
+              "max": 15.757963499999999
+            },
+            "per_vote_ms": {
+              "n": 10,
+              "median": 1.6925533828125,
+              "q1": 1.65124267578125,
+              "q3": 1.9598859140625,
+              "min": 1.61622525,
+              "max": 1.9697454374999999
+            },
+            "votes_per_second": {
+              "n": 10,
+              "median": 591.0446205013852,
+              "q1": 510.23966217998026,
+              "q3": 605.6077989554616,
+              "min": 507.6798153517744,
+              "max": 618.7256386447372
+            },
+            "packing_ms_per_flow": {
+              "n": 10,
+              "median": 0.0368909375,
+              "q1": 0.035869937500000004,
+              "q3": 0.03762996875,
+              "min": 0.035432375,
+              "max": 0.038057249999999994
+            },
+            "snarkpack_ms_per_flow": {
+              "n": 10,
+              "median": 8.8835753125,
+              "q1": 8.57907003125,
+              "q3": 10.783621125,
+              "min": 8.453672000000001,
+              "max": 10.853203125
+            },
+            "route_specific_ms_per_flow": {
+              "n": 10,
+              "median": 4.576453062500001,
+              "q1": 4.497375999999999,
+              "q3": 4.780399843750001,
+              "min": 4.377276125,
+              "max": 4.799349
+            }
+          }
+        },
+        "peak_rss_mib": 8.734375,
+        "started_utc": "2026-11-04T07:23:42Z"
+      },
+      {
+        "process": 3,
+        "routes": {
+          "snarkpack_direct_fold": {
+            "two_batch_flow_ms": {
+              "n": 10,
+              "median": 8.9371354375,
+              "q1": 8.891977843749999,
+              "q3": 10.385964874999999,
+              "min": 8.574354125,
+              "max": 10.840198000000001
+            },
+            "per_vote_ms": {
+              "n": 10,
+              "median": 1.1171419296875,
+              "q1": 1.1114972304687498,
+              "q3": 1.2982456093749999,
+              "min": 1.071794265625,
+              "max": 1.3550247500000001
+            },
+            "votes_per_second": {
+              "n": 10,
+              "median": 895.1414868760254,
+              "q1": 773.7532002799842,
+              "q3": 899.6921518839896,
+              "min": 737.9939001114186,
+              "max": 933.0148817477259
+            },
+            "packing_ms_per_flow": {
+              "n": 10,
+              "median": 0.03679149999999999,
+              "q1": 0.03607921875,
+              "q3": 0.0382134375,
+              "min": 0.03514025,
+              "max": 0.042765375
+            },
+            "snarkpack_ms_per_flow": {
+              "n": 10,
+              "median": 8.824872124999999,
+              "q1": 8.7803579375,
+              "q3": 10.272313625,
+              "min": 8.464833375,
+              "max": 10.716556875000002
+            },
+            "route_specific_ms_per_flow": {
+              "n": 10,
+              "median": 0.010307375,
+              "q1": 0.010092312499999999,
+              "q3": 0.010759218749999997,
+              "min": 0.008786625,
+              "max": 0.011275749999999998
+            }
+          },
+          "snarkpack_state_proof": {
+            "two_batch_flow_ms": {
+              "n": 10,
+              "median": 15.285221374999999,
+              "q1": 14.1792135,
+              "q3": 15.791927093750001,
+              "min": 13.366119875,
+              "max": 15.989406250000002
+            },
+            "per_vote_ms": {
+              "n": 10,
+              "median": 1.9106526718749999,
+              "q1": 1.7724016875,
+              "q3": 1.9739908867187501,
+              "min": 1.670764984375,
+              "max": 1.9986757812500002
+            },
+            "votes_per_second": {
+              "n": 10,
+              "median": 523.4375523070386,
+              "q1": 506.5916429807953,
+              "q3": 564.7712023424752,
+              "min": 500.331274027139,
+              "max": 598.5282247066484
+            },
+            "packing_ms_per_flow": {
+              "n": 10,
+              "median": 0.037869875000000004,
+              "q1": 0.036553312500000004,
+              "q3": 0.03938025,
+              "min": 0.035125250000000004,
+              "max": 0.041233874999999996
+            },
+            "snarkpack_ms_per_flow": {
+              "n": 10,
+              "median": 10.411380125,
+              "q1": 9.377441531249998,
+              "q3": 10.6288400625,
+              "min": 8.687687625,
+              "max": 10.829323125
+            },
+            "route_specific_ms_per_flow": {
+              "n": 10,
+              "median": 4.767226625,
+              "q1": 4.66453,
+              "q3": 5.037985593749999,
+              "min": 4.58025525,
+              "max": 5.2036615
+            }
+          }
+        },
+        "peak_rss_mib": 8.5625,
+        "started_utc": "2026-11-04T07:23:44Z"
+      }
+    ],
+    "memory_scope": "shared cumulative process including both routes/materials; no per-route RSS or prover-memory claim",
+    "fixed_proof_sizes": [
+      {
+        "aggregate_bytes": 8212,
+        "batch_index": 1,
+        "full_network_or_calldata_bytes": null,
+        "matrix_bytes": 3200,
+        "old_and_new_ct_bytes": 384,
+        "state_proof_bytes": 192,
+        "state_statement_bytes": 1184,
+        "state_statement_is_derived_not_added_to_matrix_and_CT": true
+      },
+      {
+        "aggregate_bytes": 8212,
+        "batch_index": 2,
+        "full_network_or_calldata_bytes": null,
+        "matrix_bytes": 3200,
+        "old_and_new_ct_bytes": 384,
+        "state_proof_bytes": 192,
+        "state_statement_bytes": 1184,
+        "state_statement_is_derived_not_added_to_matrix_and_CT": true
+      }
+    ],
+    "setup_ms": null,
+    "prove_ms": null,
+    "aggregation_ms": null,
+    "generation_cost_status": "REUSED_NOT_RETIMED_NOT_ZERO",
+    "new_setup": 0,
+    "new_proofs": 0,
+    "new_aggregates": 0,
+    "new_evm": 0,
+    "gas": null,
+    "calldata": null,
+    "two_required_negative_cases_per_process": true,
+    "negative_executions": 6,
+    "matched_final_ct2": true,
+    "complete_system_comparison": false,
+    "complete_privacy_proof": false,
+    "exact_snarkpack_evm_verified": false
+  },
+  "g10_b_comparison_scope": {
+    "status": "DESIGN_ONLY_NO_FIVE_BASELINE_SYSTEM_RUN",
+    "report": "results/g10_b_plan/comparison_scope.json",
+    "route_count": 5,
+    "system_comparison_executed": false
   }
 }
