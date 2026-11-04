@@ -8,7 +8,17 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: P0 evidence sync; P1 design/resource gate still BLOCKED
+### Current work: G10-A native Direct Fold comparison; G9-P1 v2 still BLOCKED
+
+[G10-A](docs/G10_A_NATIVE_DIRECT_FOLD.md)真实测量相同W32两批B4的完整原生接收路径：
+Direct Fold中位数9.206768 ms，State Proof 15.559338 ms。10个配对窗口/路线、每窗口8次流程；
+两个错误newState均在SnarkPack通过后原子拒绝。状态证明在本轮更慢，不宣称系统效率优势。
+[P1 v2](docs/G9_P1_FEASIBILITY_V2.md)给出十条等式的B2专门化、GT语义探针和有限存储/续算设计；
+总Gas/交易/时间及原语实现仍未闭合，不启动P2。原G8-D和所有历史raw/Manifest均不变。
+[P0本地验收](docs/P0_LOCAL_ACCEPTANCE.md)完成67页PDF总览及关键页放大，论文SHA与同步快照一致。
+本轮仅新增原生测量，没有新Setup/Prove/聚合生成或EVM交易；Gas/calldata仍为null。
+
+### Previous component: P0 evidence sync; initial P1 design/resource gate BLOCKED
 
 P0同步已有G1-E/G2-E/G4-D/G6/G8-D/E到论文摘要、实验、讨论和结论，未改Introduction或形式化定义。
 [P0报告](docs/P0_PAPER_EVIDENCE_SYNC.md)及9组JSON证据映射/论文快照已归档。

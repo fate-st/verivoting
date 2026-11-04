@@ -1,0 +1,18 @@
+   Compiling vv-friendly-dkg v0.2.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/crates/vv-friendly-dkg)
+error: recursion limit reached while expanding `$crate::json_internal!`
+   --> crates/vv-friendly-dkg/src/bin/g10a_native_fold.rs:437:18
+    |
+437 |       let report = json!({"schema":"VV/G10-A/NATIVE-MATCHED-B4/v1","status":"PASS_MATCHED_TWO_B4_NATIVE_RECEIVE_PATHS",
+    |  __________________^
+438 | |         "started_utc":started_utc,"source_base_sha":metadata("git",&["rev-parse","HEAD"] )?,
+439 | |         "git_dirty":!metadata("git",&["status","--porcelain"] )?.is_empty(),"sources":sources,"fixture_pins":data.pins,
+440 | |         "binary_sha256":hex(&sha256(&fs::read(exe)?)),"rustc":metadata("rustc",&["+1.99.1","-Vv"] )?,
+...   |
+455 | |         "full_winner_only_or_full_tally_comparison":false,"exact_snarkpack_evm_verified":false,"complete_privacy_proof":false,
+456 | |         "resource_budget":{"wall_seconds":120,"rss_mib":2048,"runs":1}});
+    | |________________________________________________________________________^
+    |
+    = help: consider increasing the recursion limit by adding a `#![recursion_limit = "256"]` attribute to your crate (`friendly_g10a_native_fold`)
+    = note: this error originates in the macro `$crate::json_internal` which comes from the expansion of the macro `json` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: could not compile `vv-friendly-dkg` (bin "friendly-g10a-native-fold") due to 1 previous error

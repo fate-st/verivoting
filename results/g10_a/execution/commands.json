@@ -1,0 +1,244 @@
+{
+  "commands": [
+    {
+      "name": "build",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g10a-native-fold"
+      ],
+      "started_utc": "2026-11-04T06:19:12.827Z",
+      "elapsed_ms": 717.269667,
+      "exit_code": 101,
+      "signal": null,
+      "error": null,
+      "log": "build-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "build",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g10a-native-fold"
+      ],
+      "started_utc": "2026-11-04T06:19:50.546Z",
+      "elapsed_ms": 4352.574417,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "build-2.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g10a-native-fold",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "started_utc": "2026-11-04T06:21:00.723Z",
+      "elapsed_ms": 1404.090958,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "clippy-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "test",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "friendly-g10a-native-fold"
+      ],
+      "started_utc": "2026-11-04T06:21:02.328Z",
+      "elapsed_ms": 1721.4802920000002,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "tests-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "benchmark",
+      "argv": [
+        "target/release/friendly-g10a-native-fold"
+      ],
+      "started_utc": "2026-11-04T06:22:30.771Z",
+      "elapsed_ms": 3532.897583,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "benchmark-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": "4"
+      }
+    },
+    {
+      "name": "report",
+      "argv": [
+        "node",
+        "scripts/g10a_report.mjs",
+        "--write"
+      ],
+      "started_utc": "2026-11-04T06:25:22.045Z",
+      "elapsed_ms": 35.172,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "report-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": null,
+        "CARGO_PROFILE_RELEASE_STRIP": null,
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "p1-review",
+      "argv": [
+        "node",
+        "scripts/g9p1_feasibility.mjs",
+        "--write"
+      ],
+      "started_utc": "2026-11-04T06:26:55.378Z",
+      "elapsed_ms": 163.174958,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "p1-review-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": null,
+        "CARGO_PROFILE_RELEASE_STRIP": null,
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "summary",
+      "argv": [
+        "python3",
+        "scripts/summarize.py"
+      ],
+      "started_utc": "2026-11-04T06:34:12.719Z",
+      "elapsed_ms": 157.982959,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "summary-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": null,
+        "CARGO_PROFILE_RELEASE_STRIP": null,
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "fmt",
+      "argv": [
+        "cargo",
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "started_utc": "2026-11-04T06:35:51.638Z",
+      "elapsed_ms": 586.5345,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "fmt-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": "2",
+        "CARGO_PROFILE_RELEASE_STRIP": "none",
+        "RAYON_NUM_THREADS": null
+      }
+    },
+    {
+      "name": "acceptance",
+      "argv": [
+        "node",
+        "scripts/g10a_check.mjs"
+      ],
+      "started_utc": "2026-11-04T06:35:52.303Z",
+      "elapsed_ms": 937.396792,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "acceptance-1.log",
+      "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+      "git_dirty": true,
+      "env": {
+        "CARGO_BUILD_JOBS": null,
+        "CARGO_PROFILE_RELEASE_STRIP": null,
+        "RAYON_NUM_THREADS": null
+      }
+    }
+  ]
+}

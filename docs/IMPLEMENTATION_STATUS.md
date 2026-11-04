@@ -1,6 +1,21 @@
 # Implementation and claim boundary
 
-## Current work: P0 evidence sync; P1 design/resource gate still BLOCKED
+## Current work: G10-A matched native receive paths; G9-P1 v2 remains BLOCKED
+
+[G10-A](G10_A_NATIVE_DIRECT_FOLD.md)：同一W32两批B4，复用原aggregate/state proof和VK/SRS，
+相同原Receiver实际执行共同检查、真实SnarkPack和checkpoint写入。Direct Fold/State Proof两批流程
+中位数9.206768/15.559338 ms，10配对轮、每窗口8次；全部20窗口保留，不是独立选举。
+两路径CT2一致；两个错误newState负例先通过SnarkPack，再分别被累计/Groth16拒绝，NF/CT不变。
+只运行新入口相关严格Clippy/6项测试和一次真实Release比较；未重跑历史大规模实验。
+生成成本为REUSED_NOT_RETIMED/null，而非零。没有EVM/完整五基线/Full Tally比较或完整隐私证明。
+
+[G9-P1 v2](G9_P1_FEASIBILITY_V2.md)新增十等式B2代数对应及独立GT单位元探针。
+generator特殊标记不等于GT单位元，不能全局数值替换；逐条关系与随机accumulator逐位接受集合也不同。
+有限存储提案1290槽和指数子程序操作上界不是实测Gas；完整实现/等价域/FS中止语义和总预算仍受阻，P2不准入。
+[P0本地验收](P0_LOCAL_ACCEPTANCE.md)对照原始9组证据和未改论文SHA，67页总览/关键实验页放大，无观察到裁切/重叠。
+原P0/P1报告、旧raw/Manifest/合约/密码学库都不改；只新增入口/Cargo注册和当前汇总。
+
+## Previous component: P0 evidence sync; initial P1 design/resource gate BLOCKED
 
 P0同步已有G1-E/G2-E/G4-D/G6/G8-D/E到论文摘要、实验、讨论和结论，未改Introduction或形式化定义。
 [P0报告](P0_PAPER_EVIDENCE_SYNC.md)及9组JSON证据映射/论文快照已归档。

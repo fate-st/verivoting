@@ -1,6 +1,20 @@
-# Next steps: P0 evidence synchronization and P1 exact-verifier design (2026-11-03)
+# Next steps: native comparison and exact-verifier feasibility (2026-11-04)
 
-## Current work: P0 evidence sync; P1 design/resource gate still BLOCKED
+## Current checkpoint: P0 local acceptance + G10-A complete; P1 v2 not admitted to P2
+
+已完成[P0本地核查](P0_LOCAL_ACCEPTANCE.md)及[G10-A完整原生接收对比](G10_A_NATIVE_DIRECT_FOLD.md)。
+只比较已有两批B4，不扩状态电路/规模、不重跑G1-E。State Proof在本机本轮更慢，不能预设效率收益。
+[P1 v2](G9_P1_FEASIBILITY_V2.md)尚无全部phase Gas/总交易/总时间和完整等价域，P2/P3继续不启动。
+
+下一轮若继续G9，先处理有类型的GT目标/特殊标记和FS资源中止语义，再实现可审计的有限GT micro-program、
+逐步不变式和完整资源预算。禁止以64,518个部分指数操作或1290槽布局提案冒充完整Gas实测/已实现验证器。
+不重启被冻结的同步Miller路线，不先写完整Receiver，不把session拒绝冒充密码学负例。
+
+G10后续可以单独设计同一CT2/DKG/份额的Full Tally vs Winner-only原生公平对比；
+链上五方案完整Gas比较仍等精确路线闭合。任意Trustee数、跨进程私密交付和T4/T5证明仍未完成。
+本轮到G10-A/P1 v2报告停止，不自动新生成P3或扩B64+；最终干净提交复现属于后续阶段。
+
+## Previous component: P0 evidence sync; initial P1 design/resource gate BLOCKED
 
 P0同步已有G1-E/G2-E/G4-D/G6/G8-D/E到论文摘要、实验、讨论和结论，未改Introduction或形式化定义。
 [P0报告](P0_PAPER_EVIDENCE_SYNC.md)及9组JSON证据映射/论文快照已归档。

@@ -1084,6 +1084,33 @@ def main() -> int:
         summary["gates"]["P0_paper_sync"] = p0["status"]
         summary["gates"]["P1_staged_exact_design"] = g9p1["status"]
         summary["project_current_progress"].update({"latest_completed_step": "P0 paper evidence sync; P1 bounded JS transcript inventory only", "next_task": "Close GT continuation, exact-check correspondence and total transaction/time budgets before P2; no frozen Miller rerun or new EVM acceptance claimed."})
+    g10a_path = raw.parent.parent / "results" / "g10_a" / "summary.json"
+    g9p1v2_path = raw.parent.parent / "results" / "g9_p1_v2" / "feasibility_review.json"
+    p0_visual_path = raw.parent.parent / "results" / "p0_visual_review" / "review.json"
+    g10a = json.loads(g10a_path.read_text()) if g10a_path.exists() else None
+    g9p1v2 = json.loads(g9p1v2_path.read_text()) if g9p1v2_path.exists() else None
+    p0_visual = json.loads(p0_visual_path.read_text()) if p0_visual_path.exists() else None
+    if g10a:
+        if (g10a["status"] != "PASS_MATCHED_TWO_B4_NATIVE_RECEIVE_PATHS"
+                or not g10a["full_native_receive_path_measured"]
+                or g10a["new_evm"] or g10a["gas"] is not None
+                or g10a["exact_snarkpack_evm_verified"]):
+            raise ValueError("G10-A is a measured native B4 comparison, not EVM/system completion")
+        summary["classification"] = "matched-native-B4-Direct-Fold-State-Proof-comparison-G9-P1-blocked"
+        summary["g10_a_native_matched_paths"] = g10a
+        summary["gates"]["G10_A_native_direct_fold"] = g10a["status"]
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G10-A real matched two-B4 native receive paths; P0 local visual acceptance",
+            "next_task": "G9-P1: resolve typed GT target/sentinel semantics, full micro-program invariants and complete phase/total resource bounds before P2. Native comparison is available; no B64+, frozen Miller rerun or EVM claim.",
+        })
+    if g9p1v2:
+        if g9p1v2["resources"]["p2_allowed"] or g9p1v2["resources"]["maximum_total_gas"] is not None:
+            raise ValueError("P1 v2 is an unresolved feasibility review, not an admitted P2 experiment")
+        summary["g9_p1_feasibility_v2"] = {"status": g9p1v2["status"], "report": str(g9p1v2_path), "gate_checks": g9p1v2["gate_checks"]}
+        summary["gates"]["G9_P1_v2_resource_equivalence"] = g9p1v2["status"]
+    if p0_visual:
+        summary["p0_local_visual_review"] = {"status": p0_visual["status"], "paper_sha256": p0_visual["paper_sha256"], "pdf": p0_visual["pdf"], "report": str(p0_visual_path)}
+        summary["gates"]["P0_local_visual_review"] = p0_visual["status"]
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -1093,8 +1120,17 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g10a:
+        direct = g10a["routes"]["snarkpack_direct_fold"]["two_batch_flow_ms"]["median"]
+        state = g10a["routes"]["snarkpack_state_proof"]["two_batch_flow_ms"]["median"]
+        lines.extend(["## Current work: G10-A native matched comparison passed; G9-P1 v2 BLOCKED", "",
+                      f"- Same two W32 B4 batches, full receive/preflight/SnarkPack/checkpoint paths: Direct Fold median {direct:.6f} ms; State Proof median {state:.6f} ms.",
+                      "- Ten alternating paired windows/route, eight full flows/window; fixed proofs, all samples retained. Not independent elections or full-system superiority.",
+                      "- Both paths reach the same CT2; two altered-new-state negatives pass SnarkPack then reject atomically. No Setup/Prove/aggregate generation/EVM. State route is slower in this campaign.",
+                      "- Report: docs/G10_A_NATIVE_DIRECT_FOLD.md. P1 v2: docs/G9_P1_FEASIBILITY_V2.md; typed GT target/sentinel and total resource/equivalence gates remain open. P2 not started.",
+                      "- P0 local PDF overview of all 67 pages and enlarged current experiment pages recorded in results/p0_visual_review; original paper hash unchanged.", ""])
     if p0 and g9p1:
-        lines.extend(["## Current work: P0 synchronized; P1 resource/equivalence gate BLOCKED", "",
+        lines.extend(["## Previous component: P0 evidence sync and initial P1 inventory" if g10a else "## Current work: P0 synchronized; P1 resource/equivalence gate BLOCKED", "",
                       "- P0: docs/P0_PAPER_EVIDENCE_SYNC.md; results/p0_paper_sync/claim_evidence.json and paper snapshot.",
                       "- P1: docs/G9_P1_STAGED_EXACT_DESIGN.md; 10 equations/18 logical pairing terms; actual two-case JS transcript execution only.",
                       "- GT parsing/folding/final exponentiation, continuation schedule and total budgets remain unresolved. No EVM/Setup/Prove or P2 acceptance.", ""])

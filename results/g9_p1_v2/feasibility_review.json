@@ -1,0 +1,214 @@
+{
+  "schema": "VV/G9-P1/FEASIBILITY-REVIEW/v2",
+  "status": "BLOCKED_NO_COMPLETE_GAS_AND_EQUIVALENCE_BOUND",
+  "base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+  "prior": {
+    "path": "results/g9_p1/design_inventory.json",
+    "sha256": "77f12c60cb3c77f6e16e0486c22172dcca543d0fc39aa6888098fa8449abad4b"
+  },
+  "sources": {
+    "verify": {
+      "package_path": "index.crates.io-1949cf8c6b5b557f/bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+      "sha256": "cd6412860def9630b47a58a96c7245dc4a714e0b847dd43780858412eabe578d"
+    },
+    "prove": {
+      "package_path": "index.crates.io-1949cf8c6b5b557f/bellperson-0.27.0/src/groth16/aggregate/prove.rs",
+      "sha256": "f1386e3ba03fcdbed774735d0d3f7e0e39993e8374c08cabbbf2a0f67f4d66d8"
+    },
+    "accumulator": {
+      "package_path": "index.crates.io-1949cf8c6b5b557f/bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+      "sha256": "4e3f730fdb258fbcfc99bf44e575d23e8c3c1e2224de98309f323e4d5ef7808b"
+    },
+    "gt": {
+      "package_path": "index.crates.io-1949cf8c6b5b557f/blstrs-0.7.0/src/gt.rs",
+      "sha256": "db4e6f2978e121a5c1631146eac59d25b3c3a93d296f445bb3fb45f7b736e9d8"
+    }
+  },
+  "ten_equations": [
+    {
+      "id": "KZG_V_ALPHA",
+      "pairs": 2,
+      "formula": "e(-g,V_alpha-h*f_v(z))*e(g_alpha-g*z,pi_v_alpha)=1"
+    },
+    {
+      "id": "KZG_V_BETA",
+      "pairs": 2,
+      "formula": "e(-g,V_beta-h*f_v(z))*e(g_beta-g*z,pi_v_beta)=1"
+    },
+    {
+      "id": "KZG_W_ALPHA",
+      "pairs": 2,
+      "formula": "e(W_alpha-g*f_w(z),-h)*e(pi_w_alpha,h_alpha-h*z)=1"
+    },
+    {
+      "id": "KZG_W_BETA",
+      "pairs": 2,
+      "formula": "e(W_beta-g*f_w(z),-h)*e(pi_w_beta,h_beta-h*z)=1"
+    },
+    {
+      "id": "TIPP_Z",
+      "pairs": 1,
+      "formula": "e(A,B)=ip_ab*Zab_L^c*Zab_R^a"
+    },
+    {
+      "id": "TIPP_T",
+      "pairs": 2,
+      "formula": "e(A,V_alpha)*e(W_alpha,B)=Tab*Tab_L^c*Tab_R^a"
+    },
+    {
+      "id": "TIPP_U",
+      "pairs": 2,
+      "formula": "e(A,V_beta)*e(W_beta,B)=Uab*Uab_L^c*Uab_R^a"
+    },
+    {
+      "id": "MIPP_T",
+      "pairs": 1,
+      "formula": "e(C,V_alpha)=Tc*Tc_L^c*Tc_R^a"
+    },
+    {
+      "id": "MIPP_U",
+      "pairs": 1,
+      "formula": "e(C,V_beta)=Uc*Uc_L^c*Uc_R^a"
+    },
+    {
+      "id": "GROTH16_AGGREGATE",
+      "pairs": 3,
+      "formula": "e(alpha*(1+r),beta)*e(IC0*(1+r)+sum_j IC[j+1]*(X0[j]+r*X1[j]),gamma)*e(agg_c,delta)=ip_ab"
+    }
+  ],
+  "B2_specialization": {
+    "notation": "a=c_inv from gipa-0-round; c=a^-1; r=random-r; z=random-z; additive G1/G2 and multiplicative GT",
+    "fv": "1+a*z",
+    "fw": "z^2*(1+c*r^-1*z)",
+    "final_r": "1+a*r",
+    "final_zc": "agg_c+c*Zc_L+a*Zc_R",
+    "mipp_nonpairing": "C*(1+a*r)==agg_c+c*Zc_L+a*Zc_R",
+    "aggregate_r_sum": "1+r",
+    "derived_scalar_values": {
+      "r": "46330866009283706817331040623425776902825280547271880194795669934966134031163",
+      "a": "21614155127250951499044129191856121694568526402826694621757190895326930753576",
+      "c": "14288367711294079326797149172914260469744559511777491521194587248072059179284",
+      "z": "38348151761747234390412621151861770841532481693538680517646863140145549508078",
+      "fv": "51625863898064495059292122983510140819420397070142942525767646505032269783565",
+      "fw": "16614974575491521980074232377363095612409352736024701574530168208816940284514",
+      "final_r": "11928448490030995335371707568552406775394767228148649643194721089867825796904"
+    },
+    "anchors": [
+      {
+        "source": "prove",
+        "line": 766,
+        "anchor": "fn polynomial_evaluation_product_form_from_transcript"
+      },
+      {
+        "source": "verify",
+        "line": 519,
+        "anchor": "let b = z == final_res.zc;"
+      },
+      {
+        "source": "verify",
+        "line": 779,
+        "anchor": "let final_r = polynomial_evaluation_product_form_from_transcript"
+      }
+    ]
+  },
+  "sentinel_review": {
+    "source_generator_is_not_group_identity": [
+      {
+        "source": "gt",
+        "line": 177,
+        "anchor": "fn identity() -> Self"
+      },
+      {
+        "source": "gt",
+        "line": 181,
+        "anchor": "fn generator() -> Self"
+      }
+    ],
+    "accumulator": [
+      {
+        "source": "accumulator",
+        "line": 313,
+        "anchor": "let one = E::Gt::generator();"
+      },
+      {
+        "source": "accumulator",
+        "line": 281,
+        "anchor": "if out != &<E as Engine>::Gt::generator()"
+      }
+    ],
+    "standard_JS_group_probe_executed": true,
+    "generator_neq_identity": true,
+    "sentinel_merge_differs_from_literal_GT_product": true,
+    "complete_native_or_attack_test": false,
+    "conclusion": "KZG identity checks require explicit tags; never globally rewrite literal GT generator as identity. Direct conjunction is a relation-level candidate, not bit-for-bit equivalence with randomized accumulator acceptance."
+  },
+  "finite_layout_proposal": {
+    "Fp": "two u256 limbs encoding one canonical 381-bit coefficient; compare <p; arithmetic modulo p; never raw Montgomery limbs",
+    "Fp2": "c0+c1*u, u^2=-1",
+    "Fp6": "c0+c1*v+c2*v^2, v^3=u+1",
+    "Fp12": "c0+c1*w, w^2=v",
+    "checkpoint": "program version, session, phase, PC, coefficient/bit/pair cursors, canonical registers, completed-check bitmap; only contract-computed advancement",
+    "pow": "fixed exponent length; accumulator initially 1; square/multiply micro-PC, no trusted host result",
+    "inverse_witness": "optional checked nonzero inverse witness, enforce x*y=1; no host-trusted inverses",
+    "Miller": "persist per-pair G2 line state, product accumulator and signed-x bit cursor; initial bit, negative-x conjugation, line embedding and tower order must match source vectors; unimplemented",
+    "final_exponent": "generic (p^12-1)/q square-and-multiply is a finite reference schedule, not optimized/native-cross-checked EVM code",
+    "slot_regions": {
+      "original_wire": 164,
+      "decoded_GT": 360,
+      "decoded_points": 76,
+      "matrix": 50,
+      "scratch": 512,
+      "metadata_envelope": 128
+    },
+    "maximum_allocated_slots_proposed": 1290,
+    "maximum_allocated_bytes_proposed": 41280,
+    "storage_measured": false,
+    "compiled_layout_audited": false
+  },
+  "fixed_exponent_subprogram_counts": {
+    "GT_subgroup_q_powers": {
+      "count": 15,
+      "bits": 255,
+      "binary_square_multiply_upper_operations": 7650
+    },
+    "GIPA_GT_powers": {
+      "count": 10,
+      "bits": 255,
+      "binary_square_multiply_upper_operations": 5100
+    },
+    "independent_final_exponentiations": {
+      "count": 6,
+      "bits": 4314,
+      "binary_square_multiply_upper_operations": 51768
+    },
+    "known_subprogram_operation_upper_subtotal": 64518,
+    "subtotal_excludes": "Miller, wire decompression, checks/recompression, GT merges, scalar/G1/G2 arithmetic, FS, storage and transactions",
+    "gas_per_operation": null,
+    "complete_verifier_operation_upper_bound": null
+  },
+  "resources": {
+    "per_transaction_policy_cap": 20000000,
+    "maximum_actual_transactions": null,
+    "maximum_total_gas": null,
+    "maximum_execution_time_ms": null,
+    "maximum_storage_bytes_measured": null,
+    "total_gas_formula": "BEGIN + sum(ADVANCE_i) + FINISH + CONSUME, including canonical parsing/FS/arithmetic/checkpoints/calldata; not merely pairing precompiles",
+    "FS_rejection": "exact rejection loop is data-dependent; a resource timeout is ABORT/INCOMPLETE, not INVALID_PROOF. A finite attempt cap must not be disguised as full-domain equivalence",
+    "time_bound": "a local watchdog is not guaranteed public-chain transaction inclusion time",
+    "p2_allowed": false
+  },
+  "gate_checks": {
+    "all_ten_equations_documented": true,
+    "B2_scalar_specialization_source_mapped": true,
+    "standard_GT_identity_probe_pass": true,
+    "finite_storage_layout_proposed": true,
+    "GT_stepper_implemented": false,
+    "complete_original_domain_equivalence_proven": false,
+    "all_phase_gas_bounds_proven": false,
+    "total_resource_budget_closed": false
+  },
+  "new_evm_transactions": 0,
+  "new_setup": 0,
+  "new_proofs": 0,
+  "full_snarkpack_verified": false
+}

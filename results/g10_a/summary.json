@@ -1,0 +1,133 @@
+{
+  "schema": "VV/G10-A/SUMMARY/v1",
+  "status": "PASS_MATCHED_TWO_B4_NATIVE_RECEIVE_PATHS",
+  "source": {
+    "path": "experiments/g10_a_raw/native_direct_fold_b4.json",
+    "sha256": "6e9261e7e0be7262e5538d89fc2f5cc59bd47a84af3e377785c24aea09386470",
+    "base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+    "dirty": true
+  },
+  "routes": {
+    "snarkpack_direct_fold": {
+      "two_batch_flow_ms": {
+        "n": 10,
+        "median": 9.20676825,
+        "q1": 9.021786468750001,
+        "q3": 11.15518746875,
+        "min": 8.71090625,
+        "max": 22.218895749999998
+      },
+      "per_vote_ms": {
+        "n": 10,
+        "median": 1.15084603125,
+        "q1": 1.1277233085937501,
+        "q3": 1.39439843359375,
+        "min": 1.08886328125,
+        "max": 2.7773619687499997
+      },
+      "votes_per_second": {
+        "n": 10,
+        "median": 868.9296681703997,
+        "q1": 720.6747633300455,
+        "q3": 886.7516936079815,
+        "min": 360.053896917897,
+        "max": 918.3889448930757
+      },
+      "packing_ms_per_flow": {
+        "n": 10,
+        "median": 0.036557375,
+        "q1": 0.03620703125000001,
+        "q3": 0.03906259375,
+        "min": 0.035343625000000004,
+        "max": 0.06305187500000001
+      },
+      "snarkpack_ms_per_flow": {
+        "n": 10,
+        "median": 9.0925964375,
+        "q1": 8.90892075,
+        "q3": 11.034473875,
+        "min": 8.59936475,
+        "max": 21.95793775
+      },
+      "route_specific_ms_per_flow": {
+        "n": 10,
+        "median": 0.011210999999999999,
+        "q1": 0.010859156249999998,
+        "q3": 0.012012062499999998,
+        "min": 0.010307374999999999,
+        "max": 0.036255375
+      }
+    },
+    "snarkpack_state_proof": {
+      "two_batch_flow_ms": {
+        "n": 10,
+        "median": 15.559338499999999,
+        "q1": 13.5848555,
+        "q3": 16.373761749999996,
+        "min": 13.51570825,
+        "max": 28.6473125
+      },
+      "per_vote_ms": {
+        "n": 10,
+        "median": 1.9449173124999999,
+        "q1": 1.6981069375,
+        "q3": 2.0467202187499995,
+        "min": 1.68946353125,
+        "max": 3.5809140625
+      },
+      "votes_per_second": {
+        "n": 10,
+        "median": 514.3178703139706,
+        "q1": 488.6742411016881,
+        "q3": 588.9007482318358,
+        "min": 279.25830738921843,
+        "max": 591.9038685967492
+      },
+      "packing_ms_per_flow": {
+        "n": 10,
+        "median": 0.0379580625,
+        "q1": 0.03692187500000001,
+        "q3": 0.038791781250000004,
+        "min": 0.034838375000000005,
+        "max": 0.06190612499999999
+      },
+      "snarkpack_ms_per_flow": {
+        "n": 10,
+        "median": 10.588736874999999,
+        "q1": 8.897960999999999,
+        "q3": 11.191634250000002,
+        "min": 8.825661125,
+        "max": 20.637734625
+      },
+      "route_specific_ms_per_flow": {
+        "n": 10,
+        "median": 4.7957993125,
+        "q1": 4.6131849375,
+        "q3": 4.89527578125,
+        "min": 4.543213625,
+        "max": 7.809687749999999
+      }
+    }
+  },
+  "paired_state_over_direct": {
+    "n": 10,
+    "median": 1.5064810005456508,
+    "q1": 1.415900116201852,
+    "q3": 1.6335325111211527,
+    "min": 1.289322062731223,
+    "max": 1.8364119691909206
+  },
+  "process_peak_rss_mib": 9.171875,
+  "sample_unit": "one window averages eight complete two-B4 receive flows; ten paired windows/route, fixed proofs, not independent elections",
+  "no_outlier_filter": true,
+  "full_native_receive_path_measured": true,
+  "total_time_is_not_component_sum": true,
+  "new_setup": 0,
+  "new_proofs": 0,
+  "new_aggregates": 0,
+  "new_evm": 0,
+  "generation_costs": "REUSED_NOT_RETIMED_NOT_ZERO",
+  "gas": null,
+  "full_system_or_privacy_claim": false,
+  "exact_snarkpack_evm_verified": false
+}

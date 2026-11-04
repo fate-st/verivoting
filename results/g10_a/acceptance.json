@@ -1,0 +1,42 @@
+{
+  "schema": "VV/G10-A/ACCEPTANCE/v1",
+  "status": "PASS_LIMITED_G10_A_P0_ACCEPTANCE_P1_V2_BLOCKED",
+  "branch": "experiment/g10a-native-fold-review",
+  "source_base_sha": "7475f564dc45b923f30ea25142882f703d821b10",
+  "execution_dirty": true,
+  "raw_sha256": "6e9261e7e0be7262e5538d89fc2f5cc59bd47a84af3e377785c24aea09386470",
+  "summary_sha256": "7ac615a23f282f6b41617a76b5a8b63fe089d6b83d023d582bebf16f841d3854",
+  "binary_sha256": "8d929e9870515ec78e973d2083194b07d3554bbff50c45fb336ad95e68ba3f0a",
+  "related_unit_tests_passed": 6,
+  "strict_clippy_pass": true,
+  "rust_fmt_pass": true,
+  "benchmark_campaigns": 1,
+  "paired_rounds": 10,
+  "windows": 20,
+  "repetitions_per_window": 8,
+  "all_samples_retained": true,
+  "matched_final_CT2": true,
+  "necessary_atomic_negatives_passed": 2,
+  "full_route_medians_ms": {
+    "direct": 9.20676825,
+    "state": 15.559338499999999
+  },
+  "P0_local_visual_review_scope": "67-page contact overview, enlarged experiment pages 46/47; no paper byte changes",
+  "P1_v2_status": "BLOCKED_NO_COMPLETE_GAS_AND_EQUIVALENCE_BOUND",
+  "P2_started": false,
+  "gas": null,
+  "new_setup": 0,
+  "new_proofs": 0,
+  "new_aggregates": 0,
+  "new_evm": 0,
+  "limitations": [
+    "fixed proof pool, not independent elections or full-system efficiency",
+    "generation costs reused/not retimed, not zero",
+    "shared process RSS, not per-route comparison",
+    "G9 GT stepper/equivalence/total-resource admission incomplete",
+    "Full Tally and five-baseline/chain integration/privacy proof/final clean-source reproduction remain unfinished"
+  ],
+  "failed_build_attempts_preserved": [
+    "build-1.log"
+  ]
+}
