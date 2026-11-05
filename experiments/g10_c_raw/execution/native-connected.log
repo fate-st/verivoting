@@ -1,0 +1,10 @@
+FLOW 1/7: authenticated DKG and registration reconstruction; no protocol/curve change
+FLOW 2/7: both live B4 SnarkPack/state verification -> CT1 -> CT2 -> one freeze
+FLOW 3/7: five OS Trustee workers, private CP/package delivery over pipes
+FLOW 4/7: real private threshold decode complete; rebuild same G4-D Groth16 PK
+FLOW 5/7: generate ONE new real P3 for this run's five-process packages; setup 90700.126 ms
+FLOW 6/7: verify frozen binding, wrong Winner rejection, then one-time Winner write
+FLOW 7/7: counterfactual Full Tally verification branch; keep usable shares outside public archive
+PASS public Winner replay: only public material, winner written once
+PASS Full Tally public diagnostic verification; private diagnostic payload not published
+PASS CONNECTED NATIVE: five workers, one NEW P3, winner=1 written once; Full Tally diagnostic verified separately

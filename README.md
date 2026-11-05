@@ -8,7 +8,39 @@ Unimplemented work is never reported as measured.
 
 ## What is implemented
 
-### Current work: clean-source G10-A 30 paired rounds; G10-B comparison scope only
+### Current work: function-first native → new P3 → authenticated EVM fallback
+
+[完整功能连接报告](docs/G10_C_CONNECTED_FUNCTIONAL_FLOW.md)：本轮不优化、不扩规模，实际完成两批接收/冻结、
+五个独立OS进程CP私包、私管道交付、门限解密、一份新P3、原生Winner一次写入；同一新证明/承诺
+又在本地Prague原合约完成认证、两批逐票/状态验证、冻结、60项存储输入重建和Winner一次写入。
+21笔新签名交易（17成功/4必要拒绝），新披露2,073,548 Gas/644 B；不是历史JSON拼接或性能优势结论。
+Full Tally同目标对照仅为反事实公开解密诊断，可用份额/计票材料留在本地私有目录，不进入Git公共归档。
+
+一条命令运行当前已实现的功能：`node scripts/run_functional_experiment.mjs /ABS/NEW_RUN_ROOT`。
+该入口会做一次新P3 Setup/Prove，再执行完整本地EVM备用路线；本轮已分阶段实际执行并核对相同证明来源。
+**仍不是完整目标架构**：EVM用逐票Groth16备用验证，精确SnarkPack EVM未实现；五worker使用集中研究DKG bootstrap，
+不是同流程的独立分布式建钥/私钥保管。下一步先补这些功能，不再推进微基准或优化Gate。
+
+### Previous component: G10-B2 artifact-linked generation costs and bounded aggregation
+
+[成本审计报告](docs/G10_B2_GENERATION_COST_AUDIT.md)逐字节追踪当前8份选票证明、2份状态证明和同CT2的P3来源。
+原8票Prove约55.702 s、两份状态Prove约15.999/16.917 s属于历史实测，不冒充本轮同条件成本。
+本轮只补测两批B4聚合生成：同轮两次运算之和中位数18.099500 ms；26份新聚合均与原归档字节一致且验证通过。
+重建1次非生产研究SRS，无新Groth16 Setup/Prove/EVM。未把历史生成时间与G10-B1接收相加当成端到端结果。
+完整系统/Gas、同环境生成与隔离证明者内存仍未完成；下一步只做同CT2下Full Tally/Winner-only披露比较。
+
+### Previous component: G10-B1 four matched native intake routes
+
+[G10-B1报告](docs/G10_B1_MATCHED_NATIVE_BASELINES.md)已完成两个真实逐票基线，
+与原两条SnarkPack路线在同一新源码/二进制内测量。同一8票/两个B4接收中位数：
+逐票3.966229 ms，B4逐票验证3.817719 ms，SnarkPack+Direct Fold 9.607130 ms，
+SnarkPack+State Proof 14.234349 ms。当前B4聚合接收更慢，不能宣称系统效率优势。
+12轮平衡顺序/48窗口，仅一组固定证明池；独立进程RSS含共同材料加载，不是证明者内存。
+本轮源修改由快照/哈希固定，raw保留git_dirty=true，不冒充干净提交复现。
+只有原生接收比较完成：生成成本、完整生命周期/Full Tally、精确SnarkPack EVM仍待完成。
+下一步先核对匹配生成成本和预算；不扩批、不重跑旧规模/Miller、不自动做P3重证明。
+
+### Previous component: clean-source G10-A 30 paired rounds; G10-B comparison scope
 
 [干净复现](docs/G10_A_CLEAN30_REPRODUCTION.md)使用未修改e1e477f独立worktree，三次顺序进程、
 30轮配对/60原始窗口，全部git_dirty=false。两批B4完整接收中位数Direct Fold 9.082339 ms、

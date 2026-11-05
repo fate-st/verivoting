@@ -1,0 +1,108 @@
+{
+  "schema": "VV/G10-C/FUNCTIONAL-INTEGRATION/v1",
+  "status": "PASS_IMPLEMENTED_NATIVE_AND_INDIVIDUAL_GROTH16_EVM_FALLBACK_FLOW",
+  "scope": "CONNECTED_IMPLEMENTED_NATIVE_AND_AUTHENTICATED_EVM_FALLBACK_NOT_FULL_TARGET",
+  "source_base_sha": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+  "source_version_sha256": "5da752ded5f812524f52ff8e5a51d4529d1903d4c06749237f5112f01fba8bab",
+  "source_was_dirty": true,
+  "binary_sha256": "99969b88c1a75db351677df80590fa6c58a132e371d545635acfe6e364a4c99e",
+  "native_proof_sha256": "226e395d81a1ae45531ae2e012d5ca3439c0a618b956f0603617234ba7a9f833",
+  "evm_uses_same_proof_and_worker_commitments": true,
+  "matched_public_input_count": 60,
+  "completed": {
+    "authenticated_dkg_registration_reconstruction": true,
+    "two_actual_native_snarkpack_and_state_batches": true,
+    "live_ct2_freeze": true,
+    "five_separate_cp_package_processes": true,
+    "private_pipe_delivery_and_cp_opening_authentication": true,
+    "private_threshold_decode": true,
+    "one_fresh_fixed_vk_p3": true,
+    "native_one_time_winner": true,
+    "independent_public_winner_replay": true,
+    "separate_full_tally_diagnostic_public_verifier": true,
+    "evm_certificate_authentication": true,
+    "evm_individual_ballot_and_state_verification": true,
+    "evm_ct2_freeze_and_commitment_authentication": true,
+    "evm_storage_rebuild_60_inputs_and_same_new_p3": true,
+    "evm_winner_write_once_and_replay_rejection": true
+  },
+  "native": {
+    "trustee_process_ids": [
+      83586,
+      83587,
+      83588,
+      83589,
+      83590
+    ],
+    "new_cp_packages": 5,
+    "new_p3_proofs": 1,
+    "setup_rebuilds": 1,
+    "setup_rebuild_ms": 90700.126125,
+    "prove_ms": 45059.411416,
+    "total_wall_ms": 136016.8725,
+    "process_peak_rss_mib": 8597.0625,
+    "reused_ballot_proofs": 8,
+    "reused_aggregates": 2,
+    "reused_state_proofs": 2,
+    "functional_run_not_statistics": true
+  },
+  "chain": {
+    "environment": "local_Prague",
+    "signed_transactions": 21,
+    "successful": 17,
+    "rejected": 4,
+    "successful_gas_including_deployment": 66172916,
+    "deployment_gas": 34082689,
+    "non_deployment_success_gas": 32090227,
+    "disclose_winner_gas": 2073548,
+    "disclose_calldata_bytes": 644,
+    "one_winner_event": true,
+    "exact_snarkpack_evm": false,
+    "gas_scope": "same new functional run receipts; successes only, deployment separated; not a statistical or exact-SnarkPack full-system efficiency result"
+  },
+  "disclosure": {
+    "winner_only_fixture_json_bytes": 18694,
+    "full_tally_diagnostic_json_bytes": 7489,
+    "winner_ark_proof_bytes": 192,
+    "winner_eip_proof_bytes": 512,
+    "winner_derived_inputs_bytes": 1920,
+    "cached_ark_vk_bytes": 3272,
+    "full_tally_counterfactual_not_policy_authorized": true,
+    "usable_full_tally_payload_withheld": true,
+    "public_data_json_files_scanned": 18,
+    "comparable_transport_envelope": false,
+    "privacy_theorem_proved": false
+  },
+  "remaining_required": [
+    "exact SnarkPack EVM verification + its receiver integration",
+    "independent DKG/private key custody in the same full-flow context",
+    "T4/T5 mathematical security composition",
+    "final matched full-system comparison and clean-source reproduction"
+  ],
+  "target_architecture_complete": false,
+  "independent_distributed_dkg": false,
+  "production_setup": false,
+  "production_deployment": false,
+  "full_privacy_proof": false,
+  "no_optimization_performed": true,
+  "no_batch_scale_expansion": true,
+  "no_g1e_repeat_campaign": true,
+  "one_command_driver_available": "node scripts/run_functional_experiment.mjs /ABS/NEW_RUN_ROOT",
+  "current_execution_was_two_sequential_drivers_then_finalize": true,
+  "current_one_command_proving_invocation_claimed": false,
+  "next_priority": "Close exact SnarkPack EVM verification/receiver functionality under an explicit bounded route decision; connect genuinely independent DKG/key custody to this same full-flow context. No further microbenchmark/optimization gates.",
+  "sources": [
+    {
+      "path": "experiments/g10_c_raw/native/report.json",
+      "sha256": "a14710a3adc1839a73b016f091b90a4ef9cfb1c3e4bf59f329c378c4c6e29070"
+    },
+    {
+      "path": "experiments/g10_c_raw/chain/winner_once.json",
+      "sha256": "17bff3d9641e79a03f79c3da8aed65f47ef692ee775774436abe46cd47bf00d7"
+    },
+    {
+      "path": "experiments/g10_c_raw/functional_completion.json",
+      "sha256": "9e97adff6c785896c98cede1e06c614090a0865796088060249145fcefc3ff9b"
+    }
+  ]
+}

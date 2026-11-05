@@ -1,0 +1,182 @@
+{
+  "aggregation_ms": null,
+  "all_routes_same_ct1_ct2_and_spent8": true,
+  "binary_sha256": "4365609f01cd854c57306837e8f418c4e6884d2bfc666a2edc2d6f7ca2eb026c",
+  "build": "release; locked; offline; toolchain1.99.1; jobs2; strip=none",
+  "calldata": null,
+  "communication_components": [
+    {
+      "accepted_roots_bytes_shared_per_flow": 64,
+      "ballot_matrix_bytes": 6400,
+      "calldata": null,
+      "components_not_a_complete_wire_envelope": true,
+      "full_network_bytes": null,
+      "individual_new_CT_is_derived_not_transmitted": true,
+      "matrix_represents_canonical_records_do_not_add_records_again": true,
+      "membership_path_bytes": 512,
+      "route": "individual_groth16_per_vote",
+      "state_proof_bytes": 0,
+      "submitted_ct_old_new_bytes": 1536,
+      "validity_proof_bytes": 1536
+    },
+    {
+      "accepted_roots_bytes_shared_per_flow": 64,
+      "ballot_matrix_bytes": 6400,
+      "calldata": null,
+      "components_not_a_complete_wire_envelope": true,
+      "full_network_bytes": null,
+      "individual_new_CT_is_derived_not_transmitted": false,
+      "matrix_represents_canonical_records_do_not_add_records_again": true,
+      "membership_path_bytes": 0,
+      "route": "transaction_batch_individual_groth16",
+      "state_proof_bytes": 0,
+      "submitted_ct_old_new_bytes": 768,
+      "validity_proof_bytes": 1536
+    },
+    {
+      "accepted_roots_bytes_shared_per_flow": 64,
+      "ballot_matrix_bytes": 6400,
+      "calldata": null,
+      "components_not_a_complete_wire_envelope": true,
+      "full_network_bytes": null,
+      "individual_new_CT_is_derived_not_transmitted": false,
+      "matrix_represents_canonical_records_do_not_add_records_again": true,
+      "membership_path_bytes": 0,
+      "route": "snarkpack_direct_fold",
+      "state_proof_bytes": 0,
+      "submitted_ct_old_new_bytes": 768,
+      "validity_proof_bytes": 16424
+    },
+    {
+      "accepted_roots_bytes_shared_per_flow": 64,
+      "ballot_matrix_bytes": 6400,
+      "calldata": null,
+      "components_not_a_complete_wire_envelope": true,
+      "full_network_bytes": null,
+      "individual_new_CT_is_derived_not_transmitted": false,
+      "matrix_represents_canonical_records_do_not_add_records_again": true,
+      "membership_path_bytes": 0,
+      "route": "snarkpack_state_proof",
+      "state_proof_bytes": 384,
+      "submitted_ct_old_new_bytes": 768,
+      "validity_proof_bytes": 16424
+    }
+  ],
+  "elapsed_ms": 97.782375,
+  "exact_snarkpack_evm": false,
+  "final_state": [
+    {
+      "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+      "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99"
+    },
+    {
+      "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+      "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae"
+    },
+    {
+      "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+      "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72"
+    }
+  ],
+  "fixture_pins": [
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "ballot_vk_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+      "state_vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+      "verifier_srs_json_sha256": "b7e6a0f46c11c014d41e5cc7f0395e570ef3a0f2614b29aa6563183f588da595"
+    }
+  ],
+  "full_lifecycle_comparison": false,
+  "full_tally_comparison": false,
+  "gas": null,
+  "git_dirty": true,
+  "hardware": "Apple M4",
+  "hardware_memory_bytes": "34359738368",
+  "load_and_prepare_ms": 30.281375,
+  "memory_route": "transaction_batch_individual_groth16",
+  "method": {
+    "balanced_cyclic_order": true,
+    "consecutive_b4": 2,
+    "deterministic_research_rng": true,
+    "distinct_ballots": 8,
+    "flows_per_window": 4,
+    "membership_verification_is_timed": true,
+    "no_filter": true,
+    "offline_excluded": "fixture decode; prepared VK; sender membership-path construction; Setup/Prove/aggregation; online certificate authentication; freeze/P3/Winner/EVM",
+    "online_scope": "receiver creation; binding/root or membership; live NF/sequence/old CT; packing; real validity verification; direct fold or state verification; atomic writes; CT1/CT2 equality",
+    "proof_pools": 1,
+    "rounds": 0,
+    "sender_path_construction_measured": false,
+    "warmup_flows_per_route": 2
+  },
+  "necessary_negatives": [],
+  "new_aggregates": 0,
+  "new_evm": 0,
+  "new_proofs": 0,
+  "new_setup": 0,
+  "process_peak_rss_mib": 6.640625,
+  "prove_ms": null,
+  "rayon_num_threads": "4",
+  "resource_budget": {
+    "rss_mib": 2048,
+    "wall_seconds": 120
+  },
+  "rss_scope": "fresh process cumulative high-water; common all-route fixture/material loader included; not incremental algorithm memory or prover memory",
+  "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+  "schema": "VV/G10-B1/MATCHED-NATIVE/v1",
+  "setup_ms": null,
+  "source_base_sha": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+  "source_version_sha256": "ed5fccd74ad307e05a4b9ce46c4f57525ecd34efda5077456098fa89bd2aa638",
+  "sources": [
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g10b1_matched_native.rs",
+      "sha256": "6199fc382055f3caa1a2d66fc40a722dfdce0c6cab7069ec11485915fcf7c8f3"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g10b_materials.rs",
+      "sha256": "a5b7f59cba2179e4adfe683e67591c8b78f8197a14c771cffe9203a3969fcdcc"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g10b_intake.rs",
+      "sha256": "d0a2df9085fd199d75105cfd95289b6315f6380679ba659293c39d84a3719f08"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g2e_receiver.rs",
+      "sha256": "7f748d4c7a172fdce109c5f89877f626a28d04815ef5510197de4e679397fced"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/native_batch.rs",
+      "sha256": "9d570edc97e90443a45a1ced94f9f7f5a97d27f0bc24883a326a07503aed6648"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/state_gadget.rs",
+      "sha256": "40aef68da8416819a8b9d457ce890968a8a426099b263b81606d746e205fb80c"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "c355183ec81824cb6f989f8ff976981625273b8b285d6e43e7c32c1e28929794"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "6b7ce01c5bd626481149ca37549a934c97131469b38d4f3bee8ae93fa1380a69"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    }
+  ],
+  "started_utc": "2026-11-04T13:04:16Z",
+  "status": "PASS_ROUTE_ISOLATED_MEMORY",
+  "windows": []
+}

@@ -1,5 +1,5 @@
 {
-  "classification": "clean-source-30-paired-round-fixed-pool-native-reproduction-G10-B-plan-only",
+  "classification": "connected-functional-native-and-local-evm-individual-fallback-not-complete-target",
   "gates": {
     "G0_native_core_and_p1": "PASS",
     "G0.5_cp_single_equation": "BLOCKED_RESOURCE_GUARD_NO_GROTH16_PROOF",
@@ -105,7 +105,11 @@
     "G9_P1_v2_resource_equivalence": "BLOCKED_NO_COMPLETE_GAS_AND_EQUIVALENCE_BOUND",
     "P0_local_visual_review": "PASS_LOCAL_EVIDENCE_AND_VISUAL_REVIEW_SCOPE",
     "G10_A_clean30_reproduction": "PASS_CLEAN_E1E477F_THREE_PROCESSES_30_PAIRED_ROUNDS",
-    "G10_B_five_route_system_comparison": "PARTIAL_PLAN_ONLY_NO_SYSTEM_COMPARISON_RUN"
+    "G10_B_five_route_system_comparison": "PARTIAL_FOUR_NATIVE_INTAKE_ROUTES_ONLY",
+    "G10_B1_matched_native_intake": "PASS_FOUR_MATCHED_NATIVE_INTAKE_ROUTES",
+    "G10_B2_generation_cost_audit": "PASS_ARTIFACT_COST_AUDIT_AND_BOUNDED_AGGREGATION",
+    "G10_C_current_native_to_evm_fallback": "PASS_IMPLEMENTED_NATIVE_AND_INDIVIDUAL_GROTH16_EVM_FALLBACK_FLOW",
+    "full_target_architecture": "PARTIAL_EXACT_SNARKPACK_EVM_AND_INDEPENDENT_DKG_CONTEXT_INTEGRATION_PENDING"
   },
   "dkg": {
     "classification": "real-group-single-process-protocol-simulation",
@@ -6238,14 +6242,14 @@
     "current_evaluation_suite_state_and_p3": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
     "current_evaluation_suite_state": "PASS_G2E_TWO_CONSECUTIVE_B4_NATIVE_CHECKPOINT",
     "current_evaluation_suite_p3": "PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2",
-    "next_task": "G10-B1: implement two real individual-proof intake baselines with the same accepted-record binding; retime all four native routes in one pinned version. Generation/full lifecycle/Full Tally and route-specific memory remain pending; G9-P1 still blocks P2.",
+    "next_task": "Close exact SnarkPack EVM verification/receiver functionality under an explicit bounded route decision; connect genuinely independent DKG/key custody to this same full-flow context. No further microbenchmark/optimization gates.",
     "large_batch_statistical_comparison": "PASS_G1E_30_SERIAL_FIXED_POOL_OPERATION_WINDOWS_PER_B_NOT_INDEPENDENT_ELECTIONS",
     "complete_native_flow": true,
     "complete_chain_settlement": false,
     "current_p3_vk_evm_verified": true,
     "active_gate": "G8",
     "active_gate_status": "PARTIAL",
-    "latest_completed_step": "G10-A unmodified clean e1e477f, three sequential processes / 30 paired rounds / one proof pool",
+    "latest_completed_step": "Connected native five-CP-worker/fresh-P3/Winner flow and SAME new proof/commitments in full local authenticated EVM individual-Groth16 fallback",
     "receiver_and_freeze_evm_measured": true,
     "current_onchain_batch_validity_route": "individual Groth16 fallback, NOT SnarkPack",
     "certificate_authentication_component_evm_measured": true,
@@ -6257,7 +6261,9 @@
     "winner_write_once_integrated": true,
     "local_fallback_lifecycle_costs_archived": true,
     "exact_snarkpack_evm_verified": false,
-    "g10b_system_comparison_measured": false
+    "g10b_system_comparison_measured": false,
+    "development_priority": "FUNCTIONAL_COMPLETION_BEFORE_OPTIMIZATION",
+    "target_architecture_complete": false
   },
   "g2_a_state_transition_r1cs": {
     "gate": "G2-A",
@@ -22071,5 +22077,537 @@
     "report": "results/g10_b_plan/comparison_scope.json",
     "route_count": 5,
     "system_comparison_executed": false
+  },
+  "g10_b1_matched_native_intake": {
+    "schema": "VV/G10-B1/SUMMARY/v1",
+    "status": "PASS_FOUR_MATCHED_NATIVE_INTAKE_ROUTES",
+    "scope": "NATIVE_INTAKE_ONLY_NOT_FULL_SYSTEM",
+    "source_base_sha": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+    "source_version_sha256": "644e75eeb817a74a1218f5b76477e75b38f9116728b7cbf846b7411e4a017353",
+    "source_was_dirty": true,
+    "source_snapshot": "experiments/g10_b1_raw/source_snapshot",
+    "binary_sha256": "c19a3943312727cb120105585e489cb3888d5edea9de6b7b2f0116e95ff9cb6f",
+    "experiment_manifest": {
+      "path": "experiments/g10_b1_raw/execution/manifest.json",
+      "sha256": "8bb3322a3da25e7a91d10efa3cf99b85c14200279893180ffcf9dd0cf16b9fed"
+    },
+    "measured_raw": {
+      "path": "experiments/g10_b1_raw/matched.json",
+      "sha256": "9d3eb44fe2db0efb9aa875c6d99e12c30051650ec208716a89c278f3a601c49c"
+    },
+    "sample_design": {
+      "processes_for_timing": 1,
+      "matched_rounds": 12,
+      "route_windows": 48,
+      "flows_per_window": 4,
+      "timed_flows": 192,
+      "proof_pools": 1,
+      "distinct_ballots": 8,
+      "balanced_position_counts_per_route": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "all_windows_retained": true,
+      "development_attempt_not_pooled": true,
+      "independent_election_statistics": false
+    },
+    "routes": [
+      {
+        "id": "individual_groth16_per_vote",
+        "title": "\u9010\u7968 Groth16 / \u9010\u7968\u7d2f\u8ba1",
+        "two_batch_flow_ms": {
+          "n": 12,
+          "median": 3.966229125,
+          "q1": 3.4100834375,
+          "q3": 4.286669249999999,
+          "min": 3.383854,
+          "max": 5.4806665
+        },
+        "per_vote_ms": {
+          "n": 12,
+          "median": 0.495778640625,
+          "q1": 0.4262604296875,
+          "q3": 0.5358336562499999,
+          "min": 0.42298175,
+          "max": 0.6850833125
+        },
+        "components_ms": {
+          "packing_ms_per_flow": {
+            "n": 12,
+            "median": 0.037057375000000004,
+            "q1": 0.0353051875,
+            "q3": 0.0377345625,
+            "min": 0.034511,
+            "max": 0.041657
+          },
+          "validity_ms_per_flow": {
+            "n": 12,
+            "median": 3.8451455,
+            "q1": 3.3011985624999998,
+            "q3": 4.15717925,
+            "min": 3.27234325,
+            "max": 5.361167
+          },
+          "route_specific_ms_per_flow": {
+            "n": 12,
+            "median": 0,
+            "q1": 0,
+            "q3": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "validity_calls": 8,
+        "checkpoint_writes": 8,
+        "process_peak_rss_mib": 6.671875,
+        "communication": {
+          "accepted_roots_bytes_shared_per_flow": 64,
+          "ballot_matrix_bytes": 6400,
+          "calldata": null,
+          "components_not_a_complete_wire_envelope": true,
+          "full_network_bytes": null,
+          "individual_new_CT_is_derived_not_transmitted": true,
+          "matrix_represents_canonical_records_do_not_add_records_again": true,
+          "membership_path_bytes": 512,
+          "route": "individual_groth16_per_vote",
+          "state_proof_bytes": 0,
+          "submitted_ct_old_new_bytes": 1536,
+          "validity_proof_bytes": 1536
+        }
+      },
+      {
+        "id": "transaction_batch_individual_groth16",
+        "title": "B4 \u63d0\u4ea4 / \u9010\u7968 Groth16 / Direct Fold",
+        "two_batch_flow_ms": {
+          "n": 12,
+          "median": 3.8177188750000006,
+          "q1": 3.4417395625,
+          "q3": 4.212953125,
+          "min": 3.3835625,
+          "max": 4.3116145
+        },
+        "per_vote_ms": {
+          "n": 12,
+          "median": 0.4772148593750001,
+          "q1": 0.4302174453125,
+          "q3": 0.526619140625,
+          "min": 0.4229453125,
+          "max": 0.5389518125
+        },
+        "components_ms": {
+          "packing_ms_per_flow": {
+            "n": 12,
+            "median": 0.037942625,
+            "q1": 0.0359525,
+            "q3": 0.04110156250000001,
+            "min": 0.03534375000000001,
+            "max": 0.04321875
+          },
+          "validity_ms_per_flow": {
+            "n": 12,
+            "median": 3.70286975,
+            "q1": 3.3343275625000004,
+            "q3": 4.0871355,
+            "min": 3.27522925,
+            "max": 4.19051
+          },
+          "route_specific_ms_per_flow": {
+            "n": 12,
+            "median": 0.008979000000000001,
+            "q1": 0.00820075,
+            "q3": 0.009534,
+            "min": 0.00763525,
+            "max": 0.01478175
+          }
+        },
+        "validity_calls": 8,
+        "checkpoint_writes": 2,
+        "process_peak_rss_mib": 6.609375,
+        "communication": {
+          "accepted_roots_bytes_shared_per_flow": 64,
+          "ballot_matrix_bytes": 6400,
+          "calldata": null,
+          "components_not_a_complete_wire_envelope": true,
+          "full_network_bytes": null,
+          "individual_new_CT_is_derived_not_transmitted": false,
+          "matrix_represents_canonical_records_do_not_add_records_again": true,
+          "membership_path_bytes": 0,
+          "route": "transaction_batch_individual_groth16",
+          "state_proof_bytes": 0,
+          "submitted_ct_old_new_bytes": 768,
+          "validity_proof_bytes": 1536
+        }
+      },
+      {
+        "id": "snarkpack_direct_fold",
+        "title": "SnarkPack + Direct Fold",
+        "two_batch_flow_ms": {
+          "n": 12,
+          "median": 9.60713025,
+          "q1": 8.962177125,
+          "q3": 11.338940125,
+          "min": 8.669270749999999,
+          "max": 12.626406249999999
+        },
+        "per_vote_ms": {
+          "n": 12,
+          "median": 1.20089128125,
+          "q1": 1.120272140625,
+          "q3": 1.417367515625,
+          "min": 1.0836588437499999,
+          "max": 1.5783007812499998
+        },
+        "components_ms": {
+          "packing_ms_per_flow": {
+            "n": 12,
+            "median": 0.03677612500000001,
+            "q1": 0.0362005,
+            "q3": 0.0392944375,
+            "min": 0.03486500000000001,
+            "max": 0.0478335
+          },
+          "validity_ms_per_flow": {
+            "n": 12,
+            "median": 9.487807375,
+            "q1": 8.850521125,
+            "q3": 11.21327125,
+            "min": 8.558823499999999,
+            "max": 12.503791499999998
+          },
+          "route_specific_ms_per_flow": {
+            "n": 12,
+            "median": 0.01015075,
+            "q1": 0.009809937500000001,
+            "q3": 0.010588750000000001,
+            "min": 0.00894775,
+            "max": 0.016177
+          }
+        },
+        "validity_calls": 2,
+        "checkpoint_writes": 2,
+        "process_peak_rss_mib": 8,
+        "communication": {
+          "accepted_roots_bytes_shared_per_flow": 64,
+          "ballot_matrix_bytes": 6400,
+          "calldata": null,
+          "components_not_a_complete_wire_envelope": true,
+          "full_network_bytes": null,
+          "individual_new_CT_is_derived_not_transmitted": false,
+          "matrix_represents_canonical_records_do_not_add_records_again": true,
+          "membership_path_bytes": 0,
+          "route": "snarkpack_direct_fold",
+          "state_proof_bytes": 0,
+          "submitted_ct_old_new_bytes": 768,
+          "validity_proof_bytes": 16424
+        }
+      },
+      {
+        "id": "snarkpack_state_proof",
+        "title": "SnarkPack + State Proof",
+        "two_batch_flow_ms": {
+          "n": 12,
+          "median": 14.234349000000002,
+          "q1": 13.4050886875,
+          "q3": 17.118408875,
+          "min": 13.094687500000001,
+          "max": 18.124677249999998
+        },
+        "per_vote_ms": {
+          "n": 12,
+          "median": 1.7792936250000002,
+          "q1": 1.6756360859375,
+          "q3": 2.139801109375,
+          "min": 1.6368359375000001,
+          "max": 2.2655846562499997
+        },
+        "components_ms": {
+          "packing_ms_per_flow": {
+            "n": 12,
+            "median": 0.036781375000000005,
+            "q1": 0.03612225,
+            "q3": 0.0383565625,
+            "min": 0.0351875,
+            "max": 0.0402395
+          },
+          "validity_ms_per_flow": {
+            "n": 12,
+            "median": 9.42358325,
+            "q1": 8.707406437500001,
+            "q3": 11.9957658125,
+            "min": 8.433,
+            "max": 13.017021
+          },
+          "route_specific_ms_per_flow": {
+            "n": 12,
+            "median": 4.746495,
+            "q1": 4.620906,
+            "q3": 5.0033178750000005,
+            "min": 4.5616769999999995,
+            "max": 5.2053745
+          }
+        },
+        "validity_calls": 2,
+        "checkpoint_writes": 2,
+        "process_peak_rss_mib": 7.75,
+        "communication": {
+          "accepted_roots_bytes_shared_per_flow": 64,
+          "ballot_matrix_bytes": 6400,
+          "calldata": null,
+          "components_not_a_complete_wire_envelope": true,
+          "full_network_bytes": null,
+          "individual_new_CT_is_derived_not_transmitted": false,
+          "matrix_represents_canonical_records_do_not_add_records_again": true,
+          "membership_path_bytes": 0,
+          "route": "snarkpack_state_proof",
+          "state_proof_bytes": 384,
+          "submitted_ct_old_new_bytes": 768,
+          "validity_proof_bytes": 16424
+        }
+      }
+    ],
+    "necessary_negative_cases": [
+      {
+        "case": "row0_with_original_row1_proof",
+        "checkpoint_unchanged": true,
+        "groth16_reached": true,
+        "membership_passed": true,
+        "rejection": "Proof",
+        "route": "individual_groth16_per_vote"
+      },
+      {
+        "accepted_root_passed": true,
+        "case": "row0_with_original_row1_proof",
+        "checkpoint_unchanged": true,
+        "groth16_reached": true,
+        "rejection": "ProofVerification",
+        "route": "transaction_batch_individual_groth16"
+      },
+      {
+        "case": "changed_first_new_state_before_acceptance",
+        "checkpoint_unchanged": true,
+        "rejection": "ProofVerification",
+        "route": "snarkpack_direct_fold",
+        "route_specific_rejected": true,
+        "snarkpack_passed": true
+      },
+      {
+        "case": "changed_first_new_state_before_acceptance",
+        "checkpoint_unchanged": true,
+        "rejection": "ProofVerification",
+        "route": "snarkpack_state_proof",
+        "route_specific_rejected": true,
+        "snarkpack_passed": true
+      }
+    ],
+    "unit_tests_passed": 4,
+    "release_build": true,
+    "strict_clippy": true,
+    "fmt": true,
+    "sender_membership_path_preparation": [
+      {
+        "batch_index": 1,
+        "four_paths_bytes": 256,
+        "prepare_ms": 0.158541
+      },
+      {
+        "batch_index": 2,
+        "four_paths_bytes": 256,
+        "prepare_ms": 0.13020800000000002
+      }
+    ],
+    "memory_scope": "fresh process cumulative high-water; common all-route fixture/material loader included; not incremental algorithm memory or prover memory",
+    "full_lifecycle_comparison": false,
+    "five_route_system_comparison": false,
+    "full_tally_vs_winner_only": false,
+    "new_setup": 0,
+    "new_proofs": 0,
+    "new_aggregates": 0,
+    "new_evm": 0,
+    "setup_ms": null,
+    "prove_ms": null,
+    "aggregation_ms": null,
+    "gas": null,
+    "calldata": null,
+    "G9_P1": "BLOCKED",
+    "G9_P2_started": false,
+    "limitations": [
+      "single fixed eight-ballot pool, one timing process; descriptive matched pilot only",
+      "working source changes pinned by full source snapshots/hashes, not a clean committed-source reproduction",
+      "process-specific RSS includes common material loading; no prover or incremental algorithm memory claim",
+      "membership path generation measured once per batch separately; not inside intake timing",
+      "no setup/prove/aggregation generation costs retimed",
+      "no certificate/freeze/threshold/P3/Winner suffix or exact SnarkPack EVM",
+      "component bytes are not a complete transport envelope"
+    ],
+    "next_task": "G10-B2: first audit existing generation-cost evidence and set a bounded matched-cost plan; only fill necessary gaps. Full Tally/Winner-only and full lifecycle remain separate."
+  },
+  "g10_b2_generation_cost_audit": {
+    "status": "PASS_ARTIFACT_COST_AUDIT_AND_BOUNDED_AGGREGATION",
+    "report": "results/g10_b2/cost_ledger.json",
+    "identity_checks": {
+      "original_eight_proofs_traced_through_d0_d1_d2": true,
+      "same_records_matrix_key_and_context": true,
+      "both_state_proof_bytes_and_ct1_ct2_match": true,
+      "p3_fixture_targets_same_ct2": true,
+      "research_srs_matches": true,
+      "all_26_generated_aggregates_byte_identical_and_verified": true
+    },
+    "current_aggregation": {
+      "by_batch": [
+        {
+          "batch_index": 1,
+          "aggregation_ms": {
+            "n": 12,
+            "median": 9.108333000000002,
+            "q1": 8.6974375,
+            "q3": 9.553708250000001,
+            "min": 8.304374999999999,
+            "max": 9.652791
+          }
+        },
+        {
+          "batch_index": 2,
+          "aggregation_ms": {
+            "n": 12,
+            "median": 8.775896,
+            "q1": 8.51339575,
+            "q3": 9.329062250000002,
+            "min": 8.344458000000001,
+            "max": 9.967459
+          }
+        }
+      ],
+      "two_batch_generation_components_ms": {
+        "n": 12,
+        "median": 18.0994995,
+        "q1": 17.74399975,
+        "q3": 18.3235205,
+        "min": 16.717458,
+        "max": 18.754792000000002
+      },
+      "generation_times_only_not_end_to_end": true,
+      "process_peak_rss_mib": 12.25,
+      "rss_scope": "whole aggregation process including shared archived material loading and research SRS; not per-call allocation or Groth16 prover RSS",
+      "srs_rebuild_ms_offline": 7.765917,
+      "srs_specialize_ms_offline": 5.50825,
+      "matrix_transcript_pack_ms_offline": 0.049042
+    },
+    "historical_costs_reference_only": true,
+    "all_current_generation_costs_measured": false,
+    "full_end_to_end_total_ms": null,
+    "new_groth16_proofs": 0,
+    "new_aggregates": 26,
+    "research_srs_rebuilds": 1,
+    "new_evm": 0
+  },
+  "g10_c_connected_functional_flow": {
+    "schema": "VV/G10-C/FUNCTIONAL-INTEGRATION/v1",
+    "status": "PASS_IMPLEMENTED_NATIVE_AND_INDIVIDUAL_GROTH16_EVM_FALLBACK_FLOW",
+    "scope": "CONNECTED_IMPLEMENTED_NATIVE_AND_AUTHENTICATED_EVM_FALLBACK_NOT_FULL_TARGET",
+    "source_base_sha": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+    "source_version_sha256": "5da752ded5f812524f52ff8e5a51d4529d1903d4c06749237f5112f01fba8bab",
+    "source_was_dirty": true,
+    "binary_sha256": "99969b88c1a75db351677df80590fa6c58a132e371d545635acfe6e364a4c99e",
+    "native_proof_sha256": "226e395d81a1ae45531ae2e012d5ca3439c0a618b956f0603617234ba7a9f833",
+    "evm_uses_same_proof_and_worker_commitments": true,
+    "matched_public_input_count": 60,
+    "completed": {
+      "authenticated_dkg_registration_reconstruction": true,
+      "two_actual_native_snarkpack_and_state_batches": true,
+      "live_ct2_freeze": true,
+      "five_separate_cp_package_processes": true,
+      "private_pipe_delivery_and_cp_opening_authentication": true,
+      "private_threshold_decode": true,
+      "one_fresh_fixed_vk_p3": true,
+      "native_one_time_winner": true,
+      "independent_public_winner_replay": true,
+      "separate_full_tally_diagnostic_public_verifier": true,
+      "evm_certificate_authentication": true,
+      "evm_individual_ballot_and_state_verification": true,
+      "evm_ct2_freeze_and_commitment_authentication": true,
+      "evm_storage_rebuild_60_inputs_and_same_new_p3": true,
+      "evm_winner_write_once_and_replay_rejection": true
+    },
+    "native": {
+      "trustee_process_ids": [
+        83586,
+        83587,
+        83588,
+        83589,
+        83590
+      ],
+      "new_cp_packages": 5,
+      "new_p3_proofs": 1,
+      "setup_rebuilds": 1,
+      "setup_rebuild_ms": 90700.126125,
+      "prove_ms": 45059.411416,
+      "total_wall_ms": 136016.8725,
+      "process_peak_rss_mib": 8597.0625,
+      "reused_ballot_proofs": 8,
+      "reused_aggregates": 2,
+      "reused_state_proofs": 2,
+      "functional_run_not_statistics": true
+    },
+    "chain": {
+      "environment": "local_Prague",
+      "signed_transactions": 21,
+      "successful": 17,
+      "rejected": 4,
+      "successful_gas_including_deployment": 66172916,
+      "deployment_gas": 34082689,
+      "non_deployment_success_gas": 32090227,
+      "disclose_winner_gas": 2073548,
+      "disclose_calldata_bytes": 644,
+      "one_winner_event": true,
+      "exact_snarkpack_evm": false,
+      "gas_scope": "same new functional run receipts; successes only, deployment separated; not a statistical or exact-SnarkPack full-system efficiency result"
+    },
+    "disclosure": {
+      "winner_only_fixture_json_bytes": 18694,
+      "full_tally_diagnostic_json_bytes": 7489,
+      "winner_ark_proof_bytes": 192,
+      "winner_eip_proof_bytes": 512,
+      "winner_derived_inputs_bytes": 1920,
+      "cached_ark_vk_bytes": 3272,
+      "full_tally_counterfactual_not_policy_authorized": true,
+      "usable_full_tally_payload_withheld": true,
+      "public_data_json_files_scanned": 18,
+      "comparable_transport_envelope": false,
+      "privacy_theorem_proved": false
+    },
+    "remaining_required": [
+      "exact SnarkPack EVM verification + its receiver integration",
+      "independent DKG/private key custody in the same full-flow context",
+      "T4/T5 mathematical security composition",
+      "final matched full-system comparison and clean-source reproduction"
+    ],
+    "target_architecture_complete": false,
+    "independent_distributed_dkg": false,
+    "production_setup": false,
+    "production_deployment": false,
+    "full_privacy_proof": false,
+    "no_optimization_performed": true,
+    "no_batch_scale_expansion": true,
+    "no_g1e_repeat_campaign": true,
+    "one_command_driver_available": "node scripts/run_functional_experiment.mjs /ABS/NEW_RUN_ROOT",
+    "current_execution_was_two_sequential_drivers_then_finalize": true,
+    "current_one_command_proving_invocation_claimed": false,
+    "next_priority": "Close exact SnarkPack EVM verification/receiver functionality under an explicit bounded route decision; connect genuinely independent DKG/key custody to this same full-flow context. No further microbenchmark/optimization gates.",
+    "sources": [
+      {
+        "path": "experiments/g10_c_raw/native/report.json",
+        "sha256": "a14710a3adc1839a73b016f091b90a4ef9cfb1c3e4bf59f329c378c4c6e29070"
+      },
+      {
+        "path": "experiments/g10_c_raw/chain/winner_once.json",
+        "sha256": "17bff3d9641e79a03f79c3da8aed65f47ef692ee775774436abe46cd47bf00d7"
+      },
+      {
+        "path": "experiments/g10_c_raw/functional_completion.json",
+        "sha256": "9e97adff6c785896c98cede1e06c614090a0865796088060249145fcefc3ff9b"
+      }
+    ]
   }
 }

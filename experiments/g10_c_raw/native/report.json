@@ -1,0 +1,270 @@
+{
+  "all_60_inputs_from_live_frozen_state": true,
+  "batches": [
+    {
+      "batch_index": 1,
+      "checkpoint": {
+        "freeze_digest_hex": null,
+        "frozen": false,
+        "next_batch_index": 2,
+        "public_winner": null,
+        "release_policy": "WINNER_ONLY_V1",
+        "selected_subset": [
+          1,
+          2,
+          3
+        ],
+        "spent_nullifier_count": 4,
+        "state": [
+          {
+            "c0_hex": "0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+            "c1_hex": "1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "fd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+            "c1_hex": "59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+            "c1_hex": "35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1",
+            "candidate_id": 3
+          }
+        ],
+        "winner_write_count": 0
+      },
+      "proofs_reused": true,
+      "snarkpack_verified": true,
+      "snarkpack_verify_ms": 4.3249580000000005,
+      "state_proof_verified": true,
+      "state_verify_ms": 2.0557079999999996
+    },
+    {
+      "batch_index": 2,
+      "checkpoint": {
+        "freeze_digest_hex": null,
+        "frozen": false,
+        "next_batch_index": 3,
+        "public_winner": null,
+        "release_policy": "WINNER_ONLY_V1",
+        "selected_subset": [
+          1,
+          2,
+          3
+        ],
+        "spent_nullifier_count": 8,
+        "state": [
+          {
+            "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+            "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+            "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+            "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+            "candidate_id": 3
+          }
+        ],
+        "winner_write_count": 0
+      },
+      "proofs_reused": true,
+      "snarkpack_verified": true,
+      "snarkpack_verify_ms": 4.366125,
+      "state_proof_verified": true,
+      "state_verify_ms": 2.6227080000000003
+    }
+  ],
+  "binary_sha256": "99969b88c1a75db351677df80590fa6c58a132e371d545635acfe6e364a4c99e",
+  "certified_dkg_and_registration": {
+    "all_32_addresses_match_d2": true,
+    "certificate_verified": true,
+    "ct2_matches_native_reconstruction": true,
+    "disclosure_digest_hex": "c9ffb7957d49018a6f8960492619752f5cb42ef0d09b0d76712f0762413faa7e",
+    "dkg_session_hex": "abc984a2ba7ee1c1a65d69c984a19c846ab00d1a3f2c3f1b746733785587aafd",
+    "election_id_hex": "bc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad45718",
+    "final_context_hex": "7ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e01",
+    "first_eight_ciphertexts_and_nullifiers_match_d2": true,
+    "key_core_digest_hex": "eb40303454eec2ccb51ca147a814a8026596d18901afdeb744ca1fff4a4c4be5",
+    "n_registered": 32,
+    "policy_pre_hex": "0b2830da624f7a3fc66c6303de74fd3a8f51477a7a873c12f42848445b49de72",
+    "pre_policy_fixed_before_dkg": true,
+    "prekey_context_hex": "12a9edb0cbe6ec7dfb2f0735e61d2949d136b326cd859082ff87974cc9b76c90",
+    "public_key_hex": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+    "rebuild_ms": 46.657958,
+    "registered_weight": 32,
+    "registration_authority_hex": "ee613868e5790ef359653b0fcdabc9037a7c2bd699d55f58df0c70d9ee814bd2",
+    "registration_certificate_hex": "000000000000000f56562d43414e4f4e4943414c2d5631000000000000002156562f4a55424a55422f52454749535445522f43455254494649434154452f76310000000000000128000000000000000f56562d43414e4f4e4943414c2d5631000000000000002256562f4a55424a55422f52454749535445522f434c4f53452f5245434f52442f7631000000000000002356455249564f54494e472d4a55424a55422d50524f544f545950452d47302e382d7632bc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad457187ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e010b2830da624f7a3fc66c6303de74fd3a8f51477a7a873c12f42848445b49de72ae579623c1046c262e6941be7423898e72c746dafcfaea0255162b2f16c06e0b0000000000000020000000000000002000000000000000200000000195bb2a6866d9363c873ec9f96c759e830e9c8ec361e198f051c53d7070437fe900000000000000421db36e7103263069ad86fed496261923ab33139fe8f70cc9819158fe0fedc55de0a68f94b35068088ff2e60e6e6401d0f259699b723f691c73eb81192b9040000000",
+    "registration_certificate_verified": true,
+    "registration_close_digest_hex": "48074943738c3222a022d6c662071f199ac8f48e76776531f5986bdc19ef7928",
+    "registration_root_hex": "ae579623c1046c262e6941be7423898e72c746dafcfaea0255162b2f16c06e0b",
+    "w_max": 32
+  },
+  "exact_snarkpack_evm": false,
+  "five_cp_and_commitment_openings_verified": true,
+  "full_target_architecture_complete": false,
+  "gas": null,
+  "independent_distributed_dkg": false,
+  "limitations": [
+    "same-host workers receive shares from centralized deterministic research DKG bootstrap; not independent trustee key custody",
+    "public research seeds invalidate operational secrecy; private pipe isolation is transport evidence, not a privacy theorem",
+    "Full Tally is a local counterfactual diagnostic, not authorized by the Winner-only certificate and not published with Winner fixture",
+    "native live state machine is in-memory; exact SnarkPack EVM and production deployment remain incomplete"
+  ],
+  "necessary_negatives": {
+    "changed_frozen_target_rejected_atomically": true,
+    "full_tally_wrong_claim_rejected": true,
+    "repeat_disclosure_rejected_atomically": true,
+    "wrong_winner_actual_groth16_rejected_atomically": true
+  },
+  "new_ballot_proofs": 0,
+  "new_cp_packages": 5,
+  "new_groth16_setup_rebuilds": 1,
+  "new_p3_proof_from_current_private_witness": true,
+  "new_p3_proofs": 1,
+  "new_state_proofs": 0,
+  "not_json_concatenation": true,
+  "operational_privacy": false,
+  "p3_proof_sha256": "226e395d81a1ae45531ae2e012d5ca3439c0a618b956f0603617234ba7a9f833",
+  "p3_prove_ms": 45059.411416,
+  "p3_vk_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29",
+  "packages_and_delivery_ms": 25.375583,
+  "private_threshold_decode_ms": 2.036125,
+  "process_peak_rss_mib": 8597.0625,
+  "production_setup": false,
+  "public_winner": 1,
+  "release_comparison": {
+    "cached_p3_vk_bytes": 3272,
+    "full_tally_diagnostic_json_bytes": 7489,
+    "full_tally_is_counterfactual_baseline": true,
+    "full_tally_payload_not_in_public_archive": true,
+    "full_tally_policy_authorized": false,
+    "privacy_theorem_proved": false,
+    "same_ct2_same_dkg_same_selected_shares": true,
+    "winner_only_fixture_json_bytes": 18694,
+    "winner_proof_bytes": 192,
+    "winner_public_inputs_bytes": 1920
+  },
+  "resource_budget": {
+    "rss_mib": 16384,
+    "wall_seconds": 600
+  },
+  "reused_aggregates": 2,
+  "reused_ballot_proofs": 8,
+  "reused_state_proofs": 2,
+  "same_ct2_and_freeze_as_g6": true,
+  "setup_rebuild_ms": 90700.126125,
+  "source_base_sha": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+  "source_version_sha256": "5da752ded5f812524f52ff8e5a51d4529d1903d4c06749237f5112f01fba8bab",
+  "source_was_dirty": true,
+  "sources": [
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/g10c_complete_native.rs",
+      "sha256": "75e9b25831fdf3d255850ff729dde9ca2b5977dbc60321f693cffad8b0a86abf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g10c_packages.rs",
+      "sha256": "e748a7a3c74ec3164a2f0e6f44487f5d3d5fa69c8931f6f64d1b21bef99d31b5"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g6_materials.rs",
+      "sha256": "f3d5f8e915c236d1f6a41e5406147385bbe321d268a8f2e17d0c79ce8dbd2c24"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g6_batches.rs",
+      "sha256": "e272ab111e29068c72d9dbe5d97ba3ae48fd5af8e4f64b3e05d35670f4e59e3f"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g6_state.rs",
+      "sha256": "c8c9bf0ad7d185aa447a707341a56b19a9e216c2a610bf867b051e2cc56c2ec2"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/common/g2e_receiver.rs",
+      "sha256": "7f748d4c7a172fdce109c5f89877f626a28d04815ef5510197de4e679397fced"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/package.rs",
+      "sha256": "224d95192e42e24f01fee3aa00dbe73cfca8bcb25f2d60492d2f4a5166192774"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/lib.rs",
+      "sha256": "6ca8db4f3092ae5311f003286ced17dfe73b0feb81b9054719987db112e8b6f4"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/cp.rs",
+      "sha256": "16667a8c1f5489e9881317ccf39f02b6dadadb028c61ab59dd79a5fbb8ffd782"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/p3ten_gadget.rs",
+      "sha256": "7e46b1ddb5ab5723cf3a1d2d646dfb9df5c8abac7d02bca5d4a95a1d26b3c27c"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "6b7ce01c5bd626481149ca37549a934c97131469b38d4f3bee8ae93fa1380a69"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "c355183ec81824cb6f989f8ff976981625273b8b285d6e43e7c32c1e28929794"
+    }
+  ],
+  "started_utc": "2026-11-04T14:05:04Z",
+  "status": "PASS_CONNECTED_NATIVE_FIVE_WORKER_NEW_P3_WINNER_ONCE_AND_FULL_TALLY_DIAGNOSTIC",
+  "total_wall_ms": 136016.8725,
+  "winner_disclose_ms": 7.015084000000001,
+  "winner_writes": 1,
+  "worker_evidence": {
+    "centralized_research_dkg_bootstrap": true,
+    "independent_distributed_dkg": false,
+    "private_delivery": "OS stdin/stdout pipes, no private state files or command-line secrets",
+    "private_payloads_archived": false,
+    "production_transport": false,
+    "research_seeds_public_no_operational_secrecy": true,
+    "unique_process_ids": 5,
+    "workers": [
+      {
+        "exited_successfully": true,
+        "private_input_bytes": 2999,
+        "private_response_bytes": 1176,
+        "process_id": 83586,
+        "trustee_id": 1
+      },
+      {
+        "exited_successfully": true,
+        "private_input_bytes": 3000,
+        "private_response_bytes": 1176,
+        "process_id": 83587,
+        "trustee_id": 2
+      },
+      {
+        "exited_successfully": true,
+        "private_input_bytes": 3000,
+        "private_response_bytes": 1176,
+        "process_id": 83588,
+        "trustee_id": 3
+      },
+      {
+        "exited_successfully": true,
+        "private_input_bytes": 3000,
+        "private_response_bytes": 1176,
+        "process_id": 83589,
+        "trustee_id": 4
+      },
+      {
+        "exited_successfully": true,
+        "private_input_bytes": 3000,
+        "private_response_bytes": 1176,
+        "process_id": 83590,
+        "trustee_id": 5
+      }
+    ]
+  }
+}

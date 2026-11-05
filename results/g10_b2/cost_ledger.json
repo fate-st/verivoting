@@ -1,0 +1,558 @@
+{
+  "schema": "VV/G10-B2/COST-LEDGER/v1",
+  "status": "PASS_ARTIFACT_COST_AUDIT_AND_BOUNDED_AGGREGATION",
+  "source_base_sha": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+  "source_version_sha256": "917a13ddf0fe7d17d1a9895aa1972d74dc9d7a407816528c0ced9c6e2796185f",
+  "binary_sha256": "2c176db99171561e864971df701d457040cf7c16b686dfc15099d5d1bb5691a9",
+  "source_was_dirty": true,
+  "sources": [
+    {
+      "id": "d0",
+      "path": "experiments/g1_d0_raw/uniform_depth5_native_pilot.json",
+      "sha256": "d62977c93e71dd2c0493dee221c50692995b13197baba0dead18e1ce6a9ee088"
+    },
+    {
+      "id": "d1",
+      "path": "experiments/g1_d1_raw/uniform_depth5_batch16.json",
+      "sha256": "0d6abd826a375a227aeecd97c083de50c05585943356f36e14f9bf964c8ea5b5"
+    },
+    {
+      "id": "d2",
+      "path": "experiments/g1_d2_raw/uniform_depth5_batch32.json",
+      "sha256": "1a8c11c29ec89b8cf4a58dc963d83f408cd6f3fef6ef28a91159bb6985952372"
+    },
+    {
+      "id": "f0",
+      "path": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+      "sha256": "a4ae00a6bf322cbeba70050e4583f297d3fd9a83e6a8cea793b1366f97cef062"
+    },
+    {
+      "id": "f1",
+      "path": "fixtures/snarkpack_g1d1_depth5_batch16_public_v1.json",
+      "sha256": "ef1dbdc30c9d70d358deb31a19125681044eb2afa7ed107cd39f702c85567f14"
+    },
+    {
+      "id": "f2",
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "id": "sd",
+      "path": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+      "sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0"
+    },
+    {
+      "id": "se",
+      "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+      "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+    },
+    {
+      "id": "fd",
+      "path": "fixtures/jubjub_state_g2d_d5w32_b4_public_v1.json",
+      "sha256": "254c0f35bd7715f2807ba7981cca7ff52f50bfc5445d5909f4a49420c2f8fe04"
+    },
+    {
+      "id": "fe",
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "id": "g6",
+      "path": "experiments/g6_raw/native_winner_only.json",
+      "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"
+    },
+    {
+      "id": "fg6",
+      "path": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+      "sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"
+    },
+    {
+      "id": "b1",
+      "path": "results/g10_b1/summary.json",
+      "sha256": "c6a7ef2b7e41f51d92a7c190a7b727465f9fce5254cc583126e0bae9107413ee"
+    },
+    {
+      "id": "b1raw",
+      "path": "experiments/g10_b1_raw/matched.json",
+      "sha256": "9d3eb44fe2db0efb9aa875c6d99e12c30051650ec208716a89c278f3a601c49c"
+    },
+    {
+      "id": "manifest",
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "id": "current",
+      "path": "experiments/g10_b2_raw/aggregation_cost.json",
+      "sha256": "5a91eefe15148efcd5285d84dc176fd22a22753d55c35a78fe629178ee27a9f3"
+    },
+    {
+      "id": "execution",
+      "path": "experiments/g10_b2_raw/execution/manifest.json",
+      "sha256": "0a08dfade5b17ca741a84b0e8c9d007cdcb877b466cefa3309adcea11c168e82"
+    }
+  ],
+  "identity_checks": {
+    "original_eight_proofs_traced_through_d0_d1_d2": true,
+    "same_records_matrix_key_and_context": true,
+    "both_state_proof_bytes_and_ct1_ct2_match": true,
+    "p3_fixture_targets_same_ct2": true,
+    "research_srs_matches": true,
+    "all_26_generated_aggregates_byte_identical_and_verified": true
+  },
+  "historical_ledger": [
+    {
+      "id": "ballot_setup",
+      "title": "选票 Groth16 Setup",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g1_d0_raw/uniform_depth5_native_pilot.json",
+        "sha256": "d62977c93e71dd2c0493dee221c50692995b13197baba0dead18e1ce6a9ee088"
+      },
+      "field": "groth16_setup_ms",
+      "measured_ms": 11312.936709000001,
+      "stage": "OFFLINE",
+      "applies_to_native_intake_routes": [
+        "individual_groth16_per_vote",
+        "transaction_batch_individual_groth16",
+        "snarkpack_direct_fold",
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "vk_ark_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+        "vk_wire_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c"
+      },
+      "count_in_original_execution": 1
+    },
+    {
+      "id": "eight_ballot_proving",
+      "title": "原八票 Groth16 Prove",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g1_d0_raw/uniform_depth5_native_pilot.json",
+        "sha256": "d62977c93e71dd2c0493dee221c50692995b13197baba0dead18e1ce6a9ee088"
+      },
+      "field": "groth16_prove_total_ms",
+      "measured_ms": 55702.40437599999,
+      "stage": "PROVER",
+      "applies_to_native_intake_routes": [
+        "individual_groth16_per_vote",
+        "transaction_batch_individual_groth16",
+        "snarkpack_direct_fold",
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "proof_sha256": [
+          "f382fb87fa793b36fc276fe16b1baf5d477ad1bc122a98c3a9a66b0700fc4dca",
+          "72f683d1844fbd36ad540000443392fc9077c626f6ec6f9434de0b93f824d3fe",
+          "b59c7c0cbbc19db3241db2f3d799aa8f05fbe5903c67130266ee1f934ff1b0be",
+          "ac998e49d33d1eb67158239f5bca2838486b4ba11448d00568ac53e9c501ef87",
+          "d5588f0c7487892f6751d6eb294e05e44c379c52c21c9dcc6195becfce910f48",
+          "3126c20f44de6376c06df00e2490536090db9488b886372c1b647322fc9b5697",
+          "04f854bee09d331a12d5792e08abe0be89bbfa715453ed3574684262336427d4",
+          "3d61e7cf663b7ed1c064fbfb6eb6d0861bad21ff7816682937299026e0cba9d1"
+        ]
+      },
+      "per_ballot_ms": [
+        7628.729667,
+        6970.812167,
+        6929.005959,
+        6835.703041000001,
+        6826.820375,
+        6739.683125,
+        7001.993542,
+        6769.6565
+      ],
+      "proof_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "aggregate1_original",
+      "title": "第一批 B4 原聚合生成",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+        "sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0"
+      },
+      "field": "new_source_aggregation_ms",
+      "measured_ms": 8.1595,
+      "stage": "AGGREGATOR",
+      "applies_to_native_intake_routes": [
+        "snarkpack_direct_fold",
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "aggregate_sha256": "10c4b85a3d063d2aaa0b0d3bce3050f59267652c978636bd3be5e8d06a06ecd6"
+      }
+    },
+    {
+      "id": "aggregate2_original",
+      "title": "第二批 B4 原聚合生成",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+        "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+      },
+      "field": "new_source_aggregation_ms",
+      "measured_ms": 12.321125,
+      "stage": "AGGREGATOR",
+      "applies_to_native_intake_routes": [
+        "snarkpack_direct_fold",
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "aggregate_sha256": "173c80153f5f689fdd641b950e514f3a7f0411f4d990716c1e5722221cb2f1fd"
+      }
+    },
+    {
+      "id": "state_setup",
+      "title": "状态关系 Setup",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+        "sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0"
+      },
+      "field": "setup_ms",
+      "measured_ms": 24941.019291,
+      "stage": "OFFLINE",
+      "applies_to_native_intake_routes": [
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856"
+      },
+      "count_in_original_execution": 1
+    },
+    {
+      "id": "state_setup_reconstruction",
+      "title": "后续状态 PK 重建",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+        "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+      },
+      "field": "setup_rebuild_ms",
+      "measured_ms": 25314.304084,
+      "stage": "OFFLINE_RECONSTRUCTION",
+      "applies_to_native_intake_routes": [
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856"
+      },
+      "not_an_additional_online_per_batch_cost": true
+    },
+    {
+      "id": "state1_proving",
+      "title": "第一批状态 Prove",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+        "sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0"
+      },
+      "field": "prove_ms",
+      "measured_ms": 15998.8315,
+      "stage": "PROVER",
+      "applies_to_native_intake_routes": [
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "proof_sha256": "b85d693df1ef357fff8d55ae33c6294d8fe520b02f3d6bb312248c2528af92e9",
+        "batch_root": "91f6c687850b799e58e413c6c9c3b67e1acb1f2cb8a03e2b4d88a3729a9a2134"
+      },
+      "process_peak_mib": 5911.078125,
+      "memory_scope": "cumulative process includes Setup and matrix instrumentation, not isolated Prove allocation"
+    },
+    {
+      "id": "state2_proving",
+      "title": "第二批状态 Prove",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+        "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+      },
+      "field": "new_second_prove_ms",
+      "measured_ms": 16917.430791000003,
+      "stage": "PROVER",
+      "applies_to_native_intake_routes": [
+        "snarkpack_state_proof"
+      ],
+      "artifact": {
+        "proof_sha256": "f01ebc07424b1360a39b8beb36dff52bd7a3c145d1109516e04e7ba555a2d84b",
+        "batch_root": "4e3a7649aa9d7455509a0b052d85c6745b38cb1f2416045c08ffd25094837fcf"
+      },
+      "process_peak_mib": 5793.875,
+      "memory_scope": "whole G2-E execution, not isolated Prove allocation"
+    },
+    {
+      "id": "p3_setup",
+      "title": "P3 PK 重建（接收范围外）",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g6_raw/native_winner_only.json",
+        "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"
+      },
+      "field": "setup_rebuild_ms",
+      "measured_ms": 69021.922209,
+      "stage": "OFFLINE_SUFFIX_ONLY",
+      "applies_to_native_intake_routes": [],
+      "artifact": {
+        "vk_sha256": "0d37a77cfc8a1cdfed612b397149d96816188d164e08a74994dd2abfca6cff29"
+      }
+    },
+    {
+      "id": "p3_proving",
+      "title": "P3 Prove（接收范围外）",
+      "classification": "HISTORICAL_EXACT_ARTIFACT_COST_NOT_CURRENT_MATCHED_MEASUREMENT",
+      "source": {
+        "path": "experiments/g6_raw/native_winner_only.json",
+        "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"
+      },
+      "field": "prove_ms",
+      "measured_ms": 41178.248416,
+      "stage": "PROVER_SUFFIX_ONLY",
+      "applies_to_native_intake_routes": [],
+      "artifact": {
+        "proof_sha256": "fc3854067baf9b766c83d18e9eabd8db90a477f8d65204991c7359e347eeee4c",
+        "target_fixture_sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+      },
+      "process_peak_mib": 8602.96875,
+      "memory_scope": "whole G6 flow including Setup, not isolated P3 Prove allocation"
+    }
+  ],
+  "historical_condition_audit": [
+    {
+      "source": {
+        "path": "experiments/g1_d0_raw/uniform_depth5_native_pilot.json",
+        "sha256": "d62977c93e71dd2c0493dee221c50692995b13197baba0dead18e1ce6a9ee088"
+      },
+      "recorded_git": "f080b7b7abe466f510ce658feecf358ec7860d0c",
+      "recorded_dirty": true,
+      "cpu": "Apple M4",
+      "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+      "profile": "release-opt-level-1",
+      "recorded_rayon_threads": null,
+      "archived_source_hashes_different_from_current": [
+        {
+          "path": "crates/vv-friendly-crypto/src/lib.rs",
+          "sha256": "c4c1cc57c44104a60a59d36b883c991c00902e025242083ab32bf5e5026f0622",
+          "current_sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+        },
+        {
+          "path": "Cargo.lock",
+          "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e",
+          "current_sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+        }
+      ],
+      "same_binary_as_current": false,
+      "current_prover_measurement": false
+    },
+    {
+      "source": {
+        "path": "experiments/g1_d1_raw/uniform_depth5_batch16.json",
+        "sha256": "0d6abd826a375a227aeecd97c083de50c05585943356f36e14f9bf964c8ea5b5"
+      },
+      "recorded_git": "bfc24a501c98ae3e95d767e3f2738fd7e6e195c3",
+      "recorded_dirty": true,
+      "cpu": "Apple M4",
+      "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+      "profile": "release-opt-level-1",
+      "recorded_rayon_threads": null,
+      "archived_source_hashes_different_from_current": [
+        {
+          "path": "crates/vv-friendly-crypto/src/lib.rs",
+          "sha256": "c4c1cc57c44104a60a59d36b883c991c00902e025242083ab32bf5e5026f0622",
+          "current_sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+        },
+        {
+          "path": "Cargo.lock",
+          "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e",
+          "current_sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+        }
+      ],
+      "same_binary_as_current": false,
+      "current_prover_measurement": false
+    },
+    {
+      "source": {
+        "path": "experiments/g1_d2_raw/uniform_depth5_batch32.json",
+        "sha256": "1a8c11c29ec89b8cf4a58dc963d83f408cd6f3fef6ef28a91159bb6985952372"
+      },
+      "recorded_git": "8e72034aa6b97c52ad23adccdff563cc27578001",
+      "recorded_dirty": false,
+      "cpu": "Apple M4",
+      "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+      "profile": "release-opt-level-1",
+      "recorded_rayon_threads": null,
+      "archived_source_hashes_different_from_current": [
+        {
+          "path": "crates/vv-friendly-dkg/Cargo.toml",
+          "sha256": "caebc9eba25431722ba3cb1d67b2118805e11fdbed87eab12b978af33b6d6a06",
+          "current_sha256": "c355183ec81824cb6f989f8ff976981625273b8b285d6e43e7c32c1e28929794"
+        },
+        {
+          "path": "crates/vv-friendly-crypto/src/lib.rs",
+          "sha256": "c4c1cc57c44104a60a59d36b883c991c00902e025242083ab32bf5e5026f0622",
+          "current_sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+        },
+        {
+          "path": "Cargo.lock",
+          "sha256": "c6f7254c653d8ec14af575db7ec11495514d2576ec4cf0a237d0d994f6dd1c4e",
+          "current_sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+        }
+      ],
+      "same_binary_as_current": false,
+      "current_prover_measurement": false
+    },
+    {
+      "source": {
+        "path": "experiments/g2_d_raw/state_transition_d5w32_b4_groth16.json",
+        "sha256": "f2d965d386b7e902b4467a94e580ca4f5b19233807097aaa6991961f687d96b0"
+      },
+      "recorded_git": "4c6220f66c7fdc53b71966a001e5716eaf9f9f1a",
+      "recorded_dirty": false,
+      "cpu": "Apple M4",
+      "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+      "profile": "release-opt-level-1",
+      "recorded_rayon_threads": null,
+      "archived_source_hashes_different_from_current": [
+        {
+          "path": "crates/vv-friendly-dkg/Cargo.toml",
+          "sha256": "8d59a756b84ae8da14b65958e308c6389ad9e389c7c8fcd9f0768378dd1e3df9",
+          "current_sha256": "c355183ec81824cb6f989f8ff976981625273b8b285d6e43e7c32c1e28929794"
+        },
+        {
+          "path": "crates/vv-friendly-crypto/src/lib.rs",
+          "sha256": "c4c1cc57c44104a60a59d36b883c991c00902e025242083ab32bf5e5026f0622",
+          "current_sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+        }
+      ],
+      "same_binary_as_current": false,
+      "current_prover_measurement": false
+    },
+    {
+      "source": {
+        "path": "experiments/g2_e_raw/multibatch_state_b4.json",
+        "sha256": "01582f079b95d317c728cca2a62c29939a03fd8425e05edd564c721ba9acda51"
+      },
+      "recorded_git": "61193416f36a4bb4132091a10259ced1282d5978",
+      "recorded_dirty": true,
+      "cpu": "Apple M4",
+      "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+      "profile": "release-opt-level-1",
+      "recorded_rayon_threads": null,
+      "archived_source_hashes_different_from_current": [
+        {
+          "path": "crates/vv-friendly-dkg/Cargo.toml",
+          "sha256": "6d3caeea6d2c9338323c83fdfc70b110ea3134aeaf226e990646689a8b995d17",
+          "current_sha256": "c355183ec81824cb6f989f8ff976981625273b8b285d6e43e7c32c1e28929794"
+        }
+      ],
+      "same_binary_as_current": false,
+      "current_prover_measurement": false
+    },
+    {
+      "source": {
+        "path": "experiments/g6_raw/native_winner_only.json",
+        "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0"
+      },
+      "recorded_git": "9d8e73a2004473ed65571e08b46e14045f3679d6",
+      "recorded_dirty": true,
+      "cpu": "Apple M4",
+      "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+      "profile": "release-opt-level-1",
+      "recorded_rayon_threads": null,
+      "archived_source_hashes_different_from_current": [
+        {
+          "path": "crates/vv-friendly-dkg/Cargo.toml",
+          "sha256": "67a2df371bd35fb1519745dab6ff9bce20674cd6c4f98871c48b21abac1c7bcd",
+          "current_sha256": "c355183ec81824cb6f989f8ff976981625273b8b285d6e43e7c32c1e28929794"
+        }
+      ],
+      "same_binary_as_current": false,
+      "current_prover_measurement": false
+    }
+  ],
+  "current_aggregation": {
+    "by_batch": [
+      {
+        "batch_index": 1,
+        "aggregation_ms": {
+          "n": 12,
+          "median": 9.108333000000002,
+          "q1": 8.6974375,
+          "q3": 9.553708250000001,
+          "min": 8.304374999999999,
+          "max": 9.652791
+        }
+      },
+      {
+        "batch_index": 2,
+        "aggregation_ms": {
+          "n": 12,
+          "median": 8.775896,
+          "q1": 8.51339575,
+          "q3": 9.329062250000002,
+          "min": 8.344458000000001,
+          "max": 9.967459
+        }
+      }
+    ],
+    "two_batch_generation_components_ms": {
+      "n": 12,
+      "median": 18.0994995,
+      "q1": 17.74399975,
+      "q3": 18.3235205,
+      "min": 16.717458,
+      "max": 18.754792000000002
+    },
+    "generation_times_only_not_end_to_end": true,
+    "process_peak_rss_mib": 12.25,
+    "rss_scope": "whole aggregation process including shared archived material loading and research SRS; not per-call allocation or Groth16 prover RSS",
+    "srs_rebuild_ms_offline": 7.765917,
+    "srs_specialize_ms_offline": 5.50825,
+    "matrix_transcript_pack_ms_offline": 0.049042
+  },
+  "current_aggregation_raw": {
+    "path": "experiments/g10_b2_raw/aggregation_cost.json",
+    "sha256": "5a91eefe15148efcd5285d84dc176fd22a22753d55c35a78fe629178ee27a9f3"
+  },
+  "timed_intake_source": {
+    "path": "results/g10_b1/summary.json",
+    "sha256": "c6a7ef2b7e41f51d92a7c190a7b727465f9fce5254cc583126e0bae9107413ee"
+  },
+  "scope": "ARTIFACT_LINKED_COMPONENT_COSTS_NOT_MATCHED_FULL_SYSTEM_COST",
+  "new_groth16_setups": 0,
+  "new_groth16_proofs": 0,
+  "new_aggregates": 26,
+  "new_evm": 0,
+  "research_srs_rebuilds": 1,
+  "artifact_linked_historical_generation_available": true,
+  "all_current_generation_costs_measured": false,
+  "full_end_to_end_total_ms": null,
+  "full_system_gas": null,
+  "historical_costs_not_added_to_B1_timings": true,
+  "setup_not_counted_as_online": true,
+  "gaps": [
+    "current matched ballot/state/P3 generation and isolated prover RSS not retimed",
+    "whole lifecycle and Full Tally/Winner-only matched comparison not implemented",
+    "one fixed proof pool; no independent proof-generation sample statistics",
+    "exact SnarkPack EVM and T4/T5 security proof obligations unresolved"
+  ],
+  "decision": {
+    "rerun_g1e_scale_matrix": false,
+    "rerun_groth16_setup_prove_now": false,
+    "reason": "exact artifact-linked historical costs already exist; no need to regenerate merely to fill a missing ledger. Different source/lock/thread conditions prevent current full-system cost claims.",
+    "next_only": "G10-C1: specify/implement same-CT2 Full Tally vs archived Winner-only public verification/release comparison, with separated output branches and explicit trust scope; no automatic P3 re-proving or public deployment."
+  },
+  "G9_P1": "BLOCKED",
+  "G9_P2_started": false
+}

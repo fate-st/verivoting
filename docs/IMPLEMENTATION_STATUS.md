@@ -1,6 +1,45 @@
 # Implementation and claim boundary
 
-## Current work: G10-A clean e1e477f reproduction passed; G10-B design-only
+## Current work: connected native / fresh P3 / actual local EVM fallback passed
+
+[G10-C功能报告](G10_C_CONNECTED_FUNCTIONAL_FLOW.md)：实际运行原认证DKG/注册重建→两批B4原生SnarkPack/
+状态验证→冻结→5进程CP/承诺签名与私管道交付→私密门限解密→1份新P3→Winner一次写入。
+本次PK重建90.700 s、Prove45.059 s；原G4-D VK不变，新P3并非复用G6历史证明。
+独立公开Winner进程无私钥/CP opening/tally输入；同CT2 Full Tally反事实公开验证及错误计票拒绝通过，
+可用解密材料保留本地私有诊断目录，公共归档不含该数据。该分支不受Winner-only证书授权，不是新正式发布模式。
+
+随后同一新P3/新承诺实际接入原本地Prague合约：认证、两批逐票及状态验证、冻结、承诺认证、60/60输入
+从存储重建、正确P3、Winner一次写入；错误Winner实际pairing=0，正例=1，重放在pairing前拒绝。
+21笔新签名交易/17成功/4原子拒绝；披露2,073,548 Gas/644 B。15份合约源文件未改，未做优化/规模实验。
+
+已提供总入口scripts/run_functional_experiment.mjs；本次先顺序执行两个阶段再核对收尾，不伪称总入口重跑了证明。
+目标仍PARTIAL：精确SnarkPack EVM缺失；5worker基于集中确定性研究bootstrap，不是独立分布式DKG/保密密钥保管；
+T4/T5、最终统一比较和干净提交复现仍未完成。功能成功不能替代这些缺口。论文及旧实验数据不改。
+
+## Previous component: G10-B2 cost provenance audited; two-B4 aggregation retimed
+
+[G10-B2](G10_B2_GENERATION_COST_AUDIT.md)核对D0→D1→D2→G2-E→G10-B1的原8票证明/矩阵/公钥，
+两份状态证明/VK/CT1/CT2及G6同目标P3来源。历史Setup/Prove有真实记录，不因复用而视为零成本。
+历史8票Prove55.702 s、状态15.999/16.917 s，仅作对应原证明的成本证据；源/锁文件和线程条件
+不完全匹配当前执行，不能拼接为本轮完整系统耗时。P3的Setup69.022 s/Prove41.178 s在接收范围外。
+本轮对原两批B4做12轮有限聚合补测，同轮生成运算之和中位数18.099500 ms；26/26字节一致并真实验证。
+新Groth16 Setup/Prove=0、研究SRS重建=1、EVM=0，Release/fmt/严格Clippy及4项接收器回归通过。
+未改B1执行源码/配置/结果、论文或历史图。账本在results/g10_b2/cost_ledger.json。
+当前完整匹配生成成本/证明者RSS/Full Tally/生命周期/精确EVM仍未完成，G9-P1仍BLOCKED，P2未启动。
+
+## Previous component: G10-B1 matched native intake passed, full system incomplete
+
+[四路线报告](G10_B1_MATCHED_NATIVE_BASELINES.md)：新Legacy实际逐票验证/累计/写入8次，
+原B4根成员路径在线核查；Transaction-batch实际逐票验证8份、原子写入2次；原两条SnarkPack
+路线在同一二进制重测。四路均达相同CT1/CT2及8个已用NF，四个必要密码学负例原子拒绝。
+Release/fmt/严格Clippy/4项相关单元测试通过，无新Setup/Prove/聚合生成/EVM。
+8票流程中位数依次3.966229/3.817719/9.607130/14.234349 ms；B4聚合未显示收益。
+12轮/48窗口、一个固定证明池，仅描述性比较；独立路线进程RSS含共同加载，非证明者内存。
+执行源快照和SHA固定，git_dirty=true明确保留；不等于最终干净提交复现。
+只完成四路线原生接收面板，五路线完整生命周期/生成开销/Full Tally和精确EVM未完成。
+旧raw、Manifest、历史图及论文不改；G9-P1仍BLOCKED，P2未启动。
+
+## Previous component: G10-A clean e1e477f reproduction; G10-B comparison scope
 
 [干净30轮](G10_A_CLEAN30_REPRODUCTION.md)：原e1e477f入口未改，外部日志/结果、外部编译缓存，
 三个顺序进程每次10轮，共30配对轮/60窗口，源HEAD/运行前后status和raw git_dirty=false均核对。

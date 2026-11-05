@@ -1,0 +1,122 @@
+{
+  "schema": "VV/G10-C/NATIVE-TO-EVM-EXECUTION/v1",
+  "started_utc": "2026-11-04T14:13:24.587Z",
+  "native_report_sha256": "a14710a3adc1839a73b016f091b90a4ef9cfb1c3e4bf59f329c378c4c6e29070",
+  "native_proof_sha256": "226e395d81a1ae45531ae2e012d5ca3439c0a618b956f0603617234ba7a9f833",
+  "driver_sha256": "1844454607284a82ad7e51bf0c0374d1a920604ef3f807dc81b933944e579a0f",
+  "commands": [
+    {
+      "name": "export-build",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "g10c_commitment_export"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "elapsed_ms": 1086.8745000000001,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/export-build.log"
+    },
+    {
+      "name": "export-clippy",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "g10c_commitment_export",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "elapsed_ms": 319.14041599999996,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/export-clippy.log"
+    },
+    {
+      "name": "fmt",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "elapsed_ms": 363.694792,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/fmt.log"
+    },
+    {
+      "name": "public-commitment-export",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/g10c_commitment_export",
+      "args": [
+        "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/native/winner_only/public.json",
+        "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/commitments.json",
+        "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/commitment_export.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "elapsed_ms": 506.0235829999999,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/public-commitment-export.log"
+    },
+    {
+      "name": "chain-syntax",
+      "program": "node",
+      "args": [
+        "--check",
+        "contracts/scripts/g10c_winner_chain.mjs"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "elapsed_ms": 19.643125000000055,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/chain-syntax.log"
+    },
+    {
+      "name": "evm-connected",
+      "program": "node",
+      "args": [
+        "contracts/scripts/g10c_winner_chain.mjs",
+        "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain",
+        "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/config.json",
+        "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/p3_export_binding.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "elapsed_ms": 21722.449834000003,
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "log": "/private/tmp/vv-g10c-complete-20261104-mpTWLu/attempt1/chain_bridge/evm-connected.log"
+    }
+  ],
+  "optimization_performed": false,
+  "exact_snarkpack_evm": false,
+  "individual_groth16_evm_fallback": true,
+  "chain_report_sha256": "17bff3d9641e79a03f79c3da8aed65f47ef692ee775774436abe46cd47bf00d7",
+  "status": "PASS_SAME_NATIVE_PROOF_AND_WORKER_COMMITMENTS_CONNECTED_TO_EVM_FALLBACK",
+  "finished_utc": "2026-11-04T14:13:48.611Z"
+}

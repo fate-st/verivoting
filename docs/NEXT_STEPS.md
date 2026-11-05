@@ -1,6 +1,59 @@
 # Next steps: native comparison and exact-verifier feasibility (2026-11-04)
 
-## Current checkpoint: clean30 reproduced; next only G10-B1 matched native baselines
+## Current priority: finish missing functionality, no optimization campaign
+
+按用户最新要求，停止以优化/新增成本Gate为主线，先完成整个目标架构所缺的功能。
+[当前功能闭环](G10_C_CONNECTED_FUNCTIONAL_FLOW.md)已真实通过：两批原生SnarkPack/状态接收、冻结、5个CP进程、
+私管道交付、解密、1份新P3、一次Winner，以及同一新证明/承诺的完整本地EVM逐票备用结算。
+同目标Full Tally已做独立公开验证对照，但只是反事实诊断，不是Winner-only授权的第二发布通道；敏感材料不公开。
+
+接下来按功能依赖推进，不再先做性能调优：
+
+1. **精确SnarkPack EVM及接收器。** 当前EVM仍逐票验证，不能跳过聚合验证、改信任模型或把原生验证充作链上验证。
+   先闭合既定分阶段路线的完整语义/有限资源边界再实施；既有Miller优化扫描保持冻结。未闭合时标明阻塞，不抹去目标缺口。
+2. **同一完整流程内的独立DKG/密钥保管。** 现5个worker真实计算CP，但密钥由集中研究bootstrap提供；
+   需接入G3的独立建钥状态/认证交付，并让该实际产生的上下文贯穿投票、累计、冻结和新P3，而不是拼接历史不同公钥结果。
+3. 上述功能完成后做完整验收/干净源码复现。届时再统一补正式性能与公平基线，不在功能未闭合时反复加B64或微基准。
+4. T4/T5数学义务独立保留；程序通过不等于联合健全性/Function-Equal隐私证明完成。
+
+当前总入口：`node scripts/run_functional_experiment.mjs /ABS/NEW_RUN_ROOT`，运行**已实现**原生+本地EVM备用功能。
+该命令不意味着精确SnarkPack链上或生产部署已完成。新P3/CP材料需运行时产生，因此每次会有一次必要Setup/Prove，而非性能重复轮次。
+
+## Previous component: G10-B2 completed; disclosure-comparison plan now functionally exercised
+
+[G10-B2](G10_B2_GENERATION_COST_AUDIT.md)完成：8票/两份状态/P3的原始生成成本与现用证明逐项对应；
+历史条件差异明确保留。只新增两个B4的有限聚合生成实测，26/26字节一致/验证通过，无新Groth16 Setup/Prove。
+没有把这些历史成本和B1接收相加为端到端数据；同条件生成与证明者内存仍为后续缺口，不通过反复重跑旧矩阵补表。
+
+下一项唯一范围G10-C1：同CT2的Full Tally vs Winner-only公开验证/披露比较。
+
+1. 复用同一认证DKG、冻结CT2与合法3-of-5份额，先核对G6现有后缀/公开P3材料可复用部分。
+2. 定义Full Tally的公开验证材料及检查规则，Winner-only继续用原P3/VK；不把二者不同验证目标隐去。
+3. Full Tally与Winner-only输出隔离：不得把可恢复同一tally的份额/opening混入Winner-only公共fixture。
+4. 分别记录本轮真正执行的公开验证、披露材料字节与复用项；未执行的Prove/Setup/Gas为null，不拼接历史费用。
+5. 先做现有CT2/固定3-of-5的原生比较，不新扩Trustee数/B64、不自动重新Setup/Prove、公链部署或进入G9-P2。
+
+本轮G10-B2到此停止。完整生命周期、最终匹配生成预算/独立证明池、精确SnarkPack EVM和T4/T5仍未完成。
+实验比较不能证明Function-Equal隐私定理；若相同目标的Full Tally被公开，则不能再以同目标Winner-only归档声称计票隐藏。
+
+## Previous component: G10-B1 done; G10-B2 admission plan now implemented
+
+[G10-B1](G10_B1_MATCHED_NATIVE_BASELINES.md)已实现两个真实逐票基线，四路线在同一源码哈希/
+二进制中测量；12轮/48窗口/一组固定8票，两批B4最终CT2一致。必要正反例、Release/fmt/
+严格Clippy/4项相关测试通过；未测生成成本仍为null，不因复用证明而填零。
+
+下一项仅做G10-B2：
+
+1. 先核对已归档选票Prove、Aggregation、State Prove及Setup的参数/源码/证明对应关系，列出真正缺口。
+2. 固定同一W32/B4、相同硬件和各阶段明确预算，再决定必要补测；不无界重跑大电路Setup/Prove。
+3. 接收时间、发送端路径准备、证明生成和离线Setup分别报告，不能把历史组件加到新接收时间冒充端到端。
+4. 当前B4原生SnarkPack/State更慢，保留结果；无需为得到预设收益而扩B64+或反复重跑。
+5. Full Tally/Winner-only仍另开同CT2/DKG/份额且隔离公开分支的实验；完整生命周期/Gas比较后置。
+
+G10-B1到此停止。本轮不改论文、不生成新P3、不进入G9-P2；精确SnarkPack EVM仍BLOCKED。
+完整五路线比较、独立证明池与最终干净提交复现尚未完成。
+
+## Previous component: clean30 reproduced; G10-B1 admission plan now implemented
 
 [G10-A干净复现](G10_A_CLEAN30_REPRODUCTION.md)完成：e1e477f未改、3进程/30配对轮/60窗口，
 全部git_dirty=false。保持一组固定证明池，不能声称独立选举/独立证明池统计；生成时间仍未重测。

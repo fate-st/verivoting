@@ -1136,6 +1136,64 @@ def main() -> int:
             raise ValueError("G10-B comparison scope is design-only and cannot authorize P2")
         summary["g10_b_comparison_scope"] = {"status": g10b_scope["status"], "report": str(g10b_scope_path), "route_count": len(g10b_scope["routes"]), "system_comparison_executed": False}
         summary["gates"]["G10_B_five_route_system_comparison"] = "PARTIAL_PLAN_ONLY_NO_SYSTEM_COMPARISON_RUN"
+    g10b1_path = raw.parent.parent / "results" / "g10_b1" / "summary.json"
+    g10b1 = json.loads(g10b1_path.read_text()) if g10b1_path.exists() else None
+    if g10b1:
+        if (g10b1["status"] != "PASS_FOUR_MATCHED_NATIVE_INTAKE_ROUTES"
+                or len(g10b1["routes"]) != 4
+                or g10b1["sample_design"]["proof_pools"] != 1
+                or g10b1["full_lifecycle_comparison"] or g10b1["new_evm"]):
+            raise ValueError("G10-B1 is fixed-pool native intake, not a full system comparison")
+        summary["classification"] = "four-matched-native-intake-routes-fixed-eight-ballot-pool-not-full-system"
+        summary["g10_b1_matched_native_intake"] = g10b1
+        summary["gates"]["G10_B1_matched_native_intake"] = g10b1["status"]
+        summary["gates"]["G10_B_five_route_system_comparison"] = "PARTIAL_FOUR_NATIVE_INTAKE_ROUTES_ONLY"
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G10-B1 four real native intake routes, one binary/source snapshot, same eight ballots and CT2",
+            "next_task": "G10-B2: audit matching generation-cost evidence and set a bounded plan before necessary gap-filling. Full lifecycle/Full Tally, independent proof pools and exact SnarkPack EVM remain pending.",
+            "g10b_system_comparison_measured": False,
+        })
+    g10b2_path = raw.parent.parent / "results" / "g10_b2" / "cost_ledger.json"
+    g10b2 = json.loads(g10b2_path.read_text()) if g10b2_path.exists() else None
+    if g10b2:
+        if (g10b2["status"] != "PASS_ARTIFACT_COST_AUDIT_AND_BOUNDED_AGGREGATION"
+                or g10b2["new_groth16_proofs"] != 0 or g10b2["new_aggregates"] != 26
+                or not g10b2["historical_costs_not_added_to_B1_timings"]
+                or g10b2["full_end_to_end_total_ms"] is not None):
+            raise ValueError("G10-B2 is an artifact cost ledger/aggregation supplement, not a full-system rerun")
+        summary["g10_b2_generation_cost_audit"] = {
+            "status": g10b2["status"], "report": str(g10b2_path),
+            "identity_checks": g10b2["identity_checks"],
+            "current_aggregation": g10b2["current_aggregation"],
+            "historical_costs_reference_only": True,
+            "all_current_generation_costs_measured": False,
+            "full_end_to_end_total_ms": None,
+            "new_groth16_proofs": 0, "new_aggregates": 26,
+            "research_srs_rebuilds": 1, "new_evm": 0,
+        }
+        summary["gates"]["G10_B2_generation_cost_audit"] = g10b2["status"]
+        summary["project_current_progress"].update({
+            "latest_completed_step": "G10-B2 exact artifact-linked historical generation ledger + current two-B4 aggregation cost supplement",
+            "next_task": "G10-C1: same-CT2 Full Tally/Winner-only public verification and release comparison, isolated outputs and explicit trust scope. No automatic P3 proving or G9-P2.",
+        })
+    g10c_path = raw.parent.parent / "results" / "g10_c" / "functional_summary.json"
+    g10c = json.loads(g10c_path.read_text()) if g10c_path.exists() else None
+    if g10c:
+        if (g10c["status"] != "PASS_IMPLEMENTED_NATIVE_AND_INDIVIDUAL_GROTH16_EVM_FALLBACK_FLOW"
+                or g10c["native"]["new_p3_proofs"] != 1
+                or not g10c["evm_uses_same_proof_and_worker_commitments"]
+                or g10c["target_architecture_complete"] or g10c["chain"]["exact_snarkpack_evm"]):
+            raise ValueError("Connected fallback success must not be promoted to complete exact-SnarkPack target")
+        summary["classification"] = "connected-functional-native-and-local-evm-individual-fallback-not-complete-target"
+        summary["g10_c_connected_functional_flow"] = g10c
+        summary["gates"]["G10_C_current_native_to_evm_fallback"] = g10c["status"]
+        summary["gates"]["full_target_architecture"] = "PARTIAL_EXACT_SNARKPACK_EVM_AND_INDEPENDENT_DKG_CONTEXT_INTEGRATION_PENDING"
+        summary["project_current_progress"].update({
+            "latest_completed_step": "Connected native five-CP-worker/fresh-P3/Winner flow and SAME new proof/commitments in full local authenticated EVM individual-Groth16 fallback",
+            "next_task": g10c["next_priority"],
+            "development_priority": "FUNCTIONAL_COMPLETION_BEFORE_OPTIMIZATION",
+            "target_architecture_complete": False,
+        })
     (aggregate / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
     event = e2e["public_event"]
@@ -1145,10 +1203,34 @@ def main() -> int:
         f"Legacy runs.csv build profile(s): `{', '.join(build_profiles) if build_profiles else 'unknown'}` (see each gate for its actual profile).",
         "",
     ]
+    if g10c:
+        lines.extend(["## Current work: functional native → fresh P3 → actual EVM fallback", "",
+                      "- Actual two-batch SnarkPack/state intake, freeze, five separate OS CP workers/private pipes, threshold decode, one NEW fixed-VK P3 and one native Winner write.",
+                      "- SAME new proof/worker commitments used in actual Prague authenticated individual-Groth16 fallback: 21 signed transactions, 17 success/4 atomic rejects, 60 storage-built inputs, one Winner event.",
+                      f"- New disclosure {g10c['chain']['disclose_winner_gas']:,} Gas / {g10c['chain']['disclose_calldata_bytes']} B; functional receipts only, not statistics or exact-SnarkPack system costs.",
+                      "- Full Tally is a separate counterfactual public-decryption diagnostic, not authorized by the Winner-only certificate. Usable shares/openings/tally are withheld from the public archive.",
+                      "- Still PARTIAL: exact SnarkPack EVM missing; centralized research DKG bootstrap is not independent distributed custody; T4/T5 and final clean-system reproduction remain open.",
+                      "- Functional entrypoint: node scripts/run_functional_experiment.mjs /ABS/NEW_RUN_ROOT. No optimization or scale campaign; next fill missing functionality first.",
+                      "- Report: docs/G10_C_CONNECTED_FUNCTIONAL_FLOW.md; results/g10_c/functional_summary.json; raw: experiments/g10_c_raw.", ""])
+    if g10b2:
+        lines.extend(["## Previous component: G10-B2 generation-cost evidence" if g10c else "## Current work: G10-B2 generation-cost evidence and bounded aggregation", "",
+                      "- Exact eight-ballot proof ancestry, two state proofs/VK/CT1/CT2, and G6 P3 target cross-checked; historical source/lock/thread differences retained.",
+                      "- Current two-B4 aggregation-generation component sum median: " + f"{g10b2['current_aggregation']['two_batch_generation_components_ms']['median']:.6f}" + " ms over 12 paired windows; all 26 generated aggregates identical to archive and verified.",
+                      "- Zero new Groth16 Setup/Prove/EVM; one research Fake SRS rebuild. Historical generation times not added to B1 receive times or presented as matched end-to-end costs.",
+                      "- Report: docs/G10_B2_GENERATION_COST_AUDIT.md; ledger: results/g10_b2/cost_ledger.json; raw: experiments/g10_b2_raw.",
+                      "- Matched generation/prover RSS, Full Tally/lifecycle comparison and exact SnarkPack EVM remain open. Next only same-CT2 disclosure comparison; no G9-P2.", ""])
+    if g10b1:
+        lines.extend(["## Previous component: G10-B1 four matched native intake routes" if g10b2 else "## Current work: G10-B1 four matched native intake routes", "",
+                      "- Same eight archived W32 ballots/two B4, same source fingerprint/binary: actual individual intake (8 writes), transaction-batch individual verification (2 writes), SnarkPack+Direct Fold and SnarkPack+State Proof.",
+                      "- Eight-vote receive medians (ms): " + "; ".join(f"{r['id']}={r['two_batch_flow_ms']['median']:.6f}" for r in g10b1["routes"]) + ".",
+                      "- 12 balanced rounds/48 windows; one proof pool, no slow-window filtering. Four required real crypto negatives atomic; Release/fmt/strict Clippy/four relevant unit tests pass.",
+                      "- Snapshot pins the dirty development source honestly; not a clean committed-source replay. Route-isolated cumulative RSS includes the common loader, not prover or incremental memory.",
+                      "- Report: docs/G10_B1_MATCHED_NATIVE_BASELINES.md; raw: experiments/g10_b1_raw; summary: results/g10_b1/summary.json.",
+                      "- Native intake only, not five-route/full lifecycle/Gas/Full Tally. No new Setup/Prove/aggregation/EVM, generation times null. G9-P1 BLOCKED, P2 not started.", ""])
     if clean30:
         clean_direct = clean30["pooled_routes"]["snarkpack_direct_fold"]["two_batch_flow_ms"]["median"]
         clean_state = clean30["pooled_routes"]["snarkpack_state_proof"]["two_batch_flow_ms"]["median"]
-        lines.extend(["## Current work: clean e1e477f G10-A reproduced; G10-B scope only", "",
+        lines.extend(["## Previous component: clean e1e477f G10-A and G10-B scope" if g10b1 else "## Current work: clean e1e477f G10-A reproduced; G10-B scope only", "",
                       f"- Unmodified clean source, three sequential processes, 30 paired rounds / 60 windows: two-B4 Direct Fold median {clean_direct:.6f} ms; State Proof median {clean_state:.6f} ms.",
                       "- One fixed proof pool, not 30 independent elections. All slow windows retained; previous dirty pilot is separate. Shared process RSS is not per-route/prover memory.",
                       "- Report: docs/G10_A_CLEAN30_REPRODUCTION.md; raw: experiments/g10_a_clean30_raw. Format/strict Clippy/six related tests and every before/after clean-source checkpoint passed.",

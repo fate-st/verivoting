@@ -1,0 +1,365 @@
+{
+  "schema": "VV/G10-B1/SUMMARY/v1",
+  "status": "PASS_FOUR_MATCHED_NATIVE_INTAKE_ROUTES",
+  "scope": "NATIVE_INTAKE_ONLY_NOT_FULL_SYSTEM",
+  "source_base_sha": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+  "source_version_sha256": "644e75eeb817a74a1218f5b76477e75b38f9116728b7cbf846b7411e4a017353",
+  "source_was_dirty": true,
+  "source_snapshot": "experiments/g10_b1_raw/source_snapshot",
+  "binary_sha256": "c19a3943312727cb120105585e489cb3888d5edea9de6b7b2f0116e95ff9cb6f",
+  "experiment_manifest": {
+    "path": "experiments/g10_b1_raw/execution/manifest.json",
+    "sha256": "8bb3322a3da25e7a91d10efa3cf99b85c14200279893180ffcf9dd0cf16b9fed"
+  },
+  "measured_raw": {
+    "path": "experiments/g10_b1_raw/matched.json",
+    "sha256": "9d3eb44fe2db0efb9aa875c6d99e12c30051650ec208716a89c278f3a601c49c"
+  },
+  "sample_design": {
+    "processes_for_timing": 1,
+    "matched_rounds": 12,
+    "route_windows": 48,
+    "flows_per_window": 4,
+    "timed_flows": 192,
+    "proof_pools": 1,
+    "distinct_ballots": 8,
+    "balanced_position_counts_per_route": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "all_windows_retained": true,
+    "development_attempt_not_pooled": true,
+    "independent_election_statistics": false
+  },
+  "routes": [
+    {
+      "id": "individual_groth16_per_vote",
+      "title": "逐票 Groth16 / 逐票累计",
+      "two_batch_flow_ms": {
+        "n": 12,
+        "median": 3.966229125,
+        "q1": 3.4100834375,
+        "q3": 4.286669249999999,
+        "min": 3.383854,
+        "max": 5.4806665
+      },
+      "per_vote_ms": {
+        "n": 12,
+        "median": 0.495778640625,
+        "q1": 0.4262604296875,
+        "q3": 0.5358336562499999,
+        "min": 0.42298175,
+        "max": 0.6850833125
+      },
+      "components_ms": {
+        "packing_ms_per_flow": {
+          "n": 12,
+          "median": 0.037057375000000004,
+          "q1": 0.0353051875,
+          "q3": 0.0377345625,
+          "min": 0.034511,
+          "max": 0.041657
+        },
+        "validity_ms_per_flow": {
+          "n": 12,
+          "median": 3.8451455,
+          "q1": 3.3011985624999998,
+          "q3": 4.15717925,
+          "min": 3.27234325,
+          "max": 5.361167
+        },
+        "route_specific_ms_per_flow": {
+          "n": 12,
+          "median": 0,
+          "q1": 0,
+          "q3": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "validity_calls": 8,
+      "checkpoint_writes": 8,
+      "process_peak_rss_mib": 6.671875,
+      "communication": {
+        "accepted_roots_bytes_shared_per_flow": 64,
+        "ballot_matrix_bytes": 6400,
+        "calldata": null,
+        "components_not_a_complete_wire_envelope": true,
+        "full_network_bytes": null,
+        "individual_new_CT_is_derived_not_transmitted": true,
+        "matrix_represents_canonical_records_do_not_add_records_again": true,
+        "membership_path_bytes": 512,
+        "route": "individual_groth16_per_vote",
+        "state_proof_bytes": 0,
+        "submitted_ct_old_new_bytes": 1536,
+        "validity_proof_bytes": 1536
+      }
+    },
+    {
+      "id": "transaction_batch_individual_groth16",
+      "title": "B4 提交 / 逐票 Groth16 / Direct Fold",
+      "two_batch_flow_ms": {
+        "n": 12,
+        "median": 3.8177188750000006,
+        "q1": 3.4417395625,
+        "q3": 4.212953125,
+        "min": 3.3835625,
+        "max": 4.3116145
+      },
+      "per_vote_ms": {
+        "n": 12,
+        "median": 0.4772148593750001,
+        "q1": 0.4302174453125,
+        "q3": 0.526619140625,
+        "min": 0.4229453125,
+        "max": 0.5389518125
+      },
+      "components_ms": {
+        "packing_ms_per_flow": {
+          "n": 12,
+          "median": 0.037942625,
+          "q1": 0.0359525,
+          "q3": 0.04110156250000001,
+          "min": 0.03534375000000001,
+          "max": 0.04321875
+        },
+        "validity_ms_per_flow": {
+          "n": 12,
+          "median": 3.70286975,
+          "q1": 3.3343275625000004,
+          "q3": 4.0871355,
+          "min": 3.27522925,
+          "max": 4.19051
+        },
+        "route_specific_ms_per_flow": {
+          "n": 12,
+          "median": 0.008979000000000001,
+          "q1": 0.00820075,
+          "q3": 0.009534,
+          "min": 0.00763525,
+          "max": 0.01478175
+        }
+      },
+      "validity_calls": 8,
+      "checkpoint_writes": 2,
+      "process_peak_rss_mib": 6.609375,
+      "communication": {
+        "accepted_roots_bytes_shared_per_flow": 64,
+        "ballot_matrix_bytes": 6400,
+        "calldata": null,
+        "components_not_a_complete_wire_envelope": true,
+        "full_network_bytes": null,
+        "individual_new_CT_is_derived_not_transmitted": false,
+        "matrix_represents_canonical_records_do_not_add_records_again": true,
+        "membership_path_bytes": 0,
+        "route": "transaction_batch_individual_groth16",
+        "state_proof_bytes": 0,
+        "submitted_ct_old_new_bytes": 768,
+        "validity_proof_bytes": 1536
+      }
+    },
+    {
+      "id": "snarkpack_direct_fold",
+      "title": "SnarkPack + Direct Fold",
+      "two_batch_flow_ms": {
+        "n": 12,
+        "median": 9.60713025,
+        "q1": 8.962177125,
+        "q3": 11.338940125,
+        "min": 8.669270749999999,
+        "max": 12.626406249999999
+      },
+      "per_vote_ms": {
+        "n": 12,
+        "median": 1.20089128125,
+        "q1": 1.120272140625,
+        "q3": 1.417367515625,
+        "min": 1.0836588437499999,
+        "max": 1.5783007812499998
+      },
+      "components_ms": {
+        "packing_ms_per_flow": {
+          "n": 12,
+          "median": 0.03677612500000001,
+          "q1": 0.0362005,
+          "q3": 0.0392944375,
+          "min": 0.03486500000000001,
+          "max": 0.0478335
+        },
+        "validity_ms_per_flow": {
+          "n": 12,
+          "median": 9.487807375,
+          "q1": 8.850521125,
+          "q3": 11.21327125,
+          "min": 8.558823499999999,
+          "max": 12.503791499999998
+        },
+        "route_specific_ms_per_flow": {
+          "n": 12,
+          "median": 0.01015075,
+          "q1": 0.009809937500000001,
+          "q3": 0.010588750000000001,
+          "min": 0.00894775,
+          "max": 0.016177
+        }
+      },
+      "validity_calls": 2,
+      "checkpoint_writes": 2,
+      "process_peak_rss_mib": 8,
+      "communication": {
+        "accepted_roots_bytes_shared_per_flow": 64,
+        "ballot_matrix_bytes": 6400,
+        "calldata": null,
+        "components_not_a_complete_wire_envelope": true,
+        "full_network_bytes": null,
+        "individual_new_CT_is_derived_not_transmitted": false,
+        "matrix_represents_canonical_records_do_not_add_records_again": true,
+        "membership_path_bytes": 0,
+        "route": "snarkpack_direct_fold",
+        "state_proof_bytes": 0,
+        "submitted_ct_old_new_bytes": 768,
+        "validity_proof_bytes": 16424
+      }
+    },
+    {
+      "id": "snarkpack_state_proof",
+      "title": "SnarkPack + State Proof",
+      "two_batch_flow_ms": {
+        "n": 12,
+        "median": 14.234349000000002,
+        "q1": 13.4050886875,
+        "q3": 17.118408875,
+        "min": 13.094687500000001,
+        "max": 18.124677249999998
+      },
+      "per_vote_ms": {
+        "n": 12,
+        "median": 1.7792936250000002,
+        "q1": 1.6756360859375,
+        "q3": 2.139801109375,
+        "min": 1.6368359375000001,
+        "max": 2.2655846562499997
+      },
+      "components_ms": {
+        "packing_ms_per_flow": {
+          "n": 12,
+          "median": 0.036781375000000005,
+          "q1": 0.03612225,
+          "q3": 0.0383565625,
+          "min": 0.0351875,
+          "max": 0.0402395
+        },
+        "validity_ms_per_flow": {
+          "n": 12,
+          "median": 9.42358325,
+          "q1": 8.707406437500001,
+          "q3": 11.9957658125,
+          "min": 8.433,
+          "max": 13.017021
+        },
+        "route_specific_ms_per_flow": {
+          "n": 12,
+          "median": 4.746495,
+          "q1": 4.620906,
+          "q3": 5.0033178750000005,
+          "min": 4.5616769999999995,
+          "max": 5.2053745
+        }
+      },
+      "validity_calls": 2,
+      "checkpoint_writes": 2,
+      "process_peak_rss_mib": 7.75,
+      "communication": {
+        "accepted_roots_bytes_shared_per_flow": 64,
+        "ballot_matrix_bytes": 6400,
+        "calldata": null,
+        "components_not_a_complete_wire_envelope": true,
+        "full_network_bytes": null,
+        "individual_new_CT_is_derived_not_transmitted": false,
+        "matrix_represents_canonical_records_do_not_add_records_again": true,
+        "membership_path_bytes": 0,
+        "route": "snarkpack_state_proof",
+        "state_proof_bytes": 384,
+        "submitted_ct_old_new_bytes": 768,
+        "validity_proof_bytes": 16424
+      }
+    }
+  ],
+  "necessary_negative_cases": [
+    {
+      "case": "row0_with_original_row1_proof",
+      "checkpoint_unchanged": true,
+      "groth16_reached": true,
+      "membership_passed": true,
+      "rejection": "Proof",
+      "route": "individual_groth16_per_vote"
+    },
+    {
+      "accepted_root_passed": true,
+      "case": "row0_with_original_row1_proof",
+      "checkpoint_unchanged": true,
+      "groth16_reached": true,
+      "rejection": "ProofVerification",
+      "route": "transaction_batch_individual_groth16"
+    },
+    {
+      "case": "changed_first_new_state_before_acceptance",
+      "checkpoint_unchanged": true,
+      "rejection": "ProofVerification",
+      "route": "snarkpack_direct_fold",
+      "route_specific_rejected": true,
+      "snarkpack_passed": true
+    },
+    {
+      "case": "changed_first_new_state_before_acceptance",
+      "checkpoint_unchanged": true,
+      "rejection": "ProofVerification",
+      "route": "snarkpack_state_proof",
+      "route_specific_rejected": true,
+      "snarkpack_passed": true
+    }
+  ],
+  "unit_tests_passed": 4,
+  "release_build": true,
+  "strict_clippy": true,
+  "fmt": true,
+  "sender_membership_path_preparation": [
+    {
+      "batch_index": 1,
+      "four_paths_bytes": 256,
+      "prepare_ms": 0.158541
+    },
+    {
+      "batch_index": 2,
+      "four_paths_bytes": 256,
+      "prepare_ms": 0.13020800000000002
+    }
+  ],
+  "memory_scope": "fresh process cumulative high-water; common all-route fixture/material loader included; not incremental algorithm memory or prover memory",
+  "full_lifecycle_comparison": false,
+  "five_route_system_comparison": false,
+  "full_tally_vs_winner_only": false,
+  "new_setup": 0,
+  "new_proofs": 0,
+  "new_aggregates": 0,
+  "new_evm": 0,
+  "setup_ms": null,
+  "prove_ms": null,
+  "aggregation_ms": null,
+  "gas": null,
+  "calldata": null,
+  "G9_P1": "BLOCKED",
+  "G9_P2_started": false,
+  "limitations": [
+    "single fixed eight-ballot pool, one timing process; descriptive matched pilot only",
+    "working source changes pinned by full source snapshots/hashes, not a clean committed-source reproduction",
+    "process-specific RSS includes common material loading; no prover or incremental algorithm memory claim",
+    "membership path generation measured once per batch separately; not inside intake timing",
+    "no setup/prove/aggregation generation costs retimed",
+    "no certificate/freeze/threshold/P3/Winner suffix or exact SnarkPack EVM",
+    "component bytes are not a complete transport envelope"
+  ],
+  "next_task": "G10-B2: first audit existing generation-cost evidence and set a bounded matched-cost plan; only fill necessary gaps. Full Tally/Winner-only and full lifecycle remain separate."
+}
