@@ -1,0 +1,107 @@
+{
+  "gate": "G11-C1",
+  "label": "n128-measured-04",
+  "uuid": "qGyiZWNRA3YejL",
+  "n": 128,
+  "phase": "measured",
+  "trial": 4,
+  "candidate_count": 3,
+  "threshold": {
+    "pedersen": "3-of-5",
+    "mandatory_server": 1,
+    "selected_trustee_ids": [
+      2,
+      3,
+      4,
+      1
+    ]
+  },
+  "expected_tally": [
+    92,
+    69,
+    96
+  ],
+  "actual_tally": [
+    [
+      92,
+      69,
+      96
+    ]
+  ],
+  "workload_sha256": "d58ab9ff061f3871274d8ea5c7efadd7fe4848447535bf3ff06ac6b2e49c9d96",
+  "ballot_count": 128,
+  "source_commit": "5a1596cefcc0944467ddc4bc9cdb0f24013b0d05",
+  "benchmark": {
+    "schema_version": "g11.v1",
+    "system": "Belenios 3.0 (official CLI, Ed25519)",
+    "kind": "external_execution",
+    "status": "passed",
+    "evidence": [
+      "n128-measured-04/commands.jsonl",
+      "n128-measured-04/stderr.log",
+      "n128-measured-04/election.bel",
+      "n128-measured-04/result.json"
+    ],
+    "measurements": {
+      "setup_ms": 168.65941900003236,
+      "ballot_generation_ms": 2246.1615360000724,
+      "proof_generation_ms": null,
+      "aggregation_ms": null,
+      "verification_ms": 3194.030831000011,
+      "state_proof_ms": null,
+      "tally_ms": 59.38412499999686,
+      "decryption_ms": 103.7668330000015,
+      "p3_verification_ms": null,
+      "proof_bytes": 202681,
+      "public_input_bytes": null,
+      "ciphertext_bytes": 58112,
+      "communication_bytes": 567296,
+      "storage_bytes": 567296,
+      "cp_package_bytes": null,
+      "memory_peak_mib": 13.21875,
+      "cpu_ms": 3300,
+      "throughput_votes_per_second": 17.38338774284125,
+      "end_to_end_ms": 7363.351833000008,
+      "gas": null,
+      "calldata_bytes": null,
+      "transaction_count": null
+    },
+    "missing_reason": [
+      "proof_generation_ms is inseparable from encryption/internal verification in upstream generate-ballot",
+      "aggregation_ms/state_proof_ms/p3_verification_ms/cp_package_bytes are not Belenios operations",
+      "public_input_bytes: no Groth16-style public-input vector; archive and ballot wire bytes reported separately",
+      "gas/calldata_bytes/transaction_count: not applicable, no blockchain",
+      "memory is maximum single sequential CLI child RSS, not multi-host aggregate memory; CPU timer resolution is 10 ms"
+    ]
+  },
+  "stage_ms": {
+    "setup": 20.40775000001304,
+    "credentials": 12.984624999997322,
+    "dkg": 135.267044000022,
+    "ballot_generation": 2246.1615360000724,
+    "single_ballot_verification": 3194.030831000011,
+    "board_acceptance": 1107.0268750000105,
+    "all_ballot_audit": 50.5475829999923,
+    "tally": 59.38412499999686,
+    "encrypted_tally_audit": 53.011459000001196,
+    "threshold_decryption": 80.7327920000098,
+    "combine_and_decode": 23.034040999991703,
+    "final_audit": 266.3548340000125
+  },
+  "end_to_end_excluding_setup_ms": 7189.053916999997,
+  "bytes": {
+    "ballot_wire": 286521,
+    "ciphertext_json": 58112,
+    "proof_and_signature_json": 202681,
+    "partial_decryption_wire": 3557,
+    "encrypted_tally_wire": 581,
+    "final_result_wire": 24,
+    "public_archive": 567296
+  },
+  "command_count": 424,
+  "negative_tests": [],
+  "timing_scope": "Sequential local CLI lifecycle including startup, archive loading, timed command I/O and audits. Setup separate. No HTTP/network latency. Download/build excluded.",
+  "communication_scope": "Public append-only .bel archive size, including tar/framing, setup, ballots, tally, partial decryptions and result; not private delivery or network traffic.",
+  "archive_sha256": "4dab35b0b55b340155e583788349d58dbedbfb4e54864edb48a5ef89ecf151ba",
+  "private_material_exported": false
+}

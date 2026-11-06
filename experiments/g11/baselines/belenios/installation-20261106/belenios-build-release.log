@@ -1,0 +1,10 @@
+File "src/lib/core/dune", line 4, characters 19-22:
+4 |  (libraries base64 hex yojson atdgen re belenios-platform)
+                       ^^^
+Error: Library "hex" not found.
+-> required by library "belenios-lib.core" in _build/default/src/lib/core
+-> required by executable main in src/tool/dune:2
+-> required by _build/default/src/tool/main.exe
+-> required by _build/install/default/bin/belenios-tool
+-> required by _build/default/belenios-tool.install
+-> required by alias install

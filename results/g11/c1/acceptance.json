@@ -1,0 +1,119 @@
+{
+  "status": "PASS_G11_C1_BELENIOS_ORIGINAL_CLI",
+  "code_base": "f18833db40895bc8918b806c32ac35ec167cca0d",
+  "source_files": {
+    "scripts/g11/c1/base-arm64-clang17.patch": "45d5118862604701b252b40a08c45f5b5a0022cb3201f8dd8aac389060229011",
+    "scripts/g11/c1/capture-install.mjs": "5d9fd9af6180531ac852f28ad75453e1ec24e891126fe10882eeb6e86b48f57e",
+    "scripts/g11/c1/check.mjs": "98389424a7496d0a8063b7c0fd2fd51e897c9a9e0bb179bb540de1bf4182b633",
+    "scripts/g11/c1/DEPENDENCY_NOTICES.md": "6c8828811a3edc79eec7fa41c1fb1043d6c5c06a53f71d5c5d9c42ab8a0bea4c",
+    "scripts/g11/c1/finish.mjs": "b9015a9e90f1e6dcba687f28ef0eba60a5c26e25e3e6d1ada7c823fac7fc6799",
+    "scripts/g11/c1/install-macos-arm64.sh": "45dc9f561247020de505406cb658f0b904b0e02cf8c1d72237d5036bfd8fe43f",
+    "scripts/g11/c1/run.mjs": "44b7357fc232414a05736e58b02e2dd481efa2f87bb869539ff092433b115ec2",
+    "scripts/g11/c1/summarize.mjs": "352828d493b2cc2fe3c1524a4dfead0d90df018a32e58ec5efecdf5acd0be91e",
+    "scripts/g11/c1/verify.mjs": "1bd8e348d129e0aa4b9b5802c09a68430598aac034ffa9f67fcd633d9e294178",
+    "configs/g11/c1-belenios.json": "3c6fdf660523933cbe888880678b3eb3d6fac36d95757cdd40ddb6b8426f5e5a",
+    "docs/G11_C1_BELENIOS_REPORT.md": "5eebbe62b6d6b083ec7d91b07075390ab4a2cbc972d03ad38e4d5f79858dfccc"
+  },
+  "config_sha256": "3c6fdf660523933cbe888880678b3eb3d6fac36d95757cdd40ddb6b8426f5e5a",
+  "executed_adapter_sha256": "44b7357fc232414a05736e58b02e2dd481efa2f87bb869539ff092433b115ec2",
+  "official_source_commit": "5a1596cefcc0944467ddc4bc9cdb0f24013b0d05",
+  "public_only_audits": [
+    {
+      "n": 8,
+      "command": [
+        "/private/tmp/vv-g11c1-20261106-K03bsm/belenios-git/_build/install/default/bin/belenios-tool",
+        "election",
+        "verify",
+        "--dir",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/g11/baselines/belenios/run-20261106-01/n8-measured-00"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "used_private_material": false
+    },
+    {
+      "n": 32,
+      "command": [
+        "/private/tmp/vv-g11c1-20261106-K03bsm/belenios-git/_build/install/default/bin/belenios-tool",
+        "election",
+        "verify",
+        "--dir",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/g11/baselines/belenios/run-20261106-01/n32-measured-00"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "used_private_material": false
+    },
+    {
+      "n": 128,
+      "command": [
+        "/private/tmp/vv-g11c1-20261106-K03bsm/belenios-git/_build/install/default/bin/belenios-tool",
+        "election",
+        "verify",
+        "--dir",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/g11/baselines/belenios/run-20261106-01/n128-measured-00"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "used_private_material": false
+    }
+  ],
+  "historical": {
+    "status": "unchanged",
+    "base_commit": "5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+    "base_tree": "0dc604e652b2df58f601ef1cea6c9c3fe65c034d",
+    "policy": "No chmod or rewrite of historical files. Git base and content hashes are the read-only guard."
+  },
+  "historical_check": {
+    "status": "PASS_G11_FRAMEWORK_AND_PARTIAL_LITERATURE_ACCEPTANCE",
+    "accepted_run": "results/g11/run-20261106-03",
+    "passed_run_cases": 6,
+    "attribute_rows": 66,
+    "verified_hash_entries": 252,
+    "original_experiments_unchanged": true,
+    "fulltext_external_sources": 4,
+    "emami_fulltext_pending": true,
+    "external_protocol_runs": 0,
+    "new_setup": 0,
+    "new_proofs": 0,
+    "new_evm": 0,
+    "full_g11_complete": false,
+    "exact_snarkpack_evm_complete": false
+  },
+  "suite_elections": 105,
+  "formal_elections": 90,
+  "warmup_elections": 15,
+  "encrypted_ballots_in_suite": 5880,
+  "measured_failures": 0,
+  "counts": [
+    {
+      "n": 8,
+      "warmups": 5,
+      "measured": 30,
+      "failed": 0
+    },
+    {
+      "n": 32,
+      "warmups": 5,
+      "measured": 30,
+      "failed": 0
+    },
+    {
+      "n": 128,
+      "warmups": 5,
+      "measured": 30,
+      "failed": 0
+    }
+  ],
+  "failed_initial_pilot_preserved": true,
+  "initial_failure_is_adapter_format_error_not_crypto_rejection": true,
+  "raw_manifest": {
+    "path": "experiments/g11/baselines/belenios/SHA256SUMS",
+    "sha256": "bc86787bf34bfefb5ae5fe4697a579fe4080d697a80e1622f7431230a2b0bab7"
+  },
+  "no_new_verivoting_setup_or_prove": true,
+  "no_new_evm": true,
+  "no_external_performance_superiority_claim": true,
+  "private_credentials_and_keys_exported": false,
+  "note": "Only Belenios C1 is complete; G11 external comparison and production distributed deployment are not complete."
+}

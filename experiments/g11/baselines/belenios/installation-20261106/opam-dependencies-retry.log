@@ -1,0 +1,96 @@
+[NOTE] Package yojson is already installed (current version is 2.2.2).
+[NOTE] Package cmdliner is already installed (current version is 1.3.0).
+[NOTE] Package atdgen is already installed (current version is 2.15.0).
+[NOTE] Package dune is already installed (current version is 3.16.0).
+The following actions will be performed:
+=== install 17 packages
+  ∗ base             v0.16.3 (pinned) [required by ppx_sexp_conv]
+  ∗ ca-certs         1.0.0            [required by conduit-lwt-unix]
+  ∗ cohttp           5.3.1            [required by cohttp-lwt]
+  ∗ cohttp-lwt       5.3.0            [required by cohttp-lwt-unix]
+  ∗ cohttp-lwt-unix  5.3.0
+  ∗ conduit          7.0.0            [required by conduit-lwt]
+  ∗ conduit-lwt      7.0.0            [required by cohttp-lwt-unix]
+  ∗ conduit-lwt-unix 7.0.0            [required by cohttp-lwt-unix]
+  ∗ conf-pkg-config  3                [required by zarith]
+  ∗ conf-zlib        1                [required by cryptokit]
+  ∗ cryptokit        1.20
+  ∗ ipaddr-sexp      5.6.0            [required by conduit-lwt-unix]
+  ∗ mirage-crypto-pk 1.1.0            [required by x509]
+  ∗ ppx_sexp_conv    v0.16.0          [required by cohttp-lwt-unix]
+  ∗ uri-sexp         4.4.0            [required by cohttp]
+  ∗ x509             1.0.3            [required by ca-certs]
+  ∗ zarith           1.14
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+⬇ retrieved cohttp-lwt.5.3.0, cohttp-lwt-unix.5.3.0  (cached)
+⬇ retrieved cohttp.5.3.1  (cached)
+⬇ retrieved conduit.7.0.0, conduit-lwt.7.0.0, conduit-lwt-unix.7.0.0  (cached)
+⬇ retrieved cryptokit.1.20  (cached)
+⬇ retrieved ipaddr-sexp.5.6.0  (cached)
+⬇ retrieved ca-certs.1.0.0  (cached)
+⬇ retrieved ppx_sexp_conv.v0.16.0  (cached)
+⬇ retrieved uri-sexp.4.4.0  (cached)
+⬇ retrieved zarith.1.14  (cached)
+⬇ retrieved x509.1.0.3  (cached)
+⬇ retrieved mirage-crypto-pk.1.1.0  (cached)
+∗ installed conf-pkg-config.3
+[ERROR] The compilation of conf-zlib.1 failed at "pkg-config zlib".
+∗ installed zarith.1.14
+∗ installed mirage-crypto-pk.1.1.0
+∗ installed x509.1.0.3
+∗ installed ca-certs.1.0.0
+[ERROR] The compilation of base.v0.16.3 failed at "dune build -p base -j 2".
+
+#=== ERROR while compiling conf-zlib.1 ========================================#
+# context              2.6.1 | macos/arm64 | ocaml-base-compiler.4.14.2 | file:///private/tmp/vv-g11c1-20261106-K03bsm/opam-repository-4093222dece7c1c8f93dc2fd8dd7eec15fa80fed
+# path                 /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/build/conf-zlib.1
+# command              /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/opam-init/hooks/sandbox.sh build pkg-config zlib
+# exit-code            1
+# env-file             /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/conf-zlib-49188-b7fb4b.env
+# output-file          /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/conf-zlib-49188-b7fb4b.out
+
+
+#=== ERROR while compiling base.v0.16.3 =======================================#
+# context              2.6.1 | macos/arm64 | ocaml-base-compiler.4.14.2 | pinned(file:///private/tmp/vv-g11c1-20261106-K03bsm/base-0.16.3)
+# path                 /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/build/base.v0.16.3
+# command              /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/opam-init/hooks/sandbox.sh build dune build -p base -j 2
+# exit-code            1
+# env-file             /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/base-49188-7bf664.env
+# output-file          /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/base-49188-7bf664.out
+### output ###
+# [...]
+# (cd _build/default/src && /usr/bin/cc -O2 -fno-strict-aliasing -fwrapv -pthread -D_FILE_OFFSET_BITS=64 -O2 -fno-strict-aliasing -fwrapv -pthread -D_LARGEFILE64_SOURCE -mpopcnt -g -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/ocaml -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/sexplib0 -I ../compiler-stdlib/src -I ../hash_types/src -I ../shadow-stdlib/src -o exn[...]
+# clang: error: unsupported option '-mpopcnt' for target 'arm64-apple-darwin24.6.0'
+# File "src/dune", line 14, characters 47-57:
+# 14 |  (c_names bytes_stubs exn_stubs int_math_stubs hash_stubs am_testing)
+#                                                     ^^^^^^^^^^
+# (cd _build/default/src && /usr/bin/cc -O2 -fno-strict-aliasing -fwrapv -pthread -D_FILE_OFFSET_BITS=64 -O2 -fno-strict-aliasing -fwrapv -pthread -D_LARGEFILE64_SOURCE -mpopcnt -g -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/ocaml -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/sexplib0 -I ../compiler-stdlib/src -I ../hash_types/src -I ../shadow-stdlib/src -o has[...]
+# clang: error: unsupported option '-mpopcnt' for target 'arm64-apple-darwin24.6.0'
+# File "src/dune", line 14, characters 32-46:
+# 14 |  (c_names bytes_stubs exn_stubs int_math_stubs hash_stubs am_testing)
+#                                      ^^^^^^^^^^^^^^
+# (cd _build/default/src && /usr/bin/cc -O2 -fno-strict-aliasing -fwrapv -pthread -D_FILE_OFFSET_BITS=64 -O2 -fno-strict-aliasing -fwrapv -pthread -D_LARGEFILE64_SOURCE -mpopcnt -g -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/ocaml -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/sexplib0 -I ../compiler-stdlib/src -I ../hash_types/src -I ../shadow-stdlib/src -o int[...]
+# clang: error: unsupported option '-mpopcnt' for target 'arm64-apple-darwin24.6.0'
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+┌─ The following actions failed
+│ λ build base      v0.16.3
+│ λ build conf-zlib 1
+└─ 
+┌─ The following changes have been performed (the rest was aborted)
+│ ∗ install ca-certs         1.0.0
+│ ∗ install conf-pkg-config  3
+│ ∗ install mirage-crypto-pk 1.1.0
+│ ∗ install x509             1.0.3
+│ ∗ install zarith           1.14
+└─ 
+
+The packages you requested declare the following system dependencies. Please make sure they are installed before retrying:
+    zlib
+
+
+The former state can be restored with:
+    /private/tmp/vv-g11c1-20261106-K03bsm/opam switch import "/private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/backup/state-20261106133107.export"

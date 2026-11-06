@@ -1,0 +1,546 @@
+
+[0000 setup] ["setup","generate-token"]
+        0.00 real         0.00 user         0.00 sys
+             8192000  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 647  page reclaims
+                 132  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   1  messages sent
+                   0  messages received
+                   0  signals received
+                   0  voluntary context switches
+                  49  involuntary context switches
+            36502995  instructions retired
+            15264521  cycles elapsed
+             4981024  peak memory footprint
+
+[0001 credentials] ["setup","generate-credentials","--uuid","FsyrvxSjzD1ZZV","--group","Ed25519","--file","voters.txt"]
+        0.00 real         0.00 user         0.00 sys
+             8536064  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 667  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                  11  voluntary context switches
+                  18  involuntary context switches
+            44639522  instructions retired
+            15553579  cycles elapsed
+             5079256  peak memory footprint
+
+[0002 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","1/3/5","--step","1"]
+I: certificate d955b4e781fdcfc516b8a667549362596a4d9b99c47e83654ae40c9ec8733c56 has been generated
+I: certificate saved to d955b4e781fdcfc516b8a667549362596a4d9b99c47e83654ae40c9ec8733c56.cert
+I: private key saved to d955b4e781fdcfc516b8a667549362596a4d9b99c47e83654ae40c9ec8733c56.key
+        0.00 real         0.00 user         0.00 sys
+             8404992  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 658  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  10  voluntary context switches
+                  39  involuntary context switches
+            40632104  instructions retired
+            16299016  cycles elapsed
+             4931800  peak memory footprint
+
+[0003 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","2/3/5","--step","1"]
+I: certificate 9f831fe37aa4af6cdd565db0c1cd6ba341c2d4985010f1bb39ad1e434c843a0d has been generated
+I: certificate saved to 9f831fe37aa4af6cdd565db0c1cd6ba341c2d4985010f1bb39ad1e434c843a0d.cert
+I: private key saved to 9f831fe37aa4af6cdd565db0c1cd6ba341c2d4985010f1bb39ad1e434c843a0d.key
+        0.00 real         0.00 user         0.00 sys
+             8470528  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 665  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  50  involuntary context switches
+            42390951  instructions retired
+            18655027  cycles elapsed
+             4997336  peak memory footprint
+
+[0004 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","3/3/5","--step","1"]
+I: certificate b92e8b705618f11c94bd10485d4e39a3f64ae7e80257cb5612d0fe5ae60e475f has been generated
+I: certificate saved to b92e8b705618f11c94bd10485d4e39a3f64ae7e80257cb5612d0fe5ae60e475f.cert
+I: private key saved to b92e8b705618f11c94bd10485d4e39a3f64ae7e80257cb5612d0fe5ae60e475f.key
+        0.00 real         0.00 user         0.00 sys
+             8503296  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 669  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  19  involuntary context switches
+            40358256  instructions retired
+            16941925  cycles elapsed
+             5095736  peak memory footprint
+
+[0005 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","4/3/5","--step","1"]
+I: certificate d32fde74d944ca93495b166c442e6c32fc97cdde568d552ae54b8cce746a49f0 has been generated
+I: certificate saved to d32fde74d944ca93495b166c442e6c32fc97cdde568d552ae54b8cce746a49f0.cert
+I: private key saved to d32fde74d944ca93495b166c442e6c32fc97cdde568d552ae54b8cce746a49f0.key
+        0.00 real         0.00 user         0.00 sys
+             8421376  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 660  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  50  involuntary context switches
+            40666523  instructions retired
+            16617613  cycles elapsed
+             4997408  peak memory footprint
+
+[0006 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","5/3/5","--step","1"]
+I: certificate 23836bf87bdf964b41fdc35ef38b3ac03f05bb45c4393061f8836a1e1870da93 has been generated
+I: certificate saved to 23836bf87bdf964b41fdc35ef38b3ac03f05bb45c4393061f8836a1e1870da93.cert
+I: private key saved to 23836bf87bdf964b41fdc35ef38b3ac03f05bb45c4393061f8836a1e1870da93.key
+        0.00 real         0.00 user         0.00 sys
+             8568832  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 668  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  27  involuntary context switches
+            40596864  instructions retired
+            16698841  cycles elapsed
+             5177680  peak memory footprint
+
+[0007 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--step","2"]
+I: loading certs.jsons...
+I: certificates are valid
+        0.00 real         0.00 user         0.00 sys
+             9093120  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 703  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                   4  voluntary context switches
+                  19  involuntary context switches
+            45419089  instructions retired
+            17419614  cycles elapsed
+             5619952  peak memory footprint
+
+[0008 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","1/3/5","--certs","certs.jsons","--key","d955b4e781fdcfc516b8a667549362596a4d9b99c47e83654ae40c9ec8733c56.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10010624  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 757  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  17  involuntary context switches
+            75275923  instructions retired
+            22531027  cycles elapsed
+             6439152  peak memory footprint
+
+[0009 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","2/3/5","--certs","certs.jsons","--key","9f831fe37aa4af6cdd565db0c1cd6ba341c2d4985010f1bb39ad1e434c843a0d.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10108928  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 763  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  60  involuntary context switches
+            75896809  instructions retired
+            24008142  cycles elapsed
+             6537456  peak memory footprint
+
+[0010 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","3/3/5","--certs","certs.jsons","--key","b92e8b705618f11c94bd10485d4e39a3f64ae7e80257cb5612d0fe5ae60e475f.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+             9977856  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 755  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  19  involuntary context switches
+            75319412  instructions retired
+            22088329  cycles elapsed
+             6389976  peak memory footprint
+
+[0011 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","4/3/5","--certs","certs.jsons","--key","d32fde74d944ca93495b166c442e6c32fc97cdde568d552ae54b8cce746a49f0.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10043392  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 762  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  40  involuntary context switches
+            75531931  instructions retired
+            22581635  cycles elapsed
+             6471920  peak memory footprint
+
+[0012 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","5/3/5","--certs","certs.jsons","--key","23836bf87bdf964b41fdc35ef38b3ac03f05bb45c4393061f8836a1e1870da93.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10108928  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 763  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  10  voluntary context switches
+                  62  involuntary context switches
+            75717804  instructions retired
+            24263063  cycles elapsed
+             6537456  peak memory footprint
+
+[0013 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--step","4","--polynomials","polynomials.jsons"]
+I: loading certs.jsons...
+I: loading polynomials.jsons...
+I: wrote d955b4e781fdcfc516b8a667549362596a4d9b99c47e83654ae40c9ec8733c56.vinput
+I: wrote 9f831fe37aa4af6cdd565db0c1cd6ba341c2d4985010f1bb39ad1e434c843a0d.vinput
+I: wrote b92e8b705618f11c94bd10485d4e39a3f64ae7e80257cb5612d0fe5ae60e475f.vinput
+I: wrote d32fde74d944ca93495b166c442e6c32fc97cdde568d552ae54b8cce746a49f0.vinput
+I: wrote 23836bf87bdf964b41fdc35ef38b3ac03f05bb45c4393061f8836a1e1870da93.vinput
+        0.00 real         0.00 user         0.00 sys
+            10584064  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 792  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   7  messages sent
+                   0  messages received
+                   0  signals received
+                  47  voluntary context switches
+                 108  involuntary context switches
+            77307700  instructions retired
+            26708541  cycles elapsed
+             7094584  peak memory footprint
+
+[0014 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","d955b4e781fdcfc516b8a667549362596a4d9b99c47e83654ae40c9ec8733c56.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10158080  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 766  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  69  involuntary context switches
+           104612599  instructions retired
+            31689401  cycles elapsed
+             6603064  peak memory footprint
+
+[0015 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","9f831fe37aa4af6cdd565db0c1cd6ba341c2d4985010f1bb39ad1e434c843a0d.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10141696  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 765  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   7  voluntary context switches
+                  61  involuntary context switches
+           103394097  instructions retired
+            31244327  cycles elapsed
+             6570272  peak memory footprint
+
+[0016 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","b92e8b705618f11c94bd10485d4e39a3f64ae7e80257cb5612d0fe5ae60e475f.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10076160  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 761  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  68  involuntary context switches
+           103599364  instructions retired
+            30235615  cycles elapsed
+             6471920  peak memory footprint
+
+[0017 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","d32fde74d944ca93495b166c442e6c32fc97cdde568d552ae54b8cce746a49f0.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10043392  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 759  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   7  voluntary context switches
+                  44  involuntary context switches
+           103276797  instructions retired
+            29226172  cycles elapsed
+             6422744  peak memory footprint
+
+[0018 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","23836bf87bdf964b41fdc35ef38b3ac03f05bb45c4393061f8836a1e1870da93.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10174464  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 767  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  51  involuntary context switches
+           103324762  instructions retired
+            30047171  cycles elapsed
+             6635856  peak memory footprint
+
+[0019 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--step","6","--polynomials","polynomials.jsons"]
+I: loading certs.jsons...
+I: loading polynomials.jsons...
+I: wrote d955b4e781fdcfc516b8a667549362596a4d9b99c47e83654ae40c9ec8733c56.dkey
+I: wrote 9f831fe37aa4af6cdd565db0c1cd6ba341c2d4985010f1bb39ad1e434c843a0d.dkey
+I: wrote b92e8b705618f11c94bd10485d4e39a3f64ae7e80257cb5612d0fe5ae60e475f.dkey
+I: wrote d32fde74d944ca93495b166c442e6c32fc97cdde568d552ae54b8cce746a49f0.dkey
+I: wrote 23836bf87bdf964b41fdc35ef38b3ac03f05bb45c4393061f8836a1e1870da93.dkey
+        0.01 real         0.00 user         0.00 sys
+            10338304  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 777  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   9  messages sent
+                   2  messages received
+                   0  signals received
+                  39  voluntary context switches
+                 137  involuntary context switches
+           147521438  instructions retired
+            43132186  cycles elapsed
+             6848824  peak memory footprint
+
+[0020 dkg] ["setup","generate-trustee-key","--group","Ed25519"]
+I: public key saved to BBAF28EB.pubkey
+I: private key saved to BBAF28EB.privkey
+        0.00 real         0.00 user         0.00 sys
+             8519680  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 667  page reclaims
+                 132  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  42  involuntary context switches
+            39967242  instructions retired
+            16347837  cycles elapsed
+             5210496  peak memory footprint
+
+[0021 setup] ["setup","make-trustees"]
+        0.00 real         0.00 user         0.00 sys
+             8552448  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 668  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  13  voluntary context switches
+                  82  involuntary context switches
+            38945310  instructions retired
+            17471797  cycles elapsed
+             5259600  peak memory footprint
+
+[0022 setup] ["setup","make-election","--uuid","FsyrvxSjzD1ZZV","--group","Ed25519","--template","questions.json"]
+        0.00 real         0.00 user         0.00 sys
+             8519680  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 666  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  12  voluntary context switches
+                  51  involuntary context switches
+            39429944  instructions retired
+            15611101  cycles elapsed
+             5046512  peak memory footprint
+
+[0023 setup] ["archive","init"]
+        0.00 real         0.00 user         0.00 sys
+             8454144  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 662  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  48  voluntary context switches
+                  52  involuntary context switches
+            41973927  instructions retired
+            16133443  cycles elapsed
+             5095664  peak memory footprint
+
+[0024 ballot_generation] ["election","generate-ballot","--privcred","credential-0","--choice","choice-0.json"]
+I: using directory .
+I: loading choice-0.json...
+belenios-tool: Yojson__Common.Json_error("Unexpected end of input")
+        0.01 real         0.00 user         0.00 sys
+             9486336  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 724  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  34  voluntary context switches
+                  54  involuntary context switches
+           148735042  instructions retired
+            40814177  cycles elapsed
+             5914864  peak memory footprint

@@ -1,0 +1,86 @@
+{
+  "captured_at": "2026-11-06T13:55:35.949Z",
+  "url": "https://github.com/glondu/belenios",
+  "tag": "3.0",
+  "commit": "5a1596cefcc0944467ddc4bc9cdb0f24013b0d05",
+  "license": "AGPL-3.0-or-later with the upstream OpenSSL linking exception; see upstream COPYING and file headers",
+  "git_tree": "0884adfb0c8fd3f756ee558a4b667d58a3b613cc",
+  "source_tree_sha256": "4479d91df6b94cbd99f1b50128198856f07aa25443d340175f982ce2c853a6cc",
+  "binary_sha256": "ad43e6fb93d447e516210ba5ae24144868ad290a53b8872e097acaeba130521c",
+  "binary_bytes": 8414472,
+  "tracked_source_unchanged": true,
+  "compile_profile": "dune release, unmodified official CLI",
+  "files": {
+    "COPYING": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6",
+    "INSTALL.md": "1afb2aff65bb24b2cc432a8df83680e274e81cdec64acde11adc8d6c2dff6a2c",
+    "opam-bootstrap.sh": "af74b660dad58150dc6b18b2a0a12249153e9d81049b5c3ed09a4063af94a4ea",
+    "tests/tool/demo-threshold.sh": "2bbcb3510e7aad1c76a7bcabfd4ce912d2aa0dff1dc0bc19289646ad0f9f0f5e",
+    "src/tool/tool_election.ml": "31b959462c4a1f8ed3ea5b196e84115ce64e9d010622de8dd66842dc40b9aa82",
+    "src/tool/setup.ml": "2400b53fb15169ed0b6763f1682e939159df7b7b7c849b487df024e4b888ccc5",
+    "src/lib/question/question_h.atd": "2ea6902bafc223601bfcb0c39fb5c42e46063397aad0b07960fafb2df719e5f5"
+  },
+  "release_url": "https://www.belenios.org/releases/belenios-3.0.tar.gz",
+  "release_sha256": "6e9fed14ccf849632b84570cbe852bea3cbe30b5c9baf6a4a3cad7e7d16c62f9",
+  "release_vs_git_identical_files": 649,
+  "source_tree_policy": "All tracked Belenios bytes unchanged; symlinks compared by link text",
+  "dependencies": {
+    "opam": "2.6.1",
+    "ocaml": "4.14.2",
+    "dune": "3.16.0",
+    "opam_repository": "4093222dece7c1c8f93dc2fd8dd7eec15fa80fed",
+    "native": {
+      "gmp": "6.3.0",
+      "libsodium": "1.0.20",
+      "pkgconf": "2.3.0",
+      "zlib": "1.3.1"
+    },
+    "base": {
+      "version": "v0.16.3",
+      "adaptation": "CPU flag probe restricted to x86 targets; not a cryptographic change",
+      "patch_sha256": "45d5118862604701b252b40a08c45f5b5a0022cb3201f8dd8aac389060229011"
+    },
+    "upstream_bootstrap_difference": "Belenios pins OCaml 4.14.2 and opam repo date 20240913; same here. Package manager binary 2.6.1 replaces bootstrap opam 2.2.1.",
+    "versions_file": "dependencies-final.txt",
+    "opam_export": "dependencies-final.export"
+  },
+  "compiler": "Apple clang version 17.0.0 (clang-1700.4.4.1)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin",
+  "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.1\nBuildVersion:\t\t24G231",
+  "official_demo": {
+    "script": "tests/tool/demo-threshold.sh",
+    "modified": false,
+    "status": "passed",
+    "command": [
+      "bash",
+      "tests/tool/demo-threshold.sh"
+    ],
+    "env": {
+      "BELENIOS": "/private/tmp/vv-g11c1-20261106-K03bsm/belenios-git"
+    },
+    "binary_path_alias": "_run/tool-debug/bin/belenios-tool is a symlink to the release CLI; no debug binary used",
+    "configuration": "Upstream unmodified 5 voters, 2-of-3 Pedersen plus mandatory server; includes revotes/diff audit",
+    "uuid": "SYyoLirb4r9uEC",
+    "public_archive": "official-demo.bel",
+    "private_material_copied": false
+  },
+  "setup_issues_resolved": [
+    "raw.githubusercontent.com unreachable: official opam checksum-addressed cache used",
+    "nested macOS sandbox-exec was not allowed: dependency builds run with execution approval",
+    "pkg-config and zlib missing: built isolated official native dependencies",
+    "base -mpopcnt falsely detected on arm64: public compiler-probe-only patch",
+    "minimal upstream package declarations omit hex/cohttp-lwt-unix: installed actual source dependencies",
+    "one initial opam exec argument-order error corrected; unsuccessful build logs retained"
+  ],
+  "recipe": "scripts/g11/c1/install-macos-arm64.sh",
+  "recipe_validation": "bash syntax checked; equivalent installation steps executed in isolated cache; fresh full recipe was not rerun a second time",
+  "artifact_sha256": {
+    "opam": "3e7f67bda3ba0bf72f597917b17dc337ed5a1bd48224df8b747bb35ce05c569e",
+    "belenios-3.0.tar.gz": "6e9fed14ccf849632b84570cbe852bea3cbe30b5c9baf6a4a3cad7e7d16c62f9",
+    "opam-repository-20240913.tar.gz": "0f8736b8977793226f48b62e242ece75b09c632b280184eaf08ea44846ac2185",
+    "gmp-6.3.0.tar.xz": "a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898",
+    "libsodium-1.0.20.tar.gz": "ebb65ef6ca439333c2bb41a0c1990587288da07f6c7fd07cb3a18cc18d30ce19",
+    "pkgconf-2.3.0.tar.xz": "3a9080ac51d03615e7c1910a0a2a8df08424892b5f13b0628a204d3fcce0ea8b",
+    "zlib-1.3.1.tar.gz": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+  },
+  "no_global_package_install": true,
+  "private_material_exported": false
+}

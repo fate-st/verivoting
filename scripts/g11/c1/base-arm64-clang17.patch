@@ -1,0 +1,13 @@
+--- a/src/discover/discover.ml
++++ b/src/discover/discover.ml
+@@ -15,5 +15,9 @@
+     ~name:"discover"
+     ~args:[ "-o", Set_string output, "FILENAME output file" ]
+     (fun c ->
+-       let has_popcnt = c_test c ~c_flags:[ "-mpopcnt" ] program in
++       let has_popcnt =
++         match ocaml_config_var c "architecture" with
++         | Some "amd64" | Some "i386" -> c_test c ~c_flags:[ "-mpopcnt" ] program
++         | _ -> false
++       in
+        Flags.write_sexp !output (if has_popcnt then [ "-mpopcnt" ] else []))

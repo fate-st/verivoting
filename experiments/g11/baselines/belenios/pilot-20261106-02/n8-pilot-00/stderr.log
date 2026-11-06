@@ -1,0 +1,1434 @@
+
+[0000 setup] ["setup","generate-token"]
+        0.00 real         0.00 user         0.00 sys
+             7979008  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 634  page reclaims
+                 132  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   1  messages sent
+                   0  messages received
+                   0  signals received
+                   0  voluntary context switches
+                   5  involuntary context switches
+            35489353  instructions retired
+            13099361  cycles elapsed
+             4718808  peak memory footprint
+
+[0001 credentials] ["setup","generate-credentials","--uuid","xVFcyYpW4yYm6P","--group","Ed25519","--file","voters.txt"]
+        0.00 real         0.00 user         0.00 sys
+             8585216  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 670  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                  10  voluntary context switches
+                  17  involuntary context switches
+            44468679  instructions retired
+            16098746  cycles elapsed
+             5144816  peak memory footprint
+
+[0002 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","1/3/5","--step","1"]
+I: certificate 29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254 has been generated
+I: certificate saved to 29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.cert
+I: private key saved to 29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.key
+        0.00 real         0.00 user         0.00 sys
+             8437760  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 661  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   7  voluntary context switches
+                  27  involuntary context switches
+            40264023  instructions retired
+            14427846  cycles elapsed
+             4980976  peak memory footprint
+
+[0003 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","2/3/5","--step","1"]
+I: certificate b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae has been generated
+I: certificate saved to b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.cert
+I: private key saved to b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.key
+        0.00 real         0.00 user         0.00 sys
+             8404992  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 659  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  16  involuntary context switches
+            40323805  instructions retired
+            14711666  cycles elapsed
+             4948208  peak memory footprint
+
+[0004 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","3/3/5","--step","1"]
+I: certificate 22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc has been generated
+I: certificate saved to 22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.cert
+I: private key saved to 22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.key
+        0.00 real         0.00 user         0.00 sys
+             8404992  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 659  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  17  involuntary context switches
+            40183603  instructions retired
+            14129101  cycles elapsed
+             4981024  peak memory footprint
+
+[0005 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","4/3/5","--step","1"]
+I: certificate 636ffdbfe81876a2ac1e4daa9080c7c1d43a0b28b2d376c2ea92fa3b2e7c79f6 has been generated
+I: certificate saved to 636ffdbfe81876a2ac1e4daa9080c7c1d43a0b28b2d376c2ea92fa3b2e7c79f6.cert
+I: private key saved to 636ffdbfe81876a2ac1e4daa9080c7c1d43a0b28b2d376c2ea92fa3b2e7c79f6.key
+        0.00 real         0.00 user         0.00 sys
+             8503296  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 665  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  28  involuntary context switches
+            40373416  instructions retired
+            14031362  cycles elapsed
+             5079328  peak memory footprint
+
+[0006 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","5/3/5","--step","1"]
+I: certificate bee9e2fb38915a7c3fcc1a64b5fb9acc1e079c7038f89301c636ee063b613ac0 has been generated
+I: certificate saved to bee9e2fb38915a7c3fcc1a64b5fb9acc1e079c7038f89301c636ee063b613ac0.cert
+I: private key saved to bee9e2fb38915a7c3fcc1a64b5fb9acc1e079c7038f89301c636ee063b613ac0.key
+        0.00 real         0.00 user         0.00 sys
+             8437760  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 661  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  16  involuntary context switches
+            40266241  instructions retired
+            14120203  cycles elapsed
+             4980976  peak memory footprint
+
+[0007 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--step","2"]
+I: loading certs.jsons...
+I: certificates are valid
+        0.00 real         0.00 user         0.00 sys
+             9125888  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 703  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                   5  voluntary context switches
+                  14  involuntary context switches
+            45171704  instructions retired
+            15144248  cycles elapsed
+             5652720  peak memory footprint
+
+[0008 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","1/3/5","--certs","certs.jsons","--key","29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10043392  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 759  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  27  involuntary context switches
+            75110466  instructions retired
+            21651144  cycles elapsed
+             6455512  peak memory footprint
+
+[0009 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","2/3/5","--certs","certs.jsons","--key","b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10043392  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 759  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  10  voluntary context switches
+                  17  involuntary context switches
+            75053239  instructions retired
+            21430482  cycles elapsed
+             6471920  peak memory footprint
+
+[0010 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","3/3/5","--certs","certs.jsons","--key","22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10043392  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 759  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  10  voluntary context switches
+                  29  involuntary context switches
+            75162517  instructions retired
+            21328014  cycles elapsed
+             6455512  peak memory footprint
+
+[0011 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","4/3/5","--certs","certs.jsons","--key","636ffdbfe81876a2ac1e4daa9080c7c1d43a0b28b2d376c2ea92fa3b2e7c79f6.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10010624  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 757  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  10  voluntary context switches
+                  17  involuntary context switches
+            75580870  instructions retired
+            22736185  cycles elapsed
+             6439152  peak memory footprint
+
+[0012 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--threshold-context","5/3/5","--certs","certs.jsons","--key","bee9e2fb38915a7c3fcc1a64b5fb9acc1e079c7038f89301c636ee063b613ac0.key","--step","3"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10043392  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 759  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   7  voluntary context switches
+                  17  involuntary context switches
+            75064976  instructions retired
+            21165723  cycles elapsed
+             6455512  peak memory footprint
+
+[0013 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--step","4","--polynomials","polynomials.jsons"]
+I: loading certs.jsons...
+I: loading polynomials.jsons...
+I: wrote 29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.vinput
+I: wrote b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.vinput
+I: wrote 22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.vinput
+I: wrote 636ffdbfe81876a2ac1e4daa9080c7c1d43a0b28b2d376c2ea92fa3b2e7c79f6.vinput
+I: wrote bee9e2fb38915a7c3fcc1a64b5fb9acc1e079c7038f89301c636ee063b613ac0.vinput
+        0.00 real         0.00 user         0.00 sys
+            10420224  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 782  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   7  messages sent
+                   0  messages received
+                   0  signals received
+                  43  voluntary context switches
+                  58  involuntary context switches
+            76916048  instructions retired
+            24413734  cycles elapsed
+             6914336  peak memory footprint
+
+[0014 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10076160  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 761  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  17  involuntary context switches
+           102951957  instructions retired
+            28213310  cycles elapsed
+             6471920  peak memory footprint
+
+[0015 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10092544  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 762  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   9  voluntary context switches
+                  19  involuntary context switches
+           102809989  instructions retired
+            28791006  cycles elapsed
+             6488304  peak memory footprint
+
+[0016 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10076160  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 761  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  23  involuntary context switches
+           102880260  instructions retired
+            27900985  cycles elapsed
+             6471920  peak memory footprint
+
+[0017 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","636ffdbfe81876a2ac1e4daa9080c7c1d43a0b28b2d376c2ea92fa3b2e7c79f6.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10076160  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 761  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  19  involuntary context switches
+           103003539  instructions retired
+            28205482  cycles elapsed
+             6471920  peak memory footprint
+
+[0018 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--key","bee9e2fb38915a7c3fcc1a64b5fb9acc1e079c7038f89301c636ee063b613ac0.key","--step","5"]
+I: loading certs.jsons...
+        0.00 real         0.00 user         0.00 sys
+            10076160  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 761  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   1  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  51  involuntary context switches
+           103107961  instructions retired
+            29098939  cycles elapsed
+             6471920  peak memory footprint
+
+[0019 dkg] ["setup","generate-trustee-key-threshold","--group","Ed25519","--certs","certs.jsons","--step","6","--polynomials","polynomials.jsons"]
+I: loading certs.jsons...
+I: loading polynomials.jsons...
+I: wrote 29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.dkey
+I: wrote b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.dkey
+I: wrote 22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.dkey
+I: wrote 636ffdbfe81876a2ac1e4daa9080c7c1d43a0b28b2d376c2ea92fa3b2e7c79f6.dkey
+I: wrote bee9e2fb38915a7c3fcc1a64b5fb9acc1e079c7038f89301c636ee063b613ac0.dkey
+        0.01 real         0.00 user         0.00 sys
+            10305536  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 775  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   9  messages sent
+                   2  messages received
+                   0  signals received
+                  39  voluntary context switches
+                  58  involuntary context switches
+           146764364  instructions retired
+            40235642  cycles elapsed
+             6766832  peak memory footprint
+
+[0020 dkg] ["setup","generate-trustee-key","--group","Ed25519"]
+I: public key saved to 924BFF48.pubkey
+I: private key saved to 924BFF48.privkey
+        0.00 real         0.00 user         0.00 sys
+             8323072  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 655  page reclaims
+                 132  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+                  16  involuntary context switches
+            39304861  instructions retired
+            14591963  cycles elapsed
+             4915440  peak memory footprint
+
+[0021 setup] ["setup","make-trustees"]
+        0.00 real         0.00 user         0.00 sys
+             8421376  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 660  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  14  voluntary context switches
+                  18  involuntary context switches
+            38115927  instructions retired
+            14081686  cycles elapsed
+             5062896  peak memory footprint
+
+[0022 setup] ["setup","make-election","--uuid","xVFcyYpW4yYm6P","--group","Ed25519","--template","questions.json"]
+        0.00 real         0.00 user         0.00 sys
+             8519680  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 666  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  12  voluntary context switches
+                  16  involuntary context switches
+            38731153  instructions retired
+            13983684  cycles elapsed
+             5046512  peak memory footprint
+
+[0023 setup] ["archive","init"]
+        0.00 real         0.00 user         0.00 sys
+             8486912  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 664  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  48  voluntary context switches
+                  52  involuntary context switches
+            41905608  instructions retired
+            15652346  cycles elapsed
+             5128432  peak memory footprint
+
+[0024 ballot_generation] ["election","generate-ballot","--privcred","credential-0","--choice","choice-0.json"]
+I: using directory .
+I: loading choice-0.json...
+I: loading credential-0...
+        0.01 real         0.01 user         0.00 sys
+            10256384  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 771  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  42  voluntary context switches
+                  57  involuntary context switches
+           211429777  instructions retired
+            52233459  cycles elapsed
+             6668528  peak memory footprint
+
+[0025 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-0.json"]
+I: using directory .
+I: loading ballot-0.json...
+I: ballot is valid
+        0.01 real         0.00 user         0.00 sys
+            10240000  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 770  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  39  voluntary context switches
+                  65  involuntary context switches
+           182982256  instructions retired
+            46550908  cycles elapsed
+             6668528  peak memory footprint
+
+[0026 invalid_ballot] ["election","verify-ballot","--ballot","invalid-ballot.json"]
+I: using directory .
+I: loading invalid-ballot.json...
+belenios-tool: error: "InvalidBallot" in ballot {"election_uuid":"xVFcyYpW4yYm6P","election_hash":"27rsy2CbsLDNRQHHUcjRwT+cvzyZ0rkZ21oZibe+Sd8","credential":"5d14a44e5b16916e29cfe878b73dab78a5ca2db61323527567da39c05082330f","answers":[{"choices":[{"alpha":"f23ee4e511743213dd00680e6f2d0f7c9aaaa533acbdc7f7df5a136d20fbabcc","beta":"b4284f7f94279b66fcacc8e4d0e097146ef360a8b366e50247a28e0e59993e1f"},{"alpha":"7ead4c2de259eb14d3780f69c44a97a4075ea7897b6ac9aa7ba62a1820fee067","beta":"e56066e018c99ca097da250d41b0b8bfdee0311c2c47c4ad003259673219f8b7"},{"alpha":"8942d882bc91123cceedc11abaea201d2ffd4b73b92dbdae7010d9eeded0e7cb","beta":"d249cf7d3e83fbe2ae6f07aa9b19cd43a48b2b9c3358f7e8c8b5c2933fc205a5"}],"individual_proofs":[[{"challenge":"3122476855126546620632023911362380006259484109311787671070643565028397674076","response":"1339542660640972618717052239137598533169907141568950306387926528205830086256"},{"challenge":"6991029145424951951785736822348705132637292392457404607964405012247524823728","response":"5670484047840224430064332975614679612508915859818255326043673069941681192956"}],[{"challenge":"5092415436818524704788182728553412957981052661067565464668058999425373972056","response":"6843254229307355886729217549580436070684636425709865823104428271189440873828"},{"challenge":"6527435072926127968581532792275031525766646259635815866646161054666056411588","response":"974875629089024304782826009053171219754530958966991324222141053789032007091"}],[{"challenge":"899071744300214054736119712002294296961367880688250559676863351708609932410","response":"1761416951259314059752046225620751274870139279456459720404833355399410631044"},{"challenge":"1744932475760436464701994061026799989535609246926322876440693980444567151126","response":"4972243114639932747987768722887830577691849319146395984476785118540953801826"}]],"overall_proof":[{"challenge":"6671367219726743987736202852875769752778038577784413471014239494375244392964","response":"3998547651376220618262979708946433559234624195631801625580951782429118691493"}]}],"signature":{"hash":"pvLKi3TVddQhLMarn2RzNCiNNzVns+kQZDIyWP0PexU","proof":{"challenge":"6910888176123378818868014411369510782234156300515191486098156485283227866142","response":"2354742891961556560436201761966691067665618354762401866012538177224231338515"}}}
+        0.01 real         0.00 user         0.00 sys
+            10190848  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 767  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  39  voluntary context switches
+                  47  involuntary context switches
+           153992046  instructions retired
+            40012148  cycles elapsed
+             6635760  peak memory footprint
+
+[0027 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9043968  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 698  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  30  voluntary context switches
+                  43  involuntary context switches
+            39777385  instructions retired
+            15469859  cycles elapsed
+             5701872  peak memory footprint
+
+[0028 ballot_generation] ["election","generate-ballot","--privcred","credential-1","--choice","choice-1.json"]
+I: using directory .
+I: loading choice-1.json...
+I: loading credential-1...
+        0.01 real         0.01 user         0.00 sys
+            10272768  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 772  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  44  voluntary context switches
+                  61  involuntary context switches
+           211629236  instructions retired
+            52840687  cycles elapsed
+             6684912  peak memory footprint
+
+[0029 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-1.json"]
+I: using directory .
+I: loading ballot-1.json...
+I: ballot is valid
+        0.01 real         0.01 user         0.00 sys
+            10240000  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 770  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  57  voluntary context switches
+                 102  involuntary context switches
+           184931785  instructions retired
+            48366238  cycles elapsed
+             6668528  peak memory footprint
+
+[0030 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9207808  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 711  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  34  voluntary context switches
+                  56  involuntary context switches
+            40474923  instructions retired
+            16415454  cycles elapsed
+             5882120  peak memory footprint
+
+[0031 ballot_generation] ["election","generate-ballot","--privcred","credential-2","--choice","choice-2.json"]
+I: using directory .
+I: loading choice-2.json...
+I: loading credential-2...
+        0.01 real         0.01 user         0.00 sys
+            10289152  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 773  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  48  voluntary context switches
+                 141  involuntary context switches
+           212985836  instructions retired
+            55509172  cycles elapsed
+             6734112  peak memory footprint
+
+[0032 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-2.json"]
+I: using directory .
+I: loading ballot-2.json...
+I: ballot is valid
+        0.01 real         0.01 user         0.00 sys
+            10272768  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 772  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  67  voluntary context switches
+                 129  involuntary context switches
+           186625531  instructions retired
+            49943032  cycles elapsed
+             6701296  peak memory footprint
+
+[0033 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9125888  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 703  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  38  voluntary context switches
+                  81  involuntary context switches
+            40940785  instructions retired
+            16638154  cycles elapsed
+             5783792  peak memory footprint
+
+[0034 ballot_generation] ["election","generate-ballot","--privcred","credential-3","--choice","choice-3.json"]
+I: using directory .
+I: loading choice-3.json...
+I: loading credential-3...
+        0.01 real         0.01 user         0.00 sys
+            10289152  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 775  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  49  voluntary context switches
+                 117  involuntary context switches
+           213141531  instructions retired
+            55573423  cycles elapsed
+             6701296  peak memory footprint
+
+[0035 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-3.json"]
+I: using directory .
+I: loading ballot-3.json...
+I: ballot is valid
+        0.01 real         0.01 user         0.00 sys
+            10403840  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 780  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  78  voluntary context switches
+                 137  involuntary context switches
+           187966924  instructions retired
+            50419260  cycles elapsed
+             6832368  peak memory footprint
+
+[0036 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9224192  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 709  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  42  voluntary context switches
+                  89  involuntary context switches
+            41406879  instructions retired
+            17156377  cycles elapsed
+             5931320  peak memory footprint
+
+[0037 ballot_generation] ["election","generate-ballot","--privcred","credential-4","--choice","choice-4.json"]
+I: using directory .
+I: loading choice-4.json...
+I: loading credential-4...
+        0.01 real         0.01 user         0.00 sys
+            10338304  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 776  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  58  voluntary context switches
+                 128  involuntary context switches
+           213321341  instructions retired
+            54838741  cycles elapsed
+             6766856  peak memory footprint
+
+[0038 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-4.json"]
+I: using directory .
+I: loading ballot-4.json...
+I: ballot is valid
+        0.01 real         0.01 user         0.00 sys
+            10403840  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 780  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                  93  voluntary context switches
+                 172  involuntary context switches
+           189663099  instructions retired
+            52281947  cycles elapsed
+             6898000  peak memory footprint
+
+[0039 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9355264  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 717  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  45  voluntary context switches
+                  77  involuntary context switches
+            41740024  instructions retired
+            17931846  cycles elapsed
+             6078800  peak memory footprint
+
+[0040 ballot_generation] ["election","generate-ballot","--privcred","credential-5","--choice","choice-5.json"]
+I: using directory .
+I: loading choice-5.json...
+I: loading credential-5...
+        0.01 real         0.01 user         0.00 sys
+            10338304  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 776  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  60  voluntary context switches
+                 136  involuntary context switches
+           213721334  instructions retired
+            55022915  cycles elapsed
+             6783264  peak memory footprint
+
+[0041 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-5.json"]
+I: using directory .
+I: loading ballot-5.json...
+I: ballot is valid
+        0.01 real         0.01 user         0.00 sys
+            10387456  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 782  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                 103  voluntary context switches
+                 161  involuntary context switches
+           190733593  instructions retired
+            51422335  cycles elapsed
+             6848800  peak memory footprint
+
+[0042 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9175040  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 706  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  51  voluntary context switches
+                  58  involuntary context switches
+            41632347  instructions retired
+            16066218  cycles elapsed
+             5832944  peak memory footprint
+
+[0043 ballot_generation] ["election","generate-ballot","--privcred","credential-6","--choice","choice-6.json"]
+I: using directory .
+I: loading choice-6.json...
+I: loading credential-6...
+        0.01 real         0.01 user         0.00 sys
+            10305536  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 774  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  63  voluntary context switches
+                 142  involuntary context switches
+           213995617  instructions retired
+            54908331  cycles elapsed
+             6734088  peak memory footprint
+
+[0044 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-6.json"]
+I: using directory .
+I: loading ballot-6.json...
+I: ballot is valid
+        0.01 real         0.01 user         0.00 sys
+            10420224  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 781  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                 115  voluntary context switches
+                 195  involuntary context switches
+           192460133  instructions retired
+            52301370  cycles elapsed
+             6865160  peak memory footprint
+
+[0045 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9273344  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 712  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  55  voluntary context switches
+                  63  involuntary context switches
+            42067687  instructions retired
+            16230720  cycles elapsed
+             5931248  peak memory footprint
+
+[0046 ballot_generation] ["election","generate-ballot","--privcred","credential-7","--choice","choice-7.json"]
+I: using directory .
+I: loading choice-7.json...
+I: loading credential-7...
+        0.01 real         0.01 user         0.00 sys
+            10387456  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 778  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   4  messages sent
+                   0  messages received
+                   0  signals received
+                  69  voluntary context switches
+                 146  involuntary context switches
+           214362789  instructions retired
+            56214750  cycles elapsed
+             6799600  peak memory footprint
+
+[0047 single_ballot_verification] ["election","verify-ballot","--ballot","ballot-7.json"]
+I: using directory .
+I: loading ballot-7.json...
+I: ballot is valid
+        0.01 real         0.01 user         0.00 sys
+            10436608  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 782  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                 126  voluntary context switches
+                 191  involuntary context switches
+           193436243  instructions retired
+            52680677  cycles elapsed
+             6865136  peak memory footprint
+
+[0048 board_acceptance] ["archive","add-event","--type=Ballot"]
+        0.00 real         0.00 user         0.00 sys
+             9224192  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 709  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  58  voluntary context switches
+                  79  involuntary context switches
+            42397115  instructions retired
+            16583355  cycles elapsed
+             5882096  peak memory footprint
+
+[0049 all_ballot_audit] ["election","verify"]
+I: using directory .
+I: no shuffles to check
+I: no result to check
+I: all checks passed
+        0.02 real         0.01 user         0.00 sys
+            10682368  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 797  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                 306  voluntary context switches
+                 485  involuntary context switches
+           283828713  instructions retired
+            83005206  cycles elapsed
+             7143688  peak memory footprint
+
+[0050 board_acceptance] ["archive","add-event","--type=EndBallots"]
+        0.00 real         0.00 user         0.00 sys
+             8781824  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 682  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  55  voluntary context switches
+                 108  involuntary context switches
+            41503743  instructions retired
+            20799754  cycles elapsed
+             5472544  peak memory footprint
+
+[0051 tally] ["election","compute-encrypted-tally"]
+I: using directory .
+        0.01 real         0.01 user         0.00 sys
+            10534912  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 787  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                 135  voluntary context switches
+                 244  involuntary context switches
+           184660019  instructions retired
+            54757596  cycles elapsed
+             6979848  peak memory footprint
+
+[0052 board_acceptance] ["archive","add-event","--type=EncryptedTally"]
+        0.00 real         0.00 user         0.00 sys
+             8732672  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 679  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  61  voluntary context switches
+                  67  involuntary context switches
+            41794385  instructions retired
+            15815003  cycles elapsed
+             5390576  peak memory footprint
+
+[0053 encrypted_tally_audit] ["election","verify"]
+I: using directory .
+I: no shuffles to check
+I: no result to check
+I: all checks passed
+        0.01 real         0.01 user         0.00 sys
+            10403840  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 780  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                 337  voluntary context switches
+                 362  involuntary context switches
+           284254673  instructions retired
+            71612993  cycles elapsed
+             6848776  peak memory footprint
+
+[0054 threshold_decryption] ["election","decrypt-threshold","--key","29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.key","--decryption-key","29a97220fa64ec3b400f8f65822a28b075d92437391f2e3d0e0556857602d254.dkey","--trustee-id","2"]
+I: using directory .
+        0.01 real         0.00 user         0.00 sys
+            10240000  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 770  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                  88  voluntary context switches
+                  94  involuntary context switches
+           180770036  instructions retired
+            46028937  cycles elapsed
+             6602992  peak memory footprint
+
+[0055 board_acceptance] ["archive","add-event","--type=PartialDecryption"]
+        0.00 real         0.00 user         0.00 sys
+             8863744  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 687  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  69  voluntary context switches
+                  74  involuntary context switches
+            42552802  instructions retired
+            15675122  cycles elapsed
+             5554464  peak memory footprint
+
+[0056 threshold_decryption] ["election","decrypt-threshold","--key","b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.key","--decryption-key","b1ad7c9c519d6b9c1acacef219771b490a3e6e1837f8fb8cd9fe66b77a4955ae.dkey","--trustee-id","3"]
+I: using directory .
+        0.01 real         0.00 user         0.00 sys
+            10354688  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 777  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                  92  voluntary context switches
+                 103  involuntary context switches
+           181355413  instructions retired
+            45769837  cycles elapsed
+             6750496  peak memory footprint
+
+[0057 board_acceptance] ["archive","add-event","--type=PartialDecryption"]
+        0.00 real         0.00 user         0.00 sys
+             8929280  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 691  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  75  voluntary context switches
+                  88  involuntary context switches
+            43438265  instructions retired
+            17916454  cycles elapsed
+             5587184  peak memory footprint
+
+[0058 threshold_decryption] ["election","decrypt-threshold","--key","22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.key","--decryption-key","22f8551ceb4fa63f8b3f86f64e7f35c729723ca308dcd480e156b999cc1198bc.dkey","--trustee-id","4"]
+I: using directory .
+        0.01 real         0.00 user         0.00 sys
+            10256384  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 771  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                  98  voluntary context switches
+                 107  involuntary context switches
+           182241776  instructions retired
+            46475432  cycles elapsed
+             6619376  peak memory footprint
+
+[0059 board_acceptance] ["archive","add-event","--type=PartialDecryption"]
+        0.00 real         0.00 user         0.00 sys
+             8929280  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 691  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  80  voluntary context switches
+                  87  involuntary context switches
+            43674624  instructions retired
+            15761664  cycles elapsed
+             5570776  peak memory footprint
+
+[0060 missing_mandatory_server] ["election","compute-result"]
+I: using directory .
+belenios-tool: a partial decryption is missing
+        0.01 real         0.00 user         0.00 sys
+            10092544  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 761  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                 135  voluntary context switches
+                 142  involuntary context switches
+           158354822  instructions retired
+            41295555  cycles elapsed
+             6504688  peak memory footprint
+
+[0061 threshold_decryption] ["election","decrypt","--privkey","924BFF48.privkey","--trustee-id","1"]
+I: using directory .
+I: loading 924BFF48.privkey...
+        0.01 real         0.00 user         0.00 sys
+            10223616  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 769  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                 103  voluntary context switches
+                 110  involuntary context switches
+           177512656  instructions retired
+            45026251  cycles elapsed
+             6635760  peak memory footprint
+
+[0062 board_acceptance] ["archive","add-event","--type=PartialDecryption"]
+        0.00 real         0.00 user         0.00 sys
+             9011200  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 696  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  88  voluntary context switches
+                  92  involuntary context switches
+            44051573  instructions retired
+            16253166  cycles elapsed
+             5652696  peak memory footprint
+
+[0063 combine_and_decode] ["election","compute-result"]
+I: using directory .
+        0.01 real         0.01 user         0.00 sys
+            10240000  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 770  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   2  messages sent
+                   0  messages received
+                   0  signals received
+                 153  voluntary context switches
+                 163  involuntary context switches
+           214318425  instructions retired
+            54157993  cycles elapsed
+             6635760  peak memory footprint
+
+[0064 board_acceptance] ["archive","add-event","--type=Result"]
+        0.00 real         0.00 user         0.00 sys
+             8830976  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 685  page reclaims
+                 133  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   1  messages received
+                   0  signals received
+                  89  voluntary context switches
+                  96  involuntary context switches
+            43817727  instructions retired
+            15988581  cycles elapsed
+             5538104  peak memory footprint
+
+[0065 final_audit] ["election","verify"]
+I: using directory .
+I: no shuffles to check
+I: all checks passed
+        0.03 real         0.03 user         0.00 sys
+            10813440  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                 805  page reclaims
+                 134  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   3  messages sent
+                   0  messages received
+                   0  signals received
+                 517  voluntary context switches
+                 547  involuntary context switches
+           593872587  instructions retired
+           139254975  cycles elapsed
+             7209200  peak memory footprint

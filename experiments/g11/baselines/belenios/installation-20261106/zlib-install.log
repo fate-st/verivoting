@@ -1,0 +1,12 @@
+rm -f /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/libz.a
+cp libz.a /private/tmp/vv-g11c1-20261106-K03bsm/native/lib
+chmod 644 /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/libz.a
+rm -f /private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man3/zlib.3
+cp zlib.3 /private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man3
+chmod 644 /private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man3/zlib.3
+rm -f /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/pkgconfig/zlib.pc
+cp zlib.pc /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/pkgconfig
+chmod 644 /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/pkgconfig/zlib.pc
+rm -f /private/tmp/vv-g11c1-20261106-K03bsm/native/include/zlib.h /private/tmp/vv-g11c1-20261106-K03bsm/native/include/zconf.h
+cp zlib.h zconf.h /private/tmp/vv-g11c1-20261106-K03bsm/native/include
+chmod 644 /private/tmp/vv-g11c1-20261106-K03bsm/native/include/zlib.h /private/tmp/vv-g11c1-20261106-K03bsm/native/include/zconf.h

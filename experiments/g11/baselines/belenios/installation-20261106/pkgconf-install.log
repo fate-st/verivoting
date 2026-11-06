@@ -1,0 +1,25 @@
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/lib'
+ /bin/sh ./libtool   --mode=install /usr/bin/install -c   libpkgconf.la '/private/tmp/vv-g11c1-20261106-K03bsm/native/lib'
+libtool: install: /usr/bin/install -c .libs/libpkgconf.lai /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/libpkgconf.la
+libtool: install: /usr/bin/install -c .libs/libpkgconf.a /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/libpkgconf.a
+libtool: install: chmod 644 /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/libpkgconf.a
+libtool: install: ranlib /private/tmp/vv-g11c1-20261106-K03bsm/native/lib/libpkgconf.a
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/bin'
+  /bin/sh ./libtool   --mode=install /usr/bin/install -c pkgconf bomtool '/private/tmp/vv-g11c1-20261106-K03bsm/native/bin'
+libtool: install: /usr/bin/install -c pkgconf /private/tmp/vv-g11c1-20261106-K03bsm/native/bin/pkgconf
+libtool: install: /usr/bin/install -c bomtool /private/tmp/vv-g11c1-20261106-K03bsm/native/bin/bomtool
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/doc/pkgconf'
+ /usr/bin/install -c -m 644 README.md AUTHORS '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/doc/pkgconf'
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/aclocal'
+ /usr/bin/install -c -m 644 pkg.m4 '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/aclocal'
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man1'
+ /usr/bin/install -c -m 644 man/pkgconf.1 '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man1'
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man5'
+ /usr/bin/install -c -m 644 man/pc.5 man/pkgconf-personality.5 '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man5'
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man7'
+ /usr/bin/install -c -m 644 man/pkg.m4.7 '/private/tmp/vv-g11c1-20261106-K03bsm/native/share/man/man7'
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/include/pkgconf'
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/include/pkgconf/libpkgconf'
+ /usr/bin/install -c -m 644  libpkgconf/bsdstubs.h libpkgconf/iter.h libpkgconf/libpkgconf.h libpkgconf/stdinc.h libpkgconf/libpkgconf-api.h '/private/tmp/vv-g11c1-20261106-K03bsm/native/include/pkgconf/libpkgconf'
+ mkdir -p '/private/tmp/vv-g11c1-20261106-K03bsm/native/lib/pkgconfig'
+ /usr/bin/install -c -m 644 libpkgconf.pc '/private/tmp/vv-g11c1-20261106-K03bsm/native/lib/pkgconfig'

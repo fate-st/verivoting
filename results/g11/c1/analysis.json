@@ -1,0 +1,46 @@
+{
+  "gate": "G11-C1",
+  "status": "PASS_BELENIOS_CLI_REPRODUCTION",
+  "raw_root": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/g11/baselines/belenios/run-20261106-01",
+  "source_commit": "5a1596cefcc0944467ddc4bc9cdb0f24013b0d05",
+  "binary_sha256": "ad43e6fb93d447e516210ba5ae24144868ad290a53b8872e097acaeba130521c",
+  "run_sha256": "5b9d349ecf146112eef370e070f839bcce10c9d47833f37a9b4fa5b92d20abeb",
+  "counts": [
+    {
+      "n": 8,
+      "warmups": 5,
+      "measured": 30,
+      "failed": 0
+    },
+    {
+      "n": 32,
+      "warmups": 5,
+      "measured": 30,
+      "failed": 0
+    },
+    {
+      "n": 128,
+      "warmups": 5,
+      "measured": 30,
+      "failed": 0
+    }
+  ],
+  "checks": {
+    "raw_samples": {
+      "rows": 105,
+      "csv_sha256": "e885a95005ae51541eac2e5095a647830b3884ee00674ff5184ed59ee7225b03",
+      "roundtrip": "exact",
+      "inspection": "{\"kind\":\"table\",\"sheet\":\"Samples\",\"address\":\"A1:F4\",\"rows\":4,\"cols\":6,\"values\":[[\"label\",\"n\",\"phase\",\"trial\",\"status\",\"uuid\"],[\"n8-warmup-00\",8,\"warmup\",0,\"passed\",\"3dnMLzQK73EDmP\"],[\"n32-warmup-00\",32,\"warmup\",0,\"passed\",\"UiHSbGxzTZcZx2\"],[\"n128-warmup-00\",128,\"warmup\",0,\"passed\",\"gyqMZbesVc3JoV\"]]}"
+    },
+    "summary": {
+      "rows": 87,
+      "csv_sha256": "91cb33cbf455882f7b0e8c4c41874c02e4bd246e5ee0f69260555f8aa7d770c8",
+      "roundtrip": "exact",
+      "inspection": "{\"kind\":\"table\",\"sheet\":\"Summary\",\"address\":\"A1:F4\",\"rows\":4,\"cols\":6,\"values\":[[\"metric\",\"unit\",\"mean\",\"median\",\"sample_sd\",\"min\"],[\"setup_ms\",\"ms\",167.5514226666625,167.82354150002357,5.91076244337587,157.01383499999065],[\"ballot_generation_ms\",\"ms\",121.75808730000499,122.60989699995844,3.7914603574803003,114.22391500000958],[\"proof_generation_ms\",\"ms\",\"\",\"\",\"\",\"\"]]}"
+    }
+  },
+  "no_verivoting_comparative_execution": true,
+  "no_claim_of_performance_superiority": true,
+  "distributed_server_or_network_experiment": false,
+  "gas_not_applicable": true
+}

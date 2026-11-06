@@ -1,0 +1,35 @@
+The following actions will be performed:
+=== install 3 packages
+  ∗ ocaml               4.14.2
+  ∗ ocaml-base-compiler 4.14.2
+  ∗ ocaml-config        2
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+⬇ retrieved ocaml-config.2  (cached)
+⬇ retrieved ocaml-base-compiler.4.14.2  (cached)
+[ERROR] The compilation of ocaml-base-compiler.4.14.2 failed at "./configure --prefix=/private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2 --docdir=/private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/doc/ocaml -C CC=cc ASPP=cc -c".
+
+#=== ERROR while compiling ocaml-base-compiler.4.14.2 =========================#
+# context              2.6.1 | macos/arm64 |  | file:///private/tmp/vv-g11c1-20261106-K03bsm/opam-repository-4093222dece7c1c8f93dc2fd8dd7eec15fa80fed
+# path                 /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/build/ocaml-base-compiler.4.14.2
+# command              /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/opam-init/hooks/sandbox.sh build ./configure --prefix=/private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2 --docdir=/private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/doc/ocaml -C CC=cc ASPP=cc -c
+# exit-code            71
+# env-file             /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/ocaml-base-compiler-17124-78640b.env
+# output-file          /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/ocaml-base-compiler-17124-78640b.out
+### output ###
+# sandbox-exec: sandbox_apply: Operation not permitted
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+┌─ The following actions failed
+│ λ build ocaml-base-compiler 4.14.2
+└─ 
+╶─ No changes have been performed
+
+<><> ocaml-base-compiler.4.14.2 troubleshooting <><><><><><><><><><><><><><>  🐫 
+=> A failure in the middle of the build may be caused by build parallelism
+      (enabled by default).
+      Please file a bug report at https://github.com/ocaml/opam-repository/issues
+=> You can try installing again including --jobs=1
+      to force a sequential build instead.

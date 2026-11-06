@@ -1,0 +1,88 @@
+metric,unit,mean,median,sample_sd,min,max,p95,voters,samples,note
+setup_ms,ms,167.5514226666625,167.82354150002357,5.91076244337587,157.01383499999065,178.78579400000308,176.7046410999799,8,30,Independent complete elections; warmups excluded; CLI wall time
+ballot_generation_ms,ms,121.75808730000499,122.60989699995844,3.7914603574803003,114.22391500000958,129.8383750000139,128.3147333000292,8,30,Independent complete elections; warmups excluded; CLI wall time
+proof_generation_ms,ms,,,,,,,8,0,Not separable or not applicable; see report
+aggregation_ms,ms,,,,,,,8,0,Not separable or not applicable; see report
+verification_ms,ms,114.47511623333193,114.4635619999608,4.886151524637622,106.49929300001531,130.78683300000557,123.1271213499971,8,30,Independent complete elections; warmups excluded; CLI wall time
+state_proof_ms,ms,,,,,,,8,0,Not separable or not applicable; see report
+tally_ms,ms,14.862798599997769,14.467187499976717,1.2676967448148195,13.609333000000333,20.114417000004323,16.55780220001834,8,30,Independent complete elections; warmups excluded; CLI wall time
+decryption_ms,ms,71.08079826667914,70.68872900004499,3.9196102218661806,65.80508100002771,84.73983200000657,76.41368329999095,8,30,Independent complete elections; warmups excluded; CLI wall time
+p3_verification_ms,ms,,,,,,,8,0,Not separable or not applicable; see report
+proof_bytes,bytes,12669.233333333334,12669,3.420862296347914,12664,12675,12674.55,8,30,Independent complete elections; warmups excluded; CLI wall time
+public_input_bytes,bytes,,,,,,,8,0,Not separable or not applicable; see report
+ciphertext_bytes,bytes,3632,3632,0,3632,3632,3632,8,30,Independent complete elections; warmups excluded; CLI wall time
+communication_bytes,bytes,67584,67584,0,67584,67584,67584,8,30,Independent complete elections; warmups excluded; CLI wall time
+storage_bytes,bytes,67584,67584,0,67584,67584,67584,8,30,Independent complete elections; warmups excluded; CLI wall time
+cp_package_bytes,bytes,,,,,,,8,0,Not separable or not applicable; see report
+memory_peak_mib,MiB,10.297916666666667,10.296875,0.041428016264470055,10.25,10.421875,10.3765625,8,30,Independent complete elections; warmups excluded; CLI wall time
+cpu_ms,ms,185.33333333333334,180,25.694938899664102,140,240,225.49999999999997,8,30,Independent complete elections; warmups excluded; CLI wall time
+throughput_votes_per_second,votes/s,11.944985531865902,11.96945195275136,0.40902660908909805,10.806185938464617,12.724599115481531,12.449828604734583,8,30,Independent complete elections; warmups excluded; CLI wall time
+end_to_end_ms,ms,670.5227347333297,668.3685624999998,23.769456481153973,628.7034999999887,740.3167079999985,715.5801123499946,8,30,Independent complete elections; warmups excluded; CLI wall time
+gas,not applicable,,,,,,,8,0,Not separable or not applicable; see report
+calldata_bytes,bytes,,,,,,,8,0,Not separable or not applicable; see report
+transaction_count,not applicable,,,,,,,8,0,Not separable or not applicable; see report
+ballot_generation_per_vote_ms,ms,15.219760912500623,15.326237124994805,0.47393254468503754,14.277989375001198,16.22979687500174,16.03934166250365,8,30,Independent complete elections; warmups excluded; CLI wall time
+single_verification_per_vote_ms,ms,14.309389529166491,14.3079452499951,0.6107689405797028,13.312411625001914,16.348354125000697,15.390890168749637,8,30,Independent complete elections; warmups excluded; CLI wall time
+archive_ballot_audit_ms,ms,20.547190233331882,20.028707999998005,2.2595583886401505,18.754249999998137,29.21704199999658,25.303745649999467,8,30,Independent complete elections; warmups excluded; CLI wall time
+final_audit_ms,ms,37.62465969999927,37.56341699999757,0.7783538243041014,36.35820800001966,39.18983399999706,38.98618110000025,8,30,Independent complete elections; warmups excluded; CLI wall time
+credential_generation_ms,ms,5.702713933332901,5.636458499990113,0.2917521398227258,5.2468750000116415,6.568417000002228,6.215700150016346,8,30,Independent complete elections; warmups excluded; CLI wall time
+dkg_ms,ms,140.0669586999936,140.10664649995306,5.129164877103366,131.34166799999366,150.44954500000313,147.6644856499319,8,30,Independent complete elections; warmups excluded; CLI wall time
+online_excluding_setup_ms,ms,497.67993766666257,494.2006249999904,20.239097054209605,466.4320829999924,562.5305419999931,531.8248274499822,8,30,Independent complete elections; warmups excluded; CLI wall time
+setup_ms,ms,168.06419413333836,167.44002100000216,8.933473245064484,156.5769169999985,195.3088310000021,185.72899425000506,32,30,Independent complete elections; warmups excluded; CLI wall time
+ballot_generation_ms,ms,502.75598323336357,496.3190840001189,12.023141733184914,491.7895009999629,528.0296240001044,525.2264213000323,32,30,Independent complete elections; warmups excluded; CLI wall time
+proof_generation_ms,ms,,,,,,,32,0,Not separable or not applicable; see report
+aggregation_ms,ms,,,,,,,32,0,Not separable or not applicable; see report
+verification_ms,ms,525.0119915666852,516.6827479999629,14.38776984203088,508.0322950001282,556.4407899999787,547.4545225500482,32,30,Independent complete elections; warmups excluded; CLI wall time
+state_proof_ms,ms,,,,,,,32,0,Not separable or not applicable; see report
+tally_ms,ms,23.803077799998572,23.429062499970314,1.5636028972980534,22.049082999990787,27.323999999993248,27.20669810000327,32,30,Independent complete elections; warmups excluded; CLI wall time
+decryption_ms,ms,76.04445140000195,73.37318699998286,10.111822331542172,69.64045900001656,111.86133300000802,98.11219935003311,32,30,Independent complete elections; warmups excluded; CLI wall time
+p3_verification_ms,ms,,,,,,,32,0,Not separable or not applicable; see report
+proof_bytes,bytes,50674.433333333334,50674,9.2724409364277,50647,50700,50686.1,32,30,Independent complete elections; warmups excluded; CLI wall time
+public_input_bytes,bytes,,,,,,,32,0,Not separable or not applicable; see report
+ciphertext_bytes,bytes,14528,14528,0,14528,14528,14528,32,30,Independent complete elections; warmups excluded; CLI wall time
+communication_bytes,bytes,167424,167424,0,167424,167424,167424,32,30,Independent complete elections; warmups excluded; CLI wall time
+storage_bytes,bytes,167424,167424,0,167424,167424,167424,32,30,Independent complete elections; warmups excluded; CLI wall time
+cp_package_bytes,bytes,,,,,,,32,0,Not separable or not applicable; see report
+memory_peak_mib,MiB,11.3171875,11.296875,0.06450840921859563,11.234375,11.515625,11.44765625,32,30,Independent complete elections; warmups excluded; CLI wall time
+cpu_ms,ms,751,755,22.49137765823866,700,800,780,32,30,Independent complete elections; warmups excluded; CLI wall time
+throughput_votes_per_second,votes/s,18.65394130341705,18.779526494962752,0.5028879399385127,17.787701417814084,19.3203216501483,19.2359400283103,32,30,Independent complete elections; warmups excluded; CLI wall time
+end_to_end_ms,ms,1716.6714111000051,1703.9847705000138,46.67965110390912,1656.2871250000317,1798.9957920000015,1791.9245937500075,32,30,Independent complete elections; warmups excluded; CLI wall time
+gas,not applicable,,,,,,,32,0,Not separable or not applicable; see report
+calldata_bytes,bytes,,,,,,,32,0,Not separable or not applicable; see report
+transaction_count,not applicable,,,,,,,32,0,Not separable or not applicable; see report
+ballot_generation_per_vote_ms,ms,15.711124476042611,15.509971375003715,0.3757231791620286,15.368421906248841,16.500925750003262,16.413325665626008,32,30,Independent complete elections; warmups excluded; CLI wall time
+single_verification_per_vote_ms,ms,16.406624736458912,16.14633587499884,0.449617807563465,15.876009218754007,17.388774687499335,17.107953829689006,32,30,Independent complete elections; warmups excluded; CLI wall time
+archive_ballot_audit_ms,ms,28.0920847666673,25.777999999991152,9.59184820906362,24.632500000006985,77.88295899998047,32.30599360000779,32,30,Independent complete elections; warmups excluded; CLI wall time
+final_audit_ms,ms,82.84979149999513,82.21685349999461,4.0518488118775435,78.82379200000287,100.71054199995706,87.78561464999146,32,30,Independent complete elections; warmups excluded; CLI wall time
+credential_generation_ms,ms,6.734257066666517,6.653333500013105,0.4573034822393518,6.180250000004889,8.767957999982173,7.1142590000112245,32,30,Independent complete elections; warmups excluded; CLI wall time
+dkg_ms,ms,139.14129020000328,138.74227149999933,6.452075164771229,130.23449999999139,156.34695599999395,151.15631675002805,32,30,Independent complete elections; warmups excluded; CLI wall time
+online_excluding_setup_ms,ms,1542.939840366672,1532.4484580000135,41.00329448985793,1492.837750000006,1620.8494169999904,1606.1118523000098,32,30,Independent complete elections; warmups excluded; CLI wall time
+setup_ms,ms,175.64657793335235,173.19929099998262,11.239361581879667,162.46879000024637,217.02162300000782,199.11706254999444,128,30,Independent complete elections; warmups excluded; CLI wall time
+ballot_generation_ms,ms,2238.9725358333303,2221.665711000256,53.066384149038846,2186.416124999814,2397.109794000062,2348.1568703500243,128,30,Independent complete elections; warmups excluded; CLI wall time
+proof_generation_ms,ms,,,,,,,128,0,Not separable or not applicable; see report
+aggregation_ms,ms,,,,,,,128,0,Not separable or not applicable; see report
+verification_ms,ms,3181.4451438333326,3143.0446034999477,83.86267741491359,3095.88865800004,3431.98845600005,3353.5234465000613,128,30,Independent complete elections; warmups excluded; CLI wall time
+state_proof_ms,ms,,,,,,,128,0,Not separable or not applicable; see report
+tally_ms,ms,61.21189453333572,60.22654150001472,4.958615296828481,58.31533399998443,86.5520000000106,63.02561495001573,128,30,Independent complete elections; warmups excluded; CLI wall time
+decryption_ms,ms,92.0687766000056,91.6762089999902,4.038559954972447,85.96187499997905,103.7668330000015,100.0152571999868,128,30,Independent complete elections; warmups excluded; CLI wall time
+p3_verification_ms,ms,,,,,,,128,0,Not separable or not applicable; see report
+proof_bytes,bytes,202695.73333333334,202695.5,16.927702928536448,202655,202720,202719,128,30,Independent complete elections; warmups excluded; CLI wall time
+public_input_bytes,bytes,,,,,,,128,0,Not separable or not applicable; see report
+ciphertext_bytes,bytes,58112,58112,0,58112,58112,58112,128,30,Independent complete elections; warmups excluded; CLI wall time
+communication_bytes,bytes,567296,567296,0,567296,567296,567296,128,30,Independent complete elections; warmups excluded; CLI wall time
+storage_bytes,bytes,567296,567296,0,567296,567296,567296,128,30,Independent complete elections; warmups excluded; CLI wall time
+cp_package_bytes,bytes,,,,,,,128,0,Not separable or not applicable; see report
+memory_peak_mib,MiB,13.245833333333334,13.21875,0.07708721642906567,13.1875,13.53125,13.405468749999999,128,30,Independent complete elections; warmups excluded; CLI wall time
+cpu_ms,ms,3241,3230,41.134765898413,3170,3340,3310,128,30,Independent complete elections; warmups excluded; CLI wall time
+throughput_votes_per_second,votes/s,17.455174738829818,17.615768935754826,0.4268733936721119,16.343549584031166,17.901167792470623,17.864416661377867,128,30,Independent complete elections; warmups excluded; CLI wall time
+end_to_end_ms,ms,7337.443976300002,7266.218270499987,185.12107800150898,7150.371500000008,7831.835999999981,7723.408373100001,128,30,Independent complete elections; warmups excluded; CLI wall time
+gas,not applicable,,,,,,,128,0,Not separable or not applicable; see report
+calldata_bytes,bytes,,,,,,,128,0,Not separable or not applicable; see report
+transaction_count,not applicable,,,,,,,128,0,Not separable or not applicable; see report
+ballot_generation_per_vote_ms,ms,17.491972936197893,17.3567633671895,0.414581126164366,17.08137597656105,18.727420265625483,18.344975549609565,128,30,Independent complete elections; warmups excluded; CLI wall time
+single_verification_per_vote_ms,ms,24.85504018619791,24.55503596484334,0.6551771673040124,24.18663014062531,26.81240981250039,26.19940192578173,128,30,Independent complete elections; warmups excluded; CLI wall time
+archive_ballot_audit_ms,ms,53.82895136666654,50.05772950001847,13.717491141535485,46.79495799999859,118.78116700000828,69.69402294999452,128,30,Independent complete elections; warmups excluded; CLI wall time
+final_audit_ms,ms,260.2537333666679,260.3498125000042,4.651761120019021,253.47987499999,270.3784159999923,267.25475435001425,128,30,Independent complete elections; warmups excluded; CLI wall time
+credential_generation_ms,ms,11.146333333332828,11.10022900000331,0.6216593590910161,10.211999999999534,12.984624999997322,12.2170734000043,128,30,Independent complete elections; warmups excluded; CLI wall time
+dkg_ms,ms,141.49308073335172,139.88029149999784,8.837036124514269,131.3817500002333,169.52224799999385,162.12162679996834,128,30,Independent complete elections; warmups excluded; CLI wall time
+online_excluding_setup_ms,ms,7155.927456933332,7077.665249999991,182.09647658240743,6967.450125000003,7651.479624999978,7533.428029050004,128,30,Independent complete elections; warmups excluded; CLI wall time

@@ -1,0 +1,46 @@
+{
+  "gate": "G11-C1",
+  "label": "n8-pilot-00",
+  "n": 8,
+  "phase": "pilot",
+  "trial": 0,
+  "error": "AssertionError [ERR_ASSERTION]: Belenios failed at ballot_generation: I: using directory .\nI: loading choice-0.json...\nbelenios-tool: Yojson__Common.Json_error(\"Unexpected end of input\")\n        0.01 real         0.00 user         0.00 sys\n             9486336  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 724  page reclaims\n                 134  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   3  messages sent\n                   0  messages received\n                   0  signals received\n                  34  voluntary context switches\n                  54  involuntary context switches\n           148735042  instructions retired\n            40814177  cycles elapsed\n             5914864  peak memory footprint\n\n\n124 !== 0\n\n    at call (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/scripts/g11/c1/run.mjs:88:17)\n    at runElection (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/scripts/g11/c1/run.mjs:134:22)\n    at main (file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/scripts/g11/c1/run.mjs:230:20)\n    at file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/scripts/g11/c1/run.mjs:241:77\n    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5)",
+  "command_count": 25,
+  "benchmark": {
+    "schema_version": "g11.v1",
+    "system": "Belenios 3.0",
+    "kind": "external_execution",
+    "status": "failed",
+    "evidence": [
+      "n8-pilot-00/commands.jsonl",
+      "n8-pilot-00/stderr.log"
+    ],
+    "measurements": {
+      "setup_ms": null,
+      "ballot_generation_ms": null,
+      "proof_generation_ms": null,
+      "aggregation_ms": null,
+      "verification_ms": null,
+      "state_proof_ms": null,
+      "tally_ms": null,
+      "decryption_ms": null,
+      "p3_verification_ms": null,
+      "proof_bytes": null,
+      "public_input_bytes": null,
+      "ciphertext_bytes": null,
+      "communication_bytes": null,
+      "storage_bytes": null,
+      "cp_package_bytes": null,
+      "memory_peak_mib": null,
+      "cpu_ms": null,
+      "throughput_votes_per_second": null,
+      "end_to_end_ms": null,
+      "gas": null,
+      "calldata_bytes": null,
+      "transaction_count": null
+    },
+    "missing_reason": [
+      "Failed election; no complete benchmark measurement. Partial command observations remain in commands.jsonl."
+    ]
+  }
+}

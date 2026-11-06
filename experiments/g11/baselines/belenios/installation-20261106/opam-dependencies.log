@@ -1,0 +1,316 @@
+The following actions will be performed:
+=== install 78 packages
+  ∗ angstrom            0.16.0   [required by uri]
+  ∗ asn1-combinators    0.3.2    [required by x509]
+  ∗ astring             0.8.5    [required by conduit]
+  ∗ atd                 2.15.0   [required by atdgen]
+  ∗ atdgen              2.15.0
+  ∗ atdgen-runtime      2.15.0   [required by atdgen]
+  ∗ base                v0.16.3  [required by ppx_sexp_conv]
+  ∗ base-bytes          base     [required by cohttp]
+  ∗ base64              3.5.1    [required by cohttp]
+  ∗ bigstringaf         0.10.0   [required by angstrom]
+  ∗ biniou              1.2.2    [required by atdgen]
+  ∗ bos                 0.2.1    [required by ca-certs]
+  ∗ ca-certs            1.0.0    [required by conduit-lwt-unix]
+  ∗ camlp-streams       5.0.1    [required by biniou]
+  ∗ cmdliner            1.3.0
+  ∗ cohttp              5.3.1    [required by cohttp-lwt]
+  ∗ cohttp-lwt          5.3.0    [required by cohttp-lwt-unix]
+  ∗ cohttp-lwt-unix     5.3.0
+  ∗ conduit             7.0.0    [required by conduit-lwt]
+  ∗ conduit-lwt         7.0.0    [required by cohttp-lwt-unix]
+  ∗ conduit-lwt-unix    7.0.0    [required by cohttp-lwt-unix]
+  ∗ conf-bash           1        [required by base]
+  ∗ conf-gmp            4        [required by zarith]
+  ∗ conf-gmp-powm-sec   3        [required by cryptokit]
+  ∗ conf-pkg-config     3        [required by zarith]
+  ∗ conf-zlib           1        [required by cryptokit]
+  ∗ cppo                1.7.0    [required by lwt]
+  ∗ cryptokit           1.20
+  ∗ csexp               1.5.2    [required by dune-configurator]
+  ∗ digestif            1.2.0    [required by ca-certs]
+  ∗ domain-name         0.4.0    [required by ipaddr, x509]
+  ∗ dune                3.16.0
+  ∗ dune-configurator   3.16.0   [required by cryptokit]
+  ∗ duration            0.2.1    [required by mirage-crypto-rng]
+  ∗ easy-format         1.3.4    [required by atd]
+  ∗ eqaf                0.10     [required by digestif, mirage-crypto]
+  ∗ fmt                 0.9.0    [required by cohttp-lwt-unix]
+  ∗ fpath               0.7.3    [required by ca-certs]
+  ∗ gmap                0.3.0    [required by x509]
+  ∗ ipaddr              5.6.0    [required by conduit-lwt-unix]
+  ∗ ipaddr-sexp         5.6.0    [required by conduit-lwt-unix]
+  ∗ jsonm               1.0.2    [required by cohttp]
+  ∗ kdf                 1.0.0    [required by x509]
+  ∗ logs                0.7.0    [required by cohttp-lwt-unix]
+  ∗ lwt                 5.7.0    [required by cohttp-lwt-unix]
+  ∗ macaddr             5.6.0    [required by ipaddr]
+  ∗ magic-mime          1.3.1    [required by cohttp-lwt-unix]
+  ∗ menhir              20240715 [required by atd]
+  ∗ menhirCST           20240715 [required by menhir]
+  ∗ menhirLib           20240715 [required by menhir]
+  ∗ menhirSdk           20240715 [required by menhir]
+  ∗ mirage-crypto       1.1.0    [required by ca-certs]
+  ∗ mirage-crypto-ec    1.1.0    [required by x509]
+  ∗ mirage-crypto-pk    1.1.0    [required by x509]
+  ∗ mirage-crypto-rng   1.1.0    [required by x509]
+  ∗ ocaml-compiler-libs v0.12.4  [required by ppxlib]
+  ∗ ocaml-syntax-shims  1.0.0    [required by angstrom]
+  ∗ ocamlbuild          0.15.0   [required by logs]
+  ∗ ocamlfind           1.9.6    [required by zarith]
+  ∗ ocplib-endian       1.2      [required by lwt]
+  ∗ ohex                0.2.0    [required by ca-certs]
+  ∗ ppx_derivers        1.2.1    [required by ppxlib]
+  ∗ ppx_sexp_conv       v0.16.0  [required by cohttp-lwt-unix]
+  ∗ ppxlib              0.33.0   [required by ppx_sexp_conv]
+  ∗ ptime               1.2.0    [required by ca-certs]
+  ∗ re                  1.12.0   [required by atdgen]
+  ∗ rresult             0.7.0    [required by bos]
+  ∗ seq                 base     [required by yojson]
+  ∗ sexplib0            v0.16.0  [required by cohttp-lwt, conduit-lwt]
+  ∗ stdlib-shims        0.3.0    [required by ppxlib]
+  ∗ stringext           1.6.0    [required by cohttp]
+  ∗ topkg               1.0.7    [required by logs]
+  ∗ uri                 4.4.0    [required by cohttp-lwt, conduit-lwt-unix]
+  ∗ uri-sexp            4.4.0    [required by cohttp]
+  ∗ uutf                1.0.3    [required by jsonm]
+  ∗ x509                1.0.3    [required by ca-certs]
+  ∗ yojson              2.2.2
+  ∗ zarith              1.14
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+⬇ retrieved asn1-combinators.0.3.2  (https://opam.ocaml.org/cache)
+⬇ retrieved astring.0.8.5  (https://opam.ocaml.org/cache)
+⬇ retrieved angstrom.0.16.0  (https://opam.ocaml.org/cache)
+⬇ retrieved base64.3.5.1  (https://opam.ocaml.org/cache)
+⬇ retrieved bigstringaf.0.10.0  (https://opam.ocaml.org/cache)
+⬇ retrieved biniou.1.2.2  (https://opam.ocaml.org/cache)
+⬇ retrieved bos.0.2.1  (https://opam.ocaml.org/cache)
+⬇ retrieved ca-certs.1.0.0  (https://opam.ocaml.org/cache)
+⬇ retrieved atd.2.15.0, atdgen.2.15.0, atdgen-runtime.2.15.0  (https://opam.ocaml.org/cache)
+⬇ retrieved camlp-streams.5.0.1  (https://opam.ocaml.org/cache)
+⬇ retrieved cmdliner.1.3.0  (https://opam.ocaml.org/cache)
+⬇ retrieved base.v0.16.3  (https://opam.ocaml.org/cache)
+⬇ retrieved cohttp.5.3.1  (https://opam.ocaml.org/cache)
+∗ installed conf-bash.1
+⬇ retrieved conf-gmp.4  (https://opam.ocaml.org/cache)
+∗ installed conf-gmp.4
+⬇ retrieved cohttp-lwt.5.3.0, cohttp-lwt-unix.5.3.0  (https://opam.ocaml.org/cache)
+[ERROR] The compilation of conf-pkg-config.3 failed at "pkg-config --help".
+⬇ retrieved conf-gmp-powm-sec.3  (https://opam.ocaml.org/cache)
+∗ installed conf-gmp-powm-sec.3
+⬇ retrieved conduit.7.0.0, conduit-lwt.7.0.0, conduit-lwt-unix.7.0.0  (https://opam.ocaml.org/cache)
+∗ installed cmdliner.1.3.0
+⬇ retrieved csexp.1.5.2  (https://opam.ocaml.org/cache)
+⬇ retrieved cryptokit.1.20  (https://opam.ocaml.org/cache)
+⬇ retrieved cppo.1.7.0  (https://opam.ocaml.org/cache)
+⬇ retrieved domain-name.0.4.0  (https://opam.ocaml.org/cache)
+⬇ retrieved duration.0.2.1  (https://opam.ocaml.org/cache)
+⬇ retrieved easy-format.1.3.4  (https://opam.ocaml.org/cache)
+⬇ retrieved eqaf.0.10  (https://opam.ocaml.org/cache)
+⬇ retrieved digestif.1.2.0  (https://opam.ocaml.org/cache)
+⬇ retrieved dune.3.16.0, dune-configurator.3.16.0  (https://opam.ocaml.org/cache)
+⬇ retrieved fpath.0.7.3  (https://opam.ocaml.org/cache)
+⬇ retrieved fmt.0.9.0  (https://opam.ocaml.org/cache)
+⬇ retrieved jsonm.1.0.2  (https://opam.ocaml.org/cache)
+⬇ retrieved ipaddr.5.6.0, ipaddr-sexp.5.6.0, macaddr.5.6.0  (https://opam.ocaml.org/cache)
+⬇ retrieved gmap.0.3.0  (https://opam.ocaml.org/cache)
+⬇ retrieved logs.0.7.0  (https://opam.ocaml.org/cache)
+⬇ retrieved kdf.1.0.0  (https://opam.ocaml.org/cache)
+⬇ retrieved magic-mime.1.3.1  (https://opam.ocaml.org/cache)
+⬇ retrieved lwt.5.7.0  (https://opam.ocaml.org/cache)
+⬇ retrieved menhir.20240715, menhirCST.20240715, menhirLib.20240715, menhirSdk.20240715  (https://opam.ocaml.org/cache)
+⬇ retrieved ocaml-compiler-libs.v0.12.4  (https://opam.ocaml.org/cache)
+⬇ retrieved ocaml-syntax-shims.1.0.0  (https://opam.ocaml.org/cache)
+⬇ retrieved ocamlbuild.0.15.0  (https://opam.ocaml.org/cache)
+⬇ retrieved mirage-crypto.1.1.0, mirage-crypto-ec.1.1.0, mirage-crypto-pk.1.1.0, mirage-crypto-rng.1.1.0  (https://opam.ocaml.org/cache)
+⬇ retrieved ocplib-endian.1.2  (https://opam.ocaml.org/cache)
+⬇ retrieved ohex.0.2.0  (https://opam.ocaml.org/cache)
+⬇ retrieved ocamlfind.1.9.6  (https://opam.ocaml.org/cache)
+⬇ retrieved ppx_derivers.1.2.1  (https://opam.ocaml.org/cache)
+⬇ retrieved ppx_sexp_conv.v0.16.0  (https://opam.ocaml.org/cache)
+⬇ retrieved ptime.1.2.0  (https://opam.ocaml.org/cache)
+⬇ retrieved re.1.12.0  (https://opam.ocaml.org/cache)
+⬇ retrieved rresult.0.7.0  (https://opam.ocaml.org/cache)
+∗ installed ocamlbuild.0.15.0
+⬇ retrieved ppxlib.0.33.0  (https://opam.ocaml.org/cache)
+⬇ retrieved stdlib-shims.0.3.0  (https://opam.ocaml.org/cache)
+⬇ retrieved seq.base  (2 extra sources)
+⬇ retrieved seq.base  (2 extra sources)
+⬇ retrieved sexplib0.v0.16.0  (https://opam.ocaml.org/cache)
+⬇ retrieved stringext.1.6.0  (https://opam.ocaml.org/cache)
+⬇ retrieved topkg.1.0.7  (https://opam.ocaml.org/cache)
+⬇ retrieved uutf.1.0.3  (https://opam.ocaml.org/cache)
+⬇ retrieved uri.4.4.0, uri-sexp.4.4.0  (https://opam.ocaml.org/cache)
+⬇ retrieved x509.1.0.3  (https://opam.ocaml.org/cache)
+∗ installed ocamlfind.1.9.6
+∗ installed base-bytes.base
+∗ installed seq.base
+⬇ retrieved yojson.2.2.2  (https://opam.ocaml.org/cache)
+⬇ retrieved zarith.1.14  (https://opam.ocaml.org/cache)
+∗ installed topkg.1.0.7
+∗ installed astring.0.8.5
+∗ installed fmt.0.9.0
+∗ installed fpath.0.7.3
+∗ installed ptime.1.2.0
+∗ installed rresult.0.7.0
+∗ installed uutf.1.0.3
+∗ installed jsonm.1.0.2
+∗ installed dune.3.16.0
+∗ installed asn1-combinators.0.3.2
+∗ installed base64.3.5.1
+∗ installed camlp-streams.5.0.1
+∗ installed csexp.1.5.2
+∗ installed domain-name.0.4.0
+∗ installed cppo.1.7.0
+∗ installed duration.0.2.1
+∗ installed easy-format.1.3.4
+∗ installed dune-configurator.3.16.0
+∗ installed eqaf.0.10
+∗ installed biniou.1.2.2
+∗ installed bigstringaf.0.10.0
+∗ installed gmap.0.3.0
+∗ installed macaddr.5.6.0
+∗ installed digestif.1.2.0
+∗ installed magic-mime.1.3.1
+∗ installed menhirCST.20240715
+∗ installed ipaddr.5.6.0
+∗ installed menhirSdk.20240715
+∗ installed menhirLib.20240715
+∗ installed mirage-crypto.1.1.0
+∗ installed ocaml-compiler-libs.v0.12.4
+∗ installed kdf.1.0.0
+∗ installed ocaml-syntax-shims.1.0.0
+∗ installed ocplib-endian.1.2
+∗ installed angstrom.0.16.0
+∗ installed lwt.5.7.0
+∗ installed ohex.0.2.0
+∗ installed logs.0.7.0
+∗ installed ppx_derivers.1.2.1
+∗ installed bos.0.2.1
+∗ installed mirage-crypto-rng.1.1.0
+∗ installed re.1.12.0
+∗ installed menhir.20240715
+∗ installed sexplib0.v0.16.0
+∗ installed stdlib-shims.0.3.0
+∗ installed mirage-crypto-ec.1.1.0
+[ERROR] The compilation of base.v0.16.3 failed at "dune build -p base -j 2".
+∗ installed stringext.1.6.0
+∗ installed yojson.2.2.2
+∗ installed uri.4.4.0
+∗ installed atd.2.15.0
+∗ installed atdgen-runtime.2.15.0
+∗ installed atdgen.2.15.0
+∗ installed ppxlib.0.33.0
+
+#=== ERROR while compiling conf-pkg-config.3 ==================================#
+# context              2.6.1 | macos/arm64 | ocaml-base-compiler.4.14.2 | file:///private/tmp/vv-g11c1-20261106-K03bsm/opam-repository-4093222dece7c1c8f93dc2fd8dd7eec15fa80fed
+# path                 /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/build/conf-pkg-config.3
+# command              /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/opam-init/hooks/sandbox.sh build pkg-config --help
+# exit-code            10
+# env-file             /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/conf-pkg-config-30588-deb34e.env
+# output-file          /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/conf-pkg-config-30588-deb34e.out
+### output ###
+# [ERROR] Command not found: pkg-config
+
+
+#=== ERROR while compiling base.v0.16.3 =======================================#
+# context              2.6.1 | macos/arm64 | ocaml-base-compiler.4.14.2 | file:///private/tmp/vv-g11c1-20261106-K03bsm/opam-repository-4093222dece7c1c8f93dc2fd8dd7eec15fa80fed
+# path                 /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/build/base.v0.16.3
+# command              /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/opam-init/hooks/sandbox.sh build dune build -p base -j 2
+# exit-code            1
+# env-file             /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/base-30588-3c1198.env
+# output-file          /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/log/base-30588-3c1198.out
+### output ###
+# [...]
+# (cd _build/default/src && /usr/bin/cc -O2 -fno-strict-aliasing -fwrapv -pthread -D_FILE_OFFSET_BITS=64 -O2 -fno-strict-aliasing -fwrapv -pthread -D_LARGEFILE64_SOURCE -mpopcnt -g -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/ocaml -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/sexplib0 -I ../compiler-stdlib/src -I ../hash_types/src -I ../shadow-stdlib/src -o exn[...]
+# clang: error: unsupported option '-mpopcnt' for target 'arm64-apple-darwin24.6.0'
+# File "src/dune", line 14, characters 47-57:
+# 14 |  (c_names bytes_stubs exn_stubs int_math_stubs hash_stubs am_testing)
+#                                                     ^^^^^^^^^^
+# (cd _build/default/src && /usr/bin/cc -O2 -fno-strict-aliasing -fwrapv -pthread -D_FILE_OFFSET_BITS=64 -O2 -fno-strict-aliasing -fwrapv -pthread -D_LARGEFILE64_SOURCE -mpopcnt -g -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/ocaml -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/sexplib0 -I ../compiler-stdlib/src -I ../hash_types/src -I ../shadow-stdlib/src -o has[...]
+# clang: error: unsupported option '-mpopcnt' for target 'arm64-apple-darwin24.6.0'
+# File "src/dune", line 14, characters 32-46:
+# 14 |  (c_names bytes_stubs exn_stubs int_math_stubs hash_stubs am_testing)
+#                                      ^^^^^^^^^^^^^^
+# (cd _build/default/src && /usr/bin/cc -O2 -fno-strict-aliasing -fwrapv -pthread -D_FILE_OFFSET_BITS=64 -O2 -fno-strict-aliasing -fwrapv -pthread -D_LARGEFILE64_SOURCE -mpopcnt -g -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/ocaml -I /private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/lib/sexplib0 -I ../compiler-stdlib/src -I ../hash_types/src -I ../shadow-stdlib/src -o int[...]
+# clang: error: unsupported option '-mpopcnt' for target 'arm64-apple-darwin24.6.0'
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+┌─ The following actions failed
+│ λ build base            v0.16.3
+│ λ build conf-pkg-config 3
+└─ 
+┌─ The following changes have been performed (the rest was aborted)
+│ ∗ install angstrom            0.16.0
+│ ∗ install asn1-combinators    0.3.2
+│ ∗ install astring             0.8.5
+│ ∗ install atd                 2.15.0
+│ ∗ install atdgen              2.15.0
+│ ∗ install atdgen-runtime      2.15.0
+│ ∗ install base-bytes          base
+│ ∗ install base64              3.5.1
+│ ∗ install bigstringaf         0.10.0
+│ ∗ install biniou              1.2.2
+│ ∗ install bos                 0.2.1
+│ ∗ install camlp-streams       5.0.1
+│ ∗ install cmdliner            1.3.0
+│ ∗ install conf-bash           1
+│ ∗ install conf-gmp            4
+│ ∗ install conf-gmp-powm-sec   3
+│ ∗ install cppo                1.7.0
+│ ∗ install csexp               1.5.2
+│ ∗ install digestif            1.2.0
+│ ∗ install domain-name         0.4.0
+│ ∗ install dune                3.16.0
+│ ∗ install dune-configurator   3.16.0
+│ ∗ install duration            0.2.1
+│ ∗ install easy-format         1.3.4
+│ ∗ install eqaf                0.10
+│ ∗ install fmt                 0.9.0
+│ ∗ install fpath               0.7.3
+│ ∗ install gmap                0.3.0
+│ ∗ install ipaddr              5.6.0
+│ ∗ install jsonm               1.0.2
+│ ∗ install kdf                 1.0.0
+│ ∗ install logs                0.7.0
+│ ∗ install lwt                 5.7.0
+│ ∗ install macaddr             5.6.0
+│ ∗ install magic-mime          1.3.1
+│ ∗ install menhir              20240715
+│ ∗ install menhirCST           20240715
+│ ∗ install menhirLib           20240715
+│ ∗ install menhirSdk           20240715
+│ ∗ install mirage-crypto       1.1.0
+│ ∗ install mirage-crypto-ec    1.1.0
+│ ∗ install mirage-crypto-rng   1.1.0
+│ ∗ install ocaml-compiler-libs v0.12.4
+│ ∗ install ocaml-syntax-shims  1.0.0
+│ ∗ install ocamlbuild          0.15.0
+│ ∗ install ocamlfind           1.9.6
+│ ∗ install ocplib-endian       1.2
+│ ∗ install ohex                0.2.0
+│ ∗ install ppx_derivers        1.2.1
+│ ∗ install ppxlib              0.33.0
+│ ∗ install ptime               1.2.0
+│ ∗ install re                  1.12.0
+│ ∗ install rresult             0.7.0
+│ ∗ install seq                 base
+│ ∗ install sexplib0            v0.16.0
+│ ∗ install stdlib-shims        0.3.0
+│ ∗ install stringext           1.6.0
+│ ∗ install topkg               1.0.7
+│ ∗ install uri                 4.4.0
+│ ∗ install uutf                1.0.3
+│ ∗ install yojson              2.2.2
+└─ 
+
+The packages you requested declare the following system dependencies. Please make sure they are installed before retrying:
+    pkg-config
+
+
+The former state can be restored with:
+    /private/tmp/vv-g11c1-20261106-K03bsm/opam switch import "/private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/backup/state-20261106132540.export"

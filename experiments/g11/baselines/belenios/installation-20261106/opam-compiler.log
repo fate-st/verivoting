@@ -1,0 +1,45 @@
+The following actions will be performed:
+=== install 9 packages
+  ∗ base-bigarray         base
+  ∗ base-threads          base
+  ∗ base-unix             base
+  ∗ host-arch-arm64       1
+  ∗ host-system-other     1
+  ∗ ocaml                 4.14.2
+  ∗ ocaml-base-compiler   4.14.2
+  ∗ ocaml-config          2
+  ∗ ocaml-options-vanilla 1
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+∗ installed base-bigarray.base
+∗ installed base-threads.base
+∗ installed base-unix.base
+∗ installed host-arch-arm64.1
+∗ installed host-system-other.1
+∗ installed ocaml-options-vanilla.1
+[ERROR] Failed to get extra source "gen_ocaml_config.ml.in" of ocaml-config.2: curl failed
+[ERROR] Failed to get extra source "ocaml-base-compiler.install" of ocaml-base-compiler.4.14.2: curl failed
+
+#=== ERROR while fetching sources for ocaml-config.2 ==========================#
+OpamSolution.Fetch_fail("https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/ocaml-config/gen_ocaml_config.ml.in.2 (curl failed: \"/usr/bin/curl --write-out %{http_code}\\\\n --retry 3 --retry-delay 2 --user-agent opam/2.6.1 -L -o /private/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/opam-15918-c826fc/gen_ocaml_config.ml.in.2.part -- https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/ocaml-config/gen_ocaml_config.ml.in.2\" exited with code 7)")
+
+#=== ERROR while fetching sources for ocaml-base-compiler.4.14.2 ==============#
+OpamSolution.Fetch_fail("https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/ocaml-base-compiler/ocaml-base-compiler.install (curl failed: \"/usr/bin/curl --write-out %{http_code}\\\\n --retry 3 --retry-delay 2 --user-agent opam/2.6.1 -L -o /private/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/opam-15918-2fe864/ocaml-base-compiler.install.part -- https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/ocaml-base-compiler/ocaml-base-compiler.install\" exited with code 7)")
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><>  🐫 
+┌─ The following actions failed
+│ ⬇ fetch ocaml-base-compiler 4.14.2
+│ ⬇ fetch ocaml-config        2
+└─ 
+┌─ The following changes have been performed (the rest was aborted)
+│ ∗ install base-bigarray         base
+│ ∗ install base-threads          base
+│ ∗ install base-unix             base
+│ ∗ install host-arch-arm64       1
+│ ∗ install host-system-other     1
+│ ∗ install ocaml-options-vanilla 1
+└─ 
+
+The former state can be restored with:
+    /private/tmp/vv-g11c1-20261106-K03bsm/opam switch import "/private/tmp/vv-g11c1-20261106-K03bsm/opam-root/4.14.2/.opam-switch/backup/state-20261106131500.export"
