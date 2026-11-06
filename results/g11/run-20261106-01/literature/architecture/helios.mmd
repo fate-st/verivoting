@@ -1,0 +1,18 @@
+flowchart LR
+  %% Helios 2.0 UCL; 2009 UCL deployment, not Helios 1.0 mixnet
+  %% Evidence: https://usenix.org/events/evtwote09/tech/full_papers/adida-helios.pdf
+  S1["Initialization<br/>Trustees create joint ElGamal key"]
+  S2["Registration<br/>Institution authenticates eligible voters"]
+  S1 --> S2
+  S3["Ballot generation<br/>Browser encrypts; cast-or-audit"]
+  S2 --> S3
+  S4["Validation and accumulation<br/>Audit board; recompute weighted product"]
+  S3 --> S4
+  S5["Final tally<br/>All holders decrypt final product"]
+  S4 --> S5
+  S6["Disclosure<br/>Publish candidate totals and audit data"]
+  S5 --> S6
+  %% Execution: Web/server and offline audit; no blockchain mechanism established.
+  %% Keys: Distributed key holders.
+  %% Full tally: Public.
+  %% Public checks: Ballot and decryption audits.

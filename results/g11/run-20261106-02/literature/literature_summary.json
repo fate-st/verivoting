@@ -1,0 +1,47 @@
+{
+  "status": "PARTIAL_G11_AB_FOUR_EXTERNAL_FULLTEXTS_ONE_ACCESS_GAP",
+  "systems": 6,
+  "external_systems": 5,
+  "fulltext_external_systems": 4,
+  "source_evidence_sha256": "780e549e51c2ddda7978d73ac7aba8dbd74b7083b5698918b04fa8be70809075",
+  "attribute_rows": 66,
+  "unknown_rows": 25,
+  "pending": [
+    "Emami complete original protocol/security text and exact code revision"
+  ],
+  "new_protocol_runs": 0,
+  "new_setup": 0,
+  "new_proofs": 0,
+  "new_evm": 0,
+  "exact_snarkpack_evm_complete": false,
+  "checks": {
+    "security_matrix": {
+      "csv_sha256": "c0b68eed0033746c1a1340c1d609e8e8d3801b89db099653a9520e5859870e4d",
+      "rows": 6,
+      "cols": 16,
+      "roundtrip": "exact",
+      "inspection": "{\"kind\":\"table\",\"sheet\":\"Comparison\",\"address\":\"A1:D4\",\"rows\":4,\"cols\":4,\"values\":[[\"system\",\"version\",\"weighted_voting\",\"ballot_validity\"],[\"Helios 2.0 UCL\",\"2009 UCL deployment, not Helios 1.0 mixnet\",\"supported\",\"supported\"],[\"Belenios\",\"Specification 3.0, homomorphic mode with Pedersen trustees\",\"conditional\",\"supported\"],[\"Ordinos\",\"EuroS&P 2020 extended author version\",\"unknown\",\"supported\"]]}"
+    },
+    "architecture_matrix": {
+      "csv_sha256": "1a1e0ebe7e3dc5272032ed81a1f732ddb20163e6933873647d4ac1865984b201",
+      "rows": 6,
+      "cols": 14,
+      "roundtrip": "exact",
+      "inspection": "{\"kind\":\"table\",\"sheet\":\"Comparison\",\"address\":\"A1:D4\",\"rows\":4,\"cols\":4,\"values\":[[\"system\",\"version\",\"stage_1\",\"stage_2\"],[\"Helios 2.0 UCL\",\"2009 UCL deployment, not Helios 1.0 mixnet\",\"Trustees create joint ElGamal key\",\"Institution authenticates eligible voters\"],[\"Belenios\",\"Specification 3.0, homomorphic mode with Pedersen trustees\",\"Configure Pedersen trustee key\",\"Issue credentials and voter weights\"],[\"Ordinos\",\"EuroS&P 2020 extended author version\",\"Generate threshold encryption shares\",\"Publish eligibility and authentication keys\"]]}"
+    },
+    "trust_model": {
+      "csv_sha256": "b70986dc576effcb2e2f8edf1e92b88ca4ae2a0ad9dc48c6833f1aed4dfe693d",
+      "rows": 6,
+      "cols": 8,
+      "roundtrip": "exact",
+      "inspection": "{\"kind\":\"table\",\"sheet\":\"Comparison\",\"address\":\"A1:D4\",\"rows\":4,\"cols\":4,\"values\":[[\"system\",\"version\",\"public_sees\",\"trustees_see\"],[\"Helios 2.0 UCL\",\"2009 UCL deployment, not Helios 1.0 mixnet\",\"Weighted totals and audit transcript.\",\"Aggregate tally.\"],[\"Belenios\",\"Specification 3.0, homomorphic mode with Pedersen trustees\",\"Accepted ballots, weights, decryptions and totals.\",\"Aggregate tally.\"],[\"Ordinos\",\"EuroS&P 2020 extended author version\",\"Result and verifiable transcript.\",\"No extra tally under stated threshold/model.\"]]}"
+    },
+    "attribute_evidence": {
+      "csv_sha256": "42d0d7d49beb0e5997b55bebc08bf147ed6d2cb24694bdfec2d2cb7d27097636",
+      "rows": 66,
+      "cols": 9,
+      "roundtrip": "exact",
+      "inspection": "{\"kind\":\"table\",\"sheet\":\"Comparison\",\"address\":\"A1:D4\",\"rows\":4,\"cols\":4,\"values\":[[\"system\",\"version\",\"attribute\",\"status\"],[\"Helios 2.0 UCL\",\"2009 UCL deployment, not Helios 1.0 mixnet\",\"weighted_voting\",\"supported\"],[\"Helios 2.0 UCL\",\"2009 UCL deployment, not Helios 1.0 mixnet\",\"ballot_validity\",\"supported\"],[\"Helios 2.0 UCL\",\"2009 UCL deployment, not Helios 1.0 mixnet\",\"homomorphic_encryption\",\"supported\"]]}"
+    }
+  }
+}

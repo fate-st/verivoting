@@ -1,0 +1,87 @@
+{
+  "observed_at": "2026-11-06T09:23:40.706Z",
+  "client_date": "2026-11-06",
+  "client_timezone": "Asia/Shanghai",
+  "base_commit": "5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+  "git_head": {
+    "value": "5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+    "error": null
+  },
+  "git_branch": {
+    "value": "experiment/g11-comparative-evaluation",
+    "error": null
+  },
+  "git_status": {
+    "value": "?? configs/g11/framework.json\n?? docs/G11_IMPLEMENTATION_PLAN.md\n?? experiments/g11/README.md\n?? experiments/g11/baselines/README.md\n?? experiments/g11/literature/evidence.json\n?? experiments/g11/performance/README.md\n?? experiments/g11/winner_only/README.md\n?? results/g11/run-20261106-01/config.json\n?? scripts/g11/common.mjs\n?? scripts/g11/literature.mjs\n?? scripts/g11/model.mjs\n?? scripts/g11/render_architecture.py\n?? scripts/g11/run.mjs\n?? scripts/g11/tests.mjs",
+    "error": null
+  },
+  "git_dirty": true,
+  "cpu": "Apple M4",
+  "cpu_count": 10,
+  "memory_bytes": 34359738368,
+  "os": {
+    "platform": "darwin",
+    "release": "24.6.0",
+    "architecture": "arm64",
+    "macos": {
+      "value": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.1\nBuildVersion:\t\t24G231",
+      "error": null
+    }
+  },
+  "node": "v23.11.0",
+  "rust": {
+    "value": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+    "error": null
+  },
+  "cargo": {
+    "value": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "error": null
+  },
+  "solidity": {
+    "observed_compiler": {
+      "value": "0.8.30+commit.73712a01.Emscripten.clang",
+      "error": null
+    },
+    "invoked_for_g11": false
+  },
+  "evm": {
+    "source": "contracts/scripts/g10c_winner_chain.mjs",
+    "intended_hardfork": "Prague",
+    "invoked_for_g11": false
+  },
+  "compile_profile": "not_applicable_no_crypto_compilation",
+  "random_seed": "g11-public-framework-seed-20261106",
+  "hashes": {
+    "configs/experiment.G8B-FIVE-TRUSTEES.json": "fc053edb3c6818c288a11f7c50d93020c237ea74d659f72a475630deba0ffd70",
+    "configs/experiment.G8C-FROZEN-P3-W32.json": "e48c5ccf4bc9476a0d5b62413d2a0c0ac059c48b4623d77ee19836825d89f9d8",
+    "configs/g11/framework.json": "88950fd6d1e35b4f4b7b72e11a2e679f956e4d1ef674151b62de629d7cd5c705",
+    "configs/p3-a.json": "579ed6326c33de39df6b895a23e39a16f7b3de625f39827ab41b13372552e764",
+    "configs/p3-b.json": "18e32371b42998e3778fcd5d8199c3720ef9ffacde680f40fa18c0d9aabbe013",
+    "configs/p3-c.json": "06fcbbd7f86a2b8f44fb8c37a478a80f62528a42000de4ab16717ebb35795df7",
+    "configs/p3-d.json": "443f6ad962c23b9f2382ae9b17d9fa10d95110ecf73454168508ee8c5128115d",
+    "configs/p3-e.json": "2acd5c91e5e2c8ed632ae44158b7ffb4851756ccead915c384cffb565fe2d026",
+    "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e",
+    "configs/protocol_manifest.JUBJUB-G1C2-B4.json": "38e88b53b4e0d5be301ff37483eb36a76de7acadcfdbe6ff4cfdf05a560d0f39",
+    "configs/protocol_manifest.JUBJUB-G1C3-B8.json": "d196b1213f5a7f833f91f73433bfe1d02187a06d2d978048677c5a2023521227",
+    "configs/protocol_manifest.JUBJUB-G2C-STATE-B4.json": "b5bd7878d4c4ba6f8bce919ac65da8fed0499da433018abaa3d22e55a238e6be",
+    "configs/protocol_manifest.JUBJUB-G2D-STATE-D5-W32-B4.json": "c8568975753d5abfff4898c65e8587b6e0ace25e2165dbba9f66babab947a288",
+    "configs/protocol_manifest.JUBJUB-G2E-MULTIBATCH-B4.json": "69037c5cd893f32fc8c7a06e13077f63b96f70b60513efe619f5e4fa0190b53b",
+    "configs/protocol_manifest.JUBJUB-G4D-P3-TEN-SUBSETS-W32.json": "9f1611de7c5adde363d71e055042da52a9004133925a38e138ef2f8a35072755",
+    "configs/protocol_manifest.JUBJUB-G6-NATIVE-WINNER-ONLY-W32.json": "e15af1fde285a683c40fa1c77b5ec1feb05664d587901b5b1da750bf7ebda1d1",
+    "configs/protocol_manifest.JUBJUB-G7-P3-EVM-W32.json": "6b55a8bdbd47cef0402423b46b70f7d49746ec06b472460c1e7723192828bc3a",
+    "configs/protocol_manifest.JUBJUB-G8-RECEIVER-FALLBACK-W32.json": "8412caf04455c14bc5df257428ca7c7dabecdf60948b96edb8ca5b6b23ec357c",
+    "configs/protocol_manifest.JUBJUB-G8A-CERT-AUTH-W32.json": "ee02838c08e340e01dd8d235b5d30eebe30c9b8bc481ea66d8e82c7d914f29a4",
+    "configs/protocol_manifest.JUBJUB-G8B-TRUSTEE-COMMITMENTS-W32.json": "df8d63296c9c3fa54d2b4bdaf9cbc34577bcad64bd9d980b24f372c988651e92",
+    "configs/protocol_manifest.JUBJUB-P3-WEIGHT-V2.json": "c9813e48b669c9e77273ca4080e51062044fa1a64fce122335e882ce4aff1e21",
+    "configs/protocol_manifest.JUBJUB-PROTOTYPE.json": "abad9f97ababfaf781eb1aa6a59e53a6b06a4d3478a544f1a8ab925e0f0570e8",
+    "configs/protocol_manifest.TEMPLATE.json": "e3d21ceb74d141ed259dca503319ae28abd71edc801dc87eb37752362eef30a9",
+    "configs/protocol_manifest.json": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503",
+    "experiments/g11/literature/evidence.json": "780e549e51c2ddda7978d73ac7aba8dbd74b7083b5698918b04fa8be70809075",
+    "scripts/g11/common.mjs": "c411eace409e71c2438bba3a153608bb1422e513a3307be9d13a3933f83f804c",
+    "scripts/g11/literature.mjs": "b81c76a1831fc56651c1080f0aca94510fe853b7feba2dbf693be313729238f3",
+    "scripts/g11/model.mjs": "6bf5c6de51afc788d48ddf55fc9e9facdf8fe6afdfe12c0472c532d23e2a938b",
+    "scripts/g11/render_architecture.py": "68ce92319e69a272083637e37d1af166c6dbc72b718d127790a047c3514f1aa9",
+    "scripts/g11/run.mjs": "ef9139cf61a29063f11ca22b6798bb6376551559dbbe579b46827cd2a9361265",
+    "scripts/g11/tests.mjs": "4dee7c83ba61b76779e70b9abfdb9d1ca15ba2b27f573b2c8ff3b7d3efa3eba4"
+  }
+}

@@ -1,0 +1,18 @@
+flowchart LR
+  %% VeriVoting-Batch prototype; 5f170c5, G10-C native plus local EVM fallback
+  %% Evidence: https://github.com/fate-st/verivoting/tree/5f170c5a904d825a99c96fd45558a743f2c4e1ea
+  S1["Initialization<br/>Rebuild certified research DKG context"]
+  S2["Registration<br/>Bind registration close and weights"]
+  S1 --> S2
+  S3["Ballot generation<br/>Weighted encrypt; verify ballot proofs"]
+  S2 --> S3
+  S4["Validation and accumulation<br/>Native SP+state; EVM individual+state"]
+  S3 --> S4
+  S5["Final tally<br/>Freeze CT2; private CP; new P3"]
+  S4 --> S5
+  S6["Disclosure<br/>Storage-derived P3; write Winner once"]
+  S5 --> S6
+  %% Execution: Native plus local Prague EVM individual-proof fallback.
+  %% Keys: Central research bootstrap; five CP worker processes.
+  %% Full tally: Combiner learns tally; public output excludes it.
+  %% Public checks: Authenticated frozen-state P3 and once-only storage.

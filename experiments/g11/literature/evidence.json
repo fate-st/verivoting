@@ -1,0 +1,170 @@
+{
+  "schema_version": "g11.literature.v1",
+  "review_date": "2026-11-06",
+  "scope": "Selected versions and relevant full-text sections; no external reproduction or new security proof.",
+  "definitions": {
+    "weighted_voting": "Authenticated unequal voter weights, not merely multi-choice ballots.",
+    "ballot_validity": "Proof/check that a submitted ballot encodes an allowed choice.",
+    "homomorphic_encryption": "Homomorphic accumulation of ballot ciphertexts; commitment accumulation is distinguished.",
+    "threshold_decryption": "Threshold or distributed key/decryption mechanism, with exact quorum qualified in notes.",
+    "batch_verification": "One cryptographic aggregate argument for several ballot proofs, not simply looping over ballots.",
+    "state_consistency": "Accepted-set-to-aggregate checking, including public recomputation. It need not use a state SNARK.",
+    "tally_hiding": "Hide the full tally from the public, with the recipient/trust distinction in trust_model.",
+    "winner_only": "Publish a winner/result function without the full tally.",
+    "public_verifiability": "External observers can audit the stated result under the source model.",
+    "coercion_resistance": "General coercion resistance, stronger than weak receipt-freeness or blocking Italian attacks.",
+    "blockchain_binding": "Protocol-enforced link to blockchain state; a public bulletin board is not sufficient."
+  },
+  "systems": [
+    {
+      "id": "helios", "name": "Helios 2.0 UCL", "version": "2009 UCL deployment, not Helios 1.0 mixnet",
+      "title": "Electing a University President using Open-Audit Voting: Analysis of real-world use of Helios",
+      "authors": "Ben Adida; Olivier de Marneffe; Olivier Pereira; Jean-Jacques Quisquater",
+      "venue": "EVT/WOTE", "year": 2009,
+      "url": "https://usenix.org/events/evtwote09/tech/full_papers/adida-helios.pdf",
+      "source_sha256": "d39be81b8a5ccb1b2cd718f94ecb9afba3a63da2311773cb9d80e927e3a632f6",
+      "pdf_pages": 15, "reviewed_pdf_pages": [1,2,3,4,5,6,10,11,12], "access": "full_text_relevant_sections_reviewed",
+      "implementation": "Paper footnote 1: github.com/benadida/helios; historical revision not yet pinned or executed.",
+      "properties": {
+        "weighted_voting": {"status":"supported","locator":"PDF pp.10-11, Section 3.5","note":"Category weights; deployment-specific approximation."},
+        "ballot_validity": {"status":"supported","locator":"PDF p.3, Section 2.1","note":"Disjunctive validity proofs."},
+        "homomorphic_encryption": {"status":"supported","locator":"PDF p.3, Section 2.1","note":"Exponential ElGamal."},
+        "threshold_decryption": {"status":"conditional","locator":"PDF p.3, Section 2.2","note":"Selected deployment requires all key holders."},
+        "batch_verification": {"status":"unknown","locator":"PDF pp.3,11, Sections 2.1,3.5","note":"No aggregate-argument evidence found."},
+        "state_consistency": {"status":"conditional","locator":"PDF pp.10-11, Sections 3.4-3.6","note":"Frozen board and independent recomputation."},
+        "tally_hiding": {"status":"not_supported","locator":"PDF pp.10-12, Section 3.5 and Table 1","note":"Publishes weighted candidate totals."},
+        "winner_only": {"status":"not_supported","locator":"PDF p.12, Table 1","note":"Full totals disclosed."},
+        "public_verifiability": {"status":"conditional","locator":"PDF p.11, Section 3.6","note":"Audit of published election data."},
+        "coercion_resistance": {"status":"not_supported","locator":"PDF p.2, Low-coercion Elections","note":"Explicit low-coercion setting."},
+        "blockchain_binding": {"status":"unknown","locator":"PDF pp.3-4, Sections 2.1-2.3","note":"Reviewed architecture uses a bulletin board."}
+      },
+      "architecture": {
+        "stages": ["Trustees create joint ElGamal key", "Institution authenticates eligible voters", "Browser encrypts; cast-or-audit", "Audit board; recompute weighted product", "All holders decrypt final product", "Publish candidate totals and audit data"],
+        "stage_locators": ["Section 2.2, PDF p.3","Section 2.3, PDF p.4","Sections 2.1,2.6, PDF pp.3,5","Sections 3.4-3.6, PDF pp.10-11","Section 3.5, PDF pp.10-11","Table 1, PDF p.12"],
+        "execution": "Web/server and offline audit; no blockchain mechanism established.",
+        "private_key_custody": "Distributed key holders.", "tally_actor": "Key holders and tally service.",
+        "full_tally_visibility": "Public.", "public_check": "Ballot and decryption audits."
+      },
+      "trust": {"public_sees":"Weighted totals and audit transcript.","trustees_see":"Aggregate tally.","combiner_sees":"Aggregate tally.","assumptions":"Authentication, voter auditing and secret key custody; compromised clients remain a limitation.","locator":"Sections 1,2.2-2.3,3.6, PDF pp.2-4,11"}
+    },
+    {
+      "id":"belenios", "name":"Belenios", "version":"Specification 3.0, homomorphic mode with Pedersen trustees",
+      "title":"Belenios specification", "authors":"Stéphane Glondu", "venue":"Official protocol specification", "year":2024,
+      "url":"https://www.belenios.org/specification.pdf", "source_sha256":"3714b6e1f71b32b6cdc54559f9489a40a27e0cc1b632ef251905d0f97bd74b22",
+      "pdf_pages":40,"reviewed_pdf_pages":[1,2,3,4,5,6,7],"access":"full_text_relevant_sections_reviewed",
+      "implementation":"Official belenios.org software distribution; protocol spec 3.0 is not a pinned executable release.",
+      "version_note":"Official homepage on 2026-11-06 advertises platform 3.1. Comparison intentionally pins spec 3.0; do not generalize to all versions.",
+      "properties": {
+        "weighted_voting":{"status":"conditional","locator":"PDF p.3, Section 1 Weights","note":"Homomorphic mode only."},
+        "ballot_validity":{"status":"supported","locator":"PDF pp.2,5, Sections 1,3.2","note":"Validity proofs and credential signatures."},
+        "homomorphic_encryption":{"status":"supported","locator":"PDF pp.2,6, Sections 1,3.4","note":"Selected ElGamal mode."},
+        "threshold_decryption":{"status":"conditional","locator":"PDF pp.4-6, Sections 3.1.1,3.4","note":"Configured Pedersen threshold; other structures differ."},
+        "batch_verification":{"status":"unknown","locator":"PDF pp.5-7, Sections 3.2-3.5","note":"No aggregate-argument evidence found."},
+        "state_consistency":{"status":"conditional","locator":"PDF pp.6-7, Section 3.5","note":"Last-ballot rule, hash chain and audit."},
+        "tally_hiding":{"status":"not_supported","locator":"PDF pp.2,6, Sections 1,3.4","note":"Homomorphic result is candidate totals."},
+        "winner_only":{"status":"not_supported","locator":"PDF pp.2,6, Sections 1,3.4","note":"Selected mode publishes full result."},
+        "public_verifiability":{"status":"conditional","locator":"PDF pp.6-7, Section 3.5","note":"Auditors check retained ballots and result."},
+        "coercion_resistance":{"status":"unknown","locator":"PDF pp.2-7, Sections 1-3","note":"No general coercion theorem assessed."},
+        "blockchain_binding":{"status":"unknown","locator":"PDF pp.3,6-7, Sections 2,3.5","note":"Hash chain is not blockchain enforcement."}
+      },
+      "architecture": {
+        "stages":["Configure Pedersen trustee key", "Issue credentials and voter weights", "Encrypt, prove validity, sign ballot", "Verify; retain latest credential ballot", "Trustees verify data; decrypt aggregate", "Publish result and partial decryptions"],
+        "stage_locators":["Section 3.1.1, PDF pp.4-5","Section 3.1, PDF pp.3-4","Section 3.2, PDF p.5","Section 3.5, PDF pp.6-7","Section 3.4, PDF p.6","Sections 3.4-3.5, PDF pp.6-7"],
+        "execution":"Voting server and public hash-chain archive.","private_key_custody":"Configured trustees.","tally_actor":"Trustees and voting server.","full_tally_visibility":"Public in selected mode.","public_check":"Recompute retained-set tally; verify proofs."
+      },
+      "trust":{"public_sees":"Accepted ballots, weights, decryptions and totals.","trustees_see":"Aggregate tally.","combiner_sees":"Aggregate tally.","assumptions":"Credential/trustee role configuration and monitored board; no unconditional server-honesty claim.","locator":"Sections 2,3.1-3.5, PDF pp.3-7"}
+    },
+    {
+      "id":"ordinos","name":"Ordinos","version":"EuroS&P 2020 extended author version",
+      "title":"Ordinos: A Verifiable Tally-Hiding E-Voting System",
+      "authors":"Ralf Küsters; Julian Liedtke; Johannes Müller; Daniel Rausch; Andreas Vogt","venue":"IEEE EuroS&P","year":2020,
+      "doi":"10.1109/EuroSP48549.2020.00022","url":"https://publ.sec.uni-stuttgart.de/kuestersliedtkemuellerrauschvogt-eurosp-2020.pdf",
+      "source_sha256":"420353b5fea005c0ba9e0bdb8d85d64741ad3cd26a6549fbc16640eaecc826fc","pdf_pages":63,
+      "reviewed_pdf_pages":[2,3,4,5,6,7,8,9,10,13,16,17,20,23,24],"access":"full_text_relevant_sections_reviewed",
+      "implementation":"Paper p.5: implementation/benchmarks upon request. Historical GitHub lead currently returns 404; no reproduction claimed.",
+      "properties": {
+        "weighted_voting":{"status":"unknown","locator":"PDF pp.6-7, Section 2","note":"No authenticated unequal-weight configuration verified."},
+        "ballot_validity":{"status":"supported","locator":"PDF pp.5-7, Section 2","note":"Choice-space NIZK."},
+        "homomorphic_encryption":{"status":"supported","locator":"PDF pp.5-6, Section 2","note":"Threshold homomorphic encryption."},
+        "threshold_decryption":{"status":"supported","locator":"PDF pp.5-7, Section 2","note":"t-of-n trustees."},
+        "batch_verification":{"status":"unknown","locator":"PDF pp.7-9, Section 2","note":"No aggregate-argument evidence found."},
+        "state_consistency":{"status":"conditional","locator":"PDF pp.8-10, Sections 2,4","note":"Board-set aggregation and public judging."},
+        "tally_hiding":{"status":"conditional","locator":"PDF pp.16-17, Section 5.3, Theorem 2","note":"P1-P4 and risk-avoiding adversaries."},
+        "winner_only":{"status":"supported","locator":"PDF pp.4-6, Sections 1-2","note":"Winner as selectable result function."},
+        "public_verifiability":{"status":"conditional","locator":"PDF pp.10-13, Section 4","note":"Public judging under original model."},
+        "coercion_resistance":{"status":"unknown","locator":"PDF pp.13,16-17, Section 5","note":"Privacy is not a coercion theorem."},
+        "blockchain_binding":{"status":"unknown","locator":"PDF pp.6-9, Section 2","note":"Reviewed model uses an authenticated board."}
+      },
+      "architecture": {
+        "stages":["Generate threshold encryption shares", "Publish eligibility and authentication keys", "Encrypt choice; prove; cast-or-audit", "Validate board set; homomorphic sum", "Trustees evaluate result through MPC", "Publish result and verifiable MPC transcript"],
+        "stage_locators":["Section 2, PDF pp.6-7","Section 2, PDF pp.6-7","Section 2, PDF p.7","Section 2, PDF pp.8-9","Sections 2,7, PDF pp.8-9,20","Sections 2,4, PDF pp.8-10"],
+        "execution":"Authenticated bulletin board and trustee MPC.","private_key_custody":"Threshold trustees; prototype central setup.","tally_actor":"Trustees jointly evaluate result.","full_tally_visibility":"Hidden under P1-P4, including from subthreshold trustees.","public_check":"Judging procedure over public transcript."
+      },
+      "trust":{"public_sees":"Result and verifiable transcript.","trustees_see":"No extra tally under stated threshold/model.","combiner_sees":"No tally-reconstructing combiner required.","assumptions":"P1-P4, t-1 corrupt trustees, protected devices, honest board/scheduler and risk-avoiding adversary; prototype trusted setup distinguished.","locator":"Section 3 p.10; Section 5.3 pp.16-17; Section 7 p.20"}
+    },
+    {
+      "id":"kryvos","name":"Kryvos","version":"CCS 2022, 15-page author version",
+      "title":"Kryvos: Publicly Tally-Hiding Verifiable E-Voting",
+      "authors":"Nicolas Huber; Ralf Küsters; Toomas Krips; Julian Liedtke; Johannes Müller; Daniel Rausch; Pascal Reisert; Andreas Vogt",
+      "venue":"ACM CCS","year":2022,"doi":"10.1145/3548606.3560701",
+      "url":"https://publ.sec.uni-stuttgart.de/huberkuesterskripsliedtkemuellerrauschreisert-ccs-2022.pdf",
+      "source_sha256":"8bc2b323b3adf0448f367db0a4a7e5853fa5a62b85d763e1102a5130571c3d6d","pdf_pages":15,
+      "reviewed_pdf_pages":[2,3,4,5,6,7,8,9,11,12],"access":"full_text_relevant_sections_reviewed",
+      "implementation":"Paper reference 53: github.com/JulianLiedtke/kryvos; currently 404. libsnark prototype not executed here.",
+      "properties": {
+        "weighted_voting":{"status":"unknown","locator":"PDF pp.6,8, Sections 3.1,4.2","note":"Multi-vote is not authenticated unequal weight."},
+        "ballot_validity":{"status":"supported","locator":"PDF p.6, Section 3.1","note":"Choice-space SNARK and weeding."},
+        "homomorphic_encryption":{"status":"not_supported","locator":"PDF pp.4,6, Sections 2.2,3.1","note":"Accumulates commitments, not ballot ciphertexts."},
+        "threshold_decryption":{"status":"conditional","locator":"PDF p.6, Section 3.1","note":"Full-threshold vote sharing; separate encryption keys."},
+        "batch_verification":{"status":"unknown","locator":"PDF pp.7,9, Sections 3.1,4.2","note":"No aggregate-argument evidence found."},
+        "state_consistency":{"status":"conditional","locator":"PDF p.7, Section 3.1 Public verification","note":"Public recomputation of commitments."},
+        "tally_hiding":{"status":"conditional","locator":"PDF p.12, Definition 5.3, Theorem 5.4","note":"Public privacy assumes all talliers honest."},
+        "winner_only":{"status":"supported","locator":"PDF pp.6-7, Section 3.1","note":"SNARK proves selected result function."},
+        "public_verifiability":{"status":"conditional","locator":"PDF p.11, Theorem 5.1","note":"V1-V2; honest board/scheduler/judge."},
+        "coercion_resistance":{"status":"unknown","locator":"PDF pp.2,12, Sections 1,5.3","note":"Italian-attack mitigation is not general coercion resistance."},
+        "blockchain_binding":{"status":"unknown","locator":"PDF pp.6-7, Section 3.1","note":"Board-based relation, not blockchain enforcement."}
+      },
+      "architecture": {
+        "stages":["Fix CRS, commitments, encryption keys", "Publish voters and authenticated channels", "Share vote; commit; encrypt openings; prove", "Weed ballots; sum public commitments", "Talliers reconstruct aggregate openings and tally", "Publish result and tally-opening SNARK"],
+        "stage_locators":["Section 3.1, PDF p.6","Section 3.1, PDF p.6","Section 3.1, PDF p.6","Section 3.1, PDF pp.6-7","Section 3.1, PDF pp.6-7","Section 3.1, PDF p.7"],
+        "execution":"Public board and private tallier exchange.","private_key_custody":"Each tallier has an encryption key.","tally_actor":"All talliers; designated proof producer.","full_tally_visibility":"Talliers learn full tally; public learns result.","public_check":"Commitment sums and result SNARK."
+      },
+      "trust":{"public_sees":"Commitments, encrypted openings, proofs and result.","trustees_see":"Full tally.","combiner_sees":"Designated tallier knows tally.","assumptions":"Public privacy: all talliers honest; internal privacy: at most nt-1 corrupt; honest BB/scheduler; honestly generated CRS.","locator":"Sections 3.2,5.2-5.3, PDF pp.7,11-12"}
+    },
+    {
+      "id":"emami","name":"Emami et al.","version":"JISA 79 (2023) 103645; full text pending",
+      "title":"A scalable decentralized privacy-preserving e-voting system based on zero-knowledge off-chain computations",
+      "authors":"Ashkan Emami; Habib Yajam; Mohammad Ali Akhaee; Rahim Asghari","venue":"Journal of Information Security and Applications","year":2023,
+      "doi":"10.1016/j.jisa.2023.103645","url":"https://www.sciencedirect.com/science/article/pii/S2214212623002296",
+      "source_sha256":null,"pdf_pages":null,"reviewed_pdf_pages":[],"access":"full_text_unavailable_metadata_and_previews_only",
+      "access_evidence":[{"url":"https://orbilu.uni.lu/handle/10993/64367","locator":"Files / Full Text","observation":"Author institution record lists no document."},{"url":"https://habibyajam.com/","locator":"Selected Publications, 2023 JISA","observation":"Author links DOI, no full-text PDF or matching code link."},{"url":"https://www.sciencedirect.com/science/article/pii/S2214212623002296","locator":"Publisher preview / Implementation snippet","observation":"Publisher reports an open-source prototype, but exact code/version and full security model not obtained; direct open returned 403."}],
+      "implementation":"Publisher reports GitHub prototype; exact paper-linked URL/version unverified. No reproduction.",
+      "properties": {},
+      "unknown_reason":"Complete protocol/security sections unavailable; abstract and section snippets are insufficient.",
+      "architecture":{"stages":["Pending full-text verification","Pending full-text verification","Pending full-text verification","Pending full-text verification","Pending full-text verification","Pending full-text verification"],"stage_locators":["Unavailable","Unavailable","Unavailable","Unavailable","Unavailable","Unavailable"],"execution":"Publisher reports off-chain computation/on-chain coordination; detailed mapping pending.","private_key_custody":"Unknown.","tally_actor":"Unknown.","full_tally_visibility":"Unknown.","public_check":"Unknown pending full protocol."},
+      "trust":{"public_sees":"Unknown.","trustees_see":"Unknown.","combiner_sees":"Unknown.","assumptions":"Pending original full text; weak receipt-freeness is not coercion resistance.","locator":"No full-text model available"}
+    },
+    {
+      "id":"verivoting","name":"VeriVoting-Batch prototype","version":"5f170c5, G10-C native plus local EVM fallback",
+      "title":"Connected fixed-parameter VeriVoting-Batch research prototype","authors":"Local project","venue":"Repository evidence","year":2026,
+      "url":"https://github.com/fate-st/verivoting/tree/5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+      "source_sha256":null,"pdf_pages":null,"reviewed_pdf_pages":[],"access":"local_source_and_archived_execution",
+      "implementation":"Native SnarkPack/state plus individual-Groth16 EVM fallback. Exact SnarkPack EVM and independent same-context DKG remain incomplete.",
+      "properties": {
+        "weighted_voting":{"status":"supported","locator":"docs/G10_C_CONNECTED_FUNCTIONAL_FLOW.md; experiments/g10_c_raw/native/report.json","note":"Fixed W32 research configuration."},
+        "ballot_validity":{"status":"supported","locator":"crates/vv-friendly-dkg/src/bin/common/g10b_materials.rs","note":"Actual archived ballot proofs verified."},
+        "homomorphic_encryption":{"status":"supported","locator":"crates/vv-friendly-dkg/src/bin/common/g6_batches.rs","note":"Weighted Jubjub ElGamal."},
+        "threshold_decryption":{"status":"conditional","locator":"crates/vv-friendly-dkg/src/bin/g10c_complete_native.rs","note":"3-of-5; centralized research key bootstrap."},
+        "batch_verification":{"status":"conditional","locator":"experiments/g10_c_raw/native/report.json","note":"Real native SnarkPack; EVM fallback is individual."},
+        "state_consistency":{"status":"conditional","locator":"experiments/g10_c_raw/native/report.json; experiments/g10_c_raw/chain/winner_once.json","note":"Two accepted B4 transitions; fixed parameters."},
+        "tally_hiding":{"status":"conditional","locator":"docs/G10_C_CONNECTED_FUNCTIONAL_FLOW.md","note":"Public-view goal; research seeds and T4/T5 limits."},
+        "winner_only":{"status":"supported","locator":"experiments/g10_c_raw/chain/winner_once.json","note":"One actual Winner event; no public tally."},
+        "public_verifiability":{"status":"conditional","locator":"scripts/g10c_chain_audit.mjs; results/g10_c/acceptance.json","note":"Fixed research setup, not full theorem."},
+        "coercion_resistance":{"status":"unknown","locator":"results/p0_paper_sync/sn-article.synced.tex","note":"Not established by implementation tests."},
+        "blockchain_binding":{"status":"conditional","locator":"contracts/src/VeriVotingWinnerOnlySettlement.sol; scripts/g10c_chain_audit.mjs","note":"Local Prague fallback only, not exact-SP settlement."}
+      },
+      "architecture":{"stages":["Rebuild certified research DKG context","Bind registration close and weights","Weighted encrypt; verify ballot proofs","Native SP+state; EVM individual+state","Freeze CT2; private CP; new P3","Storage-derived P3; write Winner once"],"stage_locators":["g10c_complete_native.rs","common/g6_materials.rs","common/g6_batches.rs","common/g2e_receiver.rs; g10c_winner_chain.mjs","g10c_complete_native.rs","scripts/g10c_chain_audit.mjs"],"execution":"Native plus local Prague EVM individual-proof fallback.","private_key_custody":"Central research bootstrap; five CP worker processes.","tally_actor":"Authorized combiner.","full_tally_visibility":"Combiner learns tally; public output excludes it.","public_check":"Authenticated frozen-state P3 and once-only storage."},
+      "trust":{"public_sees":"Ciphertexts, commitments, proofs, metadata and Winner.","trustees_see":"Their shares; central bootstrap knows research keys.","combiner_sees":"Full tally and usable private packages.","assumptions":"Confidentiality-trusted combiner, external identity roots; deterministic research setup/Fake SRS; T4/T5 not proved.","locator":"docs/G10_C_CONNECTED_FUNCTIONAL_FLOW.md; docs/G10_B_COMPARISON_PROTOCOL.md"}
+    }
+  ]
+}

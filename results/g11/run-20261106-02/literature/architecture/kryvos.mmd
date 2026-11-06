@@ -1,0 +1,18 @@
+flowchart LR
+  %% Kryvos; CCS 2022, 15-page author version
+  %% Evidence: https://publ.sec.uni-stuttgart.de/huberkuesterskripsliedtkemuellerrauschreisert-ccs-2022.pdf
+  S1["Initialization<br/>Fix CRS, commitments, encryption keys"]
+  S2["Registration<br/>Publish voters and authenticated channels"]
+  S1 --> S2
+  S3["Ballot generation<br/>Share vote; commit; encrypt openings; prove"]
+  S2 --> S3
+  S4["Validation and accumulation<br/>Weed ballots; sum public commitments"]
+  S3 --> S4
+  S5["Final tally<br/>Talliers reconstruct aggregate openings and tally"]
+  S4 --> S5
+  S6["Disclosure<br/>Publish result and tally-opening SNARK"]
+  S5 --> S6
+  %% Execution: Public board and private tallier exchange.
+  %% Keys: Each tallier has an encryption key.
+  %% Full tally: Talliers learn full tally; public learns result.
+  %% Public checks: Commitment sums and result SNARK.

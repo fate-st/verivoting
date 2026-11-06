@@ -1,0 +1,18 @@
+flowchart LR
+  %% Belenios; Specification 3.0, homomorphic mode with Pedersen trustees
+  %% Evidence: https://www.belenios.org/specification.pdf
+  S1["Initialization<br/>Configure Pedersen trustee key"]
+  S2["Registration<br/>Issue credentials and voter weights"]
+  S1 --> S2
+  S3["Ballot generation<br/>Encrypt, prove validity, sign ballot"]
+  S2 --> S3
+  S4["Validation and accumulation<br/>Verify; retain latest credential ballot"]
+  S3 --> S4
+  S5["Final tally<br/>Trustees verify data; decrypt aggregate"]
+  S4 --> S5
+  S6["Disclosure<br/>Publish result and partial decryptions"]
+  S5 --> S6
+  %% Execution: Voting server and public hash-chain archive.
+  %% Keys: Configured trustees.
+  %% Full tally: Public in selected mode.
+  %% Public checks: Recompute retained-set tally; verify proofs.

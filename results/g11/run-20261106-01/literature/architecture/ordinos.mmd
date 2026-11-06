@@ -1,0 +1,18 @@
+flowchart LR
+  %% Ordinos; EuroS&P 2020 extended author version
+  %% Evidence: https://publ.sec.uni-stuttgart.de/kuestersliedtkemuellerrauschvogt-eurosp-2020.pdf
+  S1["Initialization<br/>Generate threshold encryption shares"]
+  S2["Registration<br/>Publish eligibility and authentication keys"]
+  S1 --> S2
+  S3["Ballot generation<br/>Encrypt choice; prove; cast-or-audit"]
+  S2 --> S3
+  S4["Validation and accumulation<br/>Validate board set; homomorphic sum"]
+  S3 --> S4
+  S5["Final tally<br/>Trustees evaluate result through MPC"]
+  S4 --> S5
+  S6["Disclosure<br/>Publish result and verifiable MPC transcript"]
+  S5 --> S6
+  %% Execution: Authenticated bulletin board and trustee MPC.
+  %% Keys: Threshold trustees; prototype central setup.
+  %% Full tally: Hidden under P1-P4, including from subthreshold trustees.
+  %% Public checks: Judging procedure over public transcript.

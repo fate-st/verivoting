@@ -1,0 +1,163 @@
+{
+  "yaml_1_2_note": "JSON syntax is valid YAML 1.2",
+  "review_date": "2026-11-06",
+  "papers": [
+    {
+      "id": "helios",
+      "name": "Helios 2.0 UCL",
+      "version": "2009 UCL deployment, not Helios 1.0 mixnet",
+      "title": "Electing a University President using Open-Audit Voting: Analysis of real-world use of Helios",
+      "authors": "Ben Adida; Olivier de Marneffe; Olivier Pereira; Jean-Jacques Quisquater",
+      "venue": "EVT/WOTE",
+      "year": 2009,
+      "url": "https://usenix.org/events/evtwote09/tech/full_papers/adida-helios.pdf",
+      "source_sha256": "d39be81b8a5ccb1b2cd718f94ecb9afba3a63da2311773cb9d80e927e3a632f6",
+      "pdf_pages": 15,
+      "reviewed_pdf_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11,
+        12
+      ],
+      "access": "full_text_relevant_sections_reviewed",
+      "implementation": "Paper footnote 1: github.com/benadida/helios; historical revision not yet pinned or executed."
+    },
+    {
+      "id": "belenios",
+      "name": "Belenios",
+      "version": "Specification 3.0, homomorphic mode with Pedersen trustees",
+      "title": "Belenios specification",
+      "authors": "Stéphane Glondu",
+      "venue": "Official protocol specification",
+      "year": 2024,
+      "url": "https://www.belenios.org/specification.pdf",
+      "source_sha256": "3714b6e1f71b32b6cdc54559f9489a40a27e0cc1b632ef251905d0f97bd74b22",
+      "pdf_pages": 40,
+      "reviewed_pdf_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "access": "full_text_relevant_sections_reviewed",
+      "implementation": "Official belenios.org software distribution; protocol spec 3.0 is not a pinned executable release.",
+      "version_note": "Official homepage on 2026-11-06 advertises platform 3.1. Comparison intentionally pins spec 3.0; do not generalize to all versions."
+    },
+    {
+      "id": "ordinos",
+      "name": "Ordinos",
+      "version": "EuroS&P 2020 extended author version",
+      "title": "Ordinos: A Verifiable Tally-Hiding E-Voting System",
+      "authors": "Ralf Küsters; Julian Liedtke; Johannes Müller; Daniel Rausch; Andreas Vogt",
+      "venue": "IEEE EuroS&P",
+      "year": 2020,
+      "doi": "10.1109/EuroSP48549.2020.00022",
+      "url": "https://publ.sec.uni-stuttgart.de/kuestersliedtkemuellerrauschvogt-eurosp-2020.pdf",
+      "source_sha256": "420353b5fea005c0ba9e0bdb8d85d64741ad3cd26a6549fbc16640eaecc826fc",
+      "pdf_pages": 63,
+      "reviewed_pdf_pages": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        16,
+        17,
+        20,
+        23,
+        24
+      ],
+      "access": "full_text_relevant_sections_reviewed",
+      "implementation": "Paper p.5: implementation/benchmarks upon request. Historical GitHub lead currently returns 404; no reproduction claimed."
+    },
+    {
+      "id": "kryvos",
+      "name": "Kryvos",
+      "version": "CCS 2022, 15-page author version",
+      "title": "Kryvos: Publicly Tally-Hiding Verifiable E-Voting",
+      "authors": "Nicolas Huber; Ralf Küsters; Toomas Krips; Julian Liedtke; Johannes Müller; Daniel Rausch; Pascal Reisert; Andreas Vogt",
+      "venue": "ACM CCS",
+      "year": 2022,
+      "doi": "10.1145/3548606.3560701",
+      "url": "https://publ.sec.uni-stuttgart.de/huberkuesterskripsliedtkemuellerrauschreisert-ccs-2022.pdf",
+      "source_sha256": "8bc2b323b3adf0448f367db0a4a7e5853fa5a62b85d763e1102a5130571c3d6d",
+      "pdf_pages": 15,
+      "reviewed_pdf_pages": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12
+      ],
+      "access": "full_text_relevant_sections_reviewed",
+      "implementation": "Paper reference 53: github.com/JulianLiedtke/kryvos; currently 404. libsnark prototype not executed here."
+    },
+    {
+      "id": "emami",
+      "name": "Emami et al.",
+      "version": "JISA 79 (2023) 103645; full text pending",
+      "title": "A scalable decentralized privacy-preserving e-voting system based on zero-knowledge off-chain computations",
+      "authors": "Ashkan Emami; Habib Yajam; Mohammad Ali Akhaee; Rahim Asghari",
+      "venue": "Journal of Information Security and Applications",
+      "year": 2023,
+      "doi": "10.1016/j.jisa.2023.103645",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2214212623002296",
+      "source_sha256": null,
+      "pdf_pages": null,
+      "reviewed_pdf_pages": [],
+      "access": "full_text_unavailable_metadata_and_previews_only",
+      "access_evidence": [
+        {
+          "url": "https://orbilu.uni.lu/handle/10993/64367",
+          "locator": "Files / Full Text",
+          "observation": "Author institution record lists no document."
+        },
+        {
+          "url": "https://habibyajam.com/",
+          "locator": "Selected Publications, 2023 JISA",
+          "observation": "Author links DOI, no full-text PDF or matching code link."
+        },
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S2214212623002296",
+          "locator": "Publisher preview / Implementation snippet",
+          "observation": "Publisher reports an open-source prototype, but exact code/version and full security model not obtained; direct open returned 403."
+        }
+      ],
+      "implementation": "Publisher reports GitHub prototype; exact paper-linked URL/version unverified. No reproduction.",
+      "unknown_reason": "Complete protocol/security sections unavailable; abstract and section snippets are insufficient."
+    },
+    {
+      "id": "verivoting",
+      "name": "VeriVoting-Batch prototype",
+      "version": "5f170c5, G10-C native plus local EVM fallback",
+      "title": "Connected fixed-parameter VeriVoting-Batch research prototype",
+      "authors": "Local project",
+      "venue": "Repository evidence",
+      "year": 2026,
+      "url": "https://github.com/fate-st/verivoting/tree/5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+      "source_sha256": null,
+      "pdf_pages": null,
+      "reviewed_pdf_pages": [],
+      "access": "local_source_and_archived_execution",
+      "implementation": "Native SnarkPack/state plus individual-Groth16 EVM fallback. Exact SnarkPack EVM and independent same-context DKG remain incomplete."
+    }
+  ]
+}

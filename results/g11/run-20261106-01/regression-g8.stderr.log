@@ -1,0 +1,22 @@
+node:internal/modules/run_main:104
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: crates/vv-friendly-dkg/Cargo.toml
++ actual - expected
+
++ 'c39f86215adbf7f84c3280cf33fb6bf6327a78c4'
+- 'b54d2137e1472e5bc8942435420225b5c557c8b9'
+
+    at file:///Users/lijian/Documents/02%E5%AD%A6%E4%B9%A0/%E8%AE%BA%E6%96%87/latex%E6%A8%A1%E7%89%88/experiment/verivoting-vscode-starter/scripts/g8d_audit.mjs:79:39
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:98:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'c39f86215adbf7f84c3280cf33fb6bf6327a78c4',
+  expected: 'b54d2137e1472e5bc8942435420225b5c557c8b9',
+  operator: 'strictEqual'
+}
+
+Node.js v23.11.0

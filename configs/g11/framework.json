@@ -1,0 +1,22 @@
+{
+  "schema_version": "g11.v1",
+  "scope": "framework_and_literature_only",
+  "election": {
+    "election_id": "g11-admission-only",
+    "voter_count": 8,
+    "candidate_count": 3,
+    "batch_size": 4,
+    "weights": [1, 2, 1, 2, 1, 1, 1, 1],
+    "rule": "plurality_smallest_index_tiebreak",
+    "security_parameters": {"suite": "NOT_SELECTED_FOR_EXTERNAL_BASELINES", "production_setup": false}
+  },
+  "workload": {
+    "seed": "g11-public-framework-seed-20261106",
+    "distribution": "explicit",
+    "warmups": 0,
+    "trials": 0,
+    "independent_elections": false
+  },
+  "compile_profile": "not_applicable_no_crypto_compilation",
+  "timeout_ms": 30000
+}
