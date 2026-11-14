@@ -6,6 +6,15 @@ Measured fixed-parameter functionality is kept separate from production setup,
 full privacy/security composition, live settlement and exact on-chain verification.
 Unimplemented work is never reported as measured.
 
+## 命令行自动查看进度（不会启动实验）
+
+```sh
+node scripts/experiment_progress.mjs --watch
+```
+
+每2秒刷新并跟随最新阶段二成本实验，显示步骤、证明数量、耗时及最新日志。Ctrl+C只退出查看器。
+只查看一次可省略`--watch`。更多选项见[命令行进度说明](docs/COMMAND_LINE_PROGRESS.md)。
+
 ## What is implemented
 
 ### Current work: function-first native → new P3 → authenticated EVM fallback

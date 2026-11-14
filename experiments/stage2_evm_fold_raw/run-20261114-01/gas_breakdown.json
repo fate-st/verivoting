@@ -1,0 +1,113 @@
+{
+  "status": "MEASURED_RECEIPTS_WITH_NON_ADDITIVE_CALL_TRACES",
+  "derived": true,
+  "notes": "Inclusive callee cost already contains nested precompiles. Residual is NOT a pure Direct Fold/common-business cost; inline Direct Fold and pure shared business remain unmeasured null.",
+  "routes": [
+    {
+      "route": "direct_fold",
+      "shared_business_only_gas": null,
+      "inline_direct_fold_only_gas": null,
+      "accepted": [
+        {
+          "label": "accept_batch_1",
+          "tx_hash": "0xfaf841091b54878f0f875a8bdbf53340b5137b32b662b130e435ce6f8b9b083f",
+          "gas_used": 4523055,
+          "intrinsic_gas": 86292,
+          "execution_gas": 4436763,
+          "refund": 0,
+          "calldata_floor": 184230,
+          "calldata_floor_uplift": 0,
+          "calldata_bytes": 6372,
+          "zero_bytes": 3055,
+          "nonzero_bytes": 3317,
+          "ballot_verifier_inclusive_call_gas": 1970437,
+          "state_verifier_inclusive_call_gas": null,
+          "other_execution_residual_gas": 2466326
+        },
+        {
+          "label": "accept_batch_2",
+          "tx_hash": "0xbba3a9c53e4962a0a3094a573379a428678d78c1078f01f55c9b9a07747a6e93",
+          "gas_used": 4838516,
+          "intrinsic_gas": 88500,
+          "execution_gas": 4750016,
+          "refund": 0,
+          "calldata_floor": 189750,
+          "calldata_floor_uplift": 0,
+          "calldata_bytes": 6372,
+          "zero_bytes": 2871,
+          "nonzero_bytes": 3501,
+          "ballot_verifier_inclusive_call_gas": 1970437,
+          "state_verifier_inclusive_call_gas": null,
+          "other_execution_residual_gas": 2779579
+        }
+      ],
+      "deployments": [
+        {
+          "label": "deploy_certificate_gate",
+          "tx_hash": "0xa431e47381b5b22031c11078a305c6c2a7eb1c3977d79bd0872d39da8791feab",
+          "gas_used": 8226556,
+          "calldata_bytes": 17606
+        },
+        {
+          "label": "deploy_receiver",
+          "tx_hash": "0x97a39ba0555aeb9c27572254a072b70d4cac1a1b8187a545053d6cf7a289db3a",
+          "gas_used": 6721411,
+          "calldata_bytes": 22164
+        }
+      ]
+    },
+    {
+      "route": "state_proof",
+      "shared_business_only_gas": null,
+      "inline_direct_fold_only_gas": null,
+      "accepted": [
+        {
+          "label": "accept_batch_1",
+          "tx_hash": "0xa2ad6ce7250412bcacfbe885534d5beab962ae763888b81c09af57c31dcf2df0",
+          "gas_used": 3400469,
+          "intrinsic_gas": 93252,
+          "execution_gas": 3307217,
+          "refund": 0,
+          "calldata_floor": 201630,
+          "calldata_floor_uplift": 0,
+          "calldata_bytes": 6948,
+          "zero_bytes": 3243,
+          "nonzero_bytes": 3705,
+          "ballot_verifier_inclusive_call_gas": 1970437,
+          "state_verifier_inclusive_call_gas": 886119,
+          "other_execution_residual_gas": 450661
+        },
+        {
+          "label": "accept_batch_2",
+          "tx_hash": "0xa2d4b0c14be85f993cb4ef3c58549f08ec2bb5a22f84c6657a56af5bced46021",
+          "gas_used": 3402641,
+          "intrinsic_gas": 95424,
+          "execution_gas": 3307217,
+          "refund": 0,
+          "calldata_floor": 207060,
+          "calldata_floor_uplift": 0,
+          "calldata_bytes": 6948,
+          "zero_bytes": 3062,
+          "nonzero_bytes": 3886,
+          "ballot_verifier_inclusive_call_gas": 1970437,
+          "state_verifier_inclusive_call_gas": 886119,
+          "other_execution_residual_gas": 450661
+        }
+      ],
+      "deployments": [
+        {
+          "label": "deploy_certificate_gate",
+          "tx_hash": "0xa431e47381b5b22031c11078a305c6c2a7eb1c3977d79bd0872d39da8791feab",
+          "gas_used": 8226556,
+          "calldata_bytes": 17606
+        },
+        {
+          "label": "deploy_receiver",
+          "tx_hash": "0xa57a1102180c72eff7dddc083d6de371c480951591c794db3af58fa717229997",
+          "gas_used": 10856237,
+          "calldata_bytes": 28891
+        }
+      ]
+    }
+  ]
+}

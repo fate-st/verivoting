@@ -1,0 +1,25 @@
+{
+  "status": "PASS_EVIDENCE_AUDIT",
+  "transactions": 36,
+  "atomic_negative_transactions": 18,
+  "matched_checkpoints": true,
+  "immutable_historical_files_checked": 2400,
+  "source_version_sha256": "e71cbd4e726a831a1258405ffdb5f00347163ab26594d4fb733ff33b9a3aa8f7",
+  "csv_matches_summary": true,
+  "engine_checked_csv": true,
+  "processing_sources": [
+    {
+      "path": "scripts/stage2_evm_fold_check.mjs",
+      "sha256": "2e526cbc4ad1554a17be51b5506760c8197b1a617d06394d19c767f85774da50"
+    },
+    {
+      "path": "scripts/stage2_evm_fold_report.mjs",
+      "sha256": "f729ed6e702b1f451253790458aee5ea004b1f24fa31ab12df7aa3c4ba9a2709"
+    },
+    {
+      "path": "scripts/stage2_evm_fold_archive.mjs",
+      "sha256": "3ecf7eb7111dd48b36b1056ba7a394551623b4b7d35bcb23bccd3b952a38e985"
+    }
+  ],
+  "report_doc_sha256": "d54d4b0ed5cd4ddc12b0d3f75df121975790c2cd1944bfed7256c70a32b5d911"
+}

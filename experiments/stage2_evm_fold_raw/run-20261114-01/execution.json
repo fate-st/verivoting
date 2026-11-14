@@ -1,0 +1,366 @@
+{
+  "schema": "VV/STAGE2/EVM-FOLD-EXECUTION/v1",
+  "status": "PASS_PAIRED_EVM_FOLD_COMPARISON",
+  "started_utc": "2026-11-14T13:09:22.289Z",
+  "base_commit": "0098579fbacd2df0efca9532e8e37dced36ed013",
+  "branch": "experiment/stage2-evm-fold-comparison",
+  "git_status_at_start": "M README.md\n?? contracts/scripts/stage2_evm_fold_compare.mjs\n?? contracts/src/JubjubPointOps.sol\n?? contracts/src/JubjubPointOpsHarness.sol\n?? contracts/src/VeriVotingAuthenticatedDirectFoldSettlement.sol\n?? crates/vv-friendly-dkg/src/bin/stage2_point_vectors.rs\n?? docs/COMMAND_LINE_PROGRESS.md\n?? experiments/stage2_evm_fold_raw/\n?? scripts/experiment_progress.mjs\n?? scripts/experiment_progress.test.mjs\n?? scripts/stage2_evm_fold_run.mjs",
+  "source_version_sha256": "e71cbd4e726a831a1258405ffdb5f00347163ab26594d4fb733ff33b9a3aa8f7",
+  "sources": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "6b7ce01c5bd626481149ca37549a934c97131469b38d4f3bee8ae93fa1380a69"
+    },
+    {
+      "path": "contracts/package-lock.json",
+      "sha256": "e627b7d966a05a29946ce4f7afd078a088f6c2c30ac43740e551f342b05b2290"
+    },
+    {
+      "path": "contracts/package.json",
+      "sha256": "a814f37e71aadd4b9e5f3b314b3cb0f1eba36cc2698d0c3daabb9d6b0e60243f"
+    },
+    {
+      "path": "contracts/src/Bls12381FieldCostProfile.sol",
+      "sha256": "02ffa6fffd97bf92aeebe4e1710343a673e1eeb65a3983db87ec48b2de3e305f"
+    },
+    {
+      "path": "contracts/src/Bls12381FieldLowLevelProfile.sol",
+      "sha256": "9b2c03c91f3dbab325be969f675a62e9ba0b8a0e4f214f90ab2420644ca29786"
+    },
+    {
+      "path": "contracts/src/Bls12381Fp12Product.sol",
+      "sha256": "b3654c0c58f2587e21962c8109f8ddc7aaa5282b5e2273250404cd7b34bf8158"
+    },
+    {
+      "path": "contracts/src/Bls12381Fp2AddLowLevelProfile.sol",
+      "sha256": "475182d503caa8e57400cfcf82941b8d9cb76742e1a00294b0f2a0446f7612a2"
+    },
+    {
+      "path": "contracts/src/Bls12381Fp2AddProfile.sol",
+      "sha256": "a189ba3f395fc97a5366d9a0a184595fca9eb1faea3008a7ad14772f3bf736b4"
+    },
+    {
+      "path": "contracts/src/Bls12381Fp2LowLevelProfile.sol",
+      "sha256": "f89380291847399f78d73e942fee09cfe4644d47041ccd64461d0d9203545583"
+    },
+    {
+      "path": "contracts/src/Bls12381Fp2SubLowLevelProfile.sol",
+      "sha256": "bf022f566465531873d19f024366ae5167c2412e555489974c1f1160d9215240"
+    },
+    {
+      "path": "contracts/src/Bls12381Fp2SubProfile.sol",
+      "sha256": "4d92e40727f12d84632f017055e1ad142bb8acfd3a0b70499a76c3edc459defa"
+    },
+    {
+      "path": "contracts/src/Bls12381FpMulQuarterProfile.sol",
+      "sha256": "35d6ff2f8634286b20f777a48488cdff747722f15a9ac55ee2c8e2908a6100f9"
+    },
+    {
+      "path": "contracts/src/Bls12381Groth16Verifier.sol",
+      "sha256": "8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoop.sol",
+      "sha256": "4d118cbb4c0f141f59378b1b2318281ddbd9cae0ce15eedd33c3972ec5c096c7"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopAddLowLevel.sol",
+      "sha256": "b43045895f1b125938cbc3315cd6a5e0e690f224650d24424c8acfea40aeae2f"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopFp2LowLevel.sol",
+      "sha256": "5196fa33d5523b1fe4767a410e23250471434258add0daaceeb8d12f13a9fadc"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopLowLevel.sol",
+      "sha256": "facd572ff1f4f21fe3024c03ba59ed8f4850357687953c6d4921c24ae3e270af"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopMemory.sol",
+      "sha256": "3efa82760a9bad11ac5062d8e6d509baca8fcb329dd8dd910be5e9e589a4914b"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopQuarter.sol",
+      "sha256": "90e573ae450b9a75c0dbe4a21242cc07113ccb041f56c12370e43a194725958e"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopSparse.sol",
+      "sha256": "fb6a15f66375fd26f6ba7903bb9635ebbf4a0cc8105d912a1269ccd205d07526"
+    },
+    {
+      "path": "contracts/src/Bls12381MillerLoopSubLowLevel.sol",
+      "sha256": "8f13f1c53c5cf3ddc8f04a8259b3944d0a9fc642897f04a3cd8e5659c596eb06"
+    },
+    {
+      "path": "contracts/src/G8CExperimentPins.sol",
+      "sha256": "7f83b0318190e7567875facdc5f9d27ec81362010cb2e2fedc57f5f7ff82a858"
+    },
+    {
+      "path": "contracts/src/IndividualGroth16BatchVerifier.sol",
+      "sha256": "1697f67146dd7f62a3ef66ff6bb83528bdf2f6201c3144c110dbd687609d80d7"
+    },
+    {
+      "path": "contracts/src/VeriVotingAuthenticatedSettlement.sol",
+      "sha256": "872a29701ae7d7cd5104b941a1fc39d2a4afee59c3919f8ca9c1c061c45e30cf"
+    },
+    {
+      "path": "contracts/src/VeriVotingFrozenP3Verifier.sol",
+      "sha256": "9f844904398c0f64b8af54a6b44d13e2daa6aade73e8c8b8352e4c289724547a"
+    },
+    {
+      "path": "contracts/src/VeriVotingSettlement.sol",
+      "sha256": "aa6a8ed93998c311986866a01feeb526b5f489a85c005a543f6923205e829428"
+    },
+    {
+      "path": "contracts/src/VeriVotingWinnerOnlySettlement.sol",
+      "sha256": "adb876097767adb27a05f3de20563ff8eae745b3be61cb68054ab6ce0f01c513"
+    },
+    {
+      "path": "contracts/src/auth/CanonicalVV.sol",
+      "sha256": "4484f62ca95081d8da39884b2c158944b201ef91af7013abbd9140089f6992d2"
+    },
+    {
+      "path": "contracts/src/auth/JubjubSchnorrVerifier.sol",
+      "sha256": "1d97b689ba82b77c8149bce99ce698ecf25d2cc077981320c141f727d2fbb99b"
+    },
+    {
+      "path": "contracts/src/auth/JubjubVerificationShare.sol",
+      "sha256": "3f7613bf4018f59ac9784e4797d7da77392b08f6f610cfce70fee37153ec51ad"
+    },
+    {
+      "path": "contracts/src/auth/Sha512.sol",
+      "sha256": "71db8098dac383b21e99a14032dff8ad93abd116bdd2828362accca5a33fcd78"
+    },
+    {
+      "path": "contracts/src/auth/VeriVotingCertificateGate.sol",
+      "sha256": "0875e9bdf8ba729b234fc818da0e89dd2d0382f03a5f3f9cfe5b6dfdabb5b595"
+    },
+    {
+      "path": "contracts/src/auth/VeriVotingCertificateGateV2.sol",
+      "sha256": "d775ccee8b8887ac3690e12543b51796d7f8a816543e576ff339f86d37fa5e0f"
+    },
+    {
+      "path": "contracts/src/auth/VeriVotingTrusteeCommitments.sol",
+      "sha256": "e270b1d3573540d4251bf16afc0aaff055571be10cd565198a170a6fa89ad9ca"
+    },
+    {
+      "path": "contracts/src/interfaces/IBatchVerifier.sol",
+      "sha256": "bb37c0bad239411ae836fb0b630a5dae0578be336923b7b87c75fd84e891fafd"
+    },
+    {
+      "path": "contracts/src/JubjubPointOps.sol",
+      "sha256": "836762ce669ffea7f5b1c82011a2d8ada4d30089d4ea06657c131ae6325e3b30"
+    },
+    {
+      "path": "contracts/src/JubjubPointOpsHarness.sol",
+      "sha256": "d79ffa346b428a024a538664d1df743892be21961cfe538927c2163cc23410cd"
+    },
+    {
+      "path": "contracts/src/VeriVotingAuthenticatedDirectFoldSettlement.sol",
+      "sha256": "08517aec50d1d23330aef189887da93a2e2325fd4c1cd1f9c65270c4917c6fb6"
+    },
+    {
+      "path": "contracts/scripts/stage2_evm_fold_compare.mjs",
+      "sha256": "738214ce5cfaa8554103b3a5cde182c0148c0519fb94da8d24687f01a440ae8c"
+    },
+    {
+      "path": "scripts/stage2_evm_fold_run.mjs",
+      "sha256": "9f2300d54b6b4e0a26c094996b7e2588f3b5e359e7530158f59bfb065e6ed9c6"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage2_point_vectors.rs",
+      "sha256": "0f1b597671872cae661c8c9623828c0771c8c83041e4c44d73db693c97df1c68"
+    },
+    {
+      "path": "configs/experiment.G8C-FROZEN-P3-W32.json",
+      "sha256": "e48c5ccf4bc9476a0d5b62413d2a0c0ac059c48b4623d77ee19836825d89f9d8"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/Cargo.toml",
+      "sha256": "c355183ec81824cb6f989f8ff976981625273b8b285d6e43e7c32c1e28929794"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/lib.rs",
+      "sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14"
+    }
+  ],
+  "plan": [
+    "build-rust-reference",
+    "fmt",
+    "clippy-reference",
+    "rust-reference",
+    "compile",
+    "point-conformance",
+    "direct-fold-vm",
+    "state-proof-vm"
+  ],
+  "commands": [
+    {
+      "name": "build-rust-reference",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_point_vectors"
+      ],
+      "log": "logs/build-rust-reference.log",
+      "elapsed_ms": 254.061416,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "fmt",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "log": "logs/fmt.log",
+      "elapsed_ms": 808.758917,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "clippy-reference",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_point_vectors",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "log": "logs/clippy-reference.log",
+      "elapsed_ms": 492.6864579999999,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "rust-reference",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_point_vectors",
+      "args": [
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_evm_fold_raw/run-20261114-01/rust_points.json"
+      ],
+      "log": "logs/rust-reference.log",
+      "elapsed_ms": 560.522958,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "compile",
+      "program": "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+      "args": [
+        "--max-old-space-size=6144",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/contracts/scripts/stage2_evm_fold_compare.mjs",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_evm_fold_raw/run-20261114-01",
+        "prepare"
+      ],
+      "log": "logs/compile.log",
+      "elapsed_ms": 10890.259083,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": 398.25
+    },
+    {
+      "name": "point-conformance",
+      "program": "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+      "args": [
+        "--max-old-space-size=6144",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/contracts/scripts/stage2_evm_fold_compare.mjs",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_evm_fold_raw/run-20261114-01",
+        "points"
+      ],
+      "log": "logs/point-conformance.log",
+      "elapsed_ms": 919.523459,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "direct-fold-vm",
+      "program": "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+      "args": [
+        "--max-old-space-size=6144",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/contracts/scripts/stage2_evm_fold_compare.mjs",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_evm_fold_raw/run-20261114-01",
+        "direct_fold"
+      ],
+      "log": "logs/direct-fold-vm.log",
+      "elapsed_ms": 2863.5102499999994,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": 308.875
+    },
+    {
+      "name": "state-proof-vm",
+      "program": "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+      "args": [
+        "--max-old-space-size=6144",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/contracts/scripts/stage2_evm_fold_compare.mjs",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_evm_fold_raw/run-20261114-01",
+        "state_proof"
+      ],
+      "log": "logs/state-proof-vm.log",
+      "elapsed_ms": 2873.936207999999,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "polled_process_peak_rss_mib": 313.15625
+    }
+  ],
+  "environment": {
+    "hardware": "Apple M4",
+    "memory_bytes": 34359738368,
+    "node": "v23.11.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "budget": {
+    "worker_seconds": 600,
+    "total_seconds": 1800,
+    "worker_rss_mib": 16384,
+    "tx_gas": 20000000,
+    "block_gas": 30000000
+  },
+  "new_setup": 0,
+  "new_proofs": 0,
+  "new_p3": 0,
+  "new_dkg": 0,
+  "exact_snarkpack_evm": false,
+  "running_command": null,
+  "identical_initial_vm_and_application_checkpoints": true,
+  "old_tracked_files_unchanged": true,
+  "finished_utc": "2026-11-14T13:09:42.084Z",
+  "wall_ms": 19742.135000000002
+}

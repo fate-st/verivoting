@@ -1,0 +1,169 @@
+[package]
+name = "vv-friendly-dkg"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ark-bls12-381.workspace = true
+ark-ec.workspace = true
+ark-ed-on-bls12-381.workspace = true
+ark-ff.workspace = true
+ark-groth16.workspace = true
+ark-relations.workspace = true
+ark-serialize.workspace = true
+bellperson.workspace = true
+blstrs.workspace = true
+libc.workspace = true
+rand_chacha.workspace = true
+rand_core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+vv-friendly-crypto = { path = "../vv-friendly-crypto" }
+vv-types = { path = "../vv-types" }
+
+[[bin]]
+name = "friendly-dkg-threshold"
+path = "src/bin/dkg_threshold.rs"
+
+[[bin]]
+name = "friendly-generalized-cp"
+path = "src/bin/generalized_cp.rs"
+
+[[bin]]
+name = "friendly-private-packages"
+path = "src/bin/private_packages.rs"
+
+[[bin]]
+name = "friendly-native-e2e"
+path = "src/bin/native_e2e.rs"
+
+[[bin]]
+name = "friendly-p3a-three-cp"
+path = "src/bin/p3a_three_cp.rs"
+
+[[bin]]
+name = "friendly-p3b0-package-h2f"
+path = "src/bin/p3b0_package_h2f.rs"
+
+[[bin]]
+name = "friendly-p3b1-package-openings"
+path = "src/bin/p3b1_package_openings.rs"
+
+[[bin]]
+name = "friendly-p3c0-threshold-combination"
+path = "src/bin/p3c0_threshold_combination.rs"
+
+[[bin]]
+name = "friendly-p3c1-tally-binding"
+path = "src/bin/p3c1_tally_binding.rs"
+
+[[bin]]
+name = "friendly-p3d0-winner-linkage"
+path = "src/bin/p3d0_winner_linkage.rs"
+
+[[bin]]
+name = "friendly-p3d1-full-groth16"
+path = "src/bin/p3d1_full_groth16.rs"
+
+[[bin]]
+name = "friendly-ballot-cvote-b1"
+path = "src/bin/ballot_cvote_b1.rs"
+
+[[bin]]
+name = "friendly-g1c2-batch4"
+path = "src/bin/g1c2_batch4.rs"
+
+[[bin]]
+name = "friendly-g1c3-batch8"
+path = "src/bin/g1c3_batch8.rs"
+
+[[bin]]
+name = "friendly-g1d0-uniform-pilot"
+path = "src/bin/g1d0_uniform_pilot.rs"
+
+[[bin]]
+name = "friendly-g1d1-uniform-batch16"
+path = "src/bin/g1d1_uniform_batch16.rs"
+
+[[bin]]
+name = "friendly-g1d2-uniform-batch32"
+path = "src/bin/g1d2_uniform_batch32.rs"
+
+[[bin]]
+name = "friendly-g1e-fixed-suite-benchmark"
+path = "src/bin/g1e_fixed_suite_benchmark.rs"
+
+[[bin]]
+name = "friendly-g2c-state-batch4"
+path = "src/bin/g2c_state_batch4.rs"
+
+[[bin]]
+name = "friendly-g2d-state-d5w32-b4"
+path = "src/bin/g2d_state_d5w32_b4.rs"
+
+[[bin]]
+name = "friendly-g2e-multibatch-state"
+path = "src/bin/g2e_multibatch_state.rs"
+
+[[bin]]
+name = "friendly-g3a-multiprocess"
+path = "src/bin/g3a_multiprocess.rs"
+
+[[bin]]
+name = "friendly-g4a-second-subset-shape"
+path = "src/bin/g4a_second_subset_shape.rs"
+
+[[bin]]
+name = "friendly-g4b-public-subset-groth16"
+path = "src/bin/g4b_public_subset_groth16.rs"
+
+[[bin]]
+name = "friendly-g4c-partial-turnout"
+path = "src/bin/g4c_partial_turnout.rs"
+
+[[bin]]
+name = "friendly-g4d-ten-subsets"
+path = "src/bin/g4d_ten_subsets.rs"
+
+[[bin]]
+name = "friendly-g6-native-winner-only"
+path = "src/bin/g6_native_winner_only.rs"
+
+[[bin]]
+name = "friendly-g10a-native-fold"
+path = "src/bin/g10a_native_fold.rs"
+
+[[bin]]
+name = "friendly-g10b1-matched-native"
+path = "src/bin/g10b1_matched_native.rs"
+
+[[bin]]
+name = "friendly-g5d-p3-v2-export"
+path = "src/bin/g5d_p3_v2_export.rs"
+
+[[bin]]
+name = "friendly-g7-p3-eip2537-export"
+path = "src/bin/g7_p3_eip2537_export.rs"
+
+[[bin]]
+name = "friendly-g8-receiver-export"
+path = "src/bin/g8_receiver_export.rs"
+
+[[bin]]
+name = "friendly-g8a-certificate-export"
+path = "src/bin/g8a_certificate_export.rs"
+
+[[bin]]
+name = "friendly-g5c2-native-replay"
+path = "src/bin/g5c2_native_replay.rs"
+
+[[bin]]
+name = "friendly-g5c3-fp12-fixture"
+path = "src/bin/g5c3_fp12_fixture.rs"
+
+[[bin]]
+name = "friendly-g5c3-tipp-endpoint"
+path = "src/bin/g5c3_tipp_endpoint.rs"

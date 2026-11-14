@@ -1,0 +1,19 @@
+state_proof deploy_certificate_gate: PASS gas=8226556
+state_proof deploy_receiver: PASS gas=10856237
+state_proof uncertified: REJECT UNCERTIFIED gas=201630
+state_proof authenticate_dkg_1: PASS gas=2652194
+state_proof authenticate_dkg_2: PASS gas=2590648
+state_proof authenticate_dkg_3: PASS gas=2580463
+state_proof authenticate_registration: PASS gas=2770407
+state_proof wrong_new_state_before_first_acceptance: REJECT INVALID_GROTH16 gas=3296539
+state_proof wrong_old_state: REJECT OLD_STATE gas=202560
+state_proof wrong_batch_root: REJECT ACCEPTED_ROOT gas=326134
+state_proof another_voter_proof: REJECT INVALID_GROTH16 gas=1043532
+state_proof changed_ciphertext_encoding_in_committed_matrix: REJECT BATCH_ROOT gas=341370
+state_proof accept_batch_1: PASS gas=3400469
+state_proof replay_first_batch: REJECT NEXT_INDEX gas=201630
+state_proof cross_batch_spent_nullifier: REJECT SPENT_NULLIFIER gas=225060
+state_proof accept_batch_2: PASS gas=3402641
+state_proof freeze_ct2: PASS gas=204028
+state_proof receive_after_freeze: REJECT FROZEN gas=207060
+state_proof PASS_TWO_B4_ACCEPTANCE_AND_FREEZE

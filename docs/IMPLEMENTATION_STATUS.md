@@ -1,6 +1,24 @@
 # Implementation and claim boundary
 
-## Current stage-two step: inventory and one matched generation pilot passed
+## Latest step: stage-two EVM Direct Fold / State Proof comparison passed
+
+[报告](STAGE2_EVM_FOLD_COMPARISON.md)与原始 `experiments/stage2_evm_fold_raw/run-20261114-01`：
+新独立 Direct Fold 接收器执行真正的 Jubjub 规范压缩解码和群加；同一公开输入先经过原选票SNARK，
+再从该输入读取密文累计，子群性质由已验证加密关系/认证公钥及旧状态归纳保证，不接受外部未验证点。
+独立Harness仍对任意点执行完整子群检查。两路相同认证和冻结检查、相同CT1/CT2及8个已用NF。
+
+两批接收实测 Direct 9,361,571 / State 6,803,110 Gas；State 接收少27.329%，但多576 B/批 calldata，
+部署多4,134,826 Gas。计入部署/认证/接收/冻结，State 为36,683,643，Direct 为35,105,838 Gas。
+所以不能从接收分项推导总系统优势；完整P3/Winner不在本轮计费范围。
+两路各18笔真实签名交易（9成功/9必要拒绝），错误状态在冻结前真正到达累计/状态验证；所有拒绝不变更应用checkpoint。
+Rustfmt/新Rust入口严格Clippy、4次规范往返/4次群加与Rust对照、3项点输入拒绝通过。
+
+本轮新Setup/Prove/DKG/P3为0；复用原8份选票/2份状态证明，不把历史生成成本填零或拼接成新E2E。
+原G8合约/冻结配置/旧raw/论文不改；运行源快照及脏工作树状态明确归档，尚非干净提交复现。
+精确SnarkPack EVM仍BLOCKED，外部信任根/研究Setup和独立DKG/T4/T5限制保持不变。
+
+
+## Previous stage-two step: inventory and one matched generation pilot passed
 
 [本轮报告](STAGE2_MATCHED_COST_PILOT.md)与[证据索引](experiment_inventory.md)：
 基于c160a43，在experiment/stage2-matched-cost-pilot完成D5/W32、8票/两个连续B4的真实生成面板。

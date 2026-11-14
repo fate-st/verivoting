@@ -1,0 +1,66 @@
+{
+  "additions": [
+    {
+      "a": "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25313",
+      "b": "0100000000000000000000000000000000000000000000000000000000000000",
+      "label": "identity",
+      "sum": "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25313"
+    },
+    {
+      "a": "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25313",
+      "b": "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25393",
+      "label": "inverse",
+      "sum": "0100000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "a": "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25313",
+      "b": "e46698c7b45824d0a6ce776be548631bd2bede3ddff221c6f9378679367c978a",
+      "label": "two_real_ciphertext_points",
+      "sum": "063f4ca6a058fcac0132da7f34afffdde6d40fb69896f3930b3c7a7f93e98fbd"
+    },
+    {
+      "a": "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25313",
+      "b": "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25313",
+      "label": "doubling",
+      "sum": "8a8e6bda2ad69b14b2d5ef28a3f40d7580c52a90b7eb35155224a16d788496c1"
+    }
+  ],
+  "dkg_executed": false,
+  "folds": [
+    {
+      "batch_index": 1,
+      "state_hex": [
+        "0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+        "1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+        "fd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+        "59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+        "35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+        "35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1"
+      ]
+    },
+    {
+      "batch_index": 2,
+      "state_hex": [
+        "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72"
+      ]
+    }
+  ],
+  "group_generator_not_zero": true,
+  "new_proofs": 0,
+  "new_setup": 0,
+  "roundtrips": [
+    "0100000000000000000000000000000000000000000000000000000000000000",
+    "aa92d2590e873fccd7fe20c25cba263ec3c066c8782e1393171aabddf13c521d",
+    "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25313",
+    "f4ccaf54a178fdf7d526bac33c3a757c92ce565049ec75d9ff9717466dd25393"
+  ],
+  "schema": "VV/STAGE2/JUBJUB-POINT-REFERENCE/v1",
+  "source_fixture": "fixtures/g8_receiver_eip2537_v1.json",
+  "source_sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb",
+  "status": "PASS_RUST_PUBLIC_REFERENCE"
+}

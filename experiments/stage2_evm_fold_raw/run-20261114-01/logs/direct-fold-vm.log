@@ -1,0 +1,19 @@
+direct_fold deploy_certificate_gate: PASS gas=8226556
+direct_fold deploy_receiver: PASS gas=6721411
+direct_fold uncertified: REJECT UNCERTIFIED gas=184230
+direct_fold authenticate_dkg_1: PASS gas=2652194
+direct_fold authenticate_dkg_2: PASS gas=2590648
+direct_fold authenticate_dkg_3: PASS gas=2580463
+direct_fold authenticate_registration: PASS gas=2770407
+direct_fold wrong_new_state_before_first_acceptance: REJECT DIRECT_FOLD_MISMATCH gas=4383185
+direct_fold wrong_old_state: REJECT OLD_STATE gas=185160
+direct_fold wrong_batch_root: REJECT ACCEPTED_ROOT gas=318651
+direct_fold another_voter_proof: REJECT INVALID_GROTH16 gas=1035934
+direct_fold changed_ciphertext_encoding_in_committed_matrix: REJECT BATCH_ROOT gas=333892
+direct_fold accept_batch_1: PASS gas=4523055
+direct_fold replay_first_batch: REJECT NEXT_INDEX gas=184230
+direct_fold cross_batch_spent_nullifier: REJECT SPENT_NULLIFIER gas=218123
+direct_fold accept_batch_2: PASS gas=4838516
+direct_fold freeze_ct2: PASS gas=202588
+direct_fold receive_after_freeze: REJECT FROZEN gas=189750
+direct_fold PASS_TWO_B4_ACCEPTANCE_AND_FREEZE

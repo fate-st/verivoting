@@ -1,0 +1,81 @@
+{
+  "config_path": "configs/experiment.G8C-FROZEN-P3-W32.json",
+  "config_sha256": "e48c5ccf4bc9476a0d5b62413d2a0c0ac059c48b4623d77ee19836825d89f9d8",
+  "fixture_pins": [
+    {
+      "path": "fixtures/g6_p3_eip2537_g7_v1.json",
+      "sha256": "81daaa9311a507021883e58ce9e0c1adfc46daaf94c578b04295df4fc85ac356"
+    },
+    {
+      "path": "fixtures/g8_receiver_eip2537_v1.json",
+      "sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb"
+    },
+    {
+      "path": "fixtures/g8a_original_certificates_public_v1.json",
+      "sha256": "75e724ac0644702cbb864fafc8e54ffa0f64042bb08483038ad680db3f021b8e"
+    },
+    {
+      "path": "fixtures/g8b_trustee_commitments_public_v1.json",
+      "sha256": "944c69430864923a43624bffa5de99b6deaf2764a6d7ffc3aaac1bac01c63800"
+    },
+    {
+      "path": "fixtures/jubjub_g6_native_winner_only_public_v1.json",
+      "sha256": "ca58fb6cd23258e1edbbdcd96ad7a5d5f93ca20b7af0ab7f8b330f7c02cbef78"
+    }
+  ],
+  "contract_sources": [
+    {
+      "path": "contracts/src/auth/CanonicalVV.sol",
+      "sha256": "4484f62ca95081d8da39884b2c158944b201ef91af7013abbd9140089f6992d2"
+    },
+    {
+      "path": "contracts/src/auth/Sha512.sol",
+      "sha256": "71db8098dac383b21e99a14032dff8ad93abd116bdd2828362accca5a33fcd78"
+    },
+    {
+      "path": "contracts/src/auth/JubjubSchnorrVerifier.sol",
+      "sha256": "1d97b689ba82b77c8149bce99ce698ecf25d2cc077981320c141f727d2fbb99b"
+    },
+    {
+      "path": "contracts/src/auth/VeriVotingCertificateGateV2.sol",
+      "sha256": "d775ccee8b8887ac3690e12543b51796d7f8a816543e576ff339f86d37fa5e0f"
+    },
+    {
+      "path": "contracts/src/interfaces/IBatchVerifier.sol",
+      "sha256": "bb37c0bad239411ae836fb0b630a5dae0578be336923b7b87c75fd84e891fafd"
+    },
+    {
+      "path": "contracts/src/Bls12381Groth16Verifier.sol",
+      "sha256": "8fffe10ba59e994cacfb103a75fc7158b849437ea63cd19210997b60616f1277"
+    },
+    {
+      "path": "contracts/src/IndividualGroth16BatchVerifier.sol",
+      "sha256": "1697f67146dd7f62a3ef66ff6bb83528bdf2f6201c3144c110dbd687609d80d7"
+    },
+    {
+      "path": "contracts/src/G8CExperimentPins.sol",
+      "sha256": "7f83b0318190e7567875facdc5f9d27ec81362010cb2e2fedc57f5f7ff82a858"
+    },
+    {
+      "path": "contracts/src/VeriVotingAuthenticatedSettlement.sol",
+      "sha256": "872a29701ae7d7cd5104b941a1fc39d2a4afee59c3919f8ca9c1c061c45e30cf"
+    },
+    {
+      "path": "contracts/src/JubjubPointOps.sol",
+      "sha256": "836762ce669ffea7f5b1c82011a2d8ada4d30089d4ea06657c131ae6325e3b30"
+    },
+    {
+      "path": "contracts/src/JubjubPointOpsHarness.sol",
+      "sha256": "d79ffa346b428a024a538664d1df743892be21961cfe538927c2163cc23410cd"
+    },
+    {
+      "path": "contracts/src/VeriVotingAuthenticatedDirectFoldSettlement.sol",
+      "sha256": "08517aec50d1d23330aef189887da93a2e2325fd4c1cd1f9c65270c4917c6fb6"
+    }
+  ],
+  "ballot_vk_sha256": "69a56d10131027e0efcf0c6a7d920aac4600e87b5e20c42eb670f368e2ae9a3d",
+  "state_vk_sha256": "1367728908bb6c62009afb38ad09555d5a8c463bc6945b3ceb83ae763f376896",
+  "matrix_sha256": "774c50fc1bdb6b3ebc6a4a320a54225b2f7e33ff4542bc3285271b72e2be7746",
+  "ballot_proofs_sha256": "4685383e496b9b566a0ca9f6618aaeef85ee3864220a56b3e3012816280b2135",
+  "state_proofs_sha256": "76678cb2daf1669978f71e26db1ecbfa815e50a45053153799452238b16995ca"
+}

@@ -1,6 +1,23 @@
-# Next steps: matched generation pilot passed (2026-11-14)
+# Next steps: EVM fold comparison passed (2026-11-14)
 
-## Current step: stage-two inventory and minimal native generation pilot
+## Latest completed step: same-backend two-B4 EVM fold comparison
+
+[本轮报告](STAGE2_EVM_FOLD_COMPARISON.md)：真实 Jubjub Direct Fold 接收器与原 State Proof 接收器，
+独立新 Prague VM、相同认证/记录/根/NF/CT1/CT2/冻结目标，均正常完成；原合约/VK/配置和旧raw未改。
+两批接收 Gas：9,361,571 / 6,803,110（State 降27.329%）；两批 calldata 12,744 / 13,896 B。
+但部署/认证/接收/冻结前缀总 Gas：35,105,838 / 36,683,643，State 多1,577,805；不声称整体更快。
+本轮不重做 Setup/Prove/DKG/P3，不写 Winner。两路仍同一逐票 Groth16 回退后端，不是 SnarkPack EVM。
+8项Rust/EVM点运算对照、3项点输入拒绝、18笔真实必要拒绝（每路9项）通过，失败应用checkpoint不变。
+错误newState放在第一批接收/冻结之前，确认四份选票pairing通过后才在累计/状态关系处拒绝。
+
+本轮在此停止，不扩大B/N、不优化原语、不自动提交。下一轮先决定证据整合/最终干净源码复现范围；
+若继续系统比较，保持链下生成成本与链上接收/部署分项，不能把历史39.119s拼成此次新E2E。
+G9精确SnarkPack链上、独立DKG/密钥保管、T4/T5仍是既有缺口，不因本轮Gas结果消失。
+命令行只读查看：`node scripts/experiment_progress.mjs --watch`。
+
+## Previous step: matched generation pilot
+
+## Prior stage-two inventory and minimal native generation pilot
 
 [证据清单](experiment_inventory.md)已索引66类材料/184个主要JSON；主要归档审计通过。
 [同条件试运行](STAGE2_MATCHED_COST_PILOT.md)完成：D5/W32、32注册/8实际票、两个连续B4，
