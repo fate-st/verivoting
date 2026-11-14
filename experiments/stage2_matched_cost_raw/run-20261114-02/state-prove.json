@@ -1,0 +1,57 @@
+{
+  "aggregate_count": 0,
+  "archived_loader_ms": 28.696709000000002,
+  "ballot_proof_count": 0,
+  "key_load_ms": 195704.107666,
+  "new_evm": 0,
+  "new_p3": 0,
+  "phase": "state-prove",
+  "pins": [
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "ballot_vk_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+      "state_vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+      "verifier_srs_json_sha256": "b7e6a0f46c11c014d41e5cc7f0395e570ef3a0f2614b29aa6563183f588da595"
+    }
+  ],
+  "process_peak_rss_mib": 6290.390625,
+  "process_wall_ms": 234876.237417,
+  "production_setup": false,
+  "proofs": [
+    {
+      "batch_index": 1,
+      "bytes": 192,
+      "proof_hex": "8a27b5957ab314175b9301c687149e3abdb310f43b8af5258e1a017fec4ba9008f685531ea0a0b51a4ebf902d5919982a333b9f558b260b1bc1cf463cfc2ceccf9c12ebaeb109aa7525a795eb0a4bd4b586c8ae0b39d37aa571b0b8e593db81e1634739b418a55a7bdd7050c923557b97a6a82fea1b6993cd028ba72fb2ee26c57c3e23231eb0460febf8cfa8afefda9b2484369e9d71fe3b99321f2b71dda10292d76d686a1319415976794a88fee81bffb95e5a4515a97a179c1974263aeb2",
+      "prove_ms": 20447.145,
+      "sha256": "26a8318c546ed4c3978350f2350aa934b84da3d9112f721359cbcd15d343ad6a",
+      "verified": true,
+      "verify_ms": 2.3356660000000002
+    },
+    {
+      "batch_index": 2,
+      "bytes": 192,
+      "proof_hex": "8d1a69218f61eac7a55da116e54ca6bc7a7e7e209dabdacc760a3a700d7d950328a0cff828154a2ed1af217140af0aafaa76ecc83ad36b437af07f13eff8d4b4a10432fc4cc42d82f4e5622b542c190a1bf90a7b359c551c5f0e2a2a5d683ce508d3e7b6ea052d4227b934504aab6387bcb00f97a443585312af5cf278b760a918110d984137d489aef4fc3da41ce91ab55a9b1f3e6fa0618ae8cac3b6e262caf291be614ff05748e04a02998ebc137af4a462f3e67d0e8c0d51124be53d3bc9",
+      "prove_ms": 18671.955042,
+      "sha256": "f0631c95106447567a447aa2a984be3c0e7eaf55f624a4914b0cefd506f80d4d",
+      "verified": true,
+      "verify_ms": 3.1336250000000003
+    }
+  ],
+  "rss_scope": "fresh worker whole-process high-water; includes archived loader, key load/serialization where applicable; prove workers execute zero setup; NOT incremental algorithm-only RSS",
+  "same_archived_election": true,
+  "schema": "VV/STAGE2/MATCHED-COST-PILOT/v1",
+  "setup_count": 0,
+  "state_proof_count": 2,
+  "status": "PASS"
+}

@@ -1,4 +1,24 @@
-# Next steps: native comparison and exact-verifier feasibility (2026-11-04)
+# Next steps: matched generation pilot passed (2026-11-14)
+
+## Current step: stage-two inventory and minimal native generation pilot
+
+[证据清单](experiment_inventory.md)已索引66类材料/184个主要JSON；主要归档审计通过。
+[同条件试运行](STAGE2_MATCHED_COST_PILOT.md)完成：D5/W32、32注册/8实际票、两个连续B4，
+8份新选票证明、2份新状态证明、2份新SnarkPack聚合，四条实际接收路线达到同一CT2。
+本次Ballot Prove合计65.005s、State Prove合计39.119s、Aggregation合计19.054ms；
+都是一次成功试运行的组件数据，不是独立选举统计或完整系统E2E。首次加载中止另存，不并入成功面板。
+Setup、PK加载、证明、接收、RSS口径分离；Release opt-level=1/fmt/严格Clippy/5项测试通过。
+
+**下一项仅做任务2的最小EVM公平对比。** 同一固定B4、同认证/记录/根/NF/状态写入，
+继续使用当前真实逐票Groth16回退后端，比较Jubjub Direct Fold与State Proof的完整接收交易。
+先到现有两批，分别记录公共业务成本、实际Gas/calldata与证明生成；不做无目的原语扫描或扩B/N。
+必要反例在冻结前执行，确认真正到达累计/状态验证，失败后完整checkpoint不变。
+不要修改已通过G8合约，应新增独立实验入口；既有证明仅在VK/上下文/记录逐字节兼容后使用。
+
+精确SnarkPack EVM仍BLOCKED，不能把回退Gas称为聚合Gas。Belenios105场旧记录可审计，
+但临时binary已失效；未来外部公平比较前需恢复工具链并匹配工作负载，本轮没有重跑它。
+独立DKG、持久注册台账、部分树、通用多区域、T4/T5及最终干净提交复现仍未完成。
+本轮到最小生成面板停止，不重做P3、不修改论文、不自动提交/推送。
 
 ## Current priority: finish missing functionality, no optimization campaign
 

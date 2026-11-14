@@ -1,0 +1,268 @@
+{
+  "schema": "VV/STAGE2/EXECUTION/v1",
+  "started_utc": "2026-11-14T08:57:04.166Z",
+  "base_commit": "c160a430c0aa971250626e520209621c7673d389",
+  "branch": "experiment/stage2-matched-cost-pilot",
+  "git_status_at_start": "?? crates/vv-friendly-dkg/src/bin/common/stage2_routes.rs\n?? crates/vv-friendly-dkg/src/bin/stage2_matched_cost.rs\n?? experiments/stage2_matched_cost_raw/\n?? scripts/stage2_matched_cost.mjs",
+  "source_version_sha256": "54180b6f59a267294a38ff63d9c2d2bc32fac54130eeaa0a17806b4ea1d19e56",
+  "source_snapshot": "source_snapshot/",
+  "environment": {
+    "hardware": "Apple M4",
+    "memory_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v23.11.0",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1\n",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)\n",
+    "threads": 4,
+    "build_jobs": 2,
+    "profile": "release; strip=none; locked; offline"
+  },
+  "budget": {
+    "worker_wall_seconds": 600,
+    "worker_rss_mib": 16384,
+    "build_wall_seconds": 600,
+    "pilot_wall_seconds": 1800,
+    "actual_generated_ballot_proofs": 8,
+    "actual_generated_state_proofs": 2
+  },
+  "scope": "one reconstructed archived election, fresh randomized proofs; common workstation; sequential isolated workers; not final repeated statistics",
+  "private_runtime": "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-s3vm5J",
+  "commands": [
+    {
+      "name": "audit-b1",
+      "program": "node",
+      "args": [
+        "scripts/g10b1_report.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 29.154583000000002,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-b1.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-b2",
+      "program": "node",
+      "args": [
+        "scripts/g10b2_report.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 33.62504200000001,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-b2.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-connected-chain",
+      "program": "node",
+      "args": [
+        "scripts/g10c_chain_audit.mjs"
+      ],
+      "elapsed_ms": 166.65545800000007,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-connected-chain.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-connected-report",
+      "program": "node",
+      "args": [
+        "scripts/g10c_report.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 39.335916999999995,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-connected-report.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-belenios",
+      "program": "node",
+      "args": [
+        "scripts/g11/c1/check.mjs",
+        "experiments/g11/baselines/belenios/run-20261106-01"
+      ],
+      "elapsed_ms": 73.614375,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-belenios.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-g9-boundary",
+      "program": "node",
+      "args": [
+        "scripts/g9p1_feasibility.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 130.20287499999995,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-g9-boundary.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "build",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_matched_cost"
+      ],
+      "elapsed_ms": 9490.783709,
+      "code": 0,
+      "signal": null,
+      "log": "logs/build.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "fmt",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "elapsed_ms": 398.38858400000026,
+      "code": 0,
+      "signal": null,
+      "log": "logs/fmt.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "clippy",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_matched_cost",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "elapsed_ms": 1105.667458,
+      "code": 0,
+      "signal": null,
+      "log": "logs/clippy.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "tests",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "test",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_matched_cost"
+      ],
+      "elapsed_ms": 1028.7479170000006,
+      "code": 0,
+      "signal": null,
+      "log": "logs/tests.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "ballot-setup",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "ballot-setup",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-01",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-s3vm5J"
+      ],
+      "elapsed_ms": 16312.113792,
+      "code": 0,
+      "signal": null,
+      "log": "logs/ballot-setup.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 2332.875
+    },
+    {
+      "name": "ballot-prove",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "ballot-prove",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-01",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-s3vm5J"
+      ],
+      "elapsed_ms": 314688.4295,
+      "code": 0,
+      "signal": null,
+      "log": "logs/ballot-prove.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 3736.125
+    },
+    {
+      "name": "state-setup",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "state-setup",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-01",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-s3vm5J"
+      ],
+      "elapsed_ms": 38673.04249999998,
+      "code": 0,
+      "signal": null,
+      "log": "logs/state-setup.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 4311.265625
+    },
+    {
+      "name": "state-prove",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "state-prove",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-01",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-s3vm5J"
+      ],
+      "elapsed_ms": 161627.593459,
+      "code": null,
+      "signal": "SIGTERM",
+      "log": "logs/state-prove.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 1858.59375
+    }
+  ],
+  "files": [],
+  "status": "FAIL_OR_RESOURCE_BLOCKED",
+  "exact_snarkpack_evm": false,
+  "new_p3": 0,
+  "new_evm": 0,
+  "binary_sha256": "0363eda9b4533f86d6ef6ea5bf2151a214e4b76e5543fe591eba53151812f53b",
+  "error": "AssertionError [ERR_ASSERTION]: state-prove: {\"code\":null,\"signal\":\"SIGTERM\"} \n\nnull !== 0\n",
+  "finished_utc": "2026-11-14T09:06:08.051Z",
+  "pilot_wall_ms": 543814.422166
+}

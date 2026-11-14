@@ -1,0 +1,1248 @@
+{
+  "base_commit": "c160a430c0aa971250626e520209621c7673d389",
+  "branch": "experiment/stage2-matched-cost-pilot",
+  "environment": {
+    "hardware": "Apple M4",
+    "memory_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v23.11.0",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1\n",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)\n",
+    "threads": 4,
+    "build_jobs": 2,
+    "profile": "release; strip=none; locked; offline",
+    "local_pk_load": "SHA-256 pinned freshly generated private cache + frozen VK equality; not external unchecked key loading"
+  },
+  "entries": [
+    {
+      "experiment": "g1_e",
+      "tracked_files": 228,
+      "evidence": [
+        {
+          "path": "experiments/g1_e_raw/environment.json",
+          "sha256": "50bab827a0f9af88e26be7aa043dd0fe5b8b68edd7da45f01abf510693e60592",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "measured_source_git_commit",
+            "development_base",
+            "branch",
+            "cpu",
+            "ram_bytes",
+            "os",
+            "logical_cpus",
+            "rustc",
+            "cargo",
+            "python",
+            "numpy",
+            "matplotlib",
+            "release",
+            "rayon_num_threads",
+            "node",
+            "binary_sha256",
+            "notes"
+          ]
+        },
+        {
+          "path": "experiments/g1_e_raw/manifest.json",
+          "sha256": "f7d657f7329e32bd75910912c9bacb5891574a38c6ac98bb807ab74516bc805d",
+          "status": "PASS_TIMING_150_BATCH_SAMPLES_450_OPERATION_WINDOWS",
+          "source_commit": null,
+          "metadata_keys": [
+            "batch_sizes",
+            "build_jobs",
+            "build_profile",
+            "cases",
+            "cpu",
+            "formal_rounds_per_batch",
+            "gas",
+            "gate",
+            "git_commit",
+            "git_dirty",
+            "git_provenance_scope",
+            "iterations_frozen_after_warmup",
+            "load_verify_and_srs_rebuild_ms_offline",
+            "new_groth16_proof_count",
+            "p3_run",
+            "production_setup",
+            "provenance",
+            "ram_bytes",
+            "randomized_batch_and_operation_order",
+            "rustc",
+            "seed",
+            "source_hashes",
+            "started_utc",
+            "state_proof_run",
+            "statistical_unit",
+            "status",
+            "target_window_ms",
+            "tracked_source_clean_at_end",
+            "warmup_rounds_per_batch"
+          ]
+        },
+        {
+          "path": "results/g1_e/summary.json",
+          "sha256": "e413aab87605db515973a1acb936e36da7f0a253892935cf5c3d92d4ba24bd34",
+          "status": "PASS_150_TIMING_TRIALS_45_MEMORY_PROCESSES",
+          "source_commit": null,
+          "metadata_keys": [
+            "gate",
+            "status",
+            "source_git_commit",
+            "analysis",
+            "measurement_unit",
+            "batches",
+            "timing_trials",
+            "operation_windows",
+            "memory_processes",
+            "warmup_trials_excluded",
+            "gas",
+            "full_da_bytes",
+            "full_calldata_bytes",
+            "source_manifest_sha256"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g2_e",
+      "tracked_files": 15,
+      "evidence": [
+        {
+          "path": "experiments/g2_e_raw/commands.json",
+          "sha256": "e8c6e0e97d952e44ba70aee339faf15baef17bf4ad345cb321134e858caf4875",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "path": "experiments/g2_e_raw/environment.json",
+          "sha256": "91884641bce5d789eac18ec98fc1b44b7d23714902eee5d2d1176e9fb8ded39c",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "recorded_utc",
+            "git_commit",
+            "git_status_at_build",
+            "rustc",
+            "cargo",
+            "cpu",
+            "memory_bytes",
+            "os",
+            "build_jobs",
+            "profile",
+            "locked",
+            "offline",
+            "binary_sha256",
+            "cargo_lock_sha256"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g4_d",
+      "tracked_files": 28,
+      "evidence": [
+        {
+          "path": "experiments/g4_d_raw/commands.json",
+          "sha256": "1571324b39a8ddc409edab5c7325549abc9278c7c75464bec4ae6ce9d09804ea",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        {
+          "path": "experiments/g4_d_raw/environment.json",
+          "sha256": "13b93ddc02e11afb821316bd5392a1a7ba3306e88d331e98fd391c40303ad265",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "recorded_utc",
+            "git_commit",
+            "git_status_at_build",
+            "rustc",
+            "cargo",
+            "cpu",
+            "memory_bytes",
+            "os",
+            "build_jobs",
+            "profile",
+            "locked",
+            "offline",
+            "binary_sha256",
+            "cargo_lock_sha256",
+            "rss_budget_mib",
+            "wall_budget_s"
+          ]
+        },
+        {
+          "path": "experiments/g4_d_raw/ten_subsets_p3_v2.json",
+          "sha256": "292bf1d35dab36d44cbd3020d205ae211f8e33a2a479f5eaed4802f6f4c0e7d5",
+          "status": "PASS_TEN_P3_V2_SUBSETS_ONE_CIRCUIT_ONE_VK_FROZEN_W32_CT2",
+          "source_commit": null,
+          "metadata_keys": [
+            "accepted_ballots",
+            "all_ten_matrices_equal",
+            "arch",
+            "build_profile",
+            "calldata_bytes",
+            "cases",
+            "complete_native_receiver_to_winner_flow",
+            "cpu",
+            "evm_run",
+            "full_settlement",
+            "gas_total",
+            "gate",
+            "git_commit",
+            "git_dirty",
+            "git_status_at_start",
+            "input_layout",
+            "limitations",
+            "matrix_sha256",
+            "native_packages_created",
+            "native_packages_verified",
+            "negative_tests",
+            "new_ballot_proof_count",
+            "new_state_proof_count",
+            "one_setup_and_one_vk",
+            "os",
+            "package_seed_hex",
+            "peak_rss_after_setup_mib",
+            "peak_rss_mib",
+            "private_tally_or_shares_emitted",
+            "production_setup",
+            "proof_count",
+            "protocol_version",
+            "proving_key_compressed_bytes",
+            "proving_key_persisted",
+            "public_context",
+            "public_fixture",
+            "public_fixture_sha256",
+            "public_input_count",
+            "public_winner",
+            "registered_weight",
+            "relation_id",
+            "rustc_version",
+            "selector_input_index",
+            "setup_count",
+            "setup_ms",
+            "setup_seed_hex",
+            "source_artifact_pins",
+            "source_g2e_fixture_sha256",
+            "source_hashes",
+            "sources_unchanged_before_archival",
+            "started_utc",
+            "status",
+            "subset_count",
+            "subsets",
+            "tally_relation_id",
+            "total_run_ms_excluding_compilation",
+            "trustee_roster",
+            "verify_count",
+            "verifying_key_compressed_bytes",
+            "verifying_key_sha256",
+            "vk_preparation_ms",
+            "winner_input_index"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g6",
+      "tracked_files": 14,
+      "evidence": [
+        {
+          "path": "experiments/g6_raw/commands.json",
+          "sha256": "eac0507b5d51fd44d029eb788d2b119aaa2d961e93f67c857656a6f044cc3b79",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "working_directory",
+            "commands"
+          ]
+        },
+        {
+          "path": "experiments/g6_raw/environment.json",
+          "sha256": "ab40008fa19c7ac8a7430a488d40ba606f8f9735150ada6d1c3700bfd0c6829e",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "started_utc",
+            "git_commit",
+            "git_status_at_start",
+            "rustc",
+            "cargo",
+            "cpu",
+            "memory_bytes",
+            "os",
+            "env",
+            "resource_budget",
+            "binary_sha256",
+            "completed_utc"
+          ]
+        },
+        {
+          "path": "experiments/g6_raw/native_winner_only.json",
+          "sha256": "db7823748ddc7fe1d2f9925db065c05b836c16bb02af0b75da6fb7d3c14a86d0",
+          "status": "PASS_LIVE_RECEIVER_FREEZE_PRIVATE_DECRYPT_P3_WINNER_ONCE",
+          "source_commit": null,
+          "metadata_keys": [
+            "arch",
+            "batches",
+            "build_profile",
+            "calldata_bytes",
+            "certified_dkg_and_registration",
+            "complete_native_receiver_to_winner_flow",
+            "cpu",
+            "evm_run",
+            "final_checkpoint",
+            "freeze_digest_hex",
+            "freeze_ms",
+            "frozen_checkpoint",
+            "full_settlement",
+            "g4d_relation_and_vk_unchanged",
+            "gas_total",
+            "gate",
+            "git_commit",
+            "git_dirty",
+            "git_status_at_start",
+            "limitations",
+            "negative_tests",
+            "new_ballot_proof_count",
+            "new_p3_proof_count",
+            "new_private_packages",
+            "new_state_proof_count",
+            "os",
+            "package_seed_hex",
+            "packages_create_deliver_verify_ms",
+            "peak_rss_mib",
+            "private_delivery",
+            "private_packages_verified",
+            "private_tally_or_shares_emitted",
+            "private_threshold_decode_and_witness_ms",
+            "production_setup",
+            "proof_bytes",
+            "proof_seed_hex",
+            "protocol_version",
+            "prove_ms",
+            "proving_key_compressed_bytes",
+            "proving_key_persisted",
+            "public_fixture",
+            "public_fixture_sha256",
+            "public_input_bytes",
+            "public_winner",
+            "reused_ballot_proof_count",
+            "reused_snarkpack_proof_count",
+            "reused_state_proof_count",
+            "rustc_version",
+            "selected_subset",
+            "setup_rebuild_count",
+            "setup_rebuild_ms",
+            "setup_seed_hex",
+            "shape",
+            "source_artifact_pins",
+            "source_hashes",
+            "sources_unchanged_before_archival",
+            "started_utc",
+            "status",
+            "total_run_ms_excluding_compilation",
+            "verifying_key_bytes",
+            "verifying_key_sha256",
+            "winner_disclosure_check_prepare_verify_write_ms"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g7",
+      "tracked_files": 23,
+      "evidence": [
+        {
+          "path": "experiments/g7_raw/commands.json",
+          "sha256": "8f41e409b83d662cddb30207ce917b98d8ae2d1121cb05d0b622823790986baa",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "working_directory",
+            "env",
+            "commands"
+          ]
+        },
+        {
+          "path": "experiments/g7_raw/environment.json",
+          "sha256": "06979ba534d47706bcbc5b0498d7af7369cb3764f9129f3f57c7ca608d969e49",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "started_utc",
+            "cpu",
+            "memory_bytes",
+            "os",
+            "arch",
+            "node",
+            "git_commit",
+            "git_status",
+            "env"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g8",
+      "tracked_files": 23,
+      "evidence": [
+        {
+          "path": "experiments/g8_raw/commands.json",
+          "sha256": "3495d676667704e537e141bb06f33ed179f0ab573962a7e9a0aecdfb989eab82",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "working_directory",
+            "env",
+            "commands"
+          ]
+        },
+        {
+          "path": "experiments/g8_raw/environment.json",
+          "sha256": "aa1db68abddaae2f45574c942616ca9f6640dbd3f5803affbcc59bde8e5d2534",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "started_utc",
+            "cpu",
+            "memory_bytes",
+            "os",
+            "arch",
+            "node",
+            "git_commit",
+            "branch",
+            "git_status",
+            "env"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g8a",
+      "tracked_files": 24,
+      "evidence": [
+        {
+          "path": "experiments/g8a_raw/commands.json",
+          "sha256": "fd213818b7bd0e5eb2f3998cfb7ea03aa98774984aaeac0cd9fd3ea507ef8ac3",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "working_directory",
+            "env",
+            "commands"
+          ]
+        },
+        {
+          "path": "experiments/g8a_raw/environment.json",
+          "sha256": "52897a76b43e075f3e48050d5ff8403f8993cd4bedec181036d34c168230777f",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "started_utc",
+            "cpu",
+            "memory_bytes",
+            "os",
+            "arch",
+            "node",
+            "git_commit",
+            "branch",
+            "git_status",
+            "env"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g8b",
+      "tracked_files": 35,
+      "evidence": [
+        {
+          "path": "experiments/g8b_raw/commands.json",
+          "sha256": "cde956862a6236c7eb970a89a21a3fbb8bac2ce788fb6df300c18b7a4312f12c",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "working_directory",
+            "env",
+            "commands"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g8c",
+      "tracked_files": 34,
+      "evidence": [
+        {
+          "path": "experiments/g8c_raw/commands.json",
+          "sha256": "c08a2849d019f5ff7b371f41f6cc77b2a15ff22442c57f2c5eae5418e73ea081",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "working_directory",
+            "commands"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g8d",
+      "tracked_files": 43,
+      "evidence": [
+        {
+          "path": "experiments/g8d_raw/commands.json",
+          "sha256": "e74212b8f560ab28d24ee759e083f9cf1770fe580e87344045f81bdb678f22e8",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "working_directory",
+            "commands"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g8e",
+      "tracked_files": 0,
+      "evidence": [],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g10_b1",
+      "tracked_files": 44,
+      "evidence": [
+        {
+          "path": "experiments/g10_b1_raw/development_attempt1/execution/manifest.json",
+          "sha256": "4bd76c33799a0d190cdff6db342ac7b09e5131c1d20714f04a9f529e4abc0b94",
+          "status": "PASS_G10_B1_FOUR_ROUTE_INTAKE_AND_ISOLATED_PROCESS_RSS",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "schema",
+            "started_utc",
+            "source_base_sha",
+            "source_git_dirty",
+            "driver_sha256",
+            "commands",
+            "runs",
+            "new_setup",
+            "new_proofs",
+            "new_aggregates",
+            "new_evm",
+            "binary_sha256",
+            "source_version_sha256",
+            "status",
+            "finished_utc"
+          ]
+        },
+        {
+          "path": "experiments/g10_b1_raw/development_attempt1/matched.json",
+          "sha256": "c609fcc245b70902981a280d019c2f3c23b214571dd26135c1ca068be3158643",
+          "status": "PASS_FOUR_MATCHED_NATIVE_INTAKE_ROUTES",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "aggregation_ms",
+            "all_routes_same_ct1_ct2_and_spent8",
+            "binary_sha256",
+            "build",
+            "calldata",
+            "communication_components",
+            "elapsed_ms",
+            "exact_snarkpack_evm",
+            "final_state",
+            "fixture_pins",
+            "full_lifecycle_comparison",
+            "full_tally_comparison",
+            "gas",
+            "git_dirty",
+            "hardware",
+            "hardware_memory_bytes",
+            "load_and_prepare_ms",
+            "memory_route",
+            "method",
+            "necessary_negatives",
+            "new_aggregates",
+            "new_evm",
+            "new_proofs",
+            "new_setup",
+            "process_peak_rss_mib",
+            "prove_ms",
+            "rayon_num_threads",
+            "resource_budget",
+            "rss_scope",
+            "rustc",
+            "schema",
+            "setup_ms",
+            "source_base_sha",
+            "source_version_sha256",
+            "sources",
+            "started_utc",
+            "status",
+            "windows"
+          ]
+        },
+        {
+          "path": "experiments/g10_b1_raw/execution/manifest.json",
+          "sha256": "8bb3322a3da25e7a91d10efa3cf99b85c14200279893180ffcf9dd0cf16b9fed",
+          "status": "PASS_G10_B1_FOUR_ROUTE_INTAKE_AND_ISOLATED_PROCESS_RSS",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "schema",
+            "started_utc",
+            "source_base_sha",
+            "source_git_dirty",
+            "driver_sha256",
+            "commands",
+            "runs",
+            "new_setup",
+            "new_proofs",
+            "new_aggregates",
+            "new_evm",
+            "binary_sha256",
+            "source_version_sha256",
+            "status",
+            "finished_utc"
+          ]
+        },
+        {
+          "path": "experiments/g10_b1_raw/matched.json",
+          "sha256": "9d3eb44fe2db0efb9aa875c6d99e12c30051650ec208716a89c278f3a601c49c",
+          "status": "PASS_FOUR_MATCHED_NATIVE_INTAKE_ROUTES",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "aggregation_ms",
+            "all_routes_same_ct1_ct2_and_spent8",
+            "binary_sha256",
+            "build",
+            "calldata",
+            "communication_components",
+            "elapsed_ms",
+            "exact_snarkpack_evm",
+            "final_state",
+            "fixture_pins",
+            "full_lifecycle_comparison",
+            "full_tally_comparison",
+            "gas",
+            "git_dirty",
+            "hardware",
+            "hardware_memory_bytes",
+            "load_and_prepare_ms",
+            "memory_route",
+            "method",
+            "necessary_negatives",
+            "new_aggregates",
+            "new_evm",
+            "new_proofs",
+            "new_setup",
+            "process_peak_rss_mib",
+            "prove_ms",
+            "rayon_num_threads",
+            "resource_budget",
+            "rss_scope",
+            "rustc",
+            "schema",
+            "sender_membership_path_preparation",
+            "setup_ms",
+            "source_base_sha",
+            "source_version_sha256",
+            "sources",
+            "started_utc",
+            "status",
+            "windows"
+          ]
+        },
+        {
+          "path": "results/g10_b1/summary.json",
+          "sha256": "c6a7ef2b7e41f51d92a7c190a7b727465f9fce5254cc583126e0bae9107413ee",
+          "status": "PASS_FOUR_MATCHED_NATIVE_INTAKE_ROUTES",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "schema",
+            "status",
+            "scope",
+            "source_base_sha",
+            "source_version_sha256",
+            "source_was_dirty",
+            "source_snapshot",
+            "binary_sha256",
+            "experiment_manifest",
+            "measured_raw",
+            "sample_design",
+            "routes",
+            "necessary_negative_cases",
+            "unit_tests_passed",
+            "release_build",
+            "strict_clippy",
+            "fmt",
+            "sender_membership_path_preparation",
+            "memory_scope",
+            "full_lifecycle_comparison",
+            "five_route_system_comparison",
+            "full_tally_vs_winner_only",
+            "new_setup",
+            "new_proofs",
+            "new_aggregates",
+            "new_evm",
+            "setup_ms",
+            "prove_ms",
+            "aggregation_ms",
+            "gas",
+            "calldata",
+            "G9_P1",
+            "G9_P2_started",
+            "limitations",
+            "next_task"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g10_b2",
+      "tracked_files": 22,
+      "evidence": [
+        {
+          "path": "experiments/g10_b2_raw/aggregation_cost.json",
+          "sha256": "5a91eefe15148efcd5285d84dc176fd22a22753d55c35a78fe629178ee27a9f3",
+          "status": "PASS_EXACT_TWO_B4_AGGREGATION_GENERATION",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "additional_pins",
+            "ballot_prove_ms",
+            "binary_sha256",
+            "build",
+            "calldata",
+            "complete_system_cost",
+            "elapsed_ms",
+            "evm_executed",
+            "fixture_pins",
+            "gas",
+            "generated_aggregate_verifications",
+            "generic_srs_sha256",
+            "git_dirty",
+            "groth16_setup_ms",
+            "hardware",
+            "hardware_memory_bytes",
+            "load_and_prepare_ms_offline",
+            "matrix_and_transcript_pack_ms_offline",
+            "method",
+            "new_aggregate_count_including_warmup",
+            "new_ballot_proofs",
+            "new_groth16_setups",
+            "new_p3_proofs",
+            "new_state_proofs",
+            "p3_prove_ms",
+            "process_peak_rss_mib",
+            "production_setup",
+            "prover_srs_persisted",
+            "proving_key_persisted",
+            "rayon_num_threads",
+            "research_srs_rebuild_ms_offline",
+            "research_srs_rebuilds",
+            "research_srs_seed_hex",
+            "research_srs_specialize_ms_offline",
+            "resource_budget",
+            "rss_scope",
+            "rustc",
+            "same_srs_and_archived_proofs",
+            "samples",
+            "schema",
+            "source_base_sha",
+            "source_version_sha256",
+            "sources",
+            "started_utc",
+            "state_prove_ms",
+            "status",
+            "verifier_srs_json_sha256"
+          ]
+        },
+        {
+          "path": "experiments/g10_b2_raw/execution/manifest.json",
+          "sha256": "0a08dfade5b17ca741a84b0e8c9d007cdcb877b466cefa3309adcea11c168e82",
+          "status": "PASS_G10_B2_BOUNDED_AGGREGATION_COST",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "schema",
+            "started_utc",
+            "source_base_sha",
+            "source_was_dirty",
+            "driver_sha256",
+            "commands",
+            "new_groth16_setups",
+            "new_groth16_proofs",
+            "new_evm",
+            "binary_sha256",
+            "source_version_sha256",
+            "raw_sha256",
+            "status",
+            "finished_utc"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g10_c",
+      "tracked_files": 74,
+      "evidence": [
+        {
+          "path": "experiments/g10_c_raw/chain_bridge/manifest.json",
+          "sha256": "aa5a7d3ee2979852b26d13a8d4d814317a86cf5efb7f352834740eb7ebb77840",
+          "status": "PASS_SAME_NATIVE_PROOF_AND_WORKER_COMMITMENTS_CONNECTED_TO_EVM_FALLBACK",
+          "source_commit": null,
+          "metadata_keys": [
+            "schema",
+            "started_utc",
+            "native_report_sha256",
+            "native_proof_sha256",
+            "driver_sha256",
+            "commands",
+            "optimization_performed",
+            "exact_snarkpack_evm",
+            "individual_groth16_evm_fallback",
+            "chain_report_sha256",
+            "status",
+            "finished_utc"
+          ]
+        },
+        {
+          "path": "experiments/g10_c_raw/execution/manifest.json",
+          "sha256": "2e0fb52d15271faf3daf2e7fe97ab4545c87679143a674688a8973476dbf9d61",
+          "status": "PASS_CONNECTED_NATIVE_NEW_P3_AND_SEPARATE_PUBLIC_RELEASE_VERIFIERS",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "schema",
+            "started_utc",
+            "source_base_sha",
+            "source_was_dirty",
+            "driver_sha256",
+            "commands",
+            "optimization_campaign",
+            "statistical_benchmark",
+            "binary_sha256",
+            "source_version_sha256",
+            "native_report_sha256",
+            "full_tally_payload_withheld_from_public_archive",
+            "status",
+            "finished_utc"
+          ]
+        },
+        {
+          "path": "results/g10_c/functional_summary.json",
+          "sha256": "b9c8bb34513eebf040aa624e248c0e968df10d8ba27170a29c2108255e86564a",
+          "status": "PASS_IMPLEMENTED_NATIVE_AND_INDIVIDUAL_GROTH16_EVM_FALLBACK_FLOW",
+          "source_commit": "b253f60e73f9dec41b80b03d339b2442ce9bfe19",
+          "metadata_keys": [
+            "schema",
+            "status",
+            "scope",
+            "source_base_sha",
+            "source_version_sha256",
+            "source_was_dirty",
+            "binary_sha256",
+            "native_proof_sha256",
+            "evm_uses_same_proof_and_worker_commitments",
+            "matched_public_input_count",
+            "completed",
+            "native",
+            "chain",
+            "disclosure",
+            "remaining_required",
+            "target_architecture_complete",
+            "independent_distributed_dkg",
+            "production_setup",
+            "production_deployment",
+            "full_privacy_proof",
+            "no_optimization_performed",
+            "no_batch_scale_expansion",
+            "no_g1e_repeat_campaign",
+            "one_command_driver_available",
+            "current_execution_was_two_sequential_drivers_then_finalize",
+            "current_one_command_proving_invocation_claimed",
+            "next_priority",
+            "sources"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    },
+    {
+      "experiment": "g11",
+      "tracked_files": 833,
+      "evidence": [
+        {
+          "path": "experiments/g11/baselines/belenios/pilot-20261106-01/environment.json",
+          "sha256": "708c483ed6e74c15a4d254b48b534bee0c2c1035a10430001cb789f450f7764d",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "observed_at",
+            "code_sha",
+            "code_status",
+            "branch",
+            "provenance",
+            "config",
+            "config_sha256",
+            "adapter_sha256",
+            "hardware",
+            "node",
+            "process_timing",
+            "independent_elections",
+            "crypto_rng"
+          ]
+        },
+        {
+          "path": "experiments/g11/baselines/belenios/pilot-20261106-02/environment.json",
+          "sha256": "268ad2b7fef5bc0318011b8d8d8150ece1a67b19b0965acb5901c557324b274c",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "observed_at",
+            "code_sha",
+            "code_status",
+            "branch",
+            "provenance",
+            "config",
+            "config_sha256",
+            "adapter_sha256",
+            "hardware",
+            "node",
+            "process_timing",
+            "independent_elections",
+            "crypto_rng"
+          ]
+        },
+        {
+          "path": "experiments/g11/baselines/belenios/run-20261106-01/environment.json",
+          "sha256": "3fb283401f7e1520f8e0b804a4fcd0d15d0a3789c1f6f84c773bb021b0fef82e",
+          "status": null,
+          "source_commit": null,
+          "metadata_keys": [
+            "observed_at",
+            "code_sha",
+            "code_status",
+            "branch",
+            "provenance",
+            "config",
+            "config_sha256",
+            "adapter_sha256",
+            "hardware",
+            "node",
+            "process_timing",
+            "independent_elections",
+            "crypto_rng"
+          ]
+        },
+        {
+          "path": "experiments/g11/literature/literature_summary.json",
+          "sha256": "829df7dc716f95ec8db5082ea3be659ba6225c17ce377f40a72b3fe7c368b650",
+          "status": "PARTIAL_G11_AB_FOUR_EXTERNAL_FULLTEXTS_ONE_ACCESS_GAP",
+          "source_commit": null,
+          "metadata_keys": [
+            "status",
+            "systems",
+            "external_systems",
+            "fulltext_external_systems",
+            "source_evidence_sha256",
+            "attribute_rows",
+            "unknown_rows",
+            "pending",
+            "new_protocol_runs",
+            "new_setup",
+            "new_proofs",
+            "new_evm",
+            "exact_snarkpack_evm_complete",
+            "checks"
+          ]
+        },
+        {
+          "path": "results/g11/literature/literature_summary.json",
+          "sha256": "829df7dc716f95ec8db5082ea3be659ba6225c17ce377f40a72b3fe7c368b650",
+          "status": "PARTIAL_G11_AB_FOUR_EXTERNAL_FULLTEXTS_ONE_ACCESS_GAP",
+          "source_commit": null,
+          "metadata_keys": [
+            "status",
+            "systems",
+            "external_systems",
+            "fulltext_external_systems",
+            "source_evidence_sha256",
+            "attribute_rows",
+            "unknown_rows",
+            "pending",
+            "new_protocol_runs",
+            "new_setup",
+            "new_proofs",
+            "new_evm",
+            "exact_snarkpack_evm_complete",
+            "checks"
+          ]
+        },
+        {
+          "path": "results/g11/run-20261106-01/environment.json",
+          "sha256": "41702f4535f7ff5dbbae167ce2322716e49ad2411dacac5ca64ed634744bbde3",
+          "status": null,
+          "source_commit": {
+            "value": "5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+            "error": null
+          },
+          "metadata_keys": [
+            "observed_at",
+            "client_date",
+            "client_timezone",
+            "base_commit",
+            "git_head",
+            "git_branch",
+            "git_status",
+            "git_dirty",
+            "cpu",
+            "cpu_count",
+            "memory_bytes",
+            "os",
+            "node",
+            "rust",
+            "cargo",
+            "solidity",
+            "evm",
+            "compile_profile",
+            "random_seed",
+            "hashes"
+          ]
+        },
+        {
+          "path": "results/g11/run-20261106-01/literature/literature_summary.json",
+          "sha256": "504d077074f87c69e876d79643da30d254e391a59cadb6d30b00f11742b11e4b",
+          "status": "PARTIAL_G11_AB_FOUR_EXTERNAL_FULLTEXTS_ONE_ACCESS_GAP",
+          "source_commit": null,
+          "metadata_keys": [
+            "status",
+            "systems",
+            "external_systems",
+            "fulltext_external_systems",
+            "source_evidence_sha256",
+            "attribute_rows",
+            "unknown_rows",
+            "pending",
+            "new_protocol_runs",
+            "new_setup",
+            "new_proofs",
+            "new_evm",
+            "exact_snarkpack_evm_complete",
+            "checks"
+          ]
+        },
+        {
+          "path": "results/g11/run-20261106-02/environment.json",
+          "sha256": "2b10aa7fcd9236362b8b03b38ed9aa609ca393c386c4377d9eb29d667c24f41f",
+          "status": null,
+          "source_commit": {
+            "value": "5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+            "error": null
+          },
+          "metadata_keys": [
+            "observed_at",
+            "client_date",
+            "client_timezone",
+            "base_commit",
+            "git_head",
+            "git_branch",
+            "git_status",
+            "git_dirty",
+            "cpu",
+            "cpu_count",
+            "memory_bytes",
+            "os",
+            "node",
+            "rust",
+            "cargo",
+            "solidity",
+            "evm",
+            "compile_profile",
+            "random_seed",
+            "hashes"
+          ]
+        },
+        {
+          "path": "results/g11/run-20261106-02/literature/literature_summary.json",
+          "sha256": "504d077074f87c69e876d79643da30d254e391a59cadb6d30b00f11742b11e4b",
+          "status": "PARTIAL_G11_AB_FOUR_EXTERNAL_FULLTEXTS_ONE_ACCESS_GAP",
+          "source_commit": null,
+          "metadata_keys": [
+            "status",
+            "systems",
+            "external_systems",
+            "fulltext_external_systems",
+            "source_evidence_sha256",
+            "attribute_rows",
+            "unknown_rows",
+            "pending",
+            "new_protocol_runs",
+            "new_setup",
+            "new_proofs",
+            "new_evm",
+            "exact_snarkpack_evm_complete",
+            "checks"
+          ]
+        },
+        {
+          "path": "results/g11/run-20261106-03/environment.json",
+          "sha256": "90b107c165769310189c1a1b0c2fde7681b7b4535e8a51828b984a55c68c8d48",
+          "status": null,
+          "source_commit": {
+            "value": "5f170c5a904d825a99c96fd45558a743f2c4e1ea",
+            "error": null
+          },
+          "metadata_keys": [
+            "observed_at",
+            "client_date",
+            "client_timezone",
+            "base_commit",
+            "git_head",
+            "git_branch",
+            "git_status",
+            "git_dirty",
+            "cpu",
+            "cpu_count",
+            "memory_bytes",
+            "os",
+            "node",
+            "rust",
+            "cargo",
+            "solidity",
+            "evm",
+            "compile_profile",
+            "random_seed",
+            "hashes"
+          ]
+        },
+        {
+          "path": "results/g11/run-20261106-03/literature/literature_summary.json",
+          "sha256": "829df7dc716f95ec8db5082ea3be659ba6225c17ce377f40a72b3fe7c368b650",
+          "status": "PARTIAL_G11_AB_FOUR_EXTERNAL_FULLTEXTS_ONE_ACCESS_GAP",
+          "source_commit": null,
+          "metadata_keys": [
+            "status",
+            "systems",
+            "external_systems",
+            "fulltext_external_systems",
+            "source_evidence_sha256",
+            "attribute_rows",
+            "unknown_rows",
+            "pending",
+            "new_protocol_runs",
+            "new_setup",
+            "new_proofs",
+            "new_evm",
+            "exact_snarkpack_evm_complete",
+            "checks"
+          ]
+        }
+      ],
+      "caveat": "Historical metadata remains authoritative; missing per-file commit is null, not retroactively relabeled as current HEAD"
+    }
+  ],
+  "check_commands": [
+    [
+      "inventory",
+      [
+        "scripts/stage2_inventory.mjs",
+        "--check",
+        "experiments/stage2_matched_cost_raw/experiment_inventory.json"
+      ]
+    ],
+    [
+      "b1",
+      [
+        "scripts/g10b1_report.mjs",
+        "--check"
+      ]
+    ],
+    [
+      "b2",
+      [
+        "scripts/g10b2_report.mjs",
+        "--check"
+      ]
+    ],
+    [
+      "connected-chain",
+      [
+        "scripts/g10c_chain_audit.mjs"
+      ]
+    ],
+    [
+      "connected-report",
+      [
+        "scripts/g10c_report.mjs",
+        "--check"
+      ]
+    ],
+    [
+      "belenios",
+      [
+        "scripts/g11/c1/check.mjs",
+        "experiments/g11/baselines/belenios/run-20261106-01"
+      ]
+    ],
+    [
+      "g9-boundary",
+      [
+        "scripts/g9p1_feasibility.mjs",
+        "--check"
+      ]
+    ]
+  ],
+  "baseline_boundaries": {
+    "G10_B1": "four receiver routes, archived proofs, no generation",
+    "G10_B2": "historical generation ledger plus fresh aggregation; not a matched total",
+    "G10_C": "implemented native and individual-Groth16 EVM fallback; not exact SnarkPack EVM",
+    "G11_C1": "105 official Belenios 3.0 elections; different weights/timing model, not a ranking"
+  },
+  "belenios_runtime": {
+    "archived_binary_path": "/private/tmp/vv-g11c1-20261106-K03bsm/belenios-git/_build/install/default/bin/belenios-tool",
+    "currently_executable": false,
+    "historical_results_invalidated": false,
+    "rebuild_attempted": false
+  },
+  "gaps": [
+    "durable global registration ledger and RegisterVoter service",
+    "partially populated registration tree",
+    "general multi-region operation",
+    "independent DKG/bootstrap within the integrated flow",
+    "exact SnarkPack EVM",
+    "T4/T5 mathematical security obligations"
+  ],
+  "historic_check_scope": "Use pinned report/archive checks above; old g10b1/g10b2/g10c_check.mjs gate the old development allowlist and intentionally are not current-HEAD integration checks. Original scripts and hashes preserved."
+}

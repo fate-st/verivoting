@@ -1,0 +1,336 @@
+{
+  "schema": "VV/STAGE2/EXECUTION/v1",
+  "started_utc": "2026-11-14T09:07:11.103Z",
+  "base_commit": "c160a430c0aa971250626e520209621c7673d389",
+  "branch": "experiment/stage2-matched-cost-pilot",
+  "git_status_at_start": "?? crates/vv-friendly-dkg/src/bin/common/stage2_routes.rs\n?? crates/vv-friendly-dkg/src/bin/stage2_matched_cost.rs\n?? experiments/stage2_matched_cost_raw/\n?? scripts/stage2_inventory.mjs\n?? scripts/stage2_matched_cost.mjs",
+  "source_version_sha256": "1f610fc6c2c485bdd7daf4146f97f748aae6d99f31cae9704abbea6f0800fb12",
+  "source_snapshot": "source_snapshot/",
+  "environment": {
+    "hardware": "Apple M4",
+    "memory_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v23.11.0",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1\n",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)\n",
+    "threads": 4,
+    "build_jobs": 2,
+    "profile": "release; strip=none; locked; offline",
+    "local_pk_load": "SHA-256 pinned freshly generated private cache + frozen VK equality; not external unchecked key loading"
+  },
+  "budget": {
+    "worker_wall_seconds": 600,
+    "worker_rss_mib": 16384,
+    "build_wall_seconds": 600,
+    "pilot_wall_seconds": 1800,
+    "actual_generated_ballot_proofs": 8,
+    "actual_generated_state_proofs": 2
+  },
+  "scope": "one reconstructed archived election, fresh randomized proofs; common workstation; sequential isolated workers; not final repeated statistics",
+  "private_runtime": "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-r7xueZ",
+  "commands": [
+    {
+      "name": "audit-inventory",
+      "program": "node",
+      "args": [
+        "scripts/stage2_inventory.mjs",
+        "--check",
+        "experiments/stage2_matched_cost_raw/experiment_inventory.json"
+      ],
+      "elapsed_ms": 91.41258299999993,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-inventory.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-b1",
+      "program": "node",
+      "args": [
+        "scripts/g10b1_report.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 28.09329200000002,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-b1.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-b2",
+      "program": "node",
+      "args": [
+        "scripts/g10b2_report.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 34.688041999999996,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-b2.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-connected-chain",
+      "program": "node",
+      "args": [
+        "scripts/g10c_chain_audit.mjs"
+      ],
+      "elapsed_ms": 193.81904199999997,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-connected-chain.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-connected-report",
+      "program": "node",
+      "args": [
+        "scripts/g10c_report.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 42.32270900000003,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-connected-report.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-belenios",
+      "program": "node",
+      "args": [
+        "scripts/g11/c1/check.mjs",
+        "experiments/g11/baselines/belenios/run-20261106-01"
+      ],
+      "elapsed_ms": 73.17879200000016,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-belenios.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "audit-g9-boundary",
+      "program": "node",
+      "args": [
+        "scripts/g9p1_feasibility.mjs",
+        "--check"
+      ],
+      "elapsed_ms": 135.40125000000012,
+      "code": 0,
+      "signal": null,
+      "log": "logs/audit-g9-boundary.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "build",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_matched_cost"
+      ],
+      "elapsed_ms": 9962.353167,
+      "code": 0,
+      "signal": null,
+      "log": "logs/build.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "fmt",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "elapsed_ms": 382.03316599999926,
+      "code": 0,
+      "signal": null,
+      "log": "logs/fmt.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "clippy",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_matched_cost",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "elapsed_ms": 524.4333339999994,
+      "code": 0,
+      "signal": null,
+      "log": "logs/clippy.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "tests",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "test",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage2_matched_cost"
+      ],
+      "elapsed_ms": 1090.7417909999986,
+      "code": 0,
+      "signal": null,
+      "log": "logs/tests.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": null
+    },
+    {
+      "name": "ballot-setup",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "ballot-setup",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-02",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-r7xueZ"
+      ],
+      "elapsed_ms": 16188.345292000002,
+      "code": 0,
+      "signal": null,
+      "log": "logs/ballot-setup.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 2485.421875
+    },
+    {
+      "name": "ballot-prove",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "ballot-prove",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-02",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-r7xueZ"
+      ],
+      "elapsed_ms": 148476.628833,
+      "code": 0,
+      "signal": null,
+      "log": "logs/ballot-prove.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 3138.234375
+    },
+    {
+      "name": "state-setup",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "state-setup",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-02",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-r7xueZ"
+      ],
+      "elapsed_ms": 38647.137625,
+      "code": 0,
+      "signal": null,
+      "log": "logs/state-setup.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 4312.40625
+    },
+    {
+      "name": "state-prove",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "state-prove",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-02",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-r7xueZ"
+      ],
+      "elapsed_ms": 234902.04791700002,
+      "code": 0,
+      "signal": null,
+      "log": "logs/state-prove.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 6290.390625
+    },
+    {
+      "name": "aggregate-receive",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/stage2_matched_cost",
+      "args": [
+        "aggregate-receive",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage2_matched_cost_raw/run-20261114-02",
+        "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/vv-stage2-cost-r7xueZ"
+      ],
+      "elapsed_ms": 124.35487500001909,
+      "code": 0,
+      "signal": null,
+      "log": "logs/aggregate-receive.log",
+      "termination": null,
+      "polled_process_peak_rss_mib": 0
+    }
+  ],
+  "files": [
+    {
+      "path": "aggregate-receive.json",
+      "sha256": "942a13a1153dada40a78c37b9e583188843f70460617218ca3fccfaf1aa6dcb5"
+    },
+    {
+      "path": "ballot-prove.json",
+      "sha256": "19fa10a6e008870622f66ca9a337c74f61765ffcc5a5bdf9aa04bfdaa493c8f5"
+    },
+    {
+      "path": "ballot-setup.json",
+      "sha256": "6420249bcce65a97451f5593c5bab24c38914971076f461f8d9cf7273d8b2b91"
+    },
+    {
+      "path": "cost_summary.json",
+      "sha256": "e215f19ee388a87418a3c7ae76e67c8157493e92cde7cfe876149c467babdbe7"
+    },
+    {
+      "path": "experiment_inventory.json",
+      "sha256": "afac601fa9199fcf419c1f356e074a764ee24197ef30a4b7956a66374e880d6f"
+    },
+    {
+      "path": "historical_files.json",
+      "sha256": "7289cc99761cc5d79224a7130ef278033b1452399e836beac4451c4ebc131f52"
+    },
+    {
+      "path": "source_files.json",
+      "sha256": "c17e0ef957b888d451d201a01d666a5448f02d6609e76d2cec6c991b0895e149"
+    },
+    {
+      "path": "state-prove.json",
+      "sha256": "e115544cb19ebdf74e039e7dbcc37965249789a86f74f230600688fd4817ee96"
+    },
+    {
+      "path": "state-setup.json",
+      "sha256": "7f58e2d3f046667b0fe46369d42a03ac981ed5121f18e5d20d8dfa843ad27d68"
+    }
+  ],
+  "status": "PASS_MATCHED_GENERATION_PILOT",
+  "exact_snarkpack_evm": false,
+  "new_p3": 0,
+  "new_evm": 0,
+  "binary_sha256": "5a7dbc029fada6644efe7a85e0145cd647fb2add46d014c6dec4d4569827e0e0",
+  "historical_tracked_files_unchanged": true,
+  "finished_utc": "2026-11-14T09:14:42.569Z",
+  "pilot_wall_ms": 451359.082375
+}

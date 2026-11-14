@@ -1,6 +1,21 @@
 # Implementation and claim boundary
 
-## Current work: connected native / fresh P3 / actual local EVM fallback passed
+## Current stage-two step: inventory and one matched generation pilot passed
+
+[本轮报告](STAGE2_MATCHED_COST_PILOT.md)与[证据索引](experiment_inventory.md)：
+基于c160a43，在experiment/stage2-matched-cost-pilot完成D5/W32、8票/两个连续B4的真实生成面板。
+成功主试运行新生成8份选票证明、2份状态证明、2份SnarkPack V2聚合；四路线使用新证明并达到相同CT1/CT2和spent8。
+4项必要密码学负例原子拒绝；Release/fmt/严格Clippy/5项相关测试通过。
+选票Prove总65.005s、状态Prove总39.119s、两批聚合19.054ms；证明者进程RSS约3144.875/6290.391MiB。
+RSS包含各独立工作进程的PK加载/公共档案，不是算法增量内存；Prove进程不执行Setup。
+保留第一次中止的独立日志和运行源码；正式数据只使用run-20261114-02，不混合两次尝试。
+
+仅一个重建旧选举/一个新证明池，每路线单样本；组件之和不是独立计时E2E，不能据此声称统计性能优势。
+未改原有tracked实验文件/密码学库/冻结配置/合约，旧结果保留；只更新本节与NEXT_STEPS等滚动说明。
+本轮没有新P3/EVM/外部基线运行或论文修改，精确SnarkPack链上和完整第二阶段仍未完成。
+下一项按NEXT_STEPS做同一逐票回退后端下B4 Direct Fold vs State Proof，不开启G9或扩大规模。
+
+## Previous implemented lifecycle: connected native / fresh P3 / actual local EVM fallback passed
 
 [G10-C功能报告](G10_C_CONNECTED_FUNCTIONAL_FLOW.md)：实际运行原认证DKG/注册重建→两批B4原生SnarkPack/
 状态验证→冻结→5进程CP/承诺签名与私管道交付→私密门限解密→1份新P3→Winner一次写入。

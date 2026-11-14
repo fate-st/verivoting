@@ -1,0 +1,87 @@
+{
+  "status": "PASS_SINGLE_MATCHED_PILOT",
+  "source_version_sha256": "1f610fc6c2c485bdd7daf4146f97f748aae6d99f31cae9704abbea6f0800fb12",
+  "ballot_proving_ms": 65005.28708299999,
+  "state_proving_ms": 39119.100042000005,
+  "aggregation_ms": 19.054291,
+  "ballot_setup_ms": 14586.293375000001,
+  "state_setup_ms": 35616.589708,
+  "routes": [
+    {
+      "checkpoint_writes": 8,
+      "fold_or_state_verify_ms": 0,
+      "packing_ms": 0.037999000000000005,
+      "route": "individual_groth16_per_vote",
+      "same_ct1_ct2_and_spent8": true,
+      "two_batch_flow_ms": 4.533583,
+      "validity_calls": 8,
+      "validity_ms": 4.387582,
+      "ballot_proving_ms": 65005.28708299999,
+      "aggregation_ms": 0,
+      "state_proving_ms": 0,
+      "sequential_measured_component_sum_ms": 65009.820665999985
+    },
+    {
+      "checkpoint_writes": 2,
+      "fold_or_state_verify_ms": 0.010624999999999999,
+      "packing_ms": 0.039457,
+      "route": "transaction_batch_individual_groth16",
+      "same_ct1_ct2_and_spent8": true,
+      "two_batch_flow_ms": 6.152165999999999,
+      "validity_calls": 8,
+      "validity_ms": 6.031583,
+      "ballot_proving_ms": 65005.28708299999,
+      "aggregation_ms": 0,
+      "state_proving_ms": 0,
+      "sequential_measured_component_sum_ms": 65011.43924899999
+    },
+    {
+      "checkpoint_writes": 2,
+      "fold_or_state_verify_ms": 0.019542,
+      "packing_ms": 0.037458000000000005,
+      "route": "snarkpack_direct_fold",
+      "same_ct1_ct2_and_spent8": true,
+      "two_batch_flow_ms": 13.589708,
+      "validity_calls": 2,
+      "validity_ms": 13.453417000000002,
+      "ballot_proving_ms": 65005.28708299999,
+      "aggregation_ms": 19.054291,
+      "state_proving_ms": 0,
+      "sequential_measured_component_sum_ms": 65037.93108199999
+    },
+    {
+      "checkpoint_writes": 2,
+      "fold_or_state_verify_ms": 4.995417,
+      "packing_ms": 0.039041,
+      "route": "snarkpack_state_proof",
+      "same_ct1_ct2_and_spent8": true,
+      "two_batch_flow_ms": 18.179667,
+      "validity_calls": 2,
+      "validity_ms": 13.065625,
+      "ballot_proving_ms": 65005.28708299999,
+      "aggregation_ms": 19.054291,
+      "state_proving_ms": 39119.100042000005,
+      "sequential_measured_component_sum_ms": 104161.62108299999
+    }
+  ],
+  "total_scope": "Component sums from this execution, NOT separately timed per-route end-to-end latency; excludes setup, witness reconstruction, key I/O, sender conversion/serialization/path preparation, certificate authentication, freeze/decryption/P3/EVM. Role CPU-time attribution is separate.",
+  "prover_rss": [
+    {
+      "phase": "ballot-prove",
+      "peak_rss_mib": 3144.875,
+      "scope": "isolated worker; zero setup; key load and shared archive loader included"
+    },
+    {
+      "phase": "state-prove",
+      "peak_rss_mib": 6290.390625,
+      "scope": "isolated worker; zero setup; key load and shared archive loader included"
+    }
+  ],
+  "pilot_wall_ms": 451357.77083299996,
+  "independent_new_elections": 0,
+  "proof_pools": 1,
+  "statistical_claim": false,
+  "gas": null,
+  "calldata": null,
+  "exact_snarkpack_evm": false
+}

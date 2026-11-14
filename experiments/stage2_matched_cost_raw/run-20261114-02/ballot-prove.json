@@ -1,0 +1,112 @@
+{
+  "aggregate_count": 0,
+  "archived_loader_ms": 26.152167000000002,
+  "ballot_proof_count": 8,
+  "key_load_ms": 83357.149167,
+  "new_evm": 0,
+  "new_p3": 0,
+  "phase": "ballot-prove",
+  "pins": [
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "ballot_vk_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+      "state_vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+      "verifier_srs_json_sha256": "b7e6a0f46c11c014d41e5cc7f0395e570ef3a0f2614b29aa6563183f588da595"
+    }
+  ],
+  "process_peak_rss_mib": 3144.875,
+  "process_wall_ms": 148447.67558399998,
+  "production_setup": false,
+  "proofs": [
+    {
+      "bytes": 192,
+      "index": 0,
+      "proof_hex": "98cb19c6a2e9a48abdcafdf214770d7c535e78a00c48f345f9e303f133eead18851fa9bd5e606bd32793154a7028291eab26968c51e14d56db8b0815314ba3582e0437e7bb13688bd7c6527bb2529ca185f4868e8a5c27bd9c1ead6426e62c9a0b23ef7b23875e42cbfef52db1ac6d61fa91f5bace35332b4d78f1f8acee19e3c858ffe2db022cec03e7a9f8ad6ffeb1a7e124f2887d551b58d5d4e492d72d8f3bc6bbdc727a22b79af36d0a01e64ab682562d29e9765c19fbdd8a2fea816a0c",
+      "prove_ms": 8132.502042,
+      "sha256": "c65d403d048305c2b12542fedb51b17074f56ee37850a740c672e228af6b80bd",
+      "verified": true,
+      "verify_ms": 2.3692919999999997
+    },
+    {
+      "bytes": 192,
+      "index": 1,
+      "proof_hex": "96a628e2f10ef96060782246d649d1979b74e19589230f96faead90c3aeaa3802c9e5af21fa072d070633b9aa8eef6faa1367401937ded61ab6c278194189dfdb536c0f1afe4f5c27ba188b73deb34a4b945c314f8604468ecd5c1c11c28cd6a0eb789ed91ddc8e66f63e51b8bc1170c2faf1f9352973037e9a868dceff6ef7cb4773ef05151cbbcbfc5bee94ecea2cfa93873367e3bd99cc5b076854c2344c6c979e1c19fc3d29a6ba8799a93035cc505cbde0d910908fda8f7ad60930b7532",
+      "prove_ms": 8008.590792,
+      "sha256": "fd3ec3c1d7c28c3f7deeb6886bb1f7bead51c478239a580bcc3b8032cb6e181d",
+      "verified": true,
+      "verify_ms": 2.1570840000000002
+    },
+    {
+      "bytes": 192,
+      "index": 2,
+      "proof_hex": "86684be6bcaabfb5720fd93953436bc4df3519a83b1cd800738e4214dc78d256b44251aace085665b309d26fa1a9f5e48a7d484754d1da4301ca2749071130f10c5534054c8a98e38909c71b3c38cc5e7804bcaa8970cd163bcf70b0bf3668aa051d931eee4898d5d4154bfd68aa2e63fc1d5d84a2f7e62fd4189d7464201f7eb96332da306ba6ac673f1bae90a1b175ab7c5cf66593fb07d411c98100374193617c9e4d3f686068e4f05a1ea26dd65e448c51e939aec56d72b599d78324323f",
+      "prove_ms": 8068.305375,
+      "sha256": "a1bc51a05c2c73bcd058b211b3726752fac011369213f34445cd54055ed359a0",
+      "verified": true,
+      "verify_ms": 2.712625
+    },
+    {
+      "bytes": 192,
+      "index": 3,
+      "proof_hex": "9517dd28e4902d6cc5cca5bc471cd12de16456c36f0b8c04ba84feba2b6434290c4af631ee361f74b85450a9ec824d5f8e8332b609f3be5d662405ce4e26d6ce0f4dfd87b619472103e4daf2280fd53c98250e45e4cbabf1bf6786a3566d3b37016fa5cf955dcd8aa2c1eb67bb229e6cfd0afab5ae92694663cc428bb26e70adf616e0313d0d78559061b0f27278307b92f6299f882bf6af1f6d5e47847692ddbd1394d86a3246d98b45a41442eb352e75682326f361ff54456d12427d5280cc",
+      "prove_ms": 8100.881166000001,
+      "sha256": "22fb58f85e69aac737198a6e8c8e91f8c9e28cab3e6e6550ef530597ce7277cb",
+      "verified": true,
+      "verify_ms": 2.488083
+    },
+    {
+      "bytes": 192,
+      "index": 4,
+      "proof_hex": "b6d287e0264f3155bc953e8dd6696b344628eb8d19f4b0479a1c819598e3e673f3c79284c9f114b076dfb84436cdaca99224247a01f85c1bec42580dad9c9c4bed5f92772d56586e52c656d99a0963cd3e78d8b2329e9ba2a5200b0b36d9846c0d57927d61367d3a135dd14aac254d89b4e3baa488120f2c8c1df61d6c5040273ff6bfc388d937887d5d4c36a4619ddbb187229b9ebae066d9a51700216c68d6f081d5db19d13ada9ad98461a6416e862fb48b464175a58759d538c5ca277513",
+      "prove_ms": 8596.802,
+      "sha256": "a3375cbef71816556c73b387e1520afc5c98a2951ea435af51bff73b141be3ed",
+      "verified": true,
+      "verify_ms": 2.511084
+    },
+    {
+      "bytes": 192,
+      "index": 5,
+      "proof_hex": "a5694c824d4de169f0918a76b0d1eff1cb44f783cff7bb5e2c453643c677bc2d04cfd0a552210c6a648bd7b90e776a258ce467019b699d5a76fa7e537a11eb469e9b71b6e4a78e906875190a3db6bc12f07443ef96af7774ac2cfba9fca7ab9c0af709f9e973615cf8279dfe55a2217fa959798666cf92387b6497c48c460dd4ff29f7d9c4b926a83b97567a0118175daea4e638d20df5348f7dbf06d97acd4a3b1fc7bf2fc5c9e564fec3dc4c17cf1c6a83d37e96eae2fa9542c005fae98569",
+      "prove_ms": 8058.090875,
+      "sha256": "65f7221aba388842870e083b5f6735146151e374fe893b2e623e864e8745fe3a",
+      "verified": true,
+      "verify_ms": 2.280917
+    },
+    {
+      "bytes": 192,
+      "index": 6,
+      "proof_hex": "b5d0a9892c9a3943f9e9f7449d57b5295f8ce53a00fc85ff06ab0744e7e192af22e5f836ebe37bdde2c0f5f8ddd9a4708657fbeb9b4c353dd9344f6f70a757174f95ebe74edc9344e56eac76d9b22300692303830af44e21031fa347faf00aff069ade3861c4bcb865dfd2efa6a906f286b9a3e5445461d94db41b7f29b1eaca0e61c3bb11069aa93e0677de851660c38bfeb5f4824d99a5fcd7760535b335a3543347306c4f0cc8e4d1c686a0de8d49c17cfbd2e027a96053cd470d1664ce01",
+      "prove_ms": 7992.703458,
+      "sha256": "23d36e7f68288244c13e80e31e10bedeadde087b2855ef3a43e45d14e7f291b5",
+      "verified": true,
+      "verify_ms": 2.204542
+    },
+    {
+      "bytes": 192,
+      "index": 7,
+      "proof_hex": "92bcdb03afbf5cdf5fccfb7904df4647421d749d4ae563eb06185ac23021ddbca6b9fdc76463b58663e01445a41adbfaafac2c5ed042d8d0b60e284edbe503f67946f25510ff185c616137aefedd46e518c2217caff838e2f970383757c8b945191ed5edfb34da6448df8d59b194c893d967129cc312a82ae8ca5c47f9306674ab5522002838ee52878366eb92f3c9ceaba96fdeb314f0faf5d26e167d535be34591886aae1c27fbc286fa72b88350d1e1aa7aa1480143428876798a3a99b4a1",
+      "prove_ms": 8047.411375,
+      "sha256": "265c73a174472411b86e4b55283f76940b808f512bffa464de847eef088f1f04",
+      "verified": true,
+      "verify_ms": 2.604166
+    }
+  ],
+  "rss_scope": "fresh worker whole-process high-water; includes archived loader, key load/serialization where applicable; prove workers execute zero setup; NOT incremental algorithm-only RSS",
+  "same_archived_election": true,
+  "schema": "VV/STAGE2/MATCHED-COST-PILOT/v1",
+  "setup_count": 0,
+  "state_proof_count": 0,
+  "status": "PASS",
+  "witness_rebuild_ms": 29.338959000000003
+}

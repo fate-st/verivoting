@@ -1,0 +1,44 @@
+{
+  "aggregate_count": 0,
+  "archived_loader_ms": 27.939333,
+  "ballot_proof_count": 0,
+  "key_io": {
+    "key_archive": "private temporary runtime only",
+    "key_bytes": 847800624,
+    "key_serialize_write_ms": 1447.455541,
+    "key_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c"
+  },
+  "new_evm": 0,
+  "new_p3": 0,
+  "phase": "state-setup",
+  "pins": [
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json",
+      "sha256": "6b9a1ca042e3ab1d637fb3b554029cc7a36a5b867430b2707539d1ea61928596"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "ballot_vk_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+      "state_vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+      "verifier_srs_json_sha256": "b7e6a0f46c11c014d41e5cc7f0395e570ef3a0f2614b29aa6563183f588da595"
+    }
+  ],
+  "process_peak_rss_mib": 4883.09375,
+  "process_wall_ms": 38641.959417000005,
+  "production_setup": false,
+  "rss_scope": "fresh worker whole-process high-water; includes archived loader, key load/serialization where applicable; prove workers execute zero setup; NOT incremental algorithm-only RSS",
+  "same_archived_election": true,
+  "schema": "VV/STAGE2/MATCHED-COST-PILOT/v1",
+  "setup_count": 1,
+  "setup_ms": 35590.610875000006,
+  "state_proof_count": 0,
+  "status": "PASS",
+  "vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856"
+}
