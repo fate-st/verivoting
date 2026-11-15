@@ -1,0 +1,18 @@
+   Compiling g17-methods v0.1.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/zkvm_abc/methods)
+   Compiling ark-groth16 v0.4.0
+   Compiling lazy-regex v3.6.2
+error: failed to run custom build command for `g17-methods v0.1.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/zkvm_abc/methods)`
+
+Caused by:
+  process didn't exit successfully: `/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/zkvm_abc/target/release/build/g17-methods-1e85a3fa3f5eebb3/build-script-build` (exit status: 101)
+  --- stdout
+  cargo:rerun-if-env-changed=RISC0_BUILD_DEBUG
+  Building guest package: g17-methods.g17-guest-b
+  cargo:rerun-if-env-changed=RISC0_SKIP_BUILD
+
+  --- stderr
+
+  thread 'main' (74299430) panicked at /Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-3.0.7/src/lib.rs:379:9:
+  Risc Zero Rust toolchain not found. Try running `rzup install rust`
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+warning: build failed, waiting for other jobs to finish...

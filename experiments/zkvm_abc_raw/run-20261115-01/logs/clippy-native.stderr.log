@@ -1,0 +1,59 @@
+    Checking zerocopy v0.8.63
+    Checking typenum v1.20.1
+    Checking generic-array v0.14.7
+    Checking num-traits v0.2.19
+    Checking crypto-common v0.1.7
+    Checking block-buffer v0.10.4
+    Checking once_cell v1.21.4
+    Checking subtle v2.6.1
+    Checking rand_core v0.6.4
+    Checking digest v0.10.7
+    Checking num-integer v0.1.47
+    Checking num-bigint v0.4.8
+    Checking ppv-lite86 v0.2.21
+    Checking rand_chacha v0.3.1
+    Checking rand v0.8.8
+    Checking either v1.19.0
+    Checking itertools v0.10.5
+    Checking ark-std v0.4.0
+    Checking ark-serialize v0.4.2
+    Checking zeroize v1.9.1
+    Checking cfg-if v1.0.5
+    Checking ahash v0.8.12
+    Checking tracing-core v0.1.36
+    Checking ark-ff v0.4.2
+    Checking hashbrown v0.13.2
+    Checking pin-project-lite v0.2.17
+    Checking tracing v0.1.44
+    Checking libc v0.2.191
+    Checking tracing-subscriber v0.2.25
+    Checking cpufeatures v0.2.17
+    Checking sha2 v0.10.9
+    Checking serde_core v1.0.229
+    Checking ark-poly v0.4.2
+    Checking ark-ec v0.4.2
+    Checking ark-relations v0.4.0
+    Checking ark-snark v0.4.0
+    Checking blake2 v0.10.6
+    Checking serde v1.0.229
+    Checking zmij v1.0.23
+    Checking ark-crypto-primitives v0.4.0
+    Checking ark-bls12-381 v0.4.0
+    Checking ark-groth16 v0.4.0
+    Checking hex v0.4.3
+    Checking itoa v1.0.19
+    Checking memchr v2.8.3
+    Checking g17-common v0.1.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/zkvm_abc/common)
+    Checking serde_json v1.0.154
+    Checking g17-host v0.1.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/zkvm_abc/host)
+error: using `chunks_exact` with a constant chunk size
+  --> host/src/main.rs:74:14
+   |
+74 |             .chunks_exact(128)
+   |              ^^^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<128>().0.iter()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+   = note: `-D clippy::chunks-exact-to-as-chunks` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::chunks_exact_to_as_chunks)]`
+
+error: could not compile `g17-host` (bin "g17-host") due to 1 previous error

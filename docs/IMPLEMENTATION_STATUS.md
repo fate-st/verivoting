@@ -1,5 +1,20 @@
 # Implementation and claim boundary
 
+## Current G17 Z0/Z1: native controls passed, guest blocked by toolchain download
+
+[首轮报告](G17_ZKVM_ABC_COMPARISON.md)与 `results/g17/`：从已上传G12提交 `a73d7f5` 建立独立G17分支，
+新增隔离工作区/配置与完整Groth16验证guest源码，不改根锁/Manifest/原证明/曲线/合约/论文。
+原D5/W32前两张证明与原VK、25项输入、192B Ark/512B EIP负A编码核对一致；原生B1/B2正例和单字段错误输入共4项均通过预期。
+共享纯Rust验证代码无BLST/bellperson/Rayon normal依赖，不从host接收验证成功布尔值；这仍不是guest运行证据。
+原生Release、最终严格Clippy及fmt通过；首轮chunks_exact lint失败日志/源码也保留。
+
+固定RISC Zero SDK3.1.0/build3.0.7/guest Rust1.97.0。官方rzup安装出现TLS/连接失败，同一官方API资产下载也超时，残片长度/摘要不符合发布值，未执行。
+两次真实guest构建在risc0-build因guest Rust缺失退出101，guest ELF/程序ID/周期/时间/内存均null。
+结论 `BLOCKED_COMPATIBILITY`，子因 `OFFICIAL_TOOLCHAIN_DOWNLOAD_UNAVAILABLE`；不是guest密码学拒绝，不代表Apple Silicon或zkVM数学不可行。
+路线A、累计、真实证明/EVM、两批B4比较均NOT_RUN，无新Setup/Prove/EVM，不作A/B/C效率判断。
+本轮保留两轮真实日志和新源码快照，2603个旧跟踪文件保持原内容（既有CSV换行差异按原字节摘要核对）。
+只读复核：`node experiments/zkvm_abc/scripts/report.mjs --check`。代码/报告未自动提交推送。
+
 ## Current G12 SnarkPack EVM feasibility: BLOCKED, no G13
 
 [报告](G12_SNARKPACK_EVM_FEASIBILITY.md)及 `results/g12/` 三份JSON：源码/既有证据审查完成，

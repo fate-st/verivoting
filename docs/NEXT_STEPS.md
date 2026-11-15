@@ -1,4 +1,22 @@
-# Next steps: G12 SnarkPack EVM feasibility BLOCKED (2026-11-15)
+# Next steps: G17 Z0/Z1 blocked by toolchain download (2026-11-15)
+
+## Current G17: restore pinned toolchain, then only four B guest cases
+
+[G17首轮报告](G17_ZKVM_ABC_COMPARISON.md)：隔离工程与真实原票输入已建立，原生B1/B2正例及改最后一票input[7]反例共4项通过。
+这不是PASS_GUEST。官方guest Rust/SDK下载失败，实际guest构建因工具链缺失退出101；状态BLOCKED_COMPATIBILITY，guest所有性能指标null。
+原曲线/VK/SRS/选票/P3/合约/Manifest/论文和旧结果保持不变，不扩大B、不优化、不运行证明或EVM。
+
+下一项只恢复同一官方SDK3.1.0、guest Rust1.97.0和r0vm3.1.0，核对已保存的官方发布SHA，之后编译并执行4项guest正反例。
+RISC0_HOME继续使用本项目 `target/g17-tools/risc0`。由于默认stable cargo组件缺失，SDK辅助构建又会清除RUSTUP_TOOLCHAIN，
+恢复后应把 `rustup which --toolchain 1.99.1 cargo` 所在bin目录放在**本次命令**PATH前面，使用该真实cargo二进制，避免嵌套调用落到损坏的默认shim。
+这不需要改全局rustup默认或shell profile；该后续guest构建修复仍需工具链下载完成后实际验收，不能说已经通过。
+
+每个guest仅600秒/单进程16GiB软预算，完整验证原BLS12-381/25输入；失败保留日志，成功必须有真实ELF/image ID/cycles及与原生一致的密码学正反例。
+本轮到此停止，不能用缺工具链的构建失败当错误证明拒绝，不能用本次原生时间填zkVM指标。
+四例guest通过后再单独评审Z2 SnarkPack；暂不做状态累计、外层证明、Gas比较或替换论文架构。
+只读查看：`node experiments/zkvm_abc/scripts/report.mjs --check`。没有自动提交推送。
+
+## Previous G12 decision: full exact EVM remains blocked
 
 ## Current G12 decision: no G13 / full B2 EVM admission
 

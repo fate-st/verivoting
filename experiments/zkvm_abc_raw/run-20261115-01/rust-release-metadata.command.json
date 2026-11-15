@@ -1,0 +1,36 @@
+{
+  "name": "rust-release-metadata",
+  "program": "curl",
+  "args": [
+    "--silent",
+    "--show-error",
+    "--fail",
+    "--location",
+    "--max-time",
+    "45",
+    "--output",
+    "experiments/zkvm_abc_raw/run-20261115-01/risc0-rust-release.json",
+    "https://api.github.com/repos/risc0/rust/releases/tags/r0.1.97.0"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T11:44:42.023Z",
+  "finished_utc": "2026-11-15T11:44:43.064Z",
+  "exit_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 1041.668833,
+  "timeout_seconds": 60,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": 5.84375,
+  "sampled_max_process_tree_rss_mib": 5.84375,
+  "rss_sample_count": 1,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/rust-release-metadata.stdout.log",
+  "stderr": "logs/rust-release-metadata.stderr.log"
+}

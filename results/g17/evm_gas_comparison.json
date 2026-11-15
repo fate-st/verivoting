@@ -1,0 +1,26 @@
+{
+  "schema": "VV/G17/EVM-COMPARISON/v1",
+  "status": "NOT_RUN",
+  "reason": "No new EVM execution. Historical C is not combined with missing A/B measurements.",
+  "measurements": null,
+  "real_proof_count": 0,
+  "evm_transactions": 0,
+  "A": {
+    "deployment_gas": null,
+    "receive_gas": null,
+    "calldata_bytes": null
+  },
+  "B": {
+    "deployment_gas": null,
+    "receive_gas": null,
+    "calldata_bytes": null
+  },
+  "C": {
+    "status": "HISTORICAL_REFERENCE_ONLY_NOT_REMEASURED",
+    "source": "experiments/stage2_evm_fold_raw/run-20261114-01/direct_fold.json",
+    "new_deployment_gas": null,
+    "new_receive_gas": null,
+    "new_calldata_bytes": null
+  },
+  "fair_winner": null
+}

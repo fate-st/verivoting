@@ -1,0 +1,51 @@
+{
+  "ark_proof_bytes": 192,
+  "cases": [
+    {
+      "batch_size": 1,
+      "expected_accept": true,
+      "file": "b1-valid.json",
+      "input_sha256": "1585f15e141196f75c775b4db26b8ba19f9598a7ed5f6301926e53831cf535d8",
+      "mutation": null
+    },
+    {
+      "batch_size": 1,
+      "expected_accept": false,
+      "file": "b1-changed-input.json",
+      "input_sha256": "c7a0d9645f5f7d491816f5b9d771bab126f694a303bbd95531137ad347d49b03",
+      "mutation": {
+        "column": 7,
+        "operation": "Fr + 1",
+        "proof_vk_unchanged": true,
+        "row": 0
+      }
+    },
+    {
+      "batch_size": 2,
+      "expected_accept": true,
+      "file": "b2-valid.json",
+      "input_sha256": "e7b9bbf069c737e1ce3ec4a130d3857bb0e7ddcd221caf34401f3d10ba443376",
+      "mutation": null
+    },
+    {
+      "batch_size": 2,
+      "expected_accept": false,
+      "file": "b2-changed-input.json",
+      "input_sha256": "4af07a502c49b57115ee248f678e17e38ac1882c3d4af2eaaf613e6faeae917b",
+      "mutation": {
+        "column": 7,
+        "operation": "Fr + 1",
+        "proof_vk_unchanged": true,
+        "row": 1
+      }
+    }
+  ],
+  "eip_proof_bytes": 512,
+  "negative_a_conversion_matches": true,
+  "new_proofs": 0,
+  "new_setup": 0,
+  "original_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+  "private_witness_read": false,
+  "public_input_count": 25,
+  "status": "PASS_NATIVE_PUBLIC_MATERIAL_PREPARATION_NOT_GUEST"
+}

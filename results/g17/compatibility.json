@@ -1,0 +1,213 @@
+{
+  "schema": "VV/G17/COMPATIBILITY/v1",
+  "status": "BLOCKED_COMPATIBILITY",
+  "reason_code": "OFFICIAL_TOOLCHAIN_DOWNLOAD_UNAVAILABLE",
+  "baseline_commit": "a73d7f59e73317e18f98a90fea7aaf82856eb216",
+  "branch": "experiment/g17-zkvm-abc-comparison",
+  "scope": "Z0 / Z1 only",
+  "environment": {
+    "cpu": "Apple M4",
+    "physical_memory_bytes": 34359738368,
+    "logical_cpus": 10,
+    "host_rust": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "node": "v23.11.0",
+    "rzup": "rzup 0.6.0",
+    "guest_toolchain_installed": false,
+    "sdk_cli_installed": false,
+    "r0vm_installed": false,
+    "global_default_toolchain_changed": false
+  },
+  "sdk_version": "3.1.0",
+  "build_crate_version": "3.0.7",
+  "official_release": {
+    "url": "https://github.com/risc0/risc0/releases/tag/v3.1.0",
+    "published": "2026-11-10T23:26:01Z",
+    "tag": "v3.1.0",
+    "sdk_asset": {
+      "url": "https://github.com/risc0/risc0/releases/download/v3.1.0/cargo-risczero-aarch64-apple-darwin.tgz",
+      "bytes": 51568850,
+      "digest": "sha256:3b50b0393b8e4158e7129add4cfe0cbc536e994b5abc6a3a435e1e6b841c0990"
+    },
+    "rust_asset": {
+      "url": "https://github.com/risc0/rust/releases/download/r0.1.97.0/rust-toolchain-aarch64-apple-darwin.tar.gz",
+      "bytes": 442966921,
+      "digest": "sha256:85070d82aebbe8e1027e75f2cd0c781f5c82c0ae7e06697218be9d8b71dec15d"
+    }
+  },
+  "categories": [
+    {
+      "id": "APPLE_SILICON",
+      "status": "DOCUMENTED_SUPPORTED_HOST_NOT_GUEST_PROVEN",
+      "evidence": "https://dev.risczero.com/api/zkvm/install"
+    },
+    {
+      "id": "GUEST_TOOLCHAIN",
+      "status": "BLOCKED_COMPATIBILITY",
+      "reason": "rzup TLS/connect failures; both official API downloads timed out; actual build reports toolchain missing."
+    },
+    {
+      "id": "ORIGINAL_BELLPERSON_BLST_FFI",
+      "status": "UNKNOWN",
+      "reason": "Original blstrs uses BLST C/FFI; no direct guest cross-compilation attempted. Portable flag is not proof of zkVM support."
+    },
+    {
+      "id": "ORIGINAL_RAYON_THREADS",
+      "status": "UNKNOWN",
+      "reason": "Original verifier uses Rayon; scheduling/runtime port not tested. This round shared verifier has no Rayon dependency."
+    },
+    {
+      "id": "RNG",
+      "status": "AUDITED_DETERMINISTIC_Z1_PATH_GUEST_UNKNOWN",
+      "reason": "Pure Groth16 verification needs no random coefficients. SnarkPack random-accumulator semantics are deferred, not replaced by a fixed seed."
+    },
+    {
+      "id": "FILE_NETWORK",
+      "status": "HOST_ONLY_BY_SOURCE_GUEST_UNKNOWN",
+      "reason": "Only host reads public JSON; guest reads env input and commits output. No guest file/network API or remote prover used."
+    },
+    {
+      "id": "BLS381_PURE_RUST",
+      "status": "NATIVE_REFERENCE_PASS_GUEST_NOT_RUN",
+      "reason": "Original Ark 0.4 verifier, full canonical decoding/subgroup checks; four native cases passed, guest target not compiled."
+    },
+    {
+      "id": "SERIALIZATION",
+      "status": "NATIVE_REFERENCE_PASS_GUEST_NOT_RUN",
+      "reason": "Original VK SHA matches; 192B Ark A/B/C equals archived 512B EIP -A/B/C after sign conversion; all 25 LE/BE fields match."
+    },
+    {
+      "id": "SHA512_SHA256_FS",
+      "status": "NOT_RUN",
+      "reason": "Original SnarkPack FS belongs to Z2. Z1 SHA-256 journal digests do not replace the original protocol transcript."
+    },
+    {
+      "id": "REAL_PROOF_EVM",
+      "status": "NOT_RUN",
+      "reason": "Z4 is not authorized this round. No receipt, Docker/CUDA or remote prover was used; local outer-proof feasibility remains unknown."
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "configs/experiment.G17-ZKVM-ABC.json",
+      "sha256": "029aec19feb5ce43b6918924d73737b1558970bb469e4dbbc16b001d36dc8294"
+    },
+    {
+      "path": "experiments/zkvm_abc/Cargo.toml",
+      "sha256": "8d3d4c95950ce6a0d8a894c2610a812782eda253c2ad5a016afe3caaec52b0b6"
+    },
+    {
+      "path": "experiments/zkvm_abc/common/Cargo.toml",
+      "sha256": "70b10becd89c25299e0123a5774d427efd019654f607121c96e66d3f452187b0"
+    },
+    {
+      "path": "experiments/zkvm_abc/common/src/lib.rs",
+      "sha256": "445b72bc08b1d55989df11cfd7cbbaf2854717fa3a0f641e499268c36abb9931"
+    },
+    {
+      "path": "experiments/zkvm_abc/host/Cargo.toml",
+      "sha256": "71ce918e0d95935673cfbcc81ea0147f789695d9f52540a85615014cb35ddd36"
+    },
+    {
+      "path": "experiments/zkvm_abc/host/src/main.rs",
+      "sha256": "10f6e432be8e4a5a934de8c3a6103fa8a7e2ac864bef32e2ba7c15c346d821cc"
+    },
+    {
+      "path": "experiments/zkvm_abc/guest_b_groth16/Cargo.toml",
+      "sha256": "44015e687af22b14d18e6f1c8cb817cf9901a817ba128b466af805740d64d085"
+    },
+    {
+      "path": "experiments/zkvm_abc/guest_b_groth16/src/main.rs",
+      "sha256": "c66e21a34e485dd9a960ff3238532e5499e23299133e60efab06123a32b16d57"
+    },
+    {
+      "path": "experiments/zkvm_abc/methods/Cargo.toml",
+      "sha256": "5cf0a35d949391d573f23f540d85c494da9cc7b70578dd5192bf91d7244771b5"
+    },
+    {
+      "path": "experiments/zkvm_abc/methods/build.rs",
+      "sha256": "d3d0aa4add6d6294b4cd9199c9b7162187b7383980cda986051fe94497334f75"
+    },
+    {
+      "path": "experiments/zkvm_abc/methods/src/lib.rs",
+      "sha256": "902d56d952004dd42e65c148a4b537710f869054556528b25ed3e67d050bb255"
+    },
+    {
+      "path": "experiments/zkvm_abc/Cargo.lock",
+      "sha256": "de4d783c18ad42d56d31dbe8e9a84591b09d5b35dfc03a4baf90538d7d5182ed"
+    },
+    {
+      "path": "experiments/zkvm_abc/scripts/command.mjs",
+      "sha256": "228c4d74f57c8b97514e991a4aede1a647f75ea6b3cd859109f576d1fbd1994b"
+    },
+    {
+      "path": "experiments/zkvm_abc/scripts/report.mjs",
+      "sha256": "fba40c534efa6b308215078f06582074a602780c28fbf5f100babd718598d4ef"
+    },
+    {
+      "path": "experiments/zkvm_abc/.gitignore",
+      "sha256": "263235193a55624d698ef2bcfe8c5f14105945a0eec79728d25134acdb0298fb"
+    }
+  ],
+  "input_pins": [
+    {
+      "path": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+      "sha256": "a4ae00a6bf322cbeba70050e4583f297d3fd9a83e6a8cea793b1366f97cef062"
+    },
+    {
+      "path": "fixtures/g8_receiver_eip2537_v1.json",
+      "sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb"
+    },
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "experiments/stage2_evm_fold_raw/run-20261114-01/direct_fold.json",
+      "sha256": "e9644b27119a96fa1b8cdd7c7f533f735d9762650bc270e89a852a993e03ce47"
+    },
+    {
+      "path": "results/g12/route_decision.json",
+      "sha256": "73b72b54026f57c07740141f60dd4cf4929cd6b14266087cc66623b83b29bd99"
+    }
+  ],
+  "downloads": {
+    "assets": [
+      {
+        "cache_path": "target/g17-tools/cargo-risczero-3.1.0-api.tgz",
+        "source_url": "https://github.com/risc0/risc0/releases/download/v3.1.0/cargo-risczero-aarch64-apple-darwin.tgz",
+        "expected_bytes": 51568850,
+        "expected_sha256": "3b50b0393b8e4158e7129add4cfe0cbc536e994b5abc6a3a435e1e6b841c0990",
+        "actual_bytes": 3625443,
+        "actual_sha256": "b179d91d84a521001815a17841b8b7914dbcba8be6324a54eb79983f459cde93",
+        "complete_and_hash_matches": false,
+        "extracted_or_executed": false
+      },
+      {
+        "cache_path": "target/g17-tools/rust-toolchain-1.97.0-api.tar.gz",
+        "source_url": "https://github.com/risc0/rust/releases/download/r0.1.97.0/rust-toolchain-aarch64-apple-darwin.tar.gz",
+        "expected_bytes": 442966921,
+        "expected_sha256": "85070d82aebbe8e1027e75f2cd0c781f5c82c0ae7e06697218be9d8b71dec15d",
+        "actual_bytes": 4025331,
+        "actual_sha256": "afdc8ad29f041f67f10b1639bd78379bc6ff09d3f0291e22b7c8eae08e6d4b39",
+        "complete_and_hash_matches": false,
+        "extracted_or_executed": false
+      }
+    ],
+    "rzup": {
+      "source": "https://artifacts.risczero.net/rzup/prod/macOS-ARM64/rzup",
+      "actual_sha256": "2792000ff18329ad527cabd578851d1cc563e44ec5938a440a2fa2a8daf7cca5",
+      "actual_bytes": 5654032,
+      "observed_version": "0.6.0",
+      "binary_cached_not_committed": true
+    },
+    "preliminary_direct_sdk_download": {
+      "note": "Manual bootstrap curl max-time120 also exited28 before logged rzup/API attempts; not a benchmark sample or claimed install."
+    }
+  },
+  "historical_files_preserved": 2603,
+  "guest_build_command": "experiments/zkvm_abc_raw/run-20261115-02/build-guest.command.json",
+  "guest_build_failure_is_not_invalid_proof": true,
+  "mathematical_infeasibility_claim": false,
+  "zero_setup_and_proof_generation": true
+}

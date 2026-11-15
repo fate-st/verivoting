@@ -1,0 +1,1215 @@
+{
+  "schema": "VV/G17/EXECUTION-ARCHIVE/v1",
+  "status": "BLOCKED_COMPATIBILITY",
+  "baseline_commit": "a73d7f59e73317e18f98a90fea7aaf82856eb216",
+  "started_utc": "2026-11-15T11:39:27.956Z",
+  "finished_commands_utc": "2026-11-15T11:51:41.867Z",
+  "environment": {
+    "cpu": "Apple M4",
+    "physical_memory_bytes": 34359738368,
+    "logical_cpus": 10,
+    "host_rust": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "node": "v23.11.0",
+    "rzup": "rzup 0.6.0",
+    "guest_toolchain_installed": false,
+    "sdk_cli_installed": false,
+    "r0vm_installed": false,
+    "global_default_toolchain_changed": false
+  },
+  "config": {
+    "path": "configs/experiment.G17-ZKVM-ABC.json",
+    "sha256": "029aec19feb5ce43b6918924d73737b1558970bb469e4dbbc16b001d36dc8294"
+  },
+  "source_pins": [
+    {
+      "path": "configs/experiment.G17-ZKVM-ABC.json",
+      "sha256": "029aec19feb5ce43b6918924d73737b1558970bb469e4dbbc16b001d36dc8294"
+    },
+    {
+      "path": "experiments/zkvm_abc/Cargo.toml",
+      "sha256": "8d3d4c95950ce6a0d8a894c2610a812782eda253c2ad5a016afe3caaec52b0b6"
+    },
+    {
+      "path": "experiments/zkvm_abc/common/Cargo.toml",
+      "sha256": "70b10becd89c25299e0123a5774d427efd019654f607121c96e66d3f452187b0"
+    },
+    {
+      "path": "experiments/zkvm_abc/common/src/lib.rs",
+      "sha256": "445b72bc08b1d55989df11cfd7cbbaf2854717fa3a0f641e499268c36abb9931"
+    },
+    {
+      "path": "experiments/zkvm_abc/host/Cargo.toml",
+      "sha256": "71ce918e0d95935673cfbcc81ea0147f789695d9f52540a85615014cb35ddd36"
+    },
+    {
+      "path": "experiments/zkvm_abc/host/src/main.rs",
+      "sha256": "10f6e432be8e4a5a934de8c3a6103fa8a7e2ac864bef32e2ba7c15c346d821cc"
+    },
+    {
+      "path": "experiments/zkvm_abc/guest_b_groth16/Cargo.toml",
+      "sha256": "44015e687af22b14d18e6f1c8cb817cf9901a817ba128b466af805740d64d085"
+    },
+    {
+      "path": "experiments/zkvm_abc/guest_b_groth16/src/main.rs",
+      "sha256": "c66e21a34e485dd9a960ff3238532e5499e23299133e60efab06123a32b16d57"
+    },
+    {
+      "path": "experiments/zkvm_abc/methods/Cargo.toml",
+      "sha256": "5cf0a35d949391d573f23f540d85c494da9cc7b70578dd5192bf91d7244771b5"
+    },
+    {
+      "path": "experiments/zkvm_abc/methods/build.rs",
+      "sha256": "d3d0aa4add6d6294b4cd9199c9b7162187b7383980cda986051fe94497334f75"
+    },
+    {
+      "path": "experiments/zkvm_abc/methods/src/lib.rs",
+      "sha256": "902d56d952004dd42e65c148a4b537710f869054556528b25ed3e67d050bb255"
+    },
+    {
+      "path": "experiments/zkvm_abc/Cargo.lock",
+      "sha256": "de4d783c18ad42d56d31dbe8e9a84591b09d5b35dfc03a4baf90538d7d5182ed"
+    },
+    {
+      "path": "experiments/zkvm_abc/scripts/command.mjs",
+      "sha256": "228c4d74f57c8b97514e991a4aede1a647f75ea6b3cd859109f576d1fbd1994b"
+    },
+    {
+      "path": "experiments/zkvm_abc/scripts/report.mjs",
+      "sha256": "fba40c534efa6b308215078f06582074a602780c28fbf5f100babd718598d4ef"
+    },
+    {
+      "path": "experiments/zkvm_abc/.gitignore",
+      "sha256": "263235193a55624d698ef2bcfe8c5f14105945a0eec79728d25134acdb0298fb"
+    }
+  ],
+  "input_pins": [
+    {
+      "path": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+      "sha256": "a4ae00a6bf322cbeba70050e4583f297d3fd9a83e6a8cea793b1366f97cef062"
+    },
+    {
+      "path": "fixtures/g8_receiver_eip2537_v1.json",
+      "sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb"
+    },
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19"
+    },
+    {
+      "path": "experiments/stage2_evm_fold_raw/run-20261114-01/direct_fold.json",
+      "sha256": "e9644b27119a96fa1b8cdd7c7f533f735d9762650bc270e89a852a993e03ce47"
+    },
+    {
+      "path": "results/g12/route_decision.json",
+      "sha256": "73b72b54026f57c07740141f60dd4cf4929cd6b14266087cc66623b83b29bd99"
+    }
+  ],
+  "source_version_sha256": "3e737622f49cc882dcb1e92fb39162452766dcd72193b940e4706c3b00cd79ee",
+  "commands": [
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/build-guest.command.json",
+      "name": "build-guest",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--release",
+        "--locked",
+        "-p",
+        "g17-host",
+        "--features",
+        "zkvm"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:46:01.474Z",
+      "finished_utc": "2026-11-15T11:47:02.246Z",
+      "exit_code": 101,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 60771.955875,
+      "timeout_seconds": 600,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 399.265625,
+      "sampled_max_process_tree_rss_mib": 668.203125,
+      "rss_sample_count": 60,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/build-guest.stdout.log",
+      "stderr": "logs/build-guest.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/build-native.command.json",
+      "name": "build-native",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--release",
+        "-p",
+        "g17-host"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:44:33.122Z",
+      "finished_utc": "2026-11-15T11:44:59.797Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 26674.286167,
+      "timeout_seconds": 600,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 369.828125,
+      "sampled_max_process_tree_rss_mib": 604.265625,
+      "rss_sample_count": 26,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/build-native.stdout.log",
+      "stderr": "logs/build-native.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/cargo-version.command.json",
+      "name": "cargo-version",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "--version"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:48:46.804Z",
+      "finished_utc": "2026-11-15T11:48:46.818Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 13.924417000000002,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/cargo-version.stdout.log",
+      "stderr": "logs/cargo-version.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/clippy-native.command.json",
+      "name": "clippy-native",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "g17-host",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:48:55.134Z",
+      "finished_utc": "2026-11-15T11:48:59.810Z",
+      "exit_code": 101,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 4676.770583,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 346.40625,
+      "sampled_max_process_tree_rss_mib": 519.515625,
+      "rss_sample_count": 4,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/clippy-native.stdout.log",
+      "stderr": "logs/clippy-native.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/dependency-tree.command.json",
+      "name": "dependency-tree",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "tree",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--locked",
+        "--offline",
+        "-p",
+        "g17-common",
+        "--edges",
+        "normal"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:49:00.256Z",
+      "finished_utc": "2026-11-15T11:49:00.341Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 85.3355,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/dependency-tree.stdout.log",
+      "stderr": "logs/dependency-tree.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/download-rust-api.command.json",
+      "name": "download-rust-api",
+      "program": "curl",
+      "args": [
+        "--silent",
+        "--show-error",
+        "--fail",
+        "--location",
+        "--max-time",
+        "170",
+        "--header",
+        "Accept: application/octet-stream",
+        "--output",
+        "target/g17-tools/rust-toolchain-1.97.0-api.tar.gz",
+        "https://api.github.com/repos/risc0/rust/releases/assets/479483494?download=1"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:45:48.380Z",
+      "finished_utc": "2026-11-15T11:48:38.405Z",
+      "exit_code": 28,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 170023.00912499998,
+      "timeout_seconds": 180,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 6.515625,
+      "sampled_max_process_tree_rss_mib": 6.515625,
+      "rss_sample_count": 169,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/download-rust-api.stdout.log",
+      "stderr": "logs/download-rust-api.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/download-sdk-api.command.json",
+      "name": "download-sdk-api",
+      "program": "curl",
+      "args": [
+        "--silent",
+        "--show-error",
+        "--fail",
+        "--location",
+        "--max-time",
+        "170",
+        "--header",
+        "Accept: application/octet-stream",
+        "--output",
+        "target/g17-tools/cargo-risczero-3.1.0-api.tgz",
+        "https://api.github.com/repos/risc0/risc0/releases/assets/733352751?download=1"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:45:42.619Z",
+      "finished_utc": "2026-11-15T11:48:32.655Z",
+      "exit_code": 28,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 170034.091333,
+      "timeout_seconds": 180,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 6.5625,
+      "sampled_max_process_tree_rss_mib": 6.5625,
+      "rss_sample_count": 169,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/download-sdk-api.stdout.log",
+      "stderr": "logs/download-sdk-api.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/fmt-guest.command.json",
+      "name": "fmt-guest",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--manifest-path",
+        "experiments/zkvm_abc/guest_b_groth16/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:48:46.957Z",
+      "finished_utc": "2026-11-15T11:48:47.001Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 43.324417,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/fmt-guest.stdout.log",
+      "stderr": "logs/fmt-guest.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/fmt-workspace.command.json",
+      "name": "fmt-workspace",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:48:46.876Z",
+      "finished_utc": "2026-11-15T11:48:46.935Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 59.322708999999996,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/fmt-workspace.stdout.log",
+      "stderr": "logs/fmt-workspace.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/hardware.command.json",
+      "name": "hardware",
+      "program": "/usr/sbin/sysctl",
+      "args": [
+        "-n",
+        "machdep.cpu.brand_string",
+        "hw.memsize",
+        "hw.ncpu"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:48:46.736Z",
+      "finished_utc": "2026-11-15T11:48:46.740Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 3.685708,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/hardware.stdout.log",
+      "stderr": "logs/hardware.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/install-rust.command.json",
+      "name": "install-rust",
+      "program": "target/g17-tools/rzup",
+      "args": [
+        "install",
+        "rust",
+        "1.97.0"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:39:27.956Z",
+      "finished_utc": "2026-11-15T11:41:00.442Z",
+      "exit_code": 1,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 92485.930542,
+      "timeout_seconds": 600,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 8.375,
+      "sampled_max_process_tree_rss_mib": 8.375,
+      "rss_sample_count": 92,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/install-rust.stdout.log",
+      "stderr": "logs/install-rust.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/install-sdk.command.json",
+      "name": "install-sdk",
+      "program": "target/g17-tools/rzup",
+      "args": [
+        "install",
+        "cargo-risczero",
+        "3.1.0"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:39:33.991Z",
+      "finished_utc": "2026-11-15T11:40:49.786Z",
+      "exit_code": 1,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 75793.990959,
+      "timeout_seconds": 600,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 8.328125,
+      "sampled_max_process_tree_rss_mib": 8.328125,
+      "rss_sample_count": 75,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/install-sdk.stdout.log",
+      "stderr": "logs/install-sdk.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/native-b1-changed-input.command.json",
+      "name": "native-b1-changed-input",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-01/materials/b1-changed-input.json",
+        "experiments/zkvm_abc_raw/run-20261115-01/native-b1-changed-input.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:46:28.233Z",
+      "finished_utc": "2026-11-15T11:46:28.241Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 8.122375,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b1-changed-input.stdout.log",
+      "stderr": "logs/native-b1-changed-input.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/native-b1-valid.command.json",
+      "name": "native-b1-valid",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-01/materials/b1-valid.json",
+        "experiments/zkvm_abc_raw/run-20261115-01/native-b1-valid.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:46:23.969Z",
+      "finished_utc": "2026-11-15T11:46:23.977Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 8.4335,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b1-valid.stdout.log",
+      "stderr": "logs/native-b1-valid.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/native-b2-changed-input.command.json",
+      "name": "native-b2-changed-input",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-01/materials/b2-changed-input.json",
+        "experiments/zkvm_abc_raw/run-20261115-01/native-b2-changed-input.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:46:36.980Z",
+      "finished_utc": "2026-11-15T11:46:36.991Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 10.991583999999998,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b2-changed-input.stdout.log",
+      "stderr": "logs/native-b2-changed-input.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/native-b2-valid.command.json",
+      "name": "native-b2-valid",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-01/materials/b2-valid.json",
+        "experiments/zkvm_abc_raw/run-20261115-01/native-b2-valid.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:46:32.673Z",
+      "finished_utc": "2026-11-15T11:46:32.683Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 9.855917,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b2-valid.stdout.log",
+      "stderr": "logs/native-b2-valid.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/node-version.command.json",
+      "name": "node-version",
+      "program": "node",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:48:46.840Z",
+      "finished_utc": "2026-11-15T11:48:46.853Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 12.421667000000001,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/node-version.stdout.log",
+      "stderr": "logs/node-version.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/prepare-materials.command.json",
+      "name": "prepare-materials",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "prepare",
+        ".",
+        "experiments/zkvm_abc_raw/run-20261115-01/materials"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:45:54.122Z",
+      "finished_utc": "2026-11-15T11:45:54.528Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 405.951375,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/prepare-materials.stdout.log",
+      "stderr": "logs/prepare-materials.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/rust-release-metadata.command.json",
+      "name": "rust-release-metadata",
+      "program": "curl",
+      "args": [
+        "--silent",
+        "--show-error",
+        "--fail",
+        "--location",
+        "--max-time",
+        "45",
+        "--output",
+        "experiments/zkvm_abc_raw/run-20261115-01/risc0-rust-release.json",
+        "https://api.github.com/repos/risc0/rust/releases/tags/r0.1.97.0"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:44:42.023Z",
+      "finished_utc": "2026-11-15T11:44:43.064Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 1041.668833,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 5.84375,
+      "sampled_max_process_tree_rss_mib": 5.84375,
+      "rss_sample_count": 1,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/rust-release-metadata.stdout.log",
+      "stderr": "logs/rust-release-metadata.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-01/rust-version.command.json",
+      "name": "rust-version",
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "--version",
+        "--verbose"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:48:46.762Z",
+      "finished_utc": "2026-11-15T11:48:46.782Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 20.025000000000002,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/rust-version.stdout.log",
+      "stderr": "logs/rust-version.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/build-guest.command.json",
+      "name": "build-guest",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "g17-host",
+        "--features",
+        "zkvm"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:51:35.358Z",
+      "finished_utc": "2026-11-15T11:51:36.862Z",
+      "exit_code": 101,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 1503.999,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 70.515625,
+      "sampled_max_process_tree_rss_mib": 117.390625,
+      "rss_sample_count": 1,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/build-guest.stdout.log",
+      "stderr": "logs/build-guest.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/build-native.command.json",
+      "name": "build-native",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "g17-host"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:50:30.881Z",
+      "finished_utc": "2026-11-15T11:50:34.177Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 3296.66125,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": 223.453125,
+      "sampled_max_process_tree_rss_mib": 276.421875,
+      "rss_sample_count": 3,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/build-native.stdout.log",
+      "stderr": "logs/build-native.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/cargo-default.command.json",
+      "name": "cargo-default",
+      "program": "cargo",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:51:41.518Z",
+      "finished_utc": "2026-11-15T11:51:41.675Z",
+      "exit_code": 1,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 157.11304099999998,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/cargo-default.stdout.log",
+      "stderr": "logs/cargo-default.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/clippy-native.command.json",
+      "name": "clippy-native",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "g17-host",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:50:34.203Z",
+      "finished_utc": "2026-11-15T11:50:34.392Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 188.706625,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/clippy-native.stdout.log",
+      "stderr": "logs/clippy-native.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/fmt-final.command.json",
+      "name": "fmt-final",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--manifest-path",
+        "experiments/zkvm_abc/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:51:41.805Z",
+      "finished_utc": "2026-11-15T11:51:41.867Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 62.19708299999999,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/fmt-final.stdout.log",
+      "stderr": "logs/fmt-final.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/native-b1-changed-input.command.json",
+      "name": "native-b1-changed-input",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-02/materials/b1-changed-input.json",
+        "experiments/zkvm_abc_raw/run-20261115-02/native-b1-changed-input.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:50:35.116Z",
+      "finished_utc": "2026-11-15T11:50:35.124Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 7.944542,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b1-changed-input.stdout.log",
+      "stderr": "logs/native-b1-changed-input.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/native-b1-valid.command.json",
+      "name": "native-b1-valid",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-02/materials/b1-valid.json",
+        "experiments/zkvm_abc_raw/run-20261115-02/native-b1-valid.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:50:35.086Z",
+      "finished_utc": "2026-11-15T11:50:35.094Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 7.838624999999999,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b1-valid.stdout.log",
+      "stderr": "logs/native-b1-valid.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/native-b2-changed-input.command.json",
+      "name": "native-b2-changed-input",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-02/materials/b2-changed-input.json",
+        "experiments/zkvm_abc_raw/run-20261115-02/native-b2-changed-input.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:50:35.177Z",
+      "finished_utc": "2026-11-15T11:50:35.186Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 9.731333,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b2-changed-input.stdout.log",
+      "stderr": "logs/native-b2-changed-input.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/native-b2-valid.command.json",
+      "name": "native-b2-valid",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "native",
+        "experiments/zkvm_abc_raw/run-20261115-02/materials/b2-valid.json",
+        "experiments/zkvm_abc_raw/run-20261115-02/native-b2-valid.json"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:50:35.146Z",
+      "finished_utc": "2026-11-15T11:50:35.155Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 9.532499999999999,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/native-b2-valid.stdout.log",
+      "stderr": "logs/native-b2-valid.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/prepare-materials.command.json",
+      "name": "prepare-materials",
+      "program": "experiments/zkvm_abc/target/release/g17-host",
+      "args": [
+        "prepare",
+        ".",
+        "experiments/zkvm_abc_raw/run-20261115-02/materials"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:50:34.417Z",
+      "finished_utc": "2026-11-15T11:50:35.060Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 643.2670830000001,
+      "timeout_seconds": 120,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/prepare-materials.stdout.log",
+      "stderr": "logs/prepare-materials.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/rzup-components.command.json",
+      "name": "rzup-components",
+      "program": "target/g17-tools/rzup",
+      "args": [
+        "show"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:51:41.776Z",
+      "finished_utc": "2026-11-15T11:51:41.781Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 5.385334000000002,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/rzup-components.stdout.log",
+      "stderr": "logs/rzup-components.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/rzup-version.command.json",
+      "name": "rzup-version",
+      "program": "target/g17-tools/rzup",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:51:41.744Z",
+      "finished_utc": "2026-11-15T11:51:41.752Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 8.248042,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/rzup-version.stdout.log",
+      "stderr": "logs/rzup-version.stderr.log"
+    },
+    {
+      "record": "experiments/zkvm_abc_raw/run-20261115-02/toolchains.command.json",
+      "name": "toolchains",
+      "program": "rustup",
+      "args": [
+        "toolchain",
+        "list"
+      ],
+      "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+      "started_utc": "2026-11-15T11:51:41.700Z",
+      "finished_utc": "2026-11-15T11:51:41.719Z",
+      "exit_code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 19.10125,
+      "timeout_seconds": 60,
+      "single_process_rss_limit_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+      "env_overrides": {
+        "CARGO_BUILD_JOBS": "2",
+        "RISC0_DEV_MODE": "0",
+        "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+      },
+      "stdout": "logs/toolchains.stdout.log",
+      "stderr": "logs/toolchains.stderr.log"
+    }
+  ],
+  "rss_scope": "Build/installer polled RSS is not guest memory. Native controls finish before a 1s RSS sample; their RSS remains null.",
+  "guest_cycles": null,
+  "guest_execution_count": 0,
+  "proof_count": 0,
+  "evm_transactions": 0,
+  "historical_files_preserved": 2603,
+  "previous_run_notes": "run-01 retains initial chunks_exact lint failure/source snapshot. run-02 uses only as_chunks lint fix; actual native controls rerun; guest remains blocked at missing Rust toolchain."
+}

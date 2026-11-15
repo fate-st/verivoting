@@ -1,0 +1,37 @@
+{
+  "name": "dependency-tree",
+  "program": "cargo",
+  "args": [
+    "+1.99.1",
+    "tree",
+    "--manifest-path",
+    "experiments/zkvm_abc/Cargo.toml",
+    "--locked",
+    "--offline",
+    "-p",
+    "g17-common",
+    "--edges",
+    "normal"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T11:49:00.256Z",
+  "finished_utc": "2026-11-15T11:49:00.341Z",
+  "exit_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 85.3355,
+  "timeout_seconds": 60,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": null,
+  "sampled_max_process_tree_rss_mib": null,
+  "rss_sample_count": 0,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/dependency-tree.stdout.log",
+  "stderr": "logs/dependency-tree.stderr.log"
+}

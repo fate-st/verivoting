@@ -1,0 +1,46 @@
+{
+  "schema": "VV/G17/ZKVM-ABC-EXPERIMENT/v1",
+  "baseline_commit": "a73d7f59e73317e18f98a90fea7aaf82856eb216",
+  "baseline_branch": "experiment/g12-snarkpack-evm-feasibility",
+  "experiment_branch": "experiment/g17-zkvm-abc-comparison",
+  "authorized_round": "Z0_AND_Z1_ONLY_STOP_BEFORE_Z2",
+  "backend": "RISC Zero",
+  "sdk_version": "3.1.0",
+  "build_crate_version": "3.0.7",
+  "guest_rust_version": "1.97.0",
+  "host_rust_version": "1.99.1",
+  "original_ballot_curve": "BLS12-381",
+  "portable_verifier": "ark-groth16 0.4.0 / ark-bls12-381 0.4.0; no protocol change",
+  "original_ballot_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+  "public_inputs_per_ballot": 25,
+  "batch_sizes_this_round": [1, 2],
+  "material_sources": [
+    "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+    "fixtures/g8_receiver_eip2537_v1.json"
+  ],
+  "reference_only_later_b4_sources": [
+    "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+    "experiments/stage2_evm_fold_raw/run-20261114-01/direct_fold.json"
+  ],
+  "budget": {
+    "single_process_rss_mib": 16384,
+    "guest_execution_seconds": 600,
+    "real_proof_seconds_if_later_authorized": 1200,
+    "build_or_install_seconds_initial": 600,
+    "download_api_retry_seconds": 180,
+    "cargo_jobs": 2,
+    "enforcement": "Soft elapsed-time/process-RSS polling, not a kernel-enforced memory bound"
+  },
+  "real_proof_authorized_this_round": false,
+  "evm_authorized_this_round": false,
+  "route_a_authorized_this_round": false,
+  "state_fold_authorized_this_round": false,
+  "remote_prover_authorized": false,
+  "optional_a_plus_state_authorized": false,
+  "do_not_modify": ["original protocol manifests", "root Cargo.toml/Cargo.lock", "original curves/VKs/SRS/proofs", "contracts", "P3/Winner-only", "old archives", "paper"],
+  "official_sources": [
+    "https://dev.risczero.com/api/zkvm/install",
+    "https://github.com/risc0/risc0/releases/tag/v3.1.0",
+    "https://github.com/risc0/rust/releases/tag/r0.1.97.0"
+  ]
+}

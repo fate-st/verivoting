@@ -1,0 +1,38 @@
+{
+  "name": "download-rust-api",
+  "program": "curl",
+  "args": [
+    "--silent",
+    "--show-error",
+    "--fail",
+    "--location",
+    "--max-time",
+    "170",
+    "--header",
+    "Accept: application/octet-stream",
+    "--output",
+    "target/g17-tools/rust-toolchain-1.97.0-api.tar.gz",
+    "https://api.github.com/repos/risc0/rust/releases/assets/479483494?download=1"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T11:45:48.380Z",
+  "finished_utc": "2026-11-15T11:48:38.405Z",
+  "exit_code": 28,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 170023.00912499998,
+  "timeout_seconds": 180,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": 6.515625,
+  "sampled_max_process_tree_rss_mib": 6.515625,
+  "rss_sample_count": 169,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/download-rust-api.stdout.log",
+  "stderr": "logs/download-rust-api.stderr.log"
+}

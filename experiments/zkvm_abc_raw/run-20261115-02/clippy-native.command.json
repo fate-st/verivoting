@@ -1,0 +1,39 @@
+{
+  "name": "clippy-native",
+  "program": "cargo",
+  "args": [
+    "+1.99.1",
+    "clippy",
+    "--manifest-path",
+    "experiments/zkvm_abc/Cargo.toml",
+    "--release",
+    "--locked",
+    "--offline",
+    "-p",
+    "g17-host",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T11:50:34.203Z",
+  "finished_utc": "2026-11-15T11:50:34.392Z",
+  "exit_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 188.706625,
+  "timeout_seconds": 120,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": null,
+  "sampled_max_process_tree_rss_mib": null,
+  "rss_sample_count": 0,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/clippy-native.stdout.log",
+  "stderr": "logs/clippy-native.stderr.log"
+}
