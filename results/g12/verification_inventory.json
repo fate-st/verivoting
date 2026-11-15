@@ -1,0 +1,689 @@
+{
+  "schema": "VV/G12/VERIFICATION-INVENTORY/v1",
+  "gate": "G12",
+  "status": "BLOCKED_G12_FEASIBILITY",
+  "artifact_kind": "SOURCE_AND_ARCHIVED_EVIDENCE_REVIEW_NOT_NEW_CRYPTOGRAPHIC_EXPERIMENT",
+  "reviewed_date": "2026-11-15",
+  "timezone": "Asia/Shanghai",
+  "baseline_commit": "fff01791f51dc87e695523c53ed8e6f7e88baee8",
+  "baseline_branch": "experiment/j1-joint-proof-feasibility",
+  "stage2_readonly_reference": "1ade01f12bc95ab00a514a7986a984816fe1741b",
+  "intended_branch": "experiment/g12-snarkpack-evm-feasibility",
+  "generator": {
+    "path": "scripts/g12_feasibility_review.mjs",
+    "sha256": "01f72f3de35b06fae24ec36183785deae559a21067b56f44e7cb2363169639c6"
+  },
+  "preservation": {
+    "baseline_tracked_file_count": 2599,
+    "checked_immutable_files": 2597,
+    "checked_immutable_bytes": 91798301,
+    "baseline_tree_listing_sha256": "bb8444f5f933b321b7ae52c7de9342514cb0ac905319e8524f15da1e7650e71e",
+    "rolling_indexes_excluded": [
+      "docs/NEXT_STEPS.md",
+      "docs/IMPLEMENTATION_STATUS.md"
+    ],
+    "stage2_parameter_contract_lock_checks": 9,
+    "preexisting_line_ending_differences": [
+      {
+        "path": "experiments/raw/p3_curve_compare.csv",
+        "working_sha256": "be35305dc191aad9fa29d0e6ccdbad922e43b9ff8ec1b9b010718eae9fcfc66a",
+        "normalized_git_sha256": "4c479a746e362f2a7d55674e208b1c0b089b6381f12029e997c9712ac38a53b9",
+        "prior_working_sha_source": "experiments/joint_proof_raw/run-20261114-03/historical_files.json",
+        "rule": "Prior byte hash AND normalized baseline Git blob both match; file not rewritten."
+      }
+    ],
+    "core_protocol_changed": false,
+    "old_results_changed": false,
+    "paper_changed": false
+  },
+  "source_pins": [
+    {
+      "path": "results/g9/route_review.json",
+      "sha256": "d473d93c309c1f37038cce51707be18d6f5004e841e26ba29343b1defb93f9b4"
+    },
+    {
+      "path": "results/g9_p1/design_inventory.json",
+      "sha256": "77f12c60cb3c77f6e16e0486c22172dcca543d0fc39aa6888098fa8449abad4b"
+    },
+    {
+      "path": "results/g9_p1_v2/feasibility_review.json",
+      "sha256": "ea625de3b7b6019bcf6c611ae9e8e5cc2ad32f5e976e0062d1fc2a6a5be80126"
+    },
+    {
+      "path": "experiments/g5_c3_raw/miller_quarter_full_evm.json",
+      "sha256": "ea725ce6aa8e1f0aebf0b8ca44f273cdec2aaffa25d579610ab21e090eea7ccf"
+    },
+    {
+      "path": "experiments/g5_c2_raw/transcript_conformance.json",
+      "sha256": "ef7983ea2dbce49ee5752133183273ccc41ccc2181b8d4d68102624683bc102c"
+    },
+    {
+      "path": "experiments/g5_c3_raw/tipp_endpoint_route.json",
+      "sha256": "25e2c6bb0feb6a9372b82c805aa22c87e80a6be57f8a5507a38a72b9ef5b7f5f"
+    },
+    {
+      "path": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+      "sha256": "a4ae00a6bf322cbeba70050e4583f297d3fd9a83e6a8cea793b1366f97cef062"
+    },
+    {
+      "path": "fixtures/g8_receiver_eip2537_v1.json",
+      "sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb"
+    },
+    {
+      "path": "experiments/joint_proof_raw/run-20261114-03/execution.json",
+      "sha256": "a2c2c484c3c1c98ffc6450eb381d03be40dfb1eb1aa311931dc3706de0d4e59f"
+    },
+    {
+      "path": "experiments/joint_proof_raw/run-20261114-03/historical_files.json",
+      "sha256": "217ec1e6b0acd1cdeba6d2efbbd8e08a627e189cd73f40bf9b39db7d046aadcc"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "6b7ce01c5bd626481149ca37549a934c97131469b38d4f3bee8ae93fa1380a69"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e"
+    },
+    {
+      "path": "contracts/package-lock.json",
+      "sha256": "e627b7d966a05a29946ce4f7afd078a088f6c2c30ac43740e551f342b05b2290"
+    },
+    {
+      "path": "configs/protocol_manifest.json",
+      "sha256": "e65d6861b975a65c0f96617b3ab8faada47ce5b93219190ee871a4feefb98503"
+    },
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e"
+    },
+    {
+      "path": "contracts/src/interfaces/IBatchVerifier.sol",
+      "sha256": "bb37c0bad239411ae836fb0b630a5dae0578be336923b7b87c75fd84e891fafd"
+    },
+    {
+      "path": "contracts/src/IndividualGroth16BatchVerifier.sol",
+      "sha256": "1697f67146dd7f62a3ef66ff6bb83528bdf2f6201c3144c110dbd687609d80d7"
+    },
+    {
+      "path": "contracts/src/VeriVotingAuthenticatedSettlement.sol",
+      "sha256": "872a29701ae7d7cd5104b941a1fc39d2a4afee59c3919f8ca9c1c061c45e30cf"
+    },
+    {
+      "path": "contracts/src/VeriVotingWinnerOnlySettlement.sol",
+      "sha256": "adb876097767adb27a05f3de20563ff8eae745b3be61cb68054ab6ce0f01c513"
+    },
+    {
+      "path": "docs/G9_EXACT_VERIFICATION_ROUTE.md",
+      "sha256": "e51ef07af9b7018762806e237c1c5e2f19a5a9e03c903f7db116ae32e209341e"
+    },
+    {
+      "path": "docs/G9_P1_STAGED_EXACT_DESIGN.md",
+      "sha256": "51be308fe6c6a495c2abe80d4abede186529c840c5664c92dbdc07b16e1f66cc"
+    },
+    {
+      "path": "docs/G9_P1_FEASIBILITY_V2.md",
+      "sha256": "af7938e9fa960ea05672701ae39cbf139cd99d6215d650d153cc2e761fd4d299"
+    },
+    {
+      "path": "docs/STAGE2_EVM_FOLD_COMPARISON.md",
+      "sha256": "d54d4b0ed5cd4ddc12b0d3f75df121975790c2cd1944bfed7256c70a32b5d911"
+    },
+    {
+      "path": "docs/JOINT_PROOF_FEASIBILITY.md",
+      "sha256": "7349992f54476b682c6674bd1967a20a000c699fb0796e96c381fe5c0f82435e"
+    },
+    {
+      "path": "scripts/g9_route_review.mjs",
+      "sha256": "bfe1407c008867ea10362fa80d0127a7755df699dc99d4bb3e762672e2d3269a"
+    },
+    {
+      "path": "scripts/g9p1_design.mjs",
+      "sha256": "26afd866c4c224f9b8b5f6313205fc27a447988fdd1c6917ff37ebf968cdb6ec"
+    },
+    {
+      "path": "scripts/g9p1_feasibility.mjs",
+      "sha256": "951fa9d2237c08568d90e00a0b0ac0a460c24f24af37af40fed875a57a687604"
+    },
+    {
+      "path": "contracts/scripts/snarkpack_transcript_g5c2.mjs",
+      "sha256": "e7fa75de07541f2893ae4c4f5bca39a4f460cc0f755733805c8d09611def9343"
+    }
+  ],
+  "locked_packages": [
+    {
+      "name": "bellperson",
+      "version": "0.27.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "cd3291d3e15b3de935a9f58574dafadbe15686e56e1c7850596b14f275cdae73"
+    },
+    {
+      "name": "blstrs",
+      "version": "0.7.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "33149fccb7f93271f0192614b884430cf274e880506bbd171cbc8918dcc95b14"
+    },
+    {
+      "name": "blst",
+      "version": "0.3.10",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "6a30d0edd9dd1c60ddb42b80341c7852f6f985279a5c1a83659dcb65899dec99"
+    },
+    {
+      "name": "bincode",
+      "version": "1.3.3",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "b1f45e9417d87227c7a56d22e471c6206462cba514c7590c09aff4cf6d1ddcad"
+    },
+    {
+      "name": "sha2",
+      "version": "0.10.9",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "a7507d819769d01a365ab707794a4084392c824f54a7a6a7862f8c3d0892b283"
+    },
+    {
+      "name": "rayon",
+      "version": "1.12.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "fb39b166781f92d482534ef4b4b1b2568f42613b53e5b6c160e24cfbfa30926d"
+    }
+  ],
+  "reference_sources": [
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+      "sha256": "cd6412860def9630b47a58a96c7245dc4a714e0b847dd43780858412eabe578d"
+    },
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/proof.rs",
+      "sha256": "07d07e3c759305f52497d7685d6f7c9584e622adec2e0831471be33670146c20"
+    },
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/transcript.rs",
+      "sha256": "4ae0d7da2ecc4a2bcf1eafe0cec2209ce0fde7c27bf377e6c6e782bff87b7ac8"
+    },
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+      "sha256": "4e3f730fdb258fbcfc99bf44e575d23e8c3c1e2224de98309f323e4d5ef7808b"
+    },
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/prove.rs",
+      "sha256": "f1386e3ba03fcdbed774735d0d3f7e0e39993e8374c08cabbbf2a0f67f4d66d8"
+    },
+    {
+      "package_path": "bellperson-0.27.0/src/groth16/aggregate/srs.rs",
+      "sha256": "5c75d4410b2a6d96f28f5517070f1ac3eb52ab55e31bb5bfd7fa7453d3500091"
+    },
+    {
+      "package_path": "blstrs-0.7.0/src/gt.rs",
+      "sha256": "db4e6f2978e121a5c1631146eac59d25b3c3a93d296f445bb3fb45f7b736e9d8"
+    },
+    {
+      "package_path": "blstrs-0.7.0/src/serde_impl.rs",
+      "sha256": "0efb99fbc6e0db12357a6132a5709c49a0e87375bbfaa4e5cb06279ba77fc95a"
+    }
+  ],
+  "standards": [
+    {
+      "url": "https://eips.ethereum.org/EIPS/eip-2537",
+      "reviewed_date": "2026-11-15",
+      "observation": "Boolean product-pairing identity ABI, no arbitrary GT target/result; MSM/pairing check subgroups, additions do not; canonical 64B BE Fp."
+    },
+    {
+      "url": "https://eips.ethereum.org/EIPS/eip-2565",
+      "reviewed_date": "2026-11-15",
+      "observation": "Integer modular exponentiation primitive, not an Fp12/Miller/final-exponent verifier."
+    }
+  ],
+  "historical_observations_not_rerun": {
+    "software_miller": {
+      "source": "experiments/g5_c3_raw/miller_quarter_full_evm.json",
+      "status": "BLOCKED_QUARTER_SOFTWARE_MILLER_EXCEEDS_20M_FROZEN",
+      "receipt": "0xc0a9fa68b027043a6d579a16dc3ad0a7a5ba001f9d10d2216e479fed86e92b8c",
+      "failed_capped_spend_gas": 20000000,
+      "completed_miller_gas": null,
+      "completed_snarkpack_gas": null,
+      "classification": "HISTORICAL_MEASURED_FAILED_SPEND_NOT_COMPLETION_COST"
+    },
+    "transcript": {
+      "source": "experiments/g5_c2_raw/transcript_conformance.json",
+      "matched_calls": 12,
+      "cases": 2,
+      "solidity_fs_implemented": false
+    },
+    "endpoint": {
+      "source": "experiments/g5_c3_raw/tipp_endpoint_route.json",
+      "native_js_one_endpoint_match": true,
+      "evm_arbitrary_gt_verified": false
+    },
+    "p1": {
+      "source": "results/g9_p1_v2/feasibility_review.json",
+      "status": "BLOCKED_NO_COMPLETE_GAS_AND_EQUIVALENCE_BOUND",
+      "finite_design_is_not_measured_feasibility": true
+    },
+    "j1": {
+      "source": "experiments/joint_proof_raw/run-20261114-03/execution.json",
+      "status": "BLOCKED_INNER_RECURSIVE_VERIFIER",
+      "native_fq_bits": 381,
+      "current_fr_bits": 255,
+      "compile_rejection": "E0271",
+      "r1cs_synthesized": false,
+      "implication": "Only direct reuse of the locked native gadget in current Fr is blocked; no general zkVM impossibility result."
+    }
+  },
+  "items": [
+    {
+      "id": "PARSE",
+      "name": "解析、规范编码、子群及参数绑定",
+      "native": "IMPLEMENTED",
+      "evm": "PARTIAL",
+      "required": "原 proof read + parsing_check；B/向量长度/每行维度；G1/G2/GT 规范解码与子群；完整消费字节；固定 VK 和含 n/h_alpha_d 的完整 SRS。",
+      "gap": "已有 JS B2 解码和组件实验，不是完整 Solidity 入口。GT torus 288B/点压缩与 EIP 字段格式不同；不能仅检查 SRS PartialEq。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/proof.rs",
+          "line": 124,
+          "anchor": "pub fn parsing_check"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/proof.rs",
+          "line": 189,
+          "anchor": "fn read(mut source: impl Read)"
+        },
+        {
+          "source": "blstrs-0.7.0/src/gt.rs",
+          "line": 368,
+          "anchor": "fn read_compressed"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/srs.rs",
+          "line": 98,
+          "anchor": "pub struct VerifierSRS"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/srs.rs",
+          "line": 118,
+          "anchor": "impl<E: Engine> PartialEq for VerifierSRS"
+        }
+      ]
+    },
+    {
+      "id": "FS",
+      "name": "完整 Fiat–Shamir",
+      "native": "IMPLEMENTED",
+      "evm": "PARTIAL",
+      "required": "原 bincode、SHA-256、所有 V2 挑战及完整顺序矩阵 external transcript；保留 snarkpack-v1 前缀。",
+      "gap": "历史 Rust/JS 12 次匹配，不等于 Solidity 实现。usize nonce 宽度固定为该64位证据域；拒绝计数累积哈希，非简单 hash mod q。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/transcript.rs",
+          "line": 65,
+          "anchor": "pub fn write<S: Serialize>"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/transcript.rs",
+          "line": 77,
+          "anchor": "pub fn into_challenge"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 83,
+          "anchor": ".write(&transcript_include)"
+        }
+      ]
+    },
+    {
+      "id": "GIPA",
+      "name": "全部 GIPA 折叠",
+      "native": "IMPLEMENTED",
+      "evm": "NOT_IMPLEMENTED",
+      "required": "逐轮挑战/inverse、所有 GT 和 G1 折叠、final_r 与 V2 extra-link；B2 仍不可省略。",
+      "gap": "标量公式和向量核对不能替代电路/合约执行完整折叠。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 539,
+          "anchor": "fn gipa_verify_tipp_mipp"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 668,
+          "anchor": "Transcript::<E>::new(\"gipa-extra-link\")"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 779,
+          "anchor": "let final_r = polynomial_evaluation_product_form_from_transcript"
+        }
+      ]
+    },
+    {
+      "id": "KZG",
+      "name": "KZG-V/W 四项",
+      "native": "IMPLEMENTED",
+      "evm": "NOT_IMPLEMENTED",
+      "required": "V alpha/beta、W alpha/beta；f_w 使用 r^-1 shift 与 z^n；固定所有 SRS 系数。",
+      "gap": "identity pairing ABI 可用，但完整挑战/解析/子群/点运算与四项验证未集成。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 801,
+          "anchor": "pub fn verify_kzg_v"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 876,
+          "anchor": "pub fn verify_kzg_w"
+        }
+      ]
+    },
+    {
+      "id": "TIPP",
+      "name": "TIPP 三项目标等式",
+      "native": "IMPLEMENTED",
+      "evm": "PARTIAL",
+      "required": "最终 zab/tab/uab 三个任意 GT 目标，不只是 pairing product == 1。",
+      "gap": "只有一项终点的 native/JS 对照；不能用上传的 GT 或布尔值作为验证结果。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 493,
+          "anchor": "let _check_z ="
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 495,
+          "anchor": "let _check_ab0 ="
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 498,
+          "anchor": "let _check_ab1 ="
+        }
+      ]
+    },
+    {
+      "id": "MIPP",
+      "name": "MIPP 两项与独立 G1 终点",
+      "native": "IMPLEMENTED",
+      "evm": "NOT_IMPLEMENTED",
+      "required": "tc/uc 两项目标等式，并检查 C*final_r==zc；后者不是额外 pairing。",
+      "gap": "必须保持任何 G1 终点失败会 invalidate 整个验证，不能只数10条配对式。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 508,
+          "anchor": "let _check_t ="
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 510,
+          "anchor": "let _check_u ="
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 519,
+          "anchor": "let b = z == final_res.zc;"
+        }
+      ]
+    },
+    {
+      "id": "AGGREGATE",
+      "name": "最终聚合与全部公开输入",
+      "native": "IMPLEMENTED",
+      "evm": "NOT_IMPLEMENTED",
+      "required": "每行维度与 IC 长度一致、行数=B；所有 X_i,j 按 r^i 进入最终式，同时进入应用 external transcript。",
+      "gap": "只匹配 batch root/session 或复用旧挑战不够；原生调用者负责 external transcript 的完整声明绑定。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 64,
+          "anchor": "if (pub_input.len() + 1) != pvk.ic.len()"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 69,
+          "anchor": "if public_inputs.len() != proof.tmipp.gipa.nproofs as usize"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+          "line": 192,
+          "anchor": "pairing_checks_copy.merge_nonrandom("
+        }
+      ]
+    },
+    {
+      "id": "GT",
+      "name": "GT、Miller 与最终幂",
+      "native": "IMPLEMENTED",
+      "evm": "PARTIAL",
+      "required": "Fp/Fp2/Fp6/Fp12 规范运算；GT 解压/子群/乘幂；完整 Miller、最终幂和任意目标比较。",
+      "gap": "已有部分有限域/软件 Miller 组件；full64 在20M预算失败，未完成最终幂或完整验证；预编译不返回 GT。",
+      "evidence": [
+        {
+          "source": "blstrs-0.7.0/src/gt.rs",
+          "line": 335,
+          "anchor": "pub fn uncompress"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+          "line": 307,
+          "anchor": "let left = self.left.final_exponentiation();"
+        }
+      ]
+    },
+    {
+      "id": "ACCUMULATOR",
+      "name": "随机累积与替代语义",
+      "native": "IMPLEMENTED",
+      "evm": "EQUIVALENCE_UNPROVEN",
+      "required": "明确数学关系与 native 随机系数累积的接受语义、误差和有效输入域；不能使用已知固定随机种子替代论证。",
+      "gap": "原代码用 Gt::generator() 作特殊 neutral sentinel，实际 identity 不同。直接逐式检查需 typed target、完备性/健全性论证，不等于任意坏证明/种子的逐比特接受等价。",
+      "evidence": [
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+          "line": 281,
+          "anchor": "if out != &<E as Engine>::Gt::generator()"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+          "line": 313,
+          "anchor": "let one = E::Gt::generator();"
+        },
+        {
+          "source": "bellperson-0.27.0/src/groth16/aggregate/accumulator.rs",
+          "line": 324,
+          "anchor": "fn derive_non_zero"
+        },
+        {
+          "source": "blstrs-0.7.0/src/gt.rs",
+          "line": 177,
+          "anchor": "fn identity() -> Self"
+        },
+        {
+          "source": "blstrs-0.7.0/src/gt.rs",
+          "line": 181,
+          "anchor": "fn generator() -> Self"
+        }
+      ]
+    }
+  ],
+  "ten_pairing_equations": [
+    {
+      "id": "KZG_V_ALPHA",
+      "pairs": 2,
+      "formula": "e(-g,V_alpha-h*f_v(z))*e(g_alpha-g*z,pi_v_alpha)=1",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 801,
+        "anchor": "pub fn verify_kzg_v"
+      },
+      "target_kind": "IDENTITY_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "KZG_V_BETA",
+      "pairs": 2,
+      "formula": "e(-g,V_beta-h*f_v(z))*e(g_beta-g*z,pi_v_beta)=1",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 801,
+        "anchor": "pub fn verify_kzg_v"
+      },
+      "target_kind": "IDENTITY_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "KZG_W_ALPHA",
+      "pairs": 2,
+      "formula": "e(W_alpha-g*f_w(z),-h)*e(pi_w_alpha,h_alpha-h*z)=1",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 876,
+        "anchor": "pub fn verify_kzg_w"
+      },
+      "target_kind": "IDENTITY_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "KZG_W_BETA",
+      "pairs": 2,
+      "formula": "e(W_beta-g*f_w(z),-h)*e(pi_w_beta,h_beta-h*z)=1",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 876,
+        "anchor": "pub fn verify_kzg_w"
+      },
+      "target_kind": "IDENTITY_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "TIPP_Z",
+      "pairs": 1,
+      "formula": "e(A,B)=ip_ab*Zab_L^c*Zab_R^a",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 493,
+        "anchor": "let _check_z ="
+      },
+      "target_kind": "ACTUAL_GT_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "TIPP_T",
+      "pairs": 2,
+      "formula": "e(A,V_alpha)*e(W_alpha,B)=Tab*Tab_L^c*Tab_R^a",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 495,
+        "anchor": "let _check_ab0 ="
+      },
+      "target_kind": "ACTUAL_GT_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "TIPP_U",
+      "pairs": 2,
+      "formula": "e(A,V_beta)*e(W_beta,B)=Uab*Uab_L^c*Uab_R^a",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 498,
+        "anchor": "let _check_ab1 ="
+      },
+      "target_kind": "ACTUAL_GT_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "MIPP_T",
+      "pairs": 1,
+      "formula": "e(C,V_alpha)=Tc*Tc_L^c*Tc_R^a",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 508,
+        "anchor": "let _check_t ="
+      },
+      "target_kind": "ACTUAL_GT_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "MIPP_U",
+      "pairs": 1,
+      "formula": "e(C,V_beta)=Uc*Uc_L^c*Uc_R^a",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 510,
+        "anchor": "let _check_u ="
+      },
+      "target_kind": "ACTUAL_GT_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    },
+    {
+      "id": "GROTH16_AGGREGATE",
+      "pairs": 3,
+      "formula": "e(alpha*(1+r),beta)*e(IC0*(1+r)+sum_j IC[j+1]*(X0[j]+r*X1[j]),gamma)*e(agg_c,delta)=ip_ab",
+      "evidence": {
+        "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+        "line": 192,
+        "anchor": "pairing_checks_copy.merge_nonrandom("
+      },
+      "target_kind": "ACTUAL_GT_TARGET",
+      "classification": "SOURCE_DERIVED_B2_RELATION_NOT_NEW_EVM_EXECUTION"
+    }
+  ],
+  "logical_pairing_terms": 18,
+  "mandatory_nonpairing_endpoint": {
+    "formula": "C*(1+a*r)==agg_c+c*Zc_L+a*Zc_R",
+    "evidence": {
+      "source": "bellperson-0.27.0/src/groth16/aggregate/verify.rs",
+      "line": 519,
+      "anchor": "let b = z == final_res.zc;"
+    },
+    "evm_status": "NOT_IMPLEMENTED"
+  },
+  "b2_specialization": {
+    "notation": "a=c_inv from gipa-0-round; c=a^-1; r=random-r; z=random-z; additive G1/G2 and multiplicative GT",
+    "fv": "1+a*z",
+    "fw": "z^2*(1+c*r^-1*z)",
+    "final_r": "1+a*r",
+    "final_zc": "agg_c+c*Zc_L+a*Zc_R",
+    "aggregate_r_sum": "1+r"
+  },
+  "b2_material": {
+    "source": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+    "batch_size": 2,
+    "public_input_rows": 2,
+    "fields_per_row": 25,
+    "aggregate_proof_sha256": "072156c814f1ce3ae909223eeaad5d06274c163a5843dd05b5742e4cf529447c",
+    "aggregate_proof_bytes": 5236,
+    "bellperson_vk_sha256": "0b189651c3b32d56251afc5e3ced70b670e0f56a6788d5b1cc6c127ce829ce4c",
+    "arkworks_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+    "shared_research_srs_sha256": "3a8a75be96e4150c757b85f682be37d4e502e8b45a17943171bd0bbbdfd605aa",
+    "verifier_srs_canonical_json_sha256": "78af278c0fcc6940cb6a1a61d1f0955dee91dcbc01d74ef4fe3f14f402ad1bb6",
+    "verifier_srs_hash_encoding": "UTF-8 JSON.stringify(case.verifier_srs,null,2) plus LF; includes n and h_alpha_d; not a standard wire SRS hash",
+    "full_srs_fields": [
+      "g",
+      "g_alpha",
+      "g_beta",
+      "h",
+      "h_alpha",
+      "h_alpha_d",
+      "h_beta",
+      "n"
+    ],
+    "matched_g8_fields": 50,
+    "original_d0_b2_negative": "NOT_ARCHIVED",
+    "new_full_crypto_replay": false,
+    "research_fake_srs": true,
+    "production_setup": false,
+    "rule": "Reuse only this W32 proof with its own VK/SRS/transcript. Do not splice old G5-C1 targets or challenges."
+  },
+  "execution_counts_this_review": {
+    "evm_transactions": 0,
+    "solidity_compilations": 0,
+    "rust_compilations": 0,
+    "setup": 0,
+    "prove": 0,
+    "native_or_js_full_crypto_replays": 0,
+    "group_probes": 0
+  },
+  "exact_snarkpack_evm_verified": false
+}

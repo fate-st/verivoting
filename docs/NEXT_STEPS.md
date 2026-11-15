@@ -1,4 +1,21 @@
-# Next steps: J1 recursive-verifier compatibility BLOCKED (2026-11-14)
+# Next steps: G12 SnarkPack EVM feasibility BLOCKED (2026-11-15)
+
+## Current G12 decision: no G13 / full B2 EVM admission
+
+[G12报告](G12_SNARKPACK_EVM_FEASIBILITY.md)：在最新 J1 提交 `fff0179` 上建立独立审查分支，
+Stage2 `1ade01f` 仅作只读参照。九类原验证检查、10条配对式（18项）及独立MIPP G1终点均已映射到锁定源码；
+但完整GT/Miller/最终幂、原FS、随机累积替代语义和全部续算资源界尚未闭合，结论 `BLOCKED_G12_FEASIBILITY`。
+旧20M是OOG封顶支出，不是完整验证Gas；旧64,518运算小计/41,280B布局也不是完整成本或已测上界。
+完整Gas/最大交易数/存储/运行时间保持null，未启动G13、未提高预算或优化原语。
+本轮0新EVM、0编译、0Setup/Prove；保护2597个旧跟踪文件，历史CSV换行差异经J1原摘要与归一化Git双重检查且不改写。
+
+建议下一项另行授权**B路线的guest可移植性与完整验证语义审查**，先不安装后端、不生成证明。
+需处理BLST FFI/Rayon/编码/随机性、完整关系与program/journal/选举状态绑定；不能假设已知固定种子的随机批检在恶意证明者控制的guest中自动健全。
+C统一批次证明仅为需新协议/套件范围的备选；J1 Fq/Fr不兼容不代表所有zkVM/递归路线不可能。
+本轮到G12停止，不动论文/原协议/合约/配置/历史结果，不自动提交推送。
+只读复核：`node scripts/g12_feasibility_review.mjs --check`；脚本的产物完整性PASS不是可行性PASS。
+
+## Previous J1 decision: recursive-verifier compatibility BLOCKED (2026-11-14)
 
 ## Current J1 decision: stop before joint B2
 

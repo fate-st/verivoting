@@ -1,0 +1,217 @@
+{
+  "schema": "VV/G12/RESOURCE-BUDGET/v1",
+  "gate": "G12",
+  "status": "BLOCKED_G12_FEASIBILITY",
+  "classification": "HISTORICAL_EVIDENCE_AND_PARTIAL_FORMULAS_NOT_A_NEW_BENCHMARK",
+  "local_policy": {
+    "profile": "Existing local Prague research profile; not a universal live-chain limit",
+    "per_transaction_gas_cap": 20000000,
+    "block_context_gas_cap": 30000000,
+    "maximum_total_gas_policy": null,
+    "maximum_total_transactions_policy": null,
+    "maximum_local_time_ms_policy": null,
+    "caps_automatically_increased": false
+  },
+  "known_quantities": [
+    {
+      "name": "Historical full64 failed spend",
+      "value": 20000000,
+      "unit": "Gas",
+      "kind": "HISTORICAL_MEASURED_FAILED_SPEND",
+      "source": "experiments/g5_c3_raw/miller_quarter_full_evm.json",
+      "excludes": "Not a completed Miller or SnarkPack cost; not extrapolated to the full verifier."
+    },
+    {
+      "name": "Four two-term KZG pairing calls only",
+      "value": 411600,
+      "unit": "Gas",
+      "kind": "STANDARD_FORMULA_PARTIAL",
+      "formula": "4*(37700+32600*2)",
+      "source": "https://eips.ethereum.org/EIPS/eip-2537#pairing-check-operation",
+      "excludes": "MSM, parser, FS, GT work, transaction/call/calldata/storage costs and all other checks."
+    },
+    {
+      "name": "Archived compressed B2 proof plus scalar matrix",
+      "value": 6836,
+      "unit": "bytes",
+      "kind": "DERIVED_MATERIAL_LENGTH",
+      "source": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+      "excludes": "No ABI/session/VK/SRS/envelope overhead; not full transaction calldata."
+    },
+    {
+      "name": "Expanded GT field representation proposal",
+      "value": 11520,
+      "unit": "bytes",
+      "kind": "DESIGN_PROPOSAL",
+      "excludes": "Not measured storage and not necessarily all simultaneously live."
+    },
+    {
+      "name": "G9 partial fixed-exponent operation subtotal",
+      "value": 64518,
+      "unit": "square_or_multiply",
+      "kind": "PARTIAL_REFERENCE_ALGORITHM_UPPER_SUBTOTAL",
+      "source": "results/g9_p1_v2/feasibility_review.json",
+      "components": {
+        "GT_subgroup_q_powers": {
+          "count": 15,
+          "bits": 255,
+          "binary_square_multiply_upper_operations": 7650
+        },
+        "GIPA_GT_powers": {
+          "count": 10,
+          "bits": 255,
+          "binary_square_multiply_upper_operations": 5100
+        },
+        "independent_final_exponentiations": {
+          "count": 6,
+          "bits": 4314,
+          "binary_square_multiply_upper_operations": 51768
+        },
+        "known_subprogram_operation_upper_subtotal": 64518,
+        "subtotal_excludes": "Miller, wire decompression, checks/recompression, GT merges, scalar/G1/G2 arithmetic, FS, storage and transactions",
+        "gas_per_operation": null,
+        "complete_verifier_operation_upper_bound": null
+      },
+      "excludes": "Not a lower bound, not a complete verifier upper bound, not Gas; many operations and scheduling are absent."
+    },
+    {
+      "name": "G9 proposed finite register/storage allocation",
+      "value": 41280,
+      "unit": "bytes",
+      "kind": "DESIGN_PROPOSAL",
+      "proposed_slots": 1290,
+      "source": "results/g9_p1_v2/feasibility_review.json",
+      "excludes": "Not measured, compiled or proven maximum live storage; no EVM admission inference."
+    }
+  ],
+  "phase_bounds": [
+    {
+      "id": "PARSE_FS",
+      "required": "规范 scalar/point/GT 解码与子群、完整读取、原 V2 FS 拒绝采样和矩阵绑定",
+      "implementation_complete": false,
+      "maximum_gas_per_step": null,
+      "maximum_step_transactions": null,
+      "maximum_storage_bytes": null,
+      "maximum_execution_time_ms": null,
+      "kind": "UNKNOWN",
+      "reason": "No complete audited EVM implementation/schedule."
+    },
+    {
+      "id": "GROUP_SCALAR",
+      "required": "Fr 逆/幂，G1/G2 MSM；KZG 四式与 MIPP G1 终点",
+      "implementation_complete": false,
+      "maximum_gas_per_step": null,
+      "maximum_step_transactions": null,
+      "maximum_storage_bytes": null,
+      "maximum_execution_time_ms": null,
+      "kind": "UNKNOWN",
+      "reason": "No complete audited EVM implementation/schedule."
+    },
+    {
+      "id": "GT",
+      "required": "Fp2/Fp6/Fp12 乘法/逆/乘幂、15个 GT 解压与 subgroup、10个 GIPA GT 幂",
+      "implementation_complete": false,
+      "maximum_gas_per_step": null,
+      "maximum_step_transactions": null,
+      "maximum_storage_bytes": null,
+      "maximum_execution_time_ms": null,
+      "kind": "UNKNOWN",
+      "reason": "No complete audited EVM implementation/schedule."
+    },
+    {
+      "id": "MILLER_FINAL_EXP",
+      "required": "六项任意 GT 目标关系的 Miller/最终幂，或另经证明的完整等价策略",
+      "implementation_complete": false,
+      "maximum_gas_per_step": null,
+      "maximum_step_transactions": null,
+      "maximum_storage_bytes": null,
+      "maximum_execution_time_ms": null,
+      "kind": "UNKNOWN",
+      "reason": "No complete audited EVM implementation/schedule."
+    },
+    {
+      "id": "SESSION",
+      "required": "BEGIN/ADVANCE/FINISH/CONSUME 的存储、校验、calldata、错误/中止和原子业务提交",
+      "implementation_complete": false,
+      "maximum_gas_per_step": null,
+      "maximum_step_transactions": null,
+      "maximum_storage_bytes": null,
+      "maximum_execution_time_ms": null,
+      "kind": "UNKNOWN",
+      "reason": "No complete audited EVM implementation/schedule."
+    }
+  ],
+  "complete_verifier_bounds": {
+    "maximum_gas_per_transaction_proven": null,
+    "maximum_total_gas": null,
+    "maximum_transactions": null,
+    "maximum_storage_bytes": null,
+    "maximum_execution_time_ms": null,
+    "full_operation_count_upper_bound": null,
+    "complete_b2_positive_gas_measured": null,
+    "complete_b2_negative_gas_measured": null
+  },
+  "total_cost_definition": "BEGIN + sum(ADVANCE_i) + FINISH + CONSUME including parsing, FS, arithmetic, checkpoints, calldata and storage.",
+  "continuation_design": {
+    "implementation_status": "DESIGN_ONLY",
+    "tower": {
+      "Fp": "canonical <p, two u256 limbs; not Montgomery internals",
+      "Fp2": "u^2=-1",
+      "Fp6": "v^3=u+1",
+      "Fp12": "w^2=v"
+    },
+    "checkpoint": [
+      "session/version",
+      "phase and micro-PC",
+      "coefficient/bit/pair cursors",
+      "canonical arithmetic registers",
+      "G2 line state and signed-x Miller cursor",
+      "completed-check bitmap"
+    ],
+    "transition_rule": "Only contract-computed or algebraically checked transitions from the authenticated previous checkpoint; never trust uploaded line/GT/host-success values.",
+    "gt_targets": "Separate IdentityTarget tag from ActualGT(value). Never globally replace literal GT generator by multiplicative identity.",
+    "pow": "Fixed exponent bit schedule; checked inverses; exact tower/line embedding and final-exponent convention require source/vector validation.",
+    "session_binding": [
+      "chain ID",
+      "verifier and unique receiver addresses",
+      "suite/program version",
+      "full VK and verifier SRS hashes",
+      "proof hash",
+      "ordered matrix and external-transcript hash",
+      "B",
+      "eid and final context",
+      "registration/accepted batch roots",
+      "region and batch index",
+      "old CT and proposed new CT"
+    ],
+    "stages": [
+      {
+        "name": "BEGIN",
+        "rule": "Bind full statement; at most one pending next batch; no accepted CT/NF writes."
+      },
+      {
+        "name": "ADVANCE",
+        "rule": "Enforce session, next micro-PC and authenticated registers; resume all required operations."
+      },
+      {
+        "name": "FINISH",
+        "rule": "All nine categories, ten pairing relations and G1 endpoint complete before VERIFIED."
+      },
+      {
+        "name": "CONSUME",
+        "rule": "Fixed receiver only; recheck current old CT/index/root/fresh NFs, exact matrix and state proof; consume once and update CT/NFs atomically."
+      },
+      {
+        "name": "ABORT",
+        "rule": "Incomplete/expired/out-of-budget session is not accepted; preserve accepted business state, never reinterpret as cryptographic INVALID or VERIFIED."
+      }
+    ],
+    "synchronous_view_drop_in": false,
+    "old_g8_contracts_changed": false,
+    "original_fiat_shamir_changed": false,
+    "equivalence_obligation": "Inductively relate every checkpoint/terminal result to the chosen supported-domain verifier relation; explicitly account for randomized batching/sentinel semantics and completeness.",
+    "rejection_sampling": "Original data-dependent cumulative-hash rejection loop has no established practical worst-case cap. A resource watchdog gives ABORT/INCOMPLETE, not proof invalidity or unconditional full-domain completion.",
+    "public_chain_time": "Local wall time does not bound transaction inclusion/finality time."
+  },
+  "may_start_full_b2_evm": false
+}

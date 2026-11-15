@@ -1,0 +1,123 @@
+{
+  "schema": "VV/G12/ROUTE-DECISION/v1",
+  "gate": "G12",
+  "status": "BLOCKED_G12_FEASIBILITY",
+  "routes": [
+    {
+      "id": "A",
+      "name": "原 SnarkPack 多交易精确 EVM",
+      "decision": "BLOCKED_DO_NOT_START_G13",
+      "semantic_status": "All relations mapped; supported-domain equivalence/randomized accumulator policy unproven.",
+      "evm_status": "A reviewable continuation skeleton exists, not a complete implemented/resource-audited verifier.",
+      "required_work": [
+        "complete canonical parser and FS",
+        "GT/Miller/final exponent stepper",
+        "all equations and MIPP endpoint",
+        "typed GT targets and sound acceptance semantics",
+        "bounded storage/Gas/transactions schedule",
+        "independent asynchronous receiver protocol"
+      ],
+      "total_gas": null,
+      "transactions": null,
+      "storage_bytes": null,
+      "feasibility": "UNKNOWN_NOT_PROVEN_IMPOSSIBLE",
+      "optimization_campaign_started": false
+    },
+    {
+      "id": "B",
+      "name": "完整 SnarkPack 验证的递归/zkVM 包装",
+      "decision": "PREFERRED_NEXT_SEPARATE_FEASIBILITY_REVIEW_ONLY",
+      "semantic_status": "Must actually verify the entire original statement inside an attested/constrained computation; no host Boolean shortcut.",
+      "evm_status": "Outer verifier/curve/VK and guest portability are not selected or demonstrated.",
+      "required_work": [
+        "audit guest portability of locked bellperson/blstrs/BLST FFI/Rayon and entropy; no assumption native crates run unchanged",
+        "preserve canonical encoding, complete ordered inputs, transcript, all GT/GIPA/KZG/TIPP/MIPP/aggregate checks",
+        "specify a sound deterministic verifier relation or justified randomness; known-seed native randomized batching is not automatically sound inside a prover-controlled guest",
+        "bind program/image ID, version, full VK/SRS, proof/matrix hashes and election/batch/state statement in the public journal and contract",
+        "admit new backend/assumptions/setup and manifests explicitly; measure guest prove/resources and outer EVM verify"
+      ],
+      "j1_boundary": "Locked native Fq gadget cannot be used directly in current Fr; no general impossibility of zkVM or other recursion follows.",
+      "prototype_compiled_this_round": false,
+      "new_backend_installed": false,
+      "benchmark_evidence": null,
+      "proof_time_ms": null,
+      "peak_rss_mib": null,
+      "outer_evm_gas": null,
+      "feasibility": "UNKNOWN_NO_SPEED_OR_COMPATIBILITY_CLAIM"
+    },
+    {
+      "id": "C",
+      "name": "重新设计统一批次证明",
+      "decision": "BACKUP_REQUIRES_NEW_PROTOCOL_SCOPE",
+      "semantic_status": "A different proof structure must explicitly retain ballot legality plus exact accepted batch/state binding.",
+      "required_work": [
+        "either verify existing original proofs in-circuit, or explicitly redesign voter/prover data flow and suite",
+        "do not assume aggregator possesses private voter witnesses or replace proof checks with host results",
+        "new circuit/layout/VK/setup/manifest and security proof; preserve old protocol as comparison baseline"
+      ],
+      "current_compatible_inner_verifier": false,
+      "constraints": null,
+      "prove_time_ms": null,
+      "evm_gas": null,
+      "feasibility": "UNKNOWN_NOT_A_DROP_IN_OPTIMIZATION"
+    }
+  ],
+  "gate_checks": {
+    "all_nine_categories_mapped": true,
+    "all_ten_equations_and_g1_endpoint_mapped": true,
+    "full_supported_domain_equivalence_closed": false,
+    "complete_gt_stepper_implemented": false,
+    "all_phase_resource_bounds_closed": false,
+    "explicit_total_resource_admission_closed": false,
+    "full_b2_evm_positive_and_cryptographic_negative_passed": false
+  },
+  "final_answers": [
+    {
+      "question": "真正技术障碍是什么？",
+      "answer": "Identity-only pairing ABI cannot evaluate arbitrary GT targets; full original parser/FS/GT/semantic preservation and total staged resource schedule are missing, not just a Solidity function."
+    },
+    {
+      "question": "G9 已解决哪些问题？",
+      "answer": "Pinned wire/transcript conformance and one endpoint; identified ten equations plus G1 endpoint, B2 source/formulas, sentinel issue and continuation skeleton; documented failed full64 spend. Not a complete verifier."
+    },
+    {
+      "question": "是否有明确可审计的多交易实现路线？",
+      "answer": "Only a source-mapped design skeleton. Complete transition implementation, supported-domain acceptance semantics and terminal equivalence remain unproven."
+    },
+    {
+      "question": "哪些资源上界未知？",
+      "answer": "Complete parse/FS/GT/Miller/final-exponent and checkpoint costs; full per-step/total Gas, maximum transactions/live storage/runtime and practical rejection-sampling admission remain null."
+    },
+    {
+      "question": "能否进入 B2 完整 EVM？",
+      "answer": "No. G12 is BLOCKED; no G13, no partial-check acceptance and no cap increase."
+    },
+    {
+      "question": "替代方向是什么？",
+      "answer": "Prioritize a separately authorized B guest-portability/semantics review; C is a redesign fallback. Neither is implemented or known cheaper. Preserve current real individual-proof fallback and disclose its non-SnarkPack boundary."
+    }
+  ],
+  "next_minimal_b2_acceptance_if_gate_later_passes": {
+    "authorized_now": false,
+    "positive": "Reuse the archived W32 B2 proof with its complete original statement and run all checks.",
+    "negative": "Change only row 1 input[7] (second voter nullifier), keep original proof/VK/SRS, rebuild transcript and session, require complete cryptographic rejection; not merely session mismatch.",
+    "measurements": [
+      "all per-transaction receipts and sum Gas",
+      "transaction count",
+      "calldata",
+      "maximum live storage",
+      "full completion time and relation coverage"
+    ]
+  },
+  "stop": {
+    "g13_started": false,
+    "contracts_changed": false,
+    "setup_or_prove_started": false,
+    "paper_changed": false,
+    "auto_commit": false,
+    "auto_push": false,
+    "instruction": "Stop after G12. A report-integrity PASS is never a feasibility or verifier PASS."
+  },
+  "inventory_sha256": "1b92b7ae4072088397f94088ef84a90ff726ed3ef1f5e6f099d09ba3425ec1b4",
+  "resource_budget_sha256": "a223453bc9226dc8abbf174007ba29857f6c599eb8282e1223d4b0f308040cd9"
+}

@@ -1,6 +1,22 @@
 # Implementation and claim boundary
 
-## Current J1 joint-proof feasibility: BLOCKED at field compatibility
+## Current G12 SnarkPack EVM feasibility: BLOCKED, no G13
+
+[报告](G12_SNARKPACK_EVM_FEASIBILITY.md)及 `results/g12/` 三份JSON：源码/既有证据审查完成，
+最终状态为 `BLOCKED_G12_FEASIBILITY`，不是完整SnarkPack EVM通过，也不是新基准实验。
+锁定bellperson0.27.0/blstrs0.7.0，九类检查、10条配对式/18项与额外MIPP G1终点已逐项列出源码位置。
+重点边界：原FS编码/拒绝采样，完整VK/SRS（含n/h_alpha_d），任意GT目标及generator/identity sentinel，随机批检与确定性替代的健全性。
+完整GT stepper/Miller/最终幂、终态等价性、每步/总Gas与最大交易/存储/时间均未闭合；未知项为null。
+旧20M耗尽仅是失败支出；411,600 Gas只是四次KZG配对预编译的局部公式，非完整交易或验证成本。
+
+A多交易路线保留设计骨架但不准入G13；B递归/zkVM包装仅建议下一轮单独审查，兼容性/性能未知；C为新协议范围备选。
+J1只证实当前Fq gadget不能直接用于Fr，不推出所有包装路线不可行；不得在guest中未经论证使用固定种子随机累积。
+本轮保护2597个旧跟踪文件；一个既有CRLF/LF差异用J1原字节摘要及Git归一化摘要双重确认，不改CSV。
+仅新增审查脚本/报告/JSON/SHA256SUMS并更新两份滚动索引，旧协议/合约/锁/参数/历史归档与论文不变。
+新增EVM/编译/Setup/Prove/完整密码学重放为0，到G12停止，不自动提交或推送。
+复核命令：`node scripts/g12_feasibility_review.mjs --check`，完整性审查PASS与可行性BLOCKED必须分开。
+
+## Previous J1 joint-proof feasibility: BLOCKED at field compatibility
 
 [报告](JOINT_PROOF_FEASIBILITY.md)及[比较边界](JOINT_PROOF_COMPARISON.md)：原D5/W32单票公开材料、
 原VK、25项输入、192B Ark证明与512B EIP负A表示一致；这只是宿主输入预检，不是电路内验证。
