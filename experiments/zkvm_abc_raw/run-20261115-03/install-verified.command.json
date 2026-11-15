@@ -1,0 +1,29 @@
+{
+  "name": "install-verified",
+  "program": "node",
+  "args": [
+    "experiments/zkvm_abc/scripts/recovery_install.mjs",
+    "experiments/zkvm_abc_raw/run-20261115-03"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T12:13:02.843Z",
+  "finished_utc": "2026-11-15T12:13:06.222Z",
+  "exit_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 3378.978208,
+  "timeout_seconds": 180,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": 588.90625,
+  "sampled_max_process_tree_rss_mib": 591.953125,
+  "rss_sample_count": 3,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/install-verified.stdout.log",
+  "stderr": "logs/install-verified.stderr.log"
+}

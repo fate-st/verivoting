@@ -1,0 +1,43 @@
+{
+  "name": "clippy-zkvm",
+  "program": "node",
+  "args": [
+    "experiments/zkvm_abc/scripts/recovery_exec.mjs",
+    "cargo",
+    "clippy",
+    "--manifest-path",
+    "experiments/zkvm_abc/Cargo.toml",
+    "--release",
+    "--locked",
+    "--offline",
+    "-p",
+    "g17-host",
+    "--features",
+    "zkvm",
+    "--all-targets",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T12:25:26.021Z",
+  "finished_utc": "2026-11-15T12:26:04.946Z",
+  "exit_code": 101,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 38924.862042,
+  "timeout_seconds": 600,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": 440.9375,
+  "sampled_max_process_tree_rss_mib": 2391.0625,
+  "rss_sample_count": 38,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/clippy-zkvm.stdout.log",
+  "stderr": "logs/clippy-zkvm.stderr.log"
+}

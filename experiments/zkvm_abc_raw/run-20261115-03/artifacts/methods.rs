@@ -1,0 +1,3 @@
+pub const G17_GUEST_B_ELF: &[u8] = include_bytes!("/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/zkvm_abc/target/riscv-guest/g17-methods/g17-guest-b/riscv32im-risc0-zkvm-elf/release/g17-guest-b.bin");
+pub const G17_GUEST_B_PATH: &str = "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/zkvm_abc/target/riscv-guest/g17-methods/g17-guest-b/riscv32im-risc0-zkvm-elf/release/g17-guest-b.bin";
+pub const G17_GUEST_B_ID: [u32; 8] = [329079905, 1320215169, 883483103, 1222157864, 341348593, 3065106887, 1409740102, 564331449];

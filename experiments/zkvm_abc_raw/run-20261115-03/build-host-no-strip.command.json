@@ -1,0 +1,38 @@
+{
+  "name": "build-host-no-strip",
+  "program": "node",
+  "args": [
+    "experiments/zkvm_abc/scripts/recovery_exec.mjs",
+    "cargo",
+    "build",
+    "--manifest-path",
+    "experiments/zkvm_abc/Cargo.toml",
+    "--release",
+    "--locked",
+    "-p",
+    "g17-host",
+    "--features",
+    "zkvm"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T12:21:12.903Z",
+  "finished_utc": "2026-11-15T12:22:34.431Z",
+  "exit_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 81527.272459,
+  "timeout_seconds": 600,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": 448.453125,
+  "sampled_max_process_tree_rss_mib": 778.46875,
+  "rss_sample_count": 81,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/build-host-no-strip.stdout.log",
+  "stderr": "logs/build-host-no-strip.stderr.log"
+}

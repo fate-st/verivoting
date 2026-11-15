@@ -1,6 +1,24 @@
-# Next steps: G17 Z0/Z1 blocked by toolchain download (2026-11-15)
+# Next steps: G17 Z1 real guest execution passed (2026-11-15)
 
-## Current G17: restore pinned toolchain, then only four B guest cases
+## Current scope completed: pinned tools + four existing B guest cases
+
+[本轮报告](G17_Z1_GUEST_EXECUTION.md) / `results/g17_z1_recovery/`：官方SDK/r0vm3.1.0与guest Rust1.97.0已完整下载并匹配原定官方SHA。
+只在下载命令使用系统已有代理，工具安装于项目target目录；不改全局rustup默认、shim或profile。
+真实Release guest/host与后续locked/offline构建通过；B1/B2正例和单字段错误公开输入共4项真实guest验收通过。
+两个正例分别481,270,965/714,456,045 user cycles、3.662/5.355秒；错误输入分别在第1/第2份Groth16处拒绝。
+反例panic接口不返回SessionInfo，周期为null；单样本执行不是证明时间或统计性能结论。RSS口径及程序/ELF哈希见原始报告。
+
+主机strip工具的dyld故障仅用本次命令STRIP=none绕过，算法/guest源码不变。fmt通过；严格Clippy因主机驱动进入嵌套guest构建报E0463，未声称通过。
+旧G17/G12只读检查通过，旧BLOCKED报告保持历史原样。新报告检查：`node experiments/zkvm_abc/scripts/recovery_report.mjs --check`。
+
+**本轮到Z1停止。** 下一步可以单独评审Z2 SnarkPack guest的完整语义/可移植性，尚不自动开发。
+必须先处理原FS/GT/GIPA/KZG/TIPP/MIPP、BLST FFI/Rayon以及随机累积健全性，不能把固定种子随机批检当成已证明等价。
+不得由本次Groth16 execute成功推断SnarkPack可运行、真实Prove/EVM可行或完整状态绑定完成。
+未生成任何zkVM receipt/新选票证明，未写合约、未改协议Manifest/论文，不自动提交推送。
+
+## Previous G17 attempt: toolchain download blocked
+
+### Previous instructions: restore pinned toolchain, then only four B guest cases
 
 [G17首轮报告](G17_ZKVM_ABC_COMPARISON.md)：隔离工程与真实原票输入已建立，原生B1/B2正例及改最后一票input[7]反例共4项通过。
 这不是PASS_GUEST。官方guest Rust/SDK下载失败，实际guest构建因工具链缺失退出101；状态BLOCKED_COMPATIBILITY，guest所有性能指标null。

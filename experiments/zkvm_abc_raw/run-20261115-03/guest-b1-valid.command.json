@@ -1,0 +1,32 @@
+{
+  "name": "guest-b1-valid",
+  "program": "node",
+  "args": [
+    "experiments/zkvm_abc/scripts/recovery_exec.mjs",
+    "host",
+    "guest",
+    "experiments/zkvm_abc_raw/run-20261115-02/materials/b1-valid.json",
+    "experiments/zkvm_abc_raw/run-20261115-03/guest-b1-valid.json"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T12:22:55.997Z",
+  "finished_utc": "2026-11-15T12:23:00.126Z",
+  "exit_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 4129.06475,
+  "timeout_seconds": 600,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": 48.40625,
+  "sampled_max_process_tree_rss_mib": 93.109375,
+  "rss_sample_count": 4,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/guest-b1-valid.stdout.log",
+  "stderr": "logs/guest-b1-valid.stderr.log"
+}

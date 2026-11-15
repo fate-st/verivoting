@@ -1,6 +1,20 @@
 # Implementation and claim boundary
 
-## Current G17 Z0/Z1: native controls passed, guest blocked by toolchain download
+## Current G17 Z1: pinned toolchain restored; four real guest cases passed
+
+[本轮报告](G17_Z1_GUEST_EXECUTION.md)及`results/g17_z1_recovery/`：官方SDK/r0vm3.1.0、guest Rust1.97.0的完整资产与原锁定SHA一致。
+真实RISC-V ELF和组合程序/image ID已生成；带zkvm功能的Release构建及后续locked/offline构建通过。
+原B1/B2正确证明被guest接受，两个只改末票input[7]的反例被guest分别以G17_INVALID_GROTH16_0/1拒绝，4/4符合预期。
+B1/B2正例为481,270,965/714,456,045 user cycles，executor耗时3.662/5.355秒；反例SDK错误接口无SessionInfo，周期保留null。
+每例一次功能执行；RSS是主机进程/树轮询样本，不是guest逻辑内存、精确峰值或证明器内存。
+
+只修复下载/本次PATH及host strip配置，不改共享验证函数或guest源码。fmt通过；严格Clippy仍有嵌套主机驱动/目标std问题，真实失败日志保留。
+旧G17/G12历史检查通过，旧归档未覆盖。所有新数据来自实际执行；基于34097bd加本轮未提交恢复脚本与源码快照，不称干净提交复现。
+没有生成zkVM证明/receipt，没有执行SnarkPack guest、累计、EVM或新合约；不由Z1通过推导完整方案可行或效率优势。
+到Z1停止，下一轮仅可先评审Z2完整语义准入，不自动编码/提交/推送。
+只读检查：`node experiments/zkvm_abc/scripts/recovery_report.mjs --check`。
+
+## Previous G17 Z0/Z1 attempt: native controls passed, guest blocked by toolchain download
 
 [首轮报告](G17_ZKVM_ABC_COMPARISON.md)与 `results/g17/`：从已上传G12提交 `a73d7f5` 建立独立G17分支，
 新增隔离工作区/配置与完整Groth16验证guest源码，不改根锁/Manifest/原证明/曲线/合约/论文。

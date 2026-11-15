@@ -1,0 +1,43 @@
+{
+  "status": "PASS_PINNED_TOOLCHAIN_EXTRACTED",
+  "method": "Verified official tar archives into rzup-compatible version directories",
+  "global_rust_default_changed": false,
+  "global_cargo_shims_changed": false,
+  "shell_profile_changed": false,
+  "records": [
+    {
+      "archive": "target/g17-tools/cargo-risczero-3.1.0-verified.tgz",
+      "archive_sha256": "3b50b0393b8e4158e7129add4cfe0cbc536e994b5abc6a3a435e1e6b841c0990",
+      "installed_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin",
+      "binaries": [
+        {
+          "path": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin/cargo-risczero",
+          "sha256": "d3c802ad61754b12a34dc99a260b5284e78582fe8c97205dad188f9cd2c772bb",
+          "bytes": 13739648
+        },
+        {
+          "path": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin/r0vm",
+          "sha256": "52651dc0fd0afbe6cf91bf6bf67f7da63c56a1d5f3fdcdda617f9c75e3eae5fd",
+          "bytes": 70415152
+        }
+      ]
+    },
+    {
+      "archive": "target/g17-tools/rust-toolchain-1.97.0-verified.tar.gz",
+      "archive_sha256": "85070d82aebbe8e1027e75f2cd0c781f5c82c0ae7e06697218be9d8b71dec15d",
+      "installed_directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/toolchains/v1.97.0-rust-aarch64-apple-darwin",
+      "binaries": [
+        {
+          "path": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/toolchains/v1.97.0-rust-aarch64-apple-darwin/bin/rustc",
+          "sha256": "0c103b8fff89933298ea4858dc777a52be022204057daf9d21945f6c4fdc62eb",
+          "bytes": 50680
+        },
+        {
+          "path": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/toolchains/v1.97.0-rust-aarch64-apple-darwin/bin/cargo",
+          "sha256": "9838acdcd51f4fe2be812c08b5278434acac541dc1daf928347cf4968b546947",
+          "bytes": 38581048
+        }
+      ]
+    }
+  ]
+}

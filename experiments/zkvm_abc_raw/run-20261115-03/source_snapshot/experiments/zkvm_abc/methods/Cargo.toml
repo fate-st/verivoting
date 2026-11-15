@@ -1,0 +1,11 @@
+[package]
+name = "g17-methods"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[build-dependencies]
+risc0-build = "=3.0.7"
+
+[package.metadata.risc0]
+methods = ["../guest_b_groth16"]

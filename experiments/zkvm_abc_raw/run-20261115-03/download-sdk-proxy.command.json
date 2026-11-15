@@ -1,0 +1,42 @@
+{
+  "name": "download-sdk-proxy",
+  "program": "curl",
+  "args": [
+    "--proxy",
+    "http://127.0.0.1:7890",
+    "--silent",
+    "--show-error",
+    "--fail",
+    "--location",
+    "--retry",
+    "2",
+    "--retry-delay",
+    "2",
+    "--max-time",
+    "540",
+    "--output",
+    "target/g17-tools/cargo-risczero-3.1.0-verified.tgz",
+    "https://github.com/risc0/risc0/releases/download/v3.1.0/cargo-risczero-aarch64-apple-darwin.tgz"
+  ],
+  "cwd": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+  "started_utc": "2026-11-15T12:09:57.991Z",
+  "finished_utc": "2026-11-15T12:10:02.968Z",
+  "exit_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "termination": null,
+  "wall_ms": 4976.875292,
+  "timeout_seconds": 600,
+  "single_process_rss_limit_mib": 16384,
+  "sampled_max_single_process_rss_mib": 6.296875,
+  "sampled_max_process_tree_rss_mib": 6.296875,
+  "rss_sample_count": 4,
+  "memory_scope": "Polled RSS, not exact high-water mark or guest memory. Null if no process sample.",
+  "env_overrides": {
+    "CARGO_BUILD_JOBS": "2",
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0"
+  },
+  "stdout": "logs/download-sdk-proxy.stdout.log",
+  "stderr": "logs/download-sdk-proxy.stderr.log"
+}
