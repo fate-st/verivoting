@@ -1,0 +1,29 @@
+[package]
+name = "vv-j1-inner-verifier-probe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "MIT OR Apache-2.0"
+
+# Deliberately independent: enabling verifier gadgets here must not modify
+# the protocol workspace's dependency features, Cargo.toml or Cargo.lock.
+[workspace]
+
+[dependencies]
+ark-bls12-381 = "=0.4.0"
+ark-crypto-primitives = { version = "=0.4.0", features = ["r1cs", "snark"] }
+ark-ff = "=0.4.2"
+ark-groth16 = { version = "=0.4.0", features = ["r1cs"] }
+ark-r1cs-std = "=0.4.0"
+ark-relations = "=0.4.0"
+
+[[bin]]
+name = "j1-native-fq-compile"
+path = "../../crates/vv-friendly-crypto/src/joint/native_fq_compile.rs"
+
+[[bin]]
+name = "j1-current-outer-fr-rejected"
+path = "../../crates/vv-friendly-crypto/src/joint/current_outer_fr_rejected.rs"
+
+[profile.release]
+opt-level = 1

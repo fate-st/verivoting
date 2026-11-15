@@ -1,0 +1,564 @@
+{
+  "schema": "VV/JOINT/J1-SUMMARY/v1",
+  "status": "BLOCKED_INNER_RECURSIVE_VERIFIER",
+  "reason": "Locked Groth16VerifierGadget is over inner BLS12-381 Fq, not the current outer/state Fr; no compatible non-native pairing verifier has been implemented.",
+  "run_directory": "experiments/joint_proof_raw/run-20261114-03",
+  "baseline_commit": "1ade01f12bc95ab00a514a7986a984816fe1741b",
+  "branch": "experiment/j1-joint-proof-feasibility",
+  "source_version_sha256": "77d62c7e9695b7f2eea97c4627f57164cd570179505f59db3febfd7103989ac2",
+  "config_sha256": "2a7914c08f35a3156c67c55c4604a53439395c8177b3ff41e4b55cac647049a0",
+  "audit": {
+    "audit": "PASS_HONEST_J1_BLOCKED_EVIDENCE",
+    "j1_status": "BLOCKED_INNER_RECURSIVE_VERIFIER",
+    "constraint_count": null,
+    "recursive_verification_executed": false,
+    "original_fixture_checked": true,
+    "old_artifacts_checked": 2487,
+    "source_version_sha256": "77d62c7e9695b7f2eea97c4627f57164cd570179505f59db3febfd7103989ac2"
+  },
+  "fixed_outer_constraint_field": "BLS12-381 Fr",
+  "fixed_outer_constraint_field_bits": 255,
+  "native_gadget_constraint_field": "BLS12-381 Fq",
+  "native_gadget_constraint_field_bits": 381,
+  "public_fixture_preflight_passed": true,
+  "original_ark_proof_sha256": "f382fb87fa793b36fc276fe16b1baf5d477ad1bc122a98c3a9a66b0700fc4dca",
+  "original_ark_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+  "original_eip_proof_sha256": "9381b5c88b879b15364b575671a15b3de269110e6d5081d146905e0aff63a4f9",
+  "r1cs_synthesized": false,
+  "r1cs_constraints": null,
+  "r1cs_public_input_count": null,
+  "r1cs_satisfied": null,
+  "inner_circuit_crypto_negative_tests": [
+    {
+      "name": "valid_original_proof",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "wrong_nullifier",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "changed_ciphertext",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "different_election_context",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "mismatched_vk",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    }
+  ],
+  "setup_count": 0,
+  "proof_generation_count": 0,
+  "joint_proof_bytes": null,
+  "joint_vk_sha256": null,
+  "joint_setup_ms": null,
+  "joint_prove_ms": null,
+  "joint_verify_ms": null,
+  "joint_prover_peak_rss_mib": null,
+  "joint_evm_gas": null,
+  "j2_j5_started": false,
+  "suite_changed": false,
+  "voter_secret_material_read": false,
+  "compiler_errors": [
+    {
+      "code": "E0271",
+      "message": "type mismatch resolving `<Fp<MontBackend<FqConfig, 6>, 6> as Field>::BasePrimeField == Fp<MontBackend<FrConfig, 4>, 4>`"
+    }
+  ],
+  "attempts": [
+    {
+      "directory": "experiments/joint_proof_raw/run-20261114-01",
+      "status": "FAIL_OR_RESOURCE_BLOCKED",
+      "error": "AssertionError [ERR_ASSERTION]: build-public-preflight unexpected compiler/runtime result\n\n101 !== 0\n",
+      "wall_ms": 10080.672292,
+      "commands": [
+        {
+          "name": "fmt-workspace",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "fmt",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 387.292959,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/fmt-workspace.log"
+        },
+        {
+          "name": "fmt-isolated",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "fmt",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 47.047458000000006,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/fmt-isolated.log"
+        },
+        {
+          "name": "build-public-preflight",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "vv-friendly-dkg",
+            "--bin",
+            "j1_inner_verifier_probe"
+          ],
+          "expected_exit_code": 0,
+          "code": 101,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 9600.62675,
+          "polled_process_tree_peak_rss_mib": 616.234375,
+          "log": "logs/build-public-preflight.log"
+        }
+      ]
+    },
+    {
+      "directory": "experiments/joint_proof_raw/run-20261114-02",
+      "status": "FAIL_OR_RESOURCE_BLOCKED",
+      "error": "AssertionError [ERR_ASSERTION]: not the expected concrete trait/domain incompatibility",
+      "wall_ms": 18013.353124999998,
+      "commands": [
+        {
+          "name": "fmt-workspace",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "fmt",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 461.88129200000003,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/fmt-workspace.log"
+        },
+        {
+          "name": "fmt-isolated",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "fmt",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 110.06850000000009,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/fmt-isolated.log"
+        },
+        {
+          "name": "build-public-preflight",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "vv-friendly-dkg",
+            "--bin",
+            "j1_inner_verifier_probe"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 1608.617,
+          "polled_process_tree_peak_rss_mib": 184.4375,
+          "log": "logs/build-public-preflight.log"
+        },
+        {
+          "name": "clippy-public-preflight",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "clippy",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "vv-friendly-dkg",
+            "--bin",
+            "j1_inner_verifier_probe",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 1058.9749579999998,
+          "polled_process_tree_peak_rss_mib": 123.125,
+          "log": "logs/clippy-public-preflight.log"
+        },
+        {
+          "name": "public-fixture-preflight",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "run",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "vv-friendly-dkg",
+            "--bin",
+            "j1_inner_verifier_probe",
+            "--",
+            "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/joint_proof_raw/run-20261114-02/public_preflight.json"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 762.618125,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/public-fixture-preflight.log"
+        },
+        {
+          "name": "build-native-fq-control",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-native-fq-compile"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 8141.695833999999,
+          "polled_process_tree_peak_rss_mib": 386.9375,
+          "log": "logs/build-native-fq-control.log"
+        },
+        {
+          "name": "clippy-native-fq-control",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "clippy",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-native-fq-compile",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 5233.983125000001,
+          "polled_process_tree_peak_rss_mib": 379.609375,
+          "log": "logs/clippy-native-fq-control.log"
+        },
+        {
+          "name": "native-fq-control",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "run",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-native-fq-compile"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 454.799500000001,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/native-fq-control.log"
+        },
+        {
+          "name": "current-outer-fr-compile",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-current-outer-fr-rejected",
+            "--message-format=json"
+          ],
+          "expected_exit_code": 101,
+          "code": 101,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 129.88066700000127,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/current-outer-fr-compile.log"
+        }
+      ]
+    },
+    {
+      "directory": "experiments/joint_proof_raw/run-20261114-03",
+      "status": "BLOCKED_INNER_RECURSIVE_VERIFIER",
+      "error": null,
+      "wall_ms": 1722.867833,
+      "commands": [
+        {
+          "name": "fmt-workspace",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "fmt",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 391.339833,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/fmt-workspace.log"
+        },
+        {
+          "name": "fmt-isolated",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "fmt",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--all",
+            "--",
+            "--check"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 48.307458,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/fmt-isolated.log"
+        },
+        {
+          "name": "build-public-preflight",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "vv-friendly-dkg",
+            "--bin",
+            "j1_inner_verifier_probe"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 73.24062500000002,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/build-public-preflight.log"
+        },
+        {
+          "name": "clippy-public-preflight",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "clippy",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "vv-friendly-dkg",
+            "--bin",
+            "j1_inner_verifier_probe",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 140.69595800000002,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/clippy-public-preflight.log"
+        },
+        {
+          "name": "public-fixture-preflight",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "run",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "vv-friendly-dkg",
+            "--bin",
+            "j1_inner_verifier_probe",
+            "--",
+            "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/joint_proof_raw/run-20261114-03/public_preflight.json"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 495.1893329999999,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/public-fixture-preflight.log"
+        },
+        {
+          "name": "build-native-fq-control",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-native-fq-compile"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 47.35983299999998,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/build-native-fq-control.log"
+        },
+        {
+          "name": "clippy-native-fq-control",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "clippy",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-native-fq-compile",
+            "--",
+            "-D",
+            "warnings"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 109.65479199999982,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/clippy-native-fq-control.log"
+        },
+        {
+          "name": "native-fq-control",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "run",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-native-fq-compile"
+          ],
+          "expected_exit_code": 0,
+          "code": 0,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 216.2007920000001,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/native-fq-control.log"
+        },
+        {
+          "name": "current-outer-fr-compile",
+          "program": "cargo",
+          "args": [
+            "+1.99.1",
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            "tools/j1-inner-verifier-probe/Cargo.toml",
+            "--bin",
+            "j1-current-outer-fr-rejected",
+            "--message-format=json"
+          ],
+          "expected_exit_code": 101,
+          "code": 101,
+          "signal": null,
+          "termination": null,
+          "elapsed_ms": 86.93187499999999,
+          "polled_process_tree_peak_rss_mib": null,
+          "log": "logs/current-outer-fr-compile.log"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,20 @@
-# Next steps: EVM fold comparison passed (2026-11-14)
+# Next steps: J1 recursive-verifier compatibility BLOCKED (2026-11-14)
 
-## Latest completed step: same-backend two-B4 EVM fold comparison
+## Current J1 decision: stop before joint B2
+
+[J1报告](JOINT_PROOF_FEASIBILITY.md)：从1ade01f建立独立分支，原票/VK/25项输入及EIP负A编码预检通过；
+隔离arkworks0.4原生Fq验证器仅编译通过，要求当前Fr约束域时真实E0271不兼容。
+结论BLOCKED_INNER_RECURSIVE_VERIFIER，不是内存/约束超限，也不是密码学负例通过。
+未构建内层R1CS、未生成外层证明；约束数/证明耗时/RSS/Gas均null。J2—J5不开始。
+三次尝试（含JSON宏及分类器开发错误）原始日志/源码与SHA均保留，最终证据run-20261114-03。
+原电路/主依赖锁/Manifest/VK/SnarkPack/P3/合约/Stage2结果不变；本轮不改论文、不自动提交。
+
+若继续本路线，先单独确定可审计的Fr非原生配对实现或新递归后端/套件准入；不能仅改类型别名或换曲线后沿用旧Manifest。
+在明确新范围之前停止，不自动投入大规模非原生算术开发、不重复Setup/Prove或扩B4/EVM。
+只读查看本轮结果：`node scripts/joint_proof_check.mjs experiments/joint_proof_raw/run-20261114-03`。
+现有experiment_progress查看器继续仅展示既有Stage2实验，不把其PASS当作J1通过。
+
+## Previous completed step: same-backend two-B4 EVM fold comparison
 
 [本轮报告](STAGE2_EVM_FOLD_COMPARISON.md)：真实 Jubjub Direct Fold 接收器与原 State Proof 接收器，
 独立新 Prague VM、相同认证/记录/根/NF/CT1/CT2/冻结目标，均正常完成；原合约/VK/配置和旧raw未改。

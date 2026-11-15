@@ -1,0 +1,11 @@
+   Compiling vv-friendly-crypto v0.2.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/crates/vv-friendly-crypto)
+   Compiling vv-friendly-dkg v0.2.0 (/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/crates/vv-friendly-dkg)
+error: no rules expected `.`
+   --> crates/vv-friendly-dkg/src/bin/j1_inner_verifier_probe.rs:137:35
+    |
+137 | ...   "sources":[POOL,STATE,EIP].iter().map(|p| Ok(json!({"path":p,"sha256":hex(&sha256(&fs::read(p)?))}))).collect::<Result<Vec<_>...
+    |                                 ^ no rules expected this token in macro call
+    |
+    = note: while trying to match end of macro
+
+error: could not compile `vv-friendly-dkg` (bin "j1_inner_verifier_probe") due to 1 previous error

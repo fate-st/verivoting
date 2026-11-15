@@ -1,0 +1,303 @@
+{
+  "schema": "VV/JOINT/J1-EXECUTION/v1",
+  "status": "BLOCKED_INNER_RECURSIVE_VERIFIER",
+  "stage": "J1",
+  "started_utc": "2026-11-14T14:17:55.428Z",
+  "baseline_commit": "1ade01f12bc95ab00a514a7986a984816fe1741b",
+  "branch": "experiment/j1-joint-proof-feasibility",
+  "git_status_at_start": "?? configs/experiment.J1-INNER-VERIFIER-PROBE.json\n?? crates/vv-friendly-crypto/src/joint/\n?? crates/vv-friendly-dkg/src/bin/j1_inner_verifier_probe.rs\n?? experiments/joint_proof_raw/\n?? scripts/joint_proof_run_j1.mjs\n?? tools/",
+  "source_version_sha256": "77d62c7e9695b7f2eea97c4627f57164cd570179505f59db3febfd7103989ac2",
+  "sources": [
+    {
+      "path": "configs/experiment.J1-INNER-VERIFIER-PROBE.json",
+      "sha256": "2a7914c08f35a3156c67c55c4604a53439395c8177b3ff41e4b55cac647049a0"
+    },
+    {
+      "path": "scripts/joint_proof_run_j1.mjs",
+      "sha256": "13fb28565005e13a11799a1eb20e9e0573147316c808cfe59e1823639ce2e9b5"
+    },
+    {
+      "path": "tools/j1-inner-verifier-probe/Cargo.toml",
+      "sha256": "d20a65f119e47811ee2e3a95e1840dd1cb7dd4c79de6ce76d1425b710e7f46d1"
+    },
+    {
+      "path": "tools/j1-inner-verifier-probe/Cargo.lock",
+      "sha256": "7b630a701da3f29d9bfc5920fac86abf254ea105a76adbc4029765ed2ae4e039"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/j1_inner_verifier_probe.rs",
+      "sha256": "6db4c2bbf52aebf306e93077e80df1093ff8ee24dc3d7b04c66b974134a7c674"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/joint/inner_groth16.rs",
+      "sha256": "802d7e37e03db8822c4a2f1cea1d6ca8604d874796d7e6fcc88124efa9d5546c"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/joint/native_fq_compile.rs",
+      "sha256": "e6cbddef704632ab4cd19e957f568a139da7f93c380caaaac130c2652ca3cc38"
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/joint/current_outer_fr_rejected.rs",
+      "sha256": "bdccc2f8c7e613df737a42dc53bfe3c15484c541a69a08d8504184ef41825f2a"
+    }
+  ],
+  "config_sha256": "2a7914c08f35a3156c67c55c4604a53439395c8177b3ff41e4b55cac647049a0",
+  "environment": {
+    "hardware": "Apple M4",
+    "memory_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v23.11.0"
+  },
+  "budget": {
+    "worker_seconds": 600,
+    "total_seconds": 1200,
+    "worker_rss_mib": 16384,
+    "constraint_cap": 10000000
+  },
+  "commands": [
+    {
+      "name": "fmt-workspace",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 391.339833,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/fmt-workspace.log"
+    },
+    {
+      "name": "fmt-isolated",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "fmt",
+        "--manifest-path",
+        "tools/j1-inner-verifier-probe/Cargo.toml",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 48.307458,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/fmt-isolated.log"
+    },
+    {
+      "name": "build-public-preflight",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "j1_inner_verifier_probe"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 73.24062500000002,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/build-public-preflight.log"
+    },
+    {
+      "name": "clippy-public-preflight",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "j1_inner_verifier_probe",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 140.69595800000002,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/clippy-public-preflight.log"
+    },
+    {
+      "name": "public-fixture-preflight",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "run",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "j1_inner_verifier_probe",
+        "--",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/joint_proof_raw/run-20261114-03/public_preflight.json"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 495.1893329999999,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/public-fixture-preflight.log"
+    },
+    {
+      "name": "build-native-fq-control",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "tools/j1-inner-verifier-probe/Cargo.toml",
+        "--bin",
+        "j1-native-fq-compile"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 47.35983299999998,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/build-native-fq-control.log"
+    },
+    {
+      "name": "clippy-native-fq-control",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "clippy",
+        "--release",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "tools/j1-inner-verifier-probe/Cargo.toml",
+        "--bin",
+        "j1-native-fq-compile",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 109.65479199999982,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/clippy-native-fq-control.log"
+    },
+    {
+      "name": "native-fq-control",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "run",
+        "--release",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "tools/j1-inner-verifier-probe/Cargo.toml",
+        "--bin",
+        "j1-native-fq-compile"
+      ],
+      "expected_exit_code": 0,
+      "code": 0,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 216.2007920000001,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/native-fq-control.log"
+    },
+    {
+      "name": "current-outer-fr-compile",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "tools/j1-inner-verifier-probe/Cargo.toml",
+        "--bin",
+        "j1-current-outer-fr-rejected",
+        "--message-format=json"
+      ],
+      "expected_exit_code": 101,
+      "code": 101,
+      "signal": null,
+      "termination": null,
+      "elapsed_ms": 86.93187499999999,
+      "polled_process_tree_peak_rss_mib": null,
+      "log": "logs/current-outer-fr-compile.log"
+    }
+  ],
+  "running_command": null,
+  "setup_count": 0,
+  "proof_generation_count": 0,
+  "new_dkg_count": 0,
+  "new_p3_count": 0,
+  "r1cs_synthesized": false,
+  "constraint_count": null,
+  "recursive_verification_executed": false,
+  "recursive_crypto_negative_tests": [
+    {
+      "name": "valid_original_proof",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "wrong_nullifier",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "changed_ciphertext",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "different_election_context",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    },
+    {
+      "name": "mismatched_vk",
+      "status": "NOT_RUN",
+      "reason": "current Fr verifier cannot compile; no circuit satisfaction claim"
+    }
+  ],
+  "j2_j5_started": false,
+  "old_tracked_files_unchanged": true,
+  "native_gadget_available_over_fq": true,
+  "current_fr_backend_compatible": false,
+  "reason": "Locked Groth16VerifierGadget is over inner BLS12-381 Fq, not the current outer/state Fr; no compatible non-native pairing verifier has been implemented.",
+  "finished_utc": "2026-11-14T14:17:57.151Z",
+  "wall_ms": 1722.867833
+}

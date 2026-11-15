@@ -1,6 +1,20 @@
 # Implementation and claim boundary
 
-## Latest step: stage-two EVM Direct Fold / State Proof comparison passed
+## Current J1 joint-proof feasibility: BLOCKED at field compatibility
+
+[报告](JOINT_PROOF_FEASIBILITY.md)及[比较边界](JOINT_PROOF_COMPARISON.md)：原D5/W32单票公开材料、
+原VK、25项输入、192B Ark证明与512B EIP负A表示一致；这只是宿主输入预检，不是电路内验证。
+隔离工具包真实编译了完整Fq内层验证约束函数，但没有执行；当前外层/状态使用Fr，要求对应trait时编译E0271。
+该锁定直接复用路线缺少兼容Fr的配对/验证gadget，不宣称所有递归后端均不可行。
+
+最终run-20261114-03为BLOCKED_INNER_RECURSIVE_VERIFIER；之前两次开发错误原样保留。
+J1密码学正反例NOT_RUN，约束数/满足性/外层Prove/证明大小/RSS/EVM Gas为null。
+新Setup/Prove/DKG/P3为0，未提取状态关系或实现B2/B4联合证明、Joint合约。
+主Cargo.toml/Cargo.lock、原票/状态关系、VK/fixtures/Manifest/合约和旧raw保持原字节；只增隔离探针/报告。
+fmt/新增入口及Fq对照严格Clippy通过；没有把编译拒绝当作Groth16拒绝，也没有声称全workspace重型测试已重跑。
+本轮在J1停止。继续需另行决定非原生配对或递归后端范围，不修改论文或自动上传。
+
+## Previous step: stage-two EVM Direct Fold / State Proof comparison passed
 
 [报告](STAGE2_EVM_FOLD_COMPARISON.md)与原始 `experiments/stage2_evm_fold_raw/run-20261114-01`：
 新独立 Direct Fold 接收器执行真正的 Jubjub 规范压缩解码和群加；同一公开输入先经过原选票SNARK，
