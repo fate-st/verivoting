@@ -1,0 +1,275 @@
+{
+  "schema": "VV/G18/PROVER-ADMISSION/v1",
+  "status": "BLOCKED_REQUIRED_GROTH16_ENVIRONMENT",
+  "config": {
+    "path": "configs/experiment.G18-DECISION.json",
+    "sha256": "d6879aee4027db1073ff701e55d562a3f14b9cc487568a33db2b44bd584ab7b1",
+    "bytes": 15097
+  },
+  "baseline_commit": "151ed277d76ed0344c3fb19938319f22a179675c",
+  "branch": "experiment/g18-final-architecture-decision",
+  "execution": {
+    "path": "experiments/g18_raw/run-20261115-01/execution.json",
+    "sha256": "3fe11a106cc9b4850ffa6d874dcaa9b9651867a426142c5ae4fa05edf04c4707",
+    "bytes": 8453
+  },
+  "environment": {
+    "schema": "VV/G18/ENVIRONMENT-PREFLIGHT/v1",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M4",
+    "memory_bytes": 34359738368,
+    "system_version": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.1\nBuildVersion:\t\t24G231\n",
+    "probes": [
+      {
+        "name": "r0vm-version",
+        "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin/r0vm",
+        "args": [
+          "--version"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "risc0-r0vm 3.1.0\n",
+        "stderr": ""
+      },
+      {
+        "name": "r0vm-capabilities",
+        "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin/r0vm",
+        "args": [
+          "--help"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "RISC Zero zero-knowledge VM executable\n\nUsage: r0vm [OPTIONS] <--rpc|--port <PORT>|--elf <ELF>|--image <IMAGE>|--segment <SEGMENT>|--manager|--worker <WORKER>|--config <CONFIG>>\n\nOptions:\n      --rpc\n          \n\n      --port <PORT>\n          \n\n      --elf <ELF>\n          The ELF to execute\n\n      --image <IMAGE>\n          The image to execute\n\n      --segment <SEGMENT>\n          Prove a pre-recorded segment\n\n      --manager\n          Start the manager\n\n      --worker <WORKER>\n          Start a worker\n          \n          [possible values: execute, prove-segment, prove-keccak, lift, join, union, resolve]\n\n      --config <CONFIG>\n          \n\n      --receipt <RECEIPT>\n          Receipt output file\n\n      --hashfn <HASHFN>\n          The hash function to use to produce a proof\n          \n          [default: poseidon2]\n          [possible values: sha-256, poseidon2]\n\n      --prove-guest-errors\n          Whether to prove executions ending in error status\n\n      --initial-input <INITIAL_INPUT>\n          File to read initial input from.\n          \n          Reads input from stdin if an initial input file is not provided.\n\n  -v, --verbose...\n          Display verbose output\n\n      --env <ENV>\n          Add environment variables in the form of NAME=value\n\n      --pprof-out <PPROF_OUT>\n          Write \"pprof\" protobuf output of the guest's run to this file. You can use google's pprof (<https://github.com/google/pprof>) to read it\n          \n          [env: RISC0_PPROF_OUT=]\n\n      --receipt-kind <RECEIPT_KIND>\n          The receipt kind produced by the r0vm prover\n          \n          [default: composite]\n          [possible values: composite, succinct, groth16]\n\n      --id\n          Compute the image_id for the specified ELF\n\n      --with-debugger\n          \n\n      --addr <ADDR>\n          The address to connect to or listen on\n\n      --api <API>\n          \n\n      --storage <STORAGE>\n          \n\n      --po2 <PO2>\n          \n\n      --num-gpus <NUM_GPUS>\n          Number of GPUs to use\n\n  -h, --help\n          Print help (see a summary with '-h')\n\n  -V, --version\n          Print version\n",
+        "stderr": ""
+      },
+      {
+        "name": "docker-version",
+        "program": "docker",
+        "args": [
+          "--version"
+        ],
+        "exit_code": null,
+        "signal": null,
+        "error": "spawnSync docker ENOENT",
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "name": "cuda-device",
+        "program": "nvidia-smi",
+        "args": [],
+        "exit_code": null,
+        "signal": null,
+        "error": "spawnSync nvidia-smi ENOENT",
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "name": "metal-compiler",
+        "program": "xcrun",
+        "args": [
+          "--find",
+          "metal"
+        ],
+        "exit_code": 72,
+        "signal": null,
+        "error": null,
+        "stdout": "",
+        "stderr": "xcrun: error: unable to find utility \"metal\", not a developer tool or in PATH\n"
+      },
+      {
+        "name": "developer-tools",
+        "program": "xcode-select",
+        "args": [
+          "-p"
+        ],
+        "exit_code": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "/Library/Developer/CommandLineTools\n",
+        "stderr": ""
+      },
+      {
+        "name": "system-version",
+        "program": "sw_vers",
+        "args": [],
+        "exit_code": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.1\nBuildVersion:\t\t24G231\n",
+        "stderr": ""
+      }
+    ],
+    "r0vm_sha256": "52651dc0fd0afbe6cf91bf6bf67f7da63c56a1d5f3fdcdda617f9c75e3eae5fd",
+    "original_official_r0vm_unchanged": true,
+    "local_prover_entrypoint_present": true,
+    "local_stark_proving_available": "UNKNOWN_UNTIL_OFFICIAL_SMOKE",
+    "docker_cli_available": false,
+    "cuda_available": false,
+    "metal_runtime_proving_available": "UNKNOWN_NOT_INFERRED_FROM_XCRUN",
+    "required_groth16_wrapper_available": false,
+    "required_groth16_wrapper_status": "BLOCKED_APPLE_SILICON_UNSUPPORTED",
+    "wrapper_reasons": [
+      "Current fixed platform is darwin arm64/Apple M4; official 3.1 local-proving documentation excludes Apple Silicon for Groth16 shrink-wrap",
+      "Docker CLI not installed",
+      "CUDA/NVIDIA backend not installed"
+    ],
+    "official_documentation": [
+      "https://dev.risczero.com/api/generating-proofs/local-proving",
+      "https://github.com/risc0/risc0/releases/tag/v3.1.0"
+    ],
+    "official_installed_source": {
+      "package": "risc0-groth16-3.0.6",
+      "file": "src/prove/docker.rs",
+      "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-3.0.6/src/prove/docker.rs",
+      "sha256": "071cfe3fb6f7c07f21d455d1c4241d57ea92662d13eb258879f27edbf1241e9a",
+      "bytes": 2714,
+      "crate_archive_sha256": "386b24397b788d034a4c77d8be2f53eb897e663848437ed13e23c43b8a3c8370",
+      "crate_archive_matches_g17_lock": true,
+      "installed_file_matches_archive": true
+    },
+    "environment_admitted": false,
+    "b1_ballot_prove_admitted": false,
+    "smoke_authorization": "Only the one predeclared official Composite proof smoke; does not admit B1/A/B/Gas",
+    "automatic_platform_or_backend_switch": false,
+    "dev_mode": false,
+    "remote_service_used": false
+  },
+  "local_stark_backend_actual_test": "PASS_REAL_OFFICIAL_COMPOSITE_RECEIPT",
+  "official_smoke": {
+    "attempt_wall_ms": 1758.0545829999999,
+    "ballot_proof_test": false,
+    "dev_mode": false,
+    "error": null,
+    "evm_wrapper_test": false,
+    "image_id": "691fbe91155b80f5edc7d0f3fb91b8065b84f2a3cb392312d7ace283ab23b34d",
+    "journal_verified": true,
+    "program_sha256": "6a0f59fe40634cebb6554f3e51a610b3794050478bd1d1d6266cbeb696ebae15",
+    "proof_generated": true,
+    "proof_ms": 1758.0545829999999,
+    "receipt_bytes": 198990,
+    "receipt_sha256": "55ce587e814f69d5762ba0b4d034a8afb67d2b16aa744c80577f7905ca872b6f",
+    "receipt_verified": true,
+    "remote_prover": false,
+    "schema": "VV/G18/OFFICIAL-SMOKE/v1",
+    "stats": {
+      "paging_cycles": 5951,
+      "reserved_cycles": 10264,
+      "segments": 1,
+      "total_cycles": 16384,
+      "user_cycles": 169
+    },
+    "status": "PASS_REAL_OFFICIAL_COMPOSITE_RECEIPT",
+    "verify_ms": 8.399000000000001,
+    "receipt": {
+      "path": "experiments/g18_raw/run-20261115-01/official_smoke/receipt.bincode",
+      "sha256": "55ce587e814f69d5762ba0b4d034a8afb67d2b16aa744c80577f7905ca872b6f",
+      "bytes": 198990
+    },
+    "program": {
+      "path": "experiments/g18_raw/run-20261115-01/official_smoke/program.bin",
+      "sha256": "6a0f59fe40634cebb6554f3e51a610b3794050478bd1d1d6266cbeb696ebae15",
+      "bytes": 33080
+    },
+    "user_elf": {
+      "path": "experiments/g18_raw/run-20261115-01/official_smoke/guest.elf",
+      "sha256": "cc7bdb6579ecf77a6bbaacb886953ac87eb36851609450aec20242395bbe67af",
+      "bytes": 656
+    },
+    "command": {
+      "name": "official-real-proof-smoke",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g18-admission/release/g18-prover-admission",
+      "args": [
+        "smoke",
+        "experiments/g18_raw/run-20261115-01",
+        "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-3.1.0/examples/loop.bin"
+      ],
+      "started_utc": "2026-11-15T12:58:34.413Z",
+      "finished_utc": "2026-11-15T12:58:36.186Z",
+      "code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 1773.1203749999986,
+      "budget_seconds": 1800,
+      "budget_memory_mib": 24576,
+      "sampled_max_single_process_rss_mib": 159.109375,
+      "sampled_max_process_tree_rss_mib": 162.53125,
+      "rss_sample_count": 1,
+      "rss_scope": "1-second host RSS sampling; not exact peak or guest logical/prover allocation",
+      "stdout": "logs/official-real-proof-smoke.stdout.log",
+      "stderr": "logs/official-real-proof-smoke.stderr.log"
+    },
+    "not_a_ballot_proof": true,
+    "not_a_route_a_or_b_benchmark": true,
+    "samples": 1,
+    "memory_scope": "Sampled host process RSS only; no exact peak or separate GPU-memory measurement",
+    "gpu_memory_bytes": null
+  },
+  "b1_ballot": {
+    "status": "NOT_RUN_REQUIRED_ENVIRONMENT_GATE",
+    "receipt": null,
+    "prove_ms": null,
+    "peak_rss_mib": null,
+    "receipt_bytes": null,
+    "verification_ms": null,
+    "reason": "Frozen full EVM-capable environment gate is unavailable; no large original B1 proof attempted",
+    "original_g17_program_reference": {
+      "image_id": "615c9d1381e2b04edfe1a83428a6d848f1905814c7d1b1b646ed0654b903a321",
+      "user_elf": {
+        "path": "experiments/zkvm_abc_raw/run-20261115-03/artifacts/guest-b.elf",
+        "sha256": "e423e639e9810688b0bf0820df046a454bd564ef9ab9bdc686a547cf6be24b7a",
+        "bytes": 591256
+      },
+      "combined_program": {
+        "path": "experiments/zkvm_abc_raw/run-20261115-03/artifacts/guest-b.bin",
+        "sha256": "d19a6ab39dc71a5730c3ca60c4ea7a61beacf66f15d91f2ecf6fc61d18ef2f65",
+        "bytes": 623680
+      },
+      "legacy_guest_elf_sha256_field_means": "SDK G17_GUEST_B_ELF embeds ProgramBinary (user ELF + kernel), not bare user ELF"
+    },
+    "previous_execute_only": {
+      "path": "results/g17_z1_recovery/guest_execution.json",
+      "sha256": "8e5aa6a980076fb0321e20cafa22db867015fd72df2e0758812070e2480a2328",
+      "bytes": 27766
+    }
+  },
+  "groth16_wrapper": {
+    "status": "BLOCKED_APPLE_SILICON_UNSUPPORTED",
+    "available": false,
+    "runtime_attempted": false,
+    "failure_type": "UNSUPPORTED_FIXED_PLATFORM_AND_MISSING_DOCKER",
+    "proof": null,
+    "prove_ms": null,
+    "bytes": null,
+    "evidence": {
+      "actual_probes": {
+        "path": "experiments/g18_raw/run-20261115-01/environment_preflight.json",
+        "sha256": "0681a935b2d7f3a6f8458251d07466cfc48347aede447e391a43c315b5eae2a0",
+        "bytes": 6268
+      },
+      "official_sources": [
+        "https://dev.risczero.com/api/generating-proofs/local-proving",
+        "https://github.com/risc0/risc0/releases/tag/v3.1.0"
+      ],
+      "locked_source": {
+        "package": "risc0-groth16-3.0.6",
+        "file": "src/prove/docker.rs",
+        "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-3.0.6/src/prove/docker.rs",
+        "sha256": "071cfe3fb6f7c07f21d455d1c4241d57ea92662d13eb258879f27edbf1241e9a",
+        "bytes": 2714,
+        "crate_archive_sha256": "386b24397b788d034a4c77d8be2f53eb897e663848437ed13e23c43b8a3c8370",
+        "crate_archive_matches_g17_lock": true,
+        "installed_file_matches_archive": true
+      }
+    },
+    "no_dummy_seal_or_old_wrapper_used": true
+  },
+  "engineering_repair_retests": 0,
+  "environment_admitted": false,
+  "admit_functional_stage": false,
+  "interpretation": "STARK proving capability is demonstrated only for the official 169-user-cycle control. Full B1 receipt, Groth16 wrapping and A/B feasibility remain untested."
+}

@@ -1,0 +1,125 @@
+{
+  "schema": "VV/G18/ENVIRONMENT-PREFLIGHT/v1",
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M4",
+  "memory_bytes": 34359738368,
+  "system_version": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.1\nBuildVersion:\t\t24G231\n",
+  "probes": [
+    {
+      "name": "r0vm-version",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin/r0vm",
+      "args": [
+        "--version"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "risc0-r0vm 3.1.0\n",
+      "stderr": ""
+    },
+    {
+      "name": "r0vm-capabilities",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin/r0vm",
+      "args": [
+        "--help"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "RISC Zero zero-knowledge VM executable\n\nUsage: r0vm [OPTIONS] <--rpc|--port <PORT>|--elf <ELF>|--image <IMAGE>|--segment <SEGMENT>|--manager|--worker <WORKER>|--config <CONFIG>>\n\nOptions:\n      --rpc\n          \n\n      --port <PORT>\n          \n\n      --elf <ELF>\n          The ELF to execute\n\n      --image <IMAGE>\n          The image to execute\n\n      --segment <SEGMENT>\n          Prove a pre-recorded segment\n\n      --manager\n          Start the manager\n\n      --worker <WORKER>\n          Start a worker\n          \n          [possible values: execute, prove-segment, prove-keccak, lift, join, union, resolve]\n\n      --config <CONFIG>\n          \n\n      --receipt <RECEIPT>\n          Receipt output file\n\n      --hashfn <HASHFN>\n          The hash function to use to produce a proof\n          \n          [default: poseidon2]\n          [possible values: sha-256, poseidon2]\n\n      --prove-guest-errors\n          Whether to prove executions ending in error status\n\n      --initial-input <INITIAL_INPUT>\n          File to read initial input from.\n          \n          Reads input from stdin if an initial input file is not provided.\n\n  -v, --verbose...\n          Display verbose output\n\n      --env <ENV>\n          Add environment variables in the form of NAME=value\n\n      --pprof-out <PPROF_OUT>\n          Write \"pprof\" protobuf output of the guest's run to this file. You can use google's pprof (<https://github.com/google/pprof>) to read it\n          \n          [env: RISC0_PPROF_OUT=]\n\n      --receipt-kind <RECEIPT_KIND>\n          The receipt kind produced by the r0vm prover\n          \n          [default: composite]\n          [possible values: composite, succinct, groth16]\n\n      --id\n          Compute the image_id for the specified ELF\n\n      --with-debugger\n          \n\n      --addr <ADDR>\n          The address to connect to or listen on\n\n      --api <API>\n          \n\n      --storage <STORAGE>\n          \n\n      --po2 <PO2>\n          \n\n      --num-gpus <NUM_GPUS>\n          Number of GPUs to use\n\n  -h, --help\n          Print help (see a summary with '-h')\n\n  -V, --version\n          Print version\n",
+      "stderr": ""
+    },
+    {
+      "name": "docker-version",
+      "program": "docker",
+      "args": [
+        "--version"
+      ],
+      "exit_code": null,
+      "signal": null,
+      "error": "spawnSync docker ENOENT",
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "cuda-device",
+      "program": "nvidia-smi",
+      "args": [],
+      "exit_code": null,
+      "signal": null,
+      "error": "spawnSync nvidia-smi ENOENT",
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "metal-compiler",
+      "program": "xcrun",
+      "args": [
+        "--find",
+        "metal"
+      ],
+      "exit_code": 72,
+      "signal": null,
+      "error": null,
+      "stdout": "",
+      "stderr": "xcrun: error: unable to find utility \"metal\", not a developer tool or in PATH\n"
+    },
+    {
+      "name": "developer-tools",
+      "program": "xcode-select",
+      "args": [
+        "-p"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "/Library/Developer/CommandLineTools\n",
+      "stderr": ""
+    },
+    {
+      "name": "system-version",
+      "program": "sw_vers",
+      "args": [],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.1\nBuildVersion:\t\t24G231\n",
+      "stderr": ""
+    }
+  ],
+  "r0vm_sha256": "52651dc0fd0afbe6cf91bf6bf67f7da63c56a1d5f3fdcdda617f9c75e3eae5fd",
+  "original_official_r0vm_unchanged": true,
+  "local_prover_entrypoint_present": true,
+  "local_stark_proving_available": "UNKNOWN_UNTIL_OFFICIAL_SMOKE",
+  "docker_cli_available": false,
+  "cuda_available": false,
+  "metal_runtime_proving_available": "UNKNOWN_NOT_INFERRED_FROM_XCRUN",
+  "required_groth16_wrapper_available": false,
+  "required_groth16_wrapper_status": "BLOCKED_APPLE_SILICON_UNSUPPORTED",
+  "wrapper_reasons": [
+    "Current fixed platform is darwin arm64/Apple M4; official 3.1 local-proving documentation excludes Apple Silicon for Groth16 shrink-wrap",
+    "Docker CLI not installed",
+    "CUDA/NVIDIA backend not installed"
+  ],
+  "official_documentation": [
+    "https://dev.risczero.com/api/generating-proofs/local-proving",
+    "https://github.com/risc0/risc0/releases/tag/v3.1.0"
+  ],
+  "official_installed_source": {
+    "package": "risc0-groth16-3.0.6",
+    "file": "src/prove/docker.rs",
+    "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-3.0.6/src/prove/docker.rs",
+    "sha256": "071cfe3fb6f7c07f21d455d1c4241d57ea92662d13eb258879f27edbf1241e9a",
+    "bytes": 2714,
+    "crate_archive_sha256": "386b24397b788d034a4c77d8be2f53eb897e663848437ed13e23c43b8a3c8370",
+    "crate_archive_matches_g17_lock": true,
+    "installed_file_matches_archive": true
+  },
+  "environment_admitted": false,
+  "b1_ballot_prove_admitted": false,
+  "smoke_authorization": "Only the one predeclared official Composite proof smoke; does not admit B1/A/B/Gas",
+  "automatic_platform_or_backend_switch": false,
+  "dev_mode": false,
+  "remote_service_used": false
+}

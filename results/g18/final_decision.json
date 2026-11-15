@@ -1,0 +1,53 @@
+{
+  "schema": "VV/G18/FINAL-ARCHITECTURE-DECISION/v1",
+  "decision": "INCONCLUSIVE_RESOURCE_OR_ENVIRONMENT",
+  "stage_reached": "G18-1",
+  "config_sha256": "d6879aee4027db1073ff701e55d562a3f14b9cc487568a33db2b44bd584ab7b1",
+  "baseline_commit": "151ed277d76ed0344c3fb19938319f22a179675c",
+  "branch": "experiment/g18-final-architecture-decision",
+  "basis": [
+    "One official 3.1.0 Composite receipt was actually generated and verified locally with dev mode disabled",
+    "The fixed Apple M4/arm64 environment lacks the required supported official Groth16 shrink-wrap backend; no Docker/CUDA",
+    "The frozen environment admission failed, so original B1 proving, A/B full-function guests and matched EVM comparison were not started"
+  ],
+  "evidence": {
+    "prover_admission": "results/g18/prover_admission.json",
+    "functional_admission": "results/g18/functional_admission.json",
+    "proof_and_evm_costs": "results/g18/proof_and_evm_costs.json",
+    "execution": "experiments/g18_raw/run-20261115-01/execution.json"
+  },
+  "functionality_evidence": "Official control proof only. Existing G17 B1/B2 execution is historical reference, not full G18 B validity/fold/state admission.",
+  "performance_evidence": {
+    "official_control_only": {
+      "prove_ms": 1758.0545829999999,
+      "verify_ms": 8.399000000000001,
+      "receipt_bytes": 198990,
+      "sampled_process_tree_rss_mib": 162.53125
+    },
+    "route_a_costs": null,
+    "route_b_costs": null,
+    "new_route_c_costs": null,
+    "gas_savings_fraction": null
+  },
+  "limitations": [
+    "No original ballot real receipt was generated in G18",
+    "No official Groth16 wrapper or EVM transaction was run",
+    "No A/B SnarkPack/full Jubjub state guest was implemented or admitted",
+    "The tiny control receipt cannot predict B1/B2/B4 proving time, memory or Gas",
+    "RSS is sampled host memory; GPU allocation and exact peak were not measured",
+    "The 15% full-lifecycle Gas threshold has not been evaluated",
+    "No final architecture selection or cryptographic impossibility claim is justified"
+  ],
+  "current_implemented_baseline": "C preserved unchanged; not selected as a measured performance winner",
+  "budget_or_threshold_changed_after_start": false,
+  "original_protocol_or_paper_changed": false,
+  "old_tracked_files_preserved": 2879,
+  "engineering_repair_retests": 0,
+  "stopped": true,
+  "g19_started": false,
+  "automatic_hardware_change": false,
+  "automatic_backend_change": false,
+  "auto_commit": false,
+  "auto_push": false,
+  "continuation_requires": "New explicit authorization and a separately frozen common supported target environment; do not revise this run/config or splice different-machine numbers"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "VV/G18/FUNCTIONAL-ADMISSION/v1",
+  "status": "NOT_RUN_G18_1_ENVIRONMENT_GATE",
+  "config_sha256": "d6879aee4027db1073ff701e55d562a3f14b9cc487568a33db2b44bd584ab7b1",
+  "routes": {
+    "A": {
+      "status": "NOT_RUN",
+      "snarkpack_semantics_review": "NOT_RUN",
+      "full_checks": null,
+      "tests": null,
+      "functionally_admitted": false
+    },
+    "B": {
+      "status": "NOT_RUN",
+      "g17_execute_only_reference": {
+        "path": "results/g17_z1_recovery/guest_execution.json",
+        "sha256": "8e5aa6a980076fb0321e20cafa22db867015fd72df2e0758812070e2480a2328",
+        "bytes": 27766
+      },
+      "authenticated_context_and_jubjub_fold": null,
+      "tests": null,
+      "functionally_admitted": false
+    }
+  },
+  "guest_sizes_tested_this_stage": null,
+  "guest_cycles": null,
+  "guest_ms": null,
+  "guest_rss_mib": null,
+  "input_bytes": null,
+  "no_new_guest_or_cryptographic_simplification": true,
+  "admit_gas_comparison": false
+}

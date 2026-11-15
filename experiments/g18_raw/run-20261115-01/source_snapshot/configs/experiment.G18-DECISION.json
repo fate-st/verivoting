@@ -1,0 +1,372 @@
+{
+  "schema": "VV/G18/FROZEN-DECISION-CONFIG/v1",
+  "frozen": true,
+  "baseline_commit": "151ed277d76ed0344c3fb19938319f22a179675c",
+  "baseline_branch": "experiment/g17-zkvm-abc-comparison",
+  "branch": "experiment/g18-final-architecture-decision",
+  "target": {
+    "registry_depth": 5,
+    "registered_voters": 32,
+    "original_ballots": 8,
+    "candidates": 3,
+    "batch_sizes": [
+      4,
+      4
+    ],
+    "admission_batch_sizes": [
+      1,
+      2
+    ],
+    "functional_batch_sizes": [
+      2,
+      4
+    ],
+    "aggregation": "Original SnarkPack V2",
+    "ballot_curve": "BLS12-381",
+    "accumulation_curve": "Jubjub",
+    "public_inputs_per_ballot": 25,
+    "original_ballot_vk_sha256": "6d00cab6cd02e9926bd8ef05f8e782fbf1f32b5993c134699155accf7b37aa98",
+    "ordered_batches": [
+      {
+        "batch_index": 1,
+        "batch_root": "91f6c687850b799e58e413c6c9c3b67e1acb1f2cb8a03e2b4d88a3729a9a2134",
+        "old_state": [
+          {
+            "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+            "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+            "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+            "c1_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+            "candidate_id": 3
+          }
+        ],
+        "new_state": [
+          {
+            "c0_hex": "0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+            "c1_hex": "1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "fd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+            "c1_hex": "59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+            "c1_hex": "35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1",
+            "candidate_id": 3
+          }
+        ],
+        "aggregate_sha256": "10c4b85a3d063d2aaa0b0d3bce3050f59267652c978636bd3be5e8d06a06ecd6"
+      },
+      {
+        "batch_index": 2,
+        "batch_root": "4e3a7649aa9d7455509a0b052d85c6745b38cb1f2416045c08ffd25094837fcf",
+        "old_state": [
+          {
+            "c0_hex": "0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+            "c1_hex": "1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "fd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+            "c1_hex": "59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+            "c1_hex": "35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1",
+            "candidate_id": 3
+          }
+        ],
+        "new_state": [
+          {
+            "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+            "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+            "candidate_id": 1
+          },
+          {
+            "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+            "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+            "candidate_id": 2
+          },
+          {
+            "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+            "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+            "candidate_id": 3
+          }
+        ],
+        "aggregate_sha256": "173c80153f5f689fdd641b950e514f3a7f0411f4d990716c1e5722221cb2f1fd"
+      }
+    ],
+    "final_state": [
+      {
+        "c0_hex": "a830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "c1_hex": "9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "candidate_id": 1
+      },
+      {
+        "c0_hex": "4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "c1_hex": "d1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "candidate_id": 2
+      },
+      {
+        "c0_hex": "c03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "c1_hex": "4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72",
+        "candidate_id": 3
+      }
+    ],
+    "authenticated_context_sha256": "01da52c2f28f304933cfa23ca1c764f226843e342e0895b884efb4a93150551e",
+    "election_id": "bc07ba0cfac6f8dba9620cbd00963d291a02c4e62d3519956441f8749ad45718",
+    "final_context": "7ba2acbdb9afcb00673e248f9f4c7bce5a50f86c97572d2064777d1aa1ad8e01",
+    "registration_root": "ae579623c1046c262e6941be7423898e72c746dafcfaea0255162b2f16c06e0b",
+    "public_key": "e44f0557e3830c48dc228d810923c8550670c55286dcee9bdb3ea64613e7853d",
+    "freeze_digest": "05a2ce08ef1edc92398fb7990b5896387aa2efcef5c7d885c5fab676b7e338c0",
+    "cp_target": "e21a7906c1c8a80fa5f0cd145692d0372184f0ba0965a253f741b05b3b5191e6"
+  },
+  "environment": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M4",
+    "physical_memory_bytes": 34359738368,
+    "os_release": "24.6.0",
+    "host_rust": "1.99.1",
+    "guest_rust": "1.97.0",
+    "sdk": "3.1.0",
+    "r0vm": "3.1.0",
+    "risc0_build": "3.0.7",
+    "risc0_groth16": "3.0.6",
+    "hardfork": "Prague",
+    "proving_backend": "Pinned official local macOS-arm64 r0vm; native/default hardware selection, no automatic fallback",
+    "remote_prover": false,
+    "hardware_switch_authorized": false,
+    "backend_switch_authorized": false,
+    "host_build_strip": "none (same known G17 host-link workaround)",
+    "cargo_jobs": 2
+  },
+  "budgets": {
+    "guest_seconds": 600,
+    "guest_memory_mib": 16384,
+    "proof_seconds": 1800,
+    "proof_memory_mib": 24576,
+    "build_seconds": 600,
+    "build_memory_mib": 16384,
+    "setup_or_probe_seconds": 120,
+    "poll_ms": 1000,
+    "enforcement": "Soft elapsed and maximum sampled single-process + aggregate process-tree RSS limits; not kernel-enforced",
+    "max_formal_implementation_per_route": 1,
+    "max_explicit_engineering_repair_retest_per_route": 1,
+    "no_cryptographic_failure_reclassified_as_environment_without_evidence": true
+  },
+  "official_smoke": {
+    "program": "Official SDK datasheet loop.bin + original V1COMPAT_ELF",
+    "loop_count": 0,
+    "input_hex": "00000000",
+    "receipt_kind": "Composite",
+    "expected_journal_hex": "",
+    "maximum_attempts": 1,
+    "purpose": "One local proving-backend smoke even if wrapper preflight is unavailable; not a ballot/performance comparison",
+    "user_elf_sha256": "cc7bdb6579ecf77a6bbaacb886953ac87eb36851609450aec20242395bbe67af",
+    "kernel_elf_sha256": "7ffd942e4e8babd771094f549ad080cfea8ecb2c05c986e275c011f41979d921",
+    "official_files": [
+      {
+        "package": "risc0-zkvm-3.1.0",
+        "file": "examples/loop.bin",
+        "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-3.1.0/examples/loop.bin",
+        "sha256": "cc7bdb6579ecf77a6bbaacb886953ac87eb36851609450aec20242395bbe67af",
+        "bytes": 656,
+        "crate_archive_sha256": "e204f853cb4e40174b1c1fb697cbc79fbd443595311e2d68c33a6a7be7ba6351",
+        "crate_archive_matches_g17_lock": true,
+        "installed_file_matches_archive": true
+      },
+      {
+        "package": "risc0-zkvm-3.1.0",
+        "file": "examples/loop.s",
+        "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-3.1.0/examples/loop.s",
+        "sha256": "882f89d11cdba9b2add40f445d38d2fb2b0aa4aff564c08ab8a869ca4d2b21a4",
+        "bytes": 2236,
+        "crate_archive_sha256": "e204f853cb4e40174b1c1fb697cbc79fbd443595311e2d68c33a6a7be7ba6351",
+        "crate_archive_matches_g17_lock": true,
+        "installed_file_matches_archive": true
+      },
+      {
+        "package": "risc0-zkvm-3.1.0",
+        "file": "examples/datasheet.rs",
+        "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-3.1.0/examples/datasheet.rs",
+        "sha256": "4c449092442110dfad5542fd6c3bc87e989b3c5873e9332658ee0cbe1e880667",
+        "bytes": 18936,
+        "crate_archive_sha256": "e204f853cb4e40174b1c1fb697cbc79fbd443595311e2d68c33a6a7be7ba6351",
+        "crate_archive_matches_g17_lock": true,
+        "installed_file_matches_archive": true
+      },
+      {
+        "package": "risc0-zkos-v1compat-2.2.3",
+        "file": "elfs/v1compat.elf",
+        "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkos-v1compat-2.2.3/elfs/v1compat.elf",
+        "sha256": "7ffd942e4e8babd771094f549ad080cfea8ecb2c05c986e275c011f41979d921",
+        "bytes": 32392,
+        "crate_archive_sha256": "b8b0b598ba7946354b10ca5c56e382de801e6c7fce9fccad0396ec436bc5072b",
+        "crate_archive_matches_g17_lock": true,
+        "installed_file_matches_archive": true
+      },
+      {
+        "package": "risc0-groth16-3.0.6",
+        "file": "src/prove/docker.rs",
+        "installed_path": "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-3.0.6/src/prove/docker.rs",
+        "sha256": "071cfe3fb6f7c07f21d455d1c4241d57ea92662d13eb258879f27edbf1241e9a",
+        "bytes": 2714,
+        "crate_archive_sha256": "386b24397b788d034a4c77d8be2f53eb897e663848437ed13e23c43b8a3c8370",
+        "crate_archive_matches_g17_lock": true,
+        "installed_file_matches_archive": true
+      }
+    ]
+  },
+  "admission_order": [
+    "freeze",
+    "local backend and Groth16 wrapper preflight",
+    "one official proof smoke",
+    "G17 B1 real receipt only if complete current-environment admission passes",
+    "A/B full semantics and function",
+    "B2 then two B4 proofs + EVM",
+    "new C + fair comparison"
+  ],
+  "gating": {
+    "groth16_wrapper_required_for_environment_admission": true,
+    "stop_before_b1_ballot_proving_if_required_environment_missing": true,
+    "stop_before_snarkpack_development_if_phase1_fails": true,
+    "unavailable_subsequent_metrics": null,
+    "stop_on_unclosed_crypto_semantics": true
+  },
+  "decision": {
+    "gas_advantage_minimum_fraction": 0.15,
+    "gas_scope": "Matched full deployment/authentication/two batches/freeze; not verifier-only",
+    "allowed": [
+      "SELECT_A_SNARKPACK_ZKVM",
+      "SELECT_B_DIRECT_ZKVM",
+      "KEEP_C_AND_REDESIGN",
+      "INCONCLUSIVE_RESOURCE_OR_ENVIRONMENT"
+    ],
+    "environment_failure_decision": "INCONCLUSIVE_RESOURCE_OR_ENVIRONMENT",
+    "no_unmeasured_architecture_ranking": true
+  },
+  "official_evm_wrapper": {
+    "version": "3.1.0",
+    "selector": "0xe71e6620",
+    "setup": "2026-10-20.1",
+    "docker_image_reference": "risczero/risc0-groth16-prover:v2026-10-20.1",
+    "image_digest_if_not_pulled": null,
+    "deployed_verifier_if_not_executed": null
+  },
+  "official_sources": [
+    "https://dev.risczero.com/api/generating-proofs/local-proving",
+    "https://github.com/risc0/risc0/releases/tag/v3.1.0"
+  ],
+  "input_pins": [
+    {
+      "path": "configs/protocol_manifest.JUBJUB-EVAL-D5-W32.json",
+      "sha256": "00c3869c4b10a6e48fa5972b2a98767966db2b2fac0de3692eb8cbbc13cafe5e",
+      "bytes": 1669
+    },
+    {
+      "path": "configs/experiment.G8C-FROZEN-P3-W32.json",
+      "sha256": "e48c5ccf4bc9476a0d5b62413d2a0c0ac059c48b4623d77ee19836825d89f9d8",
+      "bytes": 1680
+    },
+    {
+      "path": "fixtures/snarkpack_g1d0_depth5_public_v1.json",
+      "sha256": "a4ae00a6bf322cbeba70050e4583f297d3fd9a83e6a8cea793b1366f97cef062",
+      "bytes": 195459
+    },
+    {
+      "path": "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json",
+      "sha256": "42e68fa9bee72fb77e47c292dd3e65386cf4a348192c1ee0a9731cfe2f5eff19",
+      "bytes": 106245
+    },
+    {
+      "path": "fixtures/g8_receiver_eip2537_v1.json",
+      "sha256": "a2952ff452dd40e920360e473eea1ea2c3a374b1e7704902f16bb9ec18ce55bb",
+      "bytes": 61680
+    },
+    {
+      "path": "fixtures/g8a_original_certificates_public_v1.json",
+      "sha256": "75e724ac0644702cbb864fafc8e54ffa0f64042bb08483038ad680db3f021b8e",
+      "bytes": 25079
+    },
+    {
+      "path": "fixtures/g8b_trustee_commitments_public_v1.json",
+      "sha256": "944c69430864923a43624bffa5de99b6deaf2764a6d7ffc3aaac1bac01c63800",
+      "bytes": 13324
+    },
+    {
+      "path": "experiments/zkvm_abc/Cargo.lock",
+      "sha256": "de4d783c18ad42d56d31dbe8e9a84591b09d5b35dfc03a4baf90538d7d5182ed",
+      "bytes": 71890
+    },
+    {
+      "path": "experiments/zkvm_abc/guest_b_groth16/Cargo.lock",
+      "sha256": "49ec6024396f4ba2f55b36e51005d056995547b6d533aade85e68ff03e2df533",
+      "bytes": 42331
+    },
+    {
+      "path": "contracts/package-lock.json",
+      "sha256": "e627b7d966a05a29946ce4f7afd078a088f6c2c30ac43740e551f342b05b2290",
+      "bytes": 16379
+    },
+    {
+      "path": "contracts/src/JubjubPointOps.sol",
+      "sha256": "836762ce669ffea7f5b1c82011a2d8ada4d30089d4ea06657c131ae6325e3b30",
+      "bytes": 5006
+    },
+    {
+      "path": "contracts/src/VeriVotingAuthenticatedDirectFoldSettlement.sol",
+      "sha256": "08517aec50d1d23330aef189887da93a2e2325fd4c1cd1f9c65270c4917c6fb6",
+      "bytes": 11158
+    },
+    {
+      "path": "contracts/scripts/stage2_evm_fold_compare.mjs",
+      "sha256": "738214ce5cfaa8554103b3a5cde182c0148c0519fb94da8d24687f01a440ae8c",
+      "bytes": 20275
+    },
+    {
+      "path": "crates/vv-friendly-crypto/src/lib.rs",
+      "sha256": "1ef922c4c625e17d6b1ee57dc96e5d539c8ecc42d9009eafe434740d61fa6e14",
+      "bytes": 25635
+    },
+    {
+      "path": "results/g17_z1_recovery/guest_execution.json",
+      "sha256": "8e5aa6a980076fb0321e20cafa22db867015fd72df2e0758812070e2480a2328",
+      "bytes": 27766
+    },
+    {
+      "path": "experiments/zkvm_abc_raw/run-20261115-03/artifacts/guest-b.elf",
+      "sha256": "e423e639e9810688b0bf0820df046a454bd564ef9ab9bdc686a547cf6be24b7a",
+      "bytes": 591256
+    },
+    {
+      "path": "experiments/zkvm_abc_raw/run-20261115-03/artifacts/guest-b.bin",
+      "sha256": "d19a6ab39dc71a5730c3ca60c4ea7a61beacf66f15d91f2ecf6fc61d18ef2f65",
+      "bytes": 623680
+    }
+  ],
+  "historical_c_reference": {
+    "path": "experiments/stage2_evm_fold_raw/run-20261114-01/direct_fold.json",
+    "sha256": "e9644b27119a96fa1b8cdd7c7f533f735d9762650bc270e89a852a993e03ce47",
+    "bytes": 821430
+  },
+  "preservation": {
+    "old_tracked_files_immutable": true,
+    "old_paper_immutable": true,
+    "root_manifests_and_locks_immutable": true,
+    "no_automatic_commit": true,
+    "no_automatic_push": true,
+    "no_g19": true,
+    "no_automatic_config_rewrite": true
+  }
+}

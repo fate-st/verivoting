@@ -1,0 +1,215 @@
+{
+  "schema": "VV/G18/EXECUTION/v1",
+  "status": "STOP_G18_1_REQUIRED_GROTH16_ENVIRONMENT_UNAVAILABLE",
+  "run": "experiments/g18_raw/run-20261115-01",
+  "baseline_commit": "151ed277d76ed0344c3fb19938319f22a179675c",
+  "branch": "experiment/g18-final-architecture-decision",
+  "started_utc": "2026-11-15T12:57:26.502Z",
+  "config": {
+    "path": "configs/experiment.G18-DECISION.json",
+    "sha256": "d6879aee4027db1073ff701e55d562a3f14b9cc487568a33db2b44bd584ab7b1",
+    "bytes": 15097
+  },
+  "sources": [
+    {
+      "path": "configs/experiment.G18-DECISION.json",
+      "sha256": "d6879aee4027db1073ff701e55d562a3f14b9cc487568a33db2b44bd584ab7b1",
+      "bytes": 15097
+    },
+    {
+      "path": "scripts/g18_prepare.mjs",
+      "sha256": "f50de1003a1a4e70aafae5d6227ac7a705b7f744626b72660185d13b029e5df2",
+      "bytes": 8148
+    },
+    {
+      "path": "scripts/g18_preflight.mjs",
+      "sha256": "4cadaf51fc8e310d1c9f65d688b71a1738fb08938673cb29279a36ee80cc8e29",
+      "bytes": 3014
+    },
+    {
+      "path": "scripts/g18_run.mjs",
+      "sha256": "2623cea14e24d73392c06a06460ebfdf66e76da06d03dafb9c5b190d6759dc8f",
+      "bytes": 8668
+    },
+    {
+      "path": "experiments/g18_prover_admission/Cargo.toml",
+      "sha256": "051c07d2d5b2adfffddba78d5229a0f6f0f64ff063393888b8c3b0a4c3de7bc7",
+      "bytes": 418
+    },
+    {
+      "path": "experiments/g18_prover_admission/src/main.rs",
+      "sha256": "cdea1b89932cf2c5bac49001d3e527ace47f0445ac4922ba467b8f6b94453230",
+      "bytes": 5431
+    }
+  ],
+  "commands": [
+    {
+      "name": "environment-preflight",
+      "program": "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+      "args": [
+        "scripts/g18_preflight.mjs",
+        "experiments/g18_raw/run-20261115-01"
+      ],
+      "started_utc": "2026-11-15T12:57:26.503Z",
+      "finished_utc": "2026-11-15T12:57:26.630Z",
+      "code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 126.61358299999995,
+      "budget_seconds": 120,
+      "budget_memory_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "rss_scope": "1-second host RSS sampling; not exact peak or guest logical/prover allocation",
+      "stdout": "logs/environment-preflight.stdout.log",
+      "stderr": "logs/environment-preflight.stderr.log"
+    },
+    {
+      "name": "generate-isolated-lock",
+      "program": "/Users/lijian/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo",
+      "args": [
+        "generate-lockfile",
+        "--manifest-path",
+        "experiments/g18_prover_admission/Cargo.toml",
+        "--offline"
+      ],
+      "started_utc": "2026-11-15T12:57:26.630Z",
+      "finished_utc": "2026-11-15T12:57:26.976Z",
+      "code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 345.3577499999999,
+      "budget_seconds": 120,
+      "budget_memory_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "rss_scope": "1-second host RSS sampling; not exact peak or guest logical/prover allocation",
+      "stdout": "logs/generate-isolated-lock.stdout.log",
+      "stderr": "logs/generate-isolated-lock.stderr.log"
+    },
+    {
+      "name": "build-official-smoke-host",
+      "program": "/Users/lijian/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo",
+      "args": [
+        "build",
+        "--manifest-path",
+        "experiments/g18_prover_admission/Cargo.toml",
+        "--release",
+        "--locked",
+        "--offline"
+      ],
+      "started_utc": "2026-11-15T12:57:26.976Z",
+      "finished_utc": "2026-11-15T12:58:34.002Z",
+      "code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 67024.39625,
+      "budget_seconds": 600,
+      "budget_memory_mib": 16384,
+      "sampled_max_single_process_rss_mib": 440.34375,
+      "sampled_max_process_tree_rss_mib": 737.046875,
+      "rss_sample_count": 66,
+      "rss_scope": "1-second host RSS sampling; not exact peak or guest logical/prover allocation",
+      "stdout": "logs/build-official-smoke-host.stdout.log",
+      "stderr": "logs/build-official-smoke-host.stderr.log"
+    },
+    {
+      "name": "fmt-admission",
+      "program": "/Users/lijian/.rustup/toolchains/1.99.1-aarch64-apple-darwin/bin/cargo",
+      "args": [
+        "fmt",
+        "--manifest-path",
+        "experiments/g18_prover_admission/Cargo.toml",
+        "--",
+        "--check"
+      ],
+      "started_utc": "2026-11-15T12:58:34.002Z",
+      "finished_utc": "2026-11-15T12:58:34.050Z",
+      "code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 47.64283300000534,
+      "budget_seconds": 120,
+      "budget_memory_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "rss_scope": "1-second host RSS sampling; not exact peak or guest logical/prover allocation",
+      "stdout": "logs/fmt-admission.stdout.log",
+      "stderr": "logs/fmt-admission.stderr.log"
+    },
+    {
+      "name": "prepare-official-smoke",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g18-admission/release/g18-prover-admission",
+      "args": [
+        "prepare",
+        "experiments/g18_raw/run-20261115-01",
+        "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-3.1.0/examples/loop.bin"
+      ],
+      "started_utc": "2026-11-15T12:58:34.055Z",
+      "finished_utc": "2026-11-15T12:58:34.412Z",
+      "code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 357.5256250000093,
+      "budget_seconds": 120,
+      "budget_memory_mib": 16384,
+      "sampled_max_single_process_rss_mib": null,
+      "sampled_max_process_tree_rss_mib": null,
+      "rss_sample_count": 0,
+      "rss_scope": "1-second host RSS sampling; not exact peak or guest logical/prover allocation",
+      "stdout": "logs/prepare-official-smoke.stdout.log",
+      "stderr": "logs/prepare-official-smoke.stderr.log"
+    },
+    {
+      "name": "official-real-proof-smoke",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g18-admission/release/g18-prover-admission",
+      "args": [
+        "smoke",
+        "experiments/g18_raw/run-20261115-01",
+        "/Users/lijian/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-3.1.0/examples/loop.bin"
+      ],
+      "started_utc": "2026-11-15T12:58:34.413Z",
+      "finished_utc": "2026-11-15T12:58:36.186Z",
+      "code": 0,
+      "signal": null,
+      "spawn_error": null,
+      "termination": null,
+      "wall_ms": 1773.1203749999986,
+      "budget_seconds": 1800,
+      "budget_memory_mib": 24576,
+      "sampled_max_single_process_rss_mib": 159.109375,
+      "sampled_max_process_tree_rss_mib": 162.53125,
+      "rss_sample_count": 1,
+      "rss_scope": "1-second host RSS sampling; not exact peak or guest logical/prover allocation",
+      "stdout": "logs/official-real-proof-smoke.stdout.log",
+      "stderr": "logs/official-real-proof-smoke.stderr.log"
+    }
+  ],
+  "env_overrides": {
+    "RISC0_DEV_MODE": "0",
+    "RISC0_HOME": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0",
+    "RISC0_SERVER_PATH": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g17-tools/risc0/extensions/v3.1.0-cargo-risczero-aarch64-apple-darwin/r0vm",
+    "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/g18-admission",
+    "CARGO_BUILD_JOBS": "2",
+    "host_strip": "none",
+    "remote_prover": false,
+    "local_backend": "Explicit ExternalProver using same official r0vm; default native hardware selection"
+  },
+  "run_source_is_new_uncommitted": true,
+  "engineering_repair_retests": 0,
+  "old_tracked_files": 2879,
+  "running": null,
+  "fmt_passed": true,
+  "official_smoke_command_passed": true,
+  "stop_reason": "Apple M4 fixed environment cannot provide the required official Groth16 wrapper; one official Composite smoke retained independently",
+  "historical_files_unchanged": true,
+  "finished_utc": "2026-11-15T12:58:36.270Z"
+}
