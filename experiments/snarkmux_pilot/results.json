@@ -1,0 +1,52 @@
+{
+  "schema": "VV/SNARKMUX-PILOT/RESULTS/v1",
+  "status": "BLOCKED_SOURCE",
+  "stop_stage": 1,
+  "reason": "Author-linked prototype source not publicly retrievable in this run",
+  "baseline": {
+    "valid": 4,
+    "total": 4,
+    "curve": "BLS12-381",
+    "individual_verify_ms": 3.696459,
+    "vk_prepare_ms": 10.152958,
+    "proof_bytes": [
+      192,
+      192,
+      192,
+      192
+    ],
+    "samples": 1,
+    "binding_controls": {
+      "fifth_ballot_valid_under_own_inputs": true,
+      "fifth_proof_rejected_under_original_third_inputs": true,
+      "modified_ballot2_nullifier_field_rejected": true,
+      "swapped_inputs_rejected": true
+    },
+    "controls_are_not_snarkmux_tests": true,
+    "evm_gas": null,
+    "deployment_gas": null
+  },
+  "snarkmux": {
+    "aggregate_ms": null,
+    "aggregate_package_bytes": null,
+    "vprep_ms": null,
+    "online_verify_ms": null,
+    "peak_rss_mib": null,
+    "valid_aggregate_verified": null,
+    "modified_input_rejected": null,
+    "substituted_batch_rejected": null,
+    "evm_verified": null,
+    "evm_gas": null,
+    "deployment_gas": null,
+    "calldata_bytes": null
+  },
+  "new_ballot_proofs": 0,
+  "new_setups": 0,
+  "new_dkg": 0,
+  "new_p3": 0,
+  "new_evm_transactions": 0,
+  "stage2": "NOT_RUN_STAGE1_BLOCKED",
+  "stage3": "NOT_RUN_STAGE1_BLOCKED",
+  "replace_snarkpack": false,
+  "no_claim_of_mathematical_impossibility": true
+}

@@ -1,0 +1,86 @@
+SnarkMux: Streaming SNARK Aggregation
+with Constant Online Verification
+No Author Given
+No Institute Given
+Abstract. SNARKs let a verifier check an expensive computation via a
+succinct proof, without re-executing the computation. However, many
+applications still verify proofs individually, creating verifier load and
+high fees in replicated or constrained-verifier settings. Existing proof
+aggregation schemes largely follow the generalized inner product argu-
+ment (GIPA) line, achieving O(log n) proof size and verifier work for
+aggregating n proofs, but remaining costly in practice and operating in
+batch mode. Rather than batching until a full window is available, we
+presentSnarkMux,astreamingSNARKaggregationschemethatmain-
+tains a constant-size aggregate and requires O(1) online verifier work
+per window of size n. Motivated by incremental verifiable computation,
+SnarkMux directly folds the Groth16 and Plonk verification relations
+and composes these proof-system-specific folds with Nova’s circuit-layer
+fold; this defers expensive target-verifier logic (e.g., pairings) to the final
+checkwhilekeepingconstantaggregatorstate.Aspartofpublic-inputag-
+gregation, we propose a generic instance-delegation technique: the prover
+aggregates instances, and the verifier performs a simple binding prepro-
+cessing costing only O(n) hashes per window, after which online verifi-
+cation is constant-cost. Notably, our Groth16 and Plonk instantiations
+coverbothcircuit-specificanduniversal-setupSNARKs,withpreprocess-
+ing that makes Plonk challenges folding-compatible, leading to a 0.8 KB
+Groth16 aggregate with 18 ms verification and a 0.5 KB Plonk one with
+2 ms verification for 256 proofs.
+Keywords: Proof Aggregation· Incrementally Verifiable Computation
+· Folding Scheme.
+1 Introduction
+Succinct non-interactive argumentof knowledge (SNARK)lets aproverconvince
+a verifier that a statement is true using a short proof and efficient verification,
+without interaction. A zk-SNARK additionally provides zero-knowledge, mean-
+ing the proof reveals nothing beyond validity. SNARK verification is increas-
+inglydeployedinsecurity-criticalsystemswithconstrainedorreplicatedverifiers,
+where verification cost directly limits throughput and usability. In blockchains,
+zk-rollups submit proofs to a layer-1 chain to attest to off-chain state tran-
+sitions [26], and zkEVM systems prove correct smart-contract execution [21].
+Despite this promise, deployed SNARK-based systems face practical resource
+
+PAGE 26
+
+Table 4: Dominant operation counts of the verifier side for aggregating a window
+of n proofs
+Scheme Online (per window) Ins. (pre)proc.
+TIPP [8] SnarkPack [13] Mira [2] ℓ G1, 12 log n GT, 1 H, 18 P ℓ G1, 5 G2, 12 log n GT, log n RO,
+nℓ G1
+nℓ Zp, ℓ G1
+2 H, 18 P
+ℓ G1, 4 GT, 4 P, SNARK′
+.V nlog n H
+SnarkMux (aug.) SnarkMux (com.) 2ℓ G1, 1 RO, 1 H, 5 P, SNARK′
+.V n H (S.VPrep)
+ℓ G1, 1 RO, 1 H, 5 P, SNARK′
+.V n H (S.VPrep)
+aPlonk [1] SnarkMux (lin.) SnarkMux (quad.) 2 log2(3n) G1, 2 log2(3n) GT,
+nℓlog ℓ Zp
+log2(3n) H, 4 P
+2 G1, 1 RO, 1 H, 2 P, SNARK′
+.V n H (S.VPrep)
+22 G1, 1 RO, 1 H, 2 P, SNARK′
+.V n H (S.VPrep)
+Table 5: Verifier-received output (KB) versus window n
+Window Size 16 32 64 128 256
+Groth16 aggregation
+TIPP [8] 20 24 29 33 38
+SnarkPack [13] 20 24 29 33 38
+SnarkMux (aug.) 7.2 7.2 7.2 7.2 7.2
+SnarkMux (com.) 0.8 0.8 0.8 0.8 0.8
+Plonk aggregation
+aPlonk [1] 6.6 7.4 8.2 9.0 9.8
+SnarkMux (lin.) 0.5 0.5 0.5 0.5 0.5
+SnarkMux (quad.) 1.7 1.7 1.7 1.7 1.7
+logarithmically with nand includes per-window instance processing as shown in
+Table 4.
+6.2 Implementation and Evaluation
+We implement SnarkMux in Rust3 based on Nova’s implemention [22]. We use
+the BN254/Grumpkin cycle for recursion, and evaluate aggregation for Groth16
+and Plonk instantiated over BN254. We instantiate Hash with Poseidon at 128-
+bit security [15]. The final SNARK SNARK′ in the IVC is Spartan [23]. All
+experiments run on an Intel i7-12700KF CPU (3.6 GHz) with 32 GB RAM.
+Circuit constraints. Table 6 reports R1CS constraint counts per aggregation
+step on the BN254/Grumpkin cycle, comparing SnarkMux against the baseline
+(Figure 1a) that embeds the full SNARK.V inside the recursive circuit. The
+3 https://anonymous.4open.science/r/SnarkMux
+26

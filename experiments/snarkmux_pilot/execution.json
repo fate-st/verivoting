@@ -1,0 +1,125 @@
+{
+  "started_utc": "2026-11-16T12:30:36.792Z",
+  "git_commit": "1ade01f12bc95ab00a514a7986a984816fe1741b",
+  "branch": "experiment/snarkmux-pilot",
+  "initial_git_status": "?? experiments/snarkmux_pilot/\n?? experiments/zkvm_abc/\n?? scripts/snarkmux_pilot.mjs",
+  "commands": [
+    {
+      "label": "adapter-lock",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "generate-lockfile",
+        "--offline",
+        "--manifest-path",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/snarkmux_pilot/adapter/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 137.16941699999995
+    },
+    {
+      "label": "adapter-build",
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/snarkmux_pilot/adapter/Cargo.toml",
+        "--target-dir",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 10076.439458
+    },
+    {
+      "label": "original-b4",
+      "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/target/release/snarkmux-input-check",
+      "args": [
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/snarkmux_pilot/input_bundle.json"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 578.6520839999994
+    },
+    {
+      "label": "paper-extract",
+      "program": "swift",
+      "args": [
+        "-module-cache-path",
+        "/private/tmp/vv-snarkmux-swift-cache",
+        "-e",
+        "import PDFKit; import Foundation; let d=PDFDocument(url:URL(fileURLWithPath:CommandLine.arguments[1]))!; print(d.page(at:0)!.string!); print(\"\\nPAGE 26\\n\"); print(d.page(at:25)!.string!)",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/snarkmux_pilot/evidence/snarkmux.pdf"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 635.934874999999
+    },
+    {
+      "label": "prototype-access",
+      "program": "curl",
+      "args": [
+        "--silent",
+        "--show-error",
+        "--location",
+        "--max-time",
+        "35",
+        "--dump-header",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/snarkmux_pilot/evidence/prototype_headers.txt",
+        "--output",
+        "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/snarkmux_pilot/evidence/prototype_response.txt",
+        "--write-out",
+        "%{http_code}\n%{url_effective}\n",
+        "https://anonymous.4open.science/r/SnarkMux"
+      ],
+      "exit_code": 0,
+      "signal": null,
+      "error": null,
+      "elapsed_ms": 2093.0133749999986
+    }
+  ],
+  "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+  "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+  "binary_sha256": "7e695dd05c42e286029550775c4302837371792fd295693c24ba116828e63e4b",
+  "source_files": [
+    {
+      "path": "scripts/snarkmux_pilot.mjs",
+      "sha256": "66fad1e5f064059d2322c2994cc852df0f23c6182f47e6e9ad64f004a6d58fde"
+    },
+    {
+      "path": "experiments/snarkmux_pilot/adapter/Cargo.toml",
+      "sha256": "2b5d8bdd273931b09b9cb9f7dda97b2254c013ba3b85bad0ce6a30d3d55bc068"
+    },
+    {
+      "path": "experiments/snarkmux_pilot/adapter/Cargo.lock",
+      "sha256": "dca7b29d3cca2c7c93d4b6c069d919d8b4377653d9464850a5ff35df5d94d8c8"
+    },
+    {
+      "path": "experiments/snarkmux_pilot/adapter/src/main.rs",
+      "sha256": "2fb76f12a651e81593b154a08d4ddcc414eecbc3b8e0a07090fab3b0759b3879"
+    }
+  ],
+  "status": "BLOCKED_SOURCE",
+  "historical_tracked_files_checked": 2489,
+  "historical_tracked_files_unchanged": true,
+  "changed_historical_files": [],
+  "finished_utc": "2026-11-16T12:30:50.907Z",
+  "environment": {
+    "cpu": "Apple M4",
+    "cpus": 10,
+    "ram_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "kernel": "24.6.0",
+    "node": "v23.11.0"
+  }
+}

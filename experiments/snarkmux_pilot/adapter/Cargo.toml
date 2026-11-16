@@ -1,0 +1,15 @@
+[package]
+name = "snarkmux-input-check"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+bellperson = { version = "=0.27.0", default-features = false, features = ["groth16"] }
+blstrs = "=0.7.0"
+serde_json = "=1.0.154"
+
+[profile.release]
+opt-level = 1
