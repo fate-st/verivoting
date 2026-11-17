@@ -1,0 +1,66 @@
+{
+  "base_archive_commit": "390fafe7",
+  "base_archive_commit_full": "390fafe7b6041c3aced2ce767396c7489ce83316",
+  "archive_branch": "archive/stage1-a06-budget-evidence",
+  "verified_original_git_paths": 53,
+  "verified_original_checksum_entries": 52,
+  "original_manifest_and_integrity_preserved": true,
+  "main_experiment_branch_unpolluted": true,
+  "research_pk_excluded_from_remote": true,
+  "final_post_push_check": "VERIFIED_PASS",
+  "checked_at": "2026-11-17T13:51:40.530Z",
+  "remote_url": "https://github.com/fate-st/verivoting.git",
+  "verification_scope": "Post-push verification of original archive 390fafe7; follow-up commit/push checks are separately reported after upload.",
+  "main_experiment_head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+  "main_git_status_short": " M contracts/scripts/stage1_multibatch_compare.mjs\n M docs/STAGE1_MULTIBATCH.md\n M scripts/stage1_multibatch_audit.mjs\n?? experiments/stage1_multibatch_raw/gate-a-20261117-05/\n?? experiments/stage1_multibatch_raw/gate-a-20261117-06/\n?? experiments/stage1_multibatch_raw/gate-b-20261117-01/\n?? results/stage1_multibatch/gate-a-20261117-05/\n?? results/stage1_multibatch/gate-a-20261117-06/\n",
+  "main_git_status_short_sha256": "37476f63e99b61876836bf6c16da44d06fa6b098cd6abaadbd771901a63a653c",
+  "main_index_sha256": "da5c79e1adaa35c1ccd5904ad65a421c7c1ff4e8a232b99da692ca9331747fc8",
+  "main_source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "5d609217103da3b2822fca60f98a1e2ab3367d02755c4d4af034069a433f40e0"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "665be8f8800429c01026c680cd362c086ec9bee1c48034566bc259a5a1695c52"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "0305e0740a2c1f15d3aa4d1cdb279908ccf3f25984dc2bd5091f1f6e0773e9bc"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "sha256": "f5620e7b30dc6dcfee6714393aee75d3f75d09b161f7c21a694c9bea76195e33"
+    }
+  ],
+  "main_archive_paths_verified": 14,
+  "original_checksum_file_sha256": "8bb5547a0750d11579f52265705f8a906425426b076fd195a5da68344078f772",
+  "original_preserved_blobs": [
+    {
+      "path": "results/stage1_multibatch/archive-a06/original_integrity.json",
+      "sha256": "fb6d4e23f64f643ab9828c663ab0ac8bf36ec8897041f75120fdf663c2876f2e",
+      "blob": "b6382091c071feec50a4fb6cab31f0d0e444c8fb"
+    },
+    {
+      "path": "results/stage1_multibatch/archive-a06/upload_manifest.json",
+      "sha256": "687f467d1fc0d1b7e52913d3d8970336f44ab309a7e54183daa489f84d30b02a",
+      "blob": "d6227a8adb5219b0ddd2283c4d03a92b1748c6f6"
+    }
+  ],
+  "original_snapshot_sha256": "6bd396335f2976f3f7ea8f394e78a84ea6d3949fb6bc59b3ed91febd10f1f407",
+  "setup_executed": 0,
+  "prove_executed": 0,
+  "vm_created": 0,
+  "evm_transactions": 0,
+  "gate_b02_executed": false,
+  "gate_b02_authorization": "NOT_GRANTED_IN_THIS_TASK",
+  "reproduction_boundary": "Archive evidence only; proving key and build caches absent; not a standalone complete proof-reproduction package."
+}
