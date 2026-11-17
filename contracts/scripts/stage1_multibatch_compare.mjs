@@ -129,7 +129,7 @@ export function validateConfig({phase,run,aRun,bRun,rawRun}={}){
  assert.equal(expectedA04Changes.filter(p=>p.startsWith('A\t')).length,32);
  assert.deepEqual(a04Changes,expectedA04Changes,'fixed 35-file 3M+32A inventory');
  let dirs;
- if(phase==='A'){assert.equal(path.basename(runPath(run)),'gate-a-20261117-05');dirs=[run,resultsPathForRun(run)];}
+ if(phase==='A'){assert.equal(path.basename(runPath(run)),'gate-a-20261117-06');dirs=[run,resultsPathForRun(run)];}
  else if(phase==='D'){
   assert.match(rawRun??'',/^experiments\/stage1_multibatch_raw\/[A-Za-z0-9_-]+$/);
   assert.equal(run,resultsPathForRun(rawRun));dirs=[rawRun,run];
@@ -137,11 +137,12 @@ export function validateConfig({phase,run,aRun,bRun,rawRun}={}){
   runPath(run);runPath(aRun);assert.notEqual(run,aRun);dirs=[run,resultsPathForRun(run),aRun,resultsPathForRun(aRun)];
   if(phase==='C'){runPath(bRun);assert.ok(bRun!==run&&bRun!==aRun);dirs.push(bRun,resultsPathForRun(bRun));}
  }
+ const allowedDirs=[...dirs,...historyDirs];
  const workspaces={};
  for(const [kind,args] of [['staged',['diff','--cached','--name-only','-z']],['unstaged',['diff','--name-only','-z']],
   ['untracked',['ls-files','--others','--exclude-standard','-z']]]){
   const paths=git(...args).split('\0').filter(Boolean);workspaces[kind]=paths;
-  for(const p of paths)assert.ok(approvedPatches.includes(p)||dirs.some(d=>inside(p,d)),`${phase}: unauthorized ${kind} path ${p}`);
+  for(const p of paths)assert.ok(approvedPatches.includes(p)||allowedDirs.some(d=>inside(p,d)),`${phase}: unauthorized ${kind} path ${p}`);
  }
  assert.equal(cfg.release_opt_level,1);assert.match(read('Cargo.toml').toString(),/opt-level\s*=\s*1/);
  for(const p of cfg.source_pins)assert.equal(sha(read(p.path)),p.sha256,p.path);
@@ -167,7 +168,9 @@ export function recursiveSnapshot(p){
 export const historyDirs=['experiments/stage1_multibatch_raw/gate-a-20261117-01','experiments/stage1_multibatch_raw/gate-a-20261117-02',
  'results/stage1_multibatch/gate-a-20261117-02','results/stage1_multibatch/gate-a-20261117-01',
  'experiments/stage1_multibatch_raw/gate-a-20261117-03','results/stage1_multibatch/gate-a-20261117-03',
- 'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04'];
+ 'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04',
+ 'experiments/stage1_multibatch_raw/gate-a-20261117-05','results/stage1_multibatch/gate-a-20261117-05',
+ 'experiments/stage1_multibatch_raw/gate-b-20261117-01','results/stage1_multibatch/gate-b-20261117-01'];
 export function sourcePatchSnapshot(){return approvedPatches.map(p=>({path:p,sha256:sha(read(p))}));}
 export function readonlyInputSnapshot({phase,aRun,bRun,rawRun}){
  const dirs=[];
@@ -182,7 +185,9 @@ export function protectedSnapshot({phase,run,aRun,bRun,rawRun}){
  const files=execFileSync('git',['ls-files','--cached','--others','--exclude-standard','-z'],{cwd:root,encoding:'utf8'})
   .split('\0').filter(p=>p&&!approvedPatches.includes(p)&&!excluded.some(d=>inside(p,d))).sort();
  const paper=path.resolve(root,'../../sn-article-template/sn-article.tex');
- const archives=historyDirs.map(recursiveSnapshot);for(const a of archives)assert.equal(a.exists,a.path!=='results/stage1_multibatch/gate-a-20261117-01');
+ const archives=historyDirs.map(recursiveSnapshot);
+ const expectedAbsentHistoryDirs=new Set(['results/stage1_multibatch/gate-a-20261117-01','results/stage1_multibatch/gate-b-20261117-01']);
+ for(const a of archives)assert.equal(a.exists,!expectedAbsentHistoryDirs.has(a.path),'history path existence mismatch: '+a.path);
  const scope=Object.fromEntries(Object.entries({phase,run,aRun,bRun,rawRun}).filter(([,v])=>v!==undefined&&v!==null));
  return {scope,files:files.map(p=>({path:p,sha256:sha(read(p))})),archives,readonly_inputs:readonlyInputSnapshot(scope),
   paper:{path:paper,sha256:sha(fs.readFileSync(paper))}};
@@ -226,7 +231,7 @@ export function checkStorageLayouts(contracts){
   return {contract:name,status:'PASS_COMPILE',packed_slot:slot.toString(),fields};
  });
 }
-async function command(run,label,program,args,extraEnv={}){
+async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.budgets.child_seconds){
  const env={...process.env,...extraEnv,CARGO_BUILD_JOBS:String(cfg.budgets.build_jobs),RAYON_NUM_THREADS:String(cfg.budgets.rayon_threads)};
  for(const k of Object.keys(env))if(k.startsWith('CARGO_PROFILE_RELEASE_'))delete env[k];
  const base=path.join(run,'logs',label);fs.mkdirSync(path.dirname(absolute(base)),{recursive:true});
@@ -234,10 +239,10 @@ async function command(run,label,program,args,extraEnv={}){
  const start=performance.now(),started=new Date().toISOString();let reason=null;
  const child=spawn(program,args,{cwd:root,env,stdio:['ignore','pipe','pipe'],detached:true});
  child.stdout.on('data',b=>{fs.writeSync(out,b);process.stdout.write(b);});child.stderr.on('data',b=>{fs.writeSync(err,b);process.stderr.write(b);});
- const timer=setTimeout(()=>{reason='WALL_BUDGET';try{process.kill(-child.pid,'SIGTERM');}catch{}},cfg.budgets.child_seconds*1000);
+ const timer=setTimeout(()=>{reason='WALL_BUDGET';try{process.kill(-child.pid,'SIGTERM');}catch{}},wallBudgetSeconds * 1000);
  const result=await new Promise(resolve=>{child.once('error',e=>resolve({code:null,error:String(e)}));child.once('close',(code,signal)=>resolve({code,signal}));});
  clearTimeout(timer);fs.closeSync(out);fs.closeSync(err);
- const r={program,args,...result,reason,started,wall_ms:performance.now()-start,
+ const r={program,args,...result,reason,started,wall_ms:performance.now()-start,wall_budget_seconds: wallBudgetSeconds,
   environment:{CARGO_TARGET_DIR:env.CARGO_TARGET_DIR??null,CARGO_BUILD_JOBS:env.CARGO_BUILD_JOBS,RAYON_NUM_THREADS:env.RAYON_NUM_THREADS},
   stdout:base+'.stdout.log',stderr:base+'.stderr.log'};writeNew(base+'.command.json',r);
  assert.equal(result.code,0,label+' failed; logs preserved');assert.equal(reason,null);return r;
@@ -539,7 +544,9 @@ export async function nextGate(gate,run,aRun,bRun,approved){
  const before=protectedSnapshot({phase:gate,run,aRun,bRun});writeNew(run+'/protected_files.json',before);
  try{
   writeNew(run+'/request.json',{gate,identity:`${gate}/${path.basename(run)}/${new Date().toISOString()}`,config_sha256:sha(read(configPath)),a_run:aRun,b_run:bRun??null,approved,formal:gate==='C'});
-  await command(run,'materials',absolute(a.binary),['prepare',run+'/materials',gate,'--approved',gate]);
+  const proofCount=gate==='B'?2:8;
+  const materialsWallBudget=(1 + proofCount) * cfg.budgets.child_seconds + 120;
+  await command(run,'materials',absolute(a.binary),['prepare',run+'/materials',gate,'--approved',gate],{},materialsWallBudget);
   const ks=gate==='B'?cfg.regression_k:cfg.formal_k;
   for(const k of ks)for(const route of cfg.routes)await command(run,`positive-k${k}-${route}`,process.execPath,
    ['--max-old-space-size='+cfg.budgets.node_heap_mib,absolute(scriptPath),'--vm',run,aRun,route,String(k),'positive']);

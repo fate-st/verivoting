@@ -306,3 +306,54 @@ Rust固定 `+1.99.1`、Release opt-level=1、独立CARGO_TARGET_DIR；Solidity 0
 Gate B仅做完整功能与证据回归：材料、6正向/3负向独立会话、状态/NF连续性、回滚、收据计费及只读保护；
 不输出性能优劣结论。K=2与历史Stage2（仅Direct Fold/State Proof）的部署、认证、接收、冻结分项成本差异，
 统一保留在Gate D的 `deriveD()` 执行，不将其前移到B。完成B后仍需停止并等待C的独立批准。
+
+## A-06 当前执行规范（A-01至A-05原文全部保留为历史归档规范）
+
+本节为当前有效规范；A-05仅为历史归档规范，不再是新执行的准入入口。
+本地HEAD保持 `3f8813c9d69d0e45631e9acb7bbb247a1119f511`，禁止commit、push、reset或clean。
+只修改runner、auditor和本文档，只新建 `gate-a-20261117-06` raw/results目录；
+不改Solidity、Rust、电路、VK、研究Setup、配置、Cargo.lock、fixtures、历史结果或论文。
+
+### B-01失败归档与外层调度预算
+
+`gate-b-20261117-01`已因外层materials总预算600秒触发WALL_BUDGET/SIGTERM，
+当时Setup worker墙钟实测38.782秒、峰值RSS 4465.719 MiB，随后仍在第1批证明阶段。
+该Setup worker墙钟与仅参数生成的35.465秒不同；不能把半成品视为B通过或正式性能样本。
+失败原始日志、Setup与半成品全部只读保留，不复用、不删除、不改写。
+
+`command()`新增独立wallBudgetSeconds参数，默认仍为cfg.budgets.child_seconds（600秒）；
+仅nextGate的materials调用使用 `(1 + proofCount) * cfg.budgets.child_seconds + 120`：
+Gate B的proofCount=2，对应1920秒；Gate C的proofCount=8，对应5520秒。
+120秒涵盖材料预处理与进程调度的运行缓冲，并非数学绝对上限，也不保证证明一定完成。
+所有命令日志新增wall_budget_seconds，独立审计核对materials预算、成功退出、无超时原因、
+正墙钟耗时及未超过预算，并核对Setup加逐批worker数量为1+proofCount。
+
+Rust内层单个Worker仍使用名义600秒Worker预算与16384 MiB RSS上限，未修改Rust或配置。
+超时由后台每250ms轮询 `t.elapsed().as_secs() > 600` 触发，实际终止时刻可能略超600.000秒。
+Setup与每批Prove的独立进程RSS仍须在(0,16384] MiB内；本轮不生成这些新的运行时指标。
+
+### 12项历史快照与新源文件哈希
+
+runner递归保护A-01至A-05以及失败B-01的raw/results共12项路径，包括ignored构建缓存。
+其中A-01与B-01的results须不存在，其余10项须存在；这些历史目录虽获工作区白名单准入，
+仍受完整目录清单与内容SHA-256前后核验，绝不授权修改历史文件。
+auditor独立硬编码同一12项清单并核对存在性，不仅依赖runner提供的清单。
+原有三代静态变更清单、四代提交链、固定Tree和未授权路径拒绝规则保持不变。
+
+A-06编译前定稿全部3个批准补丁，并在currentSourcePins()中与配置、Rust及Solidity一并持久锁定。
+本文档不在编译后追加实测耗时；真实命令、计时、哈希、预检和审计结果只写入新A-06归档。
+本机新二进制必须位于A-06自己的build-target，且SHA-256与A-03不可变基准及gate_a.json一致：
+`da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`。
+
+### 本轮只编译、预检与审计
+
+```sh
+node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-06
+node contracts/scripts/stage1_multibatch_compare.mjs --preflight B --a-run experiments/stage1_multibatch_raw/gate-a-20261117-06 --b-run gate-b-20261117-02
+node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-06
+```
+
+严格按上述顺序逐条执行，前一步成功才进入下一步；不创建B-02 raw/results目录。
+最终须分别得到PASS_GATE_A_COMPILE_ONLY、READY_FOR_HUMAN_APPROVAL和PASS_GATE_A_ARTIFACT_AUDIT。
+本轮Setup=0、Prove=0、VM=0、交易=0；静态接线通过不等于运行时预算或密码学测试已通过。
+输出执行摘要与3个批准文件的完整git diff后立即停止，待人工核验后另行放行B-02，禁止自动进入B/C。

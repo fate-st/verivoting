@@ -1,0 +1,135 @@
+{
+  "status": "PASS_ORIGINAL_WORKSPACE_UNCHANGED_BEFORE_ARCHIVE_COMMIT",
+  "checked_at": "2026-11-17T12:48:49.374Z",
+  "original_head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+  "original_branch": "experiment/stage1-multibatch-gate-a",
+  "original_index_sha256": "da5c79e1adaa35c1ccd5904ad65a421c7c1ff4e8a232b99da692ca9331747fc8",
+  "before_snapshot_sha256": "38b92f8c5ae10e6f3edf8c08cba271665f4cf23d3a953d192cdf816b4592a5e2",
+  "after_snapshot_sha256": "38b92f8c5ae10e6f3edf8c08cba271665f4cf23d3a953d192cdf816b4592a5e2",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "5d609217103da3b2822fca60f98a1e2ab3367d02755c4d4af034069a433f40e0"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "665be8f8800429c01026c680cd362c086ec9bee1c48034566bc259a5a1695c52"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "0305e0740a2c1f15d3aa4d1cdb279908ccf3f25984dc2bd5091f1f6e0773e9bc"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "sha256": "f5620e7b30dc6dcfee6714393aee75d3f75d09b161f7c21a694c9bea76195e33"
+    }
+  ],
+  "paper_unchanged": true,
+  "archives": [
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-01",
+      "exists": true,
+      "file_count": 1628,
+      "entries_sha256": "73272b69b7852a350c95c5242f5e5395207eac3cb5563aa0c1876e424e5bdc8b"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-01",
+      "exists": false,
+      "file_count": 0,
+      "entries_sha256": null
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-02",
+      "exists": true,
+      "file_count": 1629,
+      "entries_sha256": "6cba6266c9ba86b8734b76a34ac245fbdaa1301d94809533d494e243d17f88fe"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-02",
+      "exists": true,
+      "file_count": 2,
+      "entries_sha256": "68d660e36287f7534fe3caa0705e4c063c59131a5e76fb81aba1bfb37653b7ed"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-03",
+      "exists": true,
+      "file_count": 1638,
+      "entries_sha256": "6b69d6fb88e032fd245b3893fcf23a7452698da6445a8555e65fb4e072d5e4ee"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-03",
+      "exists": true,
+      "file_count": 4,
+      "entries_sha256": "e832539ff73e991db0f413a79bb3f76a474421e2d1cde58596d9ff5df4f7c2a2"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-04",
+      "exists": true,
+      "file_count": 1639,
+      "entries_sha256": "8496d3bb5602f2784d595786cfdf886fdd76fc4a6d61be8d86fa1a5e62442551"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-04",
+      "exists": true,
+      "file_count": 4,
+      "entries_sha256": "5d306c8ecc4f81b30043a52fccd4c2bf8a66f6f0017da88ee2b91c9b481aecf3"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-05",
+      "exists": true,
+      "file_count": 1639,
+      "entries_sha256": "b2128bb07ac4d5d37f20d15505785503e0a431b8083b822c7aaf72d5842eb1e8"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-05",
+      "exists": true,
+      "file_count": 4,
+      "entries_sha256": "eab42da216c06fc14e504dfccfafef28ec58504e71a278ca9339130a4a3b0d5f"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-06",
+      "exists": true,
+      "file_count": 1639,
+      "entries_sha256": "68afa257f109358b5430b30342c5e2de07068d6381f66470c11ec2d70851fed0"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-06",
+      "exists": true,
+      "file_count": 6,
+      "entries_sha256": "63212c022fb9f51c700a4c7c6b7e324895a302c46a3e1fcab88f35259e401481"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-01",
+      "exists": true,
+      "file_count": 13,
+      "entries_sha256": "8c43319278587f1a8b0c34717eed6bc9d9064f441b8a646b809e3bd6edbe0a9f"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-b-20261117-01",
+      "exists": false,
+      "file_count": 0,
+      "entries_sha256": null
+    }
+  ],
+  "pk": {
+    "path": "experiments/stage1_multibatch_raw/gate-b-20261117-01/materials/research_pk.bin",
+    "bytes": 847800624,
+    "sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+    "uploaded": false,
+    "local_original_retained": true
+  },
+  "setup_executed_this_upload": 0,
+  "prove_executed_this_upload": 0,
+  "vm_created_this_upload": 0,
+  "evm_transactions_this_upload": 0,
+  "b02_executed": false,
+  "final_post_push_check": "pending; final operator report will record the read-only post-push check"
+}

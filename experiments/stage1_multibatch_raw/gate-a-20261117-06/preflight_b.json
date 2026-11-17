@@ -1,0 +1,171 @@
+{
+  "status": "READY_FOR_HUMAN_APPROVAL",
+  "scope": "STATIC_PREFLIGHT_ONLY",
+  "a_run": "experiments/stage1_multibatch_raw/gate-a-20261117-06",
+  "b_run": "gate-b-20261117-02",
+  "config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "compiled_sha256": "9752dedd88cb0c0165e58237d5bdb02aaa096acdb4308616a9de62164bcaca52",
+  "binary_sha256": "da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "5d609217103da3b2822fca60f98a1e2ab3367d02755c4d4af034069a433f40e0"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "665be8f8800429c01026c680cd362c086ec9bee1c48034566bc259a5a1695c52"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "0305e0740a2c1f15d3aa4d1cdb279908ccf3f25984dc2bd5091f1f6e0773e9bc"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "sha256": "f5620e7b30dc6dcfee6714393aee75d3f75d09b161f7c21a694c9bea76195e33"
+    }
+  ],
+  "positive_tasks": [
+    {
+      "k": 1,
+      "route": "legacy",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 1,
+      "route": "direct_fold",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 1,
+      "route": "state_proof",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 2,
+      "route": "legacy",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 2,
+      "route": "direct_fold",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 2,
+      "route": "state_proof",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    }
+  ],
+  "negative_tasks": [
+    {
+      "k": 2,
+      "route": "legacy",
+      "kind": "NEGATIVE_ONLY"
+    },
+    {
+      "k": 2,
+      "route": "direct_fold",
+      "kind": "NEGATIVE_ONLY"
+    },
+    {
+      "k": 2,
+      "route": "state_proof",
+      "kind": "NEGATIVE_ONLY"
+    }
+  ],
+  "resource_budgets": {
+    "build_jobs": 2,
+    "rayon_threads": 4,
+    "child_seconds": 600,
+    "child_rss_mib": 16384,
+    "node_heap_mib": 6144
+  },
+  "stopping_rules": {
+    "A": "compile only; stop for human approval",
+    "B": "fresh 2 proofs + regression + isolated negatives; NOT performance",
+    "C": "fresh 8 serial proof workers + 24 clean positive-only VMs",
+    "D": "audit and derive; explicit approval required"
+  },
+  "prague": {
+    "status": "PASS_STATIC",
+    "hardfork": "prague",
+    "chain_id": "1",
+    "active_eips": [
+      2537,
+      3529,
+      7623
+    ],
+    "inactive_eips": [
+      8037
+    ],
+    "max_refund_quotient": "5",
+    "vm_created": false
+  },
+  "commands": [
+    {
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "-Vv"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T12:36:49.120Z",
+      "wall_ms": 136.1712090000001,
+      "wall_budget_seconds": 600,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/preflight-rust-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/preflight-rust-version.stderr.log"
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "-V"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T12:36:49.257Z",
+      "wall_ms": 27.560041000000183,
+      "wall_budget_seconds": 600,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/preflight-cargo-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/preflight-cargo-version.stderr.log"
+    }
+  ],
+  "future_directories": [
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-02",
+      "exists": false
+    },
+    {
+      "path": "results/stage1_multibatch/gate-b-20261117-02",
+      "exists": false
+    }
+  ],
+  "setup_count": 0,
+  "proof_generation_count": 0,
+  "vm_creation_count": 0,
+  "evm_transaction_count": 0,
+  "runtime_status": "RUNTIME_PENDING_B",
+  "workspace_handoff": "B reads aRun raw/results without mutation; C reads both aRun and bRun raw/results without mutation, including ignored build caches.",
+  "next_action": "STOP; separate human approval required before B"
+}

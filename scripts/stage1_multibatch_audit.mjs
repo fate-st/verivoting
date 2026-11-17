@@ -30,6 +30,8 @@ function checkA(run){
  for(const field of gasFields)assert.ok(s.includes(field+':'),field+' output wiring');
  for(const expression of ['r.execResult.gasRefund??0n','blockNumber+=1n','blockGasUsed:0n','getCalldataFloorGas(signed,sender)',
   'used<=BigInt(cfg.block_gas_limit)','common.param(\'maxRefundQuotient\')'])assert.ok(s.includes(expression),expression);
+ for(const expression of ['wallBudgetSeconds * 1000','wall_budget_seconds: wallBudgetSeconds',
+  '(1 + proofCount) * cfg.budgets.child_seconds + 120'])assert.ok(s.includes(expression),'materials wall budget wiring '+expression);
  const preflight=load(run+'/preflight_b.json');verifyPreflightB(run,preflight.b_run);
  assert.deepEqual(preflight,load(resultsPathForRun(run)+'/preflight_b.json'));assert.ok(preflight.future_directories.every(p=>!fs.existsSync(path.join(root,p.path))));
  assert.ok(preflight.commands.every(c=>c.code===0));
@@ -41,12 +43,25 @@ function checkA(run){
  assert.equal(s.split("await reject('complete_valid_ballot_replacement'").length-1,2,'Legacy and both batch routes wired');
  for(const expression of ['m.ballots[4].eip.proof_neg_a_eip2537_hex','m.ballots[4].eip.public_inputs_be_hex',"'BATCH_MEMBERSHIP'","'BATCH_ROOT'"])
   assert.ok(s.includes(expression),'complete valid V5 replacement wiring '+expression);
- checkProtected(load(run+'/protected_files.json'));
+ const expectedHistoryDirs=[
+  'experiments/stage1_multibatch_raw/gate-a-20261117-01','results/stage1_multibatch/gate-a-20261117-01',
+  'experiments/stage1_multibatch_raw/gate-a-20261117-02','results/stage1_multibatch/gate-a-20261117-02',
+  'experiments/stage1_multibatch_raw/gate-a-20261117-03','results/stage1_multibatch/gate-a-20261117-03',
+  'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04',
+  'experiments/stage1_multibatch_raw/gate-a-20261117-05','results/stage1_multibatch/gate-a-20261117-05',
+  'experiments/stage1_multibatch_raw/gate-b-20261117-01','results/stage1_multibatch/gate-b-20261117-01'
+ ].sort();
+ const protectedManifest=load(run+'/protected_files.json');
+ assert.deepEqual(protectedManifest.archives.map(x=>x.path).sort(),expectedHistoryDirs,'exact historical archive inventory');
+ const expectedAbsent=new Set(['results/stage1_multibatch/gate-a-20261117-01','results/stage1_multibatch/gate-b-20261117-01']);
+ for(const archive of protectedManifest.archives)
+  assert.equal(archive.exists,!expectedAbsent.has(archive.path),'historical archive existence mismatch: '+archive.path);
+ checkProtected(protectedManifest);
  const acceptance=[
   {id:1,item:'Four-commit chain and three explicitly named fixed trees',status:'PASS_STATIC'},
   {id:2,item:'Three fixed inventories: 59A, 3M+31A and 3M+32A',status:'PASS_STATIC'},
   {id:3,item:'Dynamic paths, phase call sites, A/B read-only inputs, all three patch hashes frozen',status:'PASS_STATIC'},
-  {id:4,item:'Recursive A-01/02/03/04 archives including ignored caches and absent result A-01',status:'PASS_STATIC'},
+  {id:4,item:'Recursive A-01..A-05 and B-01 archives including ignored caches; A-01/B-01 results absent.',status:'PASS_STATIC'},
   {id:5,item:'Raw Legacy EVM refund counter; no zero-refund assumption',status:'PASS_STATIC'},
   {id:6,item:'Per-transaction blocks, BigInt 14 fields and receipt identities',status:'PASS_STATIC',runtime_status:'RUNTIME_PENDING_B'},
   {id:7,item:'Prague 2537/3529/7623 active; 8037 inactive; quotient 5',status:'PASS_STATIC'},
@@ -62,6 +77,13 @@ function checkA(run){
 }
 function checkMaterials(run,gate){
  const m=load(run+'/materials/materials.json');assert.equal(m.phase,gate);assert.equal(m.state_proofs_generated,gate==='B'?2:8);
+ const materialCommand=load(run+'/logs/materials.command.json');
+ const proofCount=gate==='B'?2:8;
+ const expectedWallBudgetSeconds=(1 + proofCount) * cfg.budgets.child_seconds + 120;
+ assert.equal(materialCommand.wall_budget_seconds,expectedWallBudgetSeconds);
+ assert.equal(materialCommand.code,0);assert.equal(materialCommand.reason,null);
+ assert.ok(materialCommand.wall_ms>0);assert.ok(materialCommand.wall_ms<=expectedWallBudgetSeconds*1000);
+ assert.equal(m.commands.length,1+proofCount);
  assert.equal(m.archived_state_proofs_reused,0);assert.equal(m.all_state_proofs_fresh,true);assert.equal(m.serial_workers,true);
  assert.equal(m.config_sha256,sha(read(configPath)));assert.equal(m.request_sha256,sha(read(run+'/materials/request.json')));
  assert.equal(m.ballots.length,32);assert.equal(new Set(m.ballots.map(b=>b.nullifier)).size,32);

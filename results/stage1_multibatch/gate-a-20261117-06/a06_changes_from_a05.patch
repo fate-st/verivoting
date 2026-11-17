@@ -1,0 +1,196 @@
+diff --git a/contracts/scripts/stage1_multibatch_compare.mjs b/contracts/scripts/stage1_multibatch_compare.mjs
+index d132b12..117a071 100644
+--- a/contracts/scripts/stage1_multibatch_compare.mjs
++++ b/contracts/scripts/stage1_multibatch_compare.mjs
+@@ -129,7 +129,7 @@ export function validateConfig({phase,run,aRun,bRun,rawRun}={}){
+  assert.equal(expectedA04Changes.filter(p=>p.startsWith('A\t')).length,32);
+  assert.deepEqual(a04Changes,expectedA04Changes,'fixed 35-file 3M+32A inventory');
+  let dirs;
+- if(phase==='A'){assert.equal(path.basename(runPath(run)),'gate-a-20261117-05');dirs=[run,resultsPathForRun(run)];}
++ if(phase==='A'){assert.equal(path.basename(runPath(run)),'gate-a-20261117-06');dirs=[run,resultsPathForRun(run)];}
+  else if(phase==='D'){
+   assert.match(rawRun??'',/^experiments\/stage1_multibatch_raw\/[A-Za-z0-9_-]+$/);
+   assert.equal(run,resultsPathForRun(rawRun));dirs=[rawRun,run];
+@@ -137,11 +137,12 @@ export function validateConfig({phase,run,aRun,bRun,rawRun}={}){
+   runPath(run);runPath(aRun);assert.notEqual(run,aRun);dirs=[run,resultsPathForRun(run),aRun,resultsPathForRun(aRun)];
+   if(phase==='C'){runPath(bRun);assert.ok(bRun!==run&&bRun!==aRun);dirs.push(bRun,resultsPathForRun(bRun));}
+  }
++ const allowedDirs=[...dirs,...historyDirs];
+  const workspaces={};
+  for(const [kind,args] of [['staged',['diff','--cached','--name-only','-z']],['unstaged',['diff','--name-only','-z']],
+   ['untracked',['ls-files','--others','--exclude-standard','-z']]]){
+   const paths=git(...args).split('\0').filter(Boolean);workspaces[kind]=paths;
+-  for(const p of paths)assert.ok(approvedPatches.includes(p)||dirs.some(d=>inside(p,d)),`${phase}: unauthorized ${kind} path ${p}`);
++  for(const p of paths)assert.ok(approvedPatches.includes(p)||allowedDirs.some(d=>inside(p,d)),`${phase}: unauthorized ${kind} path ${p}`);
+  }
+  assert.equal(cfg.release_opt_level,1);assert.match(read('Cargo.toml').toString(),/opt-level\s*=\s*1/);
+  for(const p of cfg.source_pins)assert.equal(sha(read(p.path)),p.sha256,p.path);
+@@ -167,7 +168,9 @@ export function recursiveSnapshot(p){
+ export const historyDirs=['experiments/stage1_multibatch_raw/gate-a-20261117-01','experiments/stage1_multibatch_raw/gate-a-20261117-02',
+  'results/stage1_multibatch/gate-a-20261117-02','results/stage1_multibatch/gate-a-20261117-01',
+  'experiments/stage1_multibatch_raw/gate-a-20261117-03','results/stage1_multibatch/gate-a-20261117-03',
+- 'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04'];
++ 'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04',
++ 'experiments/stage1_multibatch_raw/gate-a-20261117-05','results/stage1_multibatch/gate-a-20261117-05',
++ 'experiments/stage1_multibatch_raw/gate-b-20261117-01','results/stage1_multibatch/gate-b-20261117-01'];
+ export function sourcePatchSnapshot(){return approvedPatches.map(p=>({path:p,sha256:sha(read(p))}));}
+ export function readonlyInputSnapshot({phase,aRun,bRun,rawRun}){
+  const dirs=[];
+@@ -182,7 +185,9 @@ export function protectedSnapshot({phase,run,aRun,bRun,rawRun}){
+  const files=execFileSync('git',['ls-files','--cached','--others','--exclude-standard','-z'],{cwd:root,encoding:'utf8'})
+   .split('\0').filter(p=>p&&!approvedPatches.includes(p)&&!excluded.some(d=>inside(p,d))).sort();
+  const paper=path.resolve(root,'../../sn-article-template/sn-article.tex');
+- const archives=historyDirs.map(recursiveSnapshot);for(const a of archives)assert.equal(a.exists,a.path!=='results/stage1_multibatch/gate-a-20261117-01');
++ const archives=historyDirs.map(recursiveSnapshot);
++ const expectedAbsentHistoryDirs=new Set(['results/stage1_multibatch/gate-a-20261117-01','results/stage1_multibatch/gate-b-20261117-01']);
++ for(const a of archives)assert.equal(a.exists,!expectedAbsentHistoryDirs.has(a.path),'history path existence mismatch: '+a.path);
+  const scope=Object.fromEntries(Object.entries({phase,run,aRun,bRun,rawRun}).filter(([,v])=>v!==undefined&&v!==null));
+  return {scope,files:files.map(p=>({path:p,sha256:sha(read(p))})),archives,readonly_inputs:readonlyInputSnapshot(scope),
+   paper:{path:paper,sha256:sha(fs.readFileSync(paper))}};
+@@ -226,7 +231,7 @@ export function checkStorageLayouts(contracts){
+   return {contract:name,status:'PASS_COMPILE',packed_slot:slot.toString(),fields};
+  });
+ }
+-async function command(run,label,program,args,extraEnv={}){
++async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.budgets.child_seconds){
+  const env={...process.env,...extraEnv,CARGO_BUILD_JOBS:String(cfg.budgets.build_jobs),RAYON_NUM_THREADS:String(cfg.budgets.rayon_threads)};
+  for(const k of Object.keys(env))if(k.startsWith('CARGO_PROFILE_RELEASE_'))delete env[k];
+  const base=path.join(run,'logs',label);fs.mkdirSync(path.dirname(absolute(base)),{recursive:true});
+@@ -234,10 +239,10 @@ async function command(run,label,program,args,extraEnv={}){
+  const start=performance.now(),started=new Date().toISOString();let reason=null;
+  const child=spawn(program,args,{cwd:root,env,stdio:['ignore','pipe','pipe'],detached:true});
+  child.stdout.on('data',b=>{fs.writeSync(out,b);process.stdout.write(b);});child.stderr.on('data',b=>{fs.writeSync(err,b);process.stderr.write(b);});
+- const timer=setTimeout(()=>{reason='WALL_BUDGET';try{process.kill(-child.pid,'SIGTERM');}catch{}},cfg.budgets.child_seconds*1000);
++ const timer=setTimeout(()=>{reason='WALL_BUDGET';try{process.kill(-child.pid,'SIGTERM');}catch{}},wallBudgetSeconds * 1000);
+  const result=await new Promise(resolve=>{child.once('error',e=>resolve({code:null,error:String(e)}));child.once('close',(code,signal)=>resolve({code,signal}));});
+  clearTimeout(timer);fs.closeSync(out);fs.closeSync(err);
+- const r={program,args,...result,reason,started,wall_ms:performance.now()-start,
++ const r={program,args,...result,reason,started,wall_ms:performance.now()-start,wall_budget_seconds: wallBudgetSeconds,
+   environment:{CARGO_TARGET_DIR:env.CARGO_TARGET_DIR??null,CARGO_BUILD_JOBS:env.CARGO_BUILD_JOBS,RAYON_NUM_THREADS:env.RAYON_NUM_THREADS},
+   stdout:base+'.stdout.log',stderr:base+'.stderr.log'};writeNew(base+'.command.json',r);
+  assert.equal(result.code,0,label+' failed; logs preserved');assert.equal(reason,null);return r;
+@@ -539,7 +544,9 @@ export async function nextGate(gate,run,aRun,bRun,approved){
+  const before=protectedSnapshot({phase:gate,run,aRun,bRun});writeNew(run+'/protected_files.json',before);
+  try{
+   writeNew(run+'/request.json',{gate,identity:`${gate}/${path.basename(run)}/${new Date().toISOString()}`,config_sha256:sha(read(configPath)),a_run:aRun,b_run:bRun??null,approved,formal:gate==='C'});
+-  await command(run,'materials',absolute(a.binary),['prepare',run+'/materials',gate,'--approved',gate]);
++  const proofCount=gate==='B'?2:8;
++  const materialsWallBudget=(1 + proofCount) * cfg.budgets.child_seconds + 120;
++  await command(run,'materials',absolute(a.binary),['prepare',run+'/materials',gate,'--approved',gate],{},materialsWallBudget);
+   const ks=gate==='B'?cfg.regression_k:cfg.formal_k;
+   for(const k of ks)for(const route of cfg.routes)await command(run,`positive-k${k}-${route}`,process.execPath,
+    ['--max-old-space-size='+cfg.budgets.node_heap_mib,absolute(scriptPath),'--vm',run,aRun,route,String(k),'positive']);
+diff --git a/docs/STAGE1_MULTIBATCH.md b/docs/STAGE1_MULTIBATCH.md
+index bb53874..08d1dc0 100644
+--- a/docs/STAGE1_MULTIBATCH.md
++++ b/docs/STAGE1_MULTIBATCH.md
+@@ -306,3 +306,54 @@ Rust固定 `+1.99.1`、Release opt-level=1、独立CARGO_TARGET_DIR；Solidity 0
+ Gate B仅做完整功能与证据回归：材料、6正向/3负向独立会话、状态/NF连续性、回滚、收据计费及只读保护；
+ 不输出性能优劣结论。K=2与历史Stage2（仅Direct Fold/State Proof）的部署、认证、接收、冻结分项成本差异，
+ 统一保留在Gate D的 `deriveD()` 执行，不将其前移到B。完成B后仍需停止并等待C的独立批准。
++
++## A-06 当前执行规范（A-01至A-05原文全部保留为历史归档规范）
++
++本节为当前有效规范；A-05仅为历史归档规范，不再是新执行的准入入口。
++本地HEAD保持 `3f8813c9d69d0e45631e9acb7bbb247a1119f511`，禁止commit、push、reset或clean。
++只修改runner、auditor和本文档，只新建 `gate-a-20261117-06` raw/results目录；
++不改Solidity、Rust、电路、VK、研究Setup、配置、Cargo.lock、fixtures、历史结果或论文。
++
++### B-01失败归档与外层调度预算
++
++`gate-b-20261117-01`已因外层materials总预算600秒触发WALL_BUDGET/SIGTERM，
++当时Setup worker墙钟实测38.782秒、峰值RSS 4465.719 MiB，随后仍在第1批证明阶段。
++该Setup worker墙钟与仅参数生成的35.465秒不同；不能把半成品视为B通过或正式性能样本。
++失败原始日志、Setup与半成品全部只读保留，不复用、不删除、不改写。
++
++`command()`新增独立wallBudgetSeconds参数，默认仍为cfg.budgets.child_seconds（600秒）；
++仅nextGate的materials调用使用 `(1 + proofCount) * cfg.budgets.child_seconds + 120`：
++Gate B的proofCount=2，对应1920秒；Gate C的proofCount=8，对应5520秒。
++120秒涵盖材料预处理与进程调度的运行缓冲，并非数学绝对上限，也不保证证明一定完成。
++所有命令日志新增wall_budget_seconds，独立审计核对materials预算、成功退出、无超时原因、
++正墙钟耗时及未超过预算，并核对Setup加逐批worker数量为1+proofCount。
++
++Rust内层单个Worker仍使用名义600秒Worker预算与16384 MiB RSS上限，未修改Rust或配置。
++超时由后台每250ms轮询 `t.elapsed().as_secs() > 600` 触发，实际终止时刻可能略超600.000秒。
++Setup与每批Prove的独立进程RSS仍须在(0,16384] MiB内；本轮不生成这些新的运行时指标。
++
++### 12项历史快照与新源文件哈希
++
++runner递归保护A-01至A-05以及失败B-01的raw/results共12项路径，包括ignored构建缓存。
++其中A-01与B-01的results须不存在，其余10项须存在；这些历史目录虽获工作区白名单准入，
++仍受完整目录清单与内容SHA-256前后核验，绝不授权修改历史文件。
++auditor独立硬编码同一12项清单并核对存在性，不仅依赖runner提供的清单。
++原有三代静态变更清单、四代提交链、固定Tree和未授权路径拒绝规则保持不变。
++
++A-06编译前定稿全部3个批准补丁，并在currentSourcePins()中与配置、Rust及Solidity一并持久锁定。
++本文档不在编译后追加实测耗时；真实命令、计时、哈希、预检和审计结果只写入新A-06归档。
++本机新二进制必须位于A-06自己的build-target，且SHA-256与A-03不可变基准及gate_a.json一致：
++`da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`。
++
++### 本轮只编译、预检与审计
++
++```sh
++node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-06
++node contracts/scripts/stage1_multibatch_compare.mjs --preflight B --a-run experiments/stage1_multibatch_raw/gate-a-20261117-06 --b-run gate-b-20261117-02
++node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-06
++```
++
++严格按上述顺序逐条执行，前一步成功才进入下一步；不创建B-02 raw/results目录。
++最终须分别得到PASS_GATE_A_COMPILE_ONLY、READY_FOR_HUMAN_APPROVAL和PASS_GATE_A_ARTIFACT_AUDIT。
++本轮Setup=0、Prove=0、VM=0、交易=0；静态接线通过不等于运行时预算或密码学测试已通过。
++输出执行摘要与3个批准文件的完整git diff后立即停止，待人工核验后另行放行B-02，禁止自动进入B/C。
+diff --git a/scripts/stage1_multibatch_audit.mjs b/scripts/stage1_multibatch_audit.mjs
+index f69e210..27c3209 100644
+--- a/scripts/stage1_multibatch_audit.mjs
++++ b/scripts/stage1_multibatch_audit.mjs
+@@ -30,6 +30,8 @@ function checkA(run){
+  for(const field of gasFields)assert.ok(s.includes(field+':'),field+' output wiring');
+  for(const expression of ['r.execResult.gasRefund??0n','blockNumber+=1n','blockGasUsed:0n','getCalldataFloorGas(signed,sender)',
+   'used<=BigInt(cfg.block_gas_limit)','common.param(\'maxRefundQuotient\')'])assert.ok(s.includes(expression),expression);
++ for(const expression of ['wallBudgetSeconds * 1000','wall_budget_seconds: wallBudgetSeconds',
++  '(1 + proofCount) * cfg.budgets.child_seconds + 120'])assert.ok(s.includes(expression),'materials wall budget wiring '+expression);
+  const preflight=load(run+'/preflight_b.json');verifyPreflightB(run,preflight.b_run);
+  assert.deepEqual(preflight,load(resultsPathForRun(run)+'/preflight_b.json'));assert.ok(preflight.future_directories.every(p=>!fs.existsSync(path.join(root,p.path))));
+  assert.ok(preflight.commands.every(c=>c.code===0));
+@@ -41,12 +43,25 @@ function checkA(run){
+  assert.equal(s.split("await reject('complete_valid_ballot_replacement'").length-1,2,'Legacy and both batch routes wired');
+  for(const expression of ['m.ballots[4].eip.proof_neg_a_eip2537_hex','m.ballots[4].eip.public_inputs_be_hex',"'BATCH_MEMBERSHIP'","'BATCH_ROOT'"])
+   assert.ok(s.includes(expression),'complete valid V5 replacement wiring '+expression);
+- checkProtected(load(run+'/protected_files.json'));
++ const expectedHistoryDirs=[
++  'experiments/stage1_multibatch_raw/gate-a-20261117-01','results/stage1_multibatch/gate-a-20261117-01',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-02','results/stage1_multibatch/gate-a-20261117-02',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-03','results/stage1_multibatch/gate-a-20261117-03',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-05','results/stage1_multibatch/gate-a-20261117-05',
++  'experiments/stage1_multibatch_raw/gate-b-20261117-01','results/stage1_multibatch/gate-b-20261117-01'
++ ].sort();
++ const protectedManifest=load(run+'/protected_files.json');
++ assert.deepEqual(protectedManifest.archives.map(x=>x.path).sort(),expectedHistoryDirs,'exact historical archive inventory');
++ const expectedAbsent=new Set(['results/stage1_multibatch/gate-a-20261117-01','results/stage1_multibatch/gate-b-20261117-01']);
++ for(const archive of protectedManifest.archives)
++  assert.equal(archive.exists,!expectedAbsent.has(archive.path),'historical archive existence mismatch: '+archive.path);
++ checkProtected(protectedManifest);
+  const acceptance=[
+   {id:1,item:'Four-commit chain and three explicitly named fixed trees',status:'PASS_STATIC'},
+   {id:2,item:'Three fixed inventories: 59A, 3M+31A and 3M+32A',status:'PASS_STATIC'},
+   {id:3,item:'Dynamic paths, phase call sites, A/B read-only inputs, all three patch hashes frozen',status:'PASS_STATIC'},
+-  {id:4,item:'Recursive A-01/02/03/04 archives including ignored caches and absent result A-01',status:'PASS_STATIC'},
++  {id:4,item:'Recursive A-01..A-05 and B-01 archives including ignored caches; A-01/B-01 results absent.',status:'PASS_STATIC'},
+   {id:5,item:'Raw Legacy EVM refund counter; no zero-refund assumption',status:'PASS_STATIC'},
+   {id:6,item:'Per-transaction blocks, BigInt 14 fields and receipt identities',status:'PASS_STATIC',runtime_status:'RUNTIME_PENDING_B'},
+   {id:7,item:'Prague 2537/3529/7623 active; 8037 inactive; quotient 5',status:'PASS_STATIC'},
+@@ -62,6 +77,13 @@ function checkA(run){
+ }
+ function checkMaterials(run,gate){
+  const m=load(run+'/materials/materials.json');assert.equal(m.phase,gate);assert.equal(m.state_proofs_generated,gate==='B'?2:8);
++ const materialCommand=load(run+'/logs/materials.command.json');
++ const proofCount=gate==='B'?2:8;
++ const expectedWallBudgetSeconds=(1 + proofCount) * cfg.budgets.child_seconds + 120;
++ assert.equal(materialCommand.wall_budget_seconds,expectedWallBudgetSeconds);
++ assert.equal(materialCommand.code,0);assert.equal(materialCommand.reason,null);
++ assert.ok(materialCommand.wall_ms>0);assert.ok(materialCommand.wall_ms<=expectedWallBudgetSeconds*1000);
++ assert.equal(m.commands.length,1+proofCount);
+  assert.equal(m.archived_state_proofs_reused,0);assert.equal(m.all_state_proofs_fresh,true);assert.equal(m.serial_workers,true);
+  assert.equal(m.config_sha256,sha(read(configPath)));assert.equal(m.request_sha256,sha(read(run+'/materials/request.json')));
+  assert.equal(m.ballots.length,32);assert.equal(new Set(m.ballots.map(b=>b.nullifier)).size,32);

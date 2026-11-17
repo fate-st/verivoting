@@ -1,0 +1,27 @@
+{
+  "program": "cargo",
+  "args": [
+    "+1.99.1",
+    "build",
+    "--release",
+    "--locked",
+    "--offline",
+    "-p",
+    "vv-friendly-dkg",
+    "--bin",
+    "stage1_multibatch_materials"
+  ],
+  "code": 0,
+  "signal": null,
+  "reason": null,
+  "started": "2026-11-17T12:35:11.163Z",
+  "wall_ms": 49323.767625,
+  "wall_budget_seconds": 600,
+  "environment": {
+    "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage1_multibatch_raw/gate-a-20261117-06/build-target",
+    "CARGO_BUILD_JOBS": "2",
+    "RAYON_NUM_THREADS": "4"
+  },
+  "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/cargo-build.stdout.log",
+  "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/cargo-build.stderr.log"
+}

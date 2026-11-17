@@ -1,0 +1,23 @@
+{
+  "program": "rustfmt",
+  "args": [
+    "+1.99.1",
+    "--edition",
+    "2021",
+    "--check",
+    "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs"
+  ],
+  "code": 0,
+  "signal": null,
+  "reason": null,
+  "started": "2026-11-17T12:36:00.490Z",
+  "wall_ms": 51.42087499999616,
+  "wall_budget_seconds": 600,
+  "environment": {
+    "CARGO_TARGET_DIR": null,
+    "CARGO_BUILD_JOBS": "2",
+    "RAYON_NUM_THREADS": "4"
+  },
+  "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/rust-format.stdout.log",
+  "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-06/logs/rust-format.stderr.log"
+}
