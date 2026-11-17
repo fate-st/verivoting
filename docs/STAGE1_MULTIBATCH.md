@@ -248,3 +248,61 @@ A-01 results仍不存在，另核对3018项原有Git可见文件与论文哈希�
 4. 部署＋认证＋接收＋冻结在哪个实测K首次观察到净节省？
 5. 本次同源Setup、逐批Witness/Prove/Verify、RSS和通信成本是多少，如何划定口径？
 6. 哪些结论只属于回退原型，哪些完整SnarkPack/生产部署指标仍然未测？
+
+## A-05 当前执行规范（上方A-01至A-04全部保留为历史）
+
+本节为当前有效准入说明；上方A-04命令与“当前门槛”描述均属于当轮历史，不应作为本轮运行入口。
+固定四代提交链：`72ccc561d8934b0d761e17764ef9012bfe012626`
+→ `2444269b52573d9c2f3e551ef7d6b8bb9d0bd008`（59A）
+→ `f086879c4dc247e528d62d2253d76d6afd603669`（3M+31A）
+→ `3f8813c9d69d0e45631e9acb7bbb247a1119f511`（3M+32A）。
+对应grandparent/parent/HEAD的Tree分别固定为
+`92f7331a7d9b534d17108409342851381811aa52`、`3b8b57b375bb0391afe431935057a2711c5608e9`、
+`a21e84e05a2c653218a50ec99769b81766d12b91`，三段静态清单与版本校验仅在runner定义，auditor复用共享函数。
+
+仅修改runner、auditor和本文档；仅新建 `gate-a-20261117-05` 的raw/results归档。
+完整保护A-01至A-04旧归档及ignored构建缓存，A-01 results仍须不存在；不改Solidity、Rust、电路、VK、
+研究Setup、fixtures、Cargo.lock、历史数据或论文。当前仅允许编译/静态核查/独立预检，
+必须保持Setup=0、Prove=0、VM=0、交易=0。
+
+### 全局不提交与源文件锁定
+
+Gate A-05、B、C、D全部结束前，严禁 `git commit` 或 `git push`，不能因归档上传再触发版本锁定循环。
+3个批准文件保留为未提交补丁，其哈希由 `currentSourcePins()` 对 `sourceFiles ∪ approvedPatches` 去重后持久化；
+本文件也必须纳入 `gate_a.json`、`preflight_b.json` 及后续门控的source_pins。
+因此本文档必须在A-05编译前定稿，此后不再追加实测时间或编辑任何补丁；真实执行结果保存在新运行JSON与日志。
+Gate B/C开始前与结束后都必须与A-05的完整source_pins一致，不能修改文档后悄然更新基准。
+不同于补丁，独立运行目录允许按各阶段规则生成，但A/B只读输入与所有历史档案仍须递归前后相同。
+
+### 完整合法选票替换与现有负例的区别
+
+保留 `replacement_ballot_proof`：仅用其他证明替换V1的Groth16证明，保留V1输入，预期INVALID_GROTH16。
+新增 `complete_valid_ballot_replacement`：用第二批的合法V5（`m.ballots[4]`）同时替换第一批V1的公开输入和证明，
+保持原位置0及原BatchRoot/成员路径；Legacy预期BATCH_MEMBERSHIP，Direct Fold与State Proof预期BATCH_ROOT。
+不能使用V2替换V1：批内已经含V2，合约先执行重复Nullifier检查，会触发DUPLICATE_NULLIFIER而无法独立测根绑定。
+V5与第一批其他票的Nullifier不同，材料生成阶段仍需验证全部原始选票证明，不能用非法选票冒充“完整合法替换”。
+三条路线均通过统一reject帮助函数记录完整before/after状态、revert原因、收据与零事件回滚；独立auditor再次强制核对。
+本轮只接入与静态检查该用例，不声称已经在EVM执行并拒绝，运行时结果待Gate B。
+
+`legacy_incomplete_freeze`测试的是Alice/Bob已成功、批次未满额时提前冻结被拒绝，不能冒充批次内漏计证明。
+Direct Fold/State Proof的Omission-A则在接受第一批之前修改newState以少计批内选票，测试直接折叠或状态证明的拒绝。
+Legacy仍保留Alice/Bob成功→Charlie首次失败回滚→Charlie重试→David成功→批次完成的五步恢复检查。
+
+### 本轮严格执行顺序
+
+```sh
+node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-05
+node contracts/scripts/stage1_multibatch_compare.mjs --preflight B --a-run experiments/stage1_multibatch_raw/gate-a-20261117-05 --b-run gate-b-20261117-01
+node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-05
+```
+
+三条命令不可颠倒；A审计依赖预检文件，所有写入使用全新05目录，不覆盖01至04。
+Rust固定 `+1.99.1`、Release opt-level=1、独立CARGO_TARGET_DIR；Solidity 0.8.30配置不变。
+新二进制必须真实存在，SHA256与A-03基准
+`da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`一致；不一致立即停止。
+只有PASS_GATE_A_COMPILE_ONLY、PASS_GATE_A_ARTIFACT_AUDIT和READY_FOR_HUMAN_APPROVAL全部满足后，
+才输出摘要并停止。READY不是Gate B通过，也不构成本轮运行Gate B的授权；B命令待人工另行下发。
+
+Gate B仅做完整功能与证据回归：材料、6正向/3负向独立会话、状态/NF连续性、回滚、收据计费及只读保护；
+不输出性能优劣结论。K=2与历史Stage2（仅Direct Fold/State Proof）的部署、认证、接收、冻结分项成本差异，
+统一保留在Gate D的 `deriveD()` 执行，不将其前移到B。完成B后仍需停止并等待C的独立批准。

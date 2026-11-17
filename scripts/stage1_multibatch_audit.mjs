@@ -37,17 +37,21 @@ function checkA(run){
  // Runtime code paths are inspected here, never executed as functional tests.
  for(const e of ['verifyPreflightB(aRun,path.basename(run))','verifyGateB(bRun)','protectedSnapshot({phase:gate,run,aRun,bRun})'])assert.ok(s.includes(e),e);
  for(const e of ['m.setup.worker_peak_rss_mib<=cfg.budgets.child_rss_mib','b.peak_rss_mib<=cfg.budgets.child_rss_mib'])assert.ok(self.includes(e),e);
+ assert.ok(a.source_pins.some(p=>p.path==='docs/STAGE1_MULTIBATCH.md'),'approved documentation must be persistently pinned');
+ assert.equal(s.split("await reject('complete_valid_ballot_replacement'").length-1,2,'Legacy and both batch routes wired');
+ for(const expression of ['m.ballots[4].eip.proof_neg_a_eip2537_hex','m.ballots[4].eip.public_inputs_be_hex',"'BATCH_MEMBERSHIP'","'BATCH_ROOT'"])
+  assert.ok(s.includes(expression),'complete valid V5 replacement wiring '+expression);
  checkProtected(load(run+'/protected_files.json'));
  const acceptance=[
-  {id:1,item:'G18 / parent / HEAD chain and both fixed trees',status:'PASS_STATIC'},
-  {id:2,item:'Two fixed inventories: 59A and 3M+31A',status:'PASS_STATIC'},
-  {id:3,item:'Dynamic paths, every phase call site, A/B read-only inputs in C, D source freeze',status:'PASS_STATIC'},
-  {id:4,item:'Recursive A-01/02/03 archives including ignored caches and absent result A-01',status:'PASS_STATIC'},
+  {id:1,item:'Four-commit chain and three explicitly named fixed trees',status:'PASS_STATIC'},
+  {id:2,item:'Three fixed inventories: 59A, 3M+31A and 3M+32A',status:'PASS_STATIC'},
+  {id:3,item:'Dynamic paths, phase call sites, A/B read-only inputs, all three patch hashes frozen',status:'PASS_STATIC'},
+  {id:4,item:'Recursive A-01/02/03/04 archives including ignored caches and absent result A-01',status:'PASS_STATIC'},
   {id:5,item:'Raw Legacy EVM refund counter; no zero-refund assumption',status:'PASS_STATIC'},
   {id:6,item:'Per-transaction blocks, BigInt 14 fields and receipt identities',status:'PASS_STATIC',runtime_status:'RUNTIME_PENDING_B'},
   {id:7,item:'Prague 2537/3529/7623 active; 8037 inactive; quotient 5',status:'PASS_STATIC'},
   {id:8,item:'Compiler storage slots and offsets 0/8/16/17',status:'PASS_COMPILE'},
-  {id:9,item:'VM/context/C-VOTE boundaries, strong preflight hashes, dual C gate, RSS guards',status:'PASS_STATIC',runtime_status:['RUNTIME_PENDING_B','RUNTIME_PENDING_C']},
+  {id:9,item:'V5 complete replacement + proof-only replacement, VM/context boundaries, hash gates and RSS guards',status:'PASS_STATIC',runtime_status:['RUNTIME_PENDING_B','RUNTIME_PENDING_C']},
   {id:10,item:'Rust +1.99.1 Release opt-level=1, solc 0.8.30, A-03 binary reproducibility',status:'PASS_COMPILE'},
   {id:11,item:'Independent Gate B preflight only',status:'READY_FOR_HUMAN_APPROVAL'}];
  return {status:'PASS_GATE_A_ARTIFACT_AUDIT',gate:'A',config_sha256:a.config_sha256,
@@ -148,6 +152,8 @@ function checkRun(run,gate){
   const r=load(run+`/sessions/negative-k2-${route}.json`);assert.equal(r.kind,'NEGATIVE_ONLY');assert.equal(r.status,'PASS');r.transactions.forEach(transactionCheck);
   for(const n of r.negatives){assert.deepEqual(n.before,n.after);const t=r.transactions.find(t=>t.hash===n.transaction_hash);assert.equal(t.status,0);assert.equal(t.exception,'revert');assert.equal(t.revert_reason,n.reason);assert.equal(t.logs.length,0);}
   for(const name of ['illegal_batch_index','replacement_ballot_proof','within_batch_duplicate_nf','stale_old_state','cross_batch_duplicate_nf','receive_after_freeze'])assert.ok(r.negatives.some(n=>n.case===name));
+  const replacement=r.negatives.find(n=>n.case==='complete_valid_ballot_replacement');assert.ok(replacement,'complete valid ballot replacement required for '+route);
+  assert.equal(replacement.reason,route==='legacy'?'BATCH_MEMBERSHIP':'BATCH_ROOT');assert.deepEqual(replacement.before,replacement.after);
   if(route==='legacy'){assert.deepEqual(r.recovery.map(s=>s.step),[1,2,3,4,5]);assert.ok(r.negatives.some(n=>n.case==='legacy_incomplete_freeze'));assert.ok(r.negatives.some(n=>n.case==='charlie_first_attempt'));
    assert.deepEqual(r.recovery.map(s=>s.checkpoint.count),[2,2,3,4,4]);assert.deepEqual(r.recovery.map(s=>s.checkpoint.next),[1,1,1,2,2]);}
   else assert.ok(r.negatives.some(n=>n.case==='omission_a'));
@@ -225,7 +231,8 @@ function main(){
    assert.equal(new Set([...v.rows,...v.negatives].map(r=>r.vm_identity)).size,9);
    result={status:'PASS_GATE_B_EVIDENCE_AUDIT_ONLY',positive_vm_count:6,negative_vm_sessions:3,independent_vm_count:9,
     negative_scope:'3 independent VM sessions, each containing multiple attack scenarios',gas_receipt_audit:'PASS',
-    config_sha256:sha(read(configPath)),source_pins:currentSourcePins(),formal_performance_samples:0};
+    config_sha256:sha(read(configPath)),source_pins:currentSourcePins(),formal_performance_samples:0,
+    audit_scope:'Functional and evidence regression only; no performance ranking or historical Stage2 cost comparison. K2 cost deltas belong to Gate D deriveD.'};
   }
   else{assert.equal(f['--approved'],'D','Gate D requires explicit approval');assert.equal(rawBefore.exists,true);result=deriveD(rawRun,run,check);}
   checkReadonlyInputs(inputsBefore);assert.deepEqual(sourcePatchSnapshot(),sourceBefore,'no source modification during audit');
