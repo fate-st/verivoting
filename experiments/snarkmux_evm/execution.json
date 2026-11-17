@@ -1,0 +1,42 @@
+{
+  "started_at_utc": "2026-11-16T13:13:32.730Z",
+  "finished_at_utc": "2026-11-16T13:13:36.164Z",
+  "base_commit": "72ccc561d8934b0d761e17764ef9012bfe012626",
+  "branch": "experiment/g19-snarkmux-evm-feasibility",
+  "command": "node scripts/g19_snarkmux_source_admission.mjs",
+  "script_path": "scripts/g19_snarkmux_source_admission.mjs",
+  "script_sha256": "f2f8c78982f7d0df991324e18297b7913f11d0fadba5824036dd97d3717420f6",
+  "curl": {
+    "program": "curl",
+    "argv": [
+      "--location",
+      "--max-redirs",
+      "5",
+      "--proto",
+      "=https",
+      "--proto-redir",
+      "=https",
+      "--connect-timeout",
+      "10",
+      "--max-time",
+      "45",
+      "--silent",
+      "--show-error",
+      "--dump-header",
+      "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/g19-http-ZRekxR/headers",
+      "--output",
+      "/var/folders/p5/2vkz427s5wlg4cdl4yf753lr0000gn/T/g19-http-ZRekxR/body",
+      "--write-out",
+      "%{json}",
+      "https://anonymous.4open.science/r/SnarkMux"
+    ],
+    "exit_code": 0,
+    "signal": null
+  },
+  "historical_tracked_files_checked": 2931,
+  "historical_files_unchanged": true,
+  "cryptographic_test_count": 0,
+  "evm_transaction_count": 0,
+  "automatically_committed": false,
+  "automatically_pushed": false
+}

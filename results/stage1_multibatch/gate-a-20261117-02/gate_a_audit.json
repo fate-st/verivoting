@@ -1,0 +1,104 @@
+{
+  "status": "PASS_GATE_A_ARTIFACT_AUDIT",
+  "gate": "A",
+  "config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "compiled_contracts": [
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1DirectFoldSettlement",
+      "creation_bytes": 17266,
+      "runtime_bytes": 10621
+    },
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1LegacySettlement",
+      "creation_bytes": 15149,
+      "runtime_bytes": 9798
+    },
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1ReceiverBase",
+      "creation_bytes": 0,
+      "runtime_bytes": 0
+    },
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1StateProofSettlement",
+      "creation_bytes": 17959,
+      "runtime_bytes": 8634
+    }
+  ],
+  "commands": [
+    {
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "-Vv"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-version.stderr.log"
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage1_multibatch_materials"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/cargo-build.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/cargo-build.stderr.log"
+    },
+    {
+      "program": "rustfmt",
+      "args": [
+        "+1.99.1",
+        "--edition",
+        "2021",
+        "--check",
+        "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-format.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-format.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "contracts/scripts/stage1_multibatch_compare.mjs"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_compare.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_compare.mjs.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "scripts/stage1_multibatch_audit.mjs"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_audit.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_audit.mjs.stderr.log"
+    }
+  ],
+  "rust_opt_level": 1,
+  "cryptographic_function_tests": {
+    "status": "NOT_MEASURED",
+    "value": null
+  },
+  "evm_gas": {
+    "status": "NOT_MEASURED",
+    "value": null
+  },
+  "next_gate": "B_REQUIRES_NEW_HUMAN_CONFIRMATION",
+  "historical_files_unchanged": true
+}

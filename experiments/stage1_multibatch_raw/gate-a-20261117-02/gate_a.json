@@ -1,0 +1,156 @@
+{
+  "gate": "A",
+  "scope": "COMPILE_ONLY",
+  "run": "experiments/stage1_multibatch_raw/gate-a-20261117-02",
+  "base_commit": "72ccc561d8934b0d761e17764ef9012bfe012626",
+  "branch": "experiment/stage1-multibatch-gate-a",
+  "config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "5d609217103da3b2822fca60f98a1e2ab3367d02755c4d4af034069a433f40e0"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "360c3cef4f0d4adeec28a4e6bc9b013b5e45ae10f34a8afa2f1269fee46ecd0d"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "6b4f16769990affb52906575e3fbac3c6529839652ebf355117f69a522509fc0"
+    }
+  ],
+  "environment": {
+    "cpu": "Apple M4",
+    "memory_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v23.11.0"
+  },
+  "setup_count": 0,
+  "proof_generation_count": 0,
+  "evm_transaction_count": 0,
+  "tests": "NOT_RUN_GATE_B_REQUIRES_CONFIRMATION",
+  "automatic_commit": false,
+  "automatic_push": false,
+  "status": "PASS_GATE_A_COMPILE_ONLY",
+  "commands": [
+    {
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "-Vv"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T05:48:00.433Z",
+      "wall_ms": 21.641874999999914,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-version.stderr.log"
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage1_multibatch_materials"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T05:48:00.455Z",
+      "wall_ms": 44964.255209,
+      "environment": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage1_multibatch_raw/gate-a-20261117-02/build-target",
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/cargo-build.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/cargo-build.stderr.log"
+    },
+    {
+      "program": "rustfmt",
+      "args": [
+        "+1.99.1",
+        "--edition",
+        "2021",
+        "--check",
+        "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T05:48:45.420Z",
+      "wall_ms": 24.55008299999463,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-format.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-format.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "contracts/scripts/stage1_multibatch_compare.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T05:48:45.445Z",
+      "wall_ms": 20.75358299999789,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_compare.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_compare.mjs.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "scripts/stage1_multibatch_audit.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T05:48:45.466Z",
+      "wall_ms": 18.667750000000524,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_audit.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_audit.mjs.stderr.log"
+    }
+  ],
+  "compiled_sha256": "3c9aebfe21912bc3417ff1f04eb53ab34a34c6125ee33bbe18112081c507acd9",
+  "binary": "experiments/stage1_multibatch_raw/gate-a-20261117-02/build-target/release/stage1_multibatch_materials",
+  "binary_sha256": "da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488",
+  "historical_files_unchanged": true,
+  "next_gate": "B_REQUIRES_NEW_HUMAN_CONFIRMATION"
+}

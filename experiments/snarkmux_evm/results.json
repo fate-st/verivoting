@@ -1,0 +1,77 @@
+{
+  "gate": "G19",
+  "status": "BLOCKED_SOURCE",
+  "stage_status": {
+    "G19-A": "BLOCKED_SOURCE",
+    "G19-B": "NOT_STARTED",
+    "G19-C": "NOT_STARTED",
+    "G19-D": "NOT_EVALUATED",
+    "G19-E": "NOT_STARTED"
+  },
+  "intended_original_instance_count": 2,
+  "actual_original_instance_count": 0,
+  "proofs_generated": 0,
+  "evm_transactions": 0,
+  "solidity_created": false,
+  "tests": [
+    {
+      "name": "native_valid",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "native_wrong_proof",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "native_wrong_input",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "native_wrong_binding",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "evm_valid",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "evm_wrong_proof",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "evm_wrong_input",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "evm_wrong_binding",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    },
+    {
+      "name": "evm_wrong_vk",
+      "status": "NOT_RUN_SOURCE_BLOCKED",
+      "result": null
+    }
+  ],
+  "measurements": {
+    "deploy_gas": null,
+    "full_verify_gas": null,
+    "binding_gas": null,
+    "calldata_bytes": null,
+    "creation_bytecode_bytes": null,
+    "runtime_bytecode_bytes": null,
+    "native_verification_ms": null,
+    "proof_generation_ms": null,
+    "prover_peak_rss_bytes": null,
+    "bn254_individual_baseline_gas": null,
+    "saving_fraction": null
+  },
+  "no_mock_no_host_success_no_old_bls_baseline": true
+}

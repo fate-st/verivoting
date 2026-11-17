@@ -1,0 +1,163 @@
+{
+  "status": "INCOMPLETE_SOURCE_BLOCKED",
+  "required_relations": [
+    {
+      "id": "R1",
+      "component": "Instance binding",
+      "required_relation": "h = h_n",
+      "purpose": "Bind the intended ordered original instances.",
+      "requirement_source": "user G19 plan, Figure 2 checklist; not implementation-confirmed",
+      "implementation": null,
+      "source_location": null,
+      "test_result": null,
+      "status": "NOT_REVIEWED_SOURCE_BLOCKED"
+    },
+    {
+      "id": "R2",
+      "component": "Recursive-state binding",
+      "required_relation": "u_C,n.x = Hash(vk,n,h_n,u*,u*_C,n)",
+      "purpose": "Bind the recursive state and final target instance.",
+      "requirement_source": "user G19 plan, Figure 2 checklist; not implementation-confirmed",
+      "implementation": null,
+      "source_location": null,
+      "test_result": null,
+      "status": "NOT_REVIEWED_SOURCE_BLOCKED"
+    },
+    {
+      "id": "R3",
+      "component": "Final R1CS folding",
+      "required_relation": "u′ = FoldR1CS.V(vk_FC,u_C,n,u*_C,n)",
+      "purpose": "Compute the exact compressed-proof instance.",
+      "requirement_source": "user G19 plan, Figure 2 checklist; not implementation-confirmed",
+      "implementation": null,
+      "source_location": null,
+      "test_result": null,
+      "status": "NOT_REVIEWED_SOURCE_BLOCKED"
+    },
+    {
+      "id": "R4",
+      "component": "Target SNARK",
+      "required_relation": "V_tgt(vk_FS,u*,pi*) = 1",
+      "purpose": "Verify the final folded target relation.",
+      "requirement_source": "user G19 plan, Figure 2 checklist; not implementation-confirmed",
+      "implementation": null,
+      "source_location": null,
+      "test_result": null,
+      "status": "NOT_REVIEWED_SOURCE_BLOCKED"
+    },
+    {
+      "id": "R5",
+      "component": "Final Spartan proof",
+      "required_relation": "SNARK′.V(vk_SNARK′,u′,pi′) = 1",
+      "purpose": "Verify the complete original final proof.",
+      "requirement_source": "user G19 plan, Figure 2 checklist; not implementation-confirmed",
+      "implementation": null,
+      "source_location": null,
+      "test_result": null,
+      "status": "NOT_REVIEWED_SOURCE_BLOCKED"
+    },
+    {
+      "id": "R6",
+      "component": "Non-relaxed instance",
+      "required_relation": "u_C,n is a valid non-relaxed instance",
+      "purpose": "Enforce original encoding and non-relaxed conditions.",
+      "requirement_source": "user G19 plan, Figure 2 checklist; not implementation-confirmed",
+      "implementation": null,
+      "source_location": null,
+      "test_result": null,
+      "status": "NOT_REVIEWED_SOURCE_BLOCKED"
+    }
+  ],
+  "evm_operations": [
+    {
+      "operation": "BN254 G1 add / scalar multiplication",
+      "general_evm_support": "EIP-196 0x06 / 0x07; MSM can compose these operations.",
+      "references": [
+        "https://eips.ethereum.org/EIPS/eip-196"
+      ],
+      "original_implementation_uses_operation": null,
+      "actual_variant": null,
+      "reusable_matching_module": null,
+      "replacement_plan": null,
+      "complexity": null,
+      "measured_gas": null
+    },
+    {
+      "operation": "BN254 G2 add / scalar multiplication / MSM",
+      "general_evm_support": "No dedicated operation in EIP-196/197; a matching implementation would need review.",
+      "references": [
+        "https://eips.ethereum.org/EIPS/eip-196",
+        "https://eips.ethereum.org/EIPS/eip-197"
+      ],
+      "original_implementation_uses_operation": null,
+      "actual_variant": null,
+      "reusable_matching_module": null,
+      "replacement_plan": null,
+      "complexity": null,
+      "measured_gas": null
+    },
+    {
+      "operation": "BN254 pairing product check",
+      "general_evm_support": "EIP-197 0x08 returns a boolean pairing-product check, not a raw GT value.",
+      "references": [
+        "https://eips.ethereum.org/EIPS/eip-197"
+      ],
+      "original_implementation_uses_operation": null,
+      "actual_variant": null,
+      "reusable_matching_module": null,
+      "replacement_plan": null,
+      "complexity": null,
+      "measured_gas": null
+    },
+    {
+      "operation": "GT / Fp12 arithmetic",
+      "general_evm_support": "A pairing-product check does not expose raw GT arithmetic; actual need is unknown.",
+      "references": [
+        "https://eips.ethereum.org/EIPS/eip-197"
+      ],
+      "original_implementation_uses_operation": null,
+      "actual_variant": null,
+      "reusable_matching_module": null,
+      "replacement_plan": null,
+      "complexity": null,
+      "measured_gas": null
+    },
+    {
+      "operation": "Grumpkin arithmetic",
+      "general_evm_support": "Not supplied by the BN254 operations defined in EIP-196/197; actual need is unknown.",
+      "references": [
+        "https://eips.ethereum.org/EIPS/eip-196",
+        "https://eips.ethereum.org/EIPS/eip-197"
+      ],
+      "original_implementation_uses_operation": null,
+      "actual_variant": null,
+      "reusable_matching_module": null,
+      "replacement_plan": null,
+      "complexity": null,
+      "measured_gas": null
+    },
+    {
+      "operation": "Poseidon",
+      "general_evm_support": "Original variant, encoding and reusable Solidity implementation must be source-confirmed.",
+      "references": [],
+      "original_implementation_uses_operation": null,
+      "actual_variant": null,
+      "reusable_matching_module": null,
+      "replacement_plan": null,
+      "complexity": null,
+      "measured_gas": null
+    },
+    {
+      "operation": "IPA / polynomial commitment opening",
+      "general_evm_support": "Do not infer the commitment scheme from the Spartan name.",
+      "references": [],
+      "original_implementation_uses_operation": null,
+      "actual_variant": null,
+      "reusable_matching_module": null,
+      "replacement_plan": null,
+      "complexity": null,
+      "measured_gas": null
+    }
+  ],
+  "caveat": "EIP capability notes are not source-audit findings, execution tests or Prague Gas estimates."
+}
