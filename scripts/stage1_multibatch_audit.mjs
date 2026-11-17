@@ -5,7 +5,8 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
 import {root,cfg,configPath,load,read,sha,wire,json,checkProtected,validateConfig,recursiveSnapshot,approvedPatches,
- pragueCommon,pragueStatic,checkStorageLayouts,phaseCallSites,vmMetadataFields,inputProvenance,A03_RESULTS,verifyA} from '../contracts/scripts/stage1_multibatch_compare.mjs';
+ pragueCommon,pragueStatic,checkStorageLayouts,phaseCallSites,vmMetadataFields,inputProvenance,verifyA,verifyPreflightB,
+ resultsPathForRun,sourcePatchSnapshot,readonlyInputSnapshot,checkReadonlyInputs,currentSourcePins,binaryReproducibility} from '../contracts/scripts/stage1_multibatch_compare.mjs';
 const {Transaction,Interface}=createRequire(path.join(root,'contracts/package.json'))('ethers');
 const {createTxFromRLP,getCalldataFloorGas}=createRequire(path.join(root,'contracts/package.json'))('@ethereumjs/tx');
 const measured=value=>({status:'MEASURED',value});
@@ -29,24 +30,29 @@ function checkA(run){
  for(const field of gasFields)assert.ok(s.includes(field+':'),field+' output wiring');
  for(const expression of ['r.execResult.gasRefund??0n','blockNumber+=1n','blockGasUsed:0n','getCalldataFloorGas(signed,sender)',
   'used<=BigInt(cfg.block_gas_limit)','common.param(\'maxRefundQuotient\')'])assert.ok(s.includes(expression),expression);
- const preflight=load(run+'/preflight_b.json');assert.equal(preflight.status,'READY_FOR_HUMAN_APPROVAL');
- assert.deepEqual(preflight,load(A03_RESULTS+'/preflight_b.json'));assert.ok(preflight.future_directories.every(p=>!fs.existsSync(path.join(root,p.path))));
+ const preflight=load(run+'/preflight_b.json');verifyPreflightB(run,preflight.b_run);
+ assert.deepEqual(preflight,load(resultsPathForRun(run)+'/preflight_b.json'));assert.ok(preflight.future_directories.every(p=>!fs.existsSync(path.join(root,p.path))));
  assert.ok(preflight.commands.every(c=>c.code===0));
+ const callSites=phaseCallSites(),reproducibility=binaryReproducibility(run);
+ // Runtime code paths are inspected here, never executed as functional tests.
+ for(const e of ['verifyPreflightB(aRun,path.basename(run))','verifyGateB(bRun)','protectedSnapshot({phase:gate,run,aRun,bRun})'])assert.ok(s.includes(e),e);
+ for(const e of ['m.setup.worker_peak_rss_mib<=cfg.budgets.child_rss_mib','b.peak_rss_mib<=cfg.budgets.child_rss_mib'])assert.ok(self.includes(e),e);
  checkProtected(load(run+'/protected_files.json'));
  const acceptance=[
-  {id:1,item:'G18 / HEAD / parent / tree',status:'PASS_STATIC'},
-  {id:2,item:'Fixed 59-file all-Added inventory',status:'PASS_STATIC'},
-  {id:3,item:'Phase-aware whitelist, every call site, D rawRun read-only policy',status:'PASS_STATIC'},
-  {id:4,item:'Recursive old archives including ignored caches and absent result A-01',status:'PASS_STATIC'},
+  {id:1,item:'G18 / parent / HEAD chain and both fixed trees',status:'PASS_STATIC'},
+  {id:2,item:'Two fixed inventories: 59A and 3M+31A',status:'PASS_STATIC'},
+  {id:3,item:'Dynamic paths, every phase call site, A/B read-only inputs in C, D source freeze',status:'PASS_STATIC'},
+  {id:4,item:'Recursive A-01/02/03 archives including ignored caches and absent result A-01',status:'PASS_STATIC'},
   {id:5,item:'Raw Legacy EVM refund counter; no zero-refund assumption',status:'PASS_STATIC'},
   {id:6,item:'Per-transaction blocks, BigInt 14 fields and receipt identities',status:'PASS_STATIC',runtime_status:'RUNTIME_PENDING_B'},
   {id:7,item:'Prague 2537/3529/7623 active; 8037 inactive; quotient 5',status:'PASS_STATIC'},
   {id:8,item:'Compiler storage slots and offsets 0/8/16/17',status:'PASS_COMPILE'},
-  {id:9,item:'VM metadata wiring, final context and C-VOTE provenance boundaries',status:'PASS_STATIC',runtime_status:['RUNTIME_PENDING_B','RUNTIME_PENDING_C']},
-  {id:10,item:'Rust +1.99.1 Release opt-level=1 and solc 0.8.30',status:'PASS_COMPILE'},
+  {id:9,item:'VM/context/C-VOTE boundaries, strong preflight hashes, dual C gate, RSS guards',status:'PASS_STATIC',runtime_status:['RUNTIME_PENDING_B','RUNTIME_PENDING_C']},
+  {id:10,item:'Rust +1.99.1 Release opt-level=1, solc 0.8.30, A-03 binary reproducibility',status:'PASS_COMPILE'},
   {id:11,item:'Independent Gate B preflight only',status:'READY_FOR_HUMAN_APPROVAL'}];
  return {status:'PASS_GATE_A_ARTIFACT_AUDIT',gate:'A',config_sha256:a.config_sha256,
-  acceptance,prague:pragueStatic(),storage_checks:compiled.storage_checks,vm_metadata_fields:vmMetadataFields,
+  run,acceptance,git_version:a.version,phase_call_sites:callSites,binary_reproducibility:reproducibility,
+  admission_policy:load(run+'/static_checks.json').admission_policy,prague:pragueStatic(),storage_checks:compiled.storage_checks,vm_metadata_fields:vmMetadataFields,
   compiled_contracts:compiled.sizes.filter(c=>c.name.startsWith('Stage1')),commands:a.commands.map(c=>({program:c.program,args:c.args,code:c.code,stdout:c.stdout,stderr:c.stderr})),
   rust_opt_level:1,cryptographic_function_tests:missing,evm_gas:missing,next_gate:'B_REQUIRES_NEW_HUMAN_CONFIRMATION',historical_files_unchanged:true};
 }
@@ -56,6 +62,7 @@ function checkMaterials(run,gate){
  assert.equal(m.config_sha256,sha(read(configPath)));assert.equal(m.request_sha256,sha(read(run+'/materials/request.json')));
  assert.equal(m.ballots.length,32);assert.equal(new Set(m.ballots.map(b=>b.nullifier)).size,32);
  assert.equal(m.setup.vk_sha256,cfg.state_vk_ark_sha256);assert.ok(m.setup.setup_ms>0);
+ assert.ok(m.setup.worker_peak_rss_mib>0&&m.setup.worker_peak_rss_mib<=cfg.budgets.child_rss_mib,'Setup worker RSS outside budget');
  const old=load('fixtures/g8_receiver_eip2537_v1.json');
  for(let i=0;i<m.batches.length;i++){
   const b=m.batches[i];assert.equal(b.phase,gate);assert.equal(b.batch_index,i+1);assert.equal(b.root,cfg.ordered_batch_roots[i]);
@@ -63,6 +70,7 @@ function checkMaterials(run,gate){
   assert.equal(b.proof_ark_bytes,wire(b.proof_ark_hex).length);assert.equal(b.proof_ark_sha256,sha(wire(b.proof_ark_hex)));
   assert.equal(b.proof_eip_bytes,wire(b.eip.proof_neg_a_eip2537_hex).length);assert.equal(sha(wire(b.eip.vk_eip2537_hex)),cfg.state_vk_eip_sha256);
   assert.ok(b.peak_rss_mib>0&&b.prove_ms>0&&b.witness_ms>0&&b.verify_ms>0);
+  assert.ok(b.peak_rss_mib>0&&b.peak_rss_mib<=cfg.budgets.child_rss_mib,'Prove worker RSS outside budget');
   if(i)assert.deepEqual(b.old_state,m.batches[i-1].new_state);
   if(i<2){const flatten=v=>v.flatMap(x=>['0x'+x.c0_hex,'0x'+x.c1_hex]);assert.deepEqual(b.old_state,flatten(old.batches[i].old_state));assert.deepEqual(b.new_state,flatten(old.batches[i].new_state));}
  }
@@ -115,7 +123,11 @@ function crossVmCheck(rows){
   assert.equal(new Set(group.map(r=>r.receiver_runtime_code_sha256)).size,3,'three distinct route implementations');}
 }
 function checkRun(run,gate){
- const top=load(run+`/gate_${gate.toLowerCase()}.json`);sources(top.source_pins);const m=checkMaterials(run,gate);
+ const request=load(run+'/request.json');assert.equal(request.gate,gate);verifyA(request.a_run);
+ const inputsBefore=readonlyInputSnapshot({phase:gate,aRun:request.a_run,bRun:request.b_run});
+ const top=load(run+`/gate_${gate.toLowerCase()}.json`);sources(top.source_pins);assert.deepEqual(top.source_pins,currentSourcePins());
+ assert.equal(top.config_sha256,sha(read(configPath)));assert.equal(top.run,run);assert.equal(top.a_run,request.a_run);
+ const m=checkMaterials(run,gate);
  const expectedStatus=gate==='B'?'PASS_GATE_B_REGRESSION_ONLY':'PASS_GATE_C_FORMAL_EXECUTION';assert.equal(top.status,expectedStatus);
  const ks=gate==='B'?cfg.regression_k:cfg.formal_k,rows=[];
  for(const k of ks){let final=null;
@@ -142,9 +154,9 @@ function checkRun(run,gate){
   negatives.push(r);
  }
  crossVmCheck([...rows,...negatives]);assert.equal(rows.length+negatives.length,gate==='B'?9:24);
- checkProtected(load(run+'/protected_files.json'));return {m,rows};
+ checkProtected(load(run+'/protected_files.json'));checkReadonlyInputs(inputsBefore);return {m,rows,negatives};
 }
-function outputPath(run){return 'results/stage1_multibatch/'+path.basename(run);}
+const outputPath=resultsPathForRun;
 function emit(p,v,check){if(check)assert.deepEqual(read(p),Buffer.from(typeof v==='string'?v:json(v)),p);else {
  const f=path.join(root,p);fs.mkdirSync(path.dirname(f),{recursive:true});fs.writeFileSync(f,typeof v==='string'?v:json(v),{flag:'wx'});}}
 function csv(header,rows){return [header,...rows].map(r=>r.map(x=>x===null?'':String(x)).join(',')).join('\n')+'\n';}
@@ -196,27 +208,39 @@ function deriveD(rawRun,out,check){
 function main(){
  process.chdir(root);const a=process.argv.slice(2),check=a.includes('--check');const words=a.filter(x=>x!=='--check');assert.equal(words.length%2,0);
  const f=Object.fromEntries(Array.from({length:words.length/2},(_,i)=>[words[2*i],words[2*i+1]]));
- const gate=f['--gate'],run=f['--run'],rawRun=f['--raw-run'];assert.ok(['A','B','D'].includes(gate));
+ const sourceBefore=sourcePatchSnapshot();
+ const gate=f['--gate'],phase=gate,run=f['--run'],rawRun=f['--raw-run'];assert.ok(['A','B','D'].includes(gate));
  if(gate!=='D')assert.match(run??'',/^experiments\/stage1_multibatch_raw\/[A-Za-z0-9_-]+$/);
- validateConfig({phase:gate,run,rawRun});
- const sourceBefore=approvedPatches.map(p=>({path:p,sha256:sha(read(p))}));
+ const request=gate==='B'?load(run+'/request.json'):gate==='D'?load(rawRun+'/request.json'):null;
+ const aRun=request?.a_run;
+ validateConfig({phase,run,aRun,rawRun});
+ const inputsBefore=gate==='B'?readonlyInputSnapshot({phase,aRun}):gate==='D'?
+  [...readonlyInputSnapshot({phase,rawRun}),...readonlyInputSnapshot({phase:'C',aRun,bRun:request.b_run})]:[];
  const rawBefore=gate==='D'?recursiveSnapshot(rawRun):null;
  try{
   let result;
   if(gate==='A')result=checkA(run);
-  else if(gate==='B'){const v=checkRun(run,'B');result={status:'PASS_GATE_B_EVIDENCE_AUDIT_ONLY',development_vms:v.rows.length,formal_performance_samples:0};}
+  else if(gate==='B'){
+   const v=checkRun(run,'B');assert.equal(v.rows.length,6);assert.equal(v.negatives.length,3);
+   assert.equal(new Set([...v.rows,...v.negatives].map(r=>r.vm_identity)).size,9);
+   result={status:'PASS_GATE_B_EVIDENCE_AUDIT_ONLY',positive_vm_count:6,negative_vm_sessions:3,independent_vm_count:9,
+    negative_scope:'3 independent VM sessions, each containing multiple attack scenarios',gas_receipt_audit:'PASS',
+    config_sha256:sha(read(configPath)),source_pins:currentSourcePins(),formal_performance_samples:0};
+  }
   else{assert.equal(f['--approved'],'D','Gate D requires explicit approval');assert.equal(rawBefore.exists,true);result=deriveD(rawRun,run,check);}
+  checkReadonlyInputs(inputsBefore);assert.deepEqual(sourcePatchSnapshot(),sourceBefore,'no source modification during audit');
   const out=gate==='D'?run:outputPath(run);emit(out+`/gate_${gate.toLowerCase()}_audit.json`,result,check);
   if(gate==='A'){
    const table=result.acceptance.map(r=>`| ${r.id} | ${r.item} | ${r.status}${r.runtime_status?' / '+[].concat(r.runtime_status).join(' / '):''} |`).join('\n');
-   emit(out+'/report.md','# Gate A-03 acceptance (compile/static/preflight only)\n\n| # | Item | Status |\n|---|---|---|\n'+table+
+   emit(out+'/report.md','# '+path.basename(run)+' acceptance (compile/static/preflight only)\n\n| # | Item | Status |\n|---|---|---|\n'+table+
     '\n\nSetup=0; Prove=0; VM creation=0; EVM transactions=0. Runtime assertions are wired but have NOT been executed. No commit or push.\n\n'+
-    'B preflight is READY_FOR_HUMAN_APPROVAL, not a B pass. B/C current-run-only workspace policy requires a separate approved handoff for the untracked A-03 archives before execution.\n',check);
+    'B preflight is READY_FOR_HUMAN_APPROVAL, not a B pass. B reads the A raw/results inputs; C reads both A and B raw/results inputs with full recursive before/after checks. RSS guards and B/C admission checks are statically wired, not runtime-tested.\n',check);
   }
   if(!check){const input=gate==='D'?rawRun:run;const paths=[...artifactPaths(input),...artifactPaths(out)].filter(p=>!p.endsWith('/SHA256SUMS')).sort();emit(out+'/SHA256SUMS',paths.map(p=>sha(read(p))+'  '+p).join('\n')+'\n',false);}
   console.log(json(result));
  }finally{
-  assert.deepEqual(approvedPatches.map(p=>({path:p,sha256:sha(read(p))})),sourceBefore,'audits must not mutate approved source patches');
+  assert.deepEqual(sourcePatchSnapshot(),sourceBefore,'audits must not mutate approved source patches');
+  checkReadonlyInputs(inputsBefore);
   if(gate==='D')assert.deepEqual(recursiveSnapshot(rawRun),rawBefore,'Gate C rawRun changed during read-only Gate D audit');
  }
 }

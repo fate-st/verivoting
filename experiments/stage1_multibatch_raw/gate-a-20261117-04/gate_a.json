@@ -1,0 +1,275 @@
+{
+  "gate": "A",
+  "scope": "COMPILE_ONLY",
+  "run": "experiments/stage1_multibatch_raw/gate-a-20261117-04",
+  "base_commit": "f086879c4dc247e528d62d2253d76d6afd603669",
+  "branch": "experiment/stage1-multibatch-gate-a",
+  "config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "5d609217103da3b2822fca60f98a1e2ab3367d02755c4d4af034069a433f40e0"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "aca362a2f6a6a68afcc81d70598bde33d83806f0a78aad42356cb35ca8357cce"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "1997f3a891a4a623a062e37d9a3fb9b524d67c374c111c247c31bc2bac4c7b2d"
+    }
+  ],
+  "environment": {
+    "cpu": "Apple M4",
+    "memory_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v23.11.0"
+  },
+  "setup_count": 0,
+  "proof_generation_count": 0,
+  "evm_transaction_count": 0,
+  "tests": "NOT_RUN_GATE_B_REQUIRES_CONFIRMATION",
+  "automatic_commit": false,
+  "automatic_push": false,
+  "status": "PASS_GATE_A_COMPILE_ONLY",
+  "commands": [
+    {
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "-Vv"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T08:45:58.908Z",
+      "wall_ms": 158.0638329999997,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-version.stderr.log"
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage1_multibatch_materials"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T08:45:59.066Z",
+      "wall_ms": 49064.98375,
+      "environment": {
+        "CARGO_TARGET_DIR": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage1_multibatch_raw/gate-a-20261117-04/build-target",
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/cargo-build.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/cargo-build.stderr.log"
+    },
+    {
+      "program": "rustfmt",
+      "args": [
+        "+1.99.1",
+        "--edition",
+        "2021",
+        "--check",
+        "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T08:46:48.134Z",
+      "wall_ms": 35.59250000000611,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-format.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-format.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "contracts/scripts/stage1_multibatch_compare.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T08:46:48.170Z",
+      "wall_ms": 21.286999999996624,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_compare.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_compare.mjs.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "scripts/stage1_multibatch_audit.mjs"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T08:46:48.192Z",
+      "wall_ms": 19.442625000003318,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_audit.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_audit.mjs.stderr.log"
+    }
+  ],
+  "vm_creation_count": 0,
+  "version": {
+    "phase": "A",
+    "head": "f086879c4dc247e528d62d2253d76d6afd603669",
+    "parent": "2444269b52573d9c2f3e551ef7d6b8bb9d0bd008",
+    "base": "72ccc561d8934b0d761e17764ef9012bfe012626",
+    "parent_tree": "92f7331a7d9b534d17108409342851381811aa52",
+    "tree": "3b8b57b375bb0391afe431935057a2711c5608e9",
+    "added": [
+      "A\tconfigs/experiment.STAGE1-MULTIBATCH.json",
+      "A\tcontracts/scripts/stage1_multibatch_compare.mjs",
+      "A\tcontracts/src/stage1/Stage1Receivers.sol",
+      "A\tcrates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "A\tdocs/G19_SNARKMUX_EVM_FEASIBILITY.md",
+      "A\tdocs/STAGE1_MULTIBATCH.md",
+      "A\texperiments/snarkmux_evm/SHA256SUMS",
+      "A\texperiments/snarkmux_evm/criteria.json",
+      "A\texperiments/snarkmux_evm/environment.json",
+      "A\texperiments/snarkmux_evm/evidence/prior_paper_source.json",
+      "A\texperiments/snarkmux_evm/evidence/prototype_response.json",
+      "A\texperiments/snarkmux_evm/execution.json",
+      "A\texperiments/snarkmux_evm/historical_files.json",
+      "A\texperiments/snarkmux_evm/logs/source-access.stderr.log",
+      "A\texperiments/snarkmux_evm/logs/source-access.stdout.log",
+      "A\texperiments/snarkmux_evm/report.md",
+      "A\texperiments/snarkmux_evm/results.json",
+      "A\texperiments/snarkmux_evm/source_inventory.json",
+      "A\texperiments/snarkmux_evm/verifier_inventory.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/gate_a_failed.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/cargo-build.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/cargo-build.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/cargo-build.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/rust-format.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/rust-format.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/rust-format.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/rust-version.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/rust-version.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/rust-version.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/syntax-stage1_multibatch_audit.mjs.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/syntax-stage1_multibatch_audit.mjs.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/syntax-stage1_multibatch_audit.mjs.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/syntax-stage1_multibatch_compare.mjs.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/syntax-stage1_multibatch_compare.mjs.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/logs/syntax-stage1_multibatch_compare.mjs.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-01/protected_files.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/compiled.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/gate_a.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/cargo-build.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/cargo-build.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/cargo-build.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-format.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-format.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-format.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-version.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-version.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/rust-version.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_audit.mjs.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_audit.mjs.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_audit.mjs.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_compare.mjs.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_compare.mjs.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/logs/syntax-stage1_multibatch_compare.mjs.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-02/protected_files.json",
+      "A\tresults/g19/decision.json",
+      "A\tresults/stage1_multibatch/gate-a-20261117-02/SHA256SUMS",
+      "A\tresults/stage1_multibatch/gate-a-20261117-02/gate_a_audit.json",
+      "A\tscripts/g19_snarkmux_source_admission.mjs",
+      "A\tscripts/stage1_multibatch_audit.mjs"
+    ],
+    "a03_changes": [
+      "M\tcontracts/scripts/stage1_multibatch_compare.mjs",
+      "M\tdocs/STAGE1_MULTIBATCH.md",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/compiled.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/gate_a.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/cargo-build.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/cargo-build.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/cargo-build.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-cargo-version.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-cargo-version.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-cargo-version.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-rust-version.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-rust-version.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-rust-version.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-format.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-format.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-format.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-version.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-version.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-version.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_audit.mjs.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_audit.mjs.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_audit.mjs.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_compare.mjs.command.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_compare.mjs.stderr.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_compare.mjs.stdout.log",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/preflight_b.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/protected_files.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/static_checks.json",
+      "A\texperiments/stage1_multibatch_raw/gate-a-20261117-03/storage_layout.json",
+      "A\tresults/stage1_multibatch/gate-a-20261117-03/SHA256SUMS",
+      "A\tresults/stage1_multibatch/gate-a-20261117-03/gate_a_audit.json",
+      "A\tresults/stage1_multibatch/gate-a-20261117-03/preflight_b.json",
+      "A\tresults/stage1_multibatch/gate-a-20261117-03/report.md",
+      "M\tscripts/stage1_multibatch_audit.mjs"
+    ],
+    "workspaces": {
+      "staged": [],
+      "unstaged": [
+        "contracts/scripts/stage1_multibatch_compare.mjs",
+        "docs/STAGE1_MULTIBATCH.md",
+        "scripts/stage1_multibatch_audit.mjs"
+      ],
+      "untracked": []
+    },
+    "untracked_scope": "git ls-files --others --exclude-standard; historical ignored build caches independently included in recursive snapshots"
+  },
+  "static_checks_sha256": "e6761918ff17db0605071bf144b56a13ec550639b5328c5075b3989bf99718f5",
+  "storage_layout_sha256": "3dbd545ad74169a3d43f0bd2753f12bab2caa16ac367cafada40cab26d491092",
+  "binary_reproducibility_sha256": "8733b0b2427f9abac6044c8c1d02dbe47fd3c7789a371285895c88dc8842a751",
+  "compiled_sha256": "b639607dee7d88490f48ac2edb8f582b44dd2d34098561f2a17916030bbaebcd",
+  "binary": "experiments/stage1_multibatch_raw/gate-a-20261117-04/build-target/release/stage1_multibatch_materials",
+  "binary_sha256": "da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488",
+  "historical_files_unchanged": true,
+  "next_gate": "B_REQUIRES_NEW_HUMAN_CONFIRMATION"
+}

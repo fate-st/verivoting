@@ -1,13 +1,15 @@
 # Stage1：多批次 EVM 部署摊销与消融（隔离实现）
 
-当前门槛：A-03，最小脚本补丁、编译、静态审计及独立 B 预检。B/C/D 未获本轮运行授权，禁止自动进入。
+当前门槛：A-04，提交后准入修复、编译、静态审计及独立 B 预检重建。B/C/D 未获本轮运行授权，禁止自动进入。
 本文件不修改论文或任何 G8-E、G12、Stage2、G18 原始材料。
 
 ## 固定范围
 
-- 基准 G18 `72ccc561d8934b0d761e17764ef9012bfe012626`；当前 HEAD `2444269b52573d9c2f3e551ef7d6b8bb9d0bd008`，Tree `92f7331a7d9b534d17108409342851381811aa52`。
-  当前 HEAD 的父提交必须为 G18，固定核对全部59个 Added 文件（包括G19来源审查、Stage1、A-01/02归档）。
-  A-03仅修改runner、auditor及本文档；不修改配置、Rust、Solidity、电路、fixtures、旧结果或论文。
+- 固定提交链：G18 `72ccc561d8934b0d761e17764ef9012bfe012626` → `2444269b52573d9c2f3e551ef7d6b8bb9d0bd008`（59A）
+  → 当前HEAD `f086879c4dc247e528d62d2253d76d6afd603669`（3M+31A）。
+  父提交Tree固定为 `92f7331a7d9b534d17108409342851381811aa52`；当前Tree固定为 `3b8b57b375bb0391afe431935057a2711c5608e9`。
+  区分HEAD、直接父提交、G18基准，分别校验两段静态硬编码文件清单，不从运行环境推导预期值。
+  A-04仅修改runner、auditor及本文档；不修改配置、Rust、Solidity、电路、fixtures、旧结果或论文。
 - D5/W32，32 名选民均为 fixture 权重1；B4、3候选人、区域4；原有32份Groth16证明与25项输入完整复用。
 - Rust/Cargo `+1.99.1`，Release `opt-level=1`，两编译任务/四Rayon线程；不依赖默认stable入口。
 - solc0.8.30、optimizer200、viaIR、Prague、EthereumJS10.1.3；20M交易/30M区块上下文。不更改预算来掩盖失败。
@@ -26,20 +28,34 @@ bytes32 scheduleDigest, uint64 K, uint64 count, bytes32[6] CT))。
 scheduleDigest为Keccak256(ABI(bytes32[] roots))，根必须是固定八根序列的K项前缀。
 不含路线或地址，三路线同K应一致；不冒充旧G6 CT2摘要，不扩展到P3/Winner结算。
 
+### 三路线成本构成（不是实测Gas结论）
+
+| 成本项目 | Legacy | Direct Fold | State Proof |
+|---|---|---|---|
+| 接收时认证检查 | 每票一次 | 每批一次 | 每批一次 |
+| BallotAccepted事件 | 每票一次 | 无 | 无 |
+| BatchAccepted事件 | 每批一次 | 每批一次 | 每批一次 |
+| 选票Groth16验证 | 每票一次 | 每批4份 | 每批4份 |
+| Jubjub密文点加 | 链上逐票 | 链上批量 | 链下状态证明 |
+| 状态证明验证 | 无 | 无 | 每批一次 |
+
+三条路线在 `freeze()` 时都会再执行一次认证检查。认证重复次数、事件、交易拆分和框架存储
+属于系统框架开销；选票证明、状态证明的生成与验证属于密码学证明开销，不能将全部差额归因于证明本身。
+
 ## 严格门控命令（B/C/D均未执行）
 
 门槛A，仅编译：
 ```sh
-node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-03
-node contracts/scripts/stage1_multibatch_compare.mjs --preflight B --a-run experiments/stage1_multibatch_raw/gate-a-20261117-03 --b-run gate-b-20261117-01
-node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-03
+node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-04
+node contracts/scripts/stage1_multibatch_compare.mjs --preflight B --a-run experiments/stage1_multibatch_raw/gate-a-20261117-04 --b-run gate-b-20261117-01
+node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-04
 ```
 检查已有归档时给审计脚本追加`--check`，不覆盖记录、不重新编译。
 
 获得独立人工确认后才可执行B（以下仅列接口，不表示已经运行）：
 ```sh
-node contracts/scripts/stage1_multibatch_compare.mjs --gate B --approved B --run experiments/stage1_multibatch_raw/NEW_B_ID --a-run experiments/stage1_multibatch_raw/gate-a-20261117-03
-node scripts/stage1_multibatch_audit.mjs --gate B --run experiments/stage1_multibatch_raw/NEW_B_ID
+node contracts/scripts/stage1_multibatch_compare.mjs --gate B --approved B --run experiments/stage1_multibatch_raw/gate-b-20261117-01 --a-run experiments/stage1_multibatch_raw/gate-a-20261117-04
+node scripts/stage1_multibatch_audit.mjs --gate B --run experiments/stage1_multibatch_raw/gate-b-20261117-01
 ```
 B先新建材料目录、串行生成两份新状态证明，再运行K1/K2三路线回归及三个独立负例VM。
 Omission-A在首次接收之前测试，State Proof必须真正触发第五次配对返回0。
@@ -48,7 +64,7 @@ Legacy恢复顺序为：Alice/Bob成功→Charlie失败原子回滚→Charlie重
 
 再次获得独立确认后才可执行C：
 ```sh
-node contracts/scripts/stage1_multibatch_compare.mjs --gate C --approved C --run experiments/stage1_multibatch_raw/NEW_C_ID --a-run experiments/stage1_multibatch_raw/gate-a-20261117-03 --b-run experiments/stage1_multibatch_raw/NEW_B_ID
+node contracts/scripts/stage1_multibatch_compare.mjs --gate C --approved C --run experiments/stage1_multibatch_raw/NEW_C_ID --a-run experiments/stage1_multibatch_raw/gate-a-20261117-04 --b-run experiments/stage1_multibatch_raw/gate-b-20261117-01
 ```
 C从全新材料目录开始，重建同一研究Setup，严格核对原Ark/EIP VK，串行新生成全部8份状态证明。
 不复用B或历史状态证明。每批证明在独立Rust子进程运行，读取一次该运行的PK；OS getrusage记录工作进程高水位RSS。
@@ -105,7 +121,7 @@ solc `0.8.30+commit.73712a01.Emscripten.clang`编译通过，墙钟12.266秒（M
 未解决事项：B/C的实际功能、资源及负例尚未执行；确定性研究Setup不是生产可信设置；
 完整SnarkPack EVM及P3/Winner集成不在本阶段范围。当前停在A，下一步必须由人工单独确认B。
 
-## A-03：工作区与历史档案保护
+## 历史A-03：工作区与历史档案保护
 
 `validateConfig({phase,run,rawRun})` 分别检查 staged、unstaged 和未跟踪文件。
 未跟踪文件使用 `git ls-files --others --exclude-standard`，避免将既有 node_modules 当作新增研究文件；
@@ -119,7 +135,7 @@ D仅允许预先存在的批准补丁、只读C原始目录和当前审计输出
 显式记录 `results/stage1_multibatch/gate-a-20261117-01` 不存在，前后必须仍不存在。
 不再整体排除Stage1历史目录；A-03仅排除当前03目录。
 
-预检只是 READY_FOR_HUMAN_APPROVAL，不是 B 通过。当前 A-03 归档在工作区未跟踪；按指令保持
+预检只是 READY_FOR_HUMAN_APPROVAL，不是 B 通过。A-03运行时归档在工作区未跟踪；当时按指令保持
 B/C“仅当前run”的严格白名单，不自动放宽。实际启动B前需人工明确如何保留/纳入A-03准入材料，
 否则应拒绝执行。不会擅自提交、删除归档或借此启动Setup/Prove。
 
@@ -165,9 +181,9 @@ Stage1仅验证、复用这些原证明；后续B/C仅新生成状态转移证�
 C-VOTE的私有见证约束权重范围和Pedersen承诺，但当前固定均匀权重：32名选民、每人1、
 总登记权重32、单人上界32；不声称覆盖任意非均匀权重分布。
 
-## A-03验收记录
+## 历史A-03验收记录
 
-当前执行范围：仅编译、静态核查与独立B预检；新档案均位于 `gate-a-20261117-03`。
+A-03执行范围：仅编译、静态核查与独立B预检；当时新档案均位于 `gate-a-20261117-03`。
 实际编译、11项核查及命令退出码以新 `gate_a.json`、`static_checks.json`、`storage_layout.json`、
 `preflight_b.json`、`results/.../gate_a_audit.json` 与 `report.md` 为准。
 Setup=0、Prove=0、VM创建=0、EVM交易=0；不得把静态接线检查标为运行时通过。
@@ -181,6 +197,48 @@ rustfmt与两个JS语法检查均退出0。三路线运行字节码分别9798、
 不存在的A-01结果目录仍不存在。重复记录文件不应相加后声称为去重总数。
 `preflight_b.json`确认6正向/3负向任务配置及两个B目标目录不存在；状态为READY_FOR_HUMAN_APPROVAL。
 本轮无运行时Gas、功能正负例或性能优势数据；全部交易级检查仍待B/C。
+
+## A-04：动态运行路径与只读交接
+
+`resultsPathForRun(rawRun)`从传入路径派生results；`verifyA`、`gateA`、`preflightGateB`不再把A-03当作当前目录。
+`validateConfig({phase,run,aRun,bRun,rawRun})`和全部调用点统一更新，`phaseCallSites()`检查实际函数体，
+包括Gate B/C分支、VM worker从request读取的A/B来源，以及audit main的源文件哈希冻结。
+
+白名单分开检查staged/unstaged/untracked：A只允许3个补丁及A-04新目录；
+B允许当前运行raw/results及只读A输入双目录；C再加入只读B输入双目录。
+A/B只读输入执行前后递归校验，包括ignored build-target；C不能修改B回归记录或复用B状态证明。
+三代历史A-01/02/03目录与缓存均固定纳入完整快照，A-01 results仍须不存在。
+D在启动时冻结3个批准补丁的SHA256，结束必须相同；C原始输入只读、D审计结果独立写入。
+
+B除独立人工 `--approved B` 外，还必须检验预检两份报告字节一致、状态、a_run、b_run、
+config/compiled/binary SHA256与完整source_pins，后者同时与A记录和当前源文件逐项一致。
+预检中的B目录名必须与实际目标匹配；执行和审计B均使用同一目标。
+C除 `--approved C` 外，必须同时取得B执行报告和独立B审计报告：6个正向VM、3个负向VM会话、
+9个独立实例和gas_receipt_audit=PASS。3个负向会话分别覆盖多项攻击，不等于仅3个攻击用例。
+两份报告config/source_pins必须一致，不能只凭B执行状态放行C。
+
+Setup实际RSS字段为 `m.setup.worker_peak_rss_mib`，逐批为 `b.peak_rss_mib`；
+都必须大于0且不超过既有 `cfg.budgets.child_rss_mib=16384`，不修改配置或使用错误字段。
+本轮只审查这些运行时接线，未执行B/C，更没有测得本轮证明RSS。
+
+## A-04：本机二进制与编译准入
+
+使用当前运行自己的 `CARGO_TARGET_DIR=<aRun>/build-target`，检查真实文件
+`<aRun>/build-target/release/stage1_multibatch_materials`存在，实际SHA256同时匹配本轮gate_a.json
+及A-03固定基准 `da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`。
+比对结果独立保存为 `binary_reproducibility.json`。若不一致立即停止，不改历史记录、不继续预检或证明。
+仅新建A-04 raw/results归档；原始命令与编译器产物、历史快照、11项审计及独立预检都在对应目录。
+预检状态只允许READY_FOR_HUMAN_APPROVAL，不代表Gate B完成。
+
+本轮必须保持 Setup=0、Prove=0、VM创建=0、交易=0，不提交、不推送；A-04输出后停止等待确认。
+
+2026-11-17实际执行：`cargo +1.99.1 build --release --locked --offline -p vv-friendly-dkg --bin stage1_multibatch_materials`
+退出0，命令墙钟49.065秒，Release opt-level=1；Solidity 0.8.30编译墙钟12.228秒。
+rustfmt与两个JS语法检查均退出0。A-04本机二进制存在，SHA256与上述A-03完整基准逐字相同；未调整历史基准。
+完整storageLayout继续为slot22、offset0/8/16/17，frozenTarget为slot23。
+历史递归文件数分别为A-01 raw 1628、A-02 raw 1629/results 2、A-03 raw 1638/results 4；
+A-01 results仍不存在，另核对3018项原有Git可见文件与论文哈希。这些覆盖存在重叠，不相加冒充去重总数。
+独立B预检与11项审计结果见A-04对应JSON、report.md和SHA256SUMS；状态与未执行项目以原始报告为准。
 
 ## 最终报告六项必答问题
 

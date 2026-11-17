@@ -1,0 +1,1190 @@
+{
+  "layouts": {
+    "Stage1DirectFoldSettlement": {
+      "storage": [
+        {
+          "astId": 3386,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "binding",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(Binding)3363_storage"
+        },
+        {
+          "astId": 3398,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "acceptedRoots",
+          "offset": 0,
+          "slot": "14",
+          "type": "t_array(t_bytes32)dyn_storage"
+        },
+        {
+          "astId": 3402,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "encryptedState",
+          "offset": 0,
+          "slot": "15",
+          "type": "t_array(t_bytes32)6_storage"
+        },
+        {
+          "astId": 3406,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "spentNullifier",
+          "offset": 0,
+          "slot": "21",
+          "type": "t_mapping(t_bytes32,t_bool)"
+        },
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32"
+        }
+      ],
+      "types": {
+        "t_array(t_bytes32)6_storage": {
+          "base": "t_bytes32",
+          "encoding": "inplace",
+          "label": "bytes32[6]",
+          "numberOfBytes": "192"
+        },
+        "t_array(t_bytes32)dyn_storage": {
+          "base": "t_bytes32",
+          "encoding": "dynamic_array",
+          "label": "bytes32[]",
+          "numberOfBytes": "32"
+        },
+        "t_bool": {
+          "encoding": "inplace",
+          "label": "bool",
+          "numberOfBytes": "1"
+        },
+        "t_bytes32": {
+          "encoding": "inplace",
+          "label": "bytes32",
+          "numberOfBytes": "32"
+        },
+        "t_mapping(t_bytes32,t_bool)": {
+          "encoding": "mapping",
+          "key": "t_bytes32",
+          "label": "mapping(bytes32 => bool)",
+          "numberOfBytes": "32",
+          "value": "t_bool"
+        },
+        "t_struct(Binding)3363_storage": {
+          "encoding": "inplace",
+          "label": "struct Stage1ReceiverBase.Binding",
+          "members": [
+            {
+              "astId": 3334,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "electionId",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3336,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "policyPre",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3338,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "dkgSession",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3340,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "keyCoreDigest",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3342,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "publicKey",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3344,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "finalContext",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3346,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "registrationRoot",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3348,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "registrationCloseDigest",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3350,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "disclosureDigest",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3352,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "p3VkSha256",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3354,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "prekeyContext",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3356,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "registrationAuthority",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3358,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "registrationCertificateSha256",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3360,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "region",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_uint64"
+            },
+            {
+              "astId": 3362,
+              "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+              "label": "registeredWeight",
+              "offset": 8,
+              "slot": "13",
+              "type": "t_uint64"
+            }
+          ],
+          "numberOfBytes": "448"
+        },
+        "t_uint64": {
+          "encoding": "inplace",
+          "label": "uint64",
+          "numberOfBytes": "8"
+        },
+        "t_uint8": {
+          "encoding": "inplace",
+          "label": "uint8",
+          "numberOfBytes": "1"
+        }
+      }
+    },
+    "Stage1LegacySettlement": {
+      "storage": [
+        {
+          "astId": 3386,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "binding",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(Binding)3363_storage"
+        },
+        {
+          "astId": 3398,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "acceptedRoots",
+          "offset": 0,
+          "slot": "14",
+          "type": "t_array(t_bytes32)dyn_storage"
+        },
+        {
+          "astId": 3402,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "encryptedState",
+          "offset": 0,
+          "slot": "15",
+          "type": "t_array(t_bytes32)6_storage"
+        },
+        {
+          "astId": 3406,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "spentNullifier",
+          "offset": 0,
+          "slot": "21",
+          "type": "t_mapping(t_bytes32,t_bool)"
+        },
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32"
+        }
+      ],
+      "types": {
+        "t_array(t_bytes32)6_storage": {
+          "base": "t_bytes32",
+          "encoding": "inplace",
+          "label": "bytes32[6]",
+          "numberOfBytes": "192"
+        },
+        "t_array(t_bytes32)dyn_storage": {
+          "base": "t_bytes32",
+          "encoding": "dynamic_array",
+          "label": "bytes32[]",
+          "numberOfBytes": "32"
+        },
+        "t_bool": {
+          "encoding": "inplace",
+          "label": "bool",
+          "numberOfBytes": "1"
+        },
+        "t_bytes32": {
+          "encoding": "inplace",
+          "label": "bytes32",
+          "numberOfBytes": "32"
+        },
+        "t_mapping(t_bytes32,t_bool)": {
+          "encoding": "mapping",
+          "key": "t_bytes32",
+          "label": "mapping(bytes32 => bool)",
+          "numberOfBytes": "32",
+          "value": "t_bool"
+        },
+        "t_struct(Binding)3363_storage": {
+          "encoding": "inplace",
+          "label": "struct Stage1ReceiverBase.Binding",
+          "members": [
+            {
+              "astId": 3334,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "electionId",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3336,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "policyPre",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3338,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "dkgSession",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3340,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "keyCoreDigest",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3342,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "publicKey",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3344,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "finalContext",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3346,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "registrationRoot",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3348,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "registrationCloseDigest",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3350,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "disclosureDigest",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3352,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "p3VkSha256",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3354,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "prekeyContext",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3356,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "registrationAuthority",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3358,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "registrationCertificateSha256",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3360,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "region",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_uint64"
+            },
+            {
+              "astId": 3362,
+              "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+              "label": "registeredWeight",
+              "offset": 8,
+              "slot": "13",
+              "type": "t_uint64"
+            }
+          ],
+          "numberOfBytes": "448"
+        },
+        "t_uint64": {
+          "encoding": "inplace",
+          "label": "uint64",
+          "numberOfBytes": "8"
+        },
+        "t_uint8": {
+          "encoding": "inplace",
+          "label": "uint8",
+          "numberOfBytes": "1"
+        }
+      }
+    },
+    "Stage1ReceiverBase": {
+      "storage": [
+        {
+          "astId": 3386,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "binding",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(Binding)3363_storage"
+        },
+        {
+          "astId": 3398,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "acceptedRoots",
+          "offset": 0,
+          "slot": "14",
+          "type": "t_array(t_bytes32)dyn_storage"
+        },
+        {
+          "astId": 3402,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "encryptedState",
+          "offset": 0,
+          "slot": "15",
+          "type": "t_array(t_bytes32)6_storage"
+        },
+        {
+          "astId": 3406,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "spentNullifier",
+          "offset": 0,
+          "slot": "21",
+          "type": "t_mapping(t_bytes32,t_bool)"
+        },
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32"
+        }
+      ],
+      "types": {
+        "t_array(t_bytes32)6_storage": {
+          "base": "t_bytes32",
+          "encoding": "inplace",
+          "label": "bytes32[6]",
+          "numberOfBytes": "192"
+        },
+        "t_array(t_bytes32)dyn_storage": {
+          "base": "t_bytes32",
+          "encoding": "dynamic_array",
+          "label": "bytes32[]",
+          "numberOfBytes": "32"
+        },
+        "t_bool": {
+          "encoding": "inplace",
+          "label": "bool",
+          "numberOfBytes": "1"
+        },
+        "t_bytes32": {
+          "encoding": "inplace",
+          "label": "bytes32",
+          "numberOfBytes": "32"
+        },
+        "t_mapping(t_bytes32,t_bool)": {
+          "encoding": "mapping",
+          "key": "t_bytes32",
+          "label": "mapping(bytes32 => bool)",
+          "numberOfBytes": "32",
+          "value": "t_bool"
+        },
+        "t_struct(Binding)3363_storage": {
+          "encoding": "inplace",
+          "label": "struct Stage1ReceiverBase.Binding",
+          "members": [
+            {
+              "astId": 3334,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "electionId",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3336,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "policyPre",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3338,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "dkgSession",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3340,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "keyCoreDigest",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3342,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "publicKey",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3344,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "finalContext",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3346,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "registrationRoot",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3348,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "registrationCloseDigest",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3350,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "disclosureDigest",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3352,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "p3VkSha256",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3354,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "prekeyContext",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3356,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "registrationAuthority",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3358,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "registrationCertificateSha256",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3360,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "region",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_uint64"
+            },
+            {
+              "astId": 3362,
+              "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+              "label": "registeredWeight",
+              "offset": 8,
+              "slot": "13",
+              "type": "t_uint64"
+            }
+          ],
+          "numberOfBytes": "448"
+        },
+        "t_uint64": {
+          "encoding": "inplace",
+          "label": "uint64",
+          "numberOfBytes": "8"
+        },
+        "t_uint8": {
+          "encoding": "inplace",
+          "label": "uint8",
+          "numberOfBytes": "1"
+        }
+      }
+    },
+    "Stage1StateProofSettlement": {
+      "storage": [
+        {
+          "astId": 3386,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "binding",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(Binding)3363_storage"
+        },
+        {
+          "astId": 3398,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "acceptedRoots",
+          "offset": 0,
+          "slot": "14",
+          "type": "t_array(t_bytes32)dyn_storage"
+        },
+        {
+          "astId": 3402,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "encryptedState",
+          "offset": 0,
+          "slot": "15",
+          "type": "t_array(t_bytes32)6_storage"
+        },
+        {
+          "astId": 3406,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "spentNullifier",
+          "offset": 0,
+          "slot": "21",
+          "type": "t_mapping(t_bytes32,t_bool)"
+        },
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32"
+        }
+      ],
+      "types": {
+        "t_array(t_bytes32)6_storage": {
+          "base": "t_bytes32",
+          "encoding": "inplace",
+          "label": "bytes32[6]",
+          "numberOfBytes": "192"
+        },
+        "t_array(t_bytes32)dyn_storage": {
+          "base": "t_bytes32",
+          "encoding": "dynamic_array",
+          "label": "bytes32[]",
+          "numberOfBytes": "32"
+        },
+        "t_bool": {
+          "encoding": "inplace",
+          "label": "bool",
+          "numberOfBytes": "1"
+        },
+        "t_bytes32": {
+          "encoding": "inplace",
+          "label": "bytes32",
+          "numberOfBytes": "32"
+        },
+        "t_mapping(t_bytes32,t_bool)": {
+          "encoding": "mapping",
+          "key": "t_bytes32",
+          "label": "mapping(bytes32 => bool)",
+          "numberOfBytes": "32",
+          "value": "t_bool"
+        },
+        "t_struct(Binding)3363_storage": {
+          "encoding": "inplace",
+          "label": "struct Stage1ReceiverBase.Binding",
+          "members": [
+            {
+              "astId": 3334,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "electionId",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3336,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "policyPre",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3338,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "dkgSession",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3340,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "keyCoreDigest",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3342,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "publicKey",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3344,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "finalContext",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3346,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "registrationRoot",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3348,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "registrationCloseDigest",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3350,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "disclosureDigest",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3352,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "p3VkSha256",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3354,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "prekeyContext",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3356,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "registrationAuthority",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3358,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "registrationCertificateSha256",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_bytes32"
+            },
+            {
+              "astId": 3360,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "region",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_uint64"
+            },
+            {
+              "astId": 3362,
+              "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+              "label": "registeredWeight",
+              "offset": 8,
+              "slot": "13",
+              "type": "t_uint64"
+            }
+          ],
+          "numberOfBytes": "448"
+        },
+        "t_uint64": {
+          "encoding": "inplace",
+          "label": "uint64",
+          "numberOfBytes": "8"
+        },
+        "t_uint8": {
+          "encoding": "inplace",
+          "label": "uint8",
+          "numberOfBytes": "1"
+        }
+      }
+    }
+  },
+  "checks": [
+    {
+      "contract": "Stage1ReceiverBase",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    },
+    {
+      "contract": "Stage1LegacySettlement",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    },
+    {
+      "contract": "Stage1DirectFoldSettlement",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    },
+    {
+      "contract": "Stage1StateProofSettlement",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    }
+  ]
+}
