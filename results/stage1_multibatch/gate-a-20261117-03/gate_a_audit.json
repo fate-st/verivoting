@@ -1,0 +1,406 @@
+{
+  "status": "PASS_GATE_A_ARTIFACT_AUDIT",
+  "gate": "A",
+  "config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "acceptance": [
+    {
+      "id": 1,
+      "item": "G18 / HEAD / parent / tree",
+      "status": "PASS_STATIC"
+    },
+    {
+      "id": 2,
+      "item": "Fixed 59-file all-Added inventory",
+      "status": "PASS_STATIC"
+    },
+    {
+      "id": 3,
+      "item": "Phase-aware whitelist, every call site, D rawRun read-only policy",
+      "status": "PASS_STATIC"
+    },
+    {
+      "id": 4,
+      "item": "Recursive old archives including ignored caches and absent result A-01",
+      "status": "PASS_STATIC"
+    },
+    {
+      "id": 5,
+      "item": "Raw Legacy EVM refund counter; no zero-refund assumption",
+      "status": "PASS_STATIC"
+    },
+    {
+      "id": 6,
+      "item": "Per-transaction blocks, BigInt 14 fields and receipt identities",
+      "status": "PASS_STATIC",
+      "runtime_status": "RUNTIME_PENDING_B"
+    },
+    {
+      "id": 7,
+      "item": "Prague 2537/3529/7623 active; 8037 inactive; quotient 5",
+      "status": "PASS_STATIC"
+    },
+    {
+      "id": 8,
+      "item": "Compiler storage slots and offsets 0/8/16/17",
+      "status": "PASS_COMPILE"
+    },
+    {
+      "id": 9,
+      "item": "VM metadata wiring, final context and C-VOTE provenance boundaries",
+      "status": "PASS_STATIC",
+      "runtime_status": [
+        "RUNTIME_PENDING_B",
+        "RUNTIME_PENDING_C"
+      ]
+    },
+    {
+      "id": 10,
+      "item": "Rust +1.99.1 Release opt-level=1 and solc 0.8.30",
+      "status": "PASS_COMPILE"
+    },
+    {
+      "id": 11,
+      "item": "Independent Gate B preflight only",
+      "status": "READY_FOR_HUMAN_APPROVAL"
+    }
+  ],
+  "prague": {
+    "status": "PASS_STATIC",
+    "hardfork": "prague",
+    "chain_id": "1",
+    "active_eips": [
+      2537,
+      3529,
+      7623
+    ],
+    "inactive_eips": [
+      8037
+    ],
+    "max_refund_quotient": "5",
+    "vm_created": false
+  },
+  "storage_checks": [
+    {
+      "contract": "Stage1ReceiverBase",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1ReceiverBase",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    },
+    {
+      "contract": "Stage1LegacySettlement",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1LegacySettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    },
+    {
+      "contract": "Stage1DirectFoldSettlement",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1DirectFoldSettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    },
+    {
+      "contract": "Stage1StateProofSettlement",
+      "status": "PASS_COMPILE",
+      "packed_slot": "22",
+      "fields": [
+        {
+          "astId": 3409,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "nextBatchIndex",
+          "offset": 0,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3411,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "spentCount",
+          "offset": 8,
+          "slot": "22",
+          "type": "t_uint64",
+          "bytes": "8"
+        },
+        {
+          "astId": 3413,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "positionInBatch",
+          "offset": 16,
+          "slot": "22",
+          "type": "t_uint8",
+          "bytes": "1"
+        },
+        {
+          "astId": 3415,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "frozen",
+          "offset": 17,
+          "slot": "22",
+          "type": "t_bool",
+          "bytes": "1"
+        },
+        {
+          "astId": 3417,
+          "contract": "stage1/Stage1Receivers.sol:Stage1StateProofSettlement",
+          "label": "frozenTarget",
+          "offset": 0,
+          "slot": "23",
+          "type": "t_bytes32",
+          "bytes": "32"
+        }
+      ]
+    }
+  ],
+  "vm_metadata_fields": [
+    "route",
+    "chain_id",
+    "deployer_address",
+    "deployer_nonce_initial",
+    "gate_deployment_nonce",
+    "receiver_deployment_nonce",
+    "deployer_nonce_final",
+    "gate_address",
+    "receiver_address",
+    "gate_initcode_sha256",
+    "receiver_initcode_sha256",
+    "receiver_runtime_code_sha256",
+    "final_context"
+  ],
+  "compiled_contracts": [
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1DirectFoldSettlement",
+      "creation_bytes": 17266,
+      "runtime_bytes": 10621
+    },
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1LegacySettlement",
+      "creation_bytes": 15149,
+      "runtime_bytes": 9798
+    },
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1ReceiverBase",
+      "creation_bytes": 0,
+      "runtime_bytes": 0
+    },
+    {
+      "file": "stage1/Stage1Receivers.sol",
+      "name": "Stage1StateProofSettlement",
+      "creation_bytes": 17959,
+      "runtime_bytes": 8634
+    }
+  ],
+  "commands": [
+    {
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "-Vv"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-version.stderr.log"
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "vv-friendly-dkg",
+        "--bin",
+        "stage1_multibatch_materials"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/cargo-build.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/cargo-build.stderr.log"
+    },
+    {
+      "program": "rustfmt",
+      "args": [
+        "+1.99.1",
+        "--edition",
+        "2021",
+        "--check",
+        "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-format.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/rust-format.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "contracts/scripts/stage1_multibatch_compare.mjs"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_compare.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_compare.mjs.stderr.log"
+    },
+    {
+      "program": "node",
+      "args": [
+        "--check",
+        "scripts/stage1_multibatch_audit.mjs"
+      ],
+      "code": 0,
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_audit.mjs.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/syntax-stage1_multibatch_audit.mjs.stderr.log"
+    }
+  ],
+  "rust_opt_level": 1,
+  "cryptographic_function_tests": {
+    "status": "NOT_MEASURED",
+    "value": null
+  },
+  "evm_gas": {
+    "status": "NOT_MEASURED",
+    "value": null
+  },
+  "next_gate": "B_REQUIRES_NEW_HUMAN_CONFIRMATION",
+  "historical_files_unchanged": true
+}

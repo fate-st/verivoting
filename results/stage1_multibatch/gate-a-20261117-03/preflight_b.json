@@ -1,0 +1,165 @@
+{
+  "status": "READY_FOR_HUMAN_APPROVAL",
+  "scope": "STATIC_PREFLIGHT_ONLY",
+  "a_run": "experiments/stage1_multibatch_raw/gate-a-20261117-03",
+  "b_run": "gate-b-20261117-01",
+  "config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "compiled_sha256": "e2a282528b7cbd00dc8e0f745093dcd57d20aae11aee2a9fc7db69e4202e6c5a",
+  "binary_sha256": "da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "5d609217103da3b2822fca60f98a1e2ab3367d02755c4d4af034069a433f40e0"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "0812149a26a74e62e56ae09c379adf75510c99ac55ec4984e172caf358e02090"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "fc26671b11fdcc85bfd8d308746da188b8ce3a5988b114d35d21514999266a6f"
+    }
+  ],
+  "positive_tasks": [
+    {
+      "k": 1,
+      "route": "legacy",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 1,
+      "route": "direct_fold",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 1,
+      "route": "state_proof",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 2,
+      "route": "legacy",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 2,
+      "route": "direct_fold",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    },
+    {
+      "k": 2,
+      "route": "state_proof",
+      "kind": "DEVELOPMENT_REGRESSION_NOT_PERFORMANCE"
+    }
+  ],
+  "negative_tasks": [
+    {
+      "k": 2,
+      "route": "legacy",
+      "kind": "NEGATIVE_ONLY"
+    },
+    {
+      "k": 2,
+      "route": "direct_fold",
+      "kind": "NEGATIVE_ONLY"
+    },
+    {
+      "k": 2,
+      "route": "state_proof",
+      "kind": "NEGATIVE_ONLY"
+    }
+  ],
+  "resource_budgets": {
+    "build_jobs": 2,
+    "rayon_threads": 4,
+    "child_seconds": 600,
+    "child_rss_mib": 16384,
+    "node_heap_mib": 6144
+  },
+  "stopping_rules": {
+    "A": "compile only; stop for human approval",
+    "B": "fresh 2 proofs + regression + isolated negatives; NOT performance",
+    "C": "fresh 8 serial proof workers + 24 clean positive-only VMs",
+    "D": "audit and derive; explicit approval required"
+  },
+  "prague": {
+    "status": "PASS_STATIC",
+    "hardfork": "prague",
+    "chain_id": "1",
+    "active_eips": [
+      2537,
+      3529,
+      7623
+    ],
+    "inactive_eips": [
+      8037
+    ],
+    "max_refund_quotient": "5",
+    "vm_created": false
+  },
+  "commands": [
+    {
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "-Vv"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T07:29:44.975Z",
+      "wall_ms": 24.39408400000002,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-rust-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-rust-version.stderr.log"
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "-V"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-17T07:29:45.000Z",
+      "wall_ms": 14.973709000000099,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-cargo-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-03/logs/preflight-cargo-version.stderr.log"
+    }
+  ],
+  "future_directories": [
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-01",
+      "exists": false
+    },
+    {
+      "path": "results/stage1_multibatch/gate-b-20261117-01",
+      "exists": false
+    }
+  ],
+  "setup_count": 0,
+  "proof_generation_count": 0,
+  "vm_creation_count": 0,
+  "evm_transaction_count": 0,
+  "runtime_status": "RUNTIME_PENDING_B",
+  "workspace_handoff": "B/C whitelist remains current-run-only. Untracked A-03 archives must be explicitly resolved before a future B execution; no automatic commit, removal, or whitelist expansion.",
+  "next_action": "STOP; separate human approval and workspace handoff required before B"
+}
