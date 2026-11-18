@@ -1,0 +1,63 @@
+{
+  "branch": "archive/stage1-a06-budget-evidence",
+  "parent": "b48197ba6c0fc9ed7df1a3144882327335f0780a",
+  "copied_verbatim": [
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "bytes": 83637,
+      "sha256": "a80a13415d5db6f9286a93a21094af4ffcd37d18e34874cc15830fba12e2204d"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "bytes": 52164,
+      "sha256": "f6315bd67b185d1d3a3bfc0c6d241b3a70812c2cd9668a3ed55f8026c978f84c"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "bytes": 40689,
+      "sha256": "284170804422a610444ea2732d4b1b294cb2d6c0d9b13fd2103154fb81bd2e2a"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "bytes": 49821,
+      "sha256": "c8b8433651dcff9a831c3db46a66b6039815887aaefef5f2a8503ea2934453b7"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-08/integrity_before.json",
+      "bytes": 37071,
+      "sha256": "dfab4eea1efecf8272f2f7db96512feb087abc0eac44398855ea8c5048214e44"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-08/prebuild_readonly_review.md",
+      "bytes": 1763,
+      "sha256": "a873c9228fb8b38d643b854b74bc45269f579196cadd422d3dc198414b482b98"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-08/synthetic-reject/gate_c.json",
+      "bytes": 127,
+      "sha256": "837d06b76baec6057e8f0a0dec5d96d175e87c5ba527361e4363a410ba1db923"
+    }
+  ],
+  "excluded": [
+    {
+      "path": "research_pk.bin",
+      "bytes": 847800624,
+      "sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+      "reason": "LOCAL_PROVING_KEY_NOT_UPLOADED"
+    },
+    {
+      "path": "build-target and external target",
+      "reason": "NATIVE_EXECUTABLES_AND_BUILD_CACHE_NOT_UPLOADED"
+    },
+    {
+      "path": "contracts/node_modules",
+      "reason": "DEPENDENCY_DIRECTORY_SYMLINK_NOT_UPLOADED"
+    },
+    {
+      "path": "original experiment/paper unrelated files",
+      "reason": "OUT_OF_UPLOAD_SCOPE"
+    }
+  ],
+  "no_lfs": true,
+  "source_only_final_revision_not_build_admitted": true
+}

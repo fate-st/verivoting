@@ -9,6 +9,7 @@ use blstrs::Bls12;
 use rand_chacha::{rand_core::SeedableRng, ChaCha20Rng};
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+use std::os::unix::process::{CommandExt, ExitStatusExt};
 use std::{
     collections::HashSet,
     env,
@@ -82,6 +83,231 @@ fn write_new(p: impl AsRef<Path>, v: &Value) -> Result<()> {
     serde_json::to_writer_pretty(&mut f, v)?;
     f.write_all(b"\n")?;
     Ok(())
+}
+// New-run diagnostics only. Both file contents AND each renamed directory entry are durable.
+fn durable_json(p: impl AsRef<Path>, v: &Value) -> Result<()> {
+    let p = p.as_ref();
+    let temporary = p.with_file_name(format!(
+        "{}.tmp",
+        p.file_name().ok_or("filename")?.to_string_lossy()
+    ));
+    let mut f = fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(&temporary)?;
+    serde_json::to_writer_pretty(&mut f, v)?;
+    f.write_all(b"\n")?;
+    f.flush()?;
+    f.sync_all()?;
+    fs::rename(&temporary, p)?;
+    fs::File::open(p.parent().ok_or("parent directory")?)?.sync_all()?;
+    Ok(())
+}
+
+#[cfg(target_os = "macos")]
+fn process_identity(pid: u32) -> Result<Value> {
+    let mut info = std::mem::MaybeUninit::<libc::proc_bsdinfo>::zeroed();
+    let expected = std::mem::size_of::<libc::proc_bsdinfo>();
+    let n = unsafe {
+        libc::proc_pidinfo(
+            pid as i32,
+            libc::PROC_PIDTBSDINFO,
+            0,
+            info.as_mut_ptr().cast(),
+            expected as i32,
+        )
+    };
+    if n != expected as i32 {
+        return Err(format!("PROC_PIDINFO_FAILED:{pid}").into());
+    }
+    let info = unsafe { info.assume_init() };
+    let mut executable = [0u8; 4096];
+    let n = unsafe {
+        libc::proc_pidpath(
+            pid as i32,
+            executable.as_mut_ptr().cast(),
+            executable.len() as u32,
+        )
+    };
+    if n <= 0 {
+        return Err("PROC_PIDPATH_FAILED".into());
+    }
+    let end = executable
+        .iter()
+        .position(|x| *x == 0)
+        .ok_or("process path terminator")?;
+    let executable = fs::canonicalize(std::str::from_utf8(&executable[..end])?)?;
+    let ps = Command::new("/bin/ps")
+        .args(["-ww", "-p", &pid.to_string(), "-o", "pid=,pgid=,command="])
+        .output()?;
+    if !ps.status.success() {
+        return Err("PS_IDENTITY_FAILED".into());
+    }
+    let command = String::from_utf8(ps.stdout)?;
+    let fields = command.split_whitespace().collect::<Vec<_>>();
+    if fields.len() < 3
+        || fields[0].parse::<u32>()? != pid
+        || fields[1].parse::<u32>()? != info.pbi_pgid
+    {
+        return Err("PS_PROC_IDENTITY_MISMATCH".into());
+    }
+    let instance = fields
+        .windows(2)
+        .find(|x| x[0] == "--worker-instance-id")
+        .map(|x| x[1]);
+    Ok(
+        json!({"worker_pid":pid,"parent_pid":info.pbi_ppid,"process_group_id":info.pbi_pgid,
+      "terminal_process_group_id":info.e_tpgid,"worker_instance_id":instance,
+      "process_start_identity":format!("{}:{:06}",info.pbi_start_tvsec,info.pbi_start_tvusec),
+      "executable_path":executable,"command":command.trim()}),
+    )
+}
+#[cfg(not(target_os = "macos"))]
+fn process_identity(_: u32) -> Result<Value> {
+    Err("MACOS_PROCESS_IDENTITY_REQUIRED".into())
+}
+
+fn group_gone(pgid: i32) -> Result<bool> {
+    if pgid <= 1 {
+        return Err("UNSAFE_PROCESS_GROUP".into());
+    }
+    if unsafe { libc::kill(-pgid, 0) } == 0 {
+        return Ok(false);
+    }
+    let e = std::io::Error::last_os_error();
+    if e.raw_os_error() == Some(libc::ESRCH) {
+        Ok(true)
+    } else {
+        Err(e.into())
+    }
+}
+fn verified_worker(control: &Value) -> Result<i32> {
+    let pid = control["worker_pid"].as_u64().ok_or("worker pid")? as u32;
+    let pgid = control["process_group_id"].as_i64().ok_or("worker pgid")? as i32;
+    if pgid <= 1 || pgid != pid as i32 {
+        return Err("UNSAFE_WORKER_GROUP".into());
+    }
+    let mut ancestor = std::process::id();
+    for _ in 0..64 {
+        if ancestor <= 1 {
+            break;
+        }
+        let identity = process_identity(ancestor)?;
+        if identity["process_group_id"] == pgid || identity["terminal_process_group_id"] == pgid {
+            return Err("PROTECTED_ANCESTOR_GROUP".into());
+        }
+        ancestor = identity["parent_pid"].as_u64().ok_or("ancestor")? as u32;
+    }
+    let live = process_identity(pid)?;
+    for key in [
+        "worker_instance_id",
+        "worker_pid",
+        "process_group_id",
+        "process_start_identity",
+        "executable_path",
+    ] {
+        if live[key] != control[key] {
+            return Err(format!("WORKER_IDENTITY_MISMATCH:{key}").into());
+        }
+    }
+    Ok(pgid)
+}
+fn cleanup_worker(child: &mut std::process::Child, control: &Value, reason: &str) -> Value {
+    let begin = Instant::now();
+    let mut signals = Vec::new();
+    let mut status = None;
+    let result: Result<()> = (|| {
+        let pgid = control["process_group_id"].as_i64().ok_or("worker pgid")? as i32;
+        if !group_gone(pgid)? {
+            verified_worker(control)?;
+            if unsafe { libc::kill(-pgid, libc::SIGTERM) } != 0 && !group_gone(pgid)? {
+                return Err("SIGTERM_FAILED".into());
+            }
+            signals.push("SIGTERM");
+            let grace = Instant::now();
+            while grace.elapsed() < Duration::from_millis(5000) {
+                if status.is_none() {
+                    status = child.try_wait()?;
+                }
+                if group_gone(pgid)? {
+                    break;
+                }
+                thread::sleep(Duration::from_millis(100));
+            }
+            if !group_gone(pgid)? {
+                verified_worker(control)?;
+                if unsafe { libc::kill(-pgid, libc::SIGKILL) } != 0 && !group_gone(pgid)? {
+                    return Err("SIGKILL_FAILED".into());
+                }
+                signals.push("SIGKILL");
+            }
+        }
+        let grace = Instant::now();
+        while grace.elapsed() < Duration::from_millis(5000) {
+            if status.is_none() {
+                status = child.try_wait()?;
+            }
+            if status.is_some() && group_gone(pgid)? {
+                return Ok(());
+            }
+            thread::sleep(Duration::from_millis(100));
+        }
+        Err("REAP_OR_GROUP_EXIT_UNCONFIRMED".into())
+    })();
+    // Even if identity attestation failed, reap a naturally exiting handshake worker without signalling an unattested PID.
+    if status.is_none() && result.is_err() {
+        let grace = Instant::now();
+        while grace.elapsed() < Duration::from_millis(5000) {
+            match child.try_wait() {
+                Ok(Some(s)) => {
+                    status = Some(s);
+                    break;
+                }
+                Ok(None) => thread::sleep(Duration::from_millis(100)),
+                Err(_) => break,
+            }
+        }
+    }
+    json!({"worker_instance_id":control["worker_instance_id"],"worker_pid":child.id(),
+      "process_group_id":control["process_group_id"],"process_start_identity":control["process_start_identity"],
+      "termination_reason":reason,"termination_signal":signals,"exit_status":status.as_ref().map(|s|json!({"code":s.code(),"signal":s.signal()})),
+      "kill_wait_ms":begin.elapsed().as_secs_f64()*1000.0,
+      "cleanup_status":if result.is_ok(){"CLEANUP_COMPLETE"}else{"CLEANUP_INCOMPLETE"},"cleanup_error":result.err().map(|e|e.to_string())})
+}
+fn worker_handshake(run: &Path, instance: &str) -> Result<()> {
+    if env::var("VV_WORKER_INSTANCE_ID")? != instance {
+        return Err("WORKER_INSTANCE_CHANNEL_MISMATCH".into());
+    }
+    let begin = Instant::now();
+    loop {
+        let control = load(run.join("worker_control.json"))?;
+        let parent = control["parent_pid"].as_u64().ok_or("parent pid")? as i32;
+        if control["worker_instance_id"] != instance
+            || unsafe { libc::getppid() } != parent
+            || unsafe { libc::kill(parent, 0) } != 0
+        {
+            return Err("WORKER_PARENT_OR_INSTANCE_LOST".into());
+        }
+        if control["state"] == "ACTIVE" {
+            let live = process_identity(std::process::id())?;
+            for key in [
+                "worker_instance_id",
+                "worker_pid",
+                "process_group_id",
+                "process_start_identity",
+                "executable_path",
+            ] {
+                if live[key] != control[key] {
+                    return Err(format!("WORKER_ACTIVE_IDENTITY:{key}").into());
+                }
+            }
+            return Ok(());
+        }
+        if control["state"] != "SPAWNING" || begin.elapsed() >= Duration::from_millis(5000) {
+            return Err("WORKER_ACTIVE_HANDSHAKE_TIMEOUT_5000MS".into());
+        }
+        thread::sleep(Duration::from_millis(100));
+    }
 }
 fn hash_file(p: impl AsRef<Path>) -> Result<String> {
     let mut f = BufReader::new(fs::File::open(p)?);
@@ -335,6 +561,9 @@ fn spawn_worker(
     end: usize,
     cfg: &Value,
 ) -> Result<Value> {
+    if run.join("outer_cleanup_requested.json").exists() {
+        return Err("OUTER_CLEANUP_REQUESTED".into());
+    }
     let label = format!("{mode}-{index}");
     let stdout = run.join(format!("{label}.stdout.log"));
     let stderr = run.join(format!("{label}.stderr.log"));
@@ -348,9 +577,28 @@ fn spawn_worker(
         args.push(end.to_string());
     }
     args.extend(["--approved".to_owned(), phase.to_owned()]);
+    let parent_pid = std::process::id();
+    let executable = fs::canonicalize(env::current_exe()?)?;
+    let instance = hex(&sha256(
+        format!(
+            "{parent_pid}/{mode}/{index}/{}",
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)?
+                .as_nanos()
+        )
+        .as_bytes(),
+    ));
+    args.extend(["--worker-instance-id".to_owned(), instance.clone()]);
+    let mut control = json!({"state":"SPAWNING","worker_instance_id":instance,"parent_pid":parent_pid,"executable_path":executable});
+    durable_json(run.join("worker_control.json"), &control)?;
+    if run.join("outer_cleanup_requested.json").exists() {
+        return Err("OUTER_CLEANUP_REQUESTED".into());
+    }
     let t = Instant::now();
     let mut child = Command::new(env::current_exe()?)
         .args(&args)
+        .env("VV_WORKER_INSTANCE_ID", &instance)
+        .process_group(0)
         .stdout(Stdio::from(
             fs::OpenOptions::new()
                 .write(true)
@@ -364,67 +612,112 @@ fn spawn_worker(
                 .open(stderr)?,
         ))
         .spawn()?;
-    loop {
-        // Total deadline takes priority, including startup and final cleanup.
-        let limit = if mode == "prove-range" {
-            RANGE_WORKER_BUDGET_S
-        } else {
-            600
-        };
-        let mut reason = if t.elapsed() >= Duration::from_secs(limit) {
-            Some("RANGE_OR_CHILD_TOTAL_BUDGET")
-        } else {
-            None
-        };
-        if mode == "prove-range" {
-            if let Ok(progress) = load(run.join("range_progress.json")) {
-                let start_ns = progress["stage_start_worker_ns"]
-                    .as_u64()
-                    .ok_or("progress timestamp")?;
-                let budget = progress["stage_budget_s"]
-                    .as_u64()
-                    .ok_or("progress budget")?;
-                if t.elapsed().as_nanos().saturating_sub(start_ns as u128)
-                    >= Duration::from_secs(budget).as_nanos()
-                {
-                    reason = Some("PARENT_PHASE_BUDGET");
-                }
-            }
+    let supervised: Result<Value> = (|| {
+        let identity = process_identity(child.id())?;
+        if identity["worker_instance_id"] != instance
+            || identity["process_group_id"] != child.id()
+            || identity["executable_path"] != json!(executable)
+        {
+            return Err("WORKER_START_IDENTITY_MISMATCH".into());
         }
-        if reason.is_none() {
+        control = identity;
+        control["parent_pid"] = json!(parent_pid);
+        control["state"] = json!("ACTIVE");
+        durable_json(run.join("worker_control.json"), &control)?;
+        loop {
+            // Total deadline is examined FIRST and can never be overwritten by phase/RSS errors.
+            let limit = if mode == "prove-range" {
+                RANGE_WORKER_BUDGET_S
+            } else {
+                600
+            };
+            if t.elapsed() >= Duration::from_secs(limit) {
+                return Err(if mode == "prove-range" {
+                    "RANGE_TOTAL_TIMEOUT_1000S"
+                } else {
+                    "SETUP_VALIDATION_TIMEOUT_600S"
+                }
+                .into());
+            }
             if let Some(status) = child.try_wait()? {
-                let v = json!({"label":label,"pid":child.id(),"exit_code":status.code(),"wall_ms":t.elapsed().as_secs_f64()*1000.0,"argv":args});
-                write_new(run.join(format!("{label}.command.json")), &v)?;
-                if !status.success() {
-                    return Err(format!("worker failed: {label}; logs preserved").into());
+                let gone = group_gone(child.id() as i32)?;
+                let v = json!({"label":label,"pid":child.id(),"exit_code":status.code(),"exit_signal":status.signal(),
+                  "wall_ms":t.elapsed().as_secs_f64()*1000.0,"argv":args,"control":control,
+                  "cleanup_status":if gone {"CLEANUP_COMPLETE"} else {"CLEANUP_INCOMPLETE"}});
+                durable_json(run.join(format!("{label}.command.json")), &v)?;
+                if !status.success() || !gone {
+                    return Err("WORKER_EXIT_OR_GROUP_FAILURE".into());
                 }
                 return Ok(v);
             }
-        }
-        if let Ok(p) = Command::new("ps")
-            .args(["-o", "rss=", "-p", &child.id().to_string()])
-            .output()
-        {
-            if let Ok(kib) = String::from_utf8_lossy(&p.stdout).trim().parse::<f64>() {
+            if mode == "prove-range" {
+                match load(run.join("range_progress.json")) {
+                    Ok(progress) => {
+                        if progress["pid"] != child.id() {
+                            return Err("PROGRESS_PID_MISMATCH".into());
+                        }
+                        let start = progress["stage_start_worker_ns"]
+                            .as_u64()
+                            .ok_or("PROGRESS_TIMESTAMP_INVALID")?;
+                        let budget = progress["stage_budget_s"]
+                            .as_u64()
+                            .ok_or("PROGRESS_BUDGET_INVALID")?;
+                        let stage = string(&progress, "stage")?;
+                        if !((stage == "pk_load" && budget == PK_LOAD_BUDGET_S)
+                            || (stage.starts_with("batch_") && budget == PER_BATCH_BUDGET_S))
+                        {
+                            return Err("PROGRESS_STAGE_BUDGET_INVALID".into());
+                        }
+                        if t.elapsed().as_nanos().saturating_sub(start as u128)
+                            >= Duration::from_secs(budget).as_nanos()
+                        {
+                            return Err(format!("PARENT_PHASE_TIMEOUT:{stage}:{budget}S").into());
+                        }
+                    }
+                    Err(_) if t.elapsed() < Duration::from_millis(5000) => {}
+                    Err(_) => return Err("WORKER_PROGRESS_MISSING_OR_INVALID".into()),
+                }
+            }
+            let p = Command::new("/bin/ps")
+                .args(["-o", "rss=", "-p", &child.id().to_string()])
+                .output()?;
+            if p.status.success() {
+                let kib = String::from_utf8(p.stdout)?.trim().parse::<f64>()?;
                 if kib / 1024.0
                     > cfg["budgets"]["child_rss_mib"]
                         .as_f64()
                         .ok_or("RSS budget")?
                 {
-                    reason = Some("RSS_BUDGET");
+                    return Err("RSS_BUDGET".into());
                 }
             }
+            thread::sleep(Duration::from_millis(250));
         }
-        if let Some(reason) = reason {
-            child.kill()?;
-            child.wait()?;
-            write_new(
-                run.join(format!("{label}.blocked.json")),
-                &json!({"status":"BLOCKED","reason":reason}),
-            )?;
-            return Err(reason.into());
+    })();
+    match supervised {
+        Ok(v) => {
+            control["state"] = json!("EXITED");
+            durable_json(run.join("worker_control.json"), &control)?;
+            Ok(v)
         }
-        thread::sleep(Duration::from_millis(250));
+        Err(e) => {
+            // Never abandon a child after an identity/IO/progress error. An unattested target is NOT signalled.
+            let mut diagnostic = cleanup_worker(&mut child, &control, &e.to_string());
+            diagnostic["status"] = json!("BLOCKED");
+            diagnostic["wall_ms"] = json!(t.elapsed().as_secs_f64() * 1000.0);
+            diagnostic["stdout"] = json!(format!("{label}.stdout.log"));
+            diagnostic["stderr"] = json!(format!("{label}.stderr.log"));
+            diagnostic["last_persisted_profile"] =
+                load(run.join("range_profile.json")).unwrap_or(Value::Null);
+            diagnostic["last_completed_batch"] = diagnostic["last_persisted_profile"]
+                ["completed_batches"]
+                .as_array()
+                .and_then(|a| a.last())
+                .cloned()
+                .unwrap_or(Value::Null);
+            durable_json(run.join(format!("{label}.blocked.json")), &diagnostic)?;
+            Err(e)
+        }
     }
 }
 fn ballot_vk(pool: &Value) -> Result<VerifyingKey<Bls12_381>> {
@@ -555,7 +848,7 @@ fn prepare(run: &Path, phase: &str, cfg: &Value) -> Result<()> {
     }
     write_new(
         run.join("materials.json"),
-        &json!({"schema":"VV/STAGE1/MATERIALS/v1","phase":phase,"status":"MEASURED",
+        &json!({"schema":"VV/STAGE1/MATERIALS/v1","phase":phase,"status":"MEASURED","evidence_kind":"REAL_EXECUTION","execution_performed":true,
         "config_sha256":hash_file(CONFIG)?,"request_sha256":hash_file(run.join("request.json"))?,"setup":load(run.join("setup.json"))?,
         "ballots":ballots,"batches":batches,"commands":commands,"all_state_proofs_fresh":true,"serial_batches":true,"serial_workers":false,
         "total_wall_ms":start.elapsed().as_secs_f64()*1000.0,"original_ballot_proofs_reused":32,"original_ballot_proofs_generated":0,
@@ -563,7 +856,7 @@ fn prepare(run: &Path, phase: &str, cfg: &Value) -> Result<()> {
     )?;
     write_new(
         run.join("prepare_summary.json"),
-        &json!({"schema":"VV/STAGE1/PK-REUSE/v1","phase":phase,"commands":commands,
+        &json!({"schema":"VV/STAGE1/PK-REUSE/v1","phase":phase,"commands":commands,"evidence_kind":"REAL_EXECUTION","execution_performed":true,
         "setup_generation_count":0,"setup_material_origin":"REUSED_FROZEN_B02","setup_reuse":load(run.join("setup_reuse.json"))?,
         "range":load(run.join("range_profile.json"))?,"batches":batches,"request_sha256":hash_file(run.join("request.json"))?,
         "pk_sha256":PK_HASH,"vk_ark_sha256":cfg["state_vk_ark_sha256"],"vk_eip_sha256":cfg["state_vk_eip_sha256"],
@@ -648,9 +941,7 @@ impl<'a> RangeClock<'a> {
         self.stage_budget = budget;
         let value = json!({"pid":std::process::id(),"stage":name,"stage_budget_s":budget,
             "stage_start_worker_ns":self.start.elapsed().as_nanos(),"range_worker_budget_s":RANGE_WORKER_BUDGET_S});
-        let temporary = self.run.join("range_progress.tmp");
-        fs::write(&temporary, serde_json::to_vec(&value)?)?;
-        fs::rename(temporary, self.run.join("range_progress.json"))?;
+        durable_json(self.run.join("range_progress.json"), &value)?;
         Ok(())
     }
 }
@@ -762,7 +1053,7 @@ fn prove_reuse_batch(
     cfg: &Value,
     pk: &ProvingKey<Bls12_381>,
     clock: &RangeClock<'_>,
-) -> Result<()> {
+) -> Result<Value> {
     let total = Instant::now();
     clock.check()?;
     let pool = load(POOL)?;
@@ -823,9 +1114,9 @@ fn prove_reuse_batch(
         }
     }
     clock.check()?;
-    write_new(
-        run.join(format!("batch_{index}.json")),
-        &json!({"phase":phase,"batch_index":index,"status":"MEASURED",
+    let output = json!({"phase":phase,"batch_index":index,"status":"MEASURED",
+        "evidence_kind":"REAL_EXECUTION","execution_performed":true,
+        "ark_verify_passed":true,"ark_verify_ms":verify_ms,"eip_vk_hash_verified":true,
         "worker_pid":std::process::id(),"proof_origin":"NEW_THIS_RUN_SINGLE_PROCESS_PK_REUSE","pk_load_count":1,"batch_pk_deserialize_ms":0,
         "proof_ark_sha256":hex(&sha256(&bytes)),"proof_eip_sha256":hex(&sha256(&eip_bytes)),"proof_ark_hex":hex(&bytes),
         "proof_ark_bytes":bytes.len(),"proof_eip_bytes":eip_bytes.len(),"eip":eip,"proof_seed_sha256":hex(&seed_hash),
@@ -833,10 +1124,9 @@ fn prove_reuse_batch(
         "batch_total_before_drop_ms":total.elapsed().as_secs_f64()*1000.0,"peak_rss_mib":rss_mib()?,
         "rss_scope":"Cumulative process ru_maxrss; NOT a per-batch peak","witness_scope":cfg["witness_timing_scope"],
         "old_state":flat(&c.old_state),"new_state":flat(&c.new_state),"omission_a_new_state":flat(&omitted),
-        "root":format!("0x{}",hex(&c.batch_root)),"config_sha256":hash_file(CONFIG)?}),
-    )?;
+        "root":format!("0x{}",hex(&c.batch_root)),"config_sha256":hash_file(CONFIG)?});
     // All batch-owned POOL/R1CS/witness/proof/export objects leave scope on return.
-    Ok(())
+    Ok(output)
 }
 
 fn prove_range(
@@ -858,14 +1148,28 @@ fn prove_range(
     let result: Result<()> = (|| {
         clock.enter("pk_load", PK_LOAD_BUDGET_S)?;
         let pk = load_range_pk(run, cfg, &clock, &mut profile)?;
+        profile["worker_instance_id"] = json!(env::var("VV_WORKER_INSTANCE_ID")?);
+        durable_json(run.join("range_profile.json"), &profile)?;
+        let mut previous_state: Option<Value> = None;
         for index in start..=end {
             clock.enter(&format!("batch_{index}"), PER_BATCH_BUDGET_S)?;
             let begin = Instant::now();
-            prove_reuse_batch(run, phase, index, cfg, &pk, &clock)?;
+            let mut batch = prove_reuse_batch(run, phase, index, cfg, &pk, &clock)?;
             // Function returned: ALL large batch-owned objects have been dropped before this sample.
             let current = instant_rss_mib()?;
             let peak = rss_mib()?;
             clock.check()?;
+            if previous_state
+                .as_ref()
+                .is_some_and(|s| s != &batch["old_state"])
+            {
+                return Err("STATE_CONTINUITY".into());
+            }
+            previous_state = Some(batch["new_state"].clone());
+            batch["instant_rss_mib"] = json!(current);
+            batch["after_batch_drop"] = json!(true);
+            // P0-8/P0-11: batch rename + parent fsync BEFORE marking COMPLETED in profile.
+            durable_json(run.join(format!("batch_{index}.json")), &batch)?;
             profile[format!("batch_{index}_instant_rss_mib")] = json!(current);
             profile[format!("batch_{index}_pk_deserialize_ms")] = json!(0);
             profile[format!("batch_{index}_total_ms")] =
@@ -875,6 +1179,9 @@ fn prove_range(
                 .ok_or("batches")?
                 .push(json!(index));
             profile["rss_sequence"].as_array_mut().ok_or("rss")?.push(json!({"batch_index":index,"instant_rss_mib":current,"process_peak_rss_mib":peak,"after_batch_drop":true}));
+            profile["last_completed_batch"] = json!(index);
+            profile["last_batch_status"] = json!("COMPLETED");
+            durable_json(run.join("range_profile.json"), &profile)?;
         }
         drop(pk);
         clock.check()?;
@@ -888,19 +1195,54 @@ fn prove_range(
     profile["error"] = json!(result.as_ref().err().map(|e| e.to_string()));
     profile["worker_total_ms"] = json!(started.elapsed().as_secs_f64() * 1000.0);
     profile["worker_peak_rss_mib"] = json!(rss_mib()?);
-    write_new(run.join("range_profile.json"), &profile)?;
+    durable_json(run.join("range_profile.json"), &profile)?;
     result
 }
 
 fn main() -> Result<()> {
     let process_started = Instant::now();
-    let a = env::args().skip(1).collect::<Vec<_>>();
+    let mut a = env::args().skip(1).collect::<Vec<_>>();
+    let instance = if let Some(position) = a.iter().position(|v| v == "--worker-instance-id") {
+        if position + 2 != a.len() {
+            return Err("WORKER_INSTANCE_ARGUMENT_LAYOUT".into());
+        }
+        let id = a[position + 1].clone();
+        a.truncate(position);
+        Some(id)
+    } else {
+        None
+    };
     if a.len() < 5 {
         return Err("usage: prepare RUN B|C --approved B|C; internal worker: setup-worker|prove-worker RUN B|C INDEX --approved B|C".into());
     }
     let mode = &a[0];
+    if mode == "prepare"
+        && instance.is_some()
+        && env::var("VV_OUTER_INSTANCE_ID")? != *instance.as_ref().ok_or("outer instance")?
+    {
+        return Err("OUTER_INSTANCE_CHANNEL_MISMATCH".into());
+    }
     let run = PathBuf::from(&a[1]);
     let phase = &a[2];
+    // Attest the two instance-ID channels and parent activation before any other worker work.
+    if mode != "prepare" {
+        worker_handshake(
+            &run,
+            instance.as_deref().ok_or("WORKER_INSTANCE_ID_REQUIRED")?,
+        )?;
+    }
+    if phase == "C" {
+        let authorization =
+            load("experiments/stage1_multibatch_raw/gate-c-control/gate_c_authorization.json")
+                .map_err(|_| "GATE_C_NOT_AUTHORIZED")?;
+        if authorization["authorized"] != true
+            || authorization["approved_scope"] != "STAGE1_GATE_C_8_BATCHES_24_POSITIVE_EVM"
+            || authorization["a08_baseline_sha256"]
+                != hash_file("experiments/stage1_multibatch_raw/gate-a-20261117-08/manifest.json")?
+        {
+            return Err("GATE_C_NOT_AUTHORIZED".into());
+        }
+    }
     if !["B", "C"].contains(&phase.as_str())
         || a[a.len() - 2] != "--approved"
         || a[a.len() - 1] != *phase

@@ -7,7 +7,8 @@ import {createRequire} from 'node:module';
 import {root,cfg,configPath,load,read,sha,wire,json,checkProtected,validateConfig,recursiveSnapshot,approvedPatches,
  pragueCommon,pragueStatic,checkStorageLayouts,phaseCallSites,vmMetadataFields,inputProvenance,verifyA,verifyPreflightB,
  resultsPathForRun,sourcePatchSnapshot,readonlyInputSnapshot,checkReadonlyInputs,currentSourcePins,binaryReproducibility,
- reuseBudgets,reuseExpected,fullHashEqual,streamHashFile,integrationFrozen,integrationAdmission,verifyIntegrationA} from '../contracts/scripts/stage1_multibatch_compare.mjs';
+ reuseBudgets,reuseExpected,fullHashEqual,streamHashFile,integrationFrozen,integrationAdmission,verifyIntegrationA,
+ A08_RUN,C_AUTH,verifyA08,gateCPlan} from '../contracts/scripts/stage1_multibatch_compare.mjs';
 const {Transaction,Interface}=createRequire(path.join(root,'contracts/package.json'))('ethers');
 const {createTxFromRLP,getCalldataFloorGas}=createRequire(path.join(root,'contracts/package.json'))('@ethereumjs/tx');
 const measured=value=>({status:'MEASURED',value});
@@ -248,7 +249,9 @@ export function reuseReference(){
  });
  return {frozen,batches,request_raw:fs.readFileSync(frozen.directory+'/request.json')};
 }
-export function auditReuseSummary(m,reference){
+export function auditReuseSummary(m,reference,{schemaTest=false}={}){
+ if(schemaTest){reuseCheck(m.evidence_kind==='SYNTHETIC_TEST_ONLY'&&m.execution_performed===false,'SYNTHETIC_SCHEMA_LABEL');}
+ else requireRealEvidence(m);
  const r=m.range,count=m.batches.length,phase=m.phase??'B';reuseCheck(['B','C'].includes(phase),'MATERIAL_PHASE');
  reuseCheck(count===(phase==='B'?2:8),'BATCH_COUNT');
  reuseCheck(m.commands.length===2,'WORKER_TOPOLOGY');const [setup,range]=m.commands;
@@ -278,6 +281,7 @@ export function auditReuseSummary(m,reference){
  for(let i=0;i<count;i++){
   const b=m.batches[i],e=reference.batches[i],index=i+1;
   reuseCheck(b.worker_pid===range.pid,'WORKER_PID_MISMATCH');reuseCheck(b.pk_load_count===1,'BATCH_PK_LOAD_COUNT');
+  reuseCheck(b.ark_verify_passed===true,'ARK_VERIFY_MARKER');reuseCheck(b.eip_vk_hash_verified===true,'EIP_VK_HASH_MARKER');reuseCheck(b.ark_verify_ms>0,'ARK_VERIFY_TIMING');
   reuseCheck(b.proof_origin==='NEW_THIS_RUN_SINGLE_PROCESS_PK_REUSE','PROOF_ORIGIN');
   reuseCheck(b.batch_pk_deserialize_ms===0&&r[`batch_${index}_pk_deserialize_ms`]===0,'BATCH_PK_RELOAD');
   reuseCheck(b.batch_index===index&&b.phase===phase,'BATCH_IDENTITY');
@@ -313,16 +317,19 @@ export function reuseSchemaSelfTest(){
  const sample={range:r,batches,commands:[{label:'setup-worker-1',pid:1,exit_code:0,wall_ms:1},{label:'prove-range-1',pid:2,exit_code:0,wall_ms:2}],
   pk_sha256:reuseExpected.pk_sha256,request_sha256:reuseExpected.request_sha256,vk_ark_sha256:cfg.state_vk_ark_sha256,vk_eip_sha256:cfg.state_vk_eip_sha256,
   setup_generation_count:0,setup_reuse:{pid:1,setup_generation_count:0,setup_json_sha256:reference.frozen.setup_sha256}};
- auditReuseSummary(sample,reference);const cases=[];
+ sample.evidence_kind='SYNTHETIC_TEST_ONLY';sample.execution_performed=false;
+ for(const b of sample.batches)Object.assign(b,{ark_verify_passed:true,ark_verify_ms:1,eip_vk_hash_verified:true});
+ auditReuseSummary(sample,reference,{schemaTest:true});const cases=[];
  for(const [name,mutate,code]of [
   ['pk_load_count_2',s=>s.range.pk_load_count=2,'PK_LOAD_COUNT'],
   ['changed_new_state',s=>s.batches[0].new_state[0]='0x'+'00'.repeat(32),'STATE_CONTINUITY'],
   ['mixed_worker_pid',s=>s.batches[1].worker_pid=3,'WORKER_PID_MISMATCH']]){
-  const changed=structuredClone(sample);mutate(changed);assert.throws(()=>auditReuseSummary(changed,reference),e=>e.message===code);cases.push({name,rejected:true,reason:code});
+  const changed=structuredClone(sample);mutate(changed);assert.throws(()=>auditReuseSummary(changed,reference,{schemaTest:true}),e=>e.message===code);cases.push({name,rejected:true,reason:code});
  }
  return {status:'PASS_AC3_OFFLINE_SCHEMA_TESTS',scope:'SCHEMA_ONLY_SYNTHETIC_OPERATIONAL_FIELDS_WITH_REAL_ARCHIVED_PROOF_BYTES_NOT_PERFORMANCE',valid_sample:'PASS',negative_cases:cases};
 }
 export function auditReuseRun(run){
+ if(fs.existsSync(path.join(root,run,'request.json'))&&load(run+'/request.json').a_run===A08_RUN)return auditCExecution(run);
  const top=load(run+'/compare_summary.json'),a=verifyIntegrationA(top.a_run);assert.deepEqual(top.source_pins,a.source_pins);
  const reference=reuseReference(),m=load(run+'/materials/prepare_summary.json');assert.deepEqual(m,top.pk_reuse);
  assert.deepEqual(top.budgets,reuseBudgets);assert.equal(top.evm_transaction_count,0);assert.equal(top.vm_creation_count,0);
@@ -336,9 +343,95 @@ export function auditReuseRun(run){
   source_pins:currentSourcePins(),binary_sha256:a.binary_sha256,setup_generation_count:0,proof_generation_count:2,
   vm_creation_count:0,evm_transaction_count:0,gate_c:'NOT_AUTHORIZED_NOT_STARTED',materials_wall_ms:command.wall_ms};
 }
+export function requireRealEvidence(value){
+ reuseCheck(value.evidence_kind==='REAL_EXECUTION'&&value.execution_performed===true,'NON_REAL_EXECUTION_EVIDENCE');
+}
+export function auditNativeA08(run){
+ const request=load(run+'/request.json');requireRealEvidence(request);const a=verifyA08(request.a_run);assert.equal(request.gate,'C');
+ fullHashEqual(request.a08_baseline_sha256,sha(read(A08_RUN+'/manifest.json')),'C request baseline');
+ const summary=load(run+'/materials/prepare_summary.json'),materials=load(run+'/materials/materials.json');requireRealEvidence(summary);requireRealEvidence(materials);
+ assert.equal(summary.phase,'C');assert.equal(materials.phase,'C');assert.equal(materials.state_proofs_generated,8);assert.equal(materials.serial_workers,false);assert.equal(materials.serial_batches,true);
+ const reference={...reuseReference(),request_raw:read(run+'/materials/request.json')};
+ fullHashEqual(summary.request_sha256,sha(reference.request_raw),'C actual request');assert.equal(JSON.parse(reference.request_raw).phase,'C');
+ const c=load(run+'/logs/materials.command.json');assert.equal(c.code,0);assert.equal(c.reason,null);assert.equal(c.wall_budget_seconds,5520);
+ assert.ok(c.wall_ms>0&&c.wall_ms<=5520000);assert.equal(path.resolve(c.program),path.resolve(root,a.binary));
+ fullHashEqual(streamHashFile(path.join(root,run,'materials/research_pk.bin')),a.frozen_materials.pk_sha256,'C actual PK');
+ fullHashEqual(sha(read(run+'/materials/setup.json')),a.frozen_materials.setup_sha256,'C Setup metadata');
+ assert.deepEqual(summary.commands,materials.commands);assert.deepEqual(summary.range,load(run+'/materials/range_profile.json'));
+ assert.equal(materials.ballots.length,32);assert.equal(new Set(materials.ballots.map(b=>b.nullifier)).size,32);
+ for(const b of summary.batches){assert.deepEqual(b,load(run+`/materials/batch_${b.batch_index}.json`));assert.deepEqual(b,materials.batches[b.batch_index-1]);requireRealEvidence(b);}
+ for(const worker of summary.commands){const receipt=load(run+'/materials/'+worker.label+'.command.json');assert.deepEqual(receipt,worker);assert.equal(receipt.cleanup_status,'CLEANUP_COMPLETE');
+  const control=receipt.control;assert.equal(control.worker_pid,worker.pid);assert.equal(control.process_group_id,worker.pid);assert.ok(control.worker_instance_id);assert.match(control.process_start_identity,/^\d+:\d{6}$/);
+  assert.equal(path.resolve(control.executable_path),fs.realpathSync(path.join(root,a.binary)));assert.ok(worker.argv.includes('--worker-instance-id'));}
+ const result=auditReuseSummary(summary,reference);return {...result,phase:'C',a08_baseline_sha256:request.a08_baseline_sha256};
+}
+function auditCSessionShape(rows,manifestHash){
+ reuseCheck(rows.length===24,'EVM_SESSION_COUNT');reuseCheck(new Set(rows.map(r=>r.vm_identity)).size===24,'EVM_SESSION_IDENTITIES');
+ for(const k of cfg.formal_k){let final=null;for(const route of cfg.routes){
+  const found=rows.filter(r=>r.k===k&&r.route===route);reuseCheck(found.length===1,'EVM_SESSION_MAPPING');const r=found[0];
+  reuseCheck(r.a_run===A08_RUN&&r.a08_baseline_sha256===manifestHash,'EVM_BASELINE_BINDING');
+  reuseCheck(r.status==='PASS'&&r.fresh_vm===true&&r.hardfork==='prague','EVM_SESSION_STATUS');
+  reuseCheck(r.final_checkpoint.count===4*k&&r.final_checkpoint.next===k+1&&r.final_checkpoint.position===0&&r.final_checkpoint.frozen===true,'EVM_FINAL_STATE');
+  reuseCheck(r.transactions.filter(t=>t.category==='intake').length===(route==='legacy'?4*k:k),'EVM_INTAKE_COUNT');
+  for(const [category,count]of [['deployment',2],['certification',4],['freeze',1]])reuseCheck(r.transactions.filter(t=>t.category===category).length===count,'EVM_TRANSACTION_SEQUENCE');
+  assert.deepEqual(r.transactions.map(t=>t.category),[...Array(2).fill('deployment'),...Array(4).fill('certification'),...Array(route==='legacy'?4*k:k).fill('intake'),'freeze'],'EVM_TRANSACTION_ORDER');
+  if(final)assert.deepEqual(r.final_checkpoint,final);else final=r.final_checkpoint;
+ }}
+}
+export function auditCExecution(run){
+ // Reject synthetic payloads BEFORE any source/receipt/crypto assumptions.
+ const top=load(run+'/gate_c.json');requireRealEvidence(top);
+ const native=auditNativeA08(run),manifestHash=sha(read(A08_RUN+'/manifest.json')),a=verifyA08();
+ assert.equal(top.status,'PASS_GATE_C_FORMAL_EXECUTION');assert.equal(top.positive_vm_count,24);assert.equal(top.negative_vm_count,0);fullHashEqual(top.a08_baseline_sha256,manifestHash,'top C manifest');
+ const rows=[];
+ for(const k of cfg.formal_k)for(const route of cfg.routes){
+  const r=load(run+`/sessions/positive-k${k}-${route}.json`);requireRealEvidence(r);const c=load(run+`/logs/positive-k${k}-${route}.command.json`);
+  assert.equal(c.code,0);assert.equal(c.reason,null);assert.equal(c.wall_budget_seconds,600);assert.ok(c.wall_ms>0&&c.wall_ms<=600000);
+  fullHashEqual(r.compiled_sha256,a.compiled_sha256,'EVM compiled');fullHashEqual(r.materials_sha256,sha(read(run+'/materials/materials.json')),'EVM materials');
+  assert.equal(r.kind,'FORMAL_POSITIVE_ONLY');assert.equal(r.snarkpack_evm_verified,false);assert.equal(r.negatives.length,0);assert.ok(r.transactions.every(t=>t.status===1));r.transactions.forEach(transactionCheck);
+  const materials=load(run+'/materials/materials.json');assert.deepEqual(r.final_checkpoint.state,materials.batches[k-1].new_state);assert.deepEqual(r.final_checkpoint.spent,materials.ballots.map((_,i)=>i<k*4));
+  assert.equal(r.checkpoints.length,k);for(let i=0;i<k;i++){assert.deepEqual(r.checkpoints[i].state,materials.batches[i].new_state);assert.equal(r.checkpoints[i].next,i+2);}
+  rows.push(r);
+ }
+ auditCSessionShape(rows,manifestHash);crossVmCheck(rows);assert.equal(new Set(rows.map(r=>r.initial_vm_root)).size,1);
+ return {status:'PASS_GATE_C_EVIDENCE_AUDIT_ONLY',evidence_kind:'REAL_EXECUTION',execution_performed:true,native,positive_vm_count:24,receipt_audit:'PASS',gas_analysis_performed:false,gate_d:'NOT_STARTED'};
+}
+export function a08SchemaSelfTest(){
+ const reference={...reuseReference(),request_raw:Buffer.from('{"phase":"C","synthetic_schema_fixture":true}')};
+ const old=JSON.parse(fs.readFileSync(reference.frozen.directory+'/materials.json'));
+ const batches=reference.batches.map((e,i)=>{const b=structuredClone(old.batches[i%2]);return {...b,...e,root:e.root,evidence_kind:'SYNTHETIC_TEST_ONLY',execution_performed:false,
+  phase:'C',batch_index:i+1,worker_pid:502,pk_load_count:1,batch_pk_deserialize_ms:0,proof_origin:'NEW_THIS_RUN_SINGLE_PROCESS_PK_REUSE',
+  ark_verify_passed:true,ark_verify_ms:1,eip_vk_hash_verified:true,proof_eip_sha256:sha(wire(b.eip.proof_neg_a_eip2537_hex)),proof_seed_sha256:sha(Buffer.concat([reference.request_raw,u64Bytes(i+1)])),
+  eip:{...b.eip,public_input_count:37,public_inputs_be_hex:e.public_inputs_be_hex}};});
+ const range={status:'PASS_RANGE_PK_REUSE',error:null,pid:502,pk_load_count:1,single_readonly_descriptor:true,pk_deserialize_bytes_read:847800624,
+  pk_sha256:reuseExpected.pk_sha256,loaded_pk_sha256:reuseExpected.pk_sha256,vk_ark_sha256:cfg.state_vk_ark_sha256,budgets:{pk_load_budget_s:660,per_batch_budget_s:120,range_worker_budget_s:1000},
+  pk_once_load_total_ms:1,worker_total_ms:10,worker_peak_rss_mib:2,completed_batches:[1,2,3,4,5,6,7,8],rss_sequence:batches.map((_,i)=>({batch_index:i+1,instant_rss_mib:1,process_peak_rss_mib:2,after_batch_drop:true}))};
+ for(let i=1;i<=8;i++){range[`batch_${i}_pk_deserialize_ms`]=0;range[`batch_${i}_total_ms`]=1;range[`batch_${i}_instant_rss_mib`]=1;}
+ const sample={phase:'C',evidence_kind:'SYNTHETIC_TEST_ONLY',execution_performed:false,range,batches,commands:[{label:'setup-worker-1',pid:501,exit_code:0,wall_ms:1},{label:'prove-range-1',pid:502,exit_code:0,wall_ms:10}],
+  pk_sha256:reuseExpected.pk_sha256,request_sha256:sha(reference.request_raw),vk_ark_sha256:cfg.state_vk_ark_sha256,vk_eip_sha256:cfg.state_vk_eip_sha256,
+  setup_generation_count:0,setup_reuse:{pid:501,setup_generation_count:0,setup_json_sha256:reference.frozen.setup_sha256}};
+ const manifestHash=fs.existsSync(path.join(root,A08_RUN,'manifest.json'))?sha(read(A08_RUN+'/manifest.json')):sha(Buffer.from('UNADMITTED_SYNTHETIC_SCHEMA_ONLY'));
+ const sessions=cfg.formal_k.flatMap(k=>cfg.routes.map(route=>({evidence_kind:'SYNTHETIC_TEST_ONLY',execution_performed:false,k,route,a_run:A08_RUN,a08_baseline_sha256:manifestHash,
+  vm_identity:`SYNTHETIC/${k}/${route}`,status:'PASS',fresh_vm:true,hardfork:'prague',final_checkpoint:{count:4*k,next:k+1,position:0,frozen:true,state:reference.batches[k-1].new_state},
+  transactions:[...Array.from({length:2},()=>({category:'deployment'})),...Array.from({length:4},()=>({category:'certification'})),...Array.from({length:route==='legacy'?4*k:k},()=>({category:'intake'})),{category:'freeze'}]})));
+ const validate=(s,rows)=>{auditReuseSummary(s,reference,{schemaTest:true});auditCSessionShape(rows,manifestHash);};validate(sample,sessions);
+ const cases=[];
+ for(const [name,mutate,code]of [
+  ['seven_batches',s=>s.batches.pop(),'BATCH_COUNT'],['state_discontinuity',s=>s.batches[1].old_state=['changed'],'STATE_CONTINUITY'],
+  ['missing_ark_verify',s=>delete s.batches[0].ark_verify_passed,'ARK_VERIFY_MARKER'],['pk_loaded_twice',s=>s.range.pk_load_count=2,'PK_LOAD_COUNT']]){
+  const changed=structuredClone(sample);mutate(changed);assert.throws(()=>validate(changed,sessions),e=>e.message===code);cases.push({name,rejected:true,reason:code});
+ }
+ assert.throws(()=>validate(sample,sessions.slice(1)),e=>e.message==='EVM_SESSION_COUNT');cases.push({name:'missing_evm_session',rejected:true,reason:'EVM_SESSION_COUNT'});
+ assert.throws(()=>auditReuseSummary(sample,reference),e=>e.message==='NON_REAL_EXECUTION_EVIDENCE');cases.push({name:'formal_entry_rejects_synthetic',rejected:true,reason:'NON_REAL_EXECUTION_EVIDENCE'});
+ assert.throws(()=>requireRealEvidence({evidence_kind:'REAL_EXECUTION',execution_performed:false}),e=>e.message==='NON_REAL_EXECUTION_EVIDENCE');cases.push({name:'formal_entry_rejects_not_executed',rejected:true,reason:'NON_REAL_EXECUTION_EVIDENCE'});
+ return {status:'PASS_A08_OFFLINE_SYNTHETIC_SCHEMA_ONLY',evidence_kind:'SYNTHETIC_TEST_ONLY',execution_performed:false,valid_eight_batch_and_24_session_schema:'PASS',cases,
+  proof_generation_count:0,worker_start_count:0,vm_creation_count:0,evm_transaction_count:0,note:'Copied archived proof BYTES are NOT valid new proofs for simulated rows; schema tests only, never performance or crypto acceptance.'};
+}
 function main(){
  process.chdir(root);const a=process.argv.slice(2),check=a.includes('--check');const words=a.filter(x=>x!=='--check');assert.equal(words.length%2,0);
  const f=Object.fromEntries(Array.from({length:words.length/2},(_,i)=>[words[2*i],words[2*i+1]]));
+ if(f['--a08-schema-self-test']==='true'){console.log(json(a08SchemaSelfTest()));return;}
+ if(f['--gate']==='C'){const result=auditCExecution(f['--run']);emit(resultsPathForRun(f['--run'])+'/gate_c_audit.json',result,check);console.log(json(result));return;}
  if(f['--reuse-schema-self-test']==='true'){console.log(json(reuseSchemaSelfTest()));return;}
  if(f['--reuse-integration']==='true'){
   integrationAdmission();const result=f['--gate']==='A'?{status:'PASS_GATE_A07_ARTIFACT_AUDIT',baseline:verifyIntegrationA(f['--run'])}:auditReuseRun(f['--run']);

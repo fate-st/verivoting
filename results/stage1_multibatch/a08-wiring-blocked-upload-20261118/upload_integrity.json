@@ -1,0 +1,168 @@
+{
+  "status": "PASS_BOTH_WORKSPACES_AND_FROZEN_EVIDENCE_UNCHANGED",
+  "original": {
+    "head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+    "index_sha256": "da5c79e1adaa35c1ccd5904ad65a421c7c1ff4e8a232b99da692ca9331747fc8",
+    "diff_sha256": "6af34da00de0d4e795447bebfdcdbe5f15a1e4169369e9cdf3b2f0e46b8f8edf",
+    "status_short": " M contracts/scripts/stage1_multibatch_compare.mjs\n M docs/STAGE1_MULTIBATCH.md\n M scripts/stage1_multibatch_audit.mjs\n?? experiments/stage1_multibatch_raw/gate-a-20261117-05/\n?? experiments/stage1_multibatch_raw/gate-a-20261117-06/\n?? experiments/stage1_multibatch_raw/gate-b-20261117-01/\n?? experiments/stage1_multibatch_raw/gate-b-20261117-02/\n?? results/stage1_multibatch/gate-a-20261117-05/\n?? results/stage1_multibatch/gate-a-20261117-06/\n?? results/stage1_multibatch/gate-b-20261117-02/\n",
+    "protected_paths": [
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-01",
+        "status": "EXISTS",
+        "sha256": "9fca95613604bc85299ed2691723cc3d0639618ccec87d3ba1f2599cfc589257"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-01",
+        "status": "NOT_PRESENT"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-02",
+        "status": "EXISTS",
+        "sha256": "26db2668ea46a605821f67e6154b2b4eeb5775aa22ad7906e778594ee14fcdc6"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-02",
+        "status": "EXISTS",
+        "sha256": "c748f58d4b417e644c75bae7fe6f47aca6c688bf37c5eb3074d313108783a54f"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-03",
+        "status": "EXISTS",
+        "sha256": "5d12a6236ee84e2bcc96072cd086b9d424ece88165f0a9ed74cbc9e9f017e413"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-03",
+        "status": "EXISTS",
+        "sha256": "ab110b069bb33d62989526ab2ddba62da7622573028319c103cc7656d153c2c3"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-04",
+        "status": "EXISTS",
+        "sha256": "663a2d09bf152b3ff04ab6b6a7f91d4baacb5aa0af74633022922e4c8bae9f90"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-04",
+        "status": "EXISTS",
+        "sha256": "c398fb112dcbbb891ecb9d9f35a6616235c2eaa700232289c3872a87f9497bea"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-05",
+        "status": "EXISTS",
+        "sha256": "a73d794c95d1d4c31d9f3a06b1c9f46b210f81c1d0ba5e39d0926bc743b6a72c"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-05",
+        "status": "EXISTS",
+        "sha256": "c6eb5a7ed997f24566ecf8d00d019008d3cf233d492591ec056cf4014928bdce"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-06",
+        "status": "EXISTS",
+        "sha256": "6ab6fdca6b239b59d792770bb523060ec48b7ad8d48ba9f0ac7da77cd4f3b8b0"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-06",
+        "status": "EXISTS",
+        "sha256": "1910bc87adfaa3722c7996bc85d04b0f647e7b88db0c46c25e1d545228c19f97"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-b-20261117-01",
+        "status": "EXISTS",
+        "sha256": "99e00d934b2d23e8d3c61c7abe6bbeca541ee5efdbd36e62192431c45526c85e"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-b-20261117-01",
+        "status": "NOT_PRESENT"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-b-20261117-02",
+        "status": "EXISTS",
+        "sha256": "dced9d6123a7664b00583db73a8a36a288b58cdb2054d2fe9f6348b59268f10a"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-b-20261117-02",
+        "status": "EXISTS",
+        "sha256": "60d4ed7290422ac9740e18eb1edf999caf813c568e457898aaf4bfa016120dc8"
+      }
+    ],
+    "untracked_file_count": 141,
+    "all_original_file_hashes_match": true
+  },
+  "integration": {
+    "head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+    "branch": "feat/stage1-pk-reuse-integration",
+    "index_sha256": "3a117e87b0ae78cca676310c17fa72313bca6d1b8b829fac977b7be3ec0e58ba",
+    "diff_sha256": "693ea64769d1b1b7467ecb139eab01b0b9d8545367e05e822a37b18ea9b38073",
+    "status": " M contracts/scripts/stage1_multibatch_compare.mjs\n M crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs\n M docs/STAGE1_MULTIBATCH.md\n M scripts/stage1_multibatch_audit.mjs\n?? contracts/node_modules\n?? experiments/stage1_multibatch_raw/gate-a-20261117-07/\n?? experiments/stage1_multibatch_raw/gate-b-20261117-03/\n?? results/stage1_multibatch/gate-a-20261117-07/\n?? results/stage1_multibatch/gate-a-20261117-08/\n?? results/stage1_multibatch/gate-b-20261117-03/\n",
+    "frozen_paths": [
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-07",
+        "status": "EXISTS",
+        "sha256": "49497a86b79a854b7b7f563e7337a7418205ff13f71dddecc0c38af02d6c89d7"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-b-20261117-03",
+        "status": "EXISTS",
+        "sha256": "a93213f5e1a755e5caa99413468d5bab7699985081799f6981762233dd08c38a"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-07",
+        "status": "EXISTS",
+        "sha256": "a884ae0a874389b80dfa1202a01d926d2556899577000e22492cf04a88608051"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-b-20261117-03",
+        "status": "EXISTS",
+        "sha256": "26d452dde9869f829f02e502b1a505d444c2111d300dc2622dffceae14eab4d8"
+      }
+    ],
+    "source_and_preparation_files": [
+      {
+        "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+        "bytes": 83637,
+        "sha256": "a80a13415d5db6f9286a93a21094af4ffcd37d18e34874cc15830fba12e2204d"
+      },
+      {
+        "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+        "bytes": 52164,
+        "sha256": "f6315bd67b185d1d3a3bfc0c6d241b3a70812c2cd9668a3ed55f8026c978f84c"
+      },
+      {
+        "path": "docs/STAGE1_MULTIBATCH.md",
+        "bytes": 40689,
+        "sha256": "284170804422a610444ea2732d4b1b294cb2d6c0d9b13fd2103154fb81bd2e2a"
+      },
+      {
+        "path": "scripts/stage1_multibatch_audit.mjs",
+        "bytes": 49821,
+        "sha256": "c8b8433651dcff9a831c3db46a66b6039815887aaefef5f2a8503ea2934453b7"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-08/integrity_before.json",
+        "bytes": 37071,
+        "sha256": "dfab4eea1efecf8272f2f7db96512feb087abc0eac44398855ea8c5048214e44"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-08/prebuild_readonly_review.md",
+        "bytes": 1763,
+        "sha256": "a873c9228fb8b38d643b854b74bc45269f579196cadd422d3dc198414b482b98"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-08/synthetic-reject/gate_c.json",
+        "bytes": 127,
+        "sha256": "837d06b76baec6057e8f0a0dec5d96d175e87c5ba527361e4363a410ba1db923"
+      }
+    ]
+  },
+  "git_operations_scope": "Only independent detached archive worktree may commit/push; no reset/clean/commit/push in original or integration workspaces.",
+  "experiment_operations": {
+    "setup": 0,
+    "prove": 0,
+    "workers": 0,
+    "vm": 0,
+    "transactions": 0
+  },
+  "gate_a08": "BLOCKED_GATE_A08",
+  "gate_c": "NOT_AUTHORIZED_NOT_STARTED",
+  "gate_d": "NOT_STARTED"
+}

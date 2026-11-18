@@ -400,6 +400,90 @@ node scripts/stage1_multibatch_audit.mjs --gate B --run experiments/stage1_multi
 A-07 记录完整 PK/ArkVK/EIPVK/Cargo.lock/二进制 SHA256、rustc -Vv、target triple、Release profile、硬件与实际命令。
 最终只有 `PASS_GATE_A07_AND_REUSE_INTEGRATION`、`FAIL_REUSE_INTEGRATION` 或 `INCONCLUSIVE`，并执行原工作区16项前后快照核对。
 B03 仅两批材料回归，不代表重新完成9个 EVM 会话；没有 Gas 数据、八批结果或 Gate C 授权。完成后停止。
+
+## A-08：Gate C 最小接线修复（仅建立基线，不授权执行）
+
+A-06/B-02 原工作区及 A-07/B-03 集成归档永久冻结。仅修改本工作区的 Runner、Auditor、材料程序诊断及本文档；
+不修改 Cargo.toml/Cargo.lock、电路、Groth16 关系、Solidity、旧 fixtures、确定性种子或密码学材料。
+原密码学配置保持原字节；新增执行准入引脚只保存在 `gate-a-20261117-08/manifest.json`。
+
+### 三态与物理隔离授权（P0-6/P0-9）
+
+`A08_BASELINE_PASS` 表示 Rust 离线 Release 编译和 Solidity 本地编译通过；`GATE_C_READY` 只是静态接线就绪；
+`GATE_C_AUTHORIZED` 必须由操作者在独立控制目录签发，不能从前两项自动推导。
+授权唯一位置是 `experiments/stage1_multibatch_raw/gate-c-control/gate_c_authorization.json`，不得位于 A-08 基线内。
+本轮不创建授权文件，也不创建 gate-c-control 目录。授权文件必须含 authorized=true、完整 a08_baseline_sha256、
+非空 authorization_id/authorized_by/authorized_at 和 approved_scope=`STAGE1_GATE_C_8_BATCHES_24_POSITIVE_EVM`。
+它是受信任本地操作者的控制文件，不是新增的密码学签名协议。
+
+不可变 manifest 不包含授权文件，也不包含自身摘要，避免循环依赖。授权通过 manifest 原始字节 SHA256 绑定全部
+6 项源码引脚、9 项输入、原生二进制、compiled.json、固定 Setup 来源及完整构建指纹。
+`--plan-only` 在授权拦截和所有启动函数前处理，只读核验 A-08 并输出计划到 stdout，不创建运行目录/证明/VM/交易。
+普通 `--gate C --approved C` 在无授权时必须直接报 `GATE_C_NOT_AUTHORIZED`；Rust 原生 C 入口也独立检查该文件绑定。
+
+### 正式 C 接线（本轮不执行）
+
+`nextGate(C)` → `gateCA08` → `command(materials,5520s)` → A-08 固定二进制 `prepare DIR C --approved C`
+→ 一次 setup-worker（只验证冻结材料，Setup 生成零次）→ `prove-range DIR C 1 8 --approved C`。
+范围 Worker 同一只读文件描述符进行流式哈希与 canonical deserialize，一次加载 PK，8 批只读复用；种子仍为
+`SHA256(request_raw_bytes || u64_be(batch_index))`，不使用 unchecked 或 Validate::No。
+正式 C 使用本次新 request，而不是强制使用 B-02 字节；独立审计原生材料成功后才允许 24 个正向 EVM 会话。
+每个 K=1..8 × legacy/direct_fold/state_proof 会话独立启动并创建干净 Prague VM，600s 默认上限，
+全部绑定 A-08 manifest/source/binary/compiled.json；不再要求旧 A-06 白名单、二进制或 compiled.json。
+Solidity 仍为 0.8.30 / optimizer 200 / viaIR / Prague，EthereumJS 10.1.3，交易20M/区块30M。
+既有合约不变，仍为逐票 Groth16 EVM 回退；禁止将其称为完整 SnarkPack EVM 验证。
+
+### 双通道握手、身份校验与跨层清理（P0-7/P0-10）
+
+Node command 以 detached=true 建立外层进程组并保存 PID/PGID、真实 executable_path、libproc 微秒级启动时间。
+Node 通过系统 Python ctypes 只读桥接 macOS proc_pidinfo(PROC_PIDTBSDINFO)，不使用秒级 ps lstart 替代身份。
+Rust 直接使用 libc 0.2.191 的 proc_pidinfo/proc_pidpath，CommandExt::process_group(0) 为每个 Worker 建独立 PGID。
+spawn 前原子持久化 worker_control.json=SPAWNING；instance ID 同时通过 VV_WORKER_INSTANCE_ID 和
+`--worker-instance-id ID` 传递。父进程取得 PID、PGID==PID、高精度启动身份和路径后原子更新 ACTIVE。
+Worker 第一时间比对双通道 ID，每100ms检查控制文件及 getppid/kill(parent,0)，5000ms 未激活或父进程消失即退出，
+不允许开始 PK 加载或出证。Node 遇 SPAWNING 也最多等待5000ms，不猜测目标、不盲发信号。
+
+对任何清理信号均核对 instance ID（从 ps 命令行提取）、PID、PGID、libproc 启动身份、真实路径，
+PGID>1 且不属于自己、父进程、终端或祖先进程组。身份不符即 CLEANUP_INCOMPLETE，不发信号。
+内层 Worker 组先 SIGTERM→5000ms→必要时重新验身份后 SIGKILL，之后才清理外层组；
+内层控制文件的检查不依赖外层进程仍存活。外层异常退出同样尝试清理登记的内层组。
+取消标记阻止调度器继续启动 Worker，外层退出后再读一次控制文件以检查启动窗口内是否遗留新组。
+仅 kill(-pgid,0) 返回 ESRCH 才认为组消失；EPERM/身份不可读不视为成功。只有两组确认消失且直接子进程已回收，
+才记录 CLEANUP_COMPLETE，否则保留 CLEANUP_INCOMPLETE。此为 fail-closed 安全边界，不保证在权限不足时仍可完成清理。
+
+父进程总1000s优先于阶段660s/120s，不能因进度缺失或批次切换重置；有效进度缺失超过启动5s也进入统一清理。
+所有超时/错误保存 PID、PGID、instance、启动身份、原因、信号、退出状态、kill_wait_ms、清理状态、最后完成批次及持久化 profile。
+250ms轮询及系统调度存在延迟，不宣称绝对实时终止。日志 stdout/stderr 不删除。
+
+### 双阶段持久化、RSS 与真实证据（P0-8/P0-11）
+
+durable_json 统一执行：同目录 .tmp(create_new) → write → flush → sync_all → rename → 打开父目录 sync_all；
+任一步失败均返回 Err，不忽略。PK 单次加载成功后先持久化初始 range_profile。
+每批函数返回后，大型 POOL/R1CS/witness/proof/export 局部对象已析构；仅保留待写出的 JSON 结果值。
+Mach resident_size 与 getrusage 生命周期峰值分开采样、存储；不得将累计峰值当作独立每批峰值，不要求析构后RSS必下降。
+随后先写 batch_i.json 并 fsync 父目录，再将该批加入 COMPLETED profile 并再次 fsync 父目录；不允许先宣称完成后落盘批次。
+连续性在范围循环内检查，不连续即失败，下一批和 EVM 均不得放行。父进程硬终止也可读取上次完整持久化 profile。
+
+每批保存 ark_verify_passed=true、ark_verify_ms、eip_vk_hash_verified=true；真实验证仍先执行，再写结果。
+正式审计只接受 evidence_kind=REAL_EXECUTION 且 execution_performed=true，校验8批、两命令/PID拓扑、
+PK/VK/证明字节全哈希、37项输入、7次连续性、双口径RSS、5520s材料预算和24个600s会话及真实签名交易收据。
+专用离线 Schema 测试必须标 SYNTHETIC_TEST_ONLY / execution_performed=false，正式入口直接拒绝；
+模拟样本里的证明字节来自历史档案，不代表针对模拟新输入生成了有效证明，也不代表 EVM 运行或性能数据。
+
+### 本轮允许的命令与停止点
+
+```sh
+node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-08
+node contracts/scripts/stage1_multibatch_compare.mjs --gate C --approved C --run experiments/stage1_multibatch_raw/gate-c-NOT-STARTED --a-run experiments/stage1_multibatch_raw/gate-a-20261117-08
+# 上一条必须在无授权时失败，不创建 gate-c-NOT-STARTED。
+node contracts/scripts/stage1_multibatch_compare.mjs --gate C --approved C --plan-only --a-run experiments/stage1_multibatch_raw/gate-a-20261117-08
+node scripts/stage1_multibatch_audit.mjs --a08-schema-self-test true
+```
+
+构建环境显式使用 rustc/cargo +1.99.1、--release --locked --offline，删除 CARGO_PROFILE_RELEASE_* 覆盖，opt-level=1。
+需提供 VV_INTEGRATION_ORIGINAL_ROOT 和独立 VV_INTEGRATION_TARGET_DIR；不在原工作区运行写操作。
+本轮仅建立 A-08、编译、自检/静态计划；不启动 Setup、证明 Worker、真实八批、VM、交易或 Gate D，不 commit/push。
+最终只允许 PASS_GATE_C_WIRING_AND_A08_BASELINE 或 BLOCKED_GATE_A08；独立只读审计与人工授权前保持 Gate C 未启动。
 本机新二进制必须位于A-06自己的build-target，且SHA-256与A-03不可变基准及gate_a.json一致：
 `da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`。
 

@@ -1,0 +1,95 @@
+{
+  "status": "BLOCKED_GATE_A08",
+  "scope": "ARCHIVE_EXISTING_SOURCE_AND_EVIDENCE_ONLY",
+  "archive_parent": "b48197ba6c0fc9ed7df1a3144882327335f0780a",
+  "source_workspace": "/private/tmp/vv-pk-reuse-integration.PohVG2/worktree",
+  "source_head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+  "source_branch": "feat/stage1-pk-reuse-integration",
+  "archive_branch": "archive/stage1-a06-budget-evidence",
+  "source_files": [
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "bytes": 83637,
+      "sha256": "a80a13415d5db6f9286a93a21094af4ffcd37d18e34874cc15830fba12e2204d"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "bytes": 52164,
+      "sha256": "f6315bd67b185d1d3a3bfc0c6d241b3a70812c2cd9668a3ed55f8026c978f84c"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "bytes": 40689,
+      "sha256": "284170804422a610444ea2732d4b1b294cb2d6c0d9b13fd2103154fb81bd2e2a"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "bytes": 49821,
+      "sha256": "c8b8433651dcff9a831c3db46a66b6039815887aaefef5f2a8503ea2934453b7"
+    }
+  ],
+  "a08_baseline_created": false,
+  "a08_manifest_sha256": null,
+  "a08_compiled_json_sha256": null,
+  "a08_admitted_native_binary_sha256": null,
+  "gate_c": "NOT_AUTHORIZED_NOT_STARTED",
+  "gate_d": "NOT_STARTED",
+  "authorization_file_created": false,
+  "upload_execution_counts": {
+    "setup": 0,
+    "prove": 0,
+    "worker_start": 0,
+    "vm_creation": 0,
+    "evm_transactions": 0
+  },
+  "prior_turn_checks": {
+    "provenance": "Prior assistant turn outputs; not rerun during upload. Full standalone stdout/stderr receipts are not present for every prior check.",
+    "javascript_syntax": "PASS",
+    "rustfmt_check": "PASS",
+    "git_diff_check": "PASS",
+    "preliminary_rust_build": {
+      "status": "PASS_PRELIMINARY_ONLY",
+      "compiler_reported_seconds": 5.73,
+      "not_final_source_revision": true
+    },
+    "final_rust_release_build": "NOT_COMPLETED",
+    "final_solidity_compile": "NOT_EXECUTED",
+    "plan_only_full_validation": "NOT_EXECUTED",
+    "offline_schema": {
+      "status": "PASS_SYNTHETIC_SCHEMA_ONLY",
+      "evidence_kind": "SYNTHETIC_TEST_ONLY",
+      "execution_performed": false,
+      "valid_sample": "8_BATCHES_24_SESSIONS_SCHEMA",
+      "rejected_cases": [
+        "seven_batches",
+        "state_discontinuity",
+        "missing_ark_verify",
+        "pk_loaded_twice",
+        "missing_evm_session",
+        "formal_entry_rejects_synthetic",
+        "formal_entry_rejects_not_executed"
+      ]
+    },
+    "unauthenticated_c_entry": {
+      "exit_code": 1,
+      "reason": "GATE_C_NOT_AUTHORIZED"
+    },
+    "formal_synthetic_rejection": {
+      "exit_code": 1,
+      "reason": "NON_REAL_EXECUTION_EVIDENCE"
+    },
+    "process_identity_probe": "Read-only escalated libproc/ps probe passed; sandboxed ps probe returned EPERM. No worker/signal/VM test was run."
+  },
+  "blocker": {
+    "kind": "EXECUTION_APPROVAL",
+    "description": "Two Gate A-08 build/create requests were rejected by the execution approval reviewer, which requested explicit authorization in chat body rather than only in the attachment. No alternate build/create route was used.",
+    "requires": "Explicit approval for final offline Rust/Solidity build, A-08 creation and plan-only validation; not authorization for proof/VM execution."
+  },
+  "restrictions": [
+    "Not an A-08 acceptance result",
+    "Not real eight-batch execution",
+    "Not real 24-VM acceptance",
+    "No new Gas or performance evidence",
+    "No standalone proof reproduction package"
+  ]
+}

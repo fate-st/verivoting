@@ -4,7 +4,7 @@ import path from 'node:path';
 import os from 'node:os';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
-import {createHash} from 'node:crypto';
+import {createHash,randomUUID} from 'node:crypto';
 import {spawn,execFileSync} from 'node:child_process';
 import solc from 'solc';
 import {ContractFactory,Interface,AbiCoder,keccak256} from 'ethers';
@@ -231,18 +231,104 @@ export function checkStorageLayouts(contracts){
   return {contract:name,status:'PASS_COMPILE',packed_slot:slot.toString(),fields};
  });
 }
+// macOS libproc, not ps lstart (which loses sub-second process identity).
+const macIdentityProbe=String.raw`import ctypes,ctypes.util,struct,os,sys,json,subprocess
+pid=int(sys.argv[1]);lib=ctypes.CDLL(ctypes.util.find_library('proc'),use_errno=True)
+b=ctypes.create_string_buffer(136)
+n=lib.proc_pidinfo(pid,3,0,b,136)
+if n!=136: raise RuntimeError('PROC_PIDTBSDINFO_FAILED')
+v=b.raw;actual,ppid=struct.unpack_from('II',v,12);pgid=struct.unpack_from('I',v,100)[0];tty=struct.unpack_from('I',v,112)[0];sec,usec=struct.unpack_from('QQ',v,120)
+p=ctypes.create_string_buffer(4096)
+if lib.proc_pidpath(pid,p,4096)<=0: raise RuntimeError('PROC_PIDPATH_FAILED')
+command=subprocess.check_output(['/bin/ps','-ww','-p',str(pid),'-o','pid=,pgid=,command='],text=True).strip();tokens=command.split()
+if int(tokens[0])!=pid or int(tokens[1])!=pgid or actual!=pid: raise RuntimeError('PS_PROC_MISMATCH')
+ids=[tokens[i+1] for i in range(len(tokens)-1) if tokens[i]=='--worker-instance-id']
+if len(ids)>1: raise RuntimeError('DUPLICATE_INSTANCE_ID')
+print(json.dumps(dict(worker_pid=pid,parent_pid=ppid,process_group_id=pgid,terminal_process_group_id=tty,process_start_identity=str(sec)+':'+str(usec).zfill(6),executable_path=os.path.realpath(p.value.decode()),worker_instance_id=ids[0] if ids else None,command=command)))`;
+export function macProcessIdentity(pid){
+ assert.equal(process.platform,'darwin');return JSON.parse(execFileSync('/usr/bin/python3',['-B','-c',macIdentityProbe,String(pid)],{encoding:'utf8',timeout:3000,stdio:['ignore','pipe','pipe']}));
+}
+const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+export function processGroupGone(pgid){
+ assert.ok(Number.isInteger(pgid)&&pgid>1,'UNSAFE_PROCESS_GROUP');
+ try{process.kill(-pgid,0);return false;}catch(e){if(e.code==='ESRCH')return true;throw e;}
+}
+function protectedProcessGroups(){
+ const groups=new Set();let pid=process.pid;
+ for(let i=0;i<64&&pid>1;i++){const p=macProcessIdentity(pid);groups.add(p.process_group_id);groups.add(p.terminal_process_group_id);pid=p.parent_pid;}
+ return groups;
+}
+function assertProcessIdentity(expected){
+ assert.ok(expected?.process_group_id>1&&!protectedProcessGroups().has(expected.process_group_id),'PROTECTED_PROCESS_GROUP');
+ const live=macProcessIdentity(expected.worker_pid);
+ for(const k of ['worker_instance_id','worker_pid','process_group_id','process_start_identity','executable_path'])assert.deepEqual(live[k],expected[k],'PROCESS_IDENTITY_MISMATCH:'+k);
+ return expected.process_group_id;
+}
+async function terminateGroup(expected){
+ const started=performance.now(),signals=[];let error=null;
+ try{
+  const pgid=expected.process_group_id;
+  if(!processGroupGone(pgid)){
+   assertProcessIdentity(expected);try{process.kill(-pgid,'SIGTERM');signals.push('SIGTERM');}catch(e){if(e.code!=='ESRCH')throw e;}
+   const deadline=performance.now()+5000;while(!processGroupGone(pgid)&&performance.now()<deadline)await pause(100);
+   if(!processGroupGone(pgid)){assertProcessIdentity(expected);try{process.kill(-pgid,'SIGKILL');signals.push('SIGKILL');}catch(e){if(e.code!=='ESRCH')throw e;}}
+  }
+  const deadline=performance.now()+5000;while(!processGroupGone(pgid)&&performance.now()<deadline)await pause(100);
+  assert.equal(processGroupGone(pgid),true,'PROCESS_GROUP_STILL_ALIVE');
+ }catch(e){error=String(e);}
+ return {identity:expected,termination_signal:signals,kill_wait_ms:performance.now()-started,cleanup_status:error?'CLEANUP_INCOMPLETE':'CLEANUP_COMPLETE',error};
+}
+async function innerWorkerControl(controlPath){
+ const deadline=performance.now()+5000;
+ while(true){
+  let c;try{c=JSON.parse(fs.readFileSync(controlPath));}catch(e){throw Error('CLEANUP_INCOMPLETE:WORKER_CONTROL_UNAVAILABLE:'+e.message);}
+  if(c.state==='ACTIVE'||c.state==='EXITED')return c;
+  assert.equal(c.state,'SPAWNING','CLEANUP_INCOMPLETE:CONTROL_STATE');
+  if(performance.now()>=deadline)throw Error('CLEANUP_INCOMPLETE:SPAWNING_TIMEOUT_5000MS');
+  await pause(100);
+ }
+}
 async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.budgets.child_seconds){
  const env={...process.env,...extraEnv,CARGO_BUILD_JOBS:String(cfg.budgets.build_jobs),RAYON_NUM_THREADS:String(cfg.budgets.rayon_threads)};
  for(const k of Object.keys(env))if(k.startsWith('CARGO_PROFILE_RELEASE_'))delete env[k];
  const base=path.join(run,'logs',label);fs.mkdirSync(path.dirname(absolute(base)),{recursive:true});
  const out=fs.openSync(absolute(base+'.stdout.log'),'wx'),err=fs.openSync(absolute(base+'.stderr.log'),'wx');
  const start=performance.now(),started=new Date().toISOString();let reason=null;
+ const instance=randomUUID();args=[...args];
+ const isMaterials=path.basename(program)==='stage1_multibatch_materials'&&args[0]==='prepare';
+ const materialsDirectory=isMaterials?absolute(args[1]):null;
+ if(isMaterials||args.includes('--vm')){args.push('--worker-instance-id',instance);env.VV_OUTER_INSTANCE_ID=instance;}
  const child=spawn(program,args,{cwd:root,env,stdio:['ignore','pipe','pipe'],detached:true});
  child.stdout.on('data',b=>{fs.writeSync(out,b);process.stdout.write(b);});child.stderr.on('data',b=>{fs.writeSync(err,b);process.stderr.write(b);});
- const timer=setTimeout(()=>{reason='WALL_BUDGET';try{process.kill(-child.pid,'SIGTERM');}catch{}},wallBudgetSeconds * 1000);
- const result=await new Promise(resolve=>{child.once('error',e=>resolve({code:null,error:String(e)}));child.once('close',(code,signal)=>resolve({code,signal}));});
+ let closed=false,identity=null,identityError=null;
+ const closedPromise=new Promise(resolve=>{child.once('error',e=>{closed=true;resolve({code:null,error:String(e)});});child.once('close',(code,signal)=>{closed=true;resolve({code,signal});});});
+ try{identity=macProcessIdentity(child.pid);assert.equal(identity.process_group_id,child.pid);}catch(e){identityError=String(e);}
+ let cleanupPromise=null;
+ const cleanup=async()=>{
+  const steps=[];let incomplete=false;
+  if(materialsDirectory){
+   try{
+    // Cancellation marker prevents the scheduler from starting another group during cleanup.
+    const marker=path.join(materialsDirectory,'outer_cleanup_requested.json');if(!fs.existsSync(marker))fs.writeFileSync(marker,json({reason:'OUTER_WALL_BUDGET',outer_pid:child.pid}),{flag:'wx'});
+    const control=await innerWorkerControl(path.join(materialsDirectory,'worker_control.json'));
+    const inner=await terminateGroup(control);steps.push({layer:'INNER_WORKER',...inner});incomplete||=inner.cleanup_status!=='CLEANUP_COMPLETE';
+   }catch(e){incomplete=true;steps.push({layer:'INNER_WORKER',cleanup_status:'CLEANUP_INCOMPLETE',error:String(e)});}
+  }
+  const outer=identity?await terminateGroup(identity):{cleanup_status:'CLEANUP_INCOMPLETE',error:identityError};steps.push({layer:'OUTER_COMMAND',...outer});incomplete||=outer.cleanup_status!=='CLEANUP_COMPLETE';
+  const deadline=performance.now()+5000;while(!closed&&performance.now()<deadline)await pause(100);
+  if(!closed)incomplete=true;
+  if(materialsDirectory){try{const c=JSON.parse(fs.readFileSync(path.join(materialsDirectory,'worker_control.json')));if(c.process_group_id&&!processGroupGone(c.process_group_id))incomplete=true;if(c.state==='SPAWNING')incomplete=true;}catch{incomplete=true;}}
+  return {cleanup_status:incomplete?'CLEANUP_INCOMPLETE':'CLEANUP_COMPLETE',direct_child_reaped:closed,steps};
+ };
+ const timer=setTimeout(()=>{reason='WALL_BUDGET';cleanupPromise=cleanup();},Math.max(0,wallBudgetSeconds*1000-(performance.now()-start)));
+ const result=await Promise.race([closedPromise,new Promise(resolve=>{const poll=()=>{if(cleanupPromise)cleanupPromise.then(c=>resolve({code:child.exitCode,signal:child.signalCode,cleanup:c}));else if(!closed)setTimeout(poll,50);};poll();})]);
+ // An unexpectedly exited materials parent can still leave an independently grouped worker.
+ if(!cleanupPromise&&materialsDirectory&&result.code!==0)cleanupPromise=cleanup();
+ const cleanupResult=cleanupPromise?await cleanupPromise:null;
  clearTimeout(timer);fs.closeSync(out);fs.closeSync(err);
  const r={program,args,...result,reason,started,wall_ms:performance.now()-start,wall_budget_seconds: wallBudgetSeconds,
+  child_pid:child.pid,outer_pgid:child.pid,executable_path:identity?.executable_path??program,process_start_identity:identity?.process_start_identity??null,
+  process_identity:identity,identity_error:identityError,cleanup:cleanupResult,
   environment:{CARGO_TARGET_DIR:env.CARGO_TARGET_DIR??null,CARGO_BUILD_JOBS:env.CARGO_BUILD_JOBS,RAYON_NUM_THREADS:env.RAYON_NUM_THREADS},
   stdout:base+'.stdout.log',stderr:base+'.stderr.log'};writeNew(base+'.command.json',r);
  assert.equal(result.code,0,label+' failed; logs preserved');assert.equal(reason,null);return r;
@@ -400,9 +486,12 @@ function batchAt(m,index){const b=m.batches[index];return {index:index+1,root:b.
  ballotProofs:m.ballots.slice(index*4,index*4+4).map(x=>x.eip.proof_neg_a_eip2537_hex),ballotInputs:m.ballots.slice(index*4,index*4+4).map(x=>x.eip.public_inputs_be_hex)};}
 export async function vmWorker(run,aRun,route,k,negative){
  const request=load(run+'/request.json');assert.ok(['B','C'].includes(request.gate));
- validateConfig({phase:request.gate,run,aRun:request.a_run,bRun:request.b_run});assert.equal(aRun,request.a_run);
- const inputsBefore=readonlyInputSnapshot({phase:request.gate,aRun:request.a_run,bRun:request.b_run});
- verifyA(aRun);assert.ok(cfg.routes.includes(route));assert.ok(k>=1&&k<=8);
+ const a08=aRun===A08_RUN;
+ if(a08){requireGateCAuthorization();verifyA08(aRun);assert.equal(request.evidence_kind,'REAL_EXECUTION');assert.equal(request.execution_performed,true);fullHashEqual(request.a08_baseline_sha256,sha(read(aRun+'/manifest.json')),'VM A08 manifest');}
+ else validateConfig({phase:request.gate,run,aRun:request.a_run,bRun:request.b_run});
+ assert.equal(aRun,request.a_run);
+ const inputsBefore=a08?frozenA08Snapshots():readonlyInputSnapshot({phase:request.gate,aRun:request.a_run,bRun:request.b_run});
+ if(!a08)verifyA(aRun);assert.ok(cfg.routes.includes(route));assert.ok(k>=1&&k<=8);
  const m=load(run+'/materials/materials.json');assert.equal(m.phase,request.gate);
  assert.equal(m.config_sha256,sha(read(configPath)));assert.equal(m.state_proofs_generated,request.gate==='B'?2:8);
  assert.equal(m.archived_state_proofs_reused,0);assert.equal(m.all_state_proofs_fresh,true);
@@ -529,12 +618,14 @@ export async function vmWorker(run,aRun,route,k,negative){
   gate_initcode_sha256:deployments.deploy_gate?.initcode_sha256??null,receiver_initcode_sha256:deployments.deploy_receiver?.initcode_sha256??null,
   receiver_runtime_code_sha256:receiver?sha(await vm.stateManager.getCode(receiver)):null,final_context:binding.finalContext,
   config_sha256:sha(read(configPath)),materials_sha256:sha(read(run+'/materials/materials.json')),compiled_sha256:sha(read(aRun+'/compiled.json')),
+  evidence_kind:'REAL_EXECUTION',execution_performed:true,a_run:aRun,a08_baseline_sha256:a08?sha(read(aRun+'/manifest.json')):null,
   node_peak_rss_mib:metric(process.resourceUsage().maxRSS/1024),measurement_status:'MEASURED',snarkpack_evm_verified:false,public_chain_deployment:false,
   atomicity:route==='legacy'?'per ballot; four non-atomic transactions per completed batch':'one atomic transaction per batch'};
  checkReadonlyInputs(inputsBefore);
  writeNew(run+`/sessions/${negative?'negative':'positive'}-k${k}-${route}.json`,output);assert.equal(output.status,'PASS',output.error);
 }
 export async function nextGate(gate,run,aRun,bRun,approved){
+ if(aRun===A08_RUN)return gateCA08(run,approved);
  if(path.basename(aRun??'')==='gate-a-20261117-07')return integrationNextGate(gate,run,aRun,approved);
  assert.equal(approved,gate,'human approval must explicitly name this gate');assert.ok(['B','C'].includes(gate));runPath(run);
  if(gate==='B')validateConfig({phase:'B',run,aRun});else validateConfig({phase:'C',run,aRun,bRun});
@@ -646,10 +737,112 @@ export async function integrationNextGate(gate,run,aRun,approved){
   scope:'Materials-only official Runner to prepare to prove-range, NOT Gate B EVM regression or Gate C performance',gate_c:'NOT_AUTHORIZED_NOT_STARTED'});
  assert.deepEqual(a.source_pins,currentSourcePins());console.log('PASS_B03_MATERIALS_ONLY: STOP; independent audit required');
 }
+export const A08_RUN='experiments/stage1_multibatch_raw/gate-a-20261117-08';
+export const C_AUTH='experiments/stage1_multibatch_raw/gate-c-control/gate_c_authorization.json';
+export function frozenA08Snapshots(){
+ const original=integrationOriginal();
+ return [...['01','02','03','04','05','06'].flatMap(n=>['experiments/stage1_multibatch_raw/','results/stage1_multibatch/'].map(p=>original+'/'+p+'gate-a-20261117-'+n)),
+ ...['01','02'].flatMap(n=>['experiments/stage1_multibatch_raw/','results/stage1_multibatch/'].map(p=>original+'/'+p+'gate-b-20261117-'+n)),
+ ...['gate-a-20261117-07','gate-b-20261117-03'].flatMap(n=>['experiments/stage1_multibatch_raw/','results/stage1_multibatch/'].map(p=>p+n))].map(recursiveSnapshot);
+}
+export function a08Admission(){
+ integrationAdmission();assert.equal(cfg.batch_size,4);assert.equal(cfg.registered_count,32);assert.deepEqual(cfg.formal_k,[1,2,3,4,5,6,7,8]);
+ assert.deepEqual(cfg.routes,['legacy','direct_fold','state_proof']);assert.equal(cfg.ethereumjs_version,'10.1.3');
+ assert.equal(solc.version().split('+')[0],'0.8.30');
+ for(const n of ['vm','common','tx'])assert.equal(load('contracts/node_modules/@ethereumjs/'+n+'/package.json').version,'10.1.3');
+ const allowed=['contracts/node_modules',A08_RUN,resultsPathForRun(A08_RUN),'experiments/stage1_multibatch_raw/gate-a-20261117-07',
+ 'experiments/stage1_multibatch_raw/gate-b-20261117-03','results/stage1_multibatch/gate-a-20261117-07','results/stage1_multibatch/gate-b-20261117-03'];
+ for(const p of git('ls-files','--others','--exclude-standard','-z').split('\0').filter(Boolean))assert.ok(allowed.some(a=>p===a||p.startsWith(a+'/'))||/^(experiments\/stage1_multibatch_raw|results\/stage1_multibatch)\/gate-c-[A-Za-z0-9_-]+\//.test(p),'A08_UNEXPLAINED_UNTRACKED:'+p);
+ assert.equal(git('diff','--cached','--name-only'),'','A08_NO_STAGED_CHANGES');
+}
+export function verifyA08(run=A08_RUN){
+ assert.equal(run,A08_RUN);a08Admission();const m=load(run+'/manifest.json');
+ assert.equal(m.status,'A08_BASELINE_PASS');assert.equal(m.setup_generation_count,0);assert.equal(m.proof_generation_count,0);assert.equal(m.vm_creation_count,0);
+ assert.deepEqual(m.source_pins,currentSourcePins());for(const p of m.source_pins)fullHashEqual(sha(read(p.path)),p.sha256,p.path);
+ assert.deepEqual(m.input_pins,cfg.source_pins);
+ for(const p of m.input_pins)fullHashEqual(streamHashFile(absolute(p.path)),p.sha256,p.path);
+ fullHashEqual(streamHashFile(absolute(m.binary)),m.binary_sha256,'A08 binary');
+ fullHashEqual(sha(read(run+'/compiled.json')),m.compiled_sha256,'A08 Solidity');
+ const compiled=load(run+'/compiled.json');for(const p of compiled.sources)fullHashEqual(sha(read(p.path)),p.sha256,p.path);
+ assert.equal(compiled.compiler.split('+')[0],'0.8.30');assert.deepEqual(compiled.settings.optimizer,{enabled:true,runs:200});assert.equal(compiled.settings.viaIR,true);assert.equal(compiled.settings.evmVersion,'prague');
+ assert.deepEqual(m.budgets,reuseBudgets);checkReadonlyInputs(m.frozen_paths);return m;
+}
+export function requireGateCAuthorization(){
+ if(!fs.existsSync(absolute(C_AUTH)))throw Error('GATE_C_NOT_AUTHORIZED');
+ let authorization;try{
+  authorization=load(C_AUTH);assert.equal(authorization.authorized,true);
+  for(const k of ['authorization_id','authorized_by','authorized_at'])assert.ok(typeof authorization[k]==='string'&&authorization[k].trim().length>0);
+  assert.ok(Number.isFinite(Date.parse(authorization.authorized_at)));
+  assert.equal(authorization.approved_scope,'STAGE1_GATE_C_8_BATCHES_24_POSITIVE_EVM');
+  fullHashEqual(authorization.a08_baseline_sha256,sha(read(A08_RUN+'/manifest.json')),'authorization A08 manifest');
+ }catch(e){throw Error('GATE_C_NOT_AUTHORIZED:'+e.message);}
+ return authorization;
+}
+export function gateCPlan(){
+ const m=verifyA08();const workerArgs=['prove-range','<DIR>','C','1','8','--approved','C'];
+ const sessions=cfg.formal_k.flatMap(k=>cfg.routes.map(route=>({k,route,a_run:A08_RUN,wall_budget_seconds:600,args:['--vm','<C_RUN>',A08_RUN,route,String(k),'positive']})));
+ return {status:'GATE_C_READY',gate_c_ready:true,gate_c_authorized:false,authorization_checked:false,mode:'PLAN_ONLY',
+  evidence_kind:'STATIC_PLAN_ONLY',execution_performed:false,a_run:A08_RUN,a08_baseline_sha256:sha(read(A08_RUN+'/manifest.json')),
+  binary:m.binary,binary_sha256:m.binary_sha256,compiled_sha256:m.compiled_sha256,
+  call_chain:['nextGate(C)','gateCA08','command(materials,5520)','prepare(DIR,C)','setup-worker(DIR,C,1)','prove-range(DIR,C,1,8)'],
+  materials:{program:m.binary,args:['prepare','<C_RUN>/materials','C','--approved','C'],wall_budget_seconds:5520,setup_generation_count:0,
+   setup_validation_workers:1,range_workers:1,range_args:workerArgs,pk_load_count:1},sessions,
+  worker_start_count:0,vm_creation_count:0,evm_transaction_count:0,real_experiment_records_created:0};
+}
+export async function gateA08(){
+ a08Admission();assert.ok(!fs.existsSync(absolute(A08_RUN)),'fresh A08 only; never overwrite');assert.ok(!fs.existsSync(absolute(C_AUTH)),'NO_AUTHORIZATION_DURING_A08');
+ const frozenPaths=frozenA08Snapshots(),frozen=integrationFrozen();
+ const a07=load('experiments/stage1_multibatch_raw/gate-a-20261117-07/gate_a.json');
+ fullHashEqual(streamHashFile(absolute(a07.binary)),a07.binary_sha256,'frozen A07 binary');
+ assert.equal(frozen.pk_sha256,reuseExpected.pk_sha256);assert.equal(frozen.vk_ark_sha256,cfg.state_vk_ark_sha256);assert.equal(frozen.vk_eip_sha256,cfg.state_vk_eip_sha256);
+ const arkVK=wire(load('fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json').state_vk_hex),eipVK=wire(load('fixtures/g8_receiver_eip2537_v1.json').state_vk_eip2537_hex);
+ fullHashEqual(sha(arkVK),frozen.vk_ark_sha256,'actual frozen Ark VK bytes');fullHashEqual(sha(eipVK),frozen.vk_eip_sha256,'actual frozen EIP VK bytes');
+ const pkfd=fs.openSync(frozen.directory+'/research_pk.bin','r'),prefix=Buffer.alloc(arkVK.length);
+ try{assert.equal(fs.readSync(pkfd,prefix,0,prefix.length,0),prefix.length);assert.deepEqual(prefix,arkVK);}finally{fs.closeSync(pkfd);}
+ // READ-ONLY PK/VK/Setup validation above; the only following executable commands are rustc and cargo build.
+ const rust=await command(A08_RUN,'rust-version','rustc',['+1.99.1','-Vv']);
+ const target=process.env.VV_INTEGRATION_TARGET_DIR;assert.ok(target&&path.isAbsolute(target));
+ assert.ok(!path.resolve(target).startsWith(absolute('experiments/stage1_multibatch_raw/gate-a-20261117-07')),'FROZEN_A07_TARGET');
+ const build=await command(A08_RUN,'cargo-build','cargo',['+1.99.1','build','--release','--locked','--offline','--bin','stage1_multibatch_materials'],{CARGO_TARGET_DIR:target});
+ const binary=A08_RUN+'/build-target/release/stage1_multibatch_materials';fs.mkdirSync(path.dirname(absolute(binary)),{recursive:true});
+ fs.copyFileSync(path.join(target,'release/stage1_multibatch_materials'),absolute(binary),fs.constants.COPYFILE_EXCL);
+ const compiled=compileSolidity();writeNew(A08_RUN+'/compiled.json',compiled);
+ const rustc_vv=read(A08_RUN+'/logs/rust-version.stdout.log').toString();
+ const manifest={schema:'VV/STAGE1/A08/IMMUTABLE-BASELINE/v1',status:'A08_BASELINE_PASS',a_run:A08_RUN,
+  head:git('rev-parse','HEAD'),branch:git('branch','--show-current'),source_pins:currentSourcePins(),input_pins:cfg.source_pins,
+  binary,binary_sha256:streamHashFile(absolute(binary)),compiled_sha256:sha(read(A08_RUN+'/compiled.json')),budgets:reuseBudgets,
+  fingerprint:{rustc_vv,target_triple:rustc_vv.match(/^host:\s*(\S+)/m)?.[1],release_opt_level:1,profile_release:read('Cargo.toml').toString().match(/\[profile\.release\][\s\S]*?(?=\n\[|$)/)?.[0],
+   cargo_lock_sha256:sha(read('Cargo.lock')),hardware:os.cpus()[0].model,physical_memory_mib:os.totalmem()/1048576,os_release:os.release(),node:process.version},
+  frozen_materials:frozen,frozen_paths:frozenPaths,commands:[rust,build],evidence_kind:'STATIC_BASELINE_ONLY',execution_performed:false,
+  setup_generation_count:0,proof_generation_count:0,worker_start_count:0,vm_creation_count:0,evm_transaction_count:0,
+  gate_c_state:'GATE_C_READY',gate_c_authorized:false,authorization_path:C_AUTH,authorization_not_in_manifest_digest:true};
+ checkReadonlyInputs(frozenPaths);writeNew(A08_RUN+'/manifest.json',manifest);verifyA08();
+ console.log(json({status:'A08_BASELINE_PASS',manifest_sha256:sha(read(A08_RUN+'/manifest.json')),setup_generation_count:0,proof_generation_count:0,vm_creation_count:0}));
+}
+async function gateCA08(run,approved){
+ const authorization=requireGateCAuthorization();assert.equal(approved,'C');const m=verifyA08();runPath(run);
+ assert.ok(/^gate-c-(?!control$)[A-Za-z0-9_-]+$/.test(path.basename(run)),'DEDICATED_GATE_C_DIRECTORY');assert.ok(!fs.existsSync(absolute(run)),'fresh C run');
+ const frozen=m.frozen_materials;
+ writeNew(run+'/request.json',{gate:'C',a_run:A08_RUN,identity:'C/'+path.basename(run)+'/'+new Date().toISOString(),evidence_kind:'REAL_EXECUTION',execution_performed:true,
+  a08_baseline_sha256:sha(read(A08_RUN+'/manifest.json')),authorization_id:authorization.authorization_id,config_sha256:sha(read(configPath))});
+ await command(run,'materials',absolute(m.binary),['prepare',run+'/materials','C','--approved','C'],{VV_REUSE_SETUP_DIR:frozen.directory},5520);
+ // Audit fresh native material before permitting ANY EVM worker.
+ const {auditNativeA08}=await import('../../scripts/stage1_multibatch_audit.mjs');auditNativeA08(run);
+ for(const k of cfg.formal_k)for(const route of cfg.routes)await command(run,`positive-k${k}-${route}`,process.execPath,
+  ['--max-old-space-size='+cfg.budgets.node_heap_mib,absolute(scriptPath),'--vm',run,A08_RUN,route,String(k),'positive'],{},600);
+ for(const k of cfg.formal_k){const rows=cfg.routes.map(route=>load(run+`/sessions/positive-k${k}-${route}.json`));for(const row of rows.slice(1))assert.deepEqual(row.final_checkpoint,rows[0].final_checkpoint);}
+ verifyA08();checkReadonlyInputs(m.frozen_paths);writeNew(run+'/gate_c.json',{status:'PASS_GATE_C_FORMAL_EXECUTION',gate:'C',run,a_run:A08_RUN,evidence_kind:'REAL_EXECUTION',execution_performed:true,
+  a08_baseline_sha256:sha(read(A08_RUN+'/manifest.json')),positive_vm_count:24,negative_vm_count:0,source_pins:currentSourcePins(),snarkpack_evm_verified:false,next_gate:'D_REQUIRES_NEW_HUMAN_CONFIRMATION'});
+}
 async function main(){
  process.chdir(root);const a=process.argv.slice(2);
+ const instanceAt=a.indexOf('--worker-instance-id');if(instanceAt>=0){assert.equal(instanceAt+2,a.length);assert.equal(a[instanceAt+1],process.env.VV_OUTER_INSTANCE_ID);a.splice(instanceAt,2);}
+ const planAt=a.indexOf('--plan-only');if(planAt>=0){a.splice(planAt,1);if(a[planAt]==='true')a.splice(planAt,1);assert.equal(a[a.indexOf('--gate')+1],'C');console.log(json(gateCPlan()));return;}
+ if(a[a.indexOf('--gate')+1]==='C')requireGateCAuthorization();
  if(a[0]==='--vm'){assert.equal(a.length,6);return vmWorker(a[1],a[2],a[3],Number(a[4]),a[5]==='negative');}
  const flags=Object.fromEntries(Array.from({length:a.length/2},(_,i)=>[a[2*i],a[2*i+1]]));
+ if(flags['--gate']==='A'&&flags['--run']===A08_RUN)return gateA08();
+ if(flags['--gate']==='C')return nextGate('C',flags['--run'],A08_RUN,undefined,flags['--approved']);
  if(flags['--gate']==='A'&&path.basename(flags['--run']??'')==='gate-a-20261117-07')return integrationGateA(flags['--run']);
  if(flags['--gate']==='B'&&path.basename(flags['--a-run']??'')==='gate-a-20261117-07'){
   assert.equal(flags['--materials-only'],'true','A07 integration must explicitly be materials-only');
