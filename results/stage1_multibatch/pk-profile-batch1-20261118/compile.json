@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "+1.99.1",
+    "build",
+    "--release",
+    "--locked",
+    "--offline",
+    "--bin",
+    "stage1_multibatch_pk_profile"
+  ],
+  "cwd": "/tmp/vv-pk-profile/worktree",
+  "returncode": 0,
+  "compile_wall_ns": 47691619709,
+  "compile_wall_ms": 47691.619709,
+  "environment": {
+    "CARGO_TARGET_DIR": "/tmp/vv-pk-profile/target",
+    "CARGO_BUILD_JOBS": "2",
+    "RAYON_NUM_THREADS": "4",
+    "RUSTUP_TOOLCHAIN": "1.99.1"
+  },
+  "release_opt_level": 1
+}

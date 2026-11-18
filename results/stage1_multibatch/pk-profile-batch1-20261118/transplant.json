@@ -1,0 +1,36 @@
+{
+  "status": "PASS_PIN_IDENTICAL_TRANSPLANT",
+  "approved": [
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "665be8f8800429c01026c680cd362c086ec9bee1c48034566bc259a5a1695c52"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "0305e0740a2c1f15d3aa4d1cdb279908ccf3f25984dc2bd5091f1f6e0773e9bc"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "sha256": "f5620e7b30dc6dcfee6714393aee75d3f75d09b161f7c21a694c9bea76195e33"
+    }
+  ],
+  "input_paths": [
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-02/materials/research_pk.bin",
+      "byte_size": 847800624,
+      "sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-02/materials/request.json",
+      "byte_size": 318,
+      "sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-02/materials/setup.json",
+      "byte_size": 344,
+      "sha256": "e6ec81ab5944f064cbb4c93bc9dbcbaacf63b1958fa56d39892263c39f88bc8d"
+    }
+  ],
+  "untracked_bytes_captured": 141,
+  "untracked_exclusion": "Historical evidence copies retained in evidence/untracked_bytes; worker reads only frozen tracked sources plus unchanged request/setup and PK link. No prepare/Runner/A/B audit execution."
+}

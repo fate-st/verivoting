@@ -1,0 +1,13 @@
+{
+  "status": "PASS_SINGLE_EXECUTION_ADMISSION",
+  "frozen_pins_checked": 15,
+  "input_hashes_match": true,
+  "binary_sha256": "f8ad7d3433115fd909132fc9fbabd2ea0995ef000119c5f930f7b02c307c85ea",
+  "profile_source_sha256": "6b1ee7d425a037e8355aa2a724817bf21db4b05c557fb3faedb166b4af28fb58",
+  "original_source_sha256": "5d609217103da3b2822fca60f98a1e2ab3367d02755c4d4af034069a433f40e0",
+  "source_diff_review": "Only timers, CPU/byte counters, recoverable-error diagnostic output, diagnostic single-B1 guard, output JSON evaluation separated from write_new; unchanged cryptographic calls, validation, seeds, record ordering and encoding",
+  "worker_return_type": "Result<()>; ProvingKey/ConstraintSystem not returned; outer call timer includes local Drops",
+  "historical_timer": "Instant before current_exe/log opening/spawn through observed try_wait exit; includes ps RSS poll work",
+  "new_timer": "after logs opened, before Popen through poll observed exit; excludes log opening, no ps probe; not exactly identical historical boundary",
+  "actual_prove_invocations": 0
+}

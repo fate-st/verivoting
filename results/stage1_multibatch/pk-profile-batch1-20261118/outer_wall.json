@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/tmp/vv-pk-profile/target/release/stage1_multibatch_pk_profile",
+    "prove-worker",
+    "experiments/stage1_multibatch_raw/pk-profile-batch1",
+    "B",
+    "1",
+    "--approved",
+    "B"
+  ],
+  "cwd": "/tmp/vv-pk-profile/worktree",
+  "outer_wall_semantics": "spawn_to_observed_exit",
+  "nominal_poll_interval_ms": 250,
+  "polling_overhead_bound_ms": null,
+  "pid": 59257,
+  "outer_wall_ns": 597139812792,
+  "outer_wall_ms": 597139.812792,
+  "returncode": 0,
+  "termination_signal": null,
+  "process_config_ns": 9800917,
+  "process_config_ms": 9.800917,
+  "worker_total_ns": 596426130416,
+  "worker_total_ms": 596426.130416,
+  "outer_residual_ns": 703881459,
+  "outer_residual_ms": 703.881459
+}
