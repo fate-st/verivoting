@@ -1,0 +1,443 @@
+{
+  "gate": "B",
+  "run": "experiments/stage1_multibatch_raw/gate-b-20261117-02",
+  "status": "PASS_GATE_B02_REGRESSION_AND_AUDIT",
+  "runner_exit_code": 0,
+  "attempt_count": 1,
+  "retried": false,
+  "environment": {
+    "cpu": "Apple M4",
+    "platform": "darwin",
+    "arch": "arm64",
+    "release_opt_level": 1
+  },
+  "budgets": {
+    "materials_wall_seconds": 1920,
+    "worker_nominal_seconds": 600,
+    "worker_rss_mib": 16384
+  },
+  "materials_command": {
+    "program": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage1_multibatch_raw/gate-a-20261117-06/build-target/release/stage1_multibatch_materials",
+    "args": [
+      "prepare",
+      "experiments/stage1_multibatch_raw/gate-b-20261117-02/materials",
+      "B",
+      "--approved",
+      "B"
+    ],
+    "code": 0,
+    "signal": null,
+    "reason": null,
+    "started": "2026-11-17T14:50:12.135Z",
+    "wall_ms": 1222499.2397079999,
+    "wall_budget_seconds": 1920,
+    "environment": {
+      "CARGO_TARGET_DIR": null,
+      "CARGO_BUILD_JOBS": "2",
+      "RAYON_NUM_THREADS": "4"
+    },
+    "stdout": "experiments/stage1_multibatch_raw/gate-b-20261117-02/logs/materials.stdout.log",
+    "stderr": "experiments/stage1_multibatch_raw/gate-b-20261117-02/logs/materials.stderr.log"
+  },
+  "materials_wall_seconds": {
+    "status": "MEASURED",
+    "value": 1222.4992397079998
+  },
+  "setup": {
+    "pk_serialized_bytes": 847800624,
+    "pk_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+    "production_setup": false,
+    "setup_count": 1,
+    "setup_ms": 33629.263167,
+    "status": "MEASURED",
+    "vk_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+    "worker_peak_rss_mib": 5558.203125
+  },
+  "setup_worker_command": {
+    "argv": [
+      "setup-worker",
+      "experiments/stage1_multibatch_raw/gate-b-20261117-02/materials",
+      "B",
+      "1",
+      "--approved",
+      "B"
+    ],
+    "exit_code": 0,
+    "label": "setup-worker-1",
+    "pid": 91803,
+    "wall_ms": 36932.621041
+  },
+  "ark_vk_match": true,
+  "fresh_state_proofs_completed": 2,
+  "completed_batches": [
+    1,
+    2
+  ],
+  "completed_batch_metrics": [
+    {
+      "batch": 1,
+      "status": "MEASURED",
+      "worker_command": {
+        "argv": [
+          "prove-worker",
+          "experiments/stage1_multibatch_raw/gate-b-20261117-02/materials",
+          "B",
+          "1",
+          "--approved",
+          "B"
+        ],
+        "exit_code": 0,
+        "label": "prove-worker-1",
+        "pid": 93252,
+        "wall_ms": 593398.6029579999
+      },
+      "witness_seconds": 3.045227375,
+      "prove_seconds": 19.105934375,
+      "verify_seconds": 0.002063375,
+      "prepare_vk_seconds": 0.001113125,
+      "peak_rss_mib": 5513.1875,
+      "proof_ark_bytes": 192,
+      "proof_eip_bytes": 512,
+      "constraints": 2743666,
+      "eip_vk_sha256": "1367728908bb6c62009afb38ad09555d5a8c463bc6945b3ceb83ae763f376896",
+      "eip_vk_match": true,
+      "witness_scope": "Independent R1CS synthesis and satisfaction check; the high-level Prove call also internally synthesizes, so do not add diagnostic Witness time as an exclusive Prove subcomponent.",
+      "rss_scope": "OS process high-water mark for this sole batch worker, including witness, PK decode, Prove, Verify and export; not Prove-only interval peak"
+    },
+    {
+      "batch": 2,
+      "status": "MEASURED",
+      "worker_command": {
+        "argv": [
+          "prove-worker",
+          "experiments/stage1_multibatch_raw/gate-b-20261117-02/materials",
+          "B",
+          "2",
+          "--approved",
+          "B"
+        ],
+        "exit_code": 0,
+        "label": "prove-worker-2",
+        "pid": 16919,
+        "wall_ms": 591718.2112499999
+      },
+      "witness_seconds": 2.9940238330000004,
+      "prove_seconds": 18.897842542,
+      "verify_seconds": 0.002760708,
+      "prepare_vk_seconds": 0.001165083,
+      "peak_rss_mib": 5485.09375,
+      "proof_ark_bytes": 192,
+      "proof_eip_bytes": 512,
+      "constraints": 2743666,
+      "eip_vk_sha256": "1367728908bb6c62009afb38ad09555d5a8c463bc6945b3ceb83ae763f376896",
+      "eip_vk_match": true,
+      "witness_scope": "Independent R1CS synthesis and satisfaction check; the high-level Prove call also internally synthesizes, so do not add diagnostic Witness time as an exclusive Prove subcomponent.",
+      "rss_scope": "OS process high-water mark for this sole batch worker, including witness, PK decode, Prove, Verify and export; not Prove-only interval peak"
+    }
+  ],
+  "blocked_workers": [],
+  "worker_timing_scope": "The nominal 600s covers the entire worker: Witness, PK hash/read/canonical deserialize, Prove, Verify and export, not just create_random_proof.",
+  "unfinished_worker_native_ru_maxrss": {
+    "status": "NOT_APPLICABLE",
+    "value": null
+  },
+  "unfinished_worker_witness_prove_verify_seconds": {
+    "status": "NOT_APPLICABLE",
+    "value": null
+  },
+  "external_rss": {
+    "status": "MEASURED_SAMPLED",
+    "requested_interval_ms": 250,
+    "timestamp_resolution_seconds": 1,
+    "scope": "Only matching Rust worker descendants; not Node.js RSS; sampled peaks are not OS high-water marks.",
+    "workers": [
+      {
+        "pid": 91803,
+        "worker_type": "setup-worker",
+        "sample_count": 125,
+        "first_sample": "2026-11-17T14:50:12Z",
+        "last_sample": "2026-11-17T14:50:49Z",
+        "sampled_peak_rss_mib": 5525.922,
+        "peak_timestamp": "2026-11-17T14:50:46Z"
+      },
+      {
+        "pid": 93252,
+        "worker_type": "prove-worker",
+        "sample_count": 2068,
+        "first_sample": "2026-11-17T14:50:49Z",
+        "last_sample": "2026-11-17T15:00:42Z",
+        "sampled_peak_rss_mib": 5513.109,
+        "peak_timestamp": "2026-11-17T15:00:29Z"
+      },
+      {
+        "pid": 16919,
+        "worker_type": "prove-worker",
+        "sample_count": 2059,
+        "first_sample": "2026-11-17T15:00:43Z",
+        "last_sample": "2026-11-17T15:10:34Z",
+        "sampled_peak_rss_mib": 5432.984,
+        "peak_timestamp": "2026-11-17T15:10:33Z"
+      }
+    ]
+  },
+  "worker_cleanup": {
+    "status": "PASS_NO_TASK_PROCESS_RESIDUE",
+    "checked_at": "2026-11-17T15:11:36.545Z",
+    "runner_pid": 91642,
+    "monitor_pid": 91643,
+    "worker_pids": [
+      91803,
+      93252,
+      16919
+    ],
+    "task_pids_still_alive": [],
+    "other_or_reused_pids": [],
+    "wrapper_exit_code": 0,
+    "scope": "Exact task PID set and expected command identity; no unrelated process was killed."
+  },
+  "workspace_protection": {
+    "status": "PASS_B02_WORKSPACE_PROTECTION",
+    "head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+    "controlled_paths": 14,
+    "existing_directories": 12,
+    "old_status_entries_unchanged": true,
+    "index_unchanged": true,
+    "source_pins_unchanged": true,
+    "paper_unchanged": true,
+    "complete_archives_and_a06_before_after_match": true,
+    "permitted_new_paths": [
+      "experiments/stage1_multibatch_raw/gate-b-20261117-02",
+      "results/stage1_multibatch/gate-b-20261117-02"
+    ],
+    "checked_at": "2026-11-17T15:11:50.740Z"
+  },
+  "independent_vm_count": 9,
+  "positive_vm_count": 6,
+  "negative_vm_sessions": 3,
+  "cross_route_final_checks": [
+    {
+      "k": 1,
+      "votes": 4,
+      "routes": [
+        "direct_fold",
+        "legacy",
+        "state_proof"
+      ],
+      "complete_checkpoint_identical": true,
+      "ciphertext_component_count": 6,
+      "used_nullifier_set_identical": true,
+      "certified_context_identical": true,
+      "frozen_result_identical": true
+    },
+    {
+      "k": 2,
+      "votes": 8,
+      "routes": [
+        "direct_fold",
+        "legacy",
+        "state_proof"
+      ],
+      "complete_checkpoint_identical": true,
+      "ciphertext_component_count": 6,
+      "used_nullifier_set_identical": true,
+      "certified_context_identical": true,
+      "frozen_result_identical": true
+    }
+  ],
+  "negative_results": [
+    {
+      "route": "direct_fold",
+      "cases": [
+        {
+          "case": "uncertified",
+          "revert_reason": "UNCERTIFIED",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "illegal_batch_index",
+          "revert_reason": "NEXT_INDEX",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "replacement_ballot_proof",
+          "revert_reason": "INVALID_GROTH16",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "complete_valid_ballot_replacement",
+          "revert_reason": "BATCH_ROOT",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "within_batch_duplicate_nf",
+          "revert_reason": "DUPLICATE_NULLIFIER",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "omission_a",
+          "revert_reason": "DIRECT_FOLD_MISMATCH",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "stale_old_state",
+          "revert_reason": "OLD_STATE",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "cross_batch_duplicate_nf",
+          "revert_reason": "SPENT_NULLIFIER",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "receive_after_freeze",
+          "revert_reason": "FROZEN",
+          "full_checkpoint_rollback": true
+        }
+      ],
+      "legacy_recovery_steps": []
+    },
+    {
+      "route": "legacy",
+      "cases": [
+        {
+          "case": "uncertified",
+          "revert_reason": "UNCERTIFIED",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "illegal_batch_index",
+          "revert_reason": "NEXT_INDEX",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "replacement_ballot_proof",
+          "revert_reason": "INVALID_GROTH16",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "complete_valid_ballot_replacement",
+          "revert_reason": "BATCH_MEMBERSHIP",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "legacy_incomplete_freeze",
+          "revert_reason": "INCOMPLETE",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "within_batch_duplicate_nf",
+          "revert_reason": "SPENT_NULLIFIER",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "charlie_first_attempt",
+          "revert_reason": "INVALID_GROTH16",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "stale_old_state",
+          "revert_reason": "OLD_STATE",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "cross_batch_duplicate_nf",
+          "revert_reason": "SPENT_NULLIFIER",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "receive_after_freeze",
+          "revert_reason": "FROZEN",
+          "full_checkpoint_rollback": true
+        }
+      ],
+      "legacy_recovery_steps": [
+        {
+          "step": 1,
+          "count": 2,
+          "next": 1
+        },
+        {
+          "step": 2,
+          "count": 2,
+          "next": 1
+        },
+        {
+          "step": 3,
+          "count": 3,
+          "next": 1
+        },
+        {
+          "step": 4,
+          "count": 4,
+          "next": 2
+        },
+        {
+          "step": 5,
+          "count": 4,
+          "next": 2
+        }
+      ]
+    },
+    {
+      "route": "state_proof",
+      "cases": [
+        {
+          "case": "uncertified",
+          "revert_reason": "UNCERTIFIED",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "illegal_batch_index",
+          "revert_reason": "NEXT_INDEX",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "replacement_ballot_proof",
+          "revert_reason": "INVALID_GROTH16",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "complete_valid_ballot_replacement",
+          "revert_reason": "BATCH_ROOT",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "within_batch_duplicate_nf",
+          "revert_reason": "DUPLICATE_NULLIFIER",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "omission_a",
+          "revert_reason": "INVALID_GROTH16",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "stale_old_state",
+          "revert_reason": "OLD_STATE",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "cross_batch_duplicate_nf",
+          "revert_reason": "SPENT_NULLIFIER",
+          "full_checkpoint_rollback": true
+        },
+        {
+          "case": "receive_after_freeze",
+          "revert_reason": "FROZEN",
+          "full_checkpoint_rollback": true
+        }
+      ],
+      "legacy_recovery_steps": []
+    }
+  ],
+  "gas_receipt_audit": "PASS",
+  "formal_performance_samples": 0,
+  "gate_b_execution_status": "PASS_GATE_B_REGRESSION_ONLY",
+  "independent_audit": "PASS_GATE_B_EVIDENCE_AUDIT_ONLY",
+  "evm_sessions": 9,
+  "gate_c_started": false,
+  "git_commit_executed": false,
+  "git_push_executed": false,
+  "diagnosis_limit": "No controlled per-stage profiling was run. Do not attribute a worker timeout to opt-level or a single operation.",
+  "written_at": "2026-11-17T15:13:21.678Z"
+}

@@ -1,0 +1,26 @@
+{
+  "program": "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+  "args": [
+    "--max-old-space-size=6144",
+    "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/contracts/scripts/stage1_multibatch_compare.mjs",
+    "--vm",
+    "experiments/stage1_multibatch_raw/gate-b-20261117-02",
+    "experiments/stage1_multibatch_raw/gate-a-20261117-06",
+    "state_proof",
+    "2",
+    "positive"
+  ],
+  "code": 0,
+  "signal": null,
+  "reason": null,
+  "started": "2026-11-17T15:10:48.057Z",
+  "wall_ms": 2675.7317500000354,
+  "wall_budget_seconds": 600,
+  "environment": {
+    "CARGO_TARGET_DIR": null,
+    "CARGO_BUILD_JOBS": "2",
+    "RAYON_NUM_THREADS": "4"
+  },
+  "stdout": "experiments/stage1_multibatch_raw/gate-b-20261117-02/logs/positive-k2-state_proof.stdout.log",
+  "stderr": "experiments/stage1_multibatch_raw/gate-b-20261117-02/logs/positive-k2-state_proof.stderr.log"
+}
