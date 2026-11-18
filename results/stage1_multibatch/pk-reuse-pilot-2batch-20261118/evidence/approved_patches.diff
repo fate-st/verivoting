@@ -1,0 +1,437 @@
+diff --git a/contracts/scripts/stage1_multibatch_compare.mjs b/contracts/scripts/stage1_multibatch_compare.mjs
+index 9e71b75..117a071 100644
+--- a/contracts/scripts/stage1_multibatch_compare.mjs
++++ b/contracts/scripts/stage1_multibatch_compare.mjs
+@@ -31,11 +31,13 @@ const metric=(value,status='MEASURED')=>({status,value});
+ const normalized=v=>JSON.parse(JSON.stringify(v,(_,x)=>typeof x==='bigint'?x.toString():x));
+ const absolute=p=>path.resolve(root,p);
+ const scriptPath='contracts/scripts/stage1_multibatch_compare.mjs';
+-export const EXPECTED_HEAD='f086879c4dc247e528d62d2253d76d6afd603669';
+-export const EXPECTED_PARENT='2444269b52573d9c2f3e551ef7d6b8bb9d0bd008';
++export const EXPECTED_HEAD='3f8813c9d69d0e45631e9acb7bbb247a1119f511';
++export const EXPECTED_PARENT='f086879c4dc247e528d62d2253d76d6afd603669';
++export const EXPECTED_GRANDPARENT='2444269b52573d9c2f3e551ef7d6b8bb9d0bd008';
+ export const EXPECTED_BASE='72ccc561d8934b0d761e17764ef9012bfe012626';
+-export const EXPECTED_A03_TREE='92f7331a7d9b534d17108409342851381811aa52';
+-export const EXPECTED_HEAD_TREE='3b8b57b375bb0391afe431935057a2711c5608e9';
++export const EXPECTED_GRANDPARENT_TREE='92f7331a7d9b534d17108409342851381811aa52';
++export const EXPECTED_PARENT_TREE='3b8b57b375bb0391afe431935057a2711c5608e9';
++export const EXPECTED_HEAD_TREE='a21e84e05a2c653218a50ec99769b81766d12b91';
+ export const EXPECTED_BINARY_SHA256='da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488';
+ export const approvedPatches=[scriptPath,'scripts/stage1_multibatch_audit.mjs','docs/STAGE1_MULTIBATCH.md'];
+ // Fixed historical inventory, not inferred from whichever HEAD happens to be checked out.
+@@ -65,25 +67,69 @@ export const expectedA03Changes=[
+  'preflight_b.json','protected_files.json','static_checks.json','storage_layout.json'].map(p=>['A','experiments/stage1_multibatch_raw/gate-a-20261117-03/'+p]),
+  ...['SHA256SUMS','gate_a_audit.json','preflight_b.json','report.md'].map(p=>['A','results/stage1_multibatch/gate-a-20261117-03/'+p])
+ ].sort((a,b)=>a[1]<b[1]?-1:a[1]>b[1]?1:0).map(([status,p])=>status+'\t'+p);
++// Third independently checked static inventory; preserve both earlier inventories verbatim.
++export const expectedA04Changes=[
++ 'M\tcontracts/scripts/stage1_multibatch_compare.mjs',
++ 'M\tdocs/STAGE1_MULTIBATCH.md',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/binary_reproducibility.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/compiled.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/gate_a.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/cargo-build.command.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/cargo-build.stderr.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/cargo-build.stdout.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/preflight-cargo-version.command.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/preflight-cargo-version.stderr.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/preflight-cargo-version.stdout.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/preflight-rust-version.command.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/preflight-rust-version.stderr.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/preflight-rust-version.stdout.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-format.command.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-format.stderr.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-format.stdout.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-version.command.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-version.stderr.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/rust-version.stdout.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_audit.mjs.command.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_audit.mjs.stderr.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_audit.mjs.stdout.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_compare.mjs.command.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_compare.mjs.stderr.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/logs/syntax-stage1_multibatch_compare.mjs.stdout.log',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/preflight_b.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/protected_files.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/static_checks.json',
++ 'A\texperiments/stage1_multibatch_raw/gate-a-20261117-04/storage_layout.json',
++ 'A\tresults/stage1_multibatch/gate-a-20261117-04/SHA256SUMS',
++ 'A\tresults/stage1_multibatch/gate-a-20261117-04/gate_a_audit.json',
++ 'A\tresults/stage1_multibatch/gate-a-20261117-04/preflight_b.json',
++ 'A\tresults/stage1_multibatch/gate-a-20261117-04/report.md',
++ 'M\tscripts/stage1_multibatch_audit.mjs'
++];
+ const inside=(p,d)=>p.startsWith(d+'/');
+ export function resultsPathForRun(rawRun){runPath(rawRun);return 'results/stage1_multibatch/'+path.basename(rawRun);}
+ export function validateConfig({phase,run,aRun,bRun,rawRun}={}){
+  assert.ok(['A','B','C','D'].includes(phase),'explicit phase required');
+  assert.equal(git('rev-parse','HEAD'),EXPECTED_HEAD);
+  assert.equal(git('rev-parse','HEAD^'),EXPECTED_PARENT);
+- assert.equal(git('rev-parse','HEAD~2'),EXPECTED_BASE);
++ assert.equal(git('rev-parse','HEAD~2'),EXPECTED_GRANDPARENT);
++ assert.equal(git('rev-parse','HEAD~3'),EXPECTED_BASE);
+  assert.equal(cfg.base_commit,EXPECTED_BASE);
+- assert.equal(git('rev-parse',EXPECTED_PARENT+'^{tree}'),EXPECTED_A03_TREE);
++ assert.equal(git('rev-parse',EXPECTED_GRANDPARENT+'^{tree}'),EXPECTED_GRANDPARENT_TREE);
++ assert.equal(git('rev-parse',EXPECTED_PARENT+'^{tree}'),EXPECTED_PARENT_TREE);
+  assert.equal(git('rev-parse','HEAD^{tree}'),EXPECTED_HEAD_TREE);
+  assert.equal(expectedAdded.length,59);
+- const added=git('diff','--name-status',EXPECTED_BASE+'..'+EXPECTED_PARENT).split('\n');
++ const added=git('diff','--name-status',EXPECTED_BASE+'..'+EXPECTED_GRANDPARENT).split('\n');
+  assert.deepEqual(added,expectedAdded.map(p=>'A\t'+p),'fixed 59-file all-Added inventory');
+- const a03Changes=git('diff','--name-status',EXPECTED_PARENT+'..'+EXPECTED_HEAD).split('\n');
++ const a03Changes=git('diff','--name-status',EXPECTED_GRANDPARENT+'..'+EXPECTED_PARENT).split('\n');
+  assert.equal(expectedA03Changes.length,34);assert.equal(expectedA03Changes.filter(p=>p.startsWith('M\t')).length,3);
+  assert.equal(expectedA03Changes.filter(p=>p.startsWith('A\t')).length,31);
+  assert.deepEqual(a03Changes,expectedA03Changes,'fixed 34-file 3M+31A inventory');
++ const a04Changes=git('diff','--name-status',EXPECTED_PARENT+'..'+EXPECTED_HEAD).split('\n');
++ assert.equal(expectedA04Changes.length,35);assert.equal(expectedA04Changes.filter(p=>p.startsWith('M\t')).length,3);
++ assert.equal(expectedA04Changes.filter(p=>p.startsWith('A\t')).length,32);
++ assert.deepEqual(a04Changes,expectedA04Changes,'fixed 35-file 3M+32A inventory');
+  let dirs;
+- if(phase==='A'){assert.equal(path.basename(runPath(run)),'gate-a-20261117-04');dirs=[run,resultsPathForRun(run)];}
++ if(phase==='A'){assert.equal(path.basename(runPath(run)),'gate-a-20261117-06');dirs=[run,resultsPathForRun(run)];}
+  else if(phase==='D'){
+   assert.match(rawRun??'',/^experiments\/stage1_multibatch_raw\/[A-Za-z0-9_-]+$/);
+   assert.equal(run,resultsPathForRun(rawRun));dirs=[rawRun,run];
+@@ -91,17 +137,20 @@ export function validateConfig({phase,run,aRun,bRun,rawRun}={}){
+   runPath(run);runPath(aRun);assert.notEqual(run,aRun);dirs=[run,resultsPathForRun(run),aRun,resultsPathForRun(aRun)];
+   if(phase==='C'){runPath(bRun);assert.ok(bRun!==run&&bRun!==aRun);dirs.push(bRun,resultsPathForRun(bRun));}
+  }
++ const allowedDirs=[...dirs,...historyDirs];
+  const workspaces={};
+  for(const [kind,args] of [['staged',['diff','--cached','--name-only','-z']],['unstaged',['diff','--name-only','-z']],
+   ['untracked',['ls-files','--others','--exclude-standard','-z']]]){
+   const paths=git(...args).split('\0').filter(Boolean);workspaces[kind]=paths;
+-  for(const p of paths)assert.ok(approvedPatches.includes(p)||dirs.some(d=>inside(p,d)),`${phase}: unauthorized ${kind} path ${p}`);
++  for(const p of paths)assert.ok(approvedPatches.includes(p)||allowedDirs.some(d=>inside(p,d)),`${phase}: unauthorized ${kind} path ${p}`);
+  }
+  assert.equal(cfg.release_opt_level,1);assert.match(read('Cargo.toml').toString(),/opt-level\s*=\s*1/);
+  for(const p of cfg.source_pins)assert.equal(sha(read(p.path)),p.sha256,p.path);
+  assert.equal(solc.version().split('+')[0],cfg.solidity.version);
+  for(const n of ['vm','common','tx'])assert.equal(load(`contracts/node_modules/@ethereumjs/${n}/package.json`).version,cfg.ethereumjs_version);
+- return {phase,head:EXPECTED_HEAD,parent:EXPECTED_PARENT,base:EXPECTED_BASE,parent_tree:EXPECTED_A03_TREE,tree:EXPECTED_HEAD_TREE,added,a03_changes:a03Changes,workspaces,
++ return {phase,head:EXPECTED_HEAD,parent:EXPECTED_PARENT,grandparent:EXPECTED_GRANDPARENT,base:EXPECTED_BASE,
++  grandparent_tree:EXPECTED_GRANDPARENT_TREE,parent_tree:EXPECTED_PARENT_TREE,tree:EXPECTED_HEAD_TREE,
++  added,a03_changes:a03Changes,a04_changes:a04Changes,workspaces,
+   untracked_scope:'git ls-files --others --exclude-standard; historical ignored build caches independently included in recursive snapshots'};
+ }
+ export function recursiveSnapshot(p){
+@@ -118,7 +167,10 @@ export function recursiveSnapshot(p){
+ }
+ export const historyDirs=['experiments/stage1_multibatch_raw/gate-a-20261117-01','experiments/stage1_multibatch_raw/gate-a-20261117-02',
+  'results/stage1_multibatch/gate-a-20261117-02','results/stage1_multibatch/gate-a-20261117-01',
+- 'experiments/stage1_multibatch_raw/gate-a-20261117-03','results/stage1_multibatch/gate-a-20261117-03'];
++ 'experiments/stage1_multibatch_raw/gate-a-20261117-03','results/stage1_multibatch/gate-a-20261117-03',
++ 'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04',
++ 'experiments/stage1_multibatch_raw/gate-a-20261117-05','results/stage1_multibatch/gate-a-20261117-05',
++ 'experiments/stage1_multibatch_raw/gate-b-20261117-01','results/stage1_multibatch/gate-b-20261117-01'];
+ export function sourcePatchSnapshot(){return approvedPatches.map(p=>({path:p,sha256:sha(read(p))}));}
+ export function readonlyInputSnapshot({phase,aRun,bRun,rawRun}){
+  const dirs=[];
+@@ -133,7 +185,9 @@ export function protectedSnapshot({phase,run,aRun,bRun,rawRun}){
+  const files=execFileSync('git',['ls-files','--cached','--others','--exclude-standard','-z'],{cwd:root,encoding:'utf8'})
+   .split('\0').filter(p=>p&&!approvedPatches.includes(p)&&!excluded.some(d=>inside(p,d))).sort();
+  const paper=path.resolve(root,'../../sn-article-template/sn-article.tex');
+- const archives=historyDirs.map(recursiveSnapshot);for(const a of archives)assert.equal(a.exists,a.path!=='results/stage1_multibatch/gate-a-20261117-01');
++ const archives=historyDirs.map(recursiveSnapshot);
++ const expectedAbsentHistoryDirs=new Set(['results/stage1_multibatch/gate-a-20261117-01','results/stage1_multibatch/gate-b-20261117-01']);
++ for(const a of archives)assert.equal(a.exists,!expectedAbsentHistoryDirs.has(a.path),'history path existence mismatch: '+a.path);
+  const scope=Object.fromEntries(Object.entries({phase,run,aRun,bRun,rawRun}).filter(([,v])=>v!==undefined&&v!==null));
+  return {scope,files:files.map(p=>({path:p,sha256:sha(read(p))})),archives,readonly_inputs:readonlyInputSnapshot(scope),
+   paper:{path:paper,sha256:sha(fs.readFileSync(paper))}};
+@@ -177,7 +231,7 @@ export function checkStorageLayouts(contracts){
+   return {contract:name,status:'PASS_COMPILE',packed_slot:slot.toString(),fields};
+  });
+ }
+-async function command(run,label,program,args,extraEnv={}){
++async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.budgets.child_seconds){
+  const env={...process.env,...extraEnv,CARGO_BUILD_JOBS:String(cfg.budgets.build_jobs),RAYON_NUM_THREADS:String(cfg.budgets.rayon_threads)};
+  for(const k of Object.keys(env))if(k.startsWith('CARGO_PROFILE_RELEASE_'))delete env[k];
+  const base=path.join(run,'logs',label);fs.mkdirSync(path.dirname(absolute(base)),{recursive:true});
+@@ -185,15 +239,18 @@ async function command(run,label,program,args,extraEnv={}){
+  const start=performance.now(),started=new Date().toISOString();let reason=null;
+  const child=spawn(program,args,{cwd:root,env,stdio:['ignore','pipe','pipe'],detached:true});
+  child.stdout.on('data',b=>{fs.writeSync(out,b);process.stdout.write(b);});child.stderr.on('data',b=>{fs.writeSync(err,b);process.stderr.write(b);});
+- const timer=setTimeout(()=>{reason='WALL_BUDGET';try{process.kill(-child.pid,'SIGTERM');}catch{}},cfg.budgets.child_seconds*1000);
++ const timer=setTimeout(()=>{reason='WALL_BUDGET';try{process.kill(-child.pid,'SIGTERM');}catch{}},wallBudgetSeconds * 1000);
+  const result=await new Promise(resolve=>{child.once('error',e=>resolve({code:null,error:String(e)}));child.once('close',(code,signal)=>resolve({code,signal}));});
+  clearTimeout(timer);fs.closeSync(out);fs.closeSync(err);
+- const r={program,args,...result,reason,started,wall_ms:performance.now()-start,
++ const r={program,args,...result,reason,started,wall_ms:performance.now()-start,wall_budget_seconds: wallBudgetSeconds,
+   environment:{CARGO_TARGET_DIR:env.CARGO_TARGET_DIR??null,CARGO_BUILD_JOBS:env.CARGO_BUILD_JOBS,RAYON_NUM_THREADS:env.RAYON_NUM_THREADS},
+   stdout:base+'.stdout.log',stderr:base+'.stderr.log'};writeNew(base+'.command.json',r);
+  assert.equal(result.code,0,label+' failed; logs preserved');assert.equal(reason,null);return r;
+ }
+-export function currentSourcePins(){return sourceFiles.map(p=>({path:p,sha256:sha(read(p))}));}
++export function currentSourcePins(){
++ const pinned=[...new Set([...sourceFiles,...approvedPatches])];
++ return pinned.map(p=>({path:p,sha256:sha(read(p))}));
++}
+ export function binaryReproducibility(run){
+  const binary=runPath(run)+'/build-target/release/stage1_multibatch_materials',exists=fs.existsSync(absolute(binary));
+  const historical=load('experiments/stage1_multibatch_raw/gate-a-20261117-03/gate_a.json').binary_sha256;
+@@ -214,7 +271,7 @@ export async function gateA(run){
+  runPath(run);assert.ok(!fs.existsSync(absolute(run)),'never overwrite a run');const version=validateConfig({phase:'A',run});
+  const before=protectedSnapshot({phase:'A',run});writeNew(run+'/protected_files.json',before);
+  const commands=[];const base={gate:'A',scope:'COMPILE_ONLY',run,base_commit:git('rev-parse','HEAD'),branch:git('branch','--show-current'),
+-  config_sha256:sha(read(configPath)),source_pins:sourceFiles.map(p=>({path:p,sha256:sha(read(p))})),
++  config_sha256:sha(read(configPath)),source_pins:currentSourcePins(),
+   environment:{cpu:os.cpus()[0].model,memory_bytes:os.totalmem(),platform:os.platform(),arch:os.arch(),node:process.version},
+   setup_count:0,proof_generation_count:0,evm_transaction_count:0,tests:'NOT_RUN_GATE_B_REQUIRES_CONFIRMATION',automatic_commit:false,automatic_push:false};
+  try{
+@@ -233,6 +290,7 @@ export async function gateA(run){
+     c_requires_execution_and_audit:true,c_readonly_inputs:['aRun','resultsPathForRun(aRun)','bRun','resultsPathForRun(bRun)'],
+     rss_fields:['setup.worker_peak_rss_mib','batches[].peak_rss_mib'],child_rss_mib:cfg.budgets.child_rss_mib,runtime_status:'RUNTIME_PENDING_B_C'},
+    runtime_checks:'NOT_EXECUTED_PENDING_B_C'});checkProtected(before);
++  assert.deepEqual(currentSourcePins(),base.source_pins,'approved source patches must stay frozen during Gate A');
+   writeNew(run+'/gate_a.json',{...base,status:'PASS_GATE_A_COMPILE_ONLY',commands,
+    vm_creation_count:0,version,static_checks_sha256:sha(read(run+'/static_checks.json')),storage_layout_sha256:sha(read(run+'/storage_layout.json')),
+    binary_reproducibility_sha256:sha(read(run+'/binary_reproducibility.json')),
+@@ -427,6 +485,9 @@ export async function vmWorker(run,aRun,route,k,negative){
+    if(route==='legacy'){
+     await reject('illegal_batch_index',single(0,m.ballots[0].old_state,undefined,undefined,2),'NEXT_INDEX');
+     await reject('replacement_ballot_proof',single(0,m.ballots[0].old_state,m.ballots[1].eip.proof_neg_a_eip2537_hex),'INVALID_GROTH16');
++    // Keep V1's position and membership path, replace the complete ballot by distinct, valid V5.
++    await reject('complete_valid_ballot_replacement',single(0,m.ballots[0].old_state,
++     m.ballots[4].eip.proof_neg_a_eip2537_hex,m.ballots[4].eip.public_inputs_be_hex),'BATCH_MEMBERSHIP');
+     const firstTwo=[];
+     for(let i=0;i<2;i++){const {entry}=await tx(i===0?'recovery_alice':'recovery_bob','recovery',single(i,m.ballots[i].old_state),receiver);assert.equal(entry.status,1);const s=await snapshot();assert.equal(s.count,i+1);assert.equal(s.next,1);assert.deepEqual(s.state,m.ballots[i].new_state);firstTwo.push(entry.hash);}
+     recovery.push({step:1,action:'Alice then Bob accepted',transaction_hashes:firstTwo,checkpoint:await snapshot()});
+@@ -442,6 +503,8 @@ export async function vmWorker(run,aRun,route,k,negative){
+    }else{
+     let b=batchAt(m,0);b.index=2;await reject('illegal_batch_index',data(b),'NEXT_INDEX');
+     b=batchAt(m,0);b.ballotProofs[0]=b.ballotProofs[1];await reject('replacement_ballot_proof',data(b),'INVALID_GROTH16');
++    b=batchAt(m,0);b.ballotProofs[0]=m.ballots[4].eip.proof_neg_a_eip2537_hex;b.ballotInputs[0]=m.ballots[4].eip.public_inputs_be_hex;
++    await reject('complete_valid_ballot_replacement',data(b),'BATCH_ROOT');
+     b=batchAt(m,0);b.ballotInputs[1]=b.ballotInputs[0];await reject('within_batch_duplicate_nf',data(b),'DUPLICATE_NULLIFIER');
+     b=batchAt(m,0);b.newState=m.batches[0].omission_a_new_state;
+     const rejected=await reject('omission_a',data(b),route==='state_proof'?'INVALID_GROTH16':'DIRECT_FOLD_MISMATCH');
+@@ -481,17 +544,20 @@ export async function nextGate(gate,run,aRun,bRun,approved){
+  const before=protectedSnapshot({phase:gate,run,aRun,bRun});writeNew(run+'/protected_files.json',before);
+  try{
+   writeNew(run+'/request.json',{gate,identity:`${gate}/${path.basename(run)}/${new Date().toISOString()}`,config_sha256:sha(read(configPath)),a_run:aRun,b_run:bRun??null,approved,formal:gate==='C'});
+-  await command(run,'materials',absolute(a.binary),['prepare',run+'/materials',gate,'--approved',gate]);
++  const proofCount=gate==='B'?2:8;
++  const materialsWallBudget=(1 + proofCount) * cfg.budgets.child_seconds + 120;
++  await command(run,'materials',absolute(a.binary),['prepare',run+'/materials',gate,'--approved',gate],{},materialsWallBudget);
+   const ks=gate==='B'?cfg.regression_k:cfg.formal_k;
+   for(const k of ks)for(const route of cfg.routes)await command(run,`positive-k${k}-${route}`,process.execPath,
+    ['--max-old-space-size='+cfg.budgets.node_heap_mib,absolute(scriptPath),'--vm',run,aRun,route,String(k),'positive']);
+   if(gate==='B')for(const route of cfg.routes)await command(run,'negative-'+route,process.execPath,
+    ['--max-old-space-size='+cfg.budgets.node_heap_mib,absolute(scriptPath),'--vm',run,aRun,route,'2','negative']);
+   for(const k of ks){const rows=cfg.routes.map(r=>load(run+`/sessions/positive-k${k}-${r}.json`));for(const r of rows.slice(1))assert.deepEqual(r.final_checkpoint,rows[0].final_checkpoint);}
++  assert.deepEqual(currentSourcePins(),a.source_pins,'all approved patches including docs must still match Gate A');
+   checkProtected(before);writeNew(run+`/gate_${gate.toLowerCase()}.json`,{gate,run,a_run:aRun,b_run:bRun??null,status:gate==='B'?'PASS_GATE_B_REGRESSION_ONLY':'PASS_GATE_C_FORMAL_EXECUTION',
+    config_sha256:sha(read(configPath)),source_pins:currentSourcePins(),positive_vm_count:ks.length*3,
+    negative_vm_count:gate==='B'?3:0,historical_files_unchanged:true,next_gate:gate==='B'?'C_REQUIRES_NEW_HUMAN_CONFIRMATION':'D_REQUIRES_NEW_HUMAN_CONFIRMATION'});
+- }finally{checkReadonlyInputs(before.readonly_inputs);}
++ }finally{checkReadonlyInputs(before.readonly_inputs);assert.deepEqual(currentSourcePins(),a.source_pins,'source pins changed during B/C');}
+  console.log('PASS Gate '+gate+'; STOP for human confirmation.');
+ }
+ async function main(){
+diff --git a/docs/STAGE1_MULTIBATCH.md b/docs/STAGE1_MULTIBATCH.md
+index 81f8086..08d1dc0 100644
+--- a/docs/STAGE1_MULTIBATCH.md
++++ b/docs/STAGE1_MULTIBATCH.md
+@@ -248,3 +248,112 @@ A-01 results仍不存在，另核对3018项原有Git可见文件与论文哈希
+ 4. 部署＋认证＋接收＋冻结在哪个实测K首次观察到净节省？
+ 5. 本次同源Setup、逐批Witness/Prove/Verify、RSS和通信成本是多少，如何划定口径？
+ 6. 哪些结论只属于回退原型，哪些完整SnarkPack/生产部署指标仍然未测？
++
++## A-05 当前执行规范（上方A-01至A-04全部保留为历史）
++
++本节为当前有效准入说明；上方A-04命令与“当前门槛”描述均属于当轮历史，不应作为本轮运行入口。
++固定四代提交链：`72ccc561d8934b0d761e17764ef9012bfe012626`
++→ `2444269b52573d9c2f3e551ef7d6b8bb9d0bd008`（59A）
++→ `f086879c4dc247e528d62d2253d76d6afd603669`（3M+31A）
++→ `3f8813c9d69d0e45631e9acb7bbb247a1119f511`（3M+32A）。
++对应grandparent/parent/HEAD的Tree分别固定为
++`92f7331a7d9b534d17108409342851381811aa52`、`3b8b57b375bb0391afe431935057a2711c5608e9`、
++`a21e84e05a2c653218a50ec99769b81766d12b91`，三段静态清单与版本校验仅在runner定义，auditor复用共享函数。
++
++仅修改runner、auditor和本文档；仅新建 `gate-a-20261117-05` 的raw/results归档。
++完整保护A-01至A-04旧归档及ignored构建缓存，A-01 results仍须不存在；不改Solidity、Rust、电路、VK、
++研究Setup、fixtures、Cargo.lock、历史数据或论文。当前仅允许编译/静态核查/独立预检，
++必须保持Setup=0、Prove=0、VM=0、交易=0。
++
++### 全局不提交与源文件锁定
++
++Gate A-05、B、C、D全部结束前，严禁 `git commit` 或 `git push`，不能因归档上传再触发版本锁定循环。
++3个批准文件保留为未提交补丁，其哈希由 `currentSourcePins()` 对 `sourceFiles ∪ approvedPatches` 去重后持久化；
++本文件也必须纳入 `gate_a.json`、`preflight_b.json` 及后续门控的source_pins。
++因此本文档必须在A-05编译前定稿，此后不再追加实测时间或编辑任何补丁；真实执行结果保存在新运行JSON与日志。
++Gate B/C开始前与结束后都必须与A-05的完整source_pins一致，不能修改文档后悄然更新基准。
++不同于补丁，独立运行目录允许按各阶段规则生成，但A/B只读输入与所有历史档案仍须递归前后相同。
++
++### 完整合法选票替换与现有负例的区别
++
++保留 `replacement_ballot_proof`：仅用其他证明替换V1的Groth16证明，保留V1输入，预期INVALID_GROTH16。
++新增 `complete_valid_ballot_replacement`：用第二批的合法V5（`m.ballots[4]`）同时替换第一批V1的公开输入和证明，
++保持原位置0及原BatchRoot/成员路径；Legacy预期BATCH_MEMBERSHIP，Direct Fold与State Proof预期BATCH_ROOT。
++不能使用V2替换V1：批内已经含V2，合约先执行重复Nullifier检查，会触发DUPLICATE_NULLIFIER而无法独立测根绑定。
++V5与第一批其他票的Nullifier不同，材料生成阶段仍需验证全部原始选票证明，不能用非法选票冒充“完整合法替换”。
++三条路线均通过统一reject帮助函数记录完整before/after状态、revert原因、收据与零事件回滚；独立auditor再次强制核对。
++本轮只接入与静态检查该用例，不声称已经在EVM执行并拒绝，运行时结果待Gate B。
++
++`legacy_incomplete_freeze`测试的是Alice/Bob已成功、批次未满额时提前冻结被拒绝，不能冒充批次内漏计证明。
++Direct Fold/State Proof的Omission-A则在接受第一批之前修改newState以少计批内选票，测试直接折叠或状态证明的拒绝。
++Legacy仍保留Alice/Bob成功→Charlie首次失败回滚→Charlie重试→David成功→批次完成的五步恢复检查。
++
++### 本轮严格执行顺序
++
++```sh
++node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-05
++node contracts/scripts/stage1_multibatch_compare.mjs --preflight B --a-run experiments/stage1_multibatch_raw/gate-a-20261117-05 --b-run gate-b-20261117-01
++node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-05
++```
++
++三条命令不可颠倒；A审计依赖预检文件，所有写入使用全新05目录，不覆盖01至04。
++Rust固定 `+1.99.1`、Release opt-level=1、独立CARGO_TARGET_DIR；Solidity 0.8.30配置不变。
++新二进制必须真实存在，SHA256与A-03基准
++`da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`一致；不一致立即停止。
++只有PASS_GATE_A_COMPILE_ONLY、PASS_GATE_A_ARTIFACT_AUDIT和READY_FOR_HUMAN_APPROVAL全部满足后，
++才输出摘要并停止。READY不是Gate B通过，也不构成本轮运行Gate B的授权；B命令待人工另行下发。
++
++Gate B仅做完整功能与证据回归：材料、6正向/3负向独立会话、状态/NF连续性、回滚、收据计费及只读保护；
++不输出性能优劣结论。K=2与历史Stage2（仅Direct Fold/State Proof）的部署、认证、接收、冻结分项成本差异，
++统一保留在Gate D的 `deriveD()` 执行，不将其前移到B。完成B后仍需停止并等待C的独立批准。
++
++## A-06 当前执行规范（A-01至A-05原文全部保留为历史归档规范）
++
++本节为当前有效规范；A-05仅为历史归档规范，不再是新执行的准入入口。
++本地HEAD保持 `3f8813c9d69d0e45631e9acb7bbb247a1119f511`，禁止commit、push、reset或clean。
++只修改runner、auditor和本文档，只新建 `gate-a-20261117-06` raw/results目录；
++不改Solidity、Rust、电路、VK、研究Setup、配置、Cargo.lock、fixtures、历史结果或论文。
++
++### B-01失败归档与外层调度预算
++
++`gate-b-20261117-01`已因外层materials总预算600秒触发WALL_BUDGET/SIGTERM，
++当时Setup worker墙钟实测38.782秒、峰值RSS 4465.719 MiB，随后仍在第1批证明阶段。
++该Setup worker墙钟与仅参数生成的35.465秒不同；不能把半成品视为B通过或正式性能样本。
++失败原始日志、Setup与半成品全部只读保留，不复用、不删除、不改写。
++
++`command()`新增独立wallBudgetSeconds参数，默认仍为cfg.budgets.child_seconds（600秒）；
++仅nextGate的materials调用使用 `(1 + proofCount) * cfg.budgets.child_seconds + 120`：
++Gate B的proofCount=2，对应1920秒；Gate C的proofCount=8，对应5520秒。
++120秒涵盖材料预处理与进程调度的运行缓冲，并非数学绝对上限，也不保证证明一定完成。
++所有命令日志新增wall_budget_seconds，独立审计核对materials预算、成功退出、无超时原因、
++正墙钟耗时及未超过预算，并核对Setup加逐批worker数量为1+proofCount。
++
++Rust内层单个Worker仍使用名义600秒Worker预算与16384 MiB RSS上限，未修改Rust或配置。
++超时由后台每250ms轮询 `t.elapsed().as_secs() > 600` 触发，实际终止时刻可能略超600.000秒。
++Setup与每批Prove的独立进程RSS仍须在(0,16384] MiB内；本轮不生成这些新的运行时指标。
++
++### 12项历史快照与新源文件哈希
++
++runner递归保护A-01至A-05以及失败B-01的raw/results共12项路径，包括ignored构建缓存。
++其中A-01与B-01的results须不存在，其余10项须存在；这些历史目录虽获工作区白名单准入，
++仍受完整目录清单与内容SHA-256前后核验，绝不授权修改历史文件。
++auditor独立硬编码同一12项清单并核对存在性，不仅依赖runner提供的清单。
++原有三代静态变更清单、四代提交链、固定Tree和未授权路径拒绝规则保持不变。
++
++A-06编译前定稿全部3个批准补丁，并在currentSourcePins()中与配置、Rust及Solidity一并持久锁定。
++本文档不在编译后追加实测耗时；真实命令、计时、哈希、预检和审计结果只写入新A-06归档。
++本机新二进制必须位于A-06自己的build-target，且SHA-256与A-03不可变基准及gate_a.json一致：
++`da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`。
++
++### 本轮只编译、预检与审计
++
++```sh
++node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-06
++node contracts/scripts/stage1_multibatch_compare.mjs --preflight B --a-run experiments/stage1_multibatch_raw/gate-a-20261117-06 --b-run gate-b-20261117-02
++node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-06
++```
++
++严格按上述顺序逐条执行，前一步成功才进入下一步；不创建B-02 raw/results目录。
++最终须分别得到PASS_GATE_A_COMPILE_ONLY、READY_FOR_HUMAN_APPROVAL和PASS_GATE_A_ARTIFACT_AUDIT。
++本轮Setup=0、Prove=0、VM=0、交易=0；静态接线通过不等于运行时预算或密码学测试已通过。
++输出执行摘要与3个批准文件的完整git diff后立即停止，待人工核验后另行放行B-02，禁止自动进入B/C。
+diff --git a/scripts/stage1_multibatch_audit.mjs b/scripts/stage1_multibatch_audit.mjs
+index ccf28d8..27c3209 100644
+--- a/scripts/stage1_multibatch_audit.mjs
++++ b/scripts/stage1_multibatch_audit.mjs
+@@ -30,6 +30,8 @@ function checkA(run){
+  for(const field of gasFields)assert.ok(s.includes(field+':'),field+' output wiring');
+  for(const expression of ['r.execResult.gasRefund??0n','blockNumber+=1n','blockGasUsed:0n','getCalldataFloorGas(signed,sender)',
+   'used<=BigInt(cfg.block_gas_limit)','common.param(\'maxRefundQuotient\')'])assert.ok(s.includes(expression),expression);
++ for(const expression of ['wallBudgetSeconds * 1000','wall_budget_seconds: wallBudgetSeconds',
++  '(1 + proofCount) * cfg.budgets.child_seconds + 120'])assert.ok(s.includes(expression),'materials wall budget wiring '+expression);
+  const preflight=load(run+'/preflight_b.json');verifyPreflightB(run,preflight.b_run);
+  assert.deepEqual(preflight,load(resultsPathForRun(run)+'/preflight_b.json'));assert.ok(preflight.future_directories.every(p=>!fs.existsSync(path.join(root,p.path))));
+  assert.ok(preflight.commands.every(c=>c.code===0));
+@@ -37,17 +39,34 @@ function checkA(run){
+  // Runtime code paths are inspected here, never executed as functional tests.
+  for(const e of ['verifyPreflightB(aRun,path.basename(run))','verifyGateB(bRun)','protectedSnapshot({phase:gate,run,aRun,bRun})'])assert.ok(s.includes(e),e);
+  for(const e of ['m.setup.worker_peak_rss_mib<=cfg.budgets.child_rss_mib','b.peak_rss_mib<=cfg.budgets.child_rss_mib'])assert.ok(self.includes(e),e);
+- checkProtected(load(run+'/protected_files.json'));
++ assert.ok(a.source_pins.some(p=>p.path==='docs/STAGE1_MULTIBATCH.md'),'approved documentation must be persistently pinned');
++ assert.equal(s.split("await reject('complete_valid_ballot_replacement'").length-1,2,'Legacy and both batch routes wired');
++ for(const expression of ['m.ballots[4].eip.proof_neg_a_eip2537_hex','m.ballots[4].eip.public_inputs_be_hex',"'BATCH_MEMBERSHIP'","'BATCH_ROOT'"])
++  assert.ok(s.includes(expression),'complete valid V5 replacement wiring '+expression);
++ const expectedHistoryDirs=[
++  'experiments/stage1_multibatch_raw/gate-a-20261117-01','results/stage1_multibatch/gate-a-20261117-01',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-02','results/stage1_multibatch/gate-a-20261117-02',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-03','results/stage1_multibatch/gate-a-20261117-03',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-04','results/stage1_multibatch/gate-a-20261117-04',
++  'experiments/stage1_multibatch_raw/gate-a-20261117-05','results/stage1_multibatch/gate-a-20261117-05',
++  'experiments/stage1_multibatch_raw/gate-b-20261117-01','results/stage1_multibatch/gate-b-20261117-01'
++ ].sort();
++ const protectedManifest=load(run+'/protected_files.json');
++ assert.deepEqual(protectedManifest.archives.map(x=>x.path).sort(),expectedHistoryDirs,'exact historical archive inventory');
++ const expectedAbsent=new Set(['results/stage1_multibatch/gate-a-20261117-01','results/stage1_multibatch/gate-b-20261117-01']);
++ for(const archive of protectedManifest.archives)
++  assert.equal(archive.exists,!expectedAbsent.has(archive.path),'historical archive existence mismatch: '+archive.path);
++ checkProtected(protectedManifest);
+  const acceptance=[
+-  {id:1,item:'G18 / parent / HEAD chain and both fixed trees',status:'PASS_STATIC'},
+-  {id:2,item:'Two fixed inventories: 59A and 3M+31A',status:'PASS_STATIC'},
+-  {id:3,item:'Dynamic paths, every phase call site, A/B read-only inputs in C, D source freeze',status:'PASS_STATIC'},
+-  {id:4,item:'Recursive A-01/02/03 archives including ignored caches and absent result A-01',status:'PASS_STATIC'},
++  {id:1,item:'Four-commit chain and three explicitly named fixed trees',status:'PASS_STATIC'},
++  {id:2,item:'Three fixed inventories: 59A, 3M+31A and 3M+32A',status:'PASS_STATIC'},
++  {id:3,item:'Dynamic paths, phase call sites, A/B read-only inputs, all three patch hashes frozen',status:'PASS_STATIC'},
++  {id:4,item:'Recursive A-01..A-05 and B-01 archives including ignored caches; A-01/B-01 results absent.',status:'PASS_STATIC'},
+   {id:5,item:'Raw Legacy EVM refund counter; no zero-refund assumption',status:'PASS_STATIC'},
+   {id:6,item:'Per-transaction blocks, BigInt 14 fields and receipt identities',status:'PASS_STATIC',runtime_status:'RUNTIME_PENDING_B'},
+   {id:7,item:'Prague 2537/3529/7623 active; 8037 inactive; quotient 5',status:'PASS_STATIC'},
+   {id:8,item:'Compiler storage slots and offsets 0/8/16/17',status:'PASS_COMPILE'},
+-  {id:9,item:'VM/context/C-VOTE boundaries, strong preflight hashes, dual C gate, RSS guards',status:'PASS_STATIC',runtime_status:['RUNTIME_PENDING_B','RUNTIME_PENDING_C']},
++  {id:9,item:'V5 complete replacement + proof-only replacement, VM/context boundaries, hash gates and RSS guards',status:'PASS_STATIC',runtime_status:['RUNTIME_PENDING_B','RUNTIME_PENDING_C']},
+   {id:10,item:'Rust +1.99.1 Release opt-level=1, solc 0.8.30, A-03 binary reproducibility',status:'PASS_COMPILE'},
+   {id:11,item:'Independent Gate B preflight only',status:'READY_FOR_HUMAN_APPROVAL'}];
+  return {status:'PASS_GATE_A_ARTIFACT_AUDIT',gate:'A',config_sha256:a.config_sha256,
+@@ -58,6 +77,13 @@ function checkA(run){
+ }
+ function checkMaterials(run,gate){
+  const m=load(run+'/materials/materials.json');assert.equal(m.phase,gate);assert.equal(m.state_proofs_generated,gate==='B'?2:8);
++ const materialCommand=load(run+'/logs/materials.command.json');
++ const proofCount=gate==='B'?2:8;
++ const expectedWallBudgetSeconds=(1 + proofCount) * cfg.budgets.child_seconds + 120;
++ assert.equal(materialCommand.wall_budget_seconds,expectedWallBudgetSeconds);
++ assert.equal(materialCommand.code,0);assert.equal(materialCommand.reason,null);
++ assert.ok(materialCommand.wall_ms>0);assert.ok(materialCommand.wall_ms<=expectedWallBudgetSeconds*1000);
++ assert.equal(m.commands.length,1+proofCount);
+  assert.equal(m.archived_state_proofs_reused,0);assert.equal(m.all_state_proofs_fresh,true);assert.equal(m.serial_workers,true);
+  assert.equal(m.config_sha256,sha(read(configPath)));assert.equal(m.request_sha256,sha(read(run+'/materials/request.json')));
+  assert.equal(m.ballots.length,32);assert.equal(new Set(m.ballots.map(b=>b.nullifier)).size,32);
+@@ -148,6 +174,8 @@ function checkRun(run,gate){
+   const r=load(run+`/sessions/negative-k2-${route}.json`);assert.equal(r.kind,'NEGATIVE_ONLY');assert.equal(r.status,'PASS');r.transactions.forEach(transactionCheck);
+   for(const n of r.negatives){assert.deepEqual(n.before,n.after);const t=r.transactions.find(t=>t.hash===n.transaction_hash);assert.equal(t.status,0);assert.equal(t.exception,'revert');assert.equal(t.revert_reason,n.reason);assert.equal(t.logs.length,0);}
+   for(const name of ['illegal_batch_index','replacement_ballot_proof','within_batch_duplicate_nf','stale_old_state','cross_batch_duplicate_nf','receive_after_freeze'])assert.ok(r.negatives.some(n=>n.case===name));
++  const replacement=r.negatives.find(n=>n.case==='complete_valid_ballot_replacement');assert.ok(replacement,'complete valid ballot replacement required for '+route);
++  assert.equal(replacement.reason,route==='legacy'?'BATCH_MEMBERSHIP':'BATCH_ROOT');assert.deepEqual(replacement.before,replacement.after);
+   if(route==='legacy'){assert.deepEqual(r.recovery.map(s=>s.step),[1,2,3,4,5]);assert.ok(r.negatives.some(n=>n.case==='legacy_incomplete_freeze'));assert.ok(r.negatives.some(n=>n.case==='charlie_first_attempt'));
+    assert.deepEqual(r.recovery.map(s=>s.checkpoint.count),[2,2,3,4,4]);assert.deepEqual(r.recovery.map(s=>s.checkpoint.next),[1,1,1,2,2]);}
+   else assert.ok(r.negatives.some(n=>n.case==='omission_a'));
+@@ -225,7 +253,8 @@ function main(){
+    assert.equal(new Set([...v.rows,...v.negatives].map(r=>r.vm_identity)).size,9);
+    result={status:'PASS_GATE_B_EVIDENCE_AUDIT_ONLY',positive_vm_count:6,negative_vm_sessions:3,independent_vm_count:9,
+     negative_scope:'3 independent VM sessions, each containing multiple attack scenarios',gas_receipt_audit:'PASS',
+-    config_sha256:sha(read(configPath)),source_pins:currentSourcePins(),formal_performance_samples:0};
++    config_sha256:sha(read(configPath)),source_pins:currentSourcePins(),formal_performance_samples:0,
++    audit_scope:'Functional and evidence regression only; no performance ranking or historical Stage2 cost comparison. K2 cost deltas belong to Gate D deriveD.'};
+   }
+   else{assert.equal(f['--approved'],'D','Gate D requires explicit approval');assert.equal(rawBefore.exists,true);result=deriveD(rawRun,run,check);}
+   checkReadonlyInputs(inputsBefore);assert.deepEqual(sourcePatchSnapshot(),sourceBefore,'no source modification during audit');

@@ -1,0 +1,70 @@
+{
+  "command": [
+    "/tmp/vv-pk-reuse-pilot/target/release/stage1_multibatch_pk_reuse_pilot",
+    "prove-batch-range",
+    "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch",
+    "B",
+    "1",
+    "2",
+    "--approved",
+    "B"
+  ],
+  "cwd": "/tmp/vv-pk-reuse-pilot/worktree",
+  "outer_wall_semantics": "spawn_to_observed_exit",
+  "nominal_poll_interval_ms": 250,
+  "polling_overhead_bound_ms": null,
+  "host_physical_mem_bytes": 34359738368,
+  "host_physical_mem_mib": 32768.0,
+  "swap_before": "total = 8192.00M  used = 7017.69M  free = 1174.31M  (encrypted)",
+  "vm_stat_before": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                               84750.\nPages active:                            415974.\nPages inactive:                          449541.\nPages speculative:                        12858.\nPages throttled:                              0.\nPages wired down:                        210264.\nPages purgeable:                           7887.\n\"Translation faults\":               31826680657.\nPages copy-on-write:                 1249600823.\nPages zero filled:                  11679007192.\nPages reactivated:                    688923438.\nPages purged:                         229799109.\nFile-backed pages:                       241729.\nAnonymous pages:                         636644.\nPages stored in compressor:             2494427.\nPages occupied by compressor:            869698.\nDecompressions:                       737199328.\nCompressions:                         792690269.\nPageins:                             1832559422.\nPageouts:                               8587924.\nSwapins:                                1737136.\nSwapouts:                               3327601.\n",
+  "swap_scope": "host-global before/after; changes cannot be attributed exclusively to pilot",
+  "pid": 69865,
+  "outer_wall_ns": 621501246625,
+  "outer_wall_ms": 621501.246625,
+  "returncode": 0,
+  "termination_signal": null,
+  "sampled_peak_rss_mib": 6173.09375,
+  "sampled_peak_time_utc": "2026-11-18T06:32:15.056921Z",
+  "rss_sample_count": 2417,
+  "rss_sampling_errors": 0,
+  "per_phase_rss": {
+    "spawn": {
+      "sample_count": 3,
+      "sampled_peak_rss_mib": 0.03125,
+      "first_rss_mib": 0.03125,
+      "last_rss_mib": 0.03125
+    },
+    "pk_load": {
+      "sample_count": 2240,
+      "sampled_peak_rss_mib": 1567.421875,
+      "first_rss_mib": 1.875,
+      "last_rss_mib": 784.1875
+    },
+    "batch_1": {
+      "sample_count": 87,
+      "sampled_peak_rss_mib": 5610.890625,
+      "first_rss_mib": 1196.4375,
+      "last_rss_mib": 3497.625
+    },
+    "batch_2": {
+      "sample_count": 86,
+      "sampled_peak_rss_mib": 6173.09375,
+      "first_rss_mib": 2754.6875,
+      "last_rss_mib": 4297.59375
+    },
+    "worker_cleanup": {
+      "sample_count": 1,
+      "sampled_peak_rss_mib": 2530.734375,
+      "first_rss_mib": 2530.734375,
+      "last_rss_mib": 2530.734375
+    }
+  },
+  "swap_after": "total = 8192.00M  used = 7017.69M  free = 1174.31M  (encrypted)",
+  "vm_stat_after": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                              368649.\nPages active:                            244760.\nPages inactive:                          253796.\nPages speculative:                          885.\nPages throttled:                              0.\nPages wired down:                        191648.\nPages purgeable:                           3113.\n\"Translation faults\":               31836377405.\nPages copy-on-write:                 1250295612.\nPages zero filled:                  11682204337.\nPages reactivated:                    690117048.\nPages purged:                         230010870.\nFile-backed pages:                       135207.\nAnonymous pages:                         364234.\nPages stored in compressor:             2738085.\nPages occupied by compressor:            982916.\nDecompressions:                       738037215.\nCompressions:                         793800642.\nPageins:                             1833631152.\nPageouts:                               8589963.\nSwapins:                                1737264.\nSwapouts:                               3327601.\n",
+  "process_config_ns": 7515209,
+  "process_config_ms": 7.515209,
+  "worker_total_ns": 620603574042,
+  "worker_total_ms": 620603.574042,
+  "outer_residual_ns": 890157374,
+  "outer_residual_ms": 890.157374
+}

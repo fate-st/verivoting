@@ -1,0 +1,152 @@
+{
+  "status": "PASS_ORIGINAL_AND_INPUTS_UNCHANGED",
+  "checked_at": "2026-11-18T06:34:13.564Z",
+  "original_head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+  "head_and_status_exact_match": true,
+  "index_unchanged": true,
+  "paper_unchanged": true,
+  "previous_profile_unchanged": true,
+  "all_untracked_hashes_unchanged": true,
+  "source_pins_unchanged": true,
+  "isolated_untracked_paths": [
+    "crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs",
+    "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/batch_1.json",
+    "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/batch_2.json",
+    "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/request.json",
+    "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/research_pk.bin",
+    "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/setup.json"
+  ],
+  "request_sha256_equal": true,
+  "inputs": [
+    {
+      "name": "research_pk.bin",
+      "bytes": 847800624,
+      "historical_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+      "pilot_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+      "equal": true
+    },
+    {
+      "name": "request.json",
+      "bytes": 318,
+      "historical_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+      "pilot_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+      "equal": true
+    },
+    {
+      "name": "setup.json",
+      "bytes": 344,
+      "historical_sha256": "e6ec81ab5944f064cbb4c93bc9dbcbaacf63b1958fa56d39892263c39f88bc8d",
+      "pilot_sha256": "e6ec81ab5944f064cbb4c93bc9dbcbaacf63b1958fa56d39892263c39f88bc8d",
+      "equal": true
+    }
+  ],
+  "protected_paths": [
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-01",
+      "status": "EXISTS",
+      "entry_count": 1970,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-01.snapshot.txt",
+      "sha256": "9fca95613604bc85299ed2691723cc3d0639618ccec87d3ba1f2599cfc589257"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-01",
+      "status": "NOT_PRESENT"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-02",
+      "status": "EXISTS",
+      "entry_count": 1971,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-02.snapshot.txt",
+      "sha256": "26db2668ea46a605821f67e6154b2b4eeb5775aa22ad7906e778594ee14fcdc6"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-02",
+      "status": "EXISTS",
+      "entry_count": 3,
+      "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-02.snapshot.txt",
+      "sha256": "c748f58d4b417e644c75bae7fe6f47aca6c688bf37c5eb3074d313108783a54f"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-03",
+      "status": "EXISTS",
+      "entry_count": 1980,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-03.snapshot.txt",
+      "sha256": "5d12a6236ee84e2bcc96072cd086b9d424ece88165f0a9ed74cbc9e9f017e413"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-03",
+      "status": "EXISTS",
+      "entry_count": 5,
+      "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-03.snapshot.txt",
+      "sha256": "ab110b069bb33d62989526ab2ddba62da7622573028319c103cc7656d153c2c3"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-04",
+      "status": "EXISTS",
+      "entry_count": 1981,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-04.snapshot.txt",
+      "sha256": "663a2d09bf152b3ff04ab6b6a7f91d4baacb5aa0af74633022922e4c8bae9f90"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-04",
+      "status": "EXISTS",
+      "entry_count": 5,
+      "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-04.snapshot.txt",
+      "sha256": "c398fb112dcbbb891ecb9d9f35a6616235c2eaa700232289c3872a87f9497bea"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-05",
+      "status": "EXISTS",
+      "entry_count": 1981,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-05.snapshot.txt",
+      "sha256": "a73d794c95d1d4c31d9f3a06b1c9f46b210f81c1d0ba5e39d0926bc743b6a72c"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-05",
+      "status": "EXISTS",
+      "entry_count": 5,
+      "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-05.snapshot.txt",
+      "sha256": "c6eb5a7ed997f24566ecf8d00d019008d3cf233d492591ec056cf4014928bdce"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-01",
+      "status": "EXISTS",
+      "entry_count": 16,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-b-20261117-01.snapshot.txt",
+      "sha256": "99e00d934b2d23e8d3c61c7abe6bbeca541ee5efdbd36e62192431c45526c85e"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-b-20261117-01",
+      "status": "NOT_PRESENT"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-a-20261117-06",
+      "status": "EXISTS",
+      "entry_count": 1981,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-06.snapshot.txt",
+      "sha256": "6ab6fdca6b239b59d792770bb523060ec48b7ad8d48ba9f0ac7da77cd4f3b8b0"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-a-20261117-06",
+      "status": "EXISTS",
+      "entry_count": 7,
+      "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-06.snapshot.txt",
+      "sha256": "1910bc87adfaa3722c7996bc85d04b0f647e7b88db0c46c25e1d545228c19f97"
+    },
+    {
+      "path": "experiments/stage1_multibatch_raw/gate-b-20261117-02",
+      "status": "EXISTS",
+      "entry_count": 61,
+      "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-b-20261117-02.snapshot.txt",
+      "sha256": "dced9d6123a7664b00583db73a8a36a288b58cdb2054d2fe9f6348b59268f10a"
+    },
+    {
+      "path": "results/stage1_multibatch/gate-b-20261117-02",
+      "status": "EXISTS",
+      "entry_count": 6,
+      "manifest": "evidence/after/results__stage1_multibatch__gate-b-20261117-02.snapshot.txt",
+      "sha256": "60d4ed7290422ac9740e18eb1edf999caf813c568e457898aaf4bfa016120dc8"
+    }
+  ],
+  "gate_c": "NOT_AUTHORIZED_NOT_STARTED"
+}

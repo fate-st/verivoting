@@ -1,0 +1,799 @@
+{
+  "status": "PASS_REUSE_PILOT_ONLY",
+  "created_at": "2026-11-18T06:34:13.617Z",
+  "gate_c": "NOT_AUTHORIZED_NOT_STARTED",
+  "environment": {
+    "cpu": "Apple M4",
+    "logical_cpus": 10,
+    "physical_memory_bytes": 34359738368,
+    "platform": "darwin",
+    "arch": "arm64",
+    "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.1\nBuildVersion:\t\t24G231",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1",
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "node": "v23.11.0",
+    "python": "Python 3.13.3",
+    "release_opt_level": 1,
+    "CARGO_BUILD_JOBS": 2,
+    "RAYON_NUM_THREADS": 4
+  },
+  "compile": {
+    "command": [
+      "cargo",
+      "+1.99.1",
+      "build",
+      "--release",
+      "--locked",
+      "--offline",
+      "--bin",
+      "stage1_multibatch_pk_reuse_pilot"
+    ],
+    "cwd": "/tmp/vv-pk-reuse-pilot/worktree",
+    "returncode": 0,
+    "compile_wall_ns": 46444753208,
+    "compile_wall_ms": 46444.753208,
+    "environment": {
+      "CARGO_TARGET_DIR": "/tmp/vv-pk-reuse-pilot/target",
+      "CARGO_BUILD_JOBS": "2",
+      "RAYON_NUM_THREADS": "4",
+      "RUSTUP_TOOLCHAIN": "1.99.1"
+    },
+    "release_opt_level": 1
+  },
+  "source": {
+    "source": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs",
+    "sha256": "077f358687a6382832d9432fb38004d274e2bf4181bbf44c5df44d9fbe241622",
+    "diff_sha256": "c737b6544929d208455274e6a15c8b43b46581079689f481d7a2dc2d7042d43e",
+    "original_blob": "547d459670db3f9c15b833a1c24dc28f2cfe1602",
+    "pk_deserialize_call_sites": 1,
+    "immutable_pk": true,
+    "Cargo_changes": false,
+    "metadata_changes": [
+      "proof_origin truthfully denotes single-process reuse",
+      "rss_scope truthfully denotes cumulative process peak; keys unchanged"
+    ]
+  },
+  "request_sha256_equal": true,
+  "historical_request_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+  "pilot_request_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+  "pk_load_count": 1,
+  "pk_once_load_total_ms": 575703.350209,
+  "batch_1_pk_deserialize_ms": 0,
+  "batch_2_pk_deserialize_ms": 0,
+  "profile": {
+    "after_pk_load_peak_rss_mib": 1568.078125,
+    "batch_1_ark_verify_ms": 2.091083,
+    "batch_1_ark_verify_ns": 2091083,
+    "batch_1_completed_stages": [
+      "worker_input",
+      "request_bind",
+      "witness_diagnostic",
+      "proof_seed",
+      "prove",
+      "prepare_vk",
+      "ark_verify",
+      "proof_serialize",
+      "eip_export",
+      "omission_check",
+      "output_write"
+    ],
+    "batch_1_eip_export_ms": 0.084416,
+    "batch_1_eip_export_ns": 84416,
+    "batch_1_omission_check_ms": 0.004166,
+    "batch_1_omission_check_ns": 4166,
+    "batch_1_output_write_ms": 0.973542,
+    "batch_1_output_write_ns": 973542,
+    "batch_1_pk_deserialize_ms": 0,
+    "batch_1_pk_deserialize_ns": 0,
+    "batch_1_prepare_vk_ms": 1.256,
+    "batch_1_prepare_vk_ns": 1256000,
+    "batch_1_process_peak_rss_mib": 5610.890625,
+    "batch_1_proof_seed_ms": 0.048375,
+    "batch_1_proof_seed_ns": 48375,
+    "batch_1_proof_serialize_ms": 0.001292,
+    "batch_1_proof_serialize_ns": 1292,
+    "batch_1_prove_ms": 18374.457667,
+    "batch_1_prove_ns": 18374457667,
+    "batch_1_request_bind_ms": 0.457292,
+    "batch_1_request_bind_ns": 457292,
+    "batch_1_total_ms": 22628.008458,
+    "batch_1_total_ns": 22628008458,
+    "batch_1_unattributed_ms": 590.06525,
+    "batch_1_unattributed_ns": 590065250,
+    "batch_1_witness_diagnostic_ms": 3630.717666,
+    "batch_1_witness_diagnostic_ns": 3630717666,
+    "batch_1_worker_input_ms": 27.851709,
+    "batch_1_worker_input_ns": 27851709,
+    "batch_2_ark_verify_ms": 2.717166,
+    "batch_2_ark_verify_ns": 2717166,
+    "batch_2_completed_stages": [
+      "worker_input",
+      "request_bind",
+      "witness_diagnostic",
+      "proof_seed",
+      "prove",
+      "prepare_vk",
+      "ark_verify",
+      "proof_serialize",
+      "eip_export",
+      "omission_check",
+      "output_write"
+    ],
+    "batch_2_eip_export_ms": 0.083875,
+    "batch_2_eip_export_ns": 83875,
+    "batch_2_omission_check_ms": 0.004291,
+    "batch_2_omission_check_ns": 4291,
+    "batch_2_output_write_ms": 1.068041,
+    "batch_2_output_write_ns": 1068041,
+    "batch_2_pk_deserialize_ms": 0,
+    "batch_2_pk_deserialize_ns": 0,
+    "batch_2_prepare_vk_ms": 1.01175,
+    "batch_2_prepare_vk_ns": 1011750,
+    "batch_2_process_peak_rss_mib": 6173.09375,
+    "batch_2_proof_seed_ms": 0.069,
+    "batch_2_proof_seed_ns": 69000,
+    "batch_2_proof_serialize_ms": 0.001167,
+    "batch_2_proof_serialize_ns": 1167,
+    "batch_2_prove_ms": 18415.718209,
+    "batch_2_prove_ns": 18415718209,
+    "batch_2_request_bind_ms": 0.230875,
+    "batch_2_request_bind_ns": 230875,
+    "batch_2_total_ms": 22254.112084,
+    "batch_2_total_ns": 22254112084,
+    "batch_2_unattributed_ms": 564.000543,
+    "batch_2_unattributed_ns": 564000543,
+    "batch_2_witness_diagnostic_ms": 3242.451834,
+    "batch_2_witness_diagnostic_ns": 3242451834,
+    "batch_2_worker_input_ms": 26.755333,
+    "batch_2_worker_input_ns": 26755333,
+    "batch_stage_order": [
+      "worker_input",
+      "request_bind",
+      "witness_diagnostic",
+      "proof_seed",
+      "prove",
+      "prepare_vk",
+      "ark_verify",
+      "proof_serialize",
+      "eip_export",
+      "omission_check",
+      "output_write"
+    ],
+    "cache_scope": "Active cache following protected snapshots and PK SHA-256; not cold disk performance",
+    "completed_batches": [
+      1,
+      2
+    ],
+    "completed_load_stages": [
+      "pk_sha256",
+      "pk_open",
+      "pk_deserialize",
+      "pk_tail_check",
+      "vk_ark_hash"
+    ],
+    "error": null,
+    "evm_transaction_count": 0,
+    "gate_c": "NOT_AUTHORIZED_NOT_STARTED",
+    "historical_request_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+    "load_stage_order": [
+      "pk_sha256",
+      "pk_open",
+      "pk_deserialize",
+      "pk_tail_check",
+      "vk_ark_hash"
+    ],
+    "pilot_request_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+    "pk_deserialize_bytes_read": 847800624,
+    "pk_deserialize_ms": 574121.565333,
+    "pk_deserialize_ns": 574121565333,
+    "pk_deserialize_sys_cpu_ms": 6976.393,
+    "pk_deserialize_user_cpu_ms": 563436.369,
+    "pk_load_count": 1,
+    "pk_once_load_sys_cpu_ms": 7035.704000000001,
+    "pk_once_load_total_ms": 575703.350209,
+    "pk_once_load_total_ns": 575703350209,
+    "pk_once_load_unattributed_ms": 0.061877,
+    "pk_once_load_unattributed_ns": 61877,
+    "pk_once_load_user_cpu_ms": 564953.219,
+    "pk_open_ms": 0.053083,
+    "pk_open_ns": 53083,
+    "pk_scope": "One full canonical deserialize_compressed with unchanged validation, then immutable &ProvingKey reused sequentially; no per-batch decode",
+    "pk_sha256_ms": 1581.627416,
+    "pk_sha256_ns": 1581627416,
+    "pk_tail_check_ms": 0.0025,
+    "pk_tail_check_ns": 2500,
+    "process_config_ms": 7.515209,
+    "process_config_ns": 7515209,
+    "request_sha256_equal": true,
+    "rss_scope": "ru_maxrss process lifetime high-water mark; batch snapshots are cumulative, not independent batch peaks",
+    "setup_count": 0,
+    "status": "PASS_REUSE_PILOT_ONLY",
+    "unattributed_scope": "request hash comparison, progress logging, getrusage, loop bookkeeping, PK Drop after both batches",
+    "unattributed_worker_ms": 18.103291,
+    "unattributed_worker_ns": 18103291,
+    "vk_ark_hash_ms": 0.04,
+    "vk_ark_hash_ns": 40000,
+    "worker_peak_rss_mib": 6173.09375,
+    "worker_total_ms": 620603.574042,
+    "worker_total_ns": 620603574042
+  },
+  "outer": {
+    "command": [
+      "/tmp/vv-pk-reuse-pilot/target/release/stage1_multibatch_pk_reuse_pilot",
+      "prove-batch-range",
+      "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch",
+      "B",
+      "1",
+      "2",
+      "--approved",
+      "B"
+    ],
+    "cwd": "/tmp/vv-pk-reuse-pilot/worktree",
+    "outer_wall_semantics": "spawn_to_observed_exit",
+    "nominal_poll_interval_ms": 250,
+    "polling_overhead_bound_ms": null,
+    "host_physical_mem_bytes": 34359738368,
+    "host_physical_mem_mib": 32768,
+    "swap_before": "total = 8192.00M  used = 7017.69M  free = 1174.31M  (encrypted)",
+    "vm_stat_before": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                               84750.\nPages active:                            415974.\nPages inactive:                          449541.\nPages speculative:                        12858.\nPages throttled:                              0.\nPages wired down:                        210264.\nPages purgeable:                           7887.\n\"Translation faults\":               31826680657.\nPages copy-on-write:                 1249600823.\nPages zero filled:                  11679007192.\nPages reactivated:                    688923438.\nPages purged:                         229799109.\nFile-backed pages:                       241729.\nAnonymous pages:                         636644.\nPages stored in compressor:             2494427.\nPages occupied by compressor:            869698.\nDecompressions:                       737199328.\nCompressions:                         792690269.\nPageins:                             1832559422.\nPageouts:                               8587924.\nSwapins:                                1737136.\nSwapouts:                               3327601.\n",
+    "swap_scope": "host-global before/after; changes cannot be attributed exclusively to pilot",
+    "pid": 69865,
+    "outer_wall_ns": 621501246625,
+    "outer_wall_ms": 621501.246625,
+    "returncode": 0,
+    "termination_signal": null,
+    "sampled_peak_rss_mib": 6173.09375,
+    "sampled_peak_time_utc": "2026-11-18T06:32:15.056921Z",
+    "rss_sample_count": 2417,
+    "rss_sampling_errors": 0,
+    "per_phase_rss": {
+      "spawn": {
+        "sample_count": 3,
+        "sampled_peak_rss_mib": 0.03125,
+        "first_rss_mib": 0.03125,
+        "last_rss_mib": 0.03125
+      },
+      "pk_load": {
+        "sample_count": 2240,
+        "sampled_peak_rss_mib": 1567.421875,
+        "first_rss_mib": 1.875,
+        "last_rss_mib": 784.1875
+      },
+      "batch_1": {
+        "sample_count": 87,
+        "sampled_peak_rss_mib": 5610.890625,
+        "first_rss_mib": 1196.4375,
+        "last_rss_mib": 3497.625
+      },
+      "batch_2": {
+        "sample_count": 86,
+        "sampled_peak_rss_mib": 6173.09375,
+        "first_rss_mib": 2754.6875,
+        "last_rss_mib": 4297.59375
+      },
+      "worker_cleanup": {
+        "sample_count": 1,
+        "sampled_peak_rss_mib": 2530.734375,
+        "first_rss_mib": 2530.734375,
+        "last_rss_mib": 2530.734375
+      }
+    },
+    "swap_after": "total = 8192.00M  used = 7017.69M  free = 1174.31M  (encrypted)",
+    "vm_stat_after": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                              368649.\nPages active:                            244760.\nPages inactive:                          253796.\nPages speculative:                          885.\nPages throttled:                              0.\nPages wired down:                        191648.\nPages purgeable:                           3113.\n\"Translation faults\":               31836377405.\nPages copy-on-write:                 1250295612.\nPages zero filled:                  11682204337.\nPages reactivated:                    690117048.\nPages purged:                         230010870.\nFile-backed pages:                       135207.\nAnonymous pages:                         364234.\nPages stored in compressor:             2738085.\nPages occupied by compressor:            982916.\nDecompressions:                       738037215.\nCompressions:                         793800642.\nPageins:                             1833631152.\nPageouts:                               8589963.\nSwapins:                                1737264.\nSwapouts:                               3327601.\n",
+    "process_config_ns": 7515209,
+    "process_config_ms": 7.515209,
+    "worker_total_ns": 620603574042,
+    "worker_total_ms": 620603.574042,
+    "outer_residual_ns": 890157374,
+    "outer_residual_ms": 890.157374
+  },
+  "batches": [
+    {
+      "index": 1,
+      "status": "MEASURED",
+      "historical_wall_ms": 593398.6029579999,
+      "historical_peak_rss_mib": 5513.1875,
+      "total_ms": 22628.008458,
+      "witness_diagnostic_ms": 3630.717666,
+      "prove_ms": 18374.457667,
+      "ark_verify_ms": 2.091083,
+      "eip_export_ms": 0.084416,
+      "output_write_ms": 0.973542,
+      "pk_deserialize_ms": 0,
+      "ark_bytes": 192,
+      "eip_bytes": 512,
+      "historical_ark_sha256": "ff2b7b683b63a172c317612ab63fc093a4fa0599b7fd1faa767050ce059d45ec",
+      "pilot_ark_sha256": "ff2b7b683b63a172c317612ab63fc093a4fa0599b7fd1faa767050ce059d45ec",
+      "historical_eip_sha256": "8fad586ada7525d7b9b492d42d6b1d4387f754e31dce18959af2bc5d42333341",
+      "pilot_eip_sha256": "8fad586ada7525d7b9b492d42d6b1d4387f754e31dce18959af2bc5d42333341",
+      "batch_root": "0x91f6c687850b799e58e413c6c9c3b67e1acb1f2cb8a03e2b4d88a3729a9a2134",
+      "old_state": [
+        "0x0100000000000000000000000000000000000000000000000000000000000000",
+        "0x0100000000000000000000000000000000000000000000000000000000000000",
+        "0x0100000000000000000000000000000000000000000000000000000000000000",
+        "0x0100000000000000000000000000000000000000000000000000000000000000",
+        "0x0100000000000000000000000000000000000000000000000000000000000000",
+        "0x0100000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "new_state": [
+        "0x0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+        "0x1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+        "0xfd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+        "0x59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+        "0x35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+        "0x35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1"
+      ],
+      "historical_state_transition_digest": "6011679dec079faf9892e4af45b0266616b78a216b3997323508219a224d11ec",
+      "pilot_state_transition_digest": "6011679dec079faf9892e4af45b0266616b78a216b3997323508219a224d11ec",
+      "public_input_count": 37,
+      "schema_match": true,
+      "cryptographic_fields_byte_equal": true,
+      "process_cumulative_peak_rss_mib": 5610.890625
+    },
+    {
+      "index": 2,
+      "status": "MEASURED",
+      "historical_wall_ms": 591718.2112499999,
+      "historical_peak_rss_mib": 5485.09375,
+      "total_ms": 22254.112084,
+      "witness_diagnostic_ms": 3242.451834,
+      "prove_ms": 18415.718209,
+      "ark_verify_ms": 2.717166,
+      "eip_export_ms": 0.083875,
+      "output_write_ms": 1.068041,
+      "pk_deserialize_ms": 0,
+      "ark_bytes": 192,
+      "eip_bytes": 512,
+      "historical_ark_sha256": "ca115876f8b48d4382d446b08a760e477ca7004da73cc2e7213191efdbfb09d7",
+      "pilot_ark_sha256": "ca115876f8b48d4382d446b08a760e477ca7004da73cc2e7213191efdbfb09d7",
+      "historical_eip_sha256": "bb36782045dd4ada2fd63eac11fe76d1e47f792001a812a16cd82470b5449701",
+      "pilot_eip_sha256": "bb36782045dd4ada2fd63eac11fe76d1e47f792001a812a16cd82470b5449701",
+      "batch_root": "0x4e3a7649aa9d7455509a0b052d85c6745b38cb1f2416045c08ffd25094837fcf",
+      "old_state": [
+        "0x0b7ab83e10ad62b9105196a5a52f6282bb6098e97964dde3cc90ae39fe257540",
+        "0x1279527dd47bae75c5a27e93ec82cbc55d15c8ea99f1226535aca62053834a9d",
+        "0xfd8e382d0172a6c421717098a19ccaac053b3d0e50f3781b8150c5c803b08567",
+        "0x59dd626b3c025eed8d698b98a66264c5ed4a7be06f9cfaeeee4bd0415e199860",
+        "0x35903cf8156c81c742d0be51fb9f39024eca93da783435f136af50dbd61a9c0d",
+        "0x35fde6434ba395ec3a5488ad378c4bc2385ec72258819de807fd014f106395a1"
+      ],
+      "new_state": [
+        "0xa830ad2b650ece85d87bcee50fe47c080126ac3ac66dbb875932b1dcd1e3ba0c",
+        "0x9c7ab8d36dfac28565d49a99527b58077b0e416617915b78e1e806dbe91efa99",
+        "0x4ecb8e842461e6a26e0a504143e0180496ecbe3de0f41b4e248480d5168b921a",
+        "0xd1034a2b053fc74a60cd7445ae744c2b206cfb9fd8a098996a6cfc2a64302eae",
+        "0xc03f7c289f07c2e274b79b9c77b59ba87db6799ca2e6cfaa023c77b9f55357ca",
+        "0x4369e0e52165d95624e728e4494ce5f96b4f19ea6aef53962749e63c3d22fe72"
+      ],
+      "historical_state_transition_digest": "8e689c614233c68f1f779e17f747aba584e62370adf5ac47e3bf79e70baefc0f",
+      "pilot_state_transition_digest": "8e689c614233c68f1f779e17f747aba584e62370adf5ac47e3bf79e70baefc0f",
+      "public_input_count": 37,
+      "schema_match": true,
+      "cryptographic_fields_byte_equal": true,
+      "process_cumulative_peak_rss_mib": 6173.09375
+    }
+  ],
+  "comparison": {
+    "status": "DERIVED_FROM_MEASURED_SINGLE_RUN_AND_HISTORICAL_RUNS",
+    "historical_two_worker_total_ms": 1185116.814208,
+    "pilot_outer_wall_ms": 621501.246625,
+    "saved_ms": 563615.5675829999,
+    "speedup": 1.9068615238403102,
+    "limitation": "cross-run diagnostic comparison, not repeated independent statistics; old worker timers include log opening/RSS polling, new begins after logs open; both include observed-exit polling."
+  },
+  "rss": {
+    "host_physical_mem_mib": 32768,
+    "worker_peak_rss_mib": 6173.09375,
+    "sampled_peak_rss_mib": 6173.09375,
+    "sampled_peak_time_utc": "2026-11-18T06:32:15.056921Z",
+    "historical_reference_mib": 5513.1875,
+    "native_delta_from_historical_mib": 659.90625,
+    "per_phase_rss": {
+      "spawn": {
+        "sample_count": 3,
+        "sampled_peak_rss_mib": 0.03125,
+        "first_rss_mib": 0.03125,
+        "last_rss_mib": 0.03125
+      },
+      "pk_load": {
+        "sample_count": 2240,
+        "sampled_peak_rss_mib": 1567.421875,
+        "first_rss_mib": 1.875,
+        "last_rss_mib": 784.1875
+      },
+      "batch_1": {
+        "sample_count": 87,
+        "sampled_peak_rss_mib": 5610.890625,
+        "first_rss_mib": 1196.4375,
+        "last_rss_mib": 3497.625
+      },
+      "batch_2": {
+        "sample_count": 86,
+        "sampled_peak_rss_mib": 6173.09375,
+        "first_rss_mib": 2754.6875,
+        "last_rss_mib": 4297.59375
+      },
+      "worker_cleanup": {
+        "sample_count": 1,
+        "sampled_peak_rss_mib": 2530.734375,
+        "first_rss_mib": 2530.734375,
+        "last_rss_mib": 2530.734375
+      }
+    },
+    "after_pk_load_peak_rss_mib": 1568.078125,
+    "batch_1_process_peak_rss_mib": 5610.890625,
+    "batch_2_process_peak_rss_mib": 6173.09375,
+    "host_swap_before": "total = 8192.00M  used = 7017.69M  free = 1174.31M  (encrypted)",
+    "host_swap_after": "total = 8192.00M  used = 7017.69M  free = 1174.31M  (encrypted)",
+    "host_swap_used_before_mib": 7017.69,
+    "host_swap_used_after_mib": 7017.69,
+    "host_swap_used_delta_mib": 0,
+    "host_swapout_pages_before": 3327601,
+    "host_swapout_pages_after": 3327601,
+    "host_swapout_delta_mib": 0,
+    "limitation": "ru_maxrss is cumulative; physical minus RSS is not available system memory; host-global Swap cannot be exclusively attributed to pilot; two batches do not prove bounded eight-batch residency."
+  },
+  "gate_c_estimate": {
+    "status": "DERIVED_NOT_EXECUTED",
+    "basis": "one measured PK load + 8 times observed mean/max batch time + measured fixed residual; not a bound or acceptance",
+    "estimated_8_batch_wall_ms": 756147.608251,
+    "estimated_8_batch_using_slower_observed_batch_ms": 757643.1937470001,
+    "measured_peak_if_memory_plateaus_mib": 6173.09375,
+    "linear_highwater_scenario_8batch_mib": 9546.3125,
+    "observed_batch2_minus_batch1_native_highwater_mib": 562.203125,
+    "physical_minus_measured_peak_mib": 26594.90625,
+    "physical_minus_linear_scenario_mib": 23221.6875,
+    "memory_estimate_is_guarantee": false,
+    "original_child_seconds": 600,
+    "gate_c": "NOT_AUTHORIZED_NOT_STARTED"
+  },
+  "stage_rows": [
+    {
+      "scope": "load",
+      "stage": "pk_sha256",
+      "ns": 1581627416,
+      "ms": 1581.627416
+    },
+    {
+      "scope": "load",
+      "stage": "pk_open",
+      "ns": 53083,
+      "ms": 0.053083
+    },
+    {
+      "scope": "load",
+      "stage": "pk_deserialize",
+      "ns": 574121565333,
+      "ms": 574121.565333
+    },
+    {
+      "scope": "load",
+      "stage": "pk_tail_check",
+      "ns": 2500,
+      "ms": 0.0025
+    },
+    {
+      "scope": "load",
+      "stage": "vk_ark_hash",
+      "ns": 40000,
+      "ms": 0.04
+    },
+    {
+      "scope": "load",
+      "stage": "pk_once_load_unattributed",
+      "ns": 61877,
+      "ms": 0.061877
+    },
+    {
+      "scope": "batch_1",
+      "stage": "worker_input",
+      "ns": 27851709,
+      "ms": 27.851709
+    },
+    {
+      "scope": "batch_1",
+      "stage": "request_bind",
+      "ns": 457292,
+      "ms": 0.457292
+    },
+    {
+      "scope": "batch_1",
+      "stage": "witness_diagnostic",
+      "ns": 3630717666,
+      "ms": 3630.717666
+    },
+    {
+      "scope": "batch_1",
+      "stage": "proof_seed",
+      "ns": 48375,
+      "ms": 0.048375
+    },
+    {
+      "scope": "batch_1",
+      "stage": "prove",
+      "ns": 18374457667,
+      "ms": 18374.457667
+    },
+    {
+      "scope": "batch_1",
+      "stage": "prepare_vk",
+      "ns": 1256000,
+      "ms": 1.256
+    },
+    {
+      "scope": "batch_1",
+      "stage": "ark_verify",
+      "ns": 2091083,
+      "ms": 2.091083
+    },
+    {
+      "scope": "batch_1",
+      "stage": "proof_serialize",
+      "ns": 1292,
+      "ms": 0.001292
+    },
+    {
+      "scope": "batch_1",
+      "stage": "eip_export",
+      "ns": 84416,
+      "ms": 0.084416
+    },
+    {
+      "scope": "batch_1",
+      "stage": "omission_check",
+      "ns": 4166,
+      "ms": 0.004166
+    },
+    {
+      "scope": "batch_1",
+      "stage": "output_write",
+      "ns": 973542,
+      "ms": 0.973542
+    },
+    {
+      "scope": "batch_1",
+      "stage": "unattributed",
+      "ns": 590065250,
+      "ms": 590.06525
+    },
+    {
+      "scope": "batch_2",
+      "stage": "worker_input",
+      "ns": 26755333,
+      "ms": 26.755333
+    },
+    {
+      "scope": "batch_2",
+      "stage": "request_bind",
+      "ns": 230875,
+      "ms": 0.230875
+    },
+    {
+      "scope": "batch_2",
+      "stage": "witness_diagnostic",
+      "ns": 3242451834,
+      "ms": 3242.451834
+    },
+    {
+      "scope": "batch_2",
+      "stage": "proof_seed",
+      "ns": 69000,
+      "ms": 0.069
+    },
+    {
+      "scope": "batch_2",
+      "stage": "prove",
+      "ns": 18415718209,
+      "ms": 18415.718209
+    },
+    {
+      "scope": "batch_2",
+      "stage": "prepare_vk",
+      "ns": 1011750,
+      "ms": 1.01175
+    },
+    {
+      "scope": "batch_2",
+      "stage": "ark_verify",
+      "ns": 2717166,
+      "ms": 2.717166
+    },
+    {
+      "scope": "batch_2",
+      "stage": "proof_serialize",
+      "ns": 1167,
+      "ms": 0.001167
+    },
+    {
+      "scope": "batch_2",
+      "stage": "eip_export",
+      "ns": 83875,
+      "ms": 0.083875
+    },
+    {
+      "scope": "batch_2",
+      "stage": "omission_check",
+      "ns": 4291,
+      "ms": 0.004291
+    },
+    {
+      "scope": "batch_2",
+      "stage": "output_write",
+      "ns": 1068041,
+      "ms": 1.068041
+    },
+    {
+      "scope": "batch_2",
+      "stage": "unattributed",
+      "ns": 564000543,
+      "ms": 564.000543
+    },
+    {
+      "scope": "worker",
+      "stage": "unattributed_worker",
+      "ns": 18103291,
+      "ms": 18.103291
+    }
+  ],
+  "integrity": {
+    "status": "PASS_ORIGINAL_AND_INPUTS_UNCHANGED",
+    "checked_at": "2026-11-18T06:34:13.564Z",
+    "original_head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+    "head_and_status_exact_match": true,
+    "index_unchanged": true,
+    "paper_unchanged": true,
+    "previous_profile_unchanged": true,
+    "all_untracked_hashes_unchanged": true,
+    "source_pins_unchanged": true,
+    "isolated_untracked_paths": [
+      "crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs",
+      "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/batch_1.json",
+      "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/batch_2.json",
+      "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/request.json",
+      "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/research_pk.bin",
+      "experiments/stage1_multibatch_raw/pk-reuse-pilot-2batch/setup.json"
+    ],
+    "request_sha256_equal": true,
+    "inputs": [
+      {
+        "name": "research_pk.bin",
+        "bytes": 847800624,
+        "historical_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+        "pilot_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+        "equal": true
+      },
+      {
+        "name": "request.json",
+        "bytes": 318,
+        "historical_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+        "pilot_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+        "equal": true
+      },
+      {
+        "name": "setup.json",
+        "bytes": 344,
+        "historical_sha256": "e6ec81ab5944f064cbb4c93bc9dbcbaacf63b1958fa56d39892263c39f88bc8d",
+        "pilot_sha256": "e6ec81ab5944f064cbb4c93bc9dbcbaacf63b1958fa56d39892263c39f88bc8d",
+        "equal": true
+      }
+    ],
+    "protected_paths": [
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-01",
+        "status": "EXISTS",
+        "entry_count": 1970,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-01.snapshot.txt",
+        "sha256": "9fca95613604bc85299ed2691723cc3d0639618ccec87d3ba1f2599cfc589257"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-01",
+        "status": "NOT_PRESENT"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-02",
+        "status": "EXISTS",
+        "entry_count": 1971,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-02.snapshot.txt",
+        "sha256": "26db2668ea46a605821f67e6154b2b4eeb5775aa22ad7906e778594ee14fcdc6"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-02",
+        "status": "EXISTS",
+        "entry_count": 3,
+        "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-02.snapshot.txt",
+        "sha256": "c748f58d4b417e644c75bae7fe6f47aca6c688bf37c5eb3074d313108783a54f"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-03",
+        "status": "EXISTS",
+        "entry_count": 1980,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-03.snapshot.txt",
+        "sha256": "5d12a6236ee84e2bcc96072cd086b9d424ece88165f0a9ed74cbc9e9f017e413"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-03",
+        "status": "EXISTS",
+        "entry_count": 5,
+        "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-03.snapshot.txt",
+        "sha256": "ab110b069bb33d62989526ab2ddba62da7622573028319c103cc7656d153c2c3"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-04",
+        "status": "EXISTS",
+        "entry_count": 1981,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-04.snapshot.txt",
+        "sha256": "663a2d09bf152b3ff04ab6b6a7f91d4baacb5aa0af74633022922e4c8bae9f90"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-04",
+        "status": "EXISTS",
+        "entry_count": 5,
+        "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-04.snapshot.txt",
+        "sha256": "c398fb112dcbbb891ecb9d9f35a6616235c2eaa700232289c3872a87f9497bea"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-05",
+        "status": "EXISTS",
+        "entry_count": 1981,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-05.snapshot.txt",
+        "sha256": "a73d794c95d1d4c31d9f3a06b1c9f46b210f81c1d0ba5e39d0926bc743b6a72c"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-05",
+        "status": "EXISTS",
+        "entry_count": 5,
+        "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-05.snapshot.txt",
+        "sha256": "c6eb5a7ed997f24566ecf8d00d019008d3cf233d492591ec056cf4014928bdce"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-b-20261117-01",
+        "status": "EXISTS",
+        "entry_count": 16,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-b-20261117-01.snapshot.txt",
+        "sha256": "99e00d934b2d23e8d3c61c7abe6bbeca541ee5efdbd36e62192431c45526c85e"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-b-20261117-01",
+        "status": "NOT_PRESENT"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-a-20261117-06",
+        "status": "EXISTS",
+        "entry_count": 1981,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-a-20261117-06.snapshot.txt",
+        "sha256": "6ab6fdca6b239b59d792770bb523060ec48b7ad8d48ba9f0ac7da77cd4f3b8b0"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-a-20261117-06",
+        "status": "EXISTS",
+        "entry_count": 7,
+        "manifest": "evidence/after/results__stage1_multibatch__gate-a-20261117-06.snapshot.txt",
+        "sha256": "1910bc87adfaa3722c7996bc85d04b0f647e7b88db0c46c25e1d545228c19f97"
+      },
+      {
+        "path": "experiments/stage1_multibatch_raw/gate-b-20261117-02",
+        "status": "EXISTS",
+        "entry_count": 61,
+        "manifest": "evidence/after/experiments__stage1_multibatch_raw__gate-b-20261117-02.snapshot.txt",
+        "sha256": "dced9d6123a7664b00583db73a8a36a288b58cdb2054d2fe9f6348b59268f10a"
+      },
+      {
+        "path": "results/stage1_multibatch/gate-b-20261117-02",
+        "status": "EXISTS",
+        "entry_count": 6,
+        "manifest": "evidence/after/results__stage1_multibatch__gate-b-20261117-02.snapshot.txt",
+        "sha256": "60d4ed7290422ac9740e18eb1edf999caf813c568e457898aaf4bfa016120dc8"
+      }
+    ],
+    "gate_c": "NOT_AUTHORIZED_NOT_STARTED"
+  },
+  "invocation_counts": {
+    "setup": 0,
+    "proving_processes": 1,
+    "groth16_proofs": 2,
+    "gate_c": 0,
+    "evm": 0,
+    "git_commit": 0,
+    "git_push": 0
+  }
+}

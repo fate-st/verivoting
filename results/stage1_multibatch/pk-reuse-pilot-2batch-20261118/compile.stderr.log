@@ -1,0 +1,159 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling libc v0.2.191
+   Compiling version_check v0.9.5
+   Compiling syn v2.0.119
+   Compiling crossbeam-utils v0.8.23
+   Compiling generic-array v0.14.7
+   Compiling cfg-if v1.0.5
+   Compiling crossbeam-epoch v0.9.21
+   Compiling crossbeam-deque v0.8.8
+   Compiling zerocopy v0.8.63
+   Compiling getrandom v0.2.17
+   Compiling rayon-core v1.13.0
+   Compiling autocfg v1.5.1
+   Compiling rand_core v0.6.4
+   Compiling subtle v2.6.1
+   Compiling typenum v1.20.1
+   Compiling ppv-lite86 v0.2.21
+   Compiling zeroize_derive v1.5.0
+   Compiling radium v0.7.0
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.8
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling syn v1.0.109
+   Compiling digest v0.10.7
+   Compiling num-traits v0.2.19
+   Compiling either v1.19.0
+   Compiling once_cell v1.21.4
+   Compiling serde_core v1.0.229
+   Compiling rayon v1.12.0
+   Compiling zeroize v1.9.1
+   Compiling syn v3.0.9
+   Compiling num-integer v0.1.47
+   Compiling paste v1.0.15
+   Compiling serde v1.0.229
+   Compiling num-bigint v0.4.8
+   Compiling ark-std v0.4.0
+   Compiling ark-serialize-derive v0.4.2
+   Compiling ark-serialize v0.4.2
+   Compiling ark-ff-macros v0.4.2
+   Compiling serde_derive v1.0.229
+   Compiling derivative v2.2.0
+   Compiling ark-ff-asm v0.4.2
+   Compiling itertools v0.10.5
+   Compiling ahash v0.8.12
+   Compiling find-msvc-tools v0.1.15
+   Compiling rustversion v1.0.23
+   Compiling shlex v2.0.1
+   Compiling cc v1.10.0
+   Compiling ark-ff v0.4.2
+   Compiling thiserror v1.0.69
+   Compiling execute-command-tokens v0.1.9
+   Compiling tap v1.0.1
+   Compiling wyz v0.5.1
+   Compiling execute-command-macro-impl v0.1.12
+   Compiling blst v0.3.10
+   Compiling tracing-core v0.1.36
+   Compiling funty v2.0.0
+   Compiling bitvec v1.1.1
+   Compiling hashbrown v0.13.2
+   Compiling tracing-attributes v0.1.31
+   Compiling thiserror-impl v1.0.69
+   Compiling scopeguard v1.2.0
+   Compiling pin-project-lite v0.2.17
+   Compiling ff v0.13.0
+   Compiling tracing v0.1.44
+   Compiling lock_api v0.4.14
+   Compiling ark-poly v0.4.2
+   Compiling tracing-subscriber v0.2.25
+   Compiling rand_xorshift v0.3.0
+   Compiling num_cpus v1.17.0
+   Compiling cpufeatures v0.2.17
+   Compiling ec-gpu-gen v0.7.1
+   Compiling sha2 v0.10.9
+   Compiling group v0.13.0
+   Compiling ark-relations v0.4.0
+   Compiling ark-ec v0.4.2
+   Compiling spin v0.9.9
+   Compiling flume v0.10.14
+   Compiling threadpool v1.8.1
+   Compiling generic-array v1.4.5
+   Compiling execute-command-macro v0.1.11
+   Compiling zmij v1.0.23
+   Compiling execute v0.2.15
+   Compiling yastl v0.1.2
+   Compiling ark-r1cs-std v0.4.0
+   Compiling pairing v0.23.0
+   Compiling crossbeam-channel v0.5.17
+   Compiling byte-slice-cast v1.2.3
+   Compiling hex v0.4.3
+   Compiling serde_json v1.0.154
+   Compiling thiserror v2.0.21
+   Compiling log v0.4.34
+   Compiling ec-gpu v0.2.0
+   Compiling blstrs v0.7.0
+   Compiling ark-snark v0.4.0
+   Compiling thiserror-impl v2.0.21
+   Compiling blake2 v0.10.6
+   Compiling itoa v1.0.18
+   Compiling constant_time_eq v0.4.2
+   Compiling arrayvec v0.7.8
+   Compiling memchr v2.8.3
+   Compiling blake2s_simd v1.0.5
+   Compiling ark-crypto-primitives v0.4.0
+   Compiling bellperson v0.27.0
+   Compiling ark-bls12-381 v0.4.0
+   Compiling byteorder v1.5.0
+   Compiling bellpepper-core v0.2.1
+   Compiling ark-ed-on-bls12-381 v0.4.0
+   Compiling vv-types v0.2.0 (/private/tmp/vv-pk-reuse-pilot/worktree/crates/vv-types)
+   Compiling ark-groth16 v0.4.0
+   Compiling bincode v1.3.3
+   Compiling memmap2 v0.5.10
+   Compiling vv-friendly-crypto v0.2.0 (/private/tmp/vv-pk-reuse-pilot/worktree/crates/vv-friendly-crypto)
+   Compiling vv-friendly-dkg v0.2.0 (/private/tmp/vv-pk-reuse-pilot/worktree/crates/vv-friendly-dkg)
+warning: unused import: `BufWriter`
+  --> crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs:17:21
+   |
+17 |     io::{BufReader, BufWriter, Cursor, Read, Write},
+   |                     ^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `OLD_STATE` is never used
+   --> crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs:219:7
+    |
+219 | const OLD_STATE: &str = "fixtures/jubjub_state_g2e_multibatch_b4_public_v1.json";
+    |       ^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `canonical` is never used
+   --> crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs:249:4
+    |
+249 | fn canonical<T: CanonicalDeserialize + CanonicalSerialize>(b: &[u8]) -> Result<T> {
+    |    ^^^^^^^^^
+
+warning: function `spawn_worker` is never used
+   --> crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs:557:4
+    |
+557 | fn spawn_worker(run: &Path, phase: &str, mode: &str, index: usize, cfg: &Value) -> Result<Value> {
+    |    ^^^^^^^^^^^^
+
+warning: function `ballot_vk` is never used
+   --> crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs:628:4
+    |
+628 | fn ballot_vk(pool: &Value) -> Result<VerifyingKey<Bls12_381>> {
+    |    ^^^^^^^^^
+
+warning: function `prepare` is never used
+   --> crates/vv-friendly-dkg/src/bin/stage1_multibatch_pk_reuse_pilot.rs:649:4
+    |
+649 | fn prepare(run: &Path, phase: &str, cfg: &Value) -> Result<()> {
+    |    ^^^^^^^
+
+warning: `vv-friendly-dkg` (bin "stage1_multibatch_pk_reuse_pilot") generated 6 warnings (run `cargo fix --bin "stage1_multibatch_pk_reuse_pilot" -p vv-friendly-dkg` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 46.42s
