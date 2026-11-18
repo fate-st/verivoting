@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+    "contracts/scripts/stage1_multibatch_compare.mjs",
+    "--gate",
+    "B",
+    "--approved",
+    "B",
+    "--materials-only",
+    "true",
+    "--run",
+    "experiments/stage1_multibatch_raw/gate-b-20261117-03",
+    "--a-run",
+    "experiments/stage1_multibatch_raw/gate-a-20261117-07"
+  ],
+  "cwd": "/private/tmp/vv-pk-reuse-integration.PohVG2/worktree",
+  "started": "2026-11-18T08:24:36.630Z",
+  "one_invocation_only": true
+}

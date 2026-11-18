@@ -1,0 +1,51 @@
+{
+  "batch_1_instant_rss_mib": 2770.703125,
+  "batch_1_pk_deserialize_ms": 0,
+  "batch_1_total_ms": 23397.055916999998,
+  "batch_2_instant_rss_mib": 2363.234375,
+  "batch_2_pk_deserialize_ms": 0,
+  "batch_2_total_ms": 22762.103417,
+  "budgets": {
+    "per_batch_budget_s": 120,
+    "pk_load_budget_s": 660,
+    "range_worker_budget_s": 1000
+  },
+  "completed_batches": [
+    1,
+    2
+  ],
+  "end_batch": 2,
+  "error": null,
+  "loaded_pk_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+  "pid": 89791,
+  "pk_deserialize_bytes_read": 847800624,
+  "pk_deserialize_ms": 575854.9064999999,
+  "pk_load_count": 1,
+  "pk_once_load_total_ms": 577432.461791,
+  "pk_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+  "pk_sha256_ms": 1577.4615829999998,
+  "rss_scope": "instant resident_size after batch Drop; separate lifetime ru_maxrss",
+  "rss_sequence": [
+    {
+      "after_batch_drop": true,
+      "batch_index": 1,
+      "instant_rss_mib": 2770.703125,
+      "process_peak_rss_mib": 5006.609375
+    },
+    {
+      "after_batch_drop": true,
+      "batch_index": 2,
+      "instant_rss_mib": 2363.234375,
+      "process_peak_rss_mib": 6171.671875
+    }
+  ],
+  "schema": "VV/STAGE1/PK-REUSE-RANGE/v1",
+  "setup_generation_count": 0,
+  "single_readonly_descriptor": true,
+  "start_batch": 1,
+  "status": "PASS_RANGE_PK_REUSE",
+  "vk_ark_hash_ms": 0.026208000000000002,
+  "vk_ark_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+  "worker_peak_rss_mib": 6171.671875,
+  "worker_total_ms": 623622.8794580001
+}

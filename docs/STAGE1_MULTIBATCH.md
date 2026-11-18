@@ -1,6 +1,8 @@
 # Stage1：多批次 EVM 部署摊销与消融（隔离实现）
 
-当前门槛：A-04，提交后准入修复、编译、静态审计及独立 B 预检重建。B/C/D 未获本轮运行授权，禁止自动进入。
+当前开发门槛：独立 feat/stage1-pk-reuse-integration 分支的 A-07 与两批材料回归。
+以下 A-04/A-05/A-06 章节均为保留的历史规格；A-07 是新源码/二进制基线，不修改历史归档或追认其哈希。
+本轮没有 Gate C、EVM、重新生成 Setup、提交或推送授权。
 本文件不修改论文或任何 G8-E、G12、Stage2、G18 原始材料。
 
 ## 固定范围
@@ -342,6 +344,62 @@ auditor独立硬编码同一12项清单并核对存在性，不仅依赖runner�
 
 A-06编译前定稿全部3个批准补丁，并在currentSourcePins()中与配置、Rust及Solidity一并持久锁定。
 本文档不在编译后追加实测耗时；真实命令、计时、哈希、预检和审计结果只写入新A-06归档。
+
+## A-07：单进程 PK-Reuse 正式集成规格
+
+在独立 worktree 的本地 `feat/stage1-pk-reuse-integration` 分支修改原材料生成器、Runner、Auditor 和本文档。
+原实验工作区和 A-01..06/B-01..02 的 16 项受保护路径保持不变；不修改 Cargo 清单/锁文件、密码学电路、Solidity 或旧 fixtures。
+
+### 调用链与材料来源
+
+正式 Runner → A-07 固定二进制 `prepare` → 一个 `setup-worker` + 一个 `prove-range DIR B 1 2 --approved B`。
+此处 setup-worker 仅复核/复制冻结 B-02 Setup 元数据并在新目录链接本地 PK，实际 Setup 生成次数为零。
+旧 setup-worker/单批 prove-worker 接口保留兼容，但集成 prepare 不调用旧逐批路径；未指定冻结材料来源时停机，不自动 Setup。
+
+B-03 `request.json` 按原字节复用 B-02 研究种子输入以验收证明字节等价；其中历史 PID、时间和 run_identity 不是 B-03 的实际身份。
+本轮真实身份、源引脚和时间另记于 `integration_request.json`、command receipts、`compare_summary.json`，严禁把旧 request 元数据当作新运行元数据。
+冻结的 `experiment.STAGE1-MULTIBATCH.json` 保持原字节，使密码学 request/config 绑定及确定性种子不变。
+新的预算、sourceFiles/source_pins 和构建指纹固定在 A-07 `integration_config.json` / `gate_a.json`，不覆盖 A-06 引脚。
+
+### 一次安全加载与三层预算
+
+对 PK 只打开一个只读 File 描述符：第一次流式 SHA256 → 同一 BufReader seek(0) → HashingReader 包装规范
+`ProvingKey::deserialize_compressed` → EOF 检查 → 实际消费字节 SHA256 再核验 → 描述符 inode/长度/mtime 复核 → Ark VK SHA256。
+既防路径替换，也对第二遍实际反序列化字节重新计算哈希；不使用 unchecked/Validate::No、不克隆 PK。
+每批独立构造电路、显式析构诊断 CS，继续使用 SHA256(request 原始字节 || u64_be(index)) 初始化独立 ChaCha20Rng。
+只读 `&pk` 跨批复用，本地 Ark 验证、EIP 导出和固定 VK 检查全部保留。
+
+单调时钟预算：PK 加载 660s、每批从输入构造至 Drop 后采样 120s、范围进程自入口至退出 1000s，总预算优先。
+Worker 检查点与父进程轮询双重实施；父进程约250ms轮询可能有调度迟延，不能宣称绝对实时中断。
+Runner 外层材料预算 B=1920s/C=5520s，EVM 会话默认600s；本轮只允许运行 B03 材料，C 分支显式阻断。
+
+### 双口径内存与审计
+
+在 `prove_reuse_batch` 返回、所有该批大型局部对象析构后，用 `task_info(MACH_TASK_BASIC_INFO)` 的
+resident_size 记录 `batch_i_instant_rss_mib`。libc 0.2.191 接口必须通过本机真实 Release 编译。
+另外记录 `getrusage` 的 worker_peak_rss_mib 和逐批累计峰值。不得要求每批析构后瞬时 RSS 必须下降，
+不得把累计峰值当瞬时 RSS；分配器/线程池留存只是解释边界，不是已经定位泄漏或证明八批内存有界。
+
+Auditor 强制两个不同 PID、唯一范围证明 PID、pk_load_count=1、逐批反序列化=0、实际字节/种子/全部37项输入、
+固定批次根与 old/new 状态、相邻批连续性、EOF/加载字节哈希绑定、阶段预算和双口径 RSS。
+所有自动 SHA256 比对使用完整64位十六进制值；离线 Schema 单元样本的合成 PID/内存/计时不得进入正式实测结果。
+
+### 本轮命令与停止边界
+
+通过环境变量明确指定只读历史来源与独立构建目录：
+`VV_INTEGRATION_ORIGINAL_ROOT=<原实验工作区>`、`VV_INTEGRATION_TARGET_DIR=<本轮独立target>`。
+
+```sh
+node scripts/stage1_multibatch_audit.mjs --reuse-schema-self-test true
+node contracts/scripts/stage1_multibatch_compare.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-07
+node scripts/stage1_multibatch_audit.mjs --gate A --run experiments/stage1_multibatch_raw/gate-a-20261117-07 --reuse-integration true
+node contracts/scripts/stage1_multibatch_compare.mjs --gate B --approved B --materials-only true --run experiments/stage1_multibatch_raw/gate-b-20261117-03 --a-run experiments/stage1_multibatch_raw/gate-a-20261117-07
+node scripts/stage1_multibatch_audit.mjs --gate B --run experiments/stage1_multibatch_raw/gate-b-20261117-03 --reuse-integration true
+```
+
+A-07 记录完整 PK/ArkVK/EIPVK/Cargo.lock/二进制 SHA256、rustc -Vv、target triple、Release profile、硬件与实际命令。
+最终只有 `PASS_GATE_A07_AND_REUSE_INTEGRATION`、`FAIL_REUSE_INTEGRATION` 或 `INCONCLUSIVE`，并执行原工作区16项前后快照核对。
+B03 仅两批材料回归，不代表重新完成9个 EVM 会话；没有 Gas 数据、八批结果或 Gate C 授权。完成后停止。
 本机新二进制必须位于A-06自己的build-target，且SHA-256与A-03不可变基准及gate_a.json一致：
 `da5c0f46378af23ac61905e5f4f96d42d174dfc45e3711eec53863901fc1a488`。
 

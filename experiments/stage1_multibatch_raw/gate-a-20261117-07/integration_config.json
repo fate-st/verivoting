@@ -1,0 +1,63 @@
+{
+  "schema": "VV/STAGE1/A07/PK-REUSE/v1",
+  "head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+  "branch": "feat/stage1-pk-reuse-integration",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "8af890bdba95697c51c4148b4af9f2fd670f554226156b229dd528af52240662"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "68aee843b7a485e2aa8add4127c4d1270fe623243a556f44d6b3d808ddc551ec"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "cfe3343097f04dd91c3328d88d8494a7af2009f4757de389dc9d680772e383d0"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "sha256": "841f927bfcd4cd2ce306625ec8eeddd412b6fab6e5236d3477d4717c3d2f6de6"
+    }
+  ],
+  "proof_config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "budgets": {
+    "pk_load_budget_s": 660,
+    "per_batch_budget_s": 120,
+    "range_worker_budget_s": 1000,
+    "gate_b_materials_seconds": 1920,
+    "gate_c_materials_seconds": 5520,
+    "evm_session_seconds": 600
+  },
+  "sourceFiles": [
+    "configs/experiment.STAGE1-MULTIBATCH.json",
+    "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+    "contracts/src/stage1/Stage1Receivers.sol",
+    "contracts/scripts/stage1_multibatch_compare.mjs",
+    "scripts/stage1_multibatch_audit.mjs",
+    "docs/STAGE1_MULTIBATCH.md"
+  ],
+  "frozen": {
+    "original": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+    "directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage1_multibatch_raw/gate-b-20261117-02/materials",
+    "pk_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+    "request_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+    "vk_ark_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+    "vk_eip_sha256": "1367728908bb6c62009afb38ad09555d5a8c463bc6945b3ceb83ae763f376896",
+    "setup_sha256": "e6ec81ab5944f064cbb4c93bc9dbcbaacf63b1958fa56d39892263c39f88bc8d",
+    "setup_generation_count": 0,
+    "seed_request_origin": "BYTE_IDENTICAL_B02_RESEARCH_SEED_INPUT_NOT_A_NEW_RUN_IDENTITY"
+  },
+  "gate_c_authorized": false,
+  "evm_authorized": false,
+  "setup_generation_authorized": false,
+  "note": "Frozen cryptographic config/request bytes unchanged; NEW source and executable pins belong to A07 only."
+}

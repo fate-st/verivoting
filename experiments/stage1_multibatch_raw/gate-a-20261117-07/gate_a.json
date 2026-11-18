@@ -1,0 +1,117 @@
+{
+  "schema": "VV/STAGE1/A07/PK-REUSE/v1",
+  "status": "PASS_GATE_A07_PK_REUSE_BUILD",
+  "run": "experiments/stage1_multibatch_raw/gate-a-20261117-07",
+  "head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+  "branch": "feat/stage1-pk-reuse-integration",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "8af890bdba95697c51c4148b4af9f2fd670f554226156b229dd528af52240662"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "68aee843b7a485e2aa8add4127c4d1270fe623243a556f44d6b3d808ddc551ec"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "cfe3343097f04dd91c3328d88d8494a7af2009f4757de389dc9d680772e383d0"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "sha256": "841f927bfcd4cd2ce306625ec8eeddd412b6fab6e5236d3477d4717c3d2f6de6"
+    }
+  ],
+  "proof_config_sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf",
+  "integration_config_sha256": "de961aae38d1da6b0b135905114a290c60450af8e7b8476d774dd0adca0d1eae",
+  "fingerprint": {
+    "original": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter",
+    "directory": "/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter/experiments/stage1_multibatch_raw/gate-b-20261117-02/materials",
+    "pk_sha256": "448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c",
+    "request_sha256": "e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238",
+    "vk_ark_sha256": "92871cac5c3452ab0a1647939507d7b041dcccf189e3b60ea2b19c1d6e1e1856",
+    "vk_eip_sha256": "1367728908bb6c62009afb38ad09555d5a8c463bc6945b3ceb83ae763f376896",
+    "setup_sha256": "e6ec81ab5944f064cbb4c93bc9dbcbaacf63b1958fa56d39892263c39f88bc8d",
+    "setup_generation_count": 0,
+    "seed_request_origin": "BYTE_IDENTICAL_B02_RESEARCH_SEED_INPUT_NOT_A_NEW_RUN_IDENTITY",
+    "cargo_lock_sha256": "b37e02e7d43bb2cf5bcaabce29986b19796a8f47af0f0f57a2f9c14c43904b6e",
+    "rustc_vv": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1\n",
+    "target_triple": "aarch64-apple-darwin",
+    "release_opt_level": 1,
+    "profile_release": "[profile.release]\nopt-level = 1\n\n\n",
+    "build_jobs": 2,
+    "rayon_threads": 4,
+    "binary_sha256": "b50cf66406a661a698cc8b1cfaed9feb1891b9bf2de59b75a51cbd65bb9c58f1",
+    "binary": "experiments/stage1_multibatch_raw/gate-a-20261117-07/build-target/release/stage1_multibatch_materials",
+    "environment": {
+      "cpu": "Apple M4",
+      "physical_memory_mib": 32768,
+      "platform": "darwin",
+      "arch": "arm64",
+      "node": "v23.11.0"
+    },
+    "build_environment_policy": "no CARGO_PROFILE_RELEASE overrides; locked offline build"
+  },
+  "binary": "experiments/stage1_multibatch_raw/gate-a-20261117-07/build-target/release/stage1_multibatch_materials",
+  "binary_sha256": "b50cf66406a661a698cc8b1cfaed9feb1891b9bf2de59b75a51cbd65bb9c58f1",
+  "commands": [
+    {
+      "program": "rustc",
+      "args": [
+        "+1.99.1",
+        "-Vv"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-18T08:23:13.583Z",
+      "wall_ms": 140.21191599999997,
+      "wall_budget_seconds": 600,
+      "environment": {
+        "CARGO_TARGET_DIR": null,
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-07/logs/rust-version.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-07/logs/rust-version.stderr.log"
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "+1.99.1",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "--bin",
+        "stage1_multibatch_materials"
+      ],
+      "code": 0,
+      "signal": null,
+      "reason": null,
+      "started": "2026-11-18T08:23:13.724Z",
+      "wall_ms": 242.9111660000001,
+      "wall_budget_seconds": 600,
+      "environment": {
+        "CARGO_TARGET_DIR": "/private/tmp/vv-pk-reuse-integration.PohVG2/target",
+        "CARGO_BUILD_JOBS": "2",
+        "RAYON_NUM_THREADS": "4"
+      },
+      "stdout": "experiments/stage1_multibatch_raw/gate-a-20261117-07/logs/cargo-build.stdout.log",
+      "stderr": "experiments/stage1_multibatch_raw/gate-a-20261117-07/logs/cargo-build.stderr.log"
+    }
+  ],
+  "setup_generation_count": 0,
+  "proof_generation_count": 0,
+  "vm_creation_count": 0,
+  "evm_transaction_count": 0,
+  "gate_c": "NOT_AUTHORIZED_NOT_STARTED"
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/homebrew/Cellar/node/23.11.0/bin/node",
+    "scripts/stage1_multibatch_audit.mjs",
+    "--gate",
+    "A",
+    "--run",
+    "experiments/stage1_multibatch_raw/gate-a-20261117-07",
+    "--reuse-integration",
+    "true"
+  ],
+  "cwd": "/private/tmp/vv-pk-reuse-integration.PohVG2/worktree",
+  "started": "2026-11-18T08:23:55.714Z",
+  "one_invocation_only": true
+}

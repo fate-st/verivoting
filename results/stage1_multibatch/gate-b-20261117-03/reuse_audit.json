@@ -1,0 +1,42 @@
+{
+  "status": "PASS_GATE_A07_AND_REUSE_INTEGRATION",
+  "count": 2,
+  "worker_pid": 89791,
+  "pk_load_count": 1,
+  "scope": "TWO_BATCH_MATERIALS_ONLY_NO_EVM",
+  "a_run": "experiments/stage1_multibatch_raw/gate-a-20261117-07",
+  "run": "experiments/stage1_multibatch_raw/gate-b-20261117-03",
+  "source_pins": [
+    {
+      "path": "configs/experiment.STAGE1-MULTIBATCH.json",
+      "sha256": "c4ca5d7711d230b5862ca9a7edad3b61546d7d678272eb88ed6c176b5207f0bf"
+    },
+    {
+      "path": "crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs",
+      "sha256": "8af890bdba95697c51c4148b4af9f2fd670f554226156b229dd528af52240662"
+    },
+    {
+      "path": "contracts/src/stage1/Stage1Receivers.sol",
+      "sha256": "6860f31245e1846738efab5acdf266d078c3da1d7d994edec899dbfd93f64332"
+    },
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "sha256": "68aee843b7a485e2aa8add4127c4d1270fe623243a556f44d6b3d808ddc551ec"
+    },
+    {
+      "path": "scripts/stage1_multibatch_audit.mjs",
+      "sha256": "cfe3343097f04dd91c3328d88d8494a7af2009f4757de389dc9d680772e383d0"
+    },
+    {
+      "path": "docs/STAGE1_MULTIBATCH.md",
+      "sha256": "841f927bfcd4cd2ce306625ec8eeddd412b6fab6e5236d3477d4717c3d2f6de6"
+    }
+  ],
+  "binary_sha256": "b50cf66406a661a698cc8b1cfaed9feb1891b9bf2de59b75a51cbd65bb9c58f1",
+  "setup_generation_count": 0,
+  "proof_generation_count": 2,
+  "vm_creation_count": 0,
+  "evm_transaction_count": 0,
+  "gate_c": "NOT_AUTHORIZED_NOT_STARTED",
+  "materials_wall_ms": 626464.793084
+}

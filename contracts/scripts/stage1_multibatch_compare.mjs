@@ -535,6 +535,7 @@ export async function vmWorker(run,aRun,route,k,negative){
  writeNew(run+`/sessions/${negative?'negative':'positive'}-k${k}-${route}.json`,output);assert.equal(output.status,'PASS',output.error);
 }
 export async function nextGate(gate,run,aRun,bRun,approved){
+ if(path.basename(aRun??'')==='gate-a-20261117-07')return integrationNextGate(gate,run,aRun,approved);
  assert.equal(approved,gate,'human approval must explicitly name this gate');assert.ok(['B','C'].includes(gate));runPath(run);
  if(gate==='B')validateConfig({phase:'B',run,aRun});else validateConfig({phase:'C',run,aRun,bRun});
  const a=verifyA(aRun);
@@ -560,10 +561,100 @@ export async function nextGate(gate,run,aRun,bRun,approved){
  }finally{checkReadonlyInputs(before.readonly_inputs);assert.deepEqual(currentSourcePins(),a.source_pins,'source pins changed during B/C');}
  console.log('PASS Gate '+gate+'; STOP for human confirmation.');
 }
+// A-07 is a NEW source/binary admission baseline. Never reinterpret or rewrite A-06.
+export const reuseBudgets=Object.freeze({pk_load_budget_s:660,per_batch_budget_s:120,range_worker_budget_s:1000,
+ gate_b_materials_seconds:1920,gate_c_materials_seconds:5520,evm_session_seconds:600});
+export const reuseExpected=Object.freeze({
+ pk_sha256:'448d9d92b9250aa2bcbf59c82036ab1615f2fe323bbb5a39b8f8d7ec9f73da1c',
+ request_sha256:'e5cf3a56500341f4a91da8dd7f0f6d3eed97431bc7d01eb265372edc5552f238',
+ ark_proof_sha256:['ff2b7b683b63a172c317612ab63fc093a4fa0599b7fd1faa767050ce059d45ec','ca115876f8b48d4382d446b08a760e477ca7004da73cc2e7213191efdbfb09d7'],
+ eip_proof_sha256:['8fad586ada7525d7b9b492d42d6b1d4387f754e31dce18959af2bc5d42333341','bb36782045dd4ada2fd63eac11fe76d1e47f792001a812a16cd82470b5449701']});
+export function streamHashFile(file){const h=createHash('sha256'),fd=fs.openSync(file,'r'),b=Buffer.alloc(1048576);try{let n;while((n=fs.readSync(fd,b,0,b.length,null)))h.update(b.subarray(0,n));}finally{fs.closeSync(fd);}return h.digest('hex');}
+export function fullHashEqual(actual,expected,label){assert.match(actual??'',/^[0-9a-f]{64}$/,label);assert.match(expected??'',/^[0-9a-f]{64}$/,label+' baseline');assert.equal(actual,expected,label);}
+export function integrationOriginal(){const p=process.env.VV_INTEGRATION_ORIGINAL_ROOT;assert.ok(p&&path.isAbsolute(p),'explicit frozen original workspace required');assert.notEqual(p,root);return p;}
+export function integrationFrozen(){
+ const original=integrationOriginal(),a=JSON.parse(fs.readFileSync(original+'/experiments/stage1_multibatch_raw/gate-a-20261117-06/gate_a.json'));
+ assert.equal(a.status,'PASS_GATE_A_COMPILE_ONLY');
+ for(const p of a.source_pins)fullHashEqual(streamHashFile(original+'/'+p.path),p.sha256,'frozen A06 '+p.path);
+ for(const p of cfg.source_pins)fullHashEqual(sha(read(p.path)),p.sha256,p.path);
+ const dir=original+'/experiments/stage1_multibatch_raw/gate-b-20261117-02/materials';
+ fullHashEqual(streamHashFile(dir+'/research_pk.bin'),reuseExpected.pk_sha256,'frozen PK');
+ fullHashEqual(streamHashFile(dir+'/request.json'),reuseExpected.request_sha256,'frozen seed request');
+ const setup=JSON.parse(fs.readFileSync(dir+'/setup.json'));fullHashEqual(setup.pk_sha256,reuseExpected.pk_sha256,'Setup PK');
+ fullHashEqual(setup.vk_sha256,cfg.state_vk_ark_sha256,'Setup Ark VK');
+ const b=JSON.parse(fs.readFileSync(original+'/experiments/stage1_multibatch_raw/gate-b-20261117-02/gate_b.json'));
+ const audit=JSON.parse(fs.readFileSync(original+'/results/stage1_multibatch/gate-b-20261117-02/gate_b_audit.json'));
+ assert.equal(b.status,'PASS_GATE_B_REGRESSION_ONLY');assert.equal(audit.status,'PASS_GATE_B_EVIDENCE_AUDIT_ONLY');
+ return {original,directory:dir,pk_sha256:reuseExpected.pk_sha256,request_sha256:reuseExpected.request_sha256,
+  vk_ark_sha256:cfg.state_vk_ark_sha256,vk_eip_sha256:cfg.state_vk_eip_sha256,setup_sha256:streamHashFile(dir+'/setup.json'),
+  setup_generation_count:0,seed_request_origin:'BYTE_IDENTICAL_B02_RESEARCH_SEED_INPUT_NOT_A_NEW_RUN_IDENTITY'};
+}
+export function integrationAdmission(){
+ assert.equal(git('rev-parse','HEAD'),EXPECTED_HEAD);assert.equal(git('branch','--show-current'),'feat/stage1-pk-reuse-integration');
+ assert.equal(git('diff','--','Cargo.toml','Cargo.lock','crates/vv-friendly-dkg/Cargo.toml'),'');
+ const allowed=new Set([...approvedPatches,'crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs']);
+ for(const p of git('diff','--name-only').split('\n').filter(Boolean))assert.ok(allowed.has(p),'unexpected changed source '+p);
+ for(const p of cfg.source_pins)fullHashEqual(sha(read(p.path)),p.sha256,p.path);
+ return {head:EXPECTED_HEAD,branch:git('branch','--show-current'),source_pins:currentSourcePins(),proof_config_sha256:sha(read(configPath))};
+}
+export function verifyIntegrationA(run){
+ const a=load(run+'/gate_a.json');assert.equal(a.status,'PASS_GATE_A07_PK_REUSE_BUILD');assert.equal(a.run,run);
+ assert.deepEqual(a.source_pins,currentSourcePins());for(const p of a.source_pins)fullHashEqual(sha(read(p.path)),p.sha256,p.path);
+ fullHashEqual(streamHashFile(absolute(a.binary)),a.binary_sha256,'A07 executable');
+ fullHashEqual(sha(read('Cargo.lock')),a.fingerprint.cargo_lock_sha256,'Cargo.lock');
+ fullHashEqual(sha(read(run+'/integration_config.json')),a.integration_config_sha256,'A07 integration configuration');
+ assert.deepEqual(load(run+'/integration_config.json').budgets,reuseBudgets);return a;
+}
+export async function integrationGateA(run){
+ assert.equal(path.basename(runPath(run)),'gate-a-20261117-07');assert.ok(!fs.existsSync(absolute(run)),'fresh A07 required');
+ const admission=integrationAdmission(),frozen=integrationFrozen();
+ writeNew(run+'/integration_config.json',{schema:'VV/STAGE1/A07/PK-REUSE/v1',...admission,budgets:reuseBudgets,
+  sourceFiles:[...new Set([...sourceFiles,...approvedPatches])],source_pins:currentSourcePins(),frozen,
+  gate_c_authorized:false,evm_authorized:false,setup_generation_authorized:false,
+  note:'Frozen cryptographic config/request bytes unchanged; NEW source and executable pins belong to A07 only.'});
+ const binary=run+'/build-target/release/stage1_multibatch_materials';
+ fs.mkdirSync(path.dirname(absolute(binary)),{recursive:true});
+ const rust=await command(run,'rust-version','rustc',['+1.99.1','-Vv']);
+ const build=await command(run,'cargo-build','cargo',['+1.99.1','build','--release','--locked','--offline','--bin','stage1_multibatch_materials'],
+  {CARGO_TARGET_DIR:process.env.VV_INTEGRATION_TARGET_DIR??absolute(run+'/build-target')});
+ const built=path.join(process.env.VV_INTEGRATION_TARGET_DIR??absolute(run+'/build-target'),'release/stage1_multibatch_materials');
+ if(path.resolve(built)!==absolute(binary))fs.copyFileSync(built,absolute(binary),fs.constants.COPYFILE_EXCL);
+ const rustc=read(run+'/logs/rust-version.stdout.log').toString(),target=rustc.match(/^host:\s*(\S+)/m)?.[1];assert.ok(target);
+ const fingerprint={...frozen,cargo_lock_sha256:sha(read('Cargo.lock')),rustc_vv:rustc,target_triple:target,
+  release_opt_level:cfg.release_opt_level,profile_release:read('Cargo.toml').toString().match(/\[profile\.release\][\s\S]*?(?=\n\[|$)/)?.[0],
+  build_jobs:2,rayon_threads:4,binary_sha256:streamHashFile(absolute(binary)),binary,
+  environment:{cpu:os.cpus()[0].model,physical_memory_mib:os.totalmem()/1048576,platform:os.platform(),arch:os.arch(),node:process.version},
+  build_environment_policy:'no CARGO_PROFILE_RELEASE overrides; locked offline build'};
+ writeNew(run+'/gate_a.json',{schema:'VV/STAGE1/A07/PK-REUSE/v1',status:'PASS_GATE_A07_PK_REUSE_BUILD',run,
+  ...admission,source_pins:currentSourcePins(),integration_config_sha256:sha(read(run+'/integration_config.json')),fingerprint,
+  binary,binary_sha256:fingerprint.binary_sha256,commands:[rust,build],setup_generation_count:0,proof_generation_count:0,vm_creation_count:0,
+  evm_transaction_count:0,gate_c:'NOT_AUTHORIZED_NOT_STARTED'});
+ verifyIntegrationA(run);console.log('PASS_GATE_A07_PK_REUSE_BUILD: no Setup, proof, VM or transaction');
+}
+export async function integrationNextGate(gate,run,aRun,approved){
+ assert.equal(approved,gate);integrationAdmission();const a=verifyIntegrationA(aRun);
+ // Integration authorization covers ONLY B03 materials. Future C must receive a new explicit admission.
+ assert.equal(gate,'B','GATE_C_NOT_AUTHORIZED_IN_PK_REUSE_INTEGRATION');
+ assert.equal(path.basename(runPath(run)),'gate-b-20261117-03');assert.ok(!fs.existsSync(absolute(run)),'fresh B03 required');
+ const frozen=integrationFrozen();writeNew(run+'/integration_request.json',{gate,run,a_run:aRun,run_identity:`${path.basename(run)}/${new Date().toISOString()}`,
+  approved,source_pins:currentSourcePins(),seed_request_sha256:reuseExpected.request_sha256,seed_request_reused:true,setup_generation_count:0});
+ await command(run,'materials',absolute(a.binary),['prepare',run+'/materials',gate,'--approved',gate],{VV_REUSE_SETUP_DIR:frozen.directory},reuseBudgets.gate_b_materials_seconds);
+ const summary=load(run+'/materials/prepare_summary.json');
+ writeNew(run+'/compare_summary.json',{schema:'VV/STAGE1/A07/INTEGRATION/v1',status:'PASS_MATERIAL_GENERATION_ONLY_PENDING_AUDIT',
+  run,a_run:aRun,source_pins:currentSourcePins(),binary_sha256:a.binary_sha256,budgets:reuseBudgets,pk_reuse:summary,
+  setup_generation_count:0,proof_generation_count:2,vm_creation_count:0,evm_transaction_count:0,
+  scope:'Materials-only official Runner to prepare to prove-range, NOT Gate B EVM regression or Gate C performance',gate_c:'NOT_AUTHORIZED_NOT_STARTED'});
+ assert.deepEqual(a.source_pins,currentSourcePins());console.log('PASS_B03_MATERIALS_ONLY: STOP; independent audit required');
+}
 async function main(){
  process.chdir(root);const a=process.argv.slice(2);
  if(a[0]==='--vm'){assert.equal(a.length,6);return vmWorker(a[1],a[2],a[3],Number(a[4]),a[5]==='negative');}
  const flags=Object.fromEntries(Array.from({length:a.length/2},(_,i)=>[a[2*i],a[2*i+1]]));
+ if(flags['--gate']==='A'&&path.basename(flags['--run']??'')==='gate-a-20261117-07')return integrationGateA(flags['--run']);
+ if(flags['--gate']==='B'&&path.basename(flags['--a-run']??'')==='gate-a-20261117-07'){
+  assert.equal(flags['--materials-only'],'true','A07 integration must explicitly be materials-only');
+  return nextGate('B',flags['--run'],flags['--a-run'],undefined,flags['--approved']);
+ }
  if(flags['--preflight']){assert.equal(a.length%2,0);assert.equal(flags['--preflight'],'B');return preflightGateB(flags['--a-run'],flags['--b-run']);}
  assert.ok(a.length%2===0&&flags['--gate']&&flags['--run'],'use --gate A|B|C --run experiments/stage1_multibatch_raw/NEW_ID');
  if(flags['--gate']==='A')return gateA(flags['--run']);

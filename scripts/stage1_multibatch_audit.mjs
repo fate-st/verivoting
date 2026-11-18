@@ -6,7 +6,8 @@ import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
 import {root,cfg,configPath,load,read,sha,wire,json,checkProtected,validateConfig,recursiveSnapshot,approvedPatches,
  pragueCommon,pragueStatic,checkStorageLayouts,phaseCallSites,vmMetadataFields,inputProvenance,verifyA,verifyPreflightB,
- resultsPathForRun,sourcePatchSnapshot,readonlyInputSnapshot,checkReadonlyInputs,currentSourcePins,binaryReproducibility} from '../contracts/scripts/stage1_multibatch_compare.mjs';
+ resultsPathForRun,sourcePatchSnapshot,readonlyInputSnapshot,checkReadonlyInputs,currentSourcePins,binaryReproducibility,
+ reuseBudgets,reuseExpected,fullHashEqual,streamHashFile,integrationFrozen,integrationAdmission,verifyIntegrationA} from '../contracts/scripts/stage1_multibatch_compare.mjs';
 const {Transaction,Interface}=createRequire(path.join(root,'contracts/package.json'))('ethers');
 const {createTxFromRLP,getCalldataFloorGas}=createRequire(path.join(root,'contracts/package.json'))('@ethereumjs/tx');
 const measured=value=>({status:'MEASURED',value});
@@ -233,9 +234,116 @@ function deriveD(rawRun,out,check){
   'K2 与旧Stage2的分项差异及实现原因见 summary.json；旧冻结摘要不要求相同。费用来自本地 signed runTx receipts；内部CREATE/调用轨迹不重复计费。\n';
  emit(out+'/report.md',report,check);return {status:'PASS_GATE_D_AUDIT',formal_vms:24,crossings};
 }
+function reuseCheck(value,code){if(!value)throw Error(code);}
+function packBytes(bytes){const out=[];for(let i=0;i<bytes.length;i+=31)out.push('0x'+Buffer.from(bytes.subarray(i,i+31)).reverse().toString('hex').padStart(64,'0'));return out;}
+function u64Bytes(n){const b=Buffer.alloc(8);b.writeBigUInt64BE(BigInt(n));return b;}
+export function reuseReference(){
+ const frozen=integrationFrozen(),m=JSON.parse(fs.readFileSync(frozen.directory+'/materials.json'));
+ const pool=load('fixtures/snarkpack_g1d2_depth5_batch32_public_v1.json'),r=pool.source_public_records[0];
+ const batches=cfg.ordered_batch_roots.map((root,i)=>{
+  const old_state=m.ballots[i*4].old_state,new_state=m.ballots[i*4+3].new_state;
+  const fields=[wire(r.election_id_hex),wire(r.final_context_hex),u64Bytes(4),u64Bytes(i+1),u64Bytes(4),wire(root),wire(r.key_set_hash_hex),wire(r.public_key_hex),...old_state.map(wire),...new_state.map(wire)];
+  const public_inputs_be_hex=fields.flatMap(packBytes);assert.equal(public_inputs_be_hex.length,37);
+  return {root,old_state,new_state,public_inputs_be_hex};
+ });
+ return {frozen,batches,request_raw:fs.readFileSync(frozen.directory+'/request.json')};
+}
+export function auditReuseSummary(m,reference){
+ const r=m.range,count=m.batches.length,phase=m.phase??'B';reuseCheck(['B','C'].includes(phase),'MATERIAL_PHASE');
+ reuseCheck(count===(phase==='B'?2:8),'BATCH_COUNT');
+ reuseCheck(m.commands.length===2,'WORKER_TOPOLOGY');const [setup,range]=m.commands;
+ reuseCheck(setup.label==='setup-worker-1'&&range.label==='prove-range-1','WORKER_COMMAND_LABEL');
+ reuseCheck(Number.isInteger(range.pid)&&range.pid>0&&Number.isInteger(setup.pid)&&setup.pid>0&&setup.pid!==range.pid,'WORKER_PID_TOPOLOGY');
+ reuseCheck(m.commands.every(c=>c.exit_code===0&&c.wall_ms>0),'WORKER_EXIT');
+ reuseCheck(r.pid===range.pid,'RANGE_PID');reuseCheck(r.pk_load_count===1,'PK_LOAD_COUNT');
+ reuseCheck(r.status==='PASS_RANGE_PK_REUSE'&&r.error===null,'RANGE_STATUS');
+ reuseCheck(r.single_readonly_descriptor===true,'PK_DESCRIPTOR_BINDING');
+ reuseCheck(r.pk_deserialize_bytes_read===847800624,'PK_BYTES_READ');
+ fullHashEqual(m.pk_sha256,reuseExpected.pk_sha256,'PK');fullHashEqual(r.pk_sha256,reuseExpected.pk_sha256,'PK first pass');
+ fullHashEqual(r.loaded_pk_sha256,reuseExpected.pk_sha256,'PK loaded bytes');
+ fullHashEqual(m.request_sha256,sha(reference.request_raw),'seed request');
+ if(phase==='B')fullHashEqual(m.request_sha256,reuseExpected.request_sha256,'historical B seed request');
+ fullHashEqual(m.vk_ark_sha256,cfg.state_vk_ark_sha256,'Ark VK');fullHashEqual(r.vk_ark_sha256,cfg.state_vk_ark_sha256,'loaded Ark VK');
+ fullHashEqual(m.vk_eip_sha256,cfg.state_vk_eip_sha256,'EIP VK');
+ fullHashEqual(m.setup_reuse.setup_json_sha256,reference.frozen.setup_sha256,'frozen Setup metadata');
+ reuseCheck(m.setup_generation_count===0&&m.setup_reuse.setup_generation_count===0,'UNAUTHORIZED_SETUP');
+ reuseCheck(m.setup_reuse.pid===setup.pid,'SETUP_PID');
+ assert.deepEqual(r.budgets,{pk_load_budget_s:660,per_batch_budget_s:120,range_worker_budget_s:1000});
+ reuseCheck(r.pk_once_load_total_ms>0&&r.pk_once_load_total_ms<=660000,'PK_LOAD_BUDGET');
+ reuseCheck(r.worker_total_ms>0&&r.worker_total_ms<=1000000&&range.wall_ms<=1000000,'RANGE_TOTAL_BUDGET');
+ reuseCheck(r.worker_peak_rss_mib>0&&r.worker_peak_rss_mib<=cfg.budgets.child_rss_mib,'WORKER_PEAK_RSS');
+ assert.deepEqual(r.completed_batches,Array.from({length:count},(_,i)=>i+1));
+ reuseCheck(r.rss_sequence.length===count,'RSS_SEQUENCE_COUNT');
+ for(let i=1;i<count;i++)reuseCheck(JSON.stringify(m.batches[i-1].new_state)===JSON.stringify(m.batches[i].old_state),'STATE_CONTINUITY');
+ for(let i=0;i<count;i++){
+  const b=m.batches[i],e=reference.batches[i],index=i+1;
+  reuseCheck(b.worker_pid===range.pid,'WORKER_PID_MISMATCH');reuseCheck(b.pk_load_count===1,'BATCH_PK_LOAD_COUNT');
+  reuseCheck(b.proof_origin==='NEW_THIS_RUN_SINGLE_PROCESS_PK_REUSE','PROOF_ORIGIN');
+  reuseCheck(b.batch_pk_deserialize_ms===0&&r[`batch_${index}_pk_deserialize_ms`]===0,'BATCH_PK_RELOAD');
+  reuseCheck(b.batch_index===index&&b.phase===phase,'BATCH_IDENTITY');
+  reuseCheck(r[`batch_${index}_total_ms`]>0&&r[`batch_${index}_total_ms`]<=120000,'BATCH_BUDGET');
+  for(const field of ['witness_ms','prove_ms','verify_ms'])reuseCheck(b[field]>0,'BATCH_TIMING_'+field);
+  const rss=r.rss_sequence[i];reuseCheck(rss.batch_index===index&&rss.after_batch_drop===true,'RSS_DROP_BOUNDARY');
+  reuseCheck(Number.isFinite(rss.instant_rss_mib)&&rss.instant_rss_mib>0&&rss.instant_rss_mib===r[`batch_${index}_instant_rss_mib`],'INSTANT_RSS');
+  reuseCheck(rss.process_peak_rss_mib>0&&rss.process_peak_rss_mib<=r.worker_peak_rss_mib,'CUMULATIVE_RSS');
+  assert.equal(b.root,e.root,'BATCH_ROOT');assert.deepEqual(b.old_state,e.old_state,'OLD_STATE');assert.deepEqual(b.new_state,e.new_state,'NEW_STATE');
+  assert.equal(b.eip.public_input_count,37);assert.deepEqual(b.eip.public_inputs_be_hex,e.public_inputs_be_hex,'PUBLIC_INPUTS_37');
+  assert.equal(b.proof_ark_bytes,wire(b.proof_ark_hex).length);assert.equal(b.proof_ark_bytes,192);
+  assert.equal(b.proof_eip_bytes,wire(b.eip.proof_neg_a_eip2537_hex).length);assert.equal(b.proof_eip_bytes,512);
+  fullHashEqual(sha(wire(b.proof_ark_hex)),b.proof_ark_sha256,'Ark proof bytes');
+  fullHashEqual(sha(wire(b.eip.proof_neg_a_eip2537_hex)),b.proof_eip_sha256,'EIP proof bytes');
+  if(phase==='B'&&i<2){fullHashEqual(b.proof_ark_sha256,reuseExpected.ark_proof_sha256[i],'historical Ark proof');fullHashEqual(b.proof_eip_sha256,reuseExpected.eip_proof_sha256[i],'historical EIP proof');}
+  fullHashEqual(sha(wire(b.eip.vk_eip2537_hex)),cfg.state_vk_eip_sha256,'exported EIP VK');
+  fullHashEqual(b.proof_seed_sha256,sha(Buffer.concat([reference.request_raw,u64Bytes(index)])),'independent deterministic seed');
+ }
+ return {status:'PASS_REUSE_SUMMARY_SCHEMA_AND_BINDINGS',count,worker_pid:range.pid,pk_load_count:1};
+}
+export function reuseSchemaSelfTest(){
+ const reference=reuseReference(),f=reference.frozen.directory,original=JSON.parse(fs.readFileSync(f+'/materials.json'));
+ // Deliberately synthetic operational fields for SCHEMA UNIT TESTS ONLY, never performance evidence.
+ const r={status:'PASS_RANGE_PK_REUSE',error:null,pid:2,pk_load_count:1,single_readonly_descriptor:true,pk_deserialize_bytes_read:847800624,
+  pk_sha256:reuseExpected.pk_sha256,loaded_pk_sha256:reuseExpected.pk_sha256,vk_ark_sha256:cfg.state_vk_ark_sha256,
+  budgets:{pk_load_budget_s:660,per_batch_budget_s:120,range_worker_budget_s:1000},pk_once_load_total_ms:1,worker_total_ms:2,worker_peak_rss_mib:2,
+  completed_batches:[1,2],rss_sequence:[1,2].map(i=>({batch_index:i,instant_rss_mib:1,process_peak_rss_mib:2,after_batch_drop:true}))};
+ const batches=structuredClone(original.batches);for(let i=0;i<2;i++){
+  Object.assign(batches[i],{worker_pid:2,pk_load_count:1,batch_pk_deserialize_ms:0,proof_origin:'NEW_THIS_RUN_SINGLE_PROCESS_PK_REUSE',
+   proof_eip_sha256:sha(wire(batches[i].eip.proof_neg_a_eip2537_hex)),proof_seed_sha256:sha(Buffer.concat([reference.request_raw,u64Bytes(i+1)]))});
+  r[`batch_${i+1}_instant_rss_mib`]=1;r[`batch_${i+1}_pk_deserialize_ms`]=0;r[`batch_${i+1}_total_ms`]=1;
+ }
+ const sample={range:r,batches,commands:[{label:'setup-worker-1',pid:1,exit_code:0,wall_ms:1},{label:'prove-range-1',pid:2,exit_code:0,wall_ms:2}],
+  pk_sha256:reuseExpected.pk_sha256,request_sha256:reuseExpected.request_sha256,vk_ark_sha256:cfg.state_vk_ark_sha256,vk_eip_sha256:cfg.state_vk_eip_sha256,
+  setup_generation_count:0,setup_reuse:{pid:1,setup_generation_count:0,setup_json_sha256:reference.frozen.setup_sha256}};
+ auditReuseSummary(sample,reference);const cases=[];
+ for(const [name,mutate,code]of [
+  ['pk_load_count_2',s=>s.range.pk_load_count=2,'PK_LOAD_COUNT'],
+  ['changed_new_state',s=>s.batches[0].new_state[0]='0x'+'00'.repeat(32),'STATE_CONTINUITY'],
+  ['mixed_worker_pid',s=>s.batches[1].worker_pid=3,'WORKER_PID_MISMATCH']]){
+  const changed=structuredClone(sample);mutate(changed);assert.throws(()=>auditReuseSummary(changed,reference),e=>e.message===code);cases.push({name,rejected:true,reason:code});
+ }
+ return {status:'PASS_AC3_OFFLINE_SCHEMA_TESTS',scope:'SCHEMA_ONLY_SYNTHETIC_OPERATIONAL_FIELDS_WITH_REAL_ARCHIVED_PROOF_BYTES_NOT_PERFORMANCE',valid_sample:'PASS',negative_cases:cases};
+}
+export function auditReuseRun(run){
+ const top=load(run+'/compare_summary.json'),a=verifyIntegrationA(top.a_run);assert.deepEqual(top.source_pins,a.source_pins);
+ const reference=reuseReference(),m=load(run+'/materials/prepare_summary.json');assert.deepEqual(m,top.pk_reuse);
+ assert.deepEqual(top.budgets,reuseBudgets);assert.equal(top.evm_transaction_count,0);assert.equal(top.vm_creation_count,0);
+ const command=load(run+'/logs/materials.command.json');assert.equal(command.code,0);assert.equal(command.reason,null);assert.equal(command.wall_budget_seconds,1920);
+ fullHashEqual(streamHashFile(path.join(root,run,'materials/research_pk.bin')),reuseExpected.pk_sha256,'actual PK file');
+ fullHashEqual(sha(read(run+'/materials/request.json')),reuseExpected.request_sha256,'actual request bytes');
+ fullHashEqual(sha(read(run+'/materials/setup.json')),reference.frozen.setup_sha256,'actual Setup bytes');
+ for(const b of m.batches)assert.deepEqual(b,load(run+`/materials/batch_${b.batch_index}.json`));
+ const result=auditReuseSummary(m,reference);
+ return {...result,status:'PASS_GATE_A07_AND_REUSE_INTEGRATION',scope:'TWO_BATCH_MATERIALS_ONLY_NO_EVM',a_run:top.a_run,run,
+  source_pins:currentSourcePins(),binary_sha256:a.binary_sha256,setup_generation_count:0,proof_generation_count:2,
+  vm_creation_count:0,evm_transaction_count:0,gate_c:'NOT_AUTHORIZED_NOT_STARTED',materials_wall_ms:command.wall_ms};
+}
 function main(){
  process.chdir(root);const a=process.argv.slice(2),check=a.includes('--check');const words=a.filter(x=>x!=='--check');assert.equal(words.length%2,0);
  const f=Object.fromEntries(Array.from({length:words.length/2},(_,i)=>[words[2*i],words[2*i+1]]));
+ if(f['--reuse-schema-self-test']==='true'){console.log(json(reuseSchemaSelfTest()));return;}
+ if(f['--reuse-integration']==='true'){
+  integrationAdmission();const result=f['--gate']==='A'?{status:'PASS_GATE_A07_ARTIFACT_AUDIT',baseline:verifyIntegrationA(f['--run'])}:auditReuseRun(f['--run']);
+  const out=resultsPathForRun(f['--run']);emit(out+'/reuse_audit.json',result,check);console.log(json(result));return;
+ }
  const sourceBefore=sourcePatchSnapshot();
  const gate=f['--gate'],phase=gate,run=f['--run'],rawRun=f['--raw-run'];assert.ok(['A','B','D'].includes(gate));
  if(gate!=='D')assert.match(run??'',/^experiments\/stage1_multibatch_raw\/[A-Za-z0-9_-]+$/);

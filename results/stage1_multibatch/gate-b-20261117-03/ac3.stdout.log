@@ -1,0 +1,23 @@
+{
+  "status": "PASS_AC3_OFFLINE_SCHEMA_TESTS",
+  "scope": "SCHEMA_ONLY_SYNTHETIC_OPERATIONAL_FIELDS_WITH_REAL_ARCHIVED_PROOF_BYTES_NOT_PERFORMANCE",
+  "valid_sample": "PASS",
+  "negative_cases": [
+    {
+      "name": "pk_load_count_2",
+      "rejected": true,
+      "reason": "PK_LOAD_COUNT"
+    },
+    {
+      "name": "changed_new_state",
+      "rejected": true,
+      "reason": "STATE_CONTINUITY"
+    },
+    {
+      "name": "mixed_worker_pid",
+      "rejected": true,
+      "reason": "WORKER_PID_MISMATCH"
+    }
+  ]
+}
+
