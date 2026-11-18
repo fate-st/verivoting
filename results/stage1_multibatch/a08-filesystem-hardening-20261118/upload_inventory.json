@@ -1,0 +1,186 @@
+{
+  "schema": "VV/ARCHIVE/A08-FILESYSTEM-HARDENING/v1",
+  "parent_commit": "f9fc0ec903329db6bcc4123f8b8b094aec78e0ac",
+  "destination_branch": "archive/stage1-a06-budget-evidence",
+  "origin": "https://github.com/fate-st/verivoting.git",
+  "source_head": "3f8813c9d69d0e45631e9acb7bbb247a1119f511",
+  "source_branch": "feat/stage1-pk-reuse-integration",
+  "scope": "ARCHIVE_ONLY_NO_GATE_ADVANCEMENT",
+  "files": [
+    {
+      "path": "contracts/scripts/stage1_multibatch_compare.mjs",
+      "source": "/private/tmp/vv-pk-reuse-integration.PohVG2/worktree/contracts/scripts/stage1_multibatch_compare.mjs",
+      "bytes": 93682,
+      "mode": "644",
+      "sha256": "c8ef4870b7c1fce95979c23a420df6041d004e913f8a1c0fcfaf5e931602c3fa",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "contracts/scripts/native/vv_safe_fs_helper.c",
+      "source": "/private/tmp/vv-pk-reuse-integration.PohVG2/worktree/contracts/scripts/native/vv_safe_fs_helper.c",
+      "bytes": 10250,
+      "mode": "644",
+      "sha256": "ee5800375de0bf6336e48eb8840577a950cc08649bbd2941546d5af88e8b15eb",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "contracts/scripts/native/vv_safe_fs_helper",
+      "source": "/private/tmp/vv-pk-reuse-integration.PohVG2/worktree/contracts/scripts/native/vv_safe_fs_helper",
+      "bytes": 35072,
+      "mode": "755",
+      "sha256": "bca16b634c6bf78599ea83d0cd66737536a7190a8bec4ae99d066e2bcee448a5",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/REPORT.md",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/REPORT.md",
+      "bytes": 20824,
+      "mode": "644",
+      "sha256": "1f62ec6414e78fe085162f813f6eb74c0a3d5cad5efdcbdf3b691f21d62d7719",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/SHA256SUMS",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/SHA256SUMS",
+      "bytes": 1105,
+      "mode": "644",
+      "sha256": "e2651400edea8cb0505cc4d8ecba17534e8fc0c2e59a4009ce09258df81278a1",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/final_checks.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/final_checks.json",
+      "bytes": 1517,
+      "mode": "644",
+      "sha256": "ceda04861929e6b4f1248e70470f5a1c467993e75c073e844712ea876167e39c",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/identity.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/identity.json",
+      "bytes": 1326,
+      "mode": "644",
+      "sha256": "6f8f942fb7e6f3d6402f86b9130fc6725ed7fc3655d78c6d29fa4f0171385aeb",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/integrity_after.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/integrity_after.json",
+      "bytes": 38899,
+      "mode": "644",
+      "sha256": "b0d71fc8306dcc21900dc2847a632af3ce8d1f69094b50e25a6818aaeea5c3db",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/integrity_before.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/integrity_before.json",
+      "bytes": 38899,
+      "mode": "644",
+      "sha256": "b0d71fc8306dcc21900dc2847a632af3ce8d1f69094b50e25a6818aaeea5c3db",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/preparation_files_after.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/preparation_files_after.json",
+      "bytes": 892,
+      "mode": "644",
+      "sha256": "d380120efa12c50425c436326d2459aaf137e980af9a43e17ceab579fba16fde",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/preparation_files_before.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/preparation_files_before.json",
+      "bytes": 892,
+      "mode": "644",
+      "sha256": "d380120efa12c50425c436326d2459aaf137e980af9a43e17ceab579fba16fde",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/report.mjs",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/report.mjs",
+      "bytes": 12362,
+      "mode": "644",
+      "sha256": "34d5b7a7d83d1f0ea20e3fd1baec9ae2305b619758d675d3de2c78d4d8c6500c",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/runner_git_diff.patch",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/runner_git_diff.patch",
+      "bytes": 63781,
+      "mode": "644",
+      "sha256": "e581248b79cb76347c9f616b6316089f3b900e8fc9929ce6ebe2a9d8c50dd42f",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/test.mjs",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/test.mjs",
+      "bytes": 15340,
+      "mode": "644",
+      "sha256": "622cb5d3646b4c19dad671b7b65341eae28167e264bf8b0e0304783132d71555",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/test_results.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/test_results.json",
+      "bytes": 34217,
+      "mode": "644",
+      "sha256": "1fafc390847dd5138ca6e25988e2f016b46d337c176eff4f61c13cbd0abe5af5",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/this_turn_runner.diff",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/this_turn_runner.diff",
+      "bytes": 21666,
+      "mode": "644",
+      "sha256": "0ac830ae5518f484cd7c108e657025afdb78db305ce5d3b07aa79fc5e496fa0a",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/write_inventory.json",
+      "source": "/private/tmp/vv-a08-path-guard-test-UtjDki/write_inventory.json",
+      "bytes": 4597,
+      "mode": "644",
+      "sha256": "50f6c2a09a8ed2f30c7f9fee7f103e801c3cd21f1f9d8e7303cfe6640e152b72",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    },
+    {
+      "path": "results/stage1_multibatch/a08-filesystem-hardening-20261118/check_readonly_original_workspace.mjs",
+      "source": "/private/tmp/vv-a08-blocked-upload.Jvt2Cj/check.mjs",
+      "bytes": 4358,
+      "mode": "644",
+      "sha256": "6e7cd28ea683e92528e8121badd044501d82f92f36bcf1cf9416c0f19bfe1a7f",
+      "sensitive_data_scan": "PASS_NO_CREDENTIAL_PATTERN",
+      "redacted": false
+    }
+  ],
+  "exclusions": [
+    "research_pk.bin",
+    "build-target",
+    "target",
+    "node_modules",
+    "simulated filesystem trees",
+    "private witnesses"
+  ],
+  "source_integrity_before_after_identical": true,
+  "git_management_is_standalone": true,
+  "gate_a08": "NOT_CREATED",
+  "gate_c": "NOT_AUTHORIZED_NOT_STARTED",
+  "gate_d": "NOT_STARTED"
+}

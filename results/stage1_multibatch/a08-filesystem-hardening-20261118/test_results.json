@@ -1,0 +1,751 @@
+{
+  "status": "PASS_A08_FILESYSTEM_HARDENING",
+  "test_root": "/private/tmp/vv-a08-path-guard-test-UtjDki",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.4.4.1)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "c_source_sha256": "ee5800375de0bf6336e48eb8840577a950cc08649bbd2941546d5af88e8b15eb",
+  "c_binary_sha256": "bca16b634c6bf78599ea83d0cd66737536a7190a8bec4ae99d066e2bcee448a5",
+  "runner_sha256": "c8ef4870b7c1fce95979c23a420df6041d004e913f8a1c0fcfaf5e931602c3fa",
+  "helper_pin": "bca16b634c6bf78599ea83d0cd66737536a7190a8bec4ae99d066e2bcee448a5",
+  "tests": [
+    {
+      "id": 1,
+      "title": "new A08 via existing parent inode; duplicate and streaming",
+      "status": "PASS",
+      "details": {
+        "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/nested/new.json",
+        "anchor": {
+          "name": "A08_RAW",
+          "path": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08",
+          "anchor": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw",
+          "expectedDev": "16777234",
+          "expectedIno": "64577647"
+        },
+        "native": [
+          {
+            "event": "PARENT_OPEN",
+            "anchor_dev": "16777234",
+            "anchor_ino": "64577647",
+            "parent_dev": "16777234",
+            "parent_ino": "64577670"
+          },
+          {
+            "event": "FILE_OPEN"
+          },
+          {
+            "event": "WRITTEN",
+            "bytes": 12,
+            "anchor_dev": "16777234",
+            "anchor_ino": "64577647",
+            "parent_ino": "64577670"
+          }
+        ],
+        "duplicate": {
+          "label": "duplicate",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/nested/new.json",
+          "result": "REJECT",
+          "code": "EEXIST",
+          "message": "EEXIST:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/nested/new.json",
+          "zero_directory_or_file_changes": true
+        },
+        "nativeDuplicate": {
+          "code": 1,
+          "stderr": "VV_SAFE_FS_REJECT:openat_file_EXCL_NOFOLLOW:errno=17:File exists\n"
+        },
+        "controlled_executable_copy": {
+          "executed": false,
+          "mode": "0700",
+          "native": "{\"event\":\"PARENT_OPEN\",\"anchor_dev\":\"16777234\",\"anchor_ino\":\"64577669\",\"parent_dev\":\"16777234\",\"parent_ino\":\"64577675\"}\n{\"event\":\"FILE_OPEN\"}\n{\"event\":\"WRITTEN\",\"bytes\":17,\"anchor_dev\":\"16777234\",\"anchor_ino\":\"64577669\",\"parent_ino\":\"64577675\"}\n"
+        },
+        "stream": {
+          "bytes": 262144,
+          "sha256": "b9b8561490d31103a2783ddcbf67ffcb6aa02b1aa71a9800aad615aeb20c8c55",
+          "code": 0,
+          "stdout": "{\"event\":\"PARENT_OPEN\",\"anchor_dev\":\"16777234\",\"anchor_ino\":\"64577669\",\"parent_dev\":\"16777234\",\"parent_ino\":\"64577672\"}\n{\"event\":\"FILE_OPEN\"}\n{\"event\":\"WRITTEN\",\"bytes\":262144,\"anchor_dev\":\"16777234\",\"anchor_ino\":\"64577669\",\"parent_ino\":\"64577672\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "original A06 read-only",
+      "status": "PASS",
+      "details": {
+        "label": "original A06",
+        "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/original/gate-a-20261117-06/new.json",
+        "result": "REJECT",
+        "code": "READ_ONLY_PATH",
+        "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/original/gate-a-20261117-06/new.json",
+        "zero_directory_or_file_changes": true
+      }
+    },
+    {
+      "id": 3,
+      "title": "original B02 read-only",
+      "status": "PASS",
+      "details": {
+        "label": "original B02",
+        "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/original/gate-b-20261117-02/new.json",
+        "result": "REJECT",
+        "code": "READ_ONLY_PATH",
+        "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/original/gate-b-20261117-02/new.json",
+        "zero_directory_or_file_changes": true
+      }
+    },
+    {
+      "id": 4,
+      "title": "integration A07 read-only",
+      "status": "PASS",
+      "details": {
+        "label": "integration A07",
+        "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-07/new.json",
+        "result": "REJECT",
+        "code": "READ_ONLY_PATH",
+        "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-07/new.json",
+        "zero_directory_or_file_changes": true
+      }
+    },
+    {
+      "id": 5,
+      "title": "integration B03 read-only",
+      "status": "PASS",
+      "details": {
+        "label": "integration B03",
+        "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/results/stage1_multibatch/gate-b-20261117-03/new.json",
+        "result": "REJECT",
+        "code": "READ_ONLY_PATH",
+        "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/results/stage1_multibatch/gate-b-20261117-03/new.json",
+        "zero_directory_or_file_changes": true
+      }
+    },
+    {
+      "id": 6,
+      "title": "/tmp alias denied for both approved and historical roots",
+      "status": "PASS",
+      "details": [
+        {
+          "label": "tmp approved",
+          "input": "/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/alias.json",
+          "result": "REJECT",
+          "code": "SYMLINK_COMPONENT",
+          "message": "SYMLINK_COMPONENT:/tmp",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "tmp protected",
+          "input": "/tmp/vv-a08-path-guard-test-UtjDki/sim/original/gate-a-20261117-06/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/tmp/vv-a08-path-guard-test-UtjDki/sim/original/gate-a-20261117-06/new.json",
+          "zero_directory_or_file_changes": true
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "actual filesystem case variants",
+      "status": "PASS",
+      "details": [
+        {
+          "path": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/gate-a-20261117-06",
+          "stat": {
+            "dev": "16777234",
+            "ino": "64577657"
+          },
+          "label": "gate-a-20261117-06",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/gate-a-20261117-06/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/gate-a-20261117-06/new.json",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "path": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/Gate-A-20261117-06",
+          "stat": {
+            "dev": "16777234",
+            "ino": "64577657"
+          },
+          "label": "Gate-A-20261117-06",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/Gate-A-20261117-06/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/Gate-A-20261117-06/new.json",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "path": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/GATE-A-20261117-06",
+          "stat": {
+            "dev": "16777234",
+            "ino": "64577657"
+          },
+          "label": "GATE-A-20261117-06",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/GATE-A-20261117-06/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/case/GATE-A-20261117-06/new.json",
+          "zero_directory_or_file_changes": true
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "NFC/NFD actual inode equivalence and non-ASCII new component",
+      "status": "PASS",
+      "details": {
+        "nfc": {
+          "path": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/unicode/é",
+          "stat": {
+            "exists": true,
+            "dev": "16777234",
+            "ino": "64577659"
+          }
+        },
+        "nfd": {
+          "path": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/unicode/é",
+          "stat": {
+            "exists": true,
+            "dev": "16777234",
+            "ino": "64577659"
+          }
+        },
+        "same_inode": true,
+        "a": {
+          "label": "8a NFD protected alias",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/unicode/é/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/unicode/é/new.json",
+          "zero_directory_or_file_changes": true
+        },
+        "b": {
+          "label": "8b nonASCII new dir",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/new-dir-é/new.json",
+          "result": "REJECT",
+          "code": "NON_ASCII_NEW_COMPONENT",
+          "message": "NON_ASCII_NEW_COMPONENT:new-dir-é",
+          "zero_directory_or_file_changes": true
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "symlinks to history and unprotected intermediate directories",
+      "status": "PASS",
+      "details": [
+        {
+          "label": "A06 symlink",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/link-a06/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/link-a06/new.json",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "B03 symlink",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/link-b03/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/link-b03/new.json",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "intermediate symlink",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/middle-link/new.json",
+          "result": "REJECT",
+          "code": "SYMLINK_COMPONENT",
+          "message": "SYMLINK_COMPONENT:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/middle-link",
+          "zero_directory_or_file_changes": true
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "existing preparation file protected by EEXIST",
+      "status": "PASS",
+      "details": {
+        "label": "existing preparation",
+        "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/results/stage1_multibatch/gate-a-20261117-08/preparation.json",
+        "result": "REJECT",
+        "code": "EEXIST",
+        "message": "EEXIST:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/results/stage1_multibatch/gate-a-20261117-08/preparation.json",
+        "zero_directory_or_file_changes": true
+      }
+    },
+    {
+      "id": 11,
+      "title": "environment admission, all 15 nested pairs, PROD isolation and dev/ino",
+      "status": "PASS",
+      "details": [
+        {
+          "label": "RUSTUP target",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/rustup-read-only/new.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/rustup-read-only/new.json",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "missing VV_INTEGRATION_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/missing.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:VV_INTEGRATION_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "relative VV_INTEGRATION_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/relative.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:VV_INTEGRATION_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "missing CARGO_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/missing.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:CARGO_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "relative CARGO_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/relative.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:CARGO_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "missing CARGO_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/missing.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:CARGO_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "relative CARGO_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/relative.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:CARGO_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "missing RUSTUP_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/missing.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:RUSTUP_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "relative RUSTUP_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/relative.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:RUSTUP_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "missing TMPDIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/missing.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:TMPDIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "relative TMPDIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/relative.json",
+          "result": "REJECT",
+          "code": "INVALID_ABSOLUTE_PATH",
+          "message": "INVALID_ABSOLUTE_PATH:TMPDIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "TMPDIR=/tmp",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/tmp.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/tmp",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "TMPDIR=/private/tmp",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/tmp-root.json",
+          "result": "REJECT",
+          "code": "READ_ONLY_PATH",
+          "message": "READ_ONLY_PATH:/private/tmp",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RAW/A08_RESULTS",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RAW/A08_RESULTS",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RAW/VV_INTEGRATION_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RAW/VV_INTEGRATION_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RAW/CARGO_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RAW/CARGO_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RAW/CARGO_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RAW/CARGO_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RAW/TMPDIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RAW/TMPDIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RESULTS/VV_INTEGRATION_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RESULTS/VV_INTEGRATION_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RESULTS/CARGO_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RESULTS/CARGO_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RESULTS/CARGO_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RESULTS/CARGO_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair A08_RESULTS/TMPDIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:A08_RESULTS/TMPDIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair VV_INTEGRATION_TARGET_DIR/CARGO_TARGET_DIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:VV_INTEGRATION_TARGET_DIR/CARGO_TARGET_DIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair VV_INTEGRATION_TARGET_DIR/CARGO_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:VV_INTEGRATION_TARGET_DIR/CARGO_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair VV_INTEGRATION_TARGET_DIR/TMPDIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:VV_INTEGRATION_TARGET_DIR/TMPDIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair CARGO_TARGET_DIR/CARGO_HOME",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:VV_INTEGRATION_TARGET_DIR/CARGO_HOME",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair CARGO_TARGET_DIR/TMPDIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:VV_INTEGRATION_TARGET_DIR/TMPDIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "nested pair CARGO_HOME/TMPDIR",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/overlap.json",
+          "result": "REJECT",
+          "code": "OVERLAPPING_WRITABLE_ROOTS",
+          "message": "OVERLAPPING_WRITABLE_ROOTS:CARGO_HOME/TMPDIR",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "PROD test pause",
+          "result": "REJECT",
+          "exit_code": 1,
+          "stderr": "VV_SAFE_FS_REJECT:PROD_REFUSES_TEST_PARAMETERS:errno=22:Invalid argument\n",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "PROD refuses temporary test root",
+          "result": "REJECT",
+          "exit_code": 1,
+          "stderr": "VV_SAFE_FS_REJECT:PROD_REFUSES_TEST_ROOT:errno=22:Invalid argument\n",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "wrong expected device",
+          "result": "REJECT",
+          "exit_code": 1,
+          "stderr": "VV_SAFE_FS_REJECT:ANCHOR_IDENTITY_MISMATCH:errno=22:Invalid argument\n",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "wrong expected inode",
+          "result": "REJECT",
+          "exit_code": 1,
+          "stderr": "VV_SAFE_FS_REJECT:ANCHOR_IDENTITY_MISMATCH:errno=22:Invalid argument\n",
+          "zero_directory_or_file_changes": true
+        },
+        {
+          "label": "Runner wrong mode for test pause",
+          "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/never-created/pause.json",
+          "result": "REJECT",
+          "code": "INDEPENDENT_BUILD_ROOT_REQUIRED",
+          "message": "INDEPENDENT_BUILD_ROOT_REQUIRED",
+          "zero_directory_or_file_changes": true
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "all unsafe-path failures produced no output, logs or command receipts",
+      "status": "PASS",
+      "details": {
+        "rejections_with_full_snapshot_assertion": 48,
+        "rows": [
+          {
+            "label": "zero-write 0",
+            "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/../gate-a-20261117-07/escape.json",
+            "result": "REJECT",
+            "code": "UNSAFE_PATH_COMPONENT",
+            "message": "UNSAFE_PATH_COMPONENT:target",
+            "zero_directory_or_file_changes": true
+          },
+          {
+            "label": "zero-write 1",
+            "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/new..component/new.json",
+            "result": "REJECT",
+            "code": "UNSAFE_PATH_COMPONENT",
+            "message": "UNSAFE_PATH_COMPONENT:target",
+            "zero_directory_or_file_changes": true
+          },
+          {
+            "label": "zero-write 2",
+            "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/outside/new.json",
+            "result": "REJECT",
+            "code": "OUTSIDE_WRITABLE_ROOTS",
+            "message": "OUTSIDE_WRITABLE_ROOTS:/private/tmp/vv-a08-path-guard-test-UtjDki/sim/outside/new.json",
+            "zero_directory_or_file_changes": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "title": "same-UID rename after verified directory FD open",
+      "status": "PASS",
+      "details": {
+        "input": "/private/tmp/vv-a08-path-guard-test-UtjDki/sim/integration/experiments/stage1_multibatch_raw/gate-a-20261117-08/orig_dir/race.json",
+        "opened": {
+          "event": "PARENT_OPEN",
+          "anchor_dev": "16777234",
+          "anchor_ino": "64577669",
+          "parent_dev": "16777234",
+          "parent_ino": "64577681"
+        },
+        "completed": {
+          "code": 0,
+          "stdout": "{\"event\":\"PARENT_OPEN\",\"anchor_dev\":\"16777234\",\"anchor_ino\":\"64577669\",\"parent_dev\":\"16777234\",\"parent_ino\":\"64577681\"}\n{\"event\":\"FILE_OPEN\"}\n{\"event\":\"WRITTEN\",\"bytes\":23,\"anchor_dev\":\"16777234\",\"anchor_ino\":\"64577669\",\"parent_ino\":\"64577681\"}\n",
+          "stderr": ""
+        },
+        "moved_ino": "64577681",
+        "trap_entries": [],
+        "risk": "An opened dirFD follows the original directory inode after a same-UID rename. It does not prevent movement of that directory."
+      }
+    }
+  ],
+  "write_inventory": [
+    {
+      "line": 136,
+      "text": "export function safeWriteProtectedFile(target,data,{stream=false,onReady,...options}={}){"
+    },
+    {
+      "line": 155,
+      "text": "export const writeNew=(p,v)=>safeWriteProtectedFile(outputAbsolute(p),json(v));"
+    },
+    {
+      "line": 429,
+      "text": "  out=safeWriteProtectedFile(base+'.stdout.log',undefined,{stream:true,env});"
+    },
+    {
+      "line": 430,
+      "text": "  err=safeWriteProtectedFile(base+'.stderr.log',undefined,{stream:true,env});"
+    },
+    {
+      "line": 453,
+      "text": "    const marker=path.join(materialsDirectory,'outer_cleanup_requested.json');if(!fs.existsSync(marker))safeWriteProtectedFile(marker,json({reason:'OUTER_WALL_BUDGET',outer_pid:child.pid}));"
+    },
+    {
+      "line": 474,
+      "text": "  stdout:base+'.stdout.log',stderr:base+'.stderr.log'};writeNew(base+'.command.json',r);"
+    },
+    {
+      "line": 499,
+      "text": " const before=protectedSnapshot({phase:'A',run});writeNew(run+'/protected_files.json',before);"
+    },
+    {
+      "line": 507,
+      "text": "  const reproducibility=binaryReproducibility(run);writeNew(run+'/binary_reproducibility.json',reproducibility);"
+    },
+    {
+      "line": 512,
+      "text": "  const compiled=compileSolidity();writeNew(run+'/compiled.json',compiled);"
+    },
+    {
+      "line": 513,
+      "text": "  writeNew(run+'/storage_layout.json',{layouts:Object.fromEntries(Object.entries(compiled.contracts['stage1/Stage1Receivers.sol']).map(([n,c])=>[n,c.storageLayout])),checks:compiled.storage_checks});"
+    },
+    {
+      "line": 514,
+      "text": "  writeNew(run+'/static_checks.json',{version,prague:pragueStatic(),storage_checks:compiled.storage_checks,provenance:inputProvenance(),"
+    },
+    {
+      "line": 521,
+      "text": "  writeNew(run+'/gate_a.json',{...base,status:'PASS_GATE_A_COMPILE_ONLY',commands,"
+    },
+    {
+      "line": 527,
+      "text": " }catch(e){writeNew(run+'/gate_a_failed.json',{...base,status:'BLOCKED',error:String(e),commands});throw e;}"
+    },
+    {
+      "line": 600,
+      "text": " writeNew(aRun+'/preflight_b.json',report);writeNew(resultsPathForRun(aRun)+'/preflight_b.json',report);"
+    },
+    {
+      "line": 766,
+      "text": " writeNew(run+`/sessions/${negative?'negative':'positive'}-k${k}-${route}.json`,output);assert.equal(output.status,'PASS',output.error);"
+    },
+    {
+      "line": 777,
+      "text": " const before=protectedSnapshot({phase:gate,run,aRun,bRun});writeNew(run+'/protected_files.json',before);"
+    },
+    {
+      "line": 779,
+      "text": "  writeNew(run+'/request.json',{gate,identity:`${gate}/${path.basename(run)}/${new Date().toISOString()}`,config_sha256:sha(read(configPath)),a_run:aRun,b_run:bRun??null,approved,formal:gate==='C'});"
+    },
+    {
+      "line": 790,
+      "text": "  checkProtected(before);writeNew(run+`/gate_${gate.toLowerCase()}.json`,{gate,run,a_run:aRun,b_run:bRun??null,status:gate==='B'?'PASS_GATE_B_REGRESSION_ONLY':'PASS_GATE_C_FORMAL_EXECUTION',"
+    },
+    {
+      "line": 843,
+      "text": " writeNew(run+'/integration_config.json',{schema:'VV/STAGE1/A07/PK-REUSE/v1',...admission,budgets:reuseBudgets,"
+    },
+    {
+      "line": 852,
+      "text": " if(path.resolve(built)!==absolute(binary))safeWriteProtectedFile(absolute(binary),fs.readFileSync(built),{executable:true});"
+    },
+    {
+      "line": 859,
+      "text": " writeNew(run+'/gate_a.json',{schema:'VV/STAGE1/A07/PK-REUSE/v1',status:'PASS_GATE_A07_PK_REUSE_BUILD',run,"
+    },
+    {
+      "line": 870,
+      "text": " const frozen=integrationFrozen();writeNew(run+'/integration_request.json',{gate,run,a_run:aRun,run_identity:`${path.basename(run)}/${new Date().toISOString()}`,"
+    },
+    {
+      "line": 874,
+      "text": " writeNew(run+'/compare_summary.json',{schema:'VV/STAGE1/A07/INTEGRATION/v1',status:'PASS_MATERIAL_GENERATION_ONLY_PENDING_AUDIT',"
+    },
+    {
+      "line": 948,
+      "text": " safeWriteProtectedFile(absolute(binary),fs.readFileSync(path.join(target,'release/stage1_multibatch_materials')),{executable:true});"
+    },
+    {
+      "line": 949,
+      "text": " const compiled=compileSolidity();writeNew(A08_RUN+'/compiled.json',compiled);"
+    },
+    {
+      "line": 959,
+      "text": " checkReadonlyInputs(frozenPaths);writeNew(A08_RUN+'/manifest.json',manifest);verifyA08();"
+    },
+    {
+      "line": 966,
+      "text": " writeNew(run+'/request.json',{gate:'C',a_run:A08_RUN,identity:'C/'+path.basename(run)+'/'+new Date().toISOString(),evidence_kind:'REAL_EXECUTION',execution_performed:true,"
+    },
+    {
+      "line": 974,
+      "text": " verifyA08();checkReadonlyInputs(m.frozen_paths);writeNew(run+'/gate_c.json',{status:'PASS_GATE_C_FORMAL_EXECUTION',gate:'C',run,a_run:A08_RUN,evidence_kind:'REAL_EXECUTION',execution_performed:true,"
+    }
+  ],
+  "read_only_open_calls": [
+    {
+      "line": 804,
+      "text": "export function streamHashFile(file){const h=createHash('sha256'),fd=fs.openSync(file,'r'),b=Buffer.alloc(1048576);try{let n;while((n=fs.readSync(fd,b,0,b.length,null)))h.update(b.subarray(0,n));}finally{fs.closeSync(fd);}return h.digest('hex');}"
+    },
+    {
+      "line": 941,
+      "text": " const pkfd=fs.openSync(frozen.directory+'/research_pk.bin','r'),prefix=Buffer.alloc(arkVK.length);"
+    }
+  ],
+  "protected_integrity": {
+    "original_matches_historical_baseline": true,
+    "original_16_paths": 16,
+    "integration_4_paths_unchanged": true,
+    "existing_three_preparation_files_unchanged": true,
+    "other_three_preexisting_modified_sources_unchanged": true,
+    "head_unchanged": true,
+    "index_unchanged": true
+  },
+  "not_executed": {
+    "rust_compilation": true,
+    "solidity_compilation": true,
+    "setup": true,
+    "prove": true,
+    "worker": true,
+    "evm": true,
+    "stage3_environment_preparation": true,
+    "commit": true,
+    "push": true
+  },
+  "gate_states": {
+    "A06_B02": "FROZEN",
+    "A07_B03": "FROZEN",
+    "A08": "NOT_CREATED",
+    "C": "NOT_AUTHORIZED_NOT_STARTED",
+    "D": "NOT_STARTED"
+  }
+}

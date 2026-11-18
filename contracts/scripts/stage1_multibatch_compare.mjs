@@ -23,7 +23,136 @@ export const sha=b=>createHash('sha256').update(b).digest('hex');
 export const wire=s=>Buffer.from(s.replace(/^0x/,''),'hex');
 export const hex=s=>s.startsWith('0x')?s:'0x'+s;
 export const json=v=>JSON.stringify(v,(_,x)=>typeof x==='bigint'?x.toString():x,2)+'\n';
-export const writeNew=(p,v)=>{const f=path.resolve(root,p);fs.mkdirSync(path.dirname(f),{recursive:true});fs.writeFileSync(f,json(v),{flag:'wx'});};
+// All Runner-owned output (including streamed command logs) goes through the same dirFD writer.
+export const nativeHelperSource='contracts/scripts/native/vv_safe_fs_helper.c';
+export const nativeHelperBinary='contracts/scripts/native/vv_safe_fs_helper';
+export const SAFE_FS_EXPECTED_SHA256='bca16b634c6bf78599ea83d0cd66737536a7190a8bec4ae99d066e2bcee448a5';
+const integrationPhysicalRoot='/private/tmp/vv-pk-reuse-integration.PohVG2/worktree';
+const originalPhysicalRoot='/Users/lijian/Documents/02学习/论文/latex模版/experiment/verivoting-vscode-starter';
+const safeFsTestPrefix='/private/tmp/vv-a08-path-guard-test-';
+const guardError=(code,detail='')=>{const e=Error(code+(detail?':'+detail:''));e.code=code;throw e;};
+const components=p=>p.split('/').filter(Boolean).map(c=>c.normalize('NFC'));
+const comparable=p=>components(p).map(c=>process.platform==='darwin'?c.toLowerCase():c);
+const containsPath=(p,r)=>{const a=comparable(p),b=comparable(r);return a.length>=b.length&&b.every((c,i)=>c===a[i]);};
+const overlapPaths=(a,b)=>containsPath(a,b)||containsPath(b,a);
+function lexicalAbsolute(value,label){
+ if(typeof value!=='string'||!value.length||!path.isAbsolute(value)||value.includes('\0'))guardError('INVALID_ABSOLUTE_PATH',label);
+ const c=value.slice(1).split('/');
+ if(c.some(x=>!x||x==='.'||x.includes('..')||/[\x00-\x1f\x7f]/.test(x)))guardError('UNSAFE_PATH_COMPONENT',label);
+ return '/'+c.map(x=>x.normalize('NFC')).join('/');
+}
+function existsLstat(p){try{return fs.lstatSync(p,{bigint:true});}catch(e){if(e.code==='ENOENT')return null;throw e;}}
+// realpath is a read-only membership test, NEVER permission to follow a link when writing.
+function physicalMembership(p){
+ let ancestor=p;const tail=[];
+ while(!existsLstat(ancestor)){tail.unshift(path.basename(ancestor));ancestor=path.dirname(ancestor);}
+ return path.join(fs.realpathSync.native(ancestor),...tail).normalize('NFC');
+}
+function noSymlinkComponents(p){
+ let current='';let missing=false;
+ for(const component of components(p)){
+  current+='/'+component;
+  const s=missing?null:existsLstat(current);
+  if(s?.isSymbolicLink())guardError('SYMLINK_COMPONENT',current);
+  if(!s){missing=true;if(!/^[A-Za-z0-9._-]+$/.test(component)||component.includes('..'))guardError('NON_ASCII_NEW_COMPONENT',component);}
+  else if(current!==p&&!s.isDirectory())guardError('NON_DIRECTORY_COMPONENT',current);
+ }
+}
+function denyMembership(p,blacklists,rootCheck=false){
+ const physical=physicalMembership(p);
+ for(const denied of blacklists){
+  const d=lexicalAbsolute(denied,'blacklist'),dp=physicalMembership(d);
+  if(rootCheck?(overlapPaths(p,d)||overlapPaths(physical,dp)):(containsPath(p,d)||containsPath(physical,dp)))guardError('READ_ONLY_PATH',p);
+ }
+}
+function testPolicyCheck(policy){
+ if(policy.mode!=='TEST_ONLY'||!policy.testRoot?.startsWith(safeFsTestPrefix))guardError('EXPLICIT_TEST_ONLY_REQUIRED');
+ const t=lexicalAbsolute(policy.testRoot,'testRoot');noSymlinkComponents(t);
+ if(!fs.lstatSync(t).isDirectory()||fs.realpathSync.native(t)!==t)guardError('TEST_ROOT_NOT_PHYSICAL');
+ return t;
+}
+/** Pure read-only preflight: no mkdir, log, receipt, compiler or helper invocation. */
+export function protectedWritePreflight({env=process.env,testPolicy,target}={}){
+ const keys=['VV_INTEGRATION_TARGET_DIR','CARGO_TARGET_DIR','CARGO_HOME','RUSTUP_HOME','TMPDIR'];
+ const values=Object.fromEntries(keys.map(k=>[k,lexicalAbsolute(env[k],k)]));
+ const testing=Boolean(testPolicy),testRoot=testing?testPolicyCheck(testPolicy):null;
+ if(!testing&&fs.realpathSync.native(root)!==integrationPhysicalRoot)guardError('WRONG_INTEGRATION_WORKTREE');
+ const rustup=fs.realpathSync.native(values.RUSTUP_HOME);
+ if(!fs.lstatSync(rustup).isDirectory())guardError('RUSTUP_NOT_DIRECTORY');
+ const roots=[
+  {name:'A08_RAW',path:testing?lexicalAbsolute(testPolicy.raw,'A08_RAW'):integrationPhysicalRoot+'/experiments/stage1_multibatch_raw/gate-a-20261117-08'},
+  {name:'A08_RESULTS',path:testing?lexicalAbsolute(testPolicy.results,'A08_RESULTS'):integrationPhysicalRoot+'/results/stage1_multibatch/gate-a-20261117-08'},
+  ...['VV_INTEGRATION_TARGET_DIR','CARGO_TARGET_DIR','CARGO_HOME','TMPDIR'].map(name=>({name,path:values[name]}))
+ ];
+ const frozen=['gate-a-20261117-07','gate-b-20261117-03'].flatMap(n=>['experiments/stage1_multibatch_raw/','results/stage1_multibatch/'].map(p=>integrationPhysicalRoot+'/'+p+n));
+ const blacklist=[originalPhysicalRoot,rustup,path.join(os.homedir(),'.cargo'),
+  integrationPhysicalRoot+'/contracts/node_modules',...frozen,...(testPolicy?.blacklists??[])];
+ // Physical membership/blacklists precede no-follow checks, so aliases cannot mask history.
+ for(const r of roots)denyMembership(r.path,blacklist,true);
+ if(target!==undefined){target=lexicalAbsolute(target,'target');denyMembership(target,blacklist);}
+ if(target!==undefined)noSymlinkComponents(target);
+ for(const r of roots){
+  noSymlinkComponents(r.path);
+  if(testing&&!containsPath(r.path,testRoot))guardError('TEST_ROOT_ESCAPE');
+  if(!testing&&(r.path.includes('vv-a08-path-guard-test-')||(!r.name.startsWith('A08_')&&containsPath(r.path,integrationPhysicalRoot))))guardError('INDEPENDENT_BUILD_ROOT_REQUIRED');
+ }
+ if(!containsPath(values.TMPDIR,'/private/tmp')||values.TMPDIR==='/private/tmp')guardError('INDEPENDENT_TMPDIR_REQUIRED');
+ for(let i=0;i<roots.length;i++)for(let j=i+1;j<roots.length;j++){
+  const a=roots[i],b=roots[j],sameTarget=a.name==='VV_INTEGRATION_TARGET_DIR'&&b.name==='CARGO_TARGET_DIR'&&a.path===b.path;
+  if(!sameTarget&&(overlapPaths(a.path,b.path)||overlapPaths(physicalMembership(a.path),physicalMembership(b.path))))guardError('OVERLAPPING_WRITABLE_ROOTS',a.name+'/'+b.name);
+ }
+ const registered=roots.map(r=>{
+  let anchor=r.path;while(!existsLstat(anchor))anchor=path.dirname(anchor);
+  const s=fs.lstatSync(anchor,{bigint:true});if(!s.isDirectory())guardError('ANCHOR_NOT_DIRECTORY');
+  return {...r,anchor,expectedDev:s.dev.toString(),expectedIno:s.ino.toString()};
+ });
+ return {mode:testing?'TEST_ONLY':'PROD',env:values,roots:registered,blacklist,testRoot};
+}
+function verifyNativeHelper(){
+ const binary=path.join(integrationPhysicalRoot,nativeHelperBinary);noSymlinkComponents(binary);
+ const s=fs.lstatSync(binary);if(!s.isFile()||s.isSymbolicLink()||!(s.mode&0o111))guardError('INVALID_NATIVE_HELPER');
+ const digest=sha(fs.readFileSync(binary));if(digest!==SAFE_FS_EXPECTED_SHA256)guardError('NATIVE_HELPER_SHA256_MISMATCH');
+ return binary;
+}
+export function protectedWritePlan(target,{env=process.env,testPolicy,testPauseMs,executable=false}={}){
+ // Read/validate ALL environment values before any output; target parsing never erases '..'.
+ const context=protectedWritePreflight({env,testPolicy,target});target=lexicalAbsolute(target,'target');
+ const selected=context.roots.find(r=>containsPath(target,r.path)&&target!==r.path);
+ if(!selected)guardError('OUTSIDE_WRITABLE_ROOTS',target);
+ if(existsLstat(target))guardError('EEXIST',target);
+ if(testPauseMs!==undefined&&(context.mode!=='TEST_ONLY'||!Number.isInteger(testPauseMs)||testPauseMs<0||testPauseMs>10000))guardError('PROD_REFUSES_TEST_PARAMETERS');
+ if(executable&&!target.endsWith('/build-target/release/stage1_multibatch_materials'))guardError('EXECUTABLE_OUTPUT_SCOPE');
+ const binary=verifyNativeHelper(),rel=path.relative(selected.anchor,target);
+ if(!rel||rel.split('/').some(c=>!c||c.includes('..')||!/^[A-Za-z0-9._-]+$/.test(c)))guardError('UNSAFE_TARGET_RELPATH');
+ const args=['--mode',context.mode,'--allowed-root',selected.anchor,'--registered-root',selected.path,
+  '--expected-dev',selected.expectedDev,'--expected-ino',selected.expectedIno,'--target-relpath',rel];
+ if(testPauseMs!==undefined)args.push('--test-pause-before-file-open-ms',String(testPauseMs));
+ if(executable)args.push('--executable','true');
+ return {binary,args,target,context,anchor:selected};
+}
+/** Sync payloads and streamed logs share this single policy/integrity/dirFD boundary.
+ * SHA-check-to-exec and same-UID directory renaming remain explicitly outside its guarantee.
+ */
+export function safeWriteProtectedFile(target,data,{stream=false,onReady,...options}={}){
+ const plan=protectedWritePlan(target,options),env={...process.env,...plan.context.env};
+ if(!stream)return execFileSync(plan.binary,plan.args,{input:data,env,encoding:'utf8',maxBuffer:1024*1024});
+ const child=spawn(plan.binary,plan.args,{env,stdio:['pipe','pipe','pipe']});let stdout='',stderr='',parentReady=false;
+ let readyResolve,readyReject;const ready=new Promise((resolve,reject)=>{readyResolve=resolve;readyReject=reject;});ready.catch(()=>{});
+ const completion=new Promise((resolve,reject)=>{
+  child.stdout.on('data',b=>{stdout+=b.toString();if(!parentReady&&stdout.includes('\n')){parentReady=true;onReady?.(JSON.parse(stdout.split('\n')[0]));}
+   if(stdout.includes('"event":"FILE_OPEN"'))readyResolve();});
+  child.stderr.on('data',b=>{stderr+=b.toString();});child.stdin.on('error',()=>{});
+  child.once('error',e=>{readyReject(e);reject(e);});child.once('close',(code,signal)=>{
+   if(code===0)resolve({code,stdout,stderr});else{const e=Error('NATIVE_LOG_WRITE_FAILED:'+code+':'+signal+':'+stderr);readyReject(e);reject(e);}});
+ });
+ // Avoid an unhandled rejection if a log helper fails before command cleanup awaits it.
+ completion.catch(()=>{});return {child,completion,ready,plan};
+}
+function outputAbsolute(p){
+ if(typeof p!=='string'||p.split('/').some(c=>c==='.'||c.includes('..')))guardError('UNSAFE_OUTPUT_ARGUMENT');
+ return path.isAbsolute(p)?p:root+'/'+p;
+}
+export const writeNew=(p,v)=>safeWriteProtectedFile(outputAbsolute(p),json(v));
 export const cfg=load(configPath);
 export const git=(...a)=>execFileSync('git',a,{cwd:root,encoding:'utf8',env:{...process.env,GIT_OPTIONAL_LOCKS:'0'}}).trim();
 const abi=AbiCoder.defaultAbiCoder();
@@ -182,7 +311,7 @@ export function readonlyInputSnapshot({phase,aRun,bRun,rawRun}){
 export function checkReadonlyInputs(before){for(const p of before)assert.deepEqual(recursiveSnapshot(p.path),p,'read-only input changed: '+p.path);}
 export function protectedSnapshot({phase,run,aRun,bRun,rawRun}){
  const excluded=phase==='D'?[run,rawRun]:[run,resultsPathForRun(run)];
- const files=execFileSync('git',['ls-files','--cached','--others','--exclude-standard','-z'],{cwd:root,encoding:'utf8'})
+ const files=execFileSync('git',['ls-files','--cached','--others','--exclude-standard','-z'],{cwd:root,encoding:'utf8',env:{...process.env,GIT_OPTIONAL_LOCKS:'0'}})
   .split('\0').filter(p=>p&&!approvedPatches.includes(p)&&!excluded.some(d=>inside(p,d))).sort();
  const paper=path.resolve(root,'../../sn-article-template/sn-article.tex');
  const archives=historyDirs.map(recursiveSnapshot);
@@ -291,15 +420,27 @@ async function innerWorkerControl(controlPath){
 async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.budgets.child_seconds){
  const env={...process.env,...extraEnv,CARGO_BUILD_JOBS:String(cfg.budgets.build_jobs),RAYON_NUM_THREADS:String(cfg.budgets.rayon_threads)};
  for(const k of Object.keys(env))if(k.startsWith('CARGO_PROFILE_RELEASE_'))delete env[k];
- const base=path.join(run,'logs',label);fs.mkdirSync(path.dirname(absolute(base)),{recursive:true});
- const out=fs.openSync(absolute(base+'.stdout.log'),'wx'),err=fs.openSync(absolute(base+'.stderr.log'),'wx');
+ const base=outputAbsolute(run)+'/logs/'+label;
+ // Validate all output destinations and subprocess-controlled build roots before the first log.
+ for(const p of [base+'.stdout.log',base+'.stderr.log',base+'.command.json'])protectedWritePlan(p,{env});
+ assert.equal(env.CARGO_TARGET_DIR,process.env.CARGO_TARGET_DIR,'COMMAND_TARGET_MUST_MATCH_REGISTERED_ROOT');
+ let out,err;
+ try{
+  out=safeWriteProtectedFile(base+'.stdout.log',undefined,{stream:true,env});
+  err=safeWriteProtectedFile(base+'.stderr.log',undefined,{stream:true,env});
+  await Promise.all([out.ready,err.ready]);
+ }catch(e){
+  for(const writer of [out,err])writer?.child.stdin.end();
+  await Promise.allSettled([out,err].filter(Boolean).map(w=>w.completion));throw e;
+ }
  const start=performance.now(),started=new Date().toISOString();let reason=null;
  const instance=randomUUID();args=[...args];
  const isMaterials=path.basename(program)==='stage1_multibatch_materials'&&args[0]==='prepare';
  const materialsDirectory=isMaterials?absolute(args[1]):null;
  if(isMaterials||args.includes('--vm')){args.push('--worker-instance-id',instance);env.VV_OUTER_INSTANCE_ID=instance;}
  const child=spawn(program,args,{cwd:root,env,stdio:['ignore','pipe','pipe'],detached:true});
- child.stdout.on('data',b=>{fs.writeSync(out,b);process.stdout.write(b);});child.stderr.on('data',b=>{fs.writeSync(err,b);process.stderr.write(b);});
+ child.stdout.pipe(out.child.stdin);child.stderr.pipe(err.child.stdin);
+ child.stdout.on('data',b=>process.stdout.write(b));child.stderr.on('data',b=>process.stderr.write(b));
  let closed=false,identity=null,identityError=null;
  const closedPromise=new Promise(resolve=>{child.once('error',e=>{closed=true;resolve({code:null,error:String(e)});});child.once('close',(code,signal)=>{closed=true;resolve({code,signal});});});
  try{identity=macProcessIdentity(child.pid);assert.equal(identity.process_group_id,child.pid);}catch(e){identityError=String(e);}
@@ -309,7 +450,7 @@ async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.
   if(materialsDirectory){
    try{
     // Cancellation marker prevents the scheduler from starting another group during cleanup.
-    const marker=path.join(materialsDirectory,'outer_cleanup_requested.json');if(!fs.existsSync(marker))fs.writeFileSync(marker,json({reason:'OUTER_WALL_BUDGET',outer_pid:child.pid}),{flag:'wx'});
+    const marker=path.join(materialsDirectory,'outer_cleanup_requested.json');if(!fs.existsSync(marker))safeWriteProtectedFile(marker,json({reason:'OUTER_WALL_BUDGET',outer_pid:child.pid}));
     const control=await innerWorkerControl(path.join(materialsDirectory,'worker_control.json'));
     const inner=await terminateGroup(control);steps.push({layer:'INNER_WORKER',...inner});incomplete||=inner.cleanup_status!=='CLEANUP_COMPLETE';
    }catch(e){incomplete=true;steps.push({layer:'INNER_WORKER',cleanup_status:'CLEANUP_INCOMPLETE',error:String(e)});}
@@ -325,7 +466,7 @@ async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.
  // An unexpectedly exited materials parent can still leave an independently grouped worker.
  if(!cleanupPromise&&materialsDirectory&&result.code!==0)cleanupPromise=cleanup();
  const cleanupResult=cleanupPromise?await cleanupPromise:null;
- clearTimeout(timer);fs.closeSync(out);fs.closeSync(err);
+ clearTimeout(timer);out.child.stdin.end();err.child.stdin.end();await Promise.all([out.completion,err.completion]);
  const r={program,args,...result,reason,started,wall_ms:performance.now()-start,wall_budget_seconds: wallBudgetSeconds,
   child_pid:child.pid,outer_pgid:child.pid,executable_path:identity?.executable_path??program,process_start_identity:identity?.process_start_identity??null,
   process_identity:identity,identity_error:identityError,cleanup:cleanupResult,
@@ -334,7 +475,7 @@ async function command(run,label,program,args,extraEnv={},wallBudgetSeconds=cfg.
  assert.equal(result.code,0,label+' failed; logs preserved');assert.equal(reason,null);return r;
 }
 export function currentSourcePins(){
- const pinned=[...new Set([...sourceFiles,...approvedPatches])];
+ const pinned=[...new Set([...sourceFiles,...approvedPatches,nativeHelperSource,nativeHelperBinary])];
  return pinned.map(p=>({path:p,sha256:sha(read(p))}));
 }
 export function binaryReproducibility(run){
@@ -683,7 +824,7 @@ export function integrationFrozen(){
 export function integrationAdmission(){
  assert.equal(git('rev-parse','HEAD'),EXPECTED_HEAD);assert.equal(git('branch','--show-current'),'feat/stage1-pk-reuse-integration');
  assert.equal(git('diff','--','Cargo.toml','Cargo.lock','crates/vv-friendly-dkg/Cargo.toml'),'');
- const allowed=new Set([...approvedPatches,'crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs']);
+ const allowed=new Set([...approvedPatches,'crates/vv-friendly-dkg/src/bin/stage1_multibatch_materials.rs',nativeHelperSource,nativeHelperBinary]);
  for(const p of git('diff','--name-only').split('\n').filter(Boolean))assert.ok(allowed.has(p),'unexpected changed source '+p);
  for(const p of cfg.source_pins)fullHashEqual(sha(read(p.path)),p.sha256,p.path);
  return {head:EXPECTED_HEAD,branch:git('branch','--show-current'),source_pins:currentSourcePins(),proof_config_sha256:sha(read(configPath))};
@@ -704,12 +845,11 @@ export async function integrationGateA(run){
   gate_c_authorized:false,evm_authorized:false,setup_generation_authorized:false,
   note:'Frozen cryptographic config/request bytes unchanged; NEW source and executable pins belong to A07 only.'});
  const binary=run+'/build-target/release/stage1_multibatch_materials';
- fs.mkdirSync(path.dirname(absolute(binary)),{recursive:true});
  const rust=await command(run,'rust-version','rustc',['+1.99.1','-Vv']);
  const build=await command(run,'cargo-build','cargo',['+1.99.1','build','--release','--locked','--offline','--bin','stage1_multibatch_materials'],
   {CARGO_TARGET_DIR:process.env.VV_INTEGRATION_TARGET_DIR??absolute(run+'/build-target')});
  const built=path.join(process.env.VV_INTEGRATION_TARGET_DIR??absolute(run+'/build-target'),'release/stage1_multibatch_materials');
- if(path.resolve(built)!==absolute(binary))fs.copyFileSync(built,absolute(binary),fs.constants.COPYFILE_EXCL);
+ if(path.resolve(built)!==absolute(binary))safeWriteProtectedFile(absolute(binary),fs.readFileSync(built),{executable:true});
  const rustc=read(run+'/logs/rust-version.stdout.log').toString(),target=rustc.match(/^host:\s*(\S+)/m)?.[1];assert.ok(target);
  const fingerprint={...frozen,cargo_lock_sha256:sha(read('Cargo.lock')),rustc_vv:rustc,target_triple:target,
   release_opt_level:cfg.release_opt_level,profile_release:read('Cargo.toml').toString().match(/\[profile\.release\][\s\S]*?(?=\n\[|$)/)?.[0],
@@ -750,7 +890,7 @@ export function a08Admission(){
  assert.deepEqual(cfg.routes,['legacy','direct_fold','state_proof']);assert.equal(cfg.ethereumjs_version,'10.1.3');
  assert.equal(solc.version().split('+')[0],'0.8.30');
  for(const n of ['vm','common','tx'])assert.equal(load('contracts/node_modules/@ethereumjs/'+n+'/package.json').version,'10.1.3');
- const allowed=['contracts/node_modules',A08_RUN,resultsPathForRun(A08_RUN),'experiments/stage1_multibatch_raw/gate-a-20261117-07',
+ const allowed=[nativeHelperSource,nativeHelperBinary,'contracts/node_modules',A08_RUN,resultsPathForRun(A08_RUN),'experiments/stage1_multibatch_raw/gate-a-20261117-07',
  'experiments/stage1_multibatch_raw/gate-b-20261117-03','results/stage1_multibatch/gate-a-20261117-07','results/stage1_multibatch/gate-b-20261117-03'];
  for(const p of git('ls-files','--others','--exclude-standard','-z').split('\0').filter(Boolean))assert.ok(allowed.some(a=>p===a||p.startsWith(a+'/'))||/^(experiments\/stage1_multibatch_raw|results\/stage1_multibatch)\/gate-c-[A-Za-z0-9_-]+\//.test(p),'A08_UNEXPLAINED_UNTRACKED:'+p);
  assert.equal(git('diff','--cached','--name-only'),'','A08_NO_STAGED_CHANGES');
@@ -790,6 +930,7 @@ export function gateCPlan(){
   worker_start_count:0,vm_creation_count:0,evm_transaction_count:0,real_experiment_records_created:0};
 }
 export async function gateA08(){
+ protectedWritePreflight(); // Zero-write environment/blacklist/overlap admission BEFORE any logs.
  a08Admission();assert.ok(!fs.existsSync(absolute(A08_RUN)),'fresh A08 only; never overwrite');assert.ok(!fs.existsSync(absolute(C_AUTH)),'NO_AUTHORIZATION_DURING_A08');
  const frozenPaths=frozenA08Snapshots(),frozen=integrationFrozen();
  const a07=load('experiments/stage1_multibatch_raw/gate-a-20261117-07/gate_a.json');
@@ -801,11 +942,10 @@ export async function gateA08(){
  try{assert.equal(fs.readSync(pkfd,prefix,0,prefix.length,0),prefix.length);assert.deepEqual(prefix,arkVK);}finally{fs.closeSync(pkfd);}
  // READ-ONLY PK/VK/Setup validation above; the only following executable commands are rustc and cargo build.
  const rust=await command(A08_RUN,'rust-version','rustc',['+1.99.1','-Vv']);
- const target=process.env.VV_INTEGRATION_TARGET_DIR;assert.ok(target&&path.isAbsolute(target));
- assert.ok(!path.resolve(target).startsWith(absolute('experiments/stage1_multibatch_raw/gate-a-20261117-07')),'FROZEN_A07_TARGET');
+ const target=process.env.VV_INTEGRATION_TARGET_DIR;
  const build=await command(A08_RUN,'cargo-build','cargo',['+1.99.1','build','--release','--locked','--offline','--bin','stage1_multibatch_materials'],{CARGO_TARGET_DIR:target});
- const binary=A08_RUN+'/build-target/release/stage1_multibatch_materials';fs.mkdirSync(path.dirname(absolute(binary)),{recursive:true});
- fs.copyFileSync(path.join(target,'release/stage1_multibatch_materials'),absolute(binary),fs.constants.COPYFILE_EXCL);
+ const binary=A08_RUN+'/build-target/release/stage1_multibatch_materials';
+ safeWriteProtectedFile(absolute(binary),fs.readFileSync(path.join(target,'release/stage1_multibatch_materials')),{executable:true});
  const compiled=compileSolidity();writeNew(A08_RUN+'/compiled.json',compiled);
  const rustc_vv=read(A08_RUN+'/logs/rust-version.stdout.log').toString();
  const manifest={schema:'VV/STAGE1/A08/IMMUTABLE-BASELINE/v1',status:'A08_BASELINE_PASS',a_run:A08_RUN,

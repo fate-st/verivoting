@@ -1,0 +1,114 @@
+[
+  {
+    "line": 136,
+    "text": "export function safeWriteProtectedFile(target,data,{stream=false,onReady,...options}={}){"
+  },
+  {
+    "line": 155,
+    "text": "export const writeNew=(p,v)=>safeWriteProtectedFile(outputAbsolute(p),json(v));"
+  },
+  {
+    "line": 429,
+    "text": "  out=safeWriteProtectedFile(base+'.stdout.log',undefined,{stream:true,env});"
+  },
+  {
+    "line": 430,
+    "text": "  err=safeWriteProtectedFile(base+'.stderr.log',undefined,{stream:true,env});"
+  },
+  {
+    "line": 453,
+    "text": "    const marker=path.join(materialsDirectory,'outer_cleanup_requested.json');if(!fs.existsSync(marker))safeWriteProtectedFile(marker,json({reason:'OUTER_WALL_BUDGET',outer_pid:child.pid}));"
+  },
+  {
+    "line": 474,
+    "text": "  stdout:base+'.stdout.log',stderr:base+'.stderr.log'};writeNew(base+'.command.json',r);"
+  },
+  {
+    "line": 499,
+    "text": " const before=protectedSnapshot({phase:'A',run});writeNew(run+'/protected_files.json',before);"
+  },
+  {
+    "line": 507,
+    "text": "  const reproducibility=binaryReproducibility(run);writeNew(run+'/binary_reproducibility.json',reproducibility);"
+  },
+  {
+    "line": 512,
+    "text": "  const compiled=compileSolidity();writeNew(run+'/compiled.json',compiled);"
+  },
+  {
+    "line": 513,
+    "text": "  writeNew(run+'/storage_layout.json',{layouts:Object.fromEntries(Object.entries(compiled.contracts['stage1/Stage1Receivers.sol']).map(([n,c])=>[n,c.storageLayout])),checks:compiled.storage_checks});"
+  },
+  {
+    "line": 514,
+    "text": "  writeNew(run+'/static_checks.json',{version,prague:pragueStatic(),storage_checks:compiled.storage_checks,provenance:inputProvenance(),"
+  },
+  {
+    "line": 521,
+    "text": "  writeNew(run+'/gate_a.json',{...base,status:'PASS_GATE_A_COMPILE_ONLY',commands,"
+  },
+  {
+    "line": 527,
+    "text": " }catch(e){writeNew(run+'/gate_a_failed.json',{...base,status:'BLOCKED',error:String(e),commands});throw e;}"
+  },
+  {
+    "line": 600,
+    "text": " writeNew(aRun+'/preflight_b.json',report);writeNew(resultsPathForRun(aRun)+'/preflight_b.json',report);"
+  },
+  {
+    "line": 766,
+    "text": " writeNew(run+`/sessions/${negative?'negative':'positive'}-k${k}-${route}.json`,output);assert.equal(output.status,'PASS',output.error);"
+  },
+  {
+    "line": 777,
+    "text": " const before=protectedSnapshot({phase:gate,run,aRun,bRun});writeNew(run+'/protected_files.json',before);"
+  },
+  {
+    "line": 779,
+    "text": "  writeNew(run+'/request.json',{gate,identity:`${gate}/${path.basename(run)}/${new Date().toISOString()}`,config_sha256:sha(read(configPath)),a_run:aRun,b_run:bRun??null,approved,formal:gate==='C'});"
+  },
+  {
+    "line": 790,
+    "text": "  checkProtected(before);writeNew(run+`/gate_${gate.toLowerCase()}.json`,{gate,run,a_run:aRun,b_run:bRun??null,status:gate==='B'?'PASS_GATE_B_REGRESSION_ONLY':'PASS_GATE_C_FORMAL_EXECUTION',"
+  },
+  {
+    "line": 843,
+    "text": " writeNew(run+'/integration_config.json',{schema:'VV/STAGE1/A07/PK-REUSE/v1',...admission,budgets:reuseBudgets,"
+  },
+  {
+    "line": 852,
+    "text": " if(path.resolve(built)!==absolute(binary))safeWriteProtectedFile(absolute(binary),fs.readFileSync(built),{executable:true});"
+  },
+  {
+    "line": 859,
+    "text": " writeNew(run+'/gate_a.json',{schema:'VV/STAGE1/A07/PK-REUSE/v1',status:'PASS_GATE_A07_PK_REUSE_BUILD',run,"
+  },
+  {
+    "line": 870,
+    "text": " const frozen=integrationFrozen();writeNew(run+'/integration_request.json',{gate,run,a_run:aRun,run_identity:`${path.basename(run)}/${new Date().toISOString()}`,"
+  },
+  {
+    "line": 874,
+    "text": " writeNew(run+'/compare_summary.json',{schema:'VV/STAGE1/A07/INTEGRATION/v1',status:'PASS_MATERIAL_GENERATION_ONLY_PENDING_AUDIT',"
+  },
+  {
+    "line": 948,
+    "text": " safeWriteProtectedFile(absolute(binary),fs.readFileSync(path.join(target,'release/stage1_multibatch_materials')),{executable:true});"
+  },
+  {
+    "line": 949,
+    "text": " const compiled=compileSolidity();writeNew(A08_RUN+'/compiled.json',compiled);"
+  },
+  {
+    "line": 959,
+    "text": " checkReadonlyInputs(frozenPaths);writeNew(A08_RUN+'/manifest.json',manifest);verifyA08();"
+  },
+  {
+    "line": 966,
+    "text": " writeNew(run+'/request.json',{gate:'C',a_run:A08_RUN,identity:'C/'+path.basename(run)+'/'+new Date().toISOString(),evidence_kind:'REAL_EXECUTION',execution_performed:true,"
+  },
+  {
+    "line": 974,
+    "text": " verifyA08();checkReadonlyInputs(m.frozen_paths);writeNew(run+'/gate_c.json',{status:'PASS_GATE_C_FORMAL_EXECUTION',gate:'C',run,a_run:A08_RUN,evidence_kind:'REAL_EXECUTION',execution_performed:true,"
+  }
+]
